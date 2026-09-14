@@ -1,11 +1,17 @@
 import os
 import shutil
+import sys
+from pathlib import Path
 
 from dotenv import load_dotenv
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_community.document_loaders import Docx2txtLoader, PyPDFLoader
-from langchain_openai import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+# Make src/ importable no matter where the script is launched from
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from agents.tools import get_embeddings  # noqa: E402
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -18,7 +24,7 @@ def create_chroma_db(
     chunk_size: int = 2000,
     overlap: int = 500,
 ):
-    embeddings = OpenAIEmbeddings(api_key=os.environ["OPENAI_API_KEY"])
+    embeddings = get_embeddings()
 
     # Initialize Chroma vector store
     if delete_chroma_db and os.path.exists(db_name):
@@ -66,10 +72,11 @@ def create_chroma_db(
 
 if __name__ == "__main__":
     # Path to the folder containing the documents
-    folder_path = "./data"
+    folder_path = os.environ.get("CHROMA_DATA_DIR", "./data")
+    db_name = os.environ.get("CHROMA_DB_DIR", "./chroma_db")
 
     # Create the Chroma database
-    chroma = create_chroma_db(folder_path=folder_path)
+    chroma = create_chroma_db(folder_path=folder_path, db_name=db_name)
 
     # Create retriever from the Chroma database
     retriever = chroma.as_retriever(search_kwargs={"k": 3})

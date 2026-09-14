@@ -112,6 +112,16 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
                 agent.checkpointer = saver
                 # Set store for long-term memory (cross-conversation knowledge)
                 agent.store = store
+
+            # Warm up the local Chroma retriever (BGE-M3) so the first user request
+            # doesn't hit chromadb's flaky first-time client initialization.
+            try:
+                from agents.tools import get_chroma_retriever
+
+                get_chroma_retriever()
+                logger.info("Chroma retriever warmed up")
+            except Exception as e:
+                logger.error(f"Chroma retriever warm-up failed: {e}")
             yield
     except Exception as e:
         logger.error(f"Error during database/store/agents initialization: {e}")
