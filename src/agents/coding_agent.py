@@ -1,0 +1,86 @@
+"""Coding Agent：能自己查看代码仓库并回答问题的 Agent。
+
+与 rag_assistant.py 的关系：图结构完全相同（model <-> tools 循环 + 一条条件边），
+区别只在两点：
+  1) 工具从 Database_Search 换成 list_files / read_file（看代码，而不是看手册）；
+  2) 提示词要求"先查再答、结论必须带文件路径 + 行号"。
+
+源文件保留在 study_test11/coding_agent.py，这里是接入服务用的正式版本。
+"""
+
+from typing import Literal
+
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END, START, MessagesState, StateGraph
+from langgraph.prebuilt import ToolNode
+
+from agents.code_tools import list_files, read_file
+from core import get_model, settings
+
+TOOLS = [list_files, read_file]
+
+SYSTEM_PROMPT = """你是一个代码助手，工作在一个 Python 项目仓库里。
+工作规则：
+1. 回答任何关于代码的问题之前，必须先用 list_files 看看仓库结构，
+   再用 read_file 读取相关文件；不要凭记忆或猜测回答。
+2. 你的每个结论都必须来自你真正读到的文件内容。
+3. 回答时必须给出证据：文件路径 + 行号，例如 src/run_service.py:36。
+4. 只讨论这个仓库里的内容。如果文件不存在或没有权限，如实说明，
+   不要编造文件内容。
+"""
+
+
+async def call_model(state: MessagesState, config: RunnableConfig) -> dict:
+    """异步模型节点：负责思考并决定是否调用工具。"""
+    # 从运行时配置中动态获取模型，支持前端切换模型
+    model_name = config["configurable"].get("model", settings.DEFAULT_MODEL)
+    model = get_model(model_name)
+
+    bound_model = model.bind_tools(TOOLS)
+    messages = [SystemMessage(content=SYSTEM_PROMPT)] + state["messages"]
+
+    # 异步调用，避免阻塞整个服务的事件循环
+    response = await bound_model.ainvoke(messages)
+    return {"messages": [response]}
+
+
+def should_use_tools(state: MessagesState) -> Literal["tools", "end"]:
+    """条件边：判断模型是否发出了工具调用指令。"""
+    last = state["messages"][-1]
+    if isinstance(last, AIMessage) and last.tool_calls:
+        return "tools"
+    return "end"
+
+
+def build_graph():
+    """建图：model <-> tools 循环 + 一条条件边。"""
+    graph = StateGraph(MessagesState)
+
+    graph.add_node("model", call_model)
+    graph.add_node("tools", ToolNode(TOOLS))
+
+    graph.add_edge(START, "model")
+    graph.add_conditional_edges("model", should_use_tools, {"tools": "tools", "end": END})
+    graph.add_edge("tools", "model")
+
+    return graph.compile()
+
+
+# agents.py 注册表需要的是一个已编译的图对象（和 rag_assistant 一样的约定）
+coding_agent = build_graph()
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    async def main():
+        graph = build_graph()
+        question = "这个项目的 FastAPI 服务入口在哪里？它做了什么？"
+        result = await graph.ainvoke(
+            {"messages": [HumanMessage(content=question)]},
+            config={"configurable": {"model": settings.DEFAULT_MODEL}},
+        )
+        print(result["messages"][-1].content)
+
+    asyncio.run(main())
