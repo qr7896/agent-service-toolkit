@@ -10,7 +10,7 @@
 
 原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
 
-改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **0–7 已完成**——阶段 6 `search_code` 验收 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 验收 11/11。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 新增的可靠性原则与测试体系见 §3.6。
+改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **0–8 已完成**——阶段 6 `search_code` 验收 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 验收 11/11，阶段 8 `git_diff` 验收 8/8。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 新增的可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -157,7 +157,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 5 | Coding Agent | `src/agents/coding_agent.py` | Agent Loop | ✅ |
 | 6 | **`search_code`** | `src/agents/code_tools.py` | **Code Retrieval** | **✅ 验收 9/9** |
 | 7 | `write_file` / `edit_file` | `src/agents/code_tools.py` | Code Editing | ✅ 验收 11/11 |
-| 8 | `git_diff` / patch | `src/agents/code_tools.py` | Patch | ⏳ |
+| 8 | `git_diff` / patch | `src/agents/code_tools.py` | Patch | ✅ 验收 8/8 |
 | 9 | Planning | `src/agents/coding_agent.py` | Graph Routing | ⏳ |
 | 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ⏳ |
 | 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ⏳ |
@@ -429,6 +429,31 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 5. 失败模式清晰：`ERROR` / `no matches` 让模型能"缩小范围重搜"，而不是一路盲读
 6. **它不是取代 `read_file`，而是重排顺序**：`search_code` 是 grep，`read_file` 是 cat——先 grep 定位，再 cat 精读
 
+### 4.8 魔改四 / 五：安全写入 + 改动可见（阶段 7–8）
+
+**阶段 7 `write_file` / `edit_file`（验收 11/11）**
+
+| 设计 | 实现 | 为什么 |
+|---|---|---|
+| 只新建、默认不覆盖 | 已存在文件直接 `ERROR`，必须显式 `overwrite=True` | 覆盖是不可逆破坏，必须显式授权 |
+| 唯一命中才修改 | 命中 0 处或多处**先 return，绝不写入** | 逼模型给出足够精确的片段，而不是赌一个位置 |
+| 敏感文件边界 | `.env*` / `*.pem` / `*.key` / `*.p12` / `id_rsa*` / `.git/**` | 对应 v3 的 Permission Boundary |
+| 返回坐标 | 成功返回 `rel_path:line_no` | 让后续 `git_diff` 与人工核查有落脚点 |
+
+**阶段 8 `git_diff`（验收 8/8）**
+
+| 设计 | 实现 |
+|---|---|
+| 看真实差异 | `git diff --no-color`，可选 `--cached`（暂存区）与 `-- <path>`（限定范围） |
+| 看得到新文件 | `git diff` 天生看不到未跟踪文件，所以额外输出 `status:` 段（`git status --short`） |
+| 输出可控 | `max_lines`（默认 400）截断并标记 `truncated` |
+| 语义一致 | `staged=True` 时过滤掉未暂存条目，避免模型把"工作区改动"误读成"已暂存改动"——**这个瑕疵是接进 Agent 后由它自己暴露出来的** |
+| 优雅失败 | 没装 git / 非 git 仓库 / 越权路径 → `ERROR: ...` |
+
+**Agent 接线**：`coding_agent.py` 的 `TOOLS` 现在是 `[search_code, read_file, list_files, git_diff]`——**仍然只有只读工具**。`write_file` / `edit_file` 已实现但**故意没接**：按 v3 §13 / §37 的顺序，写权限要等 HITL（阶段 13）就位后再交出，先让 `run_tests`（阶段 10）提供"改得对不对"的确定性反馈。
+
+**实测**：问 Agent"现在工作区有哪些改动？"，它依次调用 `git_diff({})` → `git_diff({'staged': True})` → 读两个文件核对，17 秒给出"2 个文件未暂存改动、暂存区为空"的结论。
+
 ---
 
 ## 5. 文件清单
@@ -500,6 +525,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 - [x] 魔改二：`list_files` / `read_file` 工具 + 能看仓库的 `coding-agent`（已注册、已实测）
 - [x] 魔改三：`search_code`（验收 9/9 + 对照实验数据：工具调用 12→7、读取文件 9→4）
 - [x] 魔改四：`write_file` / `edit_file`（默认不覆盖、唯一命中才替换、敏感文件黑名单，验收 11/11）
+- [x] 魔改五：`git_diff`（改动可见：status 段看新文件、`--cached` 看暂存区、超长截断，验收 8/8）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -551,48 +577,50 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ## 9. 下一步
 
-### 9.1 已完成（阶段 6 / 7）
+### 9.1 已完成（阶段 6–8）
 
-**阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7。
+- **阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7
+- **阶段 7 `write_file` / `edit_file`**：验收 11/11，设计要点与失败案例见 §4.8
+- **阶段 8 `git_diff`**：验收 8/8，设计要点见 §4.8
 
-**阶段 7 `write_file` / `edit_file`**（`src/agents/code_tools.py`）：安全写入能力已实现并通过 **11 项**验收。
+**两个过关题待回答**（答完再进入下一阶段）：
 
-| 设计 | 实现 |
-|---|---|
-| 只新建、默认不覆盖 | `write_file` 遇到已存在文件直接 `ERROR`，必须显式 `overwrite=True` |
-| 唯一命中才修改 | `edit_file` 用 `text.count(old_text)`；0 处或多处**先 return、绝不写入** |
-| 敏感文件边界 | 黑名单：`.env*` / `*.pem` / `*.key` / `*.p12` / `id_rsa*` / `.git/**` |
-| 坐标可复核 | 成功返回 `rel_path:line_no`，便于后续 `git_diff` 核对 |
-| 不影响其他行 | `replace(old_text, new_text, 1)`；读进来什么样就写回什么样 |
+1. 为什么 `edit_file` 比直接让 LLM 重写整个文件更安全？
+2. 为什么在让 Agent 改代码之前，必须先有"能看见改动"的机制？
 
-验收脚本 `lg_practice/day7_edit_tools_check.py` 的 11 项里有 6 项是**失败案例**（越权、敏感文件、空 `old_text`、命中 0 处、命中多处、只改目标行），写操作全部发生在项目内沙箱 `_day7_sandbox/`，跑完自动清理。
+### 9.2 当前任务（阶段 10）：`run_tests`
 
-**过关题待回答**：为什么 `edit_file` 比直接让 LLM 重写整个文件更安全？
+> 顺序说明：阶段表里 `run_tests` 编号是 10、Planning 是 9，但 v3 §37「更新后的魔改优先级」明确把**跑测试放在 Planner 之前**——先有确定性反馈，再谈规划。这里按 §37 执行。
 
-### 9.2 当前任务（阶段 8）：`git_diff`
+**新增文件**：`src/agents/test_tools.py`
 
-**目标**：给"改代码"配上"看得见的证据"——每次修改后能立刻看到到底改了什么。这是后面 Test / Debug / Reviewer 的基础，也回答 v3 可靠性自检里的"改错了怎么办"。
+**目标**：让 Agent 能真正"运行并观察结果"，而不是自证正确（对应 v3 总纲：LLM 提方案，确定性系统验事实）。
 
 **第一版必须支持**：
 
-- `git_diff(path: str = "", staged: bool = False)`：返回 `git diff` 输出，可限定单个文件
-- 无改动时给明确提示（例如 `no changes`），不是空字符串
-- 非 git 仓库 / git 不可用时优雅返回 `ERROR: ...`
-- 输出有上限（例如最多 400 行），超出要标记截断
-- 路径限定在项目内（越权拒绝）
+- `run_tests(path: str = "", timeout: int = 120)`：默认跑 `pytest -q`，`path` 可指定测试文件或目录
+- 返回**结构化**结果：`command` / `exit_code` / `passed` / 输出摘要，而不是只回一句 "Test failed"
+- 失败时带上**具体文件与行号**（traceback 原文），否则 Debug 无处下手
+- 输出有上限（例如 200 行），超出截断并标记
+- `timeout` 到点返回 `ERROR: ...`，绝不能让图卡死
+- 命令白名单：只允许 pytest，**不接受任意 shell**
+- 路径限定项目内，越权拒绝
+- 没有测试可跑（pytest exit code 5）时给明确说明，不算失败
 
 **验收标准**：
 
-- [ ] 有改动时能返回 diff（含 `+` / `-` 行）
-- [ ] 无改动时返回明确提示
-- [ ] 能只针对一个文件取 diff
+- [ ] 全量测试：返回 command / exit_code / passed
+- [ ] 指定文件测试：只见该文件的用例
+- [ ] 失败用例：输出含 traceback、文件名与行号
+- [ ] 通过用例：`passed=True`、`exit_code=0`
+- [ ] 输出超长截断并标记
+- [ ] `timeout` 生效（用故意 sleep 的用例验证）
 - [ ] 越权路径被拒绝
-- [ ] 输出超长时截断并标记
-- [ ] 与 `edit_file` 串起来：edit → git_diff 能看到那一行改动
+- [ ] 无测试可跑时给出明确说明
 
-**过关题**：为什么在让 Agent 改代码之前，必须先有"能看见改动"的机制？
+**过关题**：测试结果如何重新进入 LangGraph State？
 
-**提交信息**：`feat(coding): add git diff tool`
+**提交信息**：`feat(coding): add test execution tool`
 
 ### 9.3 后续阶段（按 v3 顺序，不跳步）
 

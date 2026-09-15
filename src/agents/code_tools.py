@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import re
+import subprocess
 from pathlib import Path
 
 from langchain_core.tools import tool
@@ -378,5 +379,116 @@ def edit_file(path: str, old_text: str, new_text: str) -> str:
             f"OK: edited {rel}:{line_no} "
             f"({_count_lines(old_text)} -> {_count_lines(new_text)} lines)"
         )
+    except Exception as e:
+        return f"ERROR: {e}"
+
+
+def _git(args: list[str], timeout: int = 30) -> tuple[int, str, str]:
+    """在项目根目录执行 git 命令，返回 (exit_code, stdout, stderr)。
+
+    找不到 git 可执行文件时抛 FileNotFoundError，由调用方转成 ERROR 字符串。
+    """
+    proc = subprocess.run(
+        ["git", "-C", str(PROJECT_ROOT), *args],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=timeout,
+    )
+    return proc.returncode, proc.stdout, proc.stderr
+
+
+@tool
+def git_diff(path: str = "", staged: bool = False, max_lines: int = 400) -> str:
+    """查看改动（等价于 git diff）：改了哪些文件、具体改了什么。
+
+    这是"改动可见"的机制——改完代码必须能说清改了什么，否则测试、调试、复审和
+    人工核查都无从下手。注意 git diff 只看已跟踪文件，所以这里额外给出 status 段，
+    让新建的未跟踪文件也能被看见。
+
+    参数：
+      - path：可选，只看这个路径（文件或目录），相对项目根，例如 "src/agents/code_tools.py"
+      - staged：为 True 时看暂存区改动（git diff --cached）
+      - max_lines：diff 正文最多输出多少行，超出会截断
+
+    输出契约：
+      - 干净            -> "no changes"（限定 path 时为 "no changes for {rel}"）
+      - 有改动          -> 首行 "changes: {n} entries, +{added}/-{removed}"，超长时加 " (truncated)"
+                           之后可选 "status:" 段（最多 20 行 git status --short）
+                           之后可选 "diff:" 段（git diff 正文，最多 max_lines 行）
+                           截断时末尾追加 "(diff truncated at {max_lines} lines; {total} lines total)"
+      - 路径越权        -> "ERROR: 路径超出项目范围: ..."
+      - 没装 git        -> "ERROR: 未找到 git 命令"
+      - 不是 git 仓库   -> "ERROR: 不是 git 仓库 ..."
+      - 其他异常        -> "ERROR: {e}"
+    """
+    try:
+        if path:
+            try:
+                target = _resolve_inside(path)
+            except ValueError as e:
+                return f"ERROR: {e}"
+            rel = target.relative_to(PROJECT_ROOT).as_posix()
+            pathspec = ["--", rel]
+        else:
+            rel = ""
+            pathspec = []
+
+        try:
+            code, _, err = _git(["rev-parse", "--is-inside-work-tree"])
+        except FileNotFoundError:
+            return "ERROR: 未找到 git 命令"
+        except subprocess.TimeoutExpired:
+            return "ERROR: git 命令超时"
+        if code != 0:
+            reason = " ".join(err.split())[:120] or "git rev-parse 失败"
+            return f"ERROR: 不是 git 仓库或 git 不可用: {reason}"
+
+        diff_flags = ["--no-color"] + (["--cached"] if staged else [])
+        _, diff_text, _ = _git(["diff", *diff_flags, *pathspec])
+        _, status_text, _ = _git(["status", "--short", "--untracked-files=all", *pathspec])
+        _, numstat_text, _ = _git(["diff", "--numstat", *diff_flags, *pathspec])
+
+        status_lines = [ln for ln in status_text.splitlines() if ln.strip()]
+        diff_lines = diff_text.splitlines()
+
+        # staged=True 时只看暂存区：git status --short 的两位状态码里，
+        # 第一位（index 状态）是空格或 "?" 表示"没进暂存区"，这类条目要过滤掉，
+        # 否则模型会把"工作区改动"误读成"已暂存改动"。
+        if staged:
+            status_lines = [ln for ln in status_lines if len(ln) > 2 and ln[0] not in " ?"]
+
+        added = removed = 0
+        for ln in numstat_text.splitlines():
+            parts = ln.split("\t")
+            if len(parts) >= 2:
+                added += int(parts[0]) if parts[0].isdigit() else 0
+                removed += int(parts[1]) if parts[1].isdigit() else 0
+
+        if not status_lines and not diff_lines:
+            return f"no changes for {rel}" if rel else "no changes"
+
+        truncated = len(diff_lines) > max_lines
+        summary = f"changes: {len(status_lines)} entries, +{added}/-{removed}"
+        if truncated:
+            summary += " (truncated)"
+
+        out = [summary]
+        if status_lines:
+            out.append("status:")
+            out.extend(status_lines[:20])
+            if len(status_lines) > 20:
+                out.append(f"(status truncated: showing 20 of {len(status_lines)} entries)")
+        if diff_lines:
+            out.append("diff:")
+            out.extend(diff_lines[:max_lines])
+            if truncated:
+                out.append(
+                    f"(diff truncated at {max_lines} lines; {len(diff_lines)} lines total)"
+                )
+        return "\n".join(out)
+    except subprocess.TimeoutExpired:
+        return "ERROR: git 命令超时"
     except Exception as e:
         return f"ERROR: {e}"
