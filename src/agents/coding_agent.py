@@ -38,6 +38,7 @@ from agents.code_tools import (
     write_file,
 )
 from agents.coding_planner import planner
+from agents.reviewer import reviewer
 from agents.test_tools import run_tests
 from core import get_model, settings
 
@@ -82,6 +83,7 @@ class CodingState(MessagesState):
 
     plan: dict[str, Any]
     test_result: dict[str, Any]
+    review: dict[str, Any]
     attempts: int
     allow_write: bool
 
@@ -281,6 +283,7 @@ def build_graph():
     graph.add_node("tester", tester)
     graph.add_node("debugger", debugger)
     graph.add_node("giveup", giveup)
+    graph.add_node("reviewer", reviewer)
 
     graph.add_edge(START, "planner")
     graph.add_edge("planner", "coder")
@@ -288,11 +291,13 @@ def build_graph():
         "coder", should_act, {"tools": "tools", "tester": "tester", "end": END}
     )
     graph.add_edge("tools", "coder")
+    # 测试通过后不直接 END：先交给 Reviewer 做独立裁决（阶段 12）
     graph.add_conditional_edges(
-        "tester", check_test, {"pass": END, "retry": "debugger", "giveup": "giveup"}
+        "tester", check_test, {"pass": "reviewer", "retry": "debugger", "giveup": "giveup"}
     )
     graph.add_edge("debugger", "coder")
     graph.add_edge("giveup", END)
+    graph.add_edge("reviewer", END)
 
     return graph.compile()
 

@@ -10,7 +10,7 @@
 
 原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
 
-改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **阶段 0–11 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 的可靠性原则与测试体系见 §3.6。
+改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **阶段 0–12 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 的可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -161,7 +161,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 9 | Planning | `src/agents/coding_planner.py` | Graph Routing | ✅ 验收 10/10 |
 | 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ✅ 验收 9/9 |
 | 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ✅ 验收 11/11 |
-| 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ⏳ |
+| 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ✅ 验收 8/8 |
 | 13 | HITL | Graph | `interrupt()` | ⏳ |
 | 14 | Trajectory | `trajectory` | Evaluation | ⏳ |
 | 15 | Experience Memory | `src/agents/experience.py` | Store | ⏳ |
@@ -550,6 +550,41 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 `tester` 把 pytest 的结构化结果（`status` / `exit_code` / `summary` / `output`）写进 `State.test_result`；条件边 `check_test` 是一个**只读 State 的纯函数**：`passed → END`、`failed 且 attempts < MAX_RETRIES → debugger → coder`、`failed 且 attempts ≥ MAX_RETRIES → giveup → END`。关键在于**判断依据是确定性字段，而不是模型的自述**——模型说"修好了"不算数，pytest 的退出码说了算。
 
+### 4.12 魔改九：Reviewer（阶段 12）
+
+**新增文件**：`src/agents/reviewer.py`（验收 8/8）
+
+**职责边界**：Coder 负责改代码，Reviewer 负责**判断这次改动是否站得住**。Reviewer 只读——`REVIEWER_TOOLS` 里没有任何写工具。一旦它既能评审又能修改，"独立审查"就不存在了：它会倾向于替自己的改动辩护，而不是挑错。
+
+**设计**
+
+| 设计 | 实现 | 为什么 |
+|---|---|---|
+| 只读评审 | `REVIEWER_TOOLS` = git_diff / read_file / search_code / list_files / run_tests | 评审者不能同时是修改者 |
+| 结构化裁决 | `{"approved", "score", "issues", "summary"}` 写进 `State.review` | 后续节点与人可程序化使用，也便于将来做评测 |
+| 兜底不批准 | 解析失败 → `approved=False` + 说明 | 与 planner 同原则：宁可判"未通过"，也不默认放行 |
+| 评审范围可控 | `review_path` 配置 > 计划里唯一目标文件 > 全仓库 | 真实仓库里常同时存在无关的未提交改动，全仓 diff 会误判 |
+| 必须给证据 | 提示词要求 issues 引用 `文件名:行号` 或 diff 里的具体行 | 拒绝不能靠"感觉"，要能被人复核 |
+
+**图结构**：`tester --PASS--> reviewer → END`（FAIL 仍走 `debugger → coder`）。
+
+**实测**
+
+| 场景 | 结果 |
+|---|---|
+| 正常修复（真实写模式闭环跑完） | `approved=True`，`score=1.0`，摘要指出"add 已正确返回 a + b、测试通过、改动与需求一致" |
+| 改动与需求无关（diff 只有无关文件、目标文件仍是 `a - b`） | `approved=False`，issues 写明"`calc.py:2` 仍是 `return a - b`，与需求「修复 add 函数」直接矛盾" |
+| 输出无法解析 | 兜底 `approved=False`（验收项 5） |
+
+**一个很能说明设计价值的插曲**：第一次跑验收时，reviewer **拒绝了本该通过的修复**，理由是"diff 混入了与需求无关的 `coding_agent.py` / `reviewer.py` 改动"——它看到的正是我当时**未提交的本阶段代码**。这说明它确实在做独立判断而不是走形式。由此我加了"评审范围"（`review_path` / 计划单文件），让评审聚焦任务目标；同时在提示词里明确"不要因为文件是新增/未跟踪就否决"。
+
+**过关题：为什么 Reviewer 不应该自己改代码？**
+
+1. **独立性**：评审者一旦能改，就会为自己的方案辩护，审查退化成自我确认；
+2. **可追责**：谁改的、谁批的要能分开，出问题才知道是"改错"还是"批错"；
+3. **职责单一**：Coder 对"能不能跑通"负责，Reviewer 对"符不符合需求、有没有引入风险"负责；
+4. **边界清晰之后才能换模型**（v3 §28 的 Model Routing）：强模型评审、本地模型编码，各司其职。
+
 ---
 
 ## 5. 文件清单
@@ -564,6 +599,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/code_tools.py` | **新增** | `list_files` / `read_file` / `search_code` / `write_file` / `edit_file` / `git_diff` |
 | `src/agents/test_tools.py` | **新增** | `run_tests`（只允许 pytest，结构化结果） |
 | `src/agents/coding_planner.py` | **新增** | Planning：只读侦察 → JSON 计划 → 确定性校验 |
+| `src/agents/reviewer.py` | **新增** | Reviewer：只读独立评审 + 结构化裁决 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
 | `.gitignore` | 修改 | 忽略个人练习目录 `study_test11/` |
@@ -586,6 +622,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day9_run_tests_check.py` | `run_tests` 的 9 项验收脚本 |
 | `day10_planner_check.py` | Planning 的 10 项验收脚本 |
 | `day11_self_correction_check.py` | 自修复闭环的 11 项验收脚本（含两次真实端到端运行） |
+| `day12_reviewer_check.py` | Reviewer 的 8 项验收脚本（含两次真实评审） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -634,12 +671,12 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改六：`run_tests`（结构化测试结果、失败带文件名行号、超时不卡死、只允许 pytest，验收 9/9）
 - [x] 魔改七：Planning（`coding_planner.py`：只读侦察 → JSON 计划 → 确定性校验 → 写入 State，验收 10/10）
 - [x] 魔改八：Debug / Self-Correction（写权限受控开放 + tester/debugger/giveup 闭环，验收 11/11）
+- [x] 魔改九：Reviewer（只读独立评审 + 结构化裁决 + 评审范围可控，验收 8/8）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
 
 - [ ] HITL 未做：写权限目前只有"开关"（`allow_write`），高风险动作还没有"先暂停等批准"的机制（阶段 13）
-- [ ] Reviewer 未做：测试通过后直接 END，还没有独立的裁决环节（阶段 12）
 - [ ] DeepSeek 偶发流式超时（`No streaming chunk received for 120.0s`）会让单次规划/回答失败；后续需要加超时与重试配置（如 `stream_chunk_timeout`）
 - [ ] 没有评测（benchmark）与指标（成功率 / 测试通过率 / 迭代次数 / 延迟 / token 成本）
 - [ ] 知识库仍只有 3 个 chunk（手册太小），检索效果不具代表性
@@ -685,7 +722,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ## 9. 下一步
 
-### 9.1 已完成（阶段 6–11）
+### 9.1 已完成（阶段 6–12）
 
 - **阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7
 - **阶段 7 `write_file` / `edit_file`**：验收 11/11，设计见 §4.8
@@ -693,33 +730,32 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 9 Planning**：验收 10/10，设计与踩坑见 §4.10
 - **阶段 10 `run_tests`**：验收 9/9，设计与过关题回答见 §4.9
 - **阶段 11 Debug / Self-Correction**：验收 11/11，设计与过关题回答见 §4.11
+- **阶段 12 Reviewer**：验收 8/8，设计见 §4.12
 
-### 9.2 当前任务（阶段 12）：Reviewer（只评审、不改代码）
+### 9.2 当前任务（阶段 13）：Human-in-the-loop
 
-**目标**：在"改完了、测试也过了"之后再加一道**独立审查**——检查 diff 是否真的解决了需求、有没有引入风险、测试是否覆盖到位，最后给出结构化裁决。
+**目标**：把"写权限开关"升级成"**高风险动作先暂停、等人批准**"——这是 v3 可靠性自检里"改错了怎么办"的最后一块拼图。
 
 **第一版必须支持**：
 
-- 新增 `src/agents/reviewer.py`，输出结构化裁决：
-  `{"approved": bool, "score": 0.0–1.0, "issues": [...], "summary": "..."}`
-- Reviewer **只读**：可用 `git_diff` / `read_file` / `search_code` / `run_tests`，但**绝不修改代码**
-- 输入必须包含：原始需求、`plan`、`test_result`、`git_diff`
-- `approved=False` 时把问题写进 State 的新字段 `review`，供后续决定"回到 coder"还是"报告给人"
-- 图结构调整：`tester --PASS--> reviewer → END`（FAIL 路径仍走 debugger）
-- 裁决必须**有证据**：引用 diff 或具体 `文件:行号`，不能只给一句"看起来没问题"
+- 用 LangGraph 的 `interrupt()` 在**高风险动作前**暂停：`write_file` 覆盖已有文件、`edit_file` 修改已有文件（未来还包括删文件、执行命令）
+- 暂停时给出**可决策的信息**：要改哪个文件、改成什么（diff 预览）、为什么（对应计划里的哪一步）
+- 批准 → `Command(resume=...)` 继续；拒绝 → 中止并记录原因
+- 复用项目已有能力：`src/agents/interrupt_agent.py` 是现成参考，服务端 `_handle_input` 已经会处理 `Command(resume=...)`
+- **低风险动作（search / read / diff / run_tests）不要暂停**，否则体验崩坏
+- 暂停与恢复必须能被验收脚本自动测试：用 `graph.aget_state()` 检查 interrupt，再用 `Command(resume=...)` 恢复
 
 **验收标准**：
 
-- [ ] State 新增 `review` 字段且结构完整（approved / score / issues / summary）
-- [ ] 测试通过后自动进入 reviewer（而不是直接 END）
-- [ ] Reviewer 节点不绑定任何写工具（结构性保证，可用测试断言）
-- [ ] 面对"改了无关文件"这类有问题的 diff，能给出 `approved=False` + 具体 issues
-- [ ] 面对正常修复，给出 `approved=True` 且 score 合理
-- [ ] 裁决里引用 diff / 文件行号作为依据
+- [ ] 写操作前触发 interrupt，state 里能看到待批准的动作与理由
+- [ ] `resume(True)` 后动作真正执行
+- [ ] `resume(False)` 后动作被跳过/中止，且不产生"假装成功"的结论
+- [ ] 只读工具不触发 interrupt
+- [ ] 服务端 `/invoke` 能把 interrupt 值返回给客户端（复用上游已有逻辑）
 
-**过关题**：为什么 Reviewer 不应该自己改代码？它和 Coder 的职责边界在哪里？
+**过关题**：哪些动作必须人工批准？为什么不是所有动作都批准？
 
-**提交信息**：`feat(coding): add coding reviewer`
+**提交信息**：`feat(coding): add human approval for risky actions`
 
 ### 9.3 后续阶段（按 v3 顺序，不跳步）
 
