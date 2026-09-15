@@ -255,3 +255,128 @@ def search_code(
         return "\n".join([summary, *out])
     except Exception as e:  # 8) 任何其他异常都不抛出图外
         return f"ERROR: {e}"
+
+
+# 敏感文件黑名单：这些文件不允许被 Agent 写入/修改（对应 v3 的 Permission Boundary）
+SENSITIVE_SUFFIXES = {".pem", ".key", ".p12"}
+
+
+def _count_lines(text: str) -> int:
+    """数行数，口径与 read_file 保持一致：末尾换行是行终止符，不算额外一行。"""
+    if not text:
+        return 0
+    if text.endswith("\n"):
+        text = text[:-1]
+    return len(text.split("\n")) if text else 0
+
+
+def _is_sensitive(rel_path: Path) -> bool:
+    """判断相对路径是否属于"禁止写入"的敏感文件。
+
+    命中任意一条即算敏感（write_file / edit_file 共用这道闸门）：
+      - 文件名以 ".env" 开头（.env、.env.local…）
+      - 后缀在 SENSITIVE_SUFFIXES 里（.pem / .key / .p12）
+      - 文件名以 "id_rsa" 开头
+      - 路径里任何一段是 ".git"
+    """
+    name = rel_path.name.lower()
+    if name.startswith(".env"):
+        return True
+    if rel_path.suffix.lower() in SENSITIVE_SUFFIXES:
+        return True
+    if name.startswith("id_rsa"):
+        return True
+    return ".git" in rel_path.parts
+
+
+@tool
+def write_file(path: str, content: str, overwrite: bool = False) -> str:
+    """**新建**文件（默认不允许覆盖已有文件）。
+
+    这是"写"能力的第一道闸门：它只负责创建新文件；要改已有文件请用 edit_file，
+    因为局部 patch 比整文件重写安全得多（改动小、diff 清晰、容易被 review 和回滚）。
+
+    输出契约：
+      - 成功新建           -> "OK: created {rel_path} ({n} lines)"
+      - 覆盖已有文件       -> "OK: overwrote {rel_path} ({old_n} -> {n} lines)"
+      - 路径越权           -> "ERROR: 路径超出项目范围: ..."
+      - 敏感文件           -> "ERROR: 禁止写入敏感文件: {path}"
+      - 目标是目录         -> "ERROR: 目标是目录: {path}"
+      - 已存在但未授权覆盖 -> "ERROR: 文件已存在，请用 edit_file 局部修改，或显式 overwrite=True: {path}"
+    """
+    try:
+        try:
+            target = _resolve_inside(path)
+        except ValueError as e:
+            return f"ERROR: {e}"
+
+        rel = target.relative_to(PROJECT_ROOT).as_posix()
+        if _is_sensitive(Path(rel)):
+            return f"ERROR: 禁止写入敏感文件: {path}"
+
+        if target.exists():
+            if target.is_dir():
+                return f"ERROR: 目标是目录: {path}"
+            if not overwrite:
+                return (
+                    f"ERROR: 文件已存在，请用 edit_file 局部修改，"
+                    f"或显式 overwrite=True: {path}"
+                )
+            old_n = _count_lines(target.read_text(encoding="utf-8", errors="replace"))
+            target.write_text(content, encoding="utf-8")
+            return f"OK: overwrote {rel} ({old_n} -> {_count_lines(content)} lines)"
+
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+        return f"OK: created {rel} ({_count_lines(content)} lines)"
+    except Exception as e:
+        return f"ERROR: {e}"
+
+
+@tool
+def edit_file(path: str, old_text: str, new_text: str) -> str:
+    """**局部修改**已有文件：把唯一命中的 old_text 替换为 new_text。
+
+    为什么不做整文件重写：局部 patch 的改动范围小、diff 清晰、容易验证与回滚。
+    为了安全，old_text 必须在文件里**恰好出现一次**——0 处说明片段写错了，
+    多处说明片段不够独特，两种情况都必须让模型重新收敛，而不是猜一个位置改。
+
+    输出契约：
+      - 成功                -> "OK: edited {rel_path}:{line_no} ({old_lines} -> {new_lines} lines)"
+      - 路径越权            -> "ERROR: 路径超出项目范围: ..."
+      - 敏感文件            -> "ERROR: 禁止修改敏感文件: {path}"
+      - 文件不存在          -> "ERROR: 文件不存在: {path}"
+      - old_text 为空       -> "ERROR: old_text 不能为空: {path}"
+      - old_text 命中 0 处  -> "ERROR: 未找到 old_text（0 处命中）: {path}"
+      - old_text 命中多处   -> "ERROR: old_text 命中 {n} 处，请提供更精确的片段: {path}"
+    """
+    try:
+        try:
+            target = _resolve_inside(path)
+        except ValueError as e:
+            return f"ERROR: {e}"
+
+        rel = target.relative_to(PROJECT_ROOT).as_posix()
+        if _is_sensitive(Path(rel)):
+            return f"ERROR: 禁止修改敏感文件: {path}"
+        if not target.is_file():
+            return f"ERROR: 文件不存在: {path}"
+        if not old_text:
+            return f"ERROR: old_text 不能为空: {path}"
+
+        text = target.read_text(encoding="utf-8", errors="replace")
+        hits = text.count(old_text)
+        if hits == 0:
+            return f"ERROR: 未找到 old_text（0 处命中）: {path}"
+        if hits > 1:
+            return f"ERROR: old_text 命中 {hits} 处，请提供更精确的片段: {path}"
+
+        # 替换发生处的行号（1 起算）
+        line_no = text[: text.index(old_text)].count("\n") + 1
+        target.write_text(text.replace(old_text, new_text, 1), encoding="utf-8")
+        return (
+            f"OK: edited {rel}:{line_no} "
+            f"({_count_lines(old_text)} -> {_count_lines(new_text)} lines)"
+        )
+    except Exception as e:
+        return f"ERROR: {e}"

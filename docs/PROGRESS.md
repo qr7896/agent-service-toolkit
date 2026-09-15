@@ -10,7 +10,7 @@
 
 原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
 
-改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **0–6 已完成**；**阶段 6 `search_code` 验收 9/9，并有对照实验数据（工具调用 12→7、读取文件 9→4）**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 新增的可靠性原则与测试体系见 §3.6。
+改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **0–7 已完成**——阶段 6 `search_code` 验收 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 验收 11/11。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 新增的可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -156,7 +156,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 4 | `list_files` / `read_file` | `src/agents/code_tools.py` | Tool Calling | ✅ |
 | 5 | Coding Agent | `src/agents/coding_agent.py` | Agent Loop | ✅ |
 | 6 | **`search_code`** | `src/agents/code_tools.py` | **Code Retrieval** | **✅ 验收 9/9** |
-| 7 | `write_file` / `edit_file` | `src/agents/code_tools.py` | Code Editing | ⏳ |
+| 7 | `write_file` / `edit_file` | `src/agents/code_tools.py` | Code Editing | ✅ 验收 11/11 |
 | 8 | `git_diff` / patch | `src/agents/code_tools.py` | Patch | ⏳ |
 | 9 | Planning | `src/agents/coding_agent.py` | Graph Routing | ⏳ |
 | 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ⏳ |
@@ -499,6 +499,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 - [x] 魔改一：本地 BGE-M3 替换 OpenAI（无需任何外部 Key）
 - [x] 魔改二：`list_files` / `read_file` 工具 + 能看仓库的 `coding-agent`（已注册、已实测）
 - [x] 魔改三：`search_code`（验收 9/9 + 对照实验数据：工具调用 12→7、读取文件 9→4）
+- [x] 魔改四：`write_file` / `edit_file`（默认不覆盖、唯一命中才替换、敏感文件黑名单，验收 11/11）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -550,36 +551,48 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ## 9. 下一步
 
-### 9.1 已完成（阶段 6）：`search_code`
+### 9.1 已完成（阶段 6 / 7）
 
-验收 9/9，对照实验数据见 §4.7。**这一关已过关，过关题回答要点也记录在 §4.7。**
+**阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7。
 
-### 9.2 当前任务（阶段 7）：`write_file` / `edit_file`
+**阶段 7 `write_file` / `edit_file`**（`src/agents/code_tools.py`）：安全写入能力已实现并通过 **11 项**验收。
 
-**目标**：让 Agent 从"只会读"变成"能安全改"。
+| 设计 | 实现 |
+|---|---|
+| 只新建、默认不覆盖 | `write_file` 遇到已存在文件直接 `ERROR`，必须显式 `overwrite=True` |
+| 唯一命中才修改 | `edit_file` 用 `text.count(old_text)`；0 处或多处**先 return、绝不写入** |
+| 敏感文件边界 | 黑名单：`.env*` / `*.pem` / `*.key` / `*.p12` / `id_rsa*` / `.git/**` |
+| 坐标可复核 | 成功返回 `rel_path:line_no`，便于后续 `git_diff` 核对 |
+| 不影响其他行 | `replace(old_text, new_text, 1)`；读进来什么样就写回什么样 |
 
-核心设计原则（v2 §13 + v3 §35 可靠性自检）：
+验收脚本 `lg_practice/day7_edit_tools_check.py` 的 11 项里有 6 项是**失败案例**（越权、敏感文件、空 `old_text`、命中 0 处、命中多处、只改目标行），写操作全部发生在项目内沙箱 `_day7_sandbox/`，跑完自动清理。
 
-- **不做整文件重写**：主工具是 `edit_file(path, old_text, new_text)`——修改范围小、diff 清晰、易回滚、易验证
-- `write_file` 只用于**新建**文件；目标已存在时要求模型改用 `edit_file`（或显式确认覆盖）
-- `old_text` 必须**唯一命中**：0 处或多处都返回 `ERROR`，逼模型收敛到更精确的片段
-- 写入前先留退路：备份原文（或依赖 git 兜底），改完必须能看到 diff（阶段 8 的 `git_diff`）
-- 路径仍在项目根内；沿用 `_resolve_inside()` 安全闸门
+**过关题待回答**：为什么 `edit_file` 比直接让 LLM 重写整个文件更安全？
 
-**验收标准**（沿用 Stage 1 Tool Test 的路子，先写测试再实现）：
+### 9.2 当前任务（阶段 8）：`git_diff`
 
-- [ ] 能新建文件（`write_file`），并返回写入结果的坐标（路径 + 行数）
-- [ ] 能局部修改（`edit_file` 把唯一命中的 `old_text` 换成 `new_text`）
-- [ ] `old_text` 命中 0 处 → `ERROR`（**不写入**）
-- [ ] `old_text` 命中多处 → `ERROR`（提示需要更精确的片段）
+**目标**：给"改代码"配上"看得见的证据"——每次修改后能立刻看到到底改了什么。这是后面 Test / Debug / Reviewer 的基础，也回答 v3 可靠性自检里的"改错了怎么办"。
+
+**第一版必须支持**：
+
+- `git_diff(path: str = "", staged: bool = False)`：返回 `git diff` 输出，可限定单个文件
+- 无改动时给明确提示（例如 `no changes`），不是空字符串
+- 非 git 仓库 / git 不可用时优雅返回 `ERROR: ...`
+- 输出有上限（例如最多 400 行），超出要标记截断
+- 路径限定在项目内（越权拒绝）
+
+**验收标准**：
+
+- [ ] 有改动时能返回 diff（含 `+` / `-` 行）
+- [ ] 无改动时返回明确提示
+- [ ] 能只针对一个文件取 diff
 - [ ] 越权路径被拒绝
-- [ ] 修改后逐行校验内容符合预期
-- [ ] diff 只包含预期改动（不破坏文件其他部分）
-- [ ] 高风险动作（覆盖已有文件）先暂停等批准——对应 v3 的 HITL 原则
+- [ ] 输出超长时截断并标记
+- [ ] 与 `edit_file` 串起来：edit → git_diff 能看到那一行改动
 
-**过关题**：为什么 `edit_file` 比直接让 LLM 重写整个文件更安全？
+**过关题**：为什么在让 Agent 改代码之前，必须先有"能看见改动"的机制？
 
-**提交信息**：`feat(coding): add safe file editing`
+**提交信息**：`feat(coding): add git diff tool`
 
 ### 9.3 后续阶段（按 v3 顺序，不跳步）
 
