@@ -1,37 +1,57 @@
-"""Coding Agent：能查看代码仓库、并按计划行事的 Agent。
+"""Coding Agent：能看代码、按计划行事，并在放开写权限后自我修复的 Agent。
 
-图结构（阶段 9 之后）：
+图结构（阶段 11 之后）：
 
-    START → planner → coder → (有 tool_calls ? tools → coder : END)
+    START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
+                        ↑                                  │
+                        │                          PASS → END
+                        │                          FAIL → debugger → coder
+                        └───────────────           （attempts ≥ MAX_RETRIES → giveup → END）
 
-两个关键设计：
-  1) planner 先产出**结构化计划**并写进 State 的 `plan` 字段——计划进 State 才能被
-     后续节点读取、校验、执行；只打印给用户就只是个进度条。
-  2) coder 每次调用都把 `plan` 作为上下文带上，并被告知"如需偏离先说明原因"。
+三个关键设计：
+  1) planner 产出结构化计划并写进 `State.plan`——计划要进 State 才能被后续节点
+     读取、校验、执行；只打印给用户就只是个进度条。
+  2) 工具执行节点 `tools` 是**自己实现的 dispatcher**（不是 ToolNode），因为工具白名单
+     必须按运行模式动态决定：`allow_write=False`（默认）时写工具既不会被绑给模型，
+     也会被 dispatcher 拒绝执行——两道闸门。
+  3) `tester` 把 pytest 的结构化结果写进 `State.test_result`，`check_test` 依据它
+     决定"结束 / 重试（debugger → coder）/ 放弃（giveup，明确报告失败）"。
+     放弃时必须说清"没完成"，不许假装成功。
 """
+
+from __future__ import annotations
 
 import json
 from typing import Any, Literal
 
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, MessagesState, StateGraph
-from langgraph.prebuilt import ToolNode
 
-from agents.code_tools import git_diff, list_files, read_file, search_code
+from agents.code_tools import (
+    PROJECT_ROOT,
+    edit_file,
+    git_diff,
+    list_files,
+    read_file,
+    search_code,
+    write_file,
+)
 from agents.coding_planner import planner
 from agents.test_tools import run_tests
 from core import get_model, settings
 
-# 说明：这里刻意只接"只读"工具。write_file / edit_file 属于写权限，
-# 按 v3 §13 / §37 的顺序，等 HITL（阶段 13）就位后再交给模型。
-TOOLS = [search_code, read_file, list_files, git_diff, run_tests]
+MAX_RETRIES = 3
 
+# 只读工具：任何时候都允许
+READ_TOOLS = [search_code, read_file, list_files, git_diff, run_tests]
+# 写工具：只有 allow_write=True 时才交给模型
+WRITE_TOOLS = [write_file, edit_file]
+ALL_TOOLS = [*READ_TOOLS, *WRITE_TOOLS]
+_TOOL_BY_NAME = {t.name: t for t in ALL_TOOLS}
 
-class CodingState(MessagesState):
-    """比 MessagesState 多一个 plan：规划器的产出，供 coder 与后续节点读取。"""
-
-    plan: dict[str, Any]
+# 对外暴露的默认工具集（只读），供文档与验收脚本引用
+TOOLS = READ_TOOLS
 
 SYSTEM_PROMPT = """你是一个代码助手，工作在一个 Python 项目仓库里。
 
@@ -41,27 +61,60 @@ SYSTEM_PROMPT = """你是一个代码助手，工作在一个 Python 项目仓�
    看看仓库结构。不要凭记忆或猜测回答。
 2. 你的每个结论都必须来自你真正读到的文件内容。
 3. 回答时必须给出证据：文件路径 + 行号，例如 src/run_service.py:36。
-4. search_code 返回 no matches 时，换关键词、换大小写策略或放宽 path_glob 再试一次，
-   不要一次搜不到就放弃，也不要转为盲读整个仓库。
+4. search_code 返回 no matches 时，换关键词、换大小写策略或放宽 path_glob 再试一次。
 5. 涉及"改了什么 / 有哪些改动"的问题时，用 git_diff 读真实差异，不要凭猜测回答。
 6. 涉及"能不能跑通 / 测试是否通过"的问题时，用 run_tests 真实执行 pytest，
    并按返回的 status / summary 回答；不要用"应该没问题"这类没有依据的说法。
-7. 只讨论这个仓库里的内容。如果文件不存在或没有权限，如实说明，
-   不要编造文件内容。
+7. 需要改代码时：先用 edit_file 做**最小修复**（不要重写整个文件），改完用 git_diff
+   确认改动，再跑测试。改动必须与当前任务直接相关。
+8. 只讨论这个仓库里的内容。如果文件不存在或没有权限，如实说明，不要编造。
 """
 
 
-async def call_model(state: CodingState, config: RunnableConfig) -> dict:
+class CodingState(MessagesState):
+    """在 MessagesState 基础上增加计划、测试结果与重试计数。
+
+    - plan：规划器产出（控制中枢）
+    - test_result：tester 写入的结构化测试结果
+    - attempts：已经跑过几轮测试（用于重试上限）
+    - allow_write：本次运行是否放开写权限（planner 节点写入）
+    """
+
+    plan: dict[str, Any]
+    test_result: dict[str, Any]
+    attempts: int
+    allow_write: bool
+
+
+def _configurable(config: RunnableConfig) -> dict[str, Any]:
+    return config.get("configurable") or {}
+
+
+def _allow_write(config: RunnableConfig) -> bool:
+    return bool(_configurable(config).get("allow_write", False))
+
+
+def _allowed_tools(config: RunnableConfig) -> list[Any]:
+    return READ_TOOLS + (WRITE_TOOLS if _allow_write(config) else [])
+
+
+async def make_plan(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
+    """planner 的包装节点：产出计划，并把本次运行的模式写进 State。"""
+    out = await planner(state, config)
+    out["allow_write"] = _allow_write(config)
+    out["attempts"] = int(state.get("attempts") or 0)
+    return out
+
+
+async def call_model(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     """coder 节点：带着计划思考，并决定是否调用工具。"""
-    # 从运行时配置中动态获取模型，支持前端切换模型
-    model_name = config["configurable"].get("model", settings.DEFAULT_MODEL)
-    model = get_model(model_name)
+    if "model" not in _configurable(config):
+        raise ValueError("`model` is required in the configuration")
+    model = get_model(_configurable(config).get("model", settings.DEFAULT_MODEL))
+    bound_model = model.bind_tools(_allowed_tools(config))
 
-    bound_model = model.bind_tools(TOOLS)
-    messages = [SystemMessage(content=SYSTEM_PROMPT)]
+    messages: list[Any] = [SystemMessage(content=SYSTEM_PROMPT)]
 
-    # 把 planner 产出的计划作为上下文喂给 coder：
-    # 计划只有被"使用"，才算真的进了控制链路。
     plan = state.get("plan")
     if plan:
         messages.append(
@@ -73,33 +126,173 @@ async def call_model(state: CodingState, config: RunnableConfig) -> dict:
                 )
             )
         )
-    messages += state["messages"]
+    if not _allow_write(config):
+        messages.append(
+            SystemMessage(
+                content=(
+                    "本次运行**没有写权限**：你不能修改仓库里的任何文件。"
+                    "如果需要修改，请给出具体的修改建议（文件路径 + 行号 + 建议内容），"
+                    "并说明需要人工授权。"
+                )
+            )
+        )
 
-    # 异步调用，避免阻塞整个服务的事件循环
+    messages += state["messages"]
     response = await bound_model.ainvoke(messages)
     return {"messages": [response]}
 
 
-def should_use_tools(state: CodingState) -> Literal["tools", "end"]:
-    """条件边：判断模型是否发出了工具调用指令。"""
+def should_act(state: CodingState) -> Literal["tools", "tester", "end"]:
+    """coder 之后：还有工具调用就继续执行；否则进入测试（自我修复模式）或结束。"""
     last = state["messages"][-1]
     if isinstance(last, AIMessage) and last.tool_calls:
         return "tools"
-    return "end"
+    return "tester" if state.get("allow_write") else "end"
+
+
+async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
+    """工具执行节点（自己实现的 dispatcher）。
+
+    为什么不用 ToolNode：工具白名单要**按运行模式动态决定**。这里对每个 tool_call
+    再校验一次"当前模式是否允许"，越权调用只会得到一条 ERROR 的 ToolMessage，
+    而不是真的执行——这就是"不绑给模型"之外的第二道闸门。
+    """
+    allowed = {t.name for t in _allowed_tools(config)}
+    last = state["messages"][-1]
+    results: list[ToolMessage] = []
+    for call in getattr(last, "tool_calls", None) or []:
+        name = call.get("name", "")
+        tool = _TOOL_BY_NAME.get(name)
+        if tool is None:
+            content = f"ERROR: 未知工具: {name}"
+        elif name not in allowed:
+            content = (
+                f"ERROR: 当前模式不允许调用工具 {name}"
+                f"（allow_write={_allow_write(config)}）"
+            )
+        else:
+            try:
+                content = str(tool.invoke(call.get("args") or {}))
+            except Exception as e:
+                content = f"ERROR: {e}"
+        results.append(ToolMessage(content=content, tool_call_id=call.get("id", ""), name=name))
+    return {"messages": results}
+
+
+def _parse_test_result(text: str) -> dict[str, Any]:
+    """把 run_tests 的结构化文本解析成 dict（下游条件边要用它判断）。"""
+    result: dict[str, Any] = {}
+    output: list[str] = []
+    in_output = False
+    for line in text.splitlines():
+        if in_output:
+            output.append(line)
+            continue
+        if line.startswith("output:"):
+            in_output = True
+            continue
+        for key in ("command", "exit_code", "status", "passed", "summary"):
+            prefix = f"{key}: "
+            if line.startswith(prefix):
+                result[key] = line[len(prefix) :].strip()
+                break
+    result["output"] = "\n".join(output)
+    if "exit_code" in result:
+        try:
+            result["exit_code"] = int(result["exit_code"])
+        except (TypeError, ValueError):
+            pass
+    result["passed"] = result.get("passed") == "true"
+    result.setdefault("status", "error")
+    return result
+
+
+def _derive_test_path(plan: dict[str, Any]) -> str:
+    """从计划的 verification 里挑一个真实存在的测试路径（挑不到就返回空 = 跑全部）。"""
+    for command in plan.get("verification") or []:
+        for token in str(command).split():
+            if token.startswith("-") or token in {"python", "-m", "pytest", "uv", "run", "&&"}:
+                continue
+            if "/" in token or token.endswith(".py"):
+                if (PROJECT_ROOT / token).exists():
+                    return token
+    return ""
+
+
+async def tester(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
+    """测试节点：真实跑 pytest，把结构化结果与重试计数写进 State。"""
+    conf = _configurable(config)
+    attempts = int(state.get("attempts") or 0) + 1
+    test_path = str(conf.get("test_path") or "") or _derive_test_path(state.get("plan") or {})
+    timeout = conf.get("test_timeout", 120)
+    raw = str(run_tests.invoke({"path": test_path, "timeout": timeout}))
+    return {"test_result": _parse_test_result(raw), "attempts": attempts}
+
+
+def check_test(state: CodingState) -> Literal["pass", "retry", "giveup"]:
+    """测试之后：通过就结束；没通过且还有额度就重试；额度用完就放弃。"""
+    result = state.get("test_result") or {}
+    if result.get("status") == "passed":
+        return "pass"
+    if int(state.get("attempts") or 0) >= MAX_RETRIES:
+        return "giveup"
+    return "retry"
+
+
+async def debugger(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
+    """把失败信息整理成"给 coder 的修复指令"，并附上当前 diff 让改动可见。"""
+    result = state.get("test_result") or {}
+    attempts = int(state.get("attempts") or 0)
+    diff = str(git_diff.invoke({})) if _allow_write(config) else "（无写权限，未取 diff）"
+    content = (
+        f"第 {attempts} 次尝试的测试**没有通过**，需要你继续修复。\n"
+        f"测试命令：{result.get('command')}\n"
+        f"状态：{result.get('status')}（exit_code={result.get('exit_code')}）\n"
+        f"摘要：{result.get('summary')}\n\n"
+        f"失败输出（已截断）：\n{(result.get('output') or '')[:4000]}\n\n"
+        f"当前工作区改动：\n{diff[:2000]}\n\n"
+        "请先定位失败原因（引用具体的 `文件名:行号`），再用 edit_file 做最小修复；"
+        "不要重写整个文件，也不要改动与失败无关的代码。"
+    )
+    return {"messages": [HumanMessage(content=content)]}
+
+
+async def giveup(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
+    """重试额度用完：明确报告"没完成"，绝不假装成功。"""
+    result = state.get("test_result") or {}
+    content = (
+        f"[FAIL] 已尝试 {MAX_RETRIES} 次仍未通过测试，停止自动修复。\n"
+        f"测试命令：{result.get('command')}\n"
+        f"状态：{result.get('status')}（exit_code={result.get('exit_code')}）\n"
+        f"摘要：{result.get('summary')}\n\n"
+        f"最后一次失败输出（已截断）：\n{(result.get('output') or '')[:1500]}\n\n"
+        "结论：本次任务**没有完成**，需要人工介入或更明确的指示。"
+    )
+    return {"messages": [AIMessage(content=content)]}
 
 
 def build_graph():
-    """建图：planner → coder <-> tools。"""
+    """建图：planner → coder ↔ tools，并在放开写权限时接上 tester/debugger 闭环。"""
     graph = StateGraph(CodingState)
 
-    graph.add_node("planner", planner)
+    graph.add_node("planner", make_plan)
     graph.add_node("coder", call_model)
-    graph.add_node("tools", ToolNode(TOOLS))
+    graph.add_node("tools", act)
+    graph.add_node("tester", tester)
+    graph.add_node("debugger", debugger)
+    graph.add_node("giveup", giveup)
 
     graph.add_edge(START, "planner")
     graph.add_edge("planner", "coder")
-    graph.add_conditional_edges("coder", should_use_tools, {"tools": "tools", "end": END})
+    graph.add_conditional_edges(
+        "coder", should_act, {"tools": "tools", "tester": "tester", "end": END}
+    )
     graph.add_edge("tools", "coder")
+    graph.add_conditional_edges(
+        "tester", check_test, {"pass": END, "retry": "debugger", "giveup": "giveup"}
+    )
+    graph.add_edge("debugger", "coder")
+    graph.add_edge("giveup", END)
 
     return graph.compile()
 
@@ -113,7 +306,7 @@ if __name__ == "__main__":
 
     async def main():
         graph = build_graph()
-        question = "这个项目的 FastAPI 服务入口在哪里？它做了什么？"
+        question = "这个项目的 FastAPI 服务入口在哪里？"
         result = await graph.ainvoke(
             {"messages": [HumanMessage(content=question)]},
             config={"configurable": {"model": settings.DEFAULT_MODEL}},

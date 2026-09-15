@@ -10,7 +10,7 @@
 
 原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
 
-改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **阶段 0–10 已全部完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 的可靠性原则与测试体系见 §3.6。
+改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **阶段 0–11 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 的可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -160,7 +160,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 8 | `git_diff` / patch | `src/agents/code_tools.py` | Patch | ✅ 验收 8/8 |
 | 9 | Planning | `src/agents/coding_planner.py` | Graph Routing | ✅ 验收 10/10 |
 | 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ✅ 验收 9/9 |
-| 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ⏳ |
+| 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ✅ 验收 11/11 |
 | 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ⏳ |
 | 13 | HITL | Graph | `interrupt()` | ⏳ |
 | 14 | Trajectory | `trajectory` | Evaluation | ⏳ |
@@ -509,6 +509,47 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 
 **回归测试**：改动 `code_tools` / `coding_agent` 之后重跑历史验收脚本，day5 9/9、day7 11/11、day8 8/8、day9 9/9、day10 10/10 全绿。
 
+### 4.11 魔改八：Debug / Self-Correction（阶段 11）
+
+**目标**：从"能改、能测"升级到"**改错了能自己修**"；这也是第一次真正开放写权限（受开关控制）。
+
+**图结构**
+
+```
+START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
+                      ↑                              │
+                      │                      PASS → END
+                      │                      FAIL → debugger → coder
+                      └───────────────       （attempts ≥ 3 → giveup → END）
+```
+
+**四个关键设计**
+
+| 设计 | 实现 | 为什么 |
+|---|---|---|
+| 写权限默认关闭 | `allow_write` 从 config 传入，由 planner 节点写进 State；默认 False | 自我修复是高危能力，必须显式开启 |
+| **两道闸门** | ① 不给模型绑写工具；② `tools` 节点（自实现 dispatcher，不是 `ToolNode`）再校验一次 | 只靠"没绑给模型"不够——越权调用会拿到 `ERROR: 当前模式不允许调用工具 write_file` |
+| 重试上限 | `MAX_RETRIES = 3` + `attempts` 计数；`check_test` 三分支 pass / retry / giveup | 防"改→测→fail→改"死循环（v3 §23） |
+| 不许假装成功 | `giveup` 输出 `[FAIL] 已尝试 3 次仍未通过…结论：本次任务没有完成` | 失败也必须是**明确、可观察**的结果 |
+
+**为什么自己写 dispatcher 而不用 ToolNode**：工具白名单必须按运行模式**动态**决定，而 `ToolNode` 的工具列表在建图时就固定了。自己执行 `tool_call` 时再校验一次，等于加了第二道锁，而且让"越权调用"变成可测试的行为（测试项 2）。
+
+**State 演化**：`messages` → `plan` → `test_result` → `attempts`（外加 `allow_write`），对应 v3 §18 建议的渐进式 State 设计。
+
+**实测（真实 LLM + 真实改文件 + 真实跑测试）**
+
+| 场景 | 结果 |
+|---|---|
+| 只读模式（默认）：沙箱里有 bug + 失败测试 | **文件未被修改**，也没有"测试通过"的假结论——Agent 只能给修改建议 |
+| 写模式（`allow_write=True`）：同一任务 | 完整闭环：读 traceback → `edit_file` 最小修复 → 重跑测试 → `status: passed`（`attempts=1`，1 passed in 0.01s） |
+| 重试上限 | `check_test` 在 `attempts ≥ 3` 时返回 `giveup`，消息明确写"本次任务没有完成" |
+
+**验收**：`lg_practice/day11_self_correction_check.py` **11/11**（8 项确定性检查 + 图结构 + 2 次真实端到端运行）。回归：day7 11/11、day8 8/8、day10 9/10——那 1 项是 DeepSeek 流式超时（120s 无 chunk），单独复测通过（已记入 §7.2 已知问题）。
+
+**过关题：Graph 如何判断 PASS / FAIL 并决定 END 还是回到 Coder？**
+
+`tester` 把 pytest 的结构化结果（`status` / `exit_code` / `summary` / `output`）写进 `State.test_result`；条件边 `check_test` 是一个**只读 State 的纯函数**：`passed → END`、`failed 且 attempts < MAX_RETRIES → debugger → coder`、`failed 且 attempts ≥ MAX_RETRIES → giveup → END`。关键在于**判断依据是确定性字段，而不是模型的自述**——模型说"修好了"不算数，pytest 的退出码说了算。
+
 ---
 
 ## 5. 文件清单
@@ -523,7 +564,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 | `src/agents/code_tools.py` | **新增** | `list_files` / `read_file` / `search_code` / `write_file` / `edit_file` / `git_diff` |
 | `src/agents/test_tools.py` | **新增** | `run_tests`（只允许 pytest，结构化结果） |
 | `src/agents/coding_planner.py` | **新增** | Planning：只读侦察 → JSON 计划 → 确定性校验 |
-| `src/agents/coding_agent.py` | **新增** | 代码问答 Agent（异步图：planner → coder ↔ tools，目前只接只读工具 + run_tests） |
+| `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
 | `.gitignore` | 修改 | 忽略个人练习目录 `study_test11/` |
 
@@ -544,6 +585,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 | `day8_git_diff_check.py` | `git_diff` 的 8 项验收脚本 |
 | `day9_run_tests_check.py` | `run_tests` 的 9 项验收脚本 |
 | `day10_planner_check.py` | Planning 的 10 项验收脚本 |
+| `day11_self_correction_check.py` | 自修复闭环的 11 项验收脚本（含两次真实端到端运行） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -591,13 +633,14 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 - [x] 魔改五：`git_diff`（改动可见：status 段看新文件、`--cached` 看暂存区、超长截断，验收 8/8）
 - [x] 魔改六：`run_tests`（结构化测试结果、失败带文件名行号、超时不卡死、只允许 pytest，验收 9/9）
 - [x] 魔改七：Planning（`coding_planner.py`：只读侦察 → JSON 计划 → 确定性校验 → 写入 State，验收 10/10）
+- [x] 魔改八：Debug / Self-Correction（写权限受控开放 + tester/debugger/giveup 闭环，验收 11/11）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
 
-- [ ] 工具只能读，不能写（`write_file` / `edit_file` 未实现）
-- [ ] 没有规划（Planning）：模型直接开查，不会先给"我要改哪些文件"的计划
-- [ ] 没有测试循环（跑测试 → 失败 → 自修复）
+- [ ] HITL 未做：写权限目前只有"开关"（`allow_write`），高风险动作还没有"先暂停等批准"的机制（阶段 13）
+- [ ] Reviewer 未做：测试通过后直接 END，还没有独立的裁决环节（阶段 12）
+- [ ] DeepSeek 偶发流式超时（`No streaming chunk received for 120.0s`）会让单次规划/回答失败；后续需要加超时与重试配置（如 `stream_chunk_timeout`）
 - [ ] 没有评测（benchmark）与指标（成功率 / 测试通过率 / 迭代次数 / 延迟 / token 成本）
 - [ ] 知识库仍只有 3 个 chunk（手册太小），检索效果不具代表性
 - [ ] `format_contexts()` 丢弃 metadata，答案无法溯源到页码（Citation 未做）
@@ -642,44 +685,41 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ## 9. 下一步
 
-### 9.1 已完成（阶段 6–10）
+### 9.1 已完成（阶段 6–11）
 
 - **阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7
 - **阶段 7 `write_file` / `edit_file`**：验收 11/11，设计见 §4.8
 - **阶段 8 `git_diff`**：验收 8/8，设计见 §4.8
 - **阶段 9 Planning**：验收 10/10，设计与踩坑见 §4.10
 - **阶段 10 `run_tests`**：验收 9/9，设计与过关题回答见 §4.9
+- **阶段 11 Debug / Self-Correction**：验收 11/11，设计与过关题回答见 §4.11
 
-### 9.2 当前任务（阶段 11）：Debug / Self-Correction（含写权限的受控开放）
+### 9.2 当前任务（阶段 12）：Reviewer（只评审、不改代码）
 
-**目标**：从"能改、能测"升级到"**改错了能自己修**"，形成闭环：
+**目标**：在"改完了、测试也过了"之后再加一道**独立审查**——检查 diff 是否真的解决了需求、有没有引入风险、测试是否覆盖到位，最后给出结构化裁决。
 
-```
-coder → run_tests → PASS? ──是──→ END（并由 Reviewer 接管，阶段 12）
-                      └──否──→ debugger → coder（重新修改）
-```
+**第一版必须支持**：
 
-**这一阶段第一次真正开放写权限**，所以安全设计必须和功能一起做：
-
-- 写工具（`write_file` / `edit_file`）此时才接进 `TOOLS`，并用**开关控制**：
-  `config["configurable"].get("allow_write", False)` 默认关闭——这样"自我修复闭环"可以先在沙箱目标上演示，而默认状态下 Agent 依然只有只读权限
-- `MAX_RETRIES = 3`：超过就停止，并把失败原因写进 State（对应 v3 §23 的防死循环）
-- 每轮修复前先 `git_diff` 看清现状；每轮修复后必须重新跑测试
-- State 继续演化：`messages` → `plan` → `test_result` → `attempts`
-- 终止时必须给明确结论（"3 次尝试后仍未通过，原因是…"），**不许假装成功**
+- 新增 `src/agents/reviewer.py`，输出结构化裁决：
+  `{"approved": bool, "score": 0.0–1.0, "issues": [...], "summary": "..."}`
+- Reviewer **只读**：可用 `git_diff` / `read_file` / `search_code` / `run_tests`，但**绝不修改代码**
+- 输入必须包含：原始需求、`plan`、`test_result`、`git_diff`
+- `approved=False` 时把问题写进 State 的新字段 `review`，供后续决定"回到 coder"还是"报告给人"
+- 图结构调整：`tester --PASS--> reviewer → END`（FAIL 路径仍走 debugger）
+- 裁决必须**有证据**：引用 diff 或具体 `文件:行号`，不能只给一句"看起来没问题"
 
 **验收标准**：
 
-- [ ] 默认关闭写权限：不开开关时 Agent 拿不到 `write_file` / `edit_file`
-- [ ] 打开开关后：完成"故意失败 → 读 traceback → 修 → 重测通过"的完整闭环
-- [ ] 重试上限生效：连续失败不会无限循环
-- [ ] `attempts` 计数正确，超限后给出明确的失败结论
-- [ ] 每轮修复都有 `git_diff` 证据
-- [ ] 失败退出时不产生"看似成功"的假结论
+- [ ] State 新增 `review` 字段且结构完整（approved / score / issues / summary）
+- [ ] 测试通过后自动进入 reviewer（而不是直接 END）
+- [ ] Reviewer 节点不绑定任何写工具（结构性保证，可用测试断言）
+- [ ] 面对"改了无关文件"这类有问题的 diff，能给出 `approved=False` + 具体 issues
+- [ ] 面对正常修复，给出 `approved=True` 且 score 合理
+- [ ] 裁决里引用 diff / 文件行号作为依据
 
-**过关题**：Graph 如何判断 PASS / FAIL 并决定 END 还是回到 Coder？
+**过关题**：为什么 Reviewer 不应该自己改代码？它和 Coder 的职责边界在哪里？
 
-**提交信息**：`feat(coding): add self-correction loop`
+**提交信息**：`feat(coding): add coding reviewer`
 
 ### 9.3 后续阶段（按 v3 顺序，不跳步）
 
