@@ -16,11 +16,12 @@ from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode
 
 from agents.code_tools import git_diff, list_files, read_file, search_code
+from agents.test_tools import run_tests
 from core import get_model, settings
 
 # 说明：这里刻意只接"只读"工具。write_file / edit_file 属于写权限，
 # 按 v3 §13 / §37 的顺序，等 HITL（阶段 13）就位后再交给模型。
-TOOLS = [search_code, read_file, list_files, git_diff]
+TOOLS = [search_code, read_file, list_files, git_diff, run_tests]
 
 SYSTEM_PROMPT = """你是一个代码助手，工作在一个 Python 项目仓库里。
 
@@ -33,7 +34,9 @@ SYSTEM_PROMPT = """你是一个代码助手，工作在一个 Python 项目仓�
 4. search_code 返回 no matches 时，换关键词、换大小写策略或放宽 path_glob 再试一次，
    不要一次搜不到就放弃，也不要转为盲读整个仓库。
 5. 涉及"改了什么 / 有哪些改动"的问题时，用 git_diff 读真实差异，不要凭猜测回答。
-6. 只讨论这个仓库里的内容。如果文件不存在或没有权限，如实说明，
+6. 涉及"能不能跑通 / 测试是否通过"的问题时，用 run_tests 真实执行 pytest，
+   并按返回的 status / summary 回答；不要用"应该没问题"这类没有依据的说法。
+7. 只讨论这个仓库里的内容。如果文件不存在或没有权限，如实说明，
    不要编造文件内容。
 """
 

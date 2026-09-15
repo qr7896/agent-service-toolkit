@@ -10,7 +10,7 @@
 
 原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
 
-改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **0–8 已完成**——阶段 6 `search_code` 验收 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 验收 11/11，阶段 8 `git_diff` 验收 8/8。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 新增的可靠性原则与测试体系见 §3.6。
+改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **0–8 与 10 已完成**——阶段 6 `search_code` 验收 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 验收 11/11，阶段 8 `git_diff` 验收 8/8，阶段 10 `run_tests` 验收 9/9。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 新增的可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -159,7 +159,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 7 | `write_file` / `edit_file` | `src/agents/code_tools.py` | Code Editing | ✅ 验收 11/11 |
 | 8 | `git_diff` / patch | `src/agents/code_tools.py` | Patch | ✅ 验收 8/8 |
 | 9 | Planning | `src/agents/coding_agent.py` | Graph Routing | ⏳ |
-| 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ⏳ |
+| 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ✅ 验收 9/9 |
 | 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ⏳ |
 | 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ⏳ |
 | 13 | HITL | Graph | `interrupt()` | ⏳ |
@@ -454,6 +454,30 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 
 **实测**：问 Agent"现在工作区有哪些改动？"，它依次调用 `git_diff({})` → `git_diff({'staged': True})` → 读两个文件核对，17 秒给出"2 个文件未暂存改动、暂存区为空"的结论。
 
+### 4.9 魔改六：`run_tests`（阶段 10 / Test Execution）
+
+**新增文件**：`src/agents/test_tools.py`（验收 9/9）
+
+| 设计 | 实现 | 为什么 |
+|---|---|---|
+| 只跑 pytest | argv 自己拼装，`shell=False`；`path` 以 `-` 开头直接拒绝 | 不接受任意命令，也不给"选项注入"留口子 |
+| 结构化结果 | 固定六字段：`command` / `exit_code` / `status` / `passed` / `summary` / `output` | 下游 Test/Debug 节点要能程序化解析，而不是读自然语言 |
+| 状态可分辨 | `passed` / `failed` / `no_tests`(exit 5) / `timeout` / `error` | "没有测试可跑"不等于"测试失败" |
+| traceback 保真 | 原样保留 pytest 输出（含 `文件名:行号`） | Debug 阶段必须能直接看到失败位置 |
+| 超时不卡死 | `subprocess.run(timeout=...)`，到点返回 `status: timeout` | 无限等待会把整个图挂住 |
+| 输出可控 | `max_lines`（默认 200）截断并标记 | 失败时 pytest 输出可能非常长 |
+
+**验收脚本** `lg_practice/day9_run_tests_check.py` 的 9 项里包含三类真实场景：**故意失败的用例**（校验输出里有 `test_fail.py:2` 与断言信息）、**故意 sleep 10s 的用例 + timeout=5**（校验 5 秒返回 `status: timeout`，证明真的没卡死）、**空目录**（校验 `status: no_tests` / `passed: na`）。
+
+**Agent 接线**：`TOOLS` 变为 `[search_code, read_file, list_files, git_diff, run_tests]`，提示词新增"涉及能不能跑通的问题，用 run_tests 真实执行，并按 status/summary 回答，不要用『应该没问题』这种说法"。
+
+**实测**：问"tests/schema 这组测试现在能通过吗？"→ 15.9 秒，它调用 `run_tests(path='tests/schema')` 并给出带 `command / exit_code / status / summary` 的结论（10 passed in 6.45s）。
+
+**阶段 7–8 过关题的回答要点（本人作答，已记录）**
+
+1. **为什么 `edit_file` 比让 LLM 重写整个文件更安全**：全量重写等价于"改一个错别字就把整本书重印"——长文件容易被输出长度截断、模型会顺手重构无关代码（"均值回归"抹掉细节），几百行 diff 让人和 Reviewer 都分不清真实业务改动。`edit_file` 用 `old_text`/`new_text` 做**内容锚点**（不依赖脆弱的行号），匹配失败就返回结构化错误让模型自己纠错（而不是猜一个位置改），最终产出的 diff 极小、可审查、可回滚。**一句话：用确定性的工具逻辑去约束概率性的生成。**
+2. **为什么改代码前必须先有"能看见改动"的机制**：Agent 的循环是"观察 → 思考 → 行动"，如果修改工具只回一句"修改成功"，Agent 就会基于错误前提继续 Test/Debug，一旦改动没生效或改错位置，后面全是猜谜；可信的 diff 是它的 **Ground Truth（单一事实来源）**。同时它也强化了"先计划后执行"——在落盘前看到 diff，等于给 Agent 与文件系统之间加了一道审批流；只有"看见"，才能真正做到"改错了能发现、能回滚"。
+
 ---
 
 ## 5. 文件清单
@@ -465,8 +489,9 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 | `src/agents/tools.py` | 修改 | 本地 BGE-M3 + retriever 单例/重试 |
 | `src/service/service.py` | 修改 | 启动预热 Chroma |
 | `scripts/create_chroma_db.py` | 修改 | 本地 embeddings + 路径参数化 + 修 import |
-| `src/agents/code_tools.py` | **新增** | `list_files` / `read_file` |
-| `src/agents/coding_agent.py` | **新增** | 代码问答 Agent（异步图） |
+| `src/agents/code_tools.py` | **新增** | `list_files` / `read_file` / `search_code` / `write_file` / `edit_file` / `git_diff` |
+| `src/agents/test_tools.py` | **新增** | `run_tests`（只允许 pytest，结构化结果） |
+| `src/agents/coding_agent.py` | **新增** | 代码问答 Agent（异步图，目前接只读工具 + run_tests） |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
 | `.gitignore` | 修改 | 忽略个人练习目录 `study_test11/` |
 
@@ -481,6 +506,11 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 | `day2_retrieval_probe.bak` | 初版（曾静默退回 mock 数据，留作反面教材） |
 | `day3_code_tools_check.py` | `code_tools` 的 6 项验收脚本 |
 | `day4_coding_agent.py` | 把 code_tools 接到 Agent 的练习版 |
+| `day5_search_code_check.py` | `search_code` 的 9 项验收脚本 |
+| `day6_search_vs_read_benchmark.py` | search_code 与 read_file 的对照实验 |
+| `day7_edit_tools_check.py` | `write_file` / `edit_file` 的 11 项验收脚本 |
+| `day8_git_diff_check.py` | `git_diff` 的 8 项验收脚本 |
+| `day9_run_tests_check.py` | `run_tests` 的 9 项验收脚本 |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -526,6 +556,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 - [x] 魔改三：`search_code`（验收 9/9 + 对照实验数据：工具调用 12→7、读取文件 9→4）
 - [x] 魔改四：`write_file` / `edit_file`（默认不覆盖、唯一命中才替换、敏感文件黑名单，验收 11/11）
 - [x] 魔改五：`git_diff`（改动可见：status 段看新文件、`--cached` 看暂存区、超长截断，验收 8/8）
+- [x] 魔改六：`run_tests`（结构化测试结果、失败带文件名行号、超时不卡死、只允许 pytest，验收 9/9）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -577,50 +608,38 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ## 9. 下一步
 
-### 9.1 已完成（阶段 6–8）
+### 9.1 已完成（阶段 6–8、10）
 
 - **阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7
-- **阶段 7 `write_file` / `edit_file`**：验收 11/11，设计要点与失败案例见 §4.8
-- **阶段 8 `git_diff`**：验收 8/8，设计要点见 §4.8
+- **阶段 7 `write_file` / `edit_file`**：验收 11/11，设计见 §4.8
+- **阶段 8 `git_diff`**：验收 8/8，设计见 §4.8
+- **阶段 10 `run_tests`**：验收 9/9，设计与过关题回答见 §4.9
 
-**两个过关题待回答**（答完再进入下一阶段）：
+### 9.2 当前任务（阶段 9）：Planning
 
-1. 为什么 `edit_file` 比直接让 LLM 重写整个文件更安全？
-2. 为什么在让 Agent 改代码之前，必须先有"能看见改动"的机制？
-
-### 9.2 当前任务（阶段 10）：`run_tests`
-
-> 顺序说明：阶段表里 `run_tests` 编号是 10、Planning 是 9，但 v3 §37「更新后的魔改优先级」明确把**跑测试放在 Planner 之前**——先有确定性反馈，再谈规划。这里按 §37 执行。
-
-**新增文件**：`src/agents/test_tools.py`
-
-**目标**：让 Agent 能真正"运行并观察结果"，而不是自证正确（对应 v3 总纲：LLM 提方案，确定性系统验事实）。
+**目标**：让 Agent **先出计划、再动手**——把"改哪些文件、为什么改、什么顺序、怎么验证"变成 State 里的结构化数据，而不是只打印给用户看。
 
 **第一版必须支持**：
 
-- `run_tests(path: str = "", timeout: int = 120)`：默认跑 `pytest -q`，`path` 可指定测试文件或目录
-- 返回**结构化**结果：`command` / `exit_code` / `passed` / 输出摘要，而不是只回一句 "Test failed"
-- 失败时带上**具体文件与行号**（traceback 原文），否则 Debug 无处下手
-- 输出有上限（例如 200 行），超出截断并标记
-- `timeout` 到点返回 `ERROR: ...`，绝不能让图卡死
-- 命令白名单：只允许 pytest，**不接受任意 shell**
-- 路径限定项目内，越权拒绝
-- 没有测试可跑（pytest exit code 5）时给明确说明，不算失败
+- 新增 `planner` 节点（可先放在 `coding_agent.py`，规模变大再拆 `coding_planner.py`）
+- 计划输出为**结构化字段**并写入 State（新增 `plan` 字段），能在 `ainvoke` 的结果里读到
+- 计划必须包含四要素：**要改的文件 / 每个文件为什么改 / 修改顺序 / 如何验证**
+- 图结构变为：`START → planner → model(coder) → tools → model → ...`
+- planner 阶段允许调用只读工具（`search_code` / `read_file` / `list_files` / `git_diff`）先把情况看清
+- 缺信息时要显式说明"还需要确认什么"，而不是硬编一个计划
 
 **验收标准**：
 
-- [ ] 全量测试：返回 command / exit_code / passed
-- [ ] 指定文件测试：只见该文件的用例
-- [ ] 失败用例：输出含 traceback、文件名与行号
-- [ ] 通过用例：`passed=True`、`exit_code=0`
-- [ ] 输出超长截断并标记
-- [ ] `timeout` 生效（用故意 sleep 的用例验证）
-- [ ] 越权路径被拒绝
-- [ ] 无测试可跑时给出明确说明
+- [ ] 给一个需求，`ainvoke` 结果里存在 `plan` 字段
+- [ ] `plan` 四要素齐全（文件 / 原因 / 顺序 / 验证方式）
+- [ ] 计划先于任何执行动作（planner 不调用写工具）
+- [ ] planner 能调用只读工具补充上下文
+- [ ] 需求含糊时，计划里出现明确的待确认项
+- [ ] 计划内容与实际仓库结构一致（引用的文件都真实存在）
 
-**过关题**：测试结果如何重新进入 LangGraph State？
+**过关题**：Planner 的输出为什么应该进入 State，而不是只打印给用户？
 
-**提交信息**：`feat(coding): add test execution tool`
+**提交信息**：`feat(coding): add coding planner`
 
 ### 9.3 后续阶段（按 v3 顺序，不跳步）
 
