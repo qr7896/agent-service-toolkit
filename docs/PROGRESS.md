@@ -10,7 +10,7 @@
 
 原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
 
-改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **0–8 与 10 已完成**——阶段 6 `search_code` 验收 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 验收 11/11，阶段 8 `git_diff` 验收 8/8，阶段 10 `run_tests` 验收 9/9。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 新增的可靠性原则与测试体系见 §3.6。
+改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **阶段 0–10 已全部完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 的可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -158,7 +158,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 6 | **`search_code`** | `src/agents/code_tools.py` | **Code Retrieval** | **✅ 验收 9/9** |
 | 7 | `write_file` / `edit_file` | `src/agents/code_tools.py` | Code Editing | ✅ 验收 11/11 |
 | 8 | `git_diff` / patch | `src/agents/code_tools.py` | Patch | ✅ 验收 8/8 |
-| 9 | Planning | `src/agents/coding_agent.py` | Graph Routing | ⏳ |
+| 9 | Planning | `src/agents/coding_planner.py` | Graph Routing | ✅ 验收 10/10 |
 | 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ✅ 验收 9/9 |
 | 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ⏳ |
 | 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ⏳ |
@@ -478,6 +478,37 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 1. **为什么 `edit_file` 比让 LLM 重写整个文件更安全**：全量重写等价于"改一个错别字就把整本书重印"——长文件容易被输出长度截断、模型会顺手重构无关代码（"均值回归"抹掉细节），几百行 diff 让人和 Reviewer 都分不清真实业务改动。`edit_file` 用 `old_text`/`new_text` 做**内容锚点**（不依赖脆弱的行号），匹配失败就返回结构化错误让模型自己纠错（而不是猜一个位置改），最终产出的 diff 极小、可审查、可回滚。**一句话：用确定性的工具逻辑去约束概率性的生成。**
 2. **为什么改代码前必须先有"能看见改动"的机制**：Agent 的循环是"观察 → 思考 → 行动"，如果修改工具只回一句"修改成功"，Agent 就会基于错误前提继续 Test/Debug，一旦改动没生效或改错位置，后面全是猜谜；可信的 diff 是它的 **Ground Truth（单一事实来源）**。同时它也强化了"先计划后执行"——在落盘前看到 diff，等于给 Agent 与文件系统之间加了一道审批流；只有"看见"，才能真正做到"改错了能发现、能回滚"。
 
+### 4.10 魔改七：Planning（阶段 9）
+
+**新增文件**：`src/agents/coding_planner.py`（验收 10/10）
+
+**三段式实现**：
+
+| 阶段 | 做什么 | 关键约束 |
+|---|---|---|
+| ① recon 侦察 | 只用只读工具（`list_files` / `search_code` / `read_file` / `git_diff`），最多 3 轮 | planner 压根没绑定写工具，所以不可能"边规划边改" |
+| ② plan 规划 | 把"需求 + 侦察结论"交给模型，要求输出**严格 JSON** | 四要素：`task` / `steps`(order+action+path+reason) / `verification` / `open_questions` |
+| ③ validate 校验 | 用确定性代码核对计划与真实仓库 | `modify` 的文件必须存在、`create` 的文件必须不存在；不一致写进 `open_questions` |
+
+**图结构**：`START → planner → coder → (tools → coder | END)`。`CodingState` 比 `MessagesState` 多一个 `plan` 字段；coder 每次调用都把 `plan` 作为 SystemMessage 上下文带上，并要求"要偏离计划先说明原因"——**计划只有被后续节点使用，才算真的进了控制链路**。
+
+**踩坑（很有价值）**：原以为该用 `model.with_structured_output(Plan)`，但 DeepSeek 当前模型两条路都返回 400：
+
+- 默认方式（`json_schema` 形式的 `response_format`）→ `This response_format type is unavailable now`
+- `method="function_calling"`（强制 `tool_choice`）→ `Thinking mode does not support this tool_choice`
+
+于是改成"JSON 提示 + 括号配平提取 + Pydantic 校验"，并把解析失败也当成可观察状态写进 `open_questions`，而不是让图崩掉。**这本身就是"LLM 提方案、确定性系统验事实"的一次实践**：模型给什么不重要，能不能被校验、被追问才重要。
+
+**实测**（真实 LLM 运行）：
+
+- 具体需求"给 coding agent 增加一个 planner 节点" → 4 步计划 + 3 条 verification，所有路径与仓库真实状态一致
+- 含糊需求"帮我优化一下这个项目" → `open_questions` 非空，直接反问"优化指性能 / 代码质量 / 测试覆盖率 / 依赖刷新 / 功能补全？"
+- 全图运行 → `state["plan"]` 存在（证明计划真的进了 State，而不是只打印）
+
+**过关题回答要点（本人作答）**：计划只打印给用户，充其量是个"进度条"；写进 State 才是把计划变成 Agent 系统的**控制中枢**——后续节点能读它、校验它、按它执行，计划本身有问题时（文件不存在 / 已存在）还能提前暴露，而不是执行到一半才失败。
+
+**回归测试**：改动 `code_tools` / `coding_agent` 之后重跑历史验收脚本，day5 9/9、day7 11/11、day8 8/8、day9 9/9、day10 10/10 全绿。
+
 ---
 
 ## 5. 文件清单
@@ -491,7 +522,8 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 | `scripts/create_chroma_db.py` | 修改 | 本地 embeddings + 路径参数化 + 修 import |
 | `src/agents/code_tools.py` | **新增** | `list_files` / `read_file` / `search_code` / `write_file` / `edit_file` / `git_diff` |
 | `src/agents/test_tools.py` | **新增** | `run_tests`（只允许 pytest，结构化结果） |
-| `src/agents/coding_agent.py` | **新增** | 代码问答 Agent（异步图，目前接只读工具 + run_tests） |
+| `src/agents/coding_planner.py` | **新增** | Planning：只读侦察 → JSON 计划 → 确定性校验 |
+| `src/agents/coding_agent.py` | **新增** | 代码问答 Agent（异步图：planner → coder ↔ tools，目前只接只读工具 + run_tests） |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
 | `.gitignore` | 修改 | 忽略个人练习目录 `study_test11/` |
 
@@ -511,6 +543,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 | `day7_edit_tools_check.py` | `write_file` / `edit_file` 的 11 项验收脚本 |
 | `day8_git_diff_check.py` | `git_diff` 的 8 项验收脚本 |
 | `day9_run_tests_check.py` | `run_tests` 的 9 项验收脚本 |
+| `day10_planner_check.py` | Planning 的 10 项验收脚本 |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -557,6 +590,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 - [x] 魔改四：`write_file` / `edit_file`（默认不覆盖、唯一命中才替换、敏感文件黑名单，验收 11/11）
 - [x] 魔改五：`git_diff`（改动可见：status 段看新文件、`--cached` 看暂存区、超长截断，验收 8/8）
 - [x] 魔改六：`run_tests`（结构化测试结果、失败带文件名行号、超时不卡死、只允许 pytest，验收 9/9）
+- [x] 魔改七：Planning（`coding_planner.py`：只读侦察 → JSON 计划 → 确定性校验 → 写入 State，验收 10/10）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -608,38 +642,44 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ## 9. 下一步
 
-### 9.1 已完成（阶段 6–8、10）
+### 9.1 已完成（阶段 6–10）
 
 - **阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7
 - **阶段 7 `write_file` / `edit_file`**：验收 11/11，设计见 §4.8
 - **阶段 8 `git_diff`**：验收 8/8，设计见 §4.8
+- **阶段 9 Planning**：验收 10/10，设计与踩坑见 §4.10
 - **阶段 10 `run_tests`**：验收 9/9，设计与过关题回答见 §4.9
 
-### 9.2 当前任务（阶段 9）：Planning
+### 9.2 当前任务（阶段 11）：Debug / Self-Correction（含写权限的受控开放）
 
-**目标**：让 Agent **先出计划、再动手**——把"改哪些文件、为什么改、什么顺序、怎么验证"变成 State 里的结构化数据，而不是只打印给用户看。
+**目标**：从"能改、能测"升级到"**改错了能自己修**"，形成闭环：
 
-**第一版必须支持**：
+```
+coder → run_tests → PASS? ──是──→ END（并由 Reviewer 接管，阶段 12）
+                      └──否──→ debugger → coder（重新修改）
+```
 
-- 新增 `planner` 节点（可先放在 `coding_agent.py`，规模变大再拆 `coding_planner.py`）
-- 计划输出为**结构化字段**并写入 State（新增 `plan` 字段），能在 `ainvoke` 的结果里读到
-- 计划必须包含四要素：**要改的文件 / 每个文件为什么改 / 修改顺序 / 如何验证**
-- 图结构变为：`START → planner → model(coder) → tools → model → ...`
-- planner 阶段允许调用只读工具（`search_code` / `read_file` / `list_files` / `git_diff`）先把情况看清
-- 缺信息时要显式说明"还需要确认什么"，而不是硬编一个计划
+**这一阶段第一次真正开放写权限**，所以安全设计必须和功能一起做：
+
+- 写工具（`write_file` / `edit_file`）此时才接进 `TOOLS`，并用**开关控制**：
+  `config["configurable"].get("allow_write", False)` 默认关闭——这样"自我修复闭环"可以先在沙箱目标上演示，而默认状态下 Agent 依然只有只读权限
+- `MAX_RETRIES = 3`：超过就停止，并把失败原因写进 State（对应 v3 §23 的防死循环）
+- 每轮修复前先 `git_diff` 看清现状；每轮修复后必须重新跑测试
+- State 继续演化：`messages` → `plan` → `test_result` → `attempts`
+- 终止时必须给明确结论（"3 次尝试后仍未通过，原因是…"），**不许假装成功**
 
 **验收标准**：
 
-- [ ] 给一个需求，`ainvoke` 结果里存在 `plan` 字段
-- [ ] `plan` 四要素齐全（文件 / 原因 / 顺序 / 验证方式）
-- [ ] 计划先于任何执行动作（planner 不调用写工具）
-- [ ] planner 能调用只读工具补充上下文
-- [ ] 需求含糊时，计划里出现明确的待确认项
-- [ ] 计划内容与实际仓库结构一致（引用的文件都真实存在）
+- [ ] 默认关闭写权限：不开开关时 Agent 拿不到 `write_file` / `edit_file`
+- [ ] 打开开关后：完成"故意失败 → 读 traceback → 修 → 重测通过"的完整闭环
+- [ ] 重试上限生效：连续失败不会无限循环
+- [ ] `attempts` 计数正确，超限后给出明确的失败结论
+- [ ] 每轮修复都有 `git_diff` 证据
+- [ ] 失败退出时不产生"看似成功"的假结论
 
-**过关题**：Planner 的输出为什么应该进入 State，而不是只打印给用户？
+**过关题**：Graph 如何判断 PASS / FAIL 并决定 END 还是回到 Coder？
 
-**提交信息**：`feat(coding): add coding planner`
+**提交信息**：`feat(coding): add self-correction loop`
 
 ### 9.3 后续阶段（按 v3 顺序，不跳步）
 

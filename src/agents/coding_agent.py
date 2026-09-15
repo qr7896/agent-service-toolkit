@@ -1,14 +1,17 @@
-"""Coding Agent：能自己查看代码仓库并回答问题的 Agent。
+"""Coding Agent：能查看代码仓库、并按计划行事的 Agent。
 
-与 rag_assistant.py 的关系：图结构完全相同（model <-> tools 循环 + 一条条件边），
-区别只在两点：
-  1) 工具从 Database_Search 换成 list_files / read_file（看代码，而不是看手册）；
-  2) 提示词要求"先查再答、结论必须带文件路径 + 行号"。
+图结构（阶段 9 之后）：
 
-源文件保留在 study_test11/coding_agent.py，这里是接入服务用的正式版本。
+    START → planner → coder → (有 tool_calls ? tools → coder : END)
+
+两个关键设计：
+  1) planner 先产出**结构化计划**并写进 State 的 `plan` 字段——计划进 State 才能被
+     后续节点读取、校验、执行；只打印给用户就只是个进度条。
+  2) coder 每次调用都把 `plan` 作为上下文带上，并被告知"如需偏离先说明原因"。
 """
 
-from typing import Literal
+import json
+from typing import Any, Literal
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.runnables import RunnableConfig
@@ -16,12 +19,19 @@ from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode
 
 from agents.code_tools import git_diff, list_files, read_file, search_code
+from agents.coding_planner import planner
 from agents.test_tools import run_tests
 from core import get_model, settings
 
 # 说明：这里刻意只接"只读"工具。write_file / edit_file 属于写权限，
 # 按 v3 §13 / §37 的顺序，等 HITL（阶段 13）就位后再交给模型。
 TOOLS = [search_code, read_file, list_files, git_diff, run_tests]
+
+
+class CodingState(MessagesState):
+    """比 MessagesState 多一个 plan：规划器的产出，供 coder 与后续节点读取。"""
+
+    plan: dict[str, Any]
 
 SYSTEM_PROMPT = """你是一个代码助手，工作在一个 Python 项目仓库里。
 
@@ -41,21 +51,36 @@ SYSTEM_PROMPT = """你是一个代码助手，工作在一个 Python 项目仓�
 """
 
 
-async def call_model(state: MessagesState, config: RunnableConfig) -> dict:
-    """异步模型节点：负责思考并决定是否调用工具。"""
+async def call_model(state: CodingState, config: RunnableConfig) -> dict:
+    """coder 节点：带着计划思考，并决定是否调用工具。"""
     # 从运行时配置中动态获取模型，支持前端切换模型
     model_name = config["configurable"].get("model", settings.DEFAULT_MODEL)
     model = get_model(model_name)
 
     bound_model = model.bind_tools(TOOLS)
-    messages = [SystemMessage(content=SYSTEM_PROMPT)] + state["messages"]
+    messages = [SystemMessage(content=SYSTEM_PROMPT)]
+
+    # 把 planner 产出的计划作为上下文喂给 coder：
+    # 计划只有被"使用"，才算真的进了控制链路。
+    plan = state.get("plan")
+    if plan:
+        messages.append(
+            SystemMessage(
+                content=(
+                    "以下是本次任务的执行计划（按 order 顺序执行）。"
+                    "如需偏离计划，必须先说明原因：\n"
+                    + json.dumps(plan, ensure_ascii=False, indent=2)
+                )
+            )
+        )
+    messages += state["messages"]
 
     # 异步调用，避免阻塞整个服务的事件循环
     response = await bound_model.ainvoke(messages)
     return {"messages": [response]}
 
 
-def should_use_tools(state: MessagesState) -> Literal["tools", "end"]:
+def should_use_tools(state: CodingState) -> Literal["tools", "end"]:
     """条件边：判断模型是否发出了工具调用指令。"""
     last = state["messages"][-1]
     if isinstance(last, AIMessage) and last.tool_calls:
@@ -64,15 +89,17 @@ def should_use_tools(state: MessagesState) -> Literal["tools", "end"]:
 
 
 def build_graph():
-    """建图：model <-> tools 循环 + 一条条件边。"""
-    graph = StateGraph(MessagesState)
+    """建图：planner → coder <-> tools。"""
+    graph = StateGraph(CodingState)
 
-    graph.add_node("model", call_model)
+    graph.add_node("planner", planner)
+    graph.add_node("coder", call_model)
     graph.add_node("tools", ToolNode(TOOLS))
 
-    graph.add_edge(START, "model")
-    graph.add_conditional_edges("model", should_use_tools, {"tools": "tools", "end": END})
-    graph.add_edge("tools", "model")
+    graph.add_edge(START, "planner")
+    graph.add_edge("planner", "coder")
+    graph.add_conditional_edges("coder", should_use_tools, {"tools": "tools", "end": END})
+    graph.add_edge("tools", "coder")
 
     return graph.compile()
 
