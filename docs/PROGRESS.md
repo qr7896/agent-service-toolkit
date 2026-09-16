@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–18 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19）。当前任务是**阶段 19 Sandbox / 隔离执行**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–19 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8。当前任务是**阶段 20 工程化（Docker / 部署）**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -173,7 +173,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ✅ 验收 11/11 |
 | 17 | Self-Correction | Graph | Experience-guided loop | ✅ 验收 7/7 |
 | 18 | Benchmark | `evals/` | Agent Evaluation | ✅ 已跑通（n=3） |
-| 19 | Sandbox | 后期 | 安全执行 | ⏳ |
+| 19 | Sandbox | `src/agents/workspace.py` | 安全执行 | ✅ 验收 8/8 |
 | 20 | Docker | 后期 | 工程化 | ⏳ |
 | 21 | Model Routing（成本感知） | `src/agents/model_router.py` | Cost-Aware Routing | ⏳ **v5 新增** |
 | 22 | Agent 平台（Builder / 编排） | Agent 配置 + 服务层 + 前端 | Platform / Multi-Agent | ⏳ **v5 新增** |
@@ -776,6 +776,26 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么 Benchmark 必须用“同一批任务跑两次”，而不能用“加了经验之后挑几个成功案例”来证明变好了？** 挑案例是在已经知道结果的前提下选证据，任何系统都能挑出漂亮样本；只有固定任务、固定模型、只改一个变量、并且失败样本也照实计入，才能把“变好了”归因到经验本身。这也是本次即使结果不利于假设、也必须照原样记录的原因。
 
+### 4.20 魔改十六：任务级工作区隔离（阶段 19）
+
+**目标**：把“路径必须落在项目内”升级成“任务根本不跑在你正在开发的仓库里”。前者保证 Agent 不跑到仓库外面去，但它默认**要改的就是你的真实工作区**——模型判断失误时，被改坏的是开发者自己的代码。
+
+**实现选择**：整树复制 + 以副本为工作目录运行（`src/agents/workspace.py` + `scripts/sandboxed_task.py`），没有把 `PROJECT_ROOT` 改成可注入的函数。理由很实在：后者要动 20 处引用、还得保证 15 个已通过的验收不变；而整树复制**不用改任何现有代码**——`PROJECT_ROOT` 是从 `__file__` 推出来的，副本里的解析结果自然就是副本。这是路线图“先做路径限制 + git diff，再考虑 Docker / WSL2 / Worktree”里的中间那一步。
+
+**关键设计**：
+
+| 设计 | 实现 | 为什么 |
+|---|---|---|
+| 隔离真实工作区 | 复制到 `.codex/sandboxes/<name>/`，任务在副本里跑完连副本一起删 | 失败任务的全部残留可以被一次性回收，不需要逐个回滚文件 |
+| 复制时排除重物 | `.git` / `.venv` / `models` / `.codex` / `chroma_db` / 各类缓存 | 副本只需要“能跑起来”，不该带上 2 GB 模型和版本库 |
+| 回收接口自己设防 | `reclaim_sandbox` 拒绝删除沙箱根目录之外的路径 | 一个删目录的工具，最该防的是自己被误用 |
+| 同名重建是干净起点 | `create_sandbox` 先清同名目录 | 避免上一次失败任务的半成品污染下一次运行 |
+| 换根不换约束 | 副本内 `../escaped.txt` 依然被拒 | 隔离与路径约束是两层，不是互相替代 |
+
+**验收**：`lg_practice/day19_sandbox_check.py` **8/8**——副本内容与排除项、工具在副本内运行且 `PROJECT_ROOT` 指向副本、**主工作区零写入**、越权路径仍被拒、回收完整、回收接口拒绝误删真实目录、同名重建无残留。全程不调用 LLM。
+
+**过关题：为什么“路径必须落在项目内”这条约束不足以代替真正的沙箱？** 因为这条约束只回答了“能不能越界”，没回答“越界以内的破坏怎么办”。Agent 在合法路径上写错内容、改错文件、跑坏配置，同样会污染正在开发的仓库；而且失败任务留下的中间状态需要人工逐个清理。沙箱把“破坏范围”本身变小，也让回收变成一次删除而不是一次代码考古。
+
 ---
 
 ## 5. 文件清单
@@ -795,6 +815,8 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/experience.py` | **新增** | 轨迹→经验派生 + SQLite 经验库（回链 / 去重 / 脱敏 / 召回） |
 | `src/agents/coding_memory.py` | **新增** | BGE-M3 + Chroma 经验检索、接入 Planner、关键词降级 |
 | `evals/coding_benchmark.py` | **新增** | 阶段 18 基准：同批任务跑两遍 + 独立判分 + 指标汇总 |
+| `src/agents/workspace.py` | **新增** | 任务级工作区隔离：整树复制、回收自防、沙箱环境变量 |
+| `scripts/sandboxed_task.py` | **新增** | 在隔离副本里跑一次任务（`--no-agent` 只验隔离） |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
@@ -824,6 +846,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day15_experience_check.py` | Experience Memory 的 11 项验收脚本（派生 / 去重 / 回链 / 脱敏 / 召回 / 接线） |
 | `day16_experience_retrieval_check.py` | Experience Retrieval 的 11 项验收脚本（真实语义召回 / 无命中不变 / 降级 / 下限） |
 | `day17_debug_experience_check.py` | 经验驱动自修复的 7 项验收脚本（注入 / 无命中逐字不变 / State 累积 / 降级） |
+| `day19_sandbox_check.py` | 工作区隔离的 8 项验收脚本（零污染 / 越权仍拒 / 回收自防 / 重建无残留） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -836,6 +859,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `.codex\trajectories\coding_agent.jsonl` | 阶段 14 的任务轨迹（JSONL） |
 | `.codex\experience\experience.db` | 阶段 15 的经验库（SQLite） |
 | `.codex\experience\chroma` | 阶段 16 的经验向量索引（Chroma） |
+| `.codex\sandboxes\<name>` | 阶段 19 的任务隔离副本（运行期间存在，结束即回收） |
 | `.env` | Key 与配置（git 忽略） |
 
 ---
@@ -882,6 +906,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十三：Experience Retrieval（BGE-M3 + Chroma 语义召回 + Planner 注入 + 无命中零影响，验收 11/11）
 - [x] 魔改十四：Experience-Guided Self-Correction（debugger 检索同类经验并按成败分组，验收 7/7）
 - [x] 魔改十五：Coding Benchmark（Baseline vs +Experience 同批任务两遍跑，独立判分，n=3 见 §4.19）
+- [x] 魔改十六：Workspace Sandbox（整树复制 + 副本内执行 + 完整回收，主工作区零污染，验收 8/8）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -946,23 +971,26 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 16 Experience Retrieval**：验收 11/11，设计与过关题回答见 §4.17
 - **阶段 17 Experience-Guided Self-Correction**：验收 7/7，设计与过关题回答见 §4.18
 - **阶段 18 Coding Benchmark**：已跑通，结果与局限见 §4.19；报告在 `.codex/benchmark/report.json`
+- **阶段 19 Workspace Sandbox**：验收 8/8，设计与过关题回答见 §4.20
 
-### 9.2 下一步（阶段 19）：Sandbox / 隔离执行
+### 9.2 下一步（阶段 20）：工程化 / 部署
 
-**已完成的阶段 18 结论**：管线跑通、检索真的生效（处理臂 3/3 命中）、工具调用与耗时下降；但任务太简单（两臂都 3/3），首次通过率与 attempts 反而变差，n=3 也谈不上显著。**要得到能写进结论的数字，下一步得先扩大样本量与任务难度**（这条留作阶段 18 的后续迭代，不阻塞阶段 19）。
+**已完成的阶段 19 结论**：任务现在跑在整树副本里，主工作区零污染，副本可整体回收，越权路径在副本内同样被拒。
 
-**阶段 19 的目标**：现在 Agent 的写权限直接作用在真实工作区上，靠“路径必须落在项目内”这一条约束兜底，一旦模型跑偏，改坏的是开发者自己的仓库。本阶段要把执行环境真正隔离起来。
+**阶段 20 的目标**：把“能在我机器上跑”推进到“换个环境也能跑”——这是路线图最后一格工程化。
 
 **本阶段要做的**：
 
-- 每个任务在独立的 git worktree / 临时副本里执行，而不是直接改主工作区
-- 路径约束 + `git diff` 之外，再加一层“任务结束后可整体丢弃”的隔离
-- 明确写清哪些动作仍在主仓库执行（读代码、跑测试），哪些必须隔离（写文件）
-- 验收要能证明：故意越权写入不会污染主工作区；失败任务的残留可以被完整回收
+- 为服务与前端补 Dockerfile / compose，把 `run_service.py` + `streamlit_app.py` 的启动方式固化
+- 处理本地依赖的现实约束：BGE-M3 模型体积、`.env` 注入方式、`chroma_db` 与 `.codex` 的数据卷挂载
+- 明确哪些东西**不进镜像**（模型权重、向量库、经验库、轨迹数据），只挂载
+- 验收要能证明：容器里能起来服务、能回答普通问题；重启后挂载的数据还在
 
-**过关题**：为什么“路径必须落在项目内”这条约束不足以代替真正的沙箱？
+**边界（v2 §29 明确不做）**：不做复杂云 Sandbox，不上 K8s，不做多租户隔离。
 
-**提交信息**：`feat(coding): isolate task execution`
+**过关题**：为什么模型权重、向量库、经验库这三样东西不该打进镜像里？
+
+**提交信息**：`chore(deploy): containerize the service`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 
