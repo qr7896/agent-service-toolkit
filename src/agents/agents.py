@@ -7,6 +7,7 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.pregel import Pregel
 
 from agents.agent_config import AgentConfigError, load_agent_configs
+from agents.agent_workflow import build_workflow, load_workflow_configs
 from agents.bg_task_agent.bg_task_agent import bg_task_agent
 from agents.chatbot import chatbot
 from agents.code_tools import git_diff, list_files, read_file, search_code
@@ -35,6 +36,7 @@ CONFIGURABLE_TOOLS = {
     "git_diff": git_diff,
 }
 CONFIG_AGENTS_DIR = Path(__file__).resolve().parents[2] / "config" / "agents"
+WORKFLOWS_DIR = Path(__file__).resolve().parents[2] / "config" / "workflows"
 
 # Type alias to handle LangGraph's different agent patterns
 # - @entrypoint functions return Pregel
@@ -69,6 +71,37 @@ def _configurable_agents() -> dict[str, "Agent"]:
         graph = build_declarative_agent(config, CONFIGURABLE_TOOLS)
         loaded[config.key] = Agent(description=config.description, graph_like=graph)
     return loaded
+
+
+def _workflow_agents() -> dict[str, "Agent"]:
+    """把 config/workflows/*.yaml 编译成 Agent（线性串联已有 Agent）。
+
+    必须在内置与配置型 Agent 都注册完之后再调用——工作流引用的是它们的图。
+    延迟加载的 Agent 暂不支持：工作流在启动时就要拿到图，而延迟加载的图那时还没有。
+    """
+    if os.getenv("CONFIG_AGENTS", "1") == "0":
+        return {}
+    try:
+        configs = load_workflow_configs(WORKFLOWS_DIR, set(agents))
+    except AgentConfigError as exc:
+        logger.error("加载工作流失败：%s", exc)
+        raise
+
+    built: dict[str, Agent] = {}
+    for config in configs:
+        graphs: dict[str, AgentGraph] = {}
+        for step in config.steps:
+            graph_like = agents[step.agent].graph_like
+            if isinstance(graph_like, LazyLoadingAgent):
+                raise AgentConfigError(
+                    f"工作流 `{config.key}` 引用了延迟加载的 Agent `{step.agent}`，暂不支持"
+                )
+            graphs[step.agent] = graph_like
+        built[config.key] = Agent(
+            description=config.description,
+            graph_like=build_workflow(config, graphs),
+        )
+    return built
 
 
 agents: dict[str, Agent] = {
@@ -111,6 +144,11 @@ agents: dict[str, Agent] = {
 for _key, _agent in _configurable_agents().items():
     if _key in agents:
         raise AgentConfigError(f"配置里的 key `{_key}` 与内置 Agent 重名，请改名")
+    agents[_key] = _agent
+
+for _key, _agent in _workflow_agents().items():
+    if _key in agents:
+        raise AgentConfigError(f"工作流里的 key `{_key}` 与已有 Agent 重名，请改名")
     agents[_key] = _agent
 
 

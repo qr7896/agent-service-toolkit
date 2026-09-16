@@ -1,0 +1,13 @@
+# 阶段 22 示例：两步线性工作流。
+# 第一步定位代码；第二步通过 {previous} 拿到上一步输出，再整理成人话总结。
+key: explain-then-summarize
+description: 先定位代码位置，再把定位结果整理成人话总结。
+steps:
+  - agent: repo-explainer
+    name: locate
+    input_template: "{input}"
+  - agent: chatbot
+    name: summarize
+    input_template: |
+      以下是代码定位结果，请整理成一段给同事看的说明，保留文件路径与行号：
+      {previous}

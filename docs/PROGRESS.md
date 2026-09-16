@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**路线图全部阶段已完成**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21），阶段 21 基础成本控制 10/10（§4.22），阶段 22 可配置 Agent 9/9（§4.23）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**路线图全部阶段已完成**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21），阶段 21 基础成本控制 10/10（§4.22），阶段 22 可配置 Agent 9/9（§4.23）+ 工作流编排 10/10（§4.24）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -877,6 +877,37 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：Agent 平台化为什么必须先把 Agent 变成可配置数据，而不能靠加一个配置界面解决？** 界面只是数据的编辑器；如果底层仍是写死的 Python 模块，界面能改的东西只能是它背后已经存在的那几个参数，改提示词、换工具、调模型依旧要动代码。先把 Agent 表达成「提示词 + 模型 + 工具 + 上限」这样一份可校验的数据，界面才有东西可编辑，编排才有东西可组合，校验与权限（比如只读白名单）也才有落点。
 
+### 4.24 魔改二十：工作流编排（阶段 22 第二块）
+
+**做到哪一步**：只做**线性串联**——上一步的输出成为下一步的输入。分支、并行、条件跳转都没做，也不该现在做：那三样都需要先有可靠的失败传播与回滚设计，硬做出来只会得到一个看起来很强、实际上没人能解释清楚执行路径的图。
+
+**形态**（`config/workflows/*.yaml` → `src/agents/agent_workflow.py`）：
+
+```yaml
+key: explain-then-summarize
+steps:
+  - agent: repo-explainer        # 引用已有 Agent 的 key
+    name: locate
+    input_template: "{input}"
+  - agent: chatbot
+    name: summarize
+    input_template: |
+      以下是代码定位结果，请整理成一段说明并保留文件路径与行号：
+      {previous}
+```
+
+两个占位符：`{input}` 是最初需求（每步都能拿到），`{previous}` 是上一步输出。渲染用字符串替换而不是 `str.format()`——否则模板里任何其它花括号都会被当成字段名而报错。
+
+**校验与注册**：引用的 Agent 必须存在（加载时校验一次、构建图时再校验一次）；步骤不能为空；key 不能与已有 Agent 重名。编译出来的图是 `START → step_1 → step_2 → … → END`，并且**以 Agent 身份注册进同一个注册表**，所以服务端不需要为"工作流"新增一套接口——它就是一个 Agent。当前注册表 11 内置 + 1 配置型 + 1 工作流 = 13 个。
+
+**已知边界**：延迟加载（lazy）的 Agent 不能放进工作流，因为工作流在启动时就要拿到图，而延迟加载的图那时还不存在——这条会在加载时报错，不会留到运行期才发现。
+
+**验收**：`lg_practice/day23_workflow_check.py` **10/10**，全程不调用 LLM。关键一条是**用打桩图验证真的串起来了**：第一步收到的 prompt 是原始需求，第二步收到的 prompt 里确实嵌着第一步的输出（`看这个：A:找一下 FastAPI 入口 / 原需求：找一下 FastAPI 入口`），这比断言"返回值不为空"能说明问题得多。
+
+**诚实记录**：编排机制用打桩图验证完毕；**真实端到端跑一次工作流需要 LLM 额度，尚未执行**。这一点写在验收脚本的最后一条检查里，而不是留给我们自己记。
+
+**过关题：为什么工作流的第一版应该只做线性串联？** 因为编排的复杂度不在"怎么连"，而在"出错时怎么办"：并行分支要回答部分失败如何回滚，条件跳转要回答状态不一致如何判定，多 Agent 要回答谁对最终结果负责。线性串联只有一个失败方向（当前步失败就整条停），语义清晰、可解释、可回收；等失败传播有了确定设计，再往上加分支才不是空中楼阁。
+
 ---
 
 ## 5. 文件清单
@@ -901,6 +932,8 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/agent_config.py` | **新增** | Agent 配置数据定义与校验（含工具白名单、重名拒绝） |
 | `src/agents/declarative_agent.py` | **新增** | 把 Agent 配置编译成 `model ⇄ tools` 图 |
 | `config/agents/repo-explainer.yaml` | **新增** | 示例配置型 Agent（只读代码讲解） |
+| `src/agents/agent_workflow.py` | **新增** | 线性工作流编排：配置校验 + 编译成链式图 |
+| `config/workflows/explain-then-summarize.yaml` | **新增** | 示例工作流（定位 → 总结） |
 | `scripts/sandboxed_task.py` | **新增** | 在隔离副本里跑一次任务（`--no-agent` 只验隔离） |
 | `docker/Dockerfile.service.local` | **新增** | 保留 src/ 层级的服务镜像：补 git、CPU torch、sentence-transformers |
 | `compose.local-models.yaml` | **新增** | compose 覆盖层：挂载模型 / 向量库 / .codex，覆盖 Windows 模型路径 |
@@ -938,6 +971,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day20_container_check.py` | 容器化的 11 项静态验收脚本（挂载 / 路径推导 / 依赖缺口 / 未验证如实记录） |
 | `day21_model_routing_check.py` | 成本控制的 10 项验收脚本（零影响 / 阶梯 / 记账 / 预算冻结 / 打桩接线） |
 | `day22_agent_config_check.py` | 可配置 Agent 的 9 项验收脚本（校验 / 图结构 / 循环上限 / 注册表合并） |
+| `day23_workflow_check.py` | 工作流编排的 10 项验收脚本（串联传递 / 模板 / 校验 / 注册） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -1001,6 +1035,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十七：容器化（保留 src/ 层级的镜像 + compose 覆盖层 + 静态校验 11/11，构建未验证）
 - [x] 魔改十八：基础成本控制（记账 + 免费档优先 + 预算冻结升级，最高档 flash，验收 10/10）
 - [x] 魔改十九：可配置 Agent（YAML 定义 + 编译成图 + 只读白名单 + 注册表合并，验收 9/9）
+- [x] 魔改二十：工作流编排（线性串联 + 模板占位符 + 以 Agent 身份注册，验收 10/10）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -1069,6 +1104,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 20 容器化**：静态验收 11/11，设计与“未验证”边界见 §4.21
 - **阶段 21 基础成本控制**：验收 10/10，设计与过关题回答见 §4.22
 - **阶段 22 可配置 Agent**：验收 9/9，设计与“做到哪一步”的边界见 §4.23
+- **阶段 22 工作流编排**：验收 10/10，设计与边界见 §4.24
 
 ### 9.2 后续（路线图全部完成，剩下的是两笔待补的账）
 
@@ -1076,7 +1112,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **21 · 基础成本控制**：已完成（§4.22）。最高档只到 `deepseek-v4-flash`。
 
-**22 · 可配置 Agent**：第一块地基已完成（§4.23）——Agent 已经是可校验的数据并能编译成图。**剩余未做**：Agent Builder 界面、Workflow 编排、Multi-Agent 协同。这三样都建立在“Agent 是可配置数据”之上，现在才有条件做。
+**22 · 可配置 Agent**：已完成两块（§4.23 数据化、§4.24 线性编排）——Agent 是可校验的数据、能编译成图、能串成工作流，并以同一个注册表对外服务。**剩余未做**：Agent Builder 界面（数据的编辑器）、分支/并行编排、Multi-Agent 协同。
 
 **两件待补的账**（不隐藏）：
 
@@ -1100,7 +1136,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | 18 Benchmark | `evals/` + 20~50 个任务 | 对比 Baseline 与 "+Experience" 的成功率、平均尝试次数、工具调用数、测试通过率 |
 | 19–20 Sandbox / Docker | 隔离执行环境 | 先做路径限制 + git diff，再考虑 Docker / WSL2 / Worktree |
 | 21 **Model Routing**（v5 新增） | `src/agents/model_router.py` | ✅ 验收 10/10：最高档只到 `deepseek-v4-flash`，只做记账 + 预算冻结升级（见 §4.22） |
-| 22 **Agent 平台**（v5 新增） | `agent_config.py` + `declarative_agent.py` + `config/agents/` | ✅ 验收 9/9：Agent 已可配置化（Prompt / 模型 / 工具 / 轮数上限）；界面与编排未做，见 §4.23 |
+| 22 **Agent 平台**（v5 新增） | `agent_config.py` + `declarative_agent.py` + `agent_workflow.py` + `config/{agents,workflows}/` | ✅ 验收 9/9 + 10/10：Agent 可配置化并能线性编排；Builder 界面与 Multi-Agent 未做，见 §4.23/§4.24 |
 
 **明确不做**（v2 §29）：整体复制 Open SWE、接 Slack / Linear / GitHub App、做 Dashboard、做 QLoRA / KTO、复杂云 Sandbox、多 Agent 大拆分、一次加 20 个工具。
 
