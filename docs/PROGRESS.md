@@ -930,6 +930,16 @@ steps:
 
 **过关题：为什么 Agent Builder 的逻辑层要和界面分开？** 因为界面是数据的编辑器，而"什么配置算合法"是业务规则。规则一旦长在按钮的回调里，就只能靠人点开页面来验证，改一次要重新点一遍，也做不到回归测试。把规则抽到不依赖框架的模块，界面只剩渲染与收集输入，逻辑才能被脚本反复验证——本节的 14 项验收里，Builder 那 4 项就是这么来的。
 
+### 4.26 补账：基准的成本口径（阶段 18 的回填）
+
+**为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
+
+**改了什么**：`evals/coding_benchmark.py` 的每行记录新增 `llm_calls` / `estimated_tokens` / `model_used`，`summarize()` 新增 `avg_llm_calls` / `avg_estimated_tokens` / `total_estimated_tokens`，运行时的进度行也把 token 估算打出来。
+
+**顺手修掉一个真问题**：改 `summarize()` 时加了向后兼容断言，结果立刻抓到它对 `agent_status` 用的是直接下标——**旧报告或残缺行会让汇总直接崩**。已改成全部 `.get()` 取值。用真实的历史报告验证过：旧 JSON 能正常重算，且旧行的成本显示为 0（那些运行发生在阶段 21 之前，本来就没有记账）——这个 0 是事实，不是缺失。
+
+**验收**：`lg_practice/day25_benchmark_cost_check.py` **4/4**（成本汇总正确、与成功率口径互不干扰、缺字段不崩、源码里确实从轨迹读成本字段）。不调用 LLM。
+
 ---
 
 ## 5. 文件清单
@@ -999,6 +1009,7 @@ steps:
 | `day22_agent_config_check.py` | 可配置 Agent 的 9 项验收脚本（校验 / 图结构 / 循环上限 / 注册表合并） |
 | `day23_workflow_check.py` | 工作流编排的 10 项验收脚本（串联传递 / 模板 / 校验 / 注册） |
 | `day24_platform_check.py` | 并行 / 路由 / Builder 的 14 项验收脚本（打桩图与打桩模型，零 API 调用） |
+| `day25_benchmark_cost_check.py` | 基准成本口径的 4 项验收脚本（含旧报告重算不崩） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -1145,7 +1156,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **三件待补的账**（不隐藏）：
 
-- **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。
+- **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。**成本口径已在 §4.26 补上**，重跑时每行会带 `llm_calls` / `estimated_tokens`。
 - **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。
 - **平台层的真实调用**：阶段 22 的编排与路由都用打桩验证了机制（零 API 调用），但**没有真跑过一次**。等额度充裕时至少各跑一次：`parallel-review`、`route-to-specialist`、以及 Builder 新建一个 Agent 后用服务端 `/invoke` 调一次。
 

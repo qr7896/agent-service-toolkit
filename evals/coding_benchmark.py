@@ -280,24 +280,41 @@ async def run_one(task: Task, arm: str, model: str) -> dict:
         "attempts": int(fresh.get("attempts") or 0),
         "tool_calls": sum((fresh.get("tool_call_counts") or {}).values()),
         "experience_hits": len(fresh.get("experience_hits") or []),
+        # 阶段 21 起每次调用都会记账，基准必须把成本一起报出来：
+        # 只比成功率不比成本，等于没验证"更省"这个主张。
+        "llm_calls": int(fresh.get("llm_calls") or 0),
+        "estimated_tokens": int(fresh.get("estimated_tokens") or 0),
+        "model_used": str(fresh.get("model_used") or fresh.get("model") or ""),
         "duration_seconds": float(fresh.get("duration_seconds") or elapsed),
         "error": error,
     }
 
 
 def summarize(rows: list[dict]) -> dict:
+    """汇总一行一个任务的记录。所有字段都用 .get() 取值——旧报告缺字段时不能崩，
+    因为"重算历史报告"是很常见的动作。
+    """
     if not rows:
         return {}
     n = len(rows)
     return {
         "tasks": n,
-        "graded_pass_rate": round(sum(r["passed"] for r in rows) / n, 3),
-        "first_try_pass_rate": round(sum(r["passed"] and r["attempts"] <= 1 for r in rows) / n, 3),
-        "avg_attempts": round(sum(r["attempts"] for r in rows) / n, 2),
-        "avg_tool_calls": round(sum(r["tool_calls"] for r in rows) / n, 2),
-        "avg_duration_seconds": round(sum(r["duration_seconds"] for r in rows) / n, 1),
-        "runs_with_experience": sum(1 for r in rows if r["experience_hits"] > 0),
-        "agent_reported_success": sum(1 for r in rows if r["agent_status"] == "succeeded"),
+        "graded_pass_rate": round(sum(bool(r.get("passed")) for r in rows) / n, 3),
+        "first_try_pass_rate": round(
+            sum(bool(r.get("passed")) and int(r.get("attempts") or 0) <= 1 for r in rows) / n, 3
+        ),
+        "avg_attempts": round(sum(int(r.get("attempts") or 0) for r in rows) / n, 2),
+        "avg_tool_calls": round(sum(int(r.get("tool_calls") or 0) for r in rows) / n, 2),
+        "avg_llm_calls": round(sum(r.get("llm_calls", 0) for r in rows) / n, 2),
+        "total_estimated_tokens": sum(r.get("estimated_tokens", 0) for r in rows),
+        "avg_estimated_tokens": round(sum(r.get("estimated_tokens", 0) for r in rows) / n, 1),
+        "avg_duration_seconds": round(
+            sum(float(r.get("duration_seconds") or 0.0) for r in rows) / n, 1
+        ),
+        "runs_with_experience": sum(1 for r in rows if int(r.get("experience_hits") or 0) > 0),
+        "agent_reported_success": sum(
+            1 for r in rows if str(r.get("agent_status") or "") == "succeeded"
+        ),
     }
 
 
@@ -318,7 +335,9 @@ async def main_async(limit: int | None, model: str) -> int:
             rows.append(row)
             print(
                 f"  {task.name:24s} passed={str(row['passed']):5s} attempts={row['attempts']} "
-                f"tools={row['tool_calls']:3d} hits={row['experience_hits']} {row['duration_seconds']}s "
+                f"tools={row['tool_calls']:3d} llm={row['llm_calls']:3d} "
+                f"tok~{row['estimated_tokens']:6d} hits={row['experience_hits']} "
+                f"{row['duration_seconds']}s "
                 f"{row['error']}"
             )
     shutil.rmtree(SANDBOX, ignore_errors=True)
