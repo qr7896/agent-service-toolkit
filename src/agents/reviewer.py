@@ -25,6 +25,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from agents.code_tools import git_diff, list_files, read_file, search_code
 from agents.coding_planner import _extract_json_object
+from agents.model_router import estimate_tokens, route_model
 from agents.test_tools import run_tests
 from core import get_model, settings
 
@@ -139,7 +140,8 @@ def _review_scope(state: dict[str, Any], config: RunnableConfig) -> str:
 
 async def reviewer(state: dict[str, Any], config: RunnableConfig) -> dict[str, Any]:
     """评审节点：读需求 / 计划 / 测试结果 / diff → 产出结构化裁决。"""
-    model = get_model(config["configurable"].get("model", settings.DEFAULT_MODEL))
+    decision = route_model(state, config, "reviewer")
+    model = get_model(decision.model)
 
     requirement = _first_human_text(state.get("messages", []))
     plan = state.get("plan") or {}
@@ -163,4 +165,11 @@ async def reviewer(state: dict[str, Any], config: RunnableConfig) -> dict[str, A
     raw = str(getattr(ai, "content", "") or "")
     review = _parse_review(raw) or _fallback_review("评审器输出无法解析为 JSON", raw)
 
-    return {"review": review.model_dump(), "messages": [AIMessage(content=format_verdict(review))]}
+    return {
+        "review": review.model_dump(),
+        "messages": [AIMessage(content=format_verdict(review))],
+        "llm_calls": int(state.get("llm_calls") or 0) + 1,
+        "estimated_tokens": int(state.get("estimated_tokens") or 0) + estimate_tokens(context, raw),
+        "model_tier": decision.tier,
+        "model_used": decision.model,
+    }

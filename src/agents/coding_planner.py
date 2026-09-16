@@ -30,6 +30,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from agents.code_tools import PROJECT_ROOT, git_diff, list_files, read_file, search_code
 from agents.coding_memory import format_experience_context, recall_experiences
+from agents.model_router import estimate_tokens, route_model
 from core import get_model, settings
 
 MAX_RECON_STEPS = 3
@@ -195,15 +196,20 @@ def recon_steps(config: RunnableConfig) -> int:
         return MAX_RECON_STEPS
 
 
-async def _recon(model: Any, requirement: str, steps: int = MAX_RECON_STEPS) -> str:
-    """只读侦察：最多 MAX_RECON_STEPS 轮工具调用，返回拼接后的发现（有长度上限）。"""
+async def _recon(model: Any, requirement: str, steps: int = MAX_RECON_STEPS) -> tuple[str, int]:
+    """只读侦察：最多 steps 轮工具调用，返回（发现, 实际轮数）。
+
+    返回轮数是为了让上游如实统计 LLM 调用次数——侦察提前收敛时不该按上限记账。
+    """
     bound = model.bind_tools(PLANNER_TOOLS)
     messages: list[Any] = [
         SystemMessage(content=RECON_PROMPT),
         HumanMessage(content=f"开发需求：{requirement}"),
     ]
     findings: list[str] = []
+    rounds = 0
     for _ in range(steps):
+        rounds += 1
         ai = await bound.ainvoke(messages)
         messages.append(ai)
         calls = getattr(ai, "tool_calls", None) or []
@@ -221,15 +227,16 @@ async def _recon(model: Any, requirement: str, steps: int = MAX_RECON_STEPS) -> 
             messages.append(ToolMessage(content=result, tool_call_id=call.get("id", "")))
             findings.append(f"[{call.get('name')}({call.get('args')})]\n{result[:MAX_FINDING_CHARS]}")
     joined = "\n\n".join(findings)
-    return joined[:MAX_FINDINGS_CHARS]
+    return joined[:MAX_FINDINGS_CHARS], rounds
 
 
 async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, Any]:
     """规划节点：侦察 → 产出结构化计划 → 确定性校验 → 写进 State 的 plan 字段。"""
     requirement = _last_human_text(state.get("messages", []))
-    model = get_model(config["configurable"].get("model", settings.DEFAULT_MODEL))
+    decision = route_model(state, config, "planner")
+    model = get_model(decision.model)
 
-    findings = await _recon(model, requirement, recon_steps(config))
+    findings, recon_rounds = await _recon(model, requirement, recon_steps(config))
     hits, retrieval = recall_experiences(requirement, config)
     plan_messages = [
         SystemMessage(content=PLAN_PROMPT),
@@ -251,4 +258,9 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     return {
         "plan": plan.model_dump(),
         "experience_hits": [{**hit, "retrieval": retrieval, "phase": "planning"} for hit in hits],
+        "llm_calls": int(state.get("llm_calls") or 0) + 1 + recon_rounds,
+        "estimated_tokens": int(state.get("estimated_tokens") or 0)
+        + estimate_tokens(requirement, findings, getattr(ai, "content", "")),
+        "model_tier": decision.tier,
+        "model_used": decision.model,
     }

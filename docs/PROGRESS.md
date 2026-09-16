@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**路线图 §22 的 20 个阶段已全部走完**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**路线图 §22 的 20 个阶段已全部走完**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21）。v5 新增的**阶段 21 基础成本控制**也已完成（10/10，见 §4.22），当前任务是**阶段 22 可编排 Agent 平台**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -830,6 +830,24 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么模型权重、向量库、经验库这三样东西不该打进镜像里？** 三样都是**数据**而不是**代码**：模型权重体积大且与代码发布节奏无关，打进镜像会让每次改一行代码都重新搬运几 GB；向量库和经验库是运行期产物，会随每次任务不断变化，固化进镜像等于每次运行都从过去的快照开始，容器一重建就把新积累的经验丢掉。把它们挂载出来，镜像才只承载“可复现的运行环境”这一件事。
 
+### 4.22 魔改十八：基础成本控制（阶段 21）
+
+**范围**：只做最基本的成本控制，不做花哨的分层策略。v5 §40 的完整设想里有 Local 7B + Cheap API + Strong API 三层加 Failure Router，本项目**明确不引入更贵的模型档位**——最高档就是 `deepseek-v4-flash`，所以阶梯只有 `local（若配置）→ cheap(flash)`。
+
+三件具体的事：
+
+1. **账面可见**：每次 LLM 调用累加 `llm_calls` 与 `estimated_tokens`，写进 State 和轨迹。以前只能凭感觉说“这个任务挺贵的”，现在每条轨迹都能直接读出调用次数与估算 token。
+2. **能用免费档就用免费档**：只有真正配置了本地模型（如 Ollama）时才把它放进阶梯，简单任务优先走本地；复杂任务（计划超过 3 步或存在未决问题）直接上 flash，不在关键处省错地方。没配本地模型时阶梯只有一档，不假装有一台不存在的模型。
+3. **预算超了冻结升级**：`budget_tokens` 用尽后不再从免费档换到付费档。重试次数仍由 `MAX_RETRIES` 决定——**成本控制不越权去改任务终止条件**。
+
+**一条硬约束**：`model_routing` 不在 config 里时，`route_model()` 原样返回今天用的 `model`，行为逐字不变。不启用就等于不存在，这条由验收脚本直接断言（三个角色都返回 `fixed-model`）。
+
+**成本估算的现实说明**：`estimated_tokens` 用的是「字符数 ÷ 3」的粗估，只适合比较同一条链路里的相对消耗，不是账单。写这句话是为了避免以后拿它当计费数据用。
+
+**验收**：`lg_practice/day21_model_routing_check.py` **10/10**，全程不调用 LLM——路由是纯决策逻辑；节点接线用打桩模型验证（stub 记录“实际被以什么名字创建”，所以证明的是接线真的生效，而不只是函数返回值对）。阶段 14 7/7、15 11/11、16 11/11、17 7/7 同步回归通过。
+
+**过关题：为什么成本控制不应该顺手去改“任务什么时候放弃”？** 因为那是两件性质不同的决定：成本控制的目标是“在给定质量下少花钱”，而放弃任务的目标是“确定不再有收益”。把两者混在一起，会出现“因为省钱所以把任务判失败”这种说不清责任的行为——用户看到的是任务失败，原因却是预算策略。所以这里预算只影响用哪档模型，重试与放弃仍旧归 `MAX_RETRIES` 和 `giveup` 管，两者互不越权。
+
 ---
 
 ## 5. 文件清单
@@ -850,6 +868,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/coding_memory.py` | **新增** | BGE-M3 + Chroma 经验检索、接入 Planner、关键词降级 |
 | `evals/coding_benchmark.py` | **新增** | 阶段 18 基准：同批任务跑两遍 + 独立判分 + 指标汇总 |
 | `src/agents/workspace.py` | **新增** | 任务级工作区隔离：整树复制、回收自防、沙箱环境变量 |
+| `src/agents/model_router.py` | **新增** | 基础成本控制：调用/估算记账、免费档优先、预算冻结升级 |
 | `scripts/sandboxed_task.py` | **新增** | 在隔离副本里跑一次任务（`--no-agent` 只验隔离） |
 | `docker/Dockerfile.service.local` | **新增** | 保留 src/ 层级的服务镜像：补 git、CPU torch、sentence-transformers |
 | `compose.local-models.yaml` | **新增** | compose 覆盖层：挂载模型 / 向量库 / .codex，覆盖 Windows 模型路径 |
@@ -885,6 +904,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day17_debug_experience_check.py` | 经验驱动自修复的 7 项验收脚本（注入 / 无命中逐字不变 / State 累积 / 降级） |
 | `day19_sandbox_check.py` | 工作区隔离的 8 项验收脚本（零污染 / 越权仍拒 / 回收自防 / 重建无残留） |
 | `day20_container_check.py` | 容器化的 11 项静态验收脚本（挂载 / 路径推导 / 依赖缺口 / 未验证如实记录） |
+| `day21_model_routing_check.py` | 成本控制的 10 项验收脚本（零影响 / 阶梯 / 记账 / 预算冻结 / 打桩接线） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -946,6 +966,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十五：Coding Benchmark（Baseline vs +Experience 同批任务两遍跑，独立判分，n=3 见 §4.19）
 - [x] 魔改十六：Workspace Sandbox（整树复制 + 副本内执行 + 完整回收，主工作区零污染，验收 8/8）
 - [x] 魔改十七：容器化（保留 src/ 层级的镜像 + compose 覆盖层 + 静态校验 11/11，构建未验证）
+- [x] 魔改十八：基础成本控制（记账 + 免费档优先 + 预算冻结升级，最高档 flash，验收 10/10）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -1012,23 +1033,24 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 18 Coding Benchmark**：已跑通，结果与局限见 §4.19；报告在 `.codex/benchmark/report.json`
 - **阶段 19 Workspace Sandbox**：验收 8/8，设计与过关题回答见 §4.20
 - **阶段 20 容器化**：静态验收 11/11，设计与“未验证”边界见 §4.21
+- **阶段 21 基础成本控制**：验收 10/10，设计与过关题回答见 §4.22
 
-### 9.2 后续（v5 新增的 21–22，排在 Evaluation 之后）
+### 9.2 后续（v5 新增的 22，排在 Evaluation 之后）
 
 路线图 §22 的 20 个阶段已经走完（阶段 18 Evaluation 已完成，因此 v5 里“排在 Evaluation 之后”的两个新方向现在才轮到）。
 
-**21 · Cost-Aware Adaptive Model Routing**：按任务复杂度 / 失败类型 / 上下文规模 / 剩余预算选模型，Failure Router 走 `Local → Cheap → Strong` 升级链，State 里加 `llm_calls` / `estimated_tokens` / `budget` / `model_tier`。硬约束：必须用 A/B 实验证明“成功率接近 + 成本更低”，否则不上。
+**21 · 基础成本控制**：已完成（§4.22）。最高档只到 `deepseek-v4-flash`。
 
-**22 · 从 Knowledge Agent 到可编排 Agent 平台**：把 Agent 从硬编码字典改成可配置数据（Prompt / Model / Knowledge / Tools / Skills / Workflow），再做 Agent Builder 界面与 Workflow 编排。这是架构级改造，不是加个页面——当前 `agents.py` 里的注册表是写死的 Python 模块。
+**22 · 从 Knowledge Agent 到可编排 Agent 平台**（当前任务）：把 Agent 从硬编码字典改成可配置数据（Prompt / Model / Knowledge / Tools / Skills / Workflow），再做 Agent Builder 界面与 Workflow 编排。这是架构级改造，不是加个页面——当前 `agents.py` 里的注册表是写死的 Python 模块。
 
 **两件待补的账**（不隐藏）：
 
 - **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。
 - **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。
 
-**过关题**：Model Routing 为什么必须用“成功率接近 + 成本更低”两个条件同时约束，只看成本下降行不行？
+**过关题**：Agent 平台化为什么必须先把 Agent 从“写死的 Python 模块”变成“可配置的数据”，而不能靠加一个配置界面解决？
 
-**提交信息**：`feat(coding): route models by cost and difficulty`
+**提交信息**：`feat(platform): make agents configurable`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 
@@ -1042,7 +1064,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | 14–17 Trajectory / Experience | `trajectory` + `experience.py` + `coding_memory.py` | 记录 task / errors / attempts / test_result；经验先存 Store 或 SQLite，第二阶段再接 BGE-M3 + Chroma 做检索 |
 | 18 Benchmark | `evals/` + 20~50 个任务 | 对比 Baseline 与 "+Experience" 的成功率、平均尝试次数、工具调用数、测试通过率 |
 | 19–20 Sandbox / Docker | 隔离执行环境 | 先做路径限制 + git diff，再考虑 Docker / WSL2 / Worktree |
-| 21 **Model Routing**（v5 新增） | `model_router.py` + Budget-aware State | 按任务复杂度 / 失败类型 / 上下文规模 / 剩余预算选模型；Failure Router 升级链 `Local → Cheap → Strong`；必须用 A/B 实验证明"成功率接近 + 成本更低" |
+| 21 **Model Routing**（v5 新增） | `src/agents/model_router.py` | ✅ 验收 10/10：最高档只到 `deepseek-v4-flash`，只做记账 + 预算冻结升级（见 §4.22） |
 | 22 **Agent 平台**（v5 新增） | Agent 配置化 + Agent Builder 界面 + Workflow 编排 + Multi-Agent | 把 Agent 从"硬编码模块"变成"可配置数据"（Prompt / Model / Knowledge / Tools / Skills / Workflow）；AICoding Agent 变成可被其他 Agent 调用的执行能力 |
 
 **明确不做**（v2 §29）：整体复制 Open SWE、接 Slack / Linear / GitHub App、做 Dashboard、做 QLoRA / KTO、复杂云 Sandbox、多 Agent 大拆分、一次加 20 个工具。

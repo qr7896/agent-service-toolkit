@@ -43,6 +43,7 @@ from agents.code_tools import (
 from agents.coding_planner import planner
 from agents.coding_memory import format_experience_context, recall_experiences
 from agents.experience import record_trajectory
+from agents.model_router import estimate_tokens, route_model, routing_enabled
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
 from agents.trajectory import (
@@ -108,6 +109,10 @@ class CodingState(MessagesState):
     review: dict[str, Any]
     approvals: list[dict[str, Any]]
     experience_hits: list[dict[str, Any]]
+    llm_calls: int
+    estimated_tokens: int
+    model_tier: str
+    model_used: str
     trajectory: dict[str, Any]
     trajectory_started_at: str
     attempts: int
@@ -194,9 +199,10 @@ async def make_plan(state: CodingState, config: RunnableConfig) -> dict[str, Any
 
 async def call_model(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     """coder 节点：带着计划思考，并决定是否调用工具。"""
-    if "model" not in _configurable(config):
+    if "model" not in _configurable(config) and not routing_enabled(config):
         raise ValueError("`model` is required in the configuration")
-    model = get_model(_configurable(config).get("model", settings.DEFAULT_MODEL))
+    decision = route_model(state, config, "coder")
+    model = get_model(decision.model)
     bound_model = model.bind_tools(_allowed_tools(config))
 
     messages: list[Any] = [SystemMessage(content=SYSTEM_PROMPT)]
@@ -225,7 +231,14 @@ async def call_model(state: CodingState, config: RunnableConfig) -> dict[str, An
 
     messages += state["messages"]
     response = await bound_model.ainvoke(messages)
-    return {"messages": [response]}
+    return {
+        "messages": [response],
+        "llm_calls": int(state.get("llm_calls") or 0) + 1,
+        "estimated_tokens": int(state.get("estimated_tokens") or 0)
+        + estimate_tokens(*(m.content for m in messages), response.content),
+        "model_tier": decision.tier,
+        "model_used": decision.model,
+    }
 
 
 def should_act(state: CodingState) -> Literal["tools", "tester", "end"]:

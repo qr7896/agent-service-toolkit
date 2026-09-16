@@ -112,6 +112,10 @@ def build_trajectory(state: dict[str, Any], config: dict[str, Any]) -> dict[str,
         "approvals": approvals,
         "experience_hits": state.get("experience_hits") or [],
         "model": str(configurable.get("model") or ""),
+        "model_tier": str(state.get("model_tier") or ""),
+        "model_used": str(state.get("model_used") or ""),
+        "llm_calls": int(state.get("llm_calls") or 0),
+        "estimated_tokens": int(state.get("estimated_tokens") or 0),
         "status": _status(state),
     }
     return _safe(record)
