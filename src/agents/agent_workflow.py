@@ -58,6 +58,23 @@ def render_template(template: str, user_input: str, previous: str) -> str:
     return template.replace("{input}", user_input).replace("{previous}", previous)
 
 
+def user_input(state: dict[str, Any]) -> str:
+    """工作流的原始输入。
+
+    优先用显式传入的 `workflow_input`；**缺省时必须能从 messages 里取出来**——
+    服务端（`/invoke`）只会传 messages，不会传 workflow_input。第一版漏了这一步，
+    结果是"通过服务调用工作流时 Agent 收到空输入"，而且所有打桩验收都发现不了，
+    因为测试里总是显式传了 workflow_input（真实运行才发现）。
+    """
+    provided = state.get("workflow_input")
+    if provided:
+        return str(provided)
+    for message in reversed(state.get("messages") or []):
+        if message.__class__.__name__ == "HumanMessage":
+            return str(getattr(message, "content", "") or "")
+    return ""
+
+
 def referenced_agents(config: WorkflowConfig) -> list[str]:
     names = [step.agent for step in config.steps] or list(config.candidates)
     return names
@@ -85,7 +102,7 @@ def _step_runner(step: WorkflowStep, agent_graph: Any):
     async def run_step(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
         outputs = list(state.get("step_outputs") or [])
         previous = outputs[-1] if outputs else ""
-        prompt = render_template(step.input_template, state.get("workflow_input") or "", previous)
+        prompt = render_template(step.input_template, user_input(state), previous)
         result = await agent_graph.ainvoke(
             {"messages": [HumanMessage(content=prompt)]}, run_config or {}
         )
@@ -120,9 +137,9 @@ def _build_parallel(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     """
 
     async def run_all(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
-        user_input = state.get("workflow_input") or ""
+        requirement = user_input(state)
         prompts = [
-            render_template(step.input_template, user_input, user_input) for step in config.steps
+            render_template(step.input_template, requirement, requirement) for step in config.steps
         ]
         results = await asyncio.gather(
             *[
@@ -157,7 +174,7 @@ def make_router_node(config: WorkflowConfig):
         prompt = (
             f"{config.routing_prompt}\n\n"
             f"候选（必须原样回复其中一个 key）：{', '.join(config.candidates)}\n\n"
-            f"用户需求：{state.get('workflow_input') or ''}"
+            f"用户需求：{user_input(state)}"
         )
         answer = str(getattr(await model.ainvoke([HumanMessage(content=prompt)]), "content", "") or "")
         chosen = next((name for name in config.candidates if name in answer), config.candidates[0])
@@ -249,5 +266,6 @@ __all__ = [
     "load_workflow_configs",
     "render_template",
     "referenced_agents",
+    "user_input",
     "validate_workflow",
 ]
