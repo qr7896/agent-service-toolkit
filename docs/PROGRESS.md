@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–13 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8。当前任务是**阶段 14 Trajectory**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–14 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7。当前任务是**阶段 15 Experience Memory**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -168,7 +168,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ✅ 验收 11/11 |
 | 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ✅ 验收 8/8 |
 | 13 | HITL | Graph | `interrupt()` | ✅ 验收 8/8 |
-| 14 | Trajectory | `trajectory` | Evaluation | ⏳ |
+| 14 | Trajectory | `src/agents/trajectory.py` | Evaluation | ✅ 验收 7/7 |
 | 15 | Experience Memory | `src/agents/experience.py` | Store | ⏳ |
 | 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ⏳ |
 | 17 | Self-Correction | Graph | Experience-guided loop | ⏳ |
@@ -670,6 +670,18 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **工程细节**：`interrupt()` 依赖 checkpointer——服务端启动时会给注册表里的图挂上 SQLite checkpointer，验收脚本用 `MemorySaver`。
 
+### 4.15 魔改十一：Trajectory（阶段 14）
+
+**目标**：把每次任务的过程变成可分析的事实记录，为后续 Experience Memory 与 Evaluation 提供同一份可信输入。
+
+图的所有收尾路径现在统一经过 `finalize_trajectory`：`reviewer → finalize_trajectory → END`、`giveup → finalize_trajectory → END`；只读任务也会收尾，因此不会只记录“成功案例”。每条 JSONL 记录含任务、计划、实际工具调用与计数、改动文件、测试轮数与结果、评审、审批、模型、耗时和最终状态。默认写入 `.codex/trajectories/coding_agent.jsonl`，该目录已加入 `.gitignore`；可用 `configurable.trajectory_path` 改为任意本地位置。
+
+**安全边界**：工具参数只保存键名而非值（避免把写入内容塞进遥测）；字段名含 `api_key`、`secret`、`token`、`password` 或 `authorization` 的值会递归脱敏。记录失败不会篡改已经完成的任务结果，而是在 State 中标出 `persistence_error`。
+
+**指标脚本**：`scripts/trajectory_metrics.py [--path <JSONL>]` 输出任务数、成功率、平均 attempts、平均工具调用数与平均耗时。验收 `lg_practice/day14_trajectory_check.py` **7/7**：成功持久化、字段完整、工具/改动/审批可追溯、脱敏、失败路径、聚合、图收口均通过。
+
+**过关题：为什么 trajectory 是 evaluation 与 experience 的共同前置？** Evaluation 需要同口径的任务结果、耗时、尝试数和成功率，才能比较基线与改进；Experience 需要知道“哪种任务在哪一步失败、怎样修复后成功”，才能提炼而不是凭印象编造经验。Trajectory 正是两者共享的原始证据。
+
 ---
 
 ## 5. 文件清单
@@ -685,6 +697,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/test_tools.py` | **新增** | `run_tests`（只允许 pytest，结构化结果） |
 | `src/agents/coding_planner.py` | **新增** | Planning：只读侦察 → JSON 计划 → 确定性校验 |
 | `src/agents/reviewer.py` | **新增** | Reviewer：只读独立评审 + 结构化裁决 |
+| `src/agents/trajectory.py` | **新增** | JSONL 轨迹构建、脱敏、持久化与聚合 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
 | `.gitignore` | 修改 | 忽略个人练习目录 `study_test11/` |
@@ -709,6 +722,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day11_self_correction_check.py` | 自修复闭环的 11 项验收脚本（含两次真实端到端运行） |
 | `day12_reviewer_check.py` | Reviewer 的 8 项验收脚本（含两次真实评审） |
 | `day13_hitl_check.py` | HITL 的 8 项验收脚本（暂停 / 批准 / 拒绝 / 关开关 / 只读不打扰） |
+| `day14_trajectory_check.py` | Trajectory 的 7 项验收脚本（持久化 / 脱敏 / 失败路径 / 聚合） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -759,6 +773,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改八：Debug / Self-Correction（写权限受控开放 + tester/debugger/giveup 闭环，验收 11/11）
 - [x] 魔改九：Reviewer（只读独立评审 + 结构化裁决 + 评审范围可控，验收 8/8）
 - [x] 魔改十：HITL（写操作前 `interrupt()` 等人批准；拒绝也会留下记录，验收 8/8）
+- [x] 魔改十一：Trajectory（统一终态收口 + JSONL + 脱敏 + 基础聚合，验收 7/7）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -818,31 +833,19 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 11 Debug / Self-Correction**：验收 11/11，设计与过关题回答见 §4.11
 - **阶段 12 Reviewer**：验收 8/8，设计见 §4.12
 - **阶段 13 HITL**：验收 8/8，设计与过关题回答见 §4.14
+- **阶段 14 Trajectory**：验收 7/7，设计与过关题回答见 §4.15
 
-### 9.2 当前任务（阶段 14）：Trajectory（把每次执行记录下来）
+### 9.2 下一步（阶段 15）：Experience Memory（从轨迹提炼可复用经验）
 
-**目标**：把每次任务的"过程"变成**结构化、可分析的数据**——这是 Evaluation（阶段 18）与 Experience Memory（阶段 15）共同的底座。没有 trajectory，就无法回答"这次任务跑了几轮、调了哪些工具、卡在哪一步、成本多少"。
+**目标**：以阶段 14 的轨迹为唯一事实来源，先把成功与失败模式沉淀为可审计的本地经验；不要让模型凭空“记住”。第一版只做 Store / SQLite 的经验条目（任务特征、失败类型、有效步骤、证据轨迹 ID），随后阶段 16 才接 BGE-M3 + Chroma 检索。
 
 **第一版必须支持**：
 
-- 新增 `src/agents/trajectory.py`：定义可序列化的 `Trajectory`（task / plan / 每轮动作 / 工具调用统计 / attempts / test_result / review / approvals / 模型 / 耗时 / 最终状态）
-- 在图上落点：任务收尾处统一写出（由 `reviewer` 与 `giveup` 两条终态路径都会经过的节点收口）
-- 存储从简：先落 JSONL 或 SQLite 文件（例如仓库外的 `D:\codex\working\trajectories\` 或已在 `.gitignore` 里的目录），**不要**一上来就上数据库服务
-- 每条记录要能回答：任务是什么、改了哪些文件、跑了几轮、最终通过没有、谁批准过
-- 提供一个聚合脚本，能算出"任务数 / 成功率 / 平均 attempts / 平均工具调用数 / 平均耗时"
+**第一版验收**：经验必须能回链 `trajectory_id`；成功、失败和人工拒绝要能区分；写入与读取都不能含密钥；并且在没有相关经验时保持原有行为。
 
-**验收标准**：
+**过关题**：为什么经验不能直接把“上一次模型的回答”当作事实？
 
-- [ ] 一次真实任务结束后，磁盘上出现一条 trajectory 记录
-- [ ] 字段齐全（task / plan / tool_calls / attempts / test_result / review / status / duration）
-- [ ] 失败路径（`giveup`）同样会被记录，且 status 明确为失败
-- [ ] 能从记录里聚合出基础指标（成功率、平均 attempts）
-- [ ] 轨迹目录不污染 git（放仓库外或加进 `.gitignore`）
-- [ ] 记录中不含密钥等敏感内容
-
-**过关题**：为什么 trajectory 是 evaluation 与 experience 的共同前置？
-
-**提交信息**：`feat(coding): record coding task trajectories`
+**提交信息**：`feat(coding): add trajectory-backed experience memory`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

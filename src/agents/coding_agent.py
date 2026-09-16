@@ -41,6 +41,7 @@ from agents.code_tools import (
 from agents.coding_planner import planner
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
+from agents.trajectory import append_trajectory, build_trajectory, trajectory_path, utc_now
 from core import get_model, settings
 
 MAX_RETRIES = 3
@@ -94,6 +95,8 @@ class CodingState(MessagesState):
     test_result: dict[str, Any]
     review: dict[str, Any]
     approvals: list[dict[str, Any]]
+    trajectory: dict[str, Any]
+    trajectory_started_at: str
     attempts: int
     allow_write: bool
 
@@ -167,6 +170,7 @@ async def make_plan(state: CodingState, config: RunnableConfig) -> dict[str, Any
     out = await planner(state, config)
     out["allow_write"] = _allow_write(config)
     out["attempts"] = int(state.get("attempts") or 0)
+    out["trajectory_started_at"] = state.get("trajectory_started_at") or utc_now()
     return out
 
 
@@ -390,6 +394,17 @@ async def giveup(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     return {"messages": [AIMessage(content=content)]}
 
 
+async def finalize_trajectory(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
+    """所有终态的统一出口：记录成功、失败和只读任务，绝不让记录失败掩盖任务结果。"""
+    record = build_trajectory(state, config)
+    try:
+        append_trajectory(record, trajectory_path(config))
+    except OSError as exc:
+        # 任务已经完成；观测数据写入失败不能反过来让用户得到一次失败任务。
+        record["persistence_error"] = f"{type(exc).__name__}: {exc}"
+    return {"trajectory": record}
+
+
 def build_graph(checkpointer: Any | None = None):
     """建图：planner → coder ↔ tools，并在放开写权限时接上 tester/debugger 闭环。
 
@@ -405,11 +420,12 @@ def build_graph(checkpointer: Any | None = None):
     graph.add_node("debugger", debugger)
     graph.add_node("giveup", giveup)
     graph.add_node("reviewer", reviewer)
+    graph.add_node("finalize_trajectory", finalize_trajectory)
 
     graph.add_edge(START, "planner")
     graph.add_edge("planner", "coder")
     graph.add_conditional_edges(
-        "coder", should_act, {"tools": "tools", "tester": "tester", "end": END}
+        "coder", should_act, {"tools": "tools", "tester": "tester", "end": "finalize_trajectory"}
     )
     graph.add_edge("tools", "coder")
     # 测试通过后不直接 END：先交给 Reviewer 做独立裁决（阶段 12）
@@ -417,8 +433,9 @@ def build_graph(checkpointer: Any | None = None):
         "tester", check_test, {"pass": "reviewer", "retry": "debugger", "giveup": "giveup"}
     )
     graph.add_edge("debugger", "coder")
-    graph.add_edge("giveup", END)
-    graph.add_edge("reviewer", END)
+    graph.add_edge("giveup", "finalize_trajectory")
+    graph.add_edge("reviewer", "finalize_trajectory")
+    graph.add_edge("finalize_trajectory", END)
 
     return graph.compile(checkpointer=checkpointer)
 
