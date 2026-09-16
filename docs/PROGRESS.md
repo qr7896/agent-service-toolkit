@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–19 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8。当前任务是**阶段 20 工程化（Docker / 部署）**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**路线图 §22 的 20 个阶段已全部走完**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -174,7 +174,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 17 | Self-Correction | Graph | Experience-guided loop | ✅ 验收 7/7 |
 | 18 | Benchmark | `evals/` | Agent Evaluation | ✅ 已跑通（n=3） |
 | 19 | Sandbox | `src/agents/workspace.py` | 安全执行 | ✅ 验收 8/8 |
-| 20 | Docker | 后期 | 工程化 | ⏳ |
+| 20 | Docker | `docker/Dockerfile.service.local` + compose 覆盖层 | 工程化 | ✅ 静态 11/11（构建未验证） |
 | 21 | Model Routing（成本感知） | `src/agents/model_router.py` | Cost-Aware Routing | ⏳ **v5 新增** |
 | 22 | Agent 平台（Builder / 编排） | Agent 配置 + 服务层 + 前端 | Platform / Multi-Agent | ⏳ **v5 新增** |
 
@@ -796,6 +796,40 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么“路径必须落在项目内”这条约束不足以代替真正的沙箱？** 因为这条约束只回答了“能不能越界”，没回答“越界以内的破坏怎么办”。Agent 在合法路径上写错内容、改错文件、跑坏配置，同样会污染正在开发的仓库；而且失败任务留下的中间状态需要人工逐个清理。沙箱把“破坏范围”本身变小，也让回收变成一次删除而不是一次代码考古。
 
+### 4.21 魔改十七：容器化（阶段 20）
+
+**先说清楚验证边界**：本机**没有安装 Docker**，所以镜像构建与容器启动**没有验证过**。这一阶段只做能确定性验证的部分（配置文件正确性、挂载点与代码真实路径是否一致、镜像内路径推导是否正确），并在验收脚本里把“未验证”写成一条显式结论。不把没跑过的东西写成跑过了。
+
+**上游已有容器配置，缺的是这个 fork 的现实约束**：仓库自带 `compose.yaml` 与 `docker/Dockerfile.service`，所以本阶段改造成 `docker/Dockerfile.service.local` + `compose.local-models.yaml`（覆盖层），而不是另写一套——覆盖层能让同步上游时保持干净，也把“这个 fork 多了什么”集中在一个文件里。
+
+**最重要的一个发现**：上游镜像把 `src/` **拍平**复制到 `/app/`（`/app/agents/code_tools.py`），而这个项目的路径是从 `__file__` 往上推两层算出来的：
+
+| 镜像 | `code_tools.py` 位置 | `PROJECT_ROOT` 推导结果 | 默认模型路径 |
+|---|---|---|---|
+| 上游 `Dockerfile.service` | `/app/agents/code_tools.py` | **`/`** ← 失准 | `/models/bge-m3` |
+| 本 fork `Dockerfile.service.local` | `/app/src/agents/code_tools.py` | **`/app`** ✅ | `/app/models/bge-m3` ✅ |
+
+`PROJECT_ROOT` 变成 `/` 意味着 Coding Agent 的工作区根成了容器的根目录——`list_files` / `write_file` 的路径约束虽然还在，但约束的边界已经不是项目了。所以本地镜像**保留 `src/` 层级**，让所有由 `__file__` 推导出的路径与本地运行一致。这条判断不是推理出来的，是脚本解析 Dockerfile 的 `COPY` + `WORKDIR` 算出来的（见 `scripts/check_container_config.py`）。
+
+**另外两处真实缺口**（同样是从代码里查出来的，不是猜的）：
+
+1. **`sentence-transformers` / `torch` 不在 `uv.lock` 里**——它们是历史上用 pip 装进 venv 的。上游镜像跑 `uv sync --frozen` 不会带它们，容器里的 RAG 会直接报错。本地镜像显式补装，并且用 CPU 版 torch 索引避免拉进 CUDA 运行库。
+2. **`git` 命令缺失**——`git_diff` 工具依赖它，`python:slim` 默认没有。本地镜像用 apt 补上（顺带装 `curl` 给 compose 健康检查用）。
+
+**挂载策略**（三样都不进镜像）：
+
+| 宿主机 | 容器内 | 为什么不能打进镜像 |
+|---|---|---|
+| `models/bge-m3`（约 2.3 GB） | `/app/models/bge-m3`（只读） | 镜像体积与重新下载成本；模型与代码的发布节奏也不同 |
+| `src/chroma_db` | `/app/src/chroma_db` | 它是灌库产生的数据，服务用相对 CWD 的 `./chroma_db` 读取 |
+| `.codex` | `/app/.codex` | 轨迹 / 经验库 / 任务沙箱，属于运行期数据，重建容器不该丢 |
+
+还有一个容易踩的坑：`.env` 里的 `EMBEDDING_MODEL_PATH` 是 Windows 绝对路径（`D:/codex/working/models/bge-m3`），`env_file` 会把它原样带进容器，导致 RAG 报“路径不存在”。覆盖层里显式改成 `/app/models/bge-m3`。
+
+**验收**：`lg_practice/day20_container_check.py` **11/11**（文件齐备、COPY 源存在、上游失准 / 本地正确、覆盖层指向、三处挂载、环境变量覆盖、两个依赖缺口、静态校验整体通过、Docker 缺失这条如实记录）。
+
+**过关题：为什么模型权重、向量库、经验库这三样东西不该打进镜像里？** 三样都是**数据**而不是**代码**：模型权重体积大且与代码发布节奏无关，打进镜像会让每次改一行代码都重新搬运几 GB；向量库和经验库是运行期产物，会随每次任务不断变化，固化进镜像等于每次运行都从过去的快照开始，容器一重建就把新积累的经验丢掉。把它们挂载出来，镜像才只承载“可复现的运行环境”这一件事。
+
 ---
 
 ## 5. 文件清单
@@ -817,6 +851,9 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `evals/coding_benchmark.py` | **新增** | 阶段 18 基准：同批任务跑两遍 + 独立判分 + 指标汇总 |
 | `src/agents/workspace.py` | **新增** | 任务级工作区隔离：整树复制、回收自防、沙箱环境变量 |
 | `scripts/sandboxed_task.py` | **新增** | 在隔离副本里跑一次任务（`--no-agent` 只验隔离） |
+| `docker/Dockerfile.service.local` | **新增** | 保留 src/ 层级的服务镜像：补 git、CPU torch、sentence-transformers |
+| `compose.local-models.yaml` | **新增** | compose 覆盖层：挂载模型 / 向量库 / .codex，覆盖 Windows 模型路径 |
+| `scripts/check_container_config.py` | **新增** | 容器配置静态校验（含镜像内 `__file__` 路径推导） |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
@@ -847,6 +884,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day16_experience_retrieval_check.py` | Experience Retrieval 的 11 项验收脚本（真实语义召回 / 无命中不变 / 降级 / 下限） |
 | `day17_debug_experience_check.py` | 经验驱动自修复的 7 项验收脚本（注入 / 无命中逐字不变 / State 累积 / 降级） |
 | `day19_sandbox_check.py` | 工作区隔离的 8 项验收脚本（零污染 / 越权仍拒 / 回收自防 / 重建无残留） |
+| `day20_container_check.py` | 容器化的 11 项静态验收脚本（挂载 / 路径推导 / 依赖缺口 / 未验证如实记录） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -907,6 +945,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十四：Experience-Guided Self-Correction（debugger 检索同类经验并按成败分组，验收 7/7）
 - [x] 魔改十五：Coding Benchmark（Baseline vs +Experience 同批任务两遍跑，独立判分，n=3 见 §4.19）
 - [x] 魔改十六：Workspace Sandbox（整树复制 + 副本内执行 + 完整回收，主工作区零污染，验收 8/8）
+- [x] 魔改十七：容器化（保留 src/ 层级的镜像 + compose 覆盖层 + 静态校验 11/11，构建未验证）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -972,25 +1011,24 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 17 Experience-Guided Self-Correction**：验收 7/7，设计与过关题回答见 §4.18
 - **阶段 18 Coding Benchmark**：已跑通，结果与局限见 §4.19；报告在 `.codex/benchmark/report.json`
 - **阶段 19 Workspace Sandbox**：验收 8/8，设计与过关题回答见 §4.20
+- **阶段 20 容器化**：静态验收 11/11，设计与“未验证”边界见 §4.21
 
-### 9.2 下一步（阶段 20）：工程化 / 部署
+### 9.2 后续（v5 新增的 21–22，排在 Evaluation 之后）
 
-**已完成的阶段 19 结论**：任务现在跑在整树副本里，主工作区零污染，副本可整体回收，越权路径在副本内同样被拒。
+路线图 §22 的 20 个阶段已经走完（阶段 18 Evaluation 已完成，因此 v5 里“排在 Evaluation 之后”的两个新方向现在才轮到）。
 
-**阶段 20 的目标**：把“能在我机器上跑”推进到“换个环境也能跑”——这是路线图最后一格工程化。
+**21 · Cost-Aware Adaptive Model Routing**：按任务复杂度 / 失败类型 / 上下文规模 / 剩余预算选模型，Failure Router 走 `Local → Cheap → Strong` 升级链，State 里加 `llm_calls` / `estimated_tokens` / `budget` / `model_tier`。硬约束：必须用 A/B 实验证明“成功率接近 + 成本更低”，否则不上。
 
-**本阶段要做的**：
+**22 · 从 Knowledge Agent 到可编排 Agent 平台**：把 Agent 从硬编码字典改成可配置数据（Prompt / Model / Knowledge / Tools / Skills / Workflow），再做 Agent Builder 界面与 Workflow 编排。这是架构级改造，不是加个页面——当前 `agents.py` 里的注册表是写死的 Python 模块。
 
-- 为服务与前端补 Dockerfile / compose，把 `run_service.py` + `streamlit_app.py` 的启动方式固化
-- 处理本地依赖的现实约束：BGE-M3 模型体积、`.env` 注入方式、`chroma_db` 与 `.codex` 的数据卷挂载
-- 明确哪些东西**不进镜像**（模型权重、向量库、经验库、轨迹数据），只挂载
-- 验收要能证明：容器里能起来服务、能回答普通问题；重启后挂载的数据还在
+**两件待补的账**（不隐藏）：
 
-**边界（v2 §29 明确不做）**：不做复杂云 Sandbox，不上 K8s，不做多租户隔离。
+- **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。
+- **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。
 
-**过关题**：为什么模型权重、向量库、经验库这三样东西不该打进镜像里？
+**过关题**：Model Routing 为什么必须用“成功率接近 + 成本更低”两个条件同时约束，只看成本下降行不行？
 
-**提交信息**：`chore(deploy): containerize the service`
+**提交信息**：`feat(coding): route models by cost and difficulty`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

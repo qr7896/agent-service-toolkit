@@ -1,0 +1,48 @@
+# 阶段 20：适配"本地 BGE-M3 + 本地向量库 + 本地经验库"的服务镜像。
+#
+# 为什么不直接用上游的 docker/Dockerfile.service：
+#   上游把 src/ 拍平复制到 /app/（例如 /app/agents/code_tools.py），而本项目里
+#   `PROJECT_ROOT = Path(__file__).resolve().parents[2]`（code_tools.py）与
+#   `parents[2] / "models" / "bge-m3"`（tools.py）都是从文件位置往上推两层算出来的。
+#   /app/agents/code_tools.py 的 parents[2] 是 `/`，于是：
+#     - Coding Agent 的工作区根变成容器的根目录（路径约束形同虚设的概念边界被放大）
+#     - 默认模型路径变成 /models/bge-m3
+#   所以这里保留仓库原本的 src/ 层级，让所有由 __file__ 推导出来的路径与本地一致。
+#
+# 另外两处现实约束：
+#   1) sentence-transformers / torch 是历史上 pip 装进 venv 的，没有进 uv.lock，
+#      不显式安装的话容器里的 RAG 会直接报错；
+#   2) git_diff 工具依赖 git 命令，slim 镜像默认没有 git。
+FROM python:3.13.14-slim
+
+WORKDIR /app
+
+ENV UV_PROJECT_ENVIRONMENT="/usr/local/" \
+    UV_COMPILE_BYTECODE=1 \
+    PYTHONPATH=/app/src \
+    PYTHONUNBUFFERED=1
+
+COPY pyproject.toml .
+COPY uv.lock .
+RUN pip install --no-cache-dir uv==0.12.5 \
+ && uv sync --frozen --no-install-project --no-dev
+
+# git_diff / run_tests 需要 git；curl 供 compose 健康检查使用
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git curl \
+ && rm -rf /var/lib/apt/lists/*
+
+# 本地向量模型所需的依赖（CPU 版 torch，避免拉进 CUDA 运行库）
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch \
+ && pip install --no-cache-dir sentence-transformers
+
+# 保留 src/ 层级：所有 __file__ 推导出的路径才与本地运行一致
+COPY src/ ./src/
+COPY scripts/ ./scripts/
+
+# 与本地一致：服务在 src 目录下启动（chroma_db 用的是相对 CWD 的 ./chroma_db）
+WORKDIR /app/src
+
+EXPOSE 8080
+
+CMD ["python", "run_service.py"]

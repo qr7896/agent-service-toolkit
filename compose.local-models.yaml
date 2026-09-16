@@ -1,0 +1,30 @@
+# 阶段 20：本地模型 / 本地数据的 compose 覆盖层。
+#
+# 为什么用 override 而不是改上游 compose.yaml：上游文件会在同步上游时被覆盖，
+# 覆盖层能保持 rebase 干净，也把"这个 fork 多了什么"集中在一个文件里。
+#
+# 用法：
+#   docker compose -f compose.yaml -f compose.local-models.yaml up --build
+#
+# 三件必须从宿主机挂进来的东西（都不该打进镜像）：
+#   models/bge-m3  —— 约 2.3 GB 的本地向量模型
+#   src/chroma_db  —— 已经灌好的知识库
+#   .codex         —— 轨迹 / 经验库 / 任务沙箱
+services:
+  agent_service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.service.local
+    environment:
+      # .env 里写的是 Windows 路径（D:/codex/working/models/bge-m3），容器里不存在，
+      # 必须显式覆盖成容器内的挂载点；不覆盖的话 RAG 会报"路径不存在"。
+      - EMBEDDING_MODEL_PATH=/app/models/bge-m3
+    volumes:
+      - ./privatecredentials:/privatecredentials
+      - ${BGE_M3_HOST_PATH:-D:/codex/working/models/bge-m3}:/app/models/bge-m3:ro
+      - ./src/chroma_db:/app/src/chroma_db
+      - ./.codex:/app/.codex
+
+  streamlit_app:
+    volumes:
+      - ./.codex:/app/.codex
