@@ -22,6 +22,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import sqlite3
 from typing import Any, Literal
 
@@ -40,13 +41,22 @@ from agents.code_tools import (
     write_file,
 )
 from agents.coding_planner import planner
+from agents.coding_memory import format_experience_context, recall_experiences
 from agents.experience import record_trajectory
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
-from agents.trajectory import append_trajectory, build_trajectory, trajectory_path, utc_now
+from agents.trajectory import (
+    append_trajectory,
+    build_trajectory,
+    human_task,
+    trajectory_path,
+    utc_now,
+)
 from core import get_model, settings
 
 MAX_RETRIES = 3
+
+logger = logging.getLogger(__name__)
 
 # 只读工具：任何时候都允许
 READ_TOOLS = [search_code, read_file, list_files, git_diff, run_tests]
@@ -370,12 +380,28 @@ def check_test(state: CodingState) -> Literal["pass", "retry", "giveup"]:
     return "retry"
 
 
+def _debug_experience_context(state: CodingState, config: RunnableConfig) -> tuple[str, list[dict[str, Any]]]:
+    """失败后检索同类经验；检索本身出问题也只降级，绝不影响修复流程。"""
+    task = human_task(state.get("messages") or [])
+    if not task:
+        return "", []
+    try:
+        hits, retrieval = recall_experiences(task, config)
+    except Exception:  # 经验库损坏等异常不该让重试路径崩掉
+        logger.warning("experience recall failed in debugger", exc_info=True)
+        return "", []
+    return (
+        format_experience_context(hits, mode="debug"),
+        [{**hit, "retrieval": retrieval, "phase": "debug"} for hit in hits],
+    )
+
+
 async def debugger(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     """把失败信息整理成"给 coder 的修复指令"，并附上当前 diff 让改动可见。"""
     result = state.get("test_result") or {}
     attempts = int(state.get("attempts") or 0)
     diff = str(git_diff.invoke({})) if _allow_write(config) else "（无写权限，未取 diff）"
-    content = (
+    base = (
         f"第 {attempts} 次尝试的测试**没有通过**，需要你继续修复。\n"
         f"测试命令：{result.get('command')}\n"
         f"状态：{result.get('status')}（exit_code={result.get('exit_code')}）\n"
@@ -385,7 +411,11 @@ async def debugger(state: CodingState, config: RunnableConfig) -> dict[str, Any]
         "请先定位失败原因（引用具体的 `文件名:行号`），再用 edit_file 做最小修复；"
         "不要重写整个文件，也不要改动与失败无关的代码。"
     )
-    return {"messages": [HumanMessage(content=content)]}
+    context, hits = _debug_experience_context(state, config)
+    # 无命中时 content 与阶段 11 的提示词逐字一致
+    content = f"{base}\n\n{context}" if context else base
+    prior = state.get("experience_hits") or []
+    return {"messages": [HumanMessage(content=content)], "experience_hits": [*prior, *hits]}
 
 
 async def giveup(state: CodingState, config: RunnableConfig) -> dict[str, Any]:

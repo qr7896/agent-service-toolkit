@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–16 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11。当前任务是**阶段 17 Experience-Guided Self-Correction**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–17 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7。当前任务是**阶段 18 Benchmark**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -171,7 +171,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 14 | Trajectory | `src/agents/trajectory.py` | Evaluation | ✅ 验收 7/7 |
 | 15 | Experience Memory | `src/agents/experience.py` | Store | ✅ 验收 11/11 |
 | 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ✅ 验收 11/11 |
-| 17 | Self-Correction | Graph | Experience-guided loop | ⏳ |
+| 17 | Self-Correction | Graph | Experience-guided loop | ✅ 验收 7/7 |
 | 18 | Benchmark | `evals/` | Agent Evaluation | ⏳ |
 | 19 | Sandbox | 后期 | 安全执行 | ⏳ |
 | 20 | Docker | 后期 | 工程化 | ⏳ |
@@ -722,6 +722,20 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么经验检索必须区分“这么做能成功”和“这么做会失败”？** 两种经验的用法正好相反：accepted 是“可以照这个思路做”，rejected 是“这条路走不通，别重复踩”。如果混在一起当正面示范喂给模型，等于把已知的坑重新推荐一遍——失败经验的价值恰恰在于它标出了不该走的方向，以及（配合轨迹）当时失败在哪一步。
 
+### 4.18 魔改十四：Experience-Guided Self-Correction（阶段 17）
+
+**目标**：阶段 16 只在“动手之前”用经验；本阶段把经验推进到“已经失败之后”——`debugger` 生成修复指令前先检索同类历史任务，按“后来被修好过”与“当时最终没修好”分组附在失败信息后面。
+
+**为什么 debug 用的是任务而不是失败堆栈**：阶段 16 实测过“往被向量化的文本里塞额外字段会稀释语义”，而索引里存的文档就是任务文本。拿失败输出（`assert 3 == 4` 这类）去搜任务库属于跨分布查询，命中质量没法保证。所以 debug 期的查询仍然用当前任务，经验的价值体现在**同一个任务上别人走通了哪条路、哪条路走不通**。
+
+**三条硬约束**：① 无命中时 `debugger` 的提示词与阶段 11 **逐字一致**（验收脚本直接比对整段字符串）；② 经验是附加段，原文一字不改，且经验不能覆盖真实测试结果——测试说没过就是没过；③ `MAX_RETRIES` 与 `giveup` 逻辑完全没动，经验不会变成“再试一次”的借口。
+
+**可观测**：debug 期命中写进 State 的 `experience_hits`，标 `phase="debug"` 与 `retrieval`（vector / keyword），并**追加**在规划期命中之后而不是覆盖——阶段 18 做 A/B 时，能直接看出某次任务是规划期就有经验、还是失败后才有。
+
+**验收**：`lg_practice/day17_debug_experience_check.py` **7/7**（无命中逐字不变、有命中追加不改原文、可回链、State 累积、debug 措辞区分、关键词降级）。阶段 14 7/7、阶段 15 11/11、阶段 16 11/11 同步回归通过。
+
+**过关题：为什么“失败经验”要配上“后来怎么修好的”才真正有用？** 只知道“这样会失败”只能排除一条路，却不知道往哪走；配上后来成功的改动，经验才从“警示牌”变成“绕行路线”。这也是为什么经验条目要同时存 `outcome` 和 `changed_paths`，并且两类经验在提示词里分组呈现。
+
 ---
 
 ## 5. 文件清单
@@ -768,6 +782,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day14_trajectory_check.py` | Trajectory 的 7 项验收脚本（持久化 / 脱敏 / 失败路径 / 聚合） |
 | `day15_experience_check.py` | Experience Memory 的 11 项验收脚本（派生 / 去重 / 回链 / 脱敏 / 召回 / 接线） |
 | `day16_experience_retrieval_check.py` | Experience Retrieval 的 11 项验收脚本（真实语义召回 / 无命中不变 / 降级 / 下限） |
+| `day17_debug_experience_check.py` | 经验驱动自修复的 7 项验收脚本（注入 / 无命中逐字不变 / State 累积 / 降级） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -824,6 +839,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十一：Trajectory（统一终态收口 + JSONL + 脱敏 + 基础聚合，验收 7/7）
 - [x] 魔改十二：Experience Memory（轨迹→经验派生 + SQLite 经验库 + 回链去重，验收 11/11）
 - [x] 魔改十三：Experience Retrieval（BGE-M3 + Chroma 语义召回 + Planner 注入 + 无命中零影响，验收 11/11）
+- [x] 魔改十四：Experience-Guided Self-Correction（debugger 检索同类经验并按成败分组，验收 7/7）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -886,22 +902,24 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 14 Trajectory**：验收 7/7，设计与过关题回答见 §4.15
 - **阶段 15 Experience Memory**：验收 11/11，设计与过关题回答见 §4.16
 - **阶段 16 Experience Retrieval**：验收 11/11，设计与过关题回答见 §4.17
+- **阶段 17 Experience-Guided Self-Correction**：验收 7/7，设计与过关题回答见 §4.18
 
-### 9.2 下一步（阶段 17）：Experience-Guided Self-Correction（让经验进入修复环节）
+### 9.2 下一步（阶段 18）：Benchmark（证明经验真的让 Agent 变好了）
 
-**目标**：阶段 16 只把经验用在了“开始规划之前”。本阶段把经验推进到“已经失败之后”——`debugger` 节点重试时，用失败摘要检索同类失败的历史经验，看看上次是怎么修好的。
+**目标**：前面 17 个阶段都在“搭系统”，阶段 18 要回答一个更硬的问题：**加入经验记忆之后，Agent 到底有没有变好？** 这需要同一批任务跑两次（Baseline vs +Experience），而不是拿单个案例讲故事。
 
 **本阶段要做的**：
 
-- `debugger` 节点在生成修复建议前，用「任务 + 本次失败摘要」检索经验
-- 检索结果按“同类失败后来被修好”（accepted）与“同类失败仍然失败”（rejected）分组注入
-- 仍是同一套零影响约束：无命中时 `debugger` 的提示词与阶段 11 逐字一致
+- `evals/` 下准备 20~50 个可自动判定成败的 Coding Task（每个任务带初始仓库状态 + 期望的测试）
+- 两组配置跑同一批任务：`record_experience=False`（基线）与开启经验检索
+- 指标从轨迹里聚合（阶段 14 的 `scripts/trajectory_metrics.py` 已经能算一部分）：任务成功率、首次通过率、平均 attempts、平均工具调用数、平均耗时、人工干预次数
+- 明确记录**统计口径与样本量**，小样本只能作为方向性证据，不能宣称显著性
 
-**验收标准**：修复环节能拿到相关经验且可回链 `trajectory_id`；无命中时行为不变；经验不得覆盖真实测试结果；`MAX_RETRIES` 上限不得被经验绕过。
+**当前阻塞**：DeepSeek 账号余额不足（`402 Insufficient Balance`），任何真实 LLM 任务都无法执行，因此 Benchmark 暂时跑不出数据。单元级验收（14/15/16/17）都不花额度，已全部通过；等额度恢复后即可直接跑基准。
 
-**过关题**：为什么“失败经验”要配上“后来怎么修好的”才真正有用？
+**过关题**：为什么 Benchmark 必须用“同一批任务跑两次”，而不能用“加了经验之后挑几个成功案例”来证明系统变好了？
 
-**提交信息**：`feat(coding): feed past failures into the debug loop`
+**提交信息**：`feat(evals): benchmark baseline vs experience memory`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

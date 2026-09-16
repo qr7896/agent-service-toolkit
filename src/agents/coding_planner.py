@@ -241,5 +241,5 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     plan = _validate_plan(parsed)
     return {
         "plan": plan.model_dump(),
-        "experience_hits": [{**hit, "retrieval": retrieval} for hit in hits],
+        "experience_hits": [{**hit, "retrieval": retrieval, "phase": "planning"} for hit in hits],
     }

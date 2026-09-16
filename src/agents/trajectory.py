@@ -24,11 +24,14 @@ def utc_now() -> str:
     return datetime.now(UTC).isoformat()
 
 
-def _human_task(messages: list[Any]) -> str:
+def human_task(messages: list[Any]) -> str:
     for message in messages:
         if message.__class__.__name__ == "HumanMessage":
             return str(getattr(message, "content", "") or "")
     return ""
+
+
+_human_task = human_task
 
 
 def _tool_calls(messages: list[Any]) -> list[dict[str, Any]]:

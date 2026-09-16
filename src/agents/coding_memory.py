@@ -51,24 +51,37 @@ def experience_document(experience: Experience) -> str:
     return experience.task
 
 
-def format_experience_context(hits: list[dict[str, Any]]) -> str:
-    """把召回结果渲染成给 Planner 的上下文；空列表返回空串（无操作）。"""
+_HEADERS = {
+    "planning": "历史经验（来自真实任务轨迹，可用 trajectory_id 追溯；不是当前仓库的事实）：",
+    "debug": "同类任务的历史经验（来自真实轨迹，可用 trajectory_id 追溯；只作修复方向参考）：",
+}
+
+
+def format_experience_context(hits: list[dict[str, Any]], mode: str = "planning") -> str:
+    """把召回结果渲染成上下文；空列表返回空串（对调用方完全无操作）。"""
     if not hits:
         return ""
-    lines = [
-        "历史经验（来自真实任务轨迹，可用 trajectory_id 追溯；不是当前仓库的事实）："
-    ]
+    lines = [_HEADERS.get(mode, _HEADERS["planning"])]
     for i, hit in enumerate(hits, start=1):
+        paths = ", ".join(hit.get("changed_paths") or [])
         if hit.get("outcome") == ACCEPTED:
-            verdict = "这类做法跑通了测试，可以作为思路参考"
+            if mode == "debug":
+                verdict = f"同类问题后来被修好过（改动：{paths}）" if paths else "同类问题后来被修好过"
+            else:
+                verdict = "这类做法跑通了测试，可以作为思路参考"
         else:
-            verdict = f"这类做法失败过（{hit.get('failure_type') or 'unknown'}），应主动避开"
+            reason = hit.get("failure_type") or "unknown"
+            verdict = (
+                f"同类问题当时最终没修好（{reason}），避免重复这条路"
+                if mode == "debug"
+                else f"这类做法失败过（{reason}），应主动避开"
+            )
         detail = "; ".join(filter(None, [hit.get("test_summary"), hit.get("review_summary")]))
         lines.append(
             f"{i}. [{hit.get('outcome')}] {hit.get('task')}\n"
             f"   - {verdict}\n"
             f"   - 证据：trajectory_id={hit.get('trajectory_id')}"
-            + (f"；涉及 {', '.join(hit.get('changed_paths') or [])}" if hit.get("changed_paths") else "")
+            + (f"；涉及 {paths}" if paths else "")
             + (f"\n   - 结果摘要：{detail}" if detail else "")
         )
     return "\n".join(lines)
