@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**路线图 §22 的 20 个阶段已全部走完**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21）。v5 新增的**阶段 21 基础成本控制**也已完成（10/10，见 §4.22），当前任务是**阶段 22 可编排 Agent 平台**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**路线图全部阶段已完成**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21），阶段 21 基础成本控制 10/10（§4.22），阶段 22 可配置 Agent 9/9（§4.23）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -848,6 +848,35 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么成本控制不应该顺手去改“任务什么时候放弃”？** 因为那是两件性质不同的决定：成本控制的目标是“在给定质量下少花钱”，而放弃任务的目标是“确定不再有收益”。把两者混在一起，会出现“因为省钱所以把任务判失败”这种说不清责任的行为——用户看到的是任务失败，原因却是预算策略。所以这里预算只影响用哪档模型，重试与放弃仍旧归 `MAX_RETRIES` 和 `giveup` 管，两者互不越权。
 
+### 4.23 魔改十九：可配置 Agent（阶段 22）
+
+**先说清楚做到了哪一步**：v5 对 Agent 平台的完整设想是「Agent 配置化 + Agent Builder 界面 + Workflow 编排 + Multi-Agent」。本阶段完成的是**第一块地基——把 Agent 从写死的 Python 模块变成可校验的数据**；界面与编排没有做，也不该在这一步假装做了。理由：`agents.py` 原本是一个写死的字典，每个 Agent 都是独立的 Python 模块，想改系统提示词、换工具集合、调模型都要改代码，这时候加一个配置界面只是在给硬编码套壳。
+
+**数据形态**（`config/agents/*.yaml` → `src/agents/agent_config.py`）：
+
+| 字段 | 作用 | 校验 |
+|---|---|---|
+| `key` / `description` | 注册表键与给人看的说明 | 必填、同目录内不得重名 |
+| `system_prompt` | 这个 Agent 的角色与规则 | 必填（空提示词的 Agent 没有意义） |
+| `tools` | 允许使用的工具名（白名单） | **未知工具名当场报错并列出可用工具** |
+| `model` | 可选，不填则用运行时传入的模型 | — |
+| `max_tool_rounds` | 工具循环上限（1–50） | 越界被 Pydantic 拒绝 |
+
+**编译**（`src/agents/declarative_agent.py`）：配置被编译成一张最小的通用图 `START → model ⇄ tools → END`。两个细节是踩过坑才写对的：
+
+1. **不在“工具还没执行”的状态下结束**：循环上限的检查放在 `tools` 之后。如果写在 `model` 之后截断，最后一条消息会是“要调工具但没人执行”的残缺消息——这正是项目踩坑记录里第 4 条（DeepSeek 400）的同类问题。验收脚本专门断言了收尾时最后一条消息是 `ToolMessage`。
+2. **白名单校验两次**：加载配置时拦一次，运行时再拦一次；越权调用只得到一条 ERROR 的 `ToolMessage`，不会真的执行。
+
+**平台化的第一版只开放只读工具**（`search_code` / `read_file` / `list_files` / `git_diff`）。把写权限交给配置文件是另一个量级的风险，需要先有审批与沙箱兜底——而这两样分别在阶段 13 与阶段 19 才有，所以这里刻意不开。
+
+**合并策略**：配置型 Agent 与内置 Agent 合并进同一个注册表，`key` 冲突直接报错，不允许悄悄覆盖内置实现。没有配置文件时 `_configurable_agents()` 返回空字典，行为与以前完全一致（`CONFIG_AGENTS=0` 可以整体关闭）。当前注册表 11 个内置 + 1 个配置型 = 12 个，`DEFAULT_AGENT` 仍是 `research-assistant`。
+
+**为什么配置错误要“启动就炸”**：配置系统里静默降级比启动失败更贵——你会以为那个 Agent 还在，直到线上才发现它少了一个工具或者根本没注册。所以缺字段、未知工具、key 重名都会带着文件名抛错。
+
+**验收**：`lg_practice/day22_agent_config_check.py` **9/9**，全程不调用 LLM（工具循环用打桩模型驱动）。覆盖：示例配置解析、未知工具报错带可用清单、缺字段报错带文件名、重名拒绝、目录缺失返回空、图结构正确、循环上限生效且收尾合法、注册表合并、白名单不含写工具。
+
+**过关题：Agent 平台化为什么必须先把 Agent 变成可配置数据，而不能靠加一个配置界面解决？** 界面只是数据的编辑器；如果底层仍是写死的 Python 模块，界面能改的东西只能是它背后已经存在的那几个参数，改提示词、换工具、调模型依旧要动代码。先把 Agent 表达成「提示词 + 模型 + 工具 + 上限」这样一份可校验的数据，界面才有东西可编辑，编排才有东西可组合，校验与权限（比如只读白名单）也才有落点。
+
 ---
 
 ## 5. 文件清单
@@ -869,6 +898,9 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `evals/coding_benchmark.py` | **新增** | 阶段 18 基准：同批任务跑两遍 + 独立判分 + 指标汇总 |
 | `src/agents/workspace.py` | **新增** | 任务级工作区隔离：整树复制、回收自防、沙箱环境变量 |
 | `src/agents/model_router.py` | **新增** | 基础成本控制：调用/估算记账、免费档优先、预算冻结升级 |
+| `src/agents/agent_config.py` | **新增** | Agent 配置数据定义与校验（含工具白名单、重名拒绝） |
+| `src/agents/declarative_agent.py` | **新增** | 把 Agent 配置编译成 `model ⇄ tools` 图 |
+| `config/agents/repo-explainer.yaml` | **新增** | 示例配置型 Agent（只读代码讲解） |
 | `scripts/sandboxed_task.py` | **新增** | 在隔离副本里跑一次任务（`--no-agent` 只验隔离） |
 | `docker/Dockerfile.service.local` | **新增** | 保留 src/ 层级的服务镜像：补 git、CPU torch、sentence-transformers |
 | `compose.local-models.yaml` | **新增** | compose 覆盖层：挂载模型 / 向量库 / .codex，覆盖 Windows 模型路径 |
@@ -905,6 +937,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day19_sandbox_check.py` | 工作区隔离的 8 项验收脚本（零污染 / 越权仍拒 / 回收自防 / 重建无残留） |
 | `day20_container_check.py` | 容器化的 11 项静态验收脚本（挂载 / 路径推导 / 依赖缺口 / 未验证如实记录） |
 | `day21_model_routing_check.py` | 成本控制的 10 项验收脚本（零影响 / 阶梯 / 记账 / 预算冻结 / 打桩接线） |
+| `day22_agent_config_check.py` | 可配置 Agent 的 9 项验收脚本（校验 / 图结构 / 循环上限 / 注册表合并） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -967,6 +1000,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十六：Workspace Sandbox（整树复制 + 副本内执行 + 完整回收，主工作区零污染，验收 8/8）
 - [x] 魔改十七：容器化（保留 src/ 层级的镜像 + compose 覆盖层 + 静态校验 11/11，构建未验证）
 - [x] 魔改十八：基础成本控制（记账 + 免费档优先 + 预算冻结升级，最高档 flash，验收 10/10）
+- [x] 魔改十九：可配置 Agent（YAML 定义 + 编译成图 + 只读白名单 + 注册表合并，验收 9/9）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -1034,23 +1068,24 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 19 Workspace Sandbox**：验收 8/8，设计与过关题回答见 §4.20
 - **阶段 20 容器化**：静态验收 11/11，设计与“未验证”边界见 §4.21
 - **阶段 21 基础成本控制**：验收 10/10，设计与过关题回答见 §4.22
+- **阶段 22 可配置 Agent**：验收 9/9，设计与“做到哪一步”的边界见 §4.23
 
-### 9.2 后续（v5 新增的 22，排在 Evaluation 之后）
+### 9.2 后续（路线图全部完成，剩下的是两笔待补的账）
 
 路线图 §22 的 20 个阶段已经走完（阶段 18 Evaluation 已完成，因此 v5 里“排在 Evaluation 之后”的两个新方向现在才轮到）。
 
 **21 · 基础成本控制**：已完成（§4.22）。最高档只到 `deepseek-v4-flash`。
 
-**22 · 从 Knowledge Agent 到可编排 Agent 平台**（当前任务）：把 Agent 从硬编码字典改成可配置数据（Prompt / Model / Knowledge / Tools / Skills / Workflow），再做 Agent Builder 界面与 Workflow 编排。这是架构级改造，不是加个页面——当前 `agents.py` 里的注册表是写死的 Python 模块。
+**22 · 可配置 Agent**：第一块地基已完成（§4.23）——Agent 已经是可校验的数据并能编译成图。**剩余未做**：Agent Builder 界面、Workflow 编排、Multi-Agent 协同。这三样都建立在“Agent 是可配置数据”之上，现在才有条件做。
 
 **两件待补的账**（不隐藏）：
 
 - **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。
 - **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。
 
-**过关题**：Agent 平台化为什么必须先把 Agent 从“写死的 Python 模块”变成“可配置的数据”，而不能靠加一个配置界面解决？
+**过关题**：如果下一步要做 Agent Builder 界面，为什么必须先给配置加“工具白名单 + 权限分级”，而不是先把界面做出来？
 
-**提交信息**：`feat(platform): make agents configurable`
+**提交信息**：`feat(platform): add an agent builder UI`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 
@@ -1065,7 +1100,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | 18 Benchmark | `evals/` + 20~50 个任务 | 对比 Baseline 与 "+Experience" 的成功率、平均尝试次数、工具调用数、测试通过率 |
 | 19–20 Sandbox / Docker | 隔离执行环境 | 先做路径限制 + git diff，再考虑 Docker / WSL2 / Worktree |
 | 21 **Model Routing**（v5 新增） | `src/agents/model_router.py` | ✅ 验收 10/10：最高档只到 `deepseek-v4-flash`，只做记账 + 预算冻结升级（见 §4.22） |
-| 22 **Agent 平台**（v5 新增） | Agent 配置化 + Agent Builder 界面 + Workflow 编排 + Multi-Agent | 把 Agent 从"硬编码模块"变成"可配置数据"（Prompt / Model / Knowledge / Tools / Skills / Workflow）；AICoding Agent 变成可被其他 Agent 调用的执行能力 |
+| 22 **Agent 平台**（v5 新增） | `agent_config.py` + `declarative_agent.py` + `config/agents/` | ✅ 验收 9/9：Agent 已可配置化（Prompt / 模型 / 工具 / 轮数上限）；界面与编排未做，见 §4.23 |
 
 **明确不做**（v2 §29）：整体复制 Open SWE、接 Slack / Linear / GitHub App、做 Dashboard、做 QLoRA / KTO、复杂云 Sandbox、多 Agent 大拆分、一次加 20 个工具。
 
