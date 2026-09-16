@@ -1,0 +1,15 @@
+# 条件分支示例：需求里提到报错/bug 就走代码定位，否则走普通问答。
+# 条件用确定性关键词匹配，不会为了"走哪条分支"再花一次模型调用。
+key: branch-on-error
+description: 需求含报错/bug 关键词时走代码定位，否则走通用问答。
+mode: conditional
+condition:
+  contains: ["报错", "异常", "bug", "失败"]
+  text: input
+then:
+  - agent: repo-explainer
+    name: locate
+    input_template: "用户描述的故障：{input}\n请定位相关代码并给出文件路径与行号。"
+otherwise:
+  - agent: chatbot
+    name: answer

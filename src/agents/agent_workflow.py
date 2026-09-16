@@ -38,19 +38,40 @@ class WorkflowStep(BaseModel):
     input_template: str = Field(default="{input}", description="支持 {input} / {previous}")
 
 
+class Condition(BaseModel):
+    """确定性条件：命中关键词即成立。不用模型判断——分支走向不该再花一次调用。"""
+
+    contains: list[str] = Field(default_factory=list, description="任一关键词命中即成立")
+    text: Literal["input", "previous"] = Field(default="previous", description="拿哪段文本匹配")
+
+
 class WorkflowConfig(BaseModel):
     key: str
     description: str = ""
-    mode: Literal["sequential", "parallel", "router"] = "sequential"
+    mode: Literal[
+        "sequential", "parallel", "router", "conditional", "loop", "hierarchy"
+    ] = "sequential"
     steps: list[WorkflowStep] = Field(default_factory=list)
     candidates: list[str] = Field(default_factory=list, description="router 模式的候选 Agent")
     routing_prompt: str = Field(default="", description="router 模式交给 supervisor 的选人规则")
+    condition: Condition | None = Field(default=None, description="conditional：命中则走 then")
+    then: list[WorkflowStep] = Field(default_factory=list)
+    otherwise: list[WorkflowStep] = Field(default_factory=list)
+    until: Condition | None = Field(default=None, description="loop：命中则停止")
+    max_iterations: int = Field(default=3, ge=1, le=20)
+    supervisor_prompt: str = Field(default="", description="hierarchy：主管的派活规则")
+    workers: list[str] = Field(default_factory=list, description="hierarchy：可被派的 worker")
+    max_rounds: int = Field(default=3, ge=1, le=20)
 
 
 class WorkflowState(MessagesState):
     step_outputs: list[str]
     workflow_input: str
     chosen: str
+    pending_task: str
+    iterations: int
+    rounds: int
+    transcript: list[str]
 
 
 def render_template(template: str, user_input: str, previous: str) -> str:
@@ -76,8 +97,21 @@ def user_input(state: dict[str, Any]) -> str:
 
 
 def referenced_agents(config: WorkflowConfig) -> list[str]:
-    names = [step.agent for step in config.steps] or list(config.candidates)
-    return names
+    if config.mode == "router":
+        return list(config.candidates)
+    if config.mode == "hierarchy":
+        return list(config.workers)
+    if config.mode == "conditional":
+        return [step.agent for step in [*config.then, *config.otherwise]]
+    return [step.agent for step in config.steps]
+
+
+def matches(condition: Condition | None, requirement: str, previous: str) -> bool:
+    """条件判断。空条件视为不成立——没写条件就不该走 then。"""
+    if condition is None or not condition.contains:
+        return False
+    haystack = requirement if condition.text == "input" else previous
+    return any(word in haystack for word in condition.contains)
 
 
 def validate_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]) -> None:
@@ -87,10 +121,26 @@ def validate_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]) -> N
             raise AgentConfigError(f"工作流 `{config.key}`（router）必须给出 candidates")
         if not config.routing_prompt.strip():
             raise AgentConfigError(f"工作流 `{config.key}`（router）必须给出 routing_prompt")
+        if config.steps:
+            raise AgentConfigError(f"工作流 `{config.key}`（router）用 candidates 指定候选，不写 steps")
+    elif config.mode == "conditional":
+        if config.condition is None or not config.condition.contains:
+            raise AgentConfigError(f"工作流 `{config.key}`（conditional）必须给出 condition.contains")
+        if not config.then:
+            raise AgentConfigError(f"工作流 `{config.key}`（conditional）必须给出 then 分支")
+    elif config.mode == "loop":
+        if not config.steps:
+            raise AgentConfigError(f"工作流 `{config.key}`（loop）必须给出 steps")
+        if config.until is None or not config.until.contains:
+            # 必须显式给终止条件：否则"跑固定轮数"很容易被误读成死循环防护
+            raise AgentConfigError(f"工作流 `{config.key}`（loop）必须给出 until.contains")
+    elif config.mode == "hierarchy":
+        if not config.workers:
+            raise AgentConfigError(f"工作流 `{config.key}`（hierarchy）必须给出 workers")
+        if not config.supervisor_prompt.strip():
+            raise AgentConfigError(f"工作流 `{config.key}`（hierarchy）必须给出 supervisor_prompt")
     elif not config.steps:
         raise AgentConfigError(f"工作流 `{config.key}` 至少要有一步")
-    if config.mode == "router" and config.steps:
-        raise AgentConfigError(f"工作流 `{config.key}`（router）用 candidates 指定候选，不写 steps")
     unknown = sorted(set(referenced_agents(config)) - set(agent_graphs))
     if unknown:
         raise AgentConfigError(
@@ -202,13 +252,168 @@ def _build_router(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     return graph.compile()
 
 
+def _add_chain(graph: StateGraph, steps: list[WorkflowStep], agent_graphs: dict[str, Any], prefix: str) -> list[str]:
+    """往图里加一条顺序执行的节点链，返回节点名（调用方负责连 START/END）。"""
+    names: list[str] = []
+    for index, step in enumerate(steps, start=1):
+        node = f"{prefix}_{index}_{step.name or step.agent}"
+        graph.add_node(node, _step_runner(step, agent_graphs[step.agent]))
+        names.append(node)
+    for left, right in zip(names, names[1:]):
+        graph.add_edge(left, right)
+    return names
+
+
+def _build_conditional(config: WorkflowConfig, agent_graphs: dict[str, Any]):
+    """条件分支：拿上一段输出（或原始输入）做关键词匹配，走 then 或 otherwise。"""
+
+    def branch(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
+        outputs = state.get("step_outputs") or []
+        previous = outputs[-1] if outputs else ""
+        taken = matches(config.condition, user_input(state), previous)
+        label = "then" if taken else "otherwise"
+        return {
+            "chosen": label,
+            "messages": [AIMessage(content=f"[branch] {label}")],
+            "transcript": [*(state.get("transcript") or []), f"[branch] {label}"],
+        }
+
+    graph = StateGraph(WorkflowState)
+    graph.add_node("branch", branch)
+    graph.add_edge(START, "branch")
+    mapping: dict[str, Any] = {}
+    for label, steps in (("then", config.then), ("otherwise", config.otherwise)):
+        if not steps:
+            mapping[label] = END
+            continue
+        names = _add_chain(graph, steps, agent_graphs, prefix=label)
+        graph.add_edge(names[-1], END)
+        mapping[label] = names[0]
+    graph.add_conditional_edges("branch", lambda state: state.get("chosen") or "otherwise", mapping)
+    return graph.compile()
+
+
+def _build_loop(config: WorkflowConfig, agent_graphs: dict[str, Any]):
+    """循环：每轮跑完整条 steps，直到 until 命中或达到 max_iterations。"""
+
+    async def body(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
+        outputs = list(state.get("step_outputs") or [])
+        previous = outputs[-1] if outputs else ""
+        produced: list[str] = []
+        for step in config.steps:
+            prompt = render_template(step.input_template, user_input(state), previous)
+            result = await agent_graphs[step.agent].ainvoke(
+                {"messages": [HumanMessage(content=prompt)]}, run_config or {}
+            )
+            previous = str(result["messages"][-1].content)
+            produced.append(previous)
+        return {
+            "messages": [AIMessage(content=previous)],
+            "step_outputs": [*outputs, *produced],
+            "iterations": int(state.get("iterations") or 0) + 1,
+        }
+
+    def after_body(state: WorkflowState) -> Literal["again", "end"]:
+        outputs = state.get("step_outputs") or [""]
+        if matches(config.until, user_input(state), outputs[-1]):
+            return "end"
+        if int(state.get("iterations") or 0) >= config.max_iterations:
+            return "end"
+        return "again"
+
+    graph = StateGraph(WorkflowState)
+    graph.add_node("body", body)
+    graph.add_edge(START, "body")
+    graph.add_conditional_edges("body", after_body, {"again": "body", "end": END})
+    return graph.compile()
+
+
+def parse_assignment(text: str, workers: list[str]) -> tuple[str, str]:
+    """从主管输出里解析 `worker: 任务`。解析不出 worker 就当它说"收工"。"""
+    stripped = text.strip()
+    if stripped.upper().startswith("DONE") or stripped.upper() == "DONE":
+        return "", ""
+    for worker in workers:
+        if worker in stripped:
+            rest = stripped.split(worker, 1)[1].lstrip(" \t:：-|").strip()
+            return worker, rest.splitlines()[0].strip() if rest else ""
+    return "", ""
+
+
+def _build_hierarchy(config: WorkflowConfig, agent_graphs: dict[str, Any]):
+    """层级分工：主管每轮派一个 worker 干活，直到它回 DONE 或达到 max_rounds。"""
+
+    async def supervise(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
+        conf = (run_config or {}).get("configurable") or {}
+        model = get_model(conf.get("model") or settings.DEFAULT_MODEL)
+        transcript = list(state.get("transcript") or [])
+        history = "\n\n".join(transcript[-4:]) or "（还没有人干活）"
+        prompt = (
+            f"{config.supervisor_prompt}\n\n"
+            f"可选 worker（只能从这里选）：{', '.join(config.workers)}\n"
+            f"输出格式：`worker_key: 交给它的具体任务`；全部完成后只输出 DONE。\n\n"
+            f"总任务：{user_input(state)}\n\n"
+            f"已有进展：\n{history}"
+        )
+        answer = str(getattr(await model.ainvoke([HumanMessage(content=prompt)]), "content", "") or "")
+        worker, task = parse_assignment(answer, config.workers)
+        note = f"[supervisor] {answer.strip()[:180]}"
+        return {
+            "chosen": worker,
+            "pending_task": task,
+            "messages": [AIMessage(content=note)],
+            "transcript": [*transcript, note],
+        }
+
+    async def work(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
+        worker = state.get("chosen") or ""
+        agent_graph = agent_graphs.get(worker)
+        if agent_graph is None:  # 理论上不会发生：配置校验已保证 worker 合法
+            result = f"ERROR: 未知 worker {worker}"
+        else:
+            out = await agent_graph.ainvoke(
+                {"messages": [HumanMessage(content=state.get("pending_task") or user_input(state))]},
+                run_config or {},
+            )
+            result = str(out["messages"][-1].content)
+        outputs = list(state.get("step_outputs") or [])
+        transcript = list(state.get("transcript") or [])
+        return {
+            "messages": [AIMessage(content=result)],
+            "step_outputs": [*outputs, result],
+            "transcript": [*transcript, f"[{worker}] {result[:400]}"],
+            "rounds": int(state.get("rounds") or 0) + 1,
+        }
+
+    def after_supervise(state: WorkflowState) -> Literal["worker", "end"]:
+        if not state.get("chosen"):
+            return "end"
+        if int(state.get("rounds") or 0) >= config.max_rounds:
+            return "end"
+        return "worker"
+
+    graph = StateGraph(WorkflowState)
+    graph.add_node("supervise", supervise)
+    graph.add_node("work", work)
+    graph.add_edge(START, "supervise")
+    graph.add_conditional_edges("supervise", after_supervise, {"worker": "work", "end": END})
+    graph.add_edge("work", "supervise")
+    return graph.compile()
+
+
 def build_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]):
-    """按 mode 编译工作流。三种模式对外都只是一个普通 Agent 图。"""
+    """按 mode 编译工作流。六种模式对外都只是一个普通 Agent 图。"""
     validate_workflow(config, agent_graphs)
     if config.mode == "parallel":
         return _build_parallel(config, agent_graphs)
     if config.mode == "router":
         return _build_router(config, agent_graphs)
+    if config.mode == "conditional":
+        return _build_conditional(config, agent_graphs)
+    if config.mode == "loop":
+        return _build_loop(config, agent_graphs)
+    if config.mode == "hierarchy":
+        return _build_hierarchy(config, agent_graphs)
     return _build_sequential(config, agent_graphs)
 
 
@@ -233,8 +438,9 @@ def load_workflow_config(path: Path, known_agents: set[str] | None = None) -> Wo
         except AgentConfigError as exc:
             raise AgentConfigError(f"{path.name}: {exc}") from exc
     else:
-        validate_workflow(config, {**{s.agent: None for s in config.steps},
-                                   **{c: None for c in config.candidates}})
+        # 可用集必须用 referenced_agents 统一推导：只收 steps/candidates 会漏掉
+        # conditional 的 then/otherwise 与 hierarchy 的 workers（加新模式时踩过）。
+        validate_workflow(config, {name: None for name in referenced_agents(config)})
     return config
 
 
@@ -257,6 +463,7 @@ def load_workflow_configs(
 
 
 __all__ = [
+    "Condition",
     "WorkflowConfig",
     "WorkflowState",
     "WorkflowStep",
@@ -264,6 +471,8 @@ __all__ = [
     "make_router_node",
     "load_workflow_config",
     "load_workflow_configs",
+    "matches",
+    "parse_assignment",
     "render_template",
     "referenced_agents",
     "user_input",

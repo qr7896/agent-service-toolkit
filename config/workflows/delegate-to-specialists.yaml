@@ -1,0 +1,13 @@
+# 层级分工示例：主管按进展逐轮派活给 worker，直到它回 DONE 或达到轮数上限。
+key: delegate-to-specialists
+description: 主管逐轮派活给工人（定位 / 总结），直到它认为完成。
+mode: hierarchy
+supervisor_prompt: |
+  你是这个任务的主管。每一轮只做一件事：从下面两个 worker 里选一个，交给它一个具体任务。
+  - repo-explainer：读代码、定位实现、给出行号（任务需要看代码时派给它）
+  - chatbot：总结、解释、写清单（任务不需要看代码时派给它）
+  已经能交付时只回复 DONE，不要再派活。
+workers:
+  - repo-explainer
+  - chatbot
+max_rounds: 3

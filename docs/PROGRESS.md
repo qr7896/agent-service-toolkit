@@ -910,7 +910,7 @@ steps:
 
 ### 4.25 魔改二十一：并行编排 / 多 Agent 路由 / Agent Builder（阶段 22 收尾）
 
-上一节说"第一版只做线性串联"，这一节把另外两种基本形态和界面补上了。**三种模式现在都在配置里选**（`mode` 字段）：
+上一节说"第一版只做线性串联"，这一节把另外两种基本形态和界面补上了。**当时实现了三种模式**（`mode` 字段；另有三种在 §4.28 补齐）：
 
 | 模式 | 语义 | 失败语义 |
 |---|---|---|
@@ -929,6 +929,29 @@ steps:
 **验收**：`lg_practice/day24_platform_check.py` **14/14**，全程不调用 LLM（编排用打桩图、路由用打桩模型）。注册表现在是 11 内置 + 1 配置型 + 3 工作流 = 15 个。
 
 **过关题：为什么 Agent Builder 的逻辑层要和界面分开？** 因为界面是数据的编辑器，而"什么配置算合法"是业务规则。规则一旦长在按钮的回调里，就只能靠人点开页面来验证，改一次要重新点一遍，也做不到回归测试。把规则抽到不依赖框架的模块，界面只剩渲染与收集输入，逻辑才能被脚本反复验证——本节的 14 项验收里，Builder 那 4 项就是这么来的。
+
+### 4.28 魔改二十二：条件分支 / 循环 / 层级分工（阶段 22 收尾）
+
+编排从三种扩到**六种**，全部由 `config/workflows/*.yaml` 的 `mode` 字段选择：
+
+| 模式 | 语义 | 终止/分支依据 | 示例配置 |
+|---|---|---|---|
+| `sequential` | 上一步输出成为下一步输入 | 走完即结束 | `explain-then-summarize` |
+| `parallel` | 全部步骤同一输入并行跑，输出按序汇总 | 任一失败即整条失败 | `parallel-review` |
+| `router` | supervisor 选一个候选执行 | 白名单子串匹配，认不出退回第一个 | `route-to-specialist` |
+| `conditional` | 命中条件走 `then`，否则走 `otherwise` | **确定性关键词匹配** | `branch-on-error` |
+| `loop` | 重复 `steps` 直到命中 `until` 或到上限 | 关键词命中 + `max_iterations` 硬兜底 | `iterate-until-pass` |
+| `hierarchy` | 主管逐轮派活给 worker，直到 DONE 或到上限 | 派活解析 + `max_rounds` 硬兜底 | `delegate-to-specialists` |
+
+**三个刻意的取舍**：
+
+1. **条件用关键词匹配，不让模型判断**。判断"走哪条分支"如果要再花一次模型调用，那这个分支本身就成了成本来源；关键词匹配确定、可解释、零额外调用。要模糊判断就用 `router` 模式，那是另一回事。
+2. **循环和层级都有硬上限**。`loop` 的终止条件来自模型输出（可能永不满足），`hierarchy` 的收工信号也来自模型（可能一直不喊停）。两者都必须配 `max_iterations` / `max_rounds` 兜底，且**缺终止条件会被加载时拒绝**——不允许"隐性跑固定轮数"，那会让人误以为有死循环防护。
+3. **层级分工的派活格式是死的**：主管每轮只能回 `worker_key: 任务` 或 `DONE`。解析不出 worker 就**当它说收工**，不会瞎派给第一个候选——多智能体系统里"猜它想派给谁"是最容易失控的地方。
+
+**顺带修掉一个真 bug**：`load_workflow_config(path)` 在不传已知 Agent 集合时，可用集只从 `steps` / `candidates` 拼，**漏了 `then`/`otherwise` 与 `workers`**——新加的三个示例配置一注册就报"引用了不存在的 Agent：可用 []"。已改为统一用 `referenced_agents(config)` 推导。这类"新增一种模式时忘了同步某个分支"的问题，正是前面坚持所有模式共用同一套 `validate_workflow` 的价值所在。
+
+**验收**：`lg_practice/day27_branch_loop_hierarchy_check.py` **11/11**，全程不调用 LLM（条件与循环本就是确定性的，层级分工用跨轮复用的打桩主管驱动）。回归：day23 10/10、day24 **15/15**、day27 11/11。注册表现在 18 个 Agent（11 内置 + 1 配置型 + 6 工作流）。
 
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
@@ -993,6 +1016,9 @@ steps:
 | `src/agent_builder_app.py` | **新增** | Agent Builder 界面（薄壳，独立 Streamlit 入口） |
 | `config/workflows/parallel-review.yaml` | **新增** | 并行编排示例（两路同时跑，汇总输出） |
 | `config/workflows/route-to-specialist.yaml` | **新增** | 多 Agent 路由示例（supervisor 选一个执行） |
+| `config/workflows/branch-on-error.yaml` | **新增** | 条件分支示例（含报错关键词则走代码定位） |
+| `config/workflows/iterate-until-pass.yaml` | **新增** | 循环示例（重复检查直到"通过"，带轮数兜底） |
+| `config/workflows/delegate-to-specialists.yaml` | **新增** | 层级分工示例（主管逐轮派活给 worker） |
 | `scripts/sandboxed_task.py` | **新增** | 在隔离副本里跑一次任务（`--no-agent` 只验隔离） |
 | `docker/Dockerfile.service.local` | **新增** | 保留 src/ 层级的服务镜像：补 git、CPU torch、sentence-transformers |
 | `compose.local-models.yaml` | **新增** | compose 覆盖层：挂载模型 / 向量库 / .codex，覆盖 Windows 模型路径 |
@@ -1034,6 +1060,7 @@ steps:
 | `day24_platform_check.py` | 并行 / 路由 / Builder 的 14 项验收脚本（打桩图与打桩模型，零 API 调用） |
 | `day25_benchmark_cost_check.py` | 基准成本口径的 4 项验收脚本（含旧报告重算不崩） |
 | `day26_platform_live_check.py` | 平台功能真跑脚本（并行 / 路由 / Builder，真实 LLM，3/3） |
+| `day27_branch_loop_hierarchy_check.py` | 条件分支 / 循环 / 层级分工的 11 项验收脚本（零 API 调用） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -1099,6 +1126,7 @@ steps:
 - [x] 魔改十九：可配置 Agent（YAML 定义 + 编译成图 + 只读白名单 + 注册表合并，验收 9/9）
 - [x] 魔改二十：工作流编排（线性串联 + 模板占位符 + 以 Agent 身份注册，验收 10/10）
 - [x] 魔改二十一：并行编排 + 多 Agent 路由 + Agent Builder（配置里选 mode，验收 14/14）
+- [x] 魔改二十二：条件分支 + 循环 + 层级分工（编排扩到六种模式，验收 11/11）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -1201,7 +1229,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | 18 Benchmark | `evals/` + 20~50 个任务 | 对比 Baseline 与 "+Experience" 的成功率、平均尝试次数、工具调用数、测试通过率 |
 | 19–20 Sandbox / Docker | 隔离执行环境 | 先做路径限制 + git diff，再考虑 Docker / WSL2 / Worktree |
 | 21 **Model Routing**（v5 新增） | `src/agents/model_router.py` | ✅ 验收 10/10：最高档只到 `deepseek-v4-flash`，只做记账 + 预算冻结升级（见 §4.22） |
-| 22 **Agent 平台**（v5 新增） | `agent_config.py` + `declarative_agent.py` + `agent_workflow.py` + `agent_builder.py` + `agent_builder_app.py` | ✅ 验收 9/9 + 10/10 + 14/14：配置化 / 三种编排模式 / Builder 界面齐备，见 §4.23–§4.25 |
+| 22 **Agent 平台**（v5 新增） | `agent_config.py` + `declarative_agent.py` + `agent_workflow.py` + `agent_builder.py` + `agent_builder_app.py` | ✅ 验收 9/9 + 10/10 + 15/15 + 11/11：配置化 / **六种编排模式** / Builder 界面齐备，见 §4.23–§4.28 |
 
 **明确不做**（v2 §29）：整体复制 Open SWE、接 Slack / Linear / GitHub App、做 Dashboard、做 QLoRA / KTO、复杂云 Sandbox、多 Agent 大拆分、一次加 20 个工具。
 

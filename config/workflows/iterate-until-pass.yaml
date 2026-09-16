@@ -1,0 +1,13 @@
+# 循环示例：反复让只读 Agent 检查，直到输出里出现"通过"或达到轮数上限。
+# max_iterations 是硬兜底——终止条件靠模型输出，必须有上限。
+key: iterate-until-pass
+description: 反复检查同一个问题，直到输出出现"通过"或达到轮数上限。
+mode: loop
+steps:
+  - agent: repo-explainer
+    name: inspect
+    input_template: "检查这个问题，如果看起来已经没问题就明确写「通过」：{input}"
+until:
+  contains: ["通过"]
+  text: previous
+max_iterations: 2
