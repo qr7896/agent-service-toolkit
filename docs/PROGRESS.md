@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–15 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11。当前任务是**阶段 16 Experience Retrieval**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–16 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11。当前任务是**阶段 17 Experience-Guided Self-Correction**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -170,7 +170,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 13 | HITL | Graph | `interrupt()` | ✅ 验收 8/8 |
 | 14 | Trajectory | `src/agents/trajectory.py` | Evaluation | ✅ 验收 7/7 |
 | 15 | Experience Memory | `src/agents/experience.py` | Store | ✅ 验收 11/11 |
-| 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ⏳ |
+| 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ✅ 验收 11/11 |
 | 17 | Self-Correction | Graph | Experience-guided loop | ⏳ |
 | 18 | Benchmark | `evals/` | Agent Evaluation | ⏳ |
 | 19 | Sandbox | 后期 | 安全执行 | ⏳ |
@@ -700,6 +700,28 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么经验不能直接把“上一次模型的回答”当作事实？** 模型回答是对当时上下文的自然语言解释，没有可验证的锚点：它可能本身就是错的，可能和实际改动不一致，也可能在测试没过时仍说“已修复”。经验要能在新任务里被信任，就必须绑定可核验的证据——改动了哪些文件、测试真的过没过、评审结论是什么、谁批准过。所以每条经验都回链 `trajectory_id`，而它背后是真实工具调用与真实测试结果。
 
+### 4.17 魔改十三：Experience Retrieval（阶段 16）
+
+**目标**：新任务开始时先检索相似历史经验，交给 Planner 当参考，把路线图 §26 的 `User Task → Experience Retrieval → Planner` 接上。本阶段只用本地 BGE-M3 + Chroma，不花任何 LLM 额度。
+
+**为什么改嵌入内容（本阶段最有价值的一次实测）**：最初把「任务 + 结果 + 涉及文件 + 步骤」整段拿去向量化，检索几乎排不动——三条候选的相似度是 0.468 / 0.466 / 0.460，几乎并列。逐项拆开测（查询是改写过的提问，正确历史任务是“修复 FastAPI route registration 造成的 404”）：
+
+| 被向量化的文本 | 相似度（正确 / 无关 / 失败） | 结果 |
+|---|---|---|
+| 任务 + 结果 + 相同文件路径 | 0.468 / 0.460 / 0.466 | 几乎并列 |
+| 任务 + 结果标签 | 0.514 / 0.468 / **0.517** | 被失败经验反超 |
+| **只嵌任务本身** | **0.515 / 0.468 / 0.505** | 正确项第一 |
+
+两个结论：① 文件路径、步骤这类结构字段在所有经验里高度重复，会把任务语义稀释掉；② 结果标签会给“问题形状”的提问染上失败语义，把提问拉向失败经验——而它本来也不该决定“哪条任务相似”，只该决定“拿到之后怎么用”。所以被向量化的文本现在只有任务本身，结果/文件/摘要全部退到 metadata。
+
+**另一次反超暴露的定性问题**：只嵌任务后，逐字提问的相似度≈1.0、改写提问≈0.53，而无关任务也有 0.43。BGE-M3 对中文短句的相似度集中在一个很窄的带里，所以**排序才是信号，绝对值不是**。因此 `experience_min_similarity`（默认 0.40）只当“防止注入近乎无关命中”的兜底下限，不假装它是质量闸门；真正的保护是提示词里“经验只是参考、以实际读到的代码为准”这条硬规则。
+
+**接线与降级**：`planner` 节点在侦察后调用 `recall_experiences`，把结果渲染成提示词的最后一段，并把 `experience_hits`（含 `trajectory_id`、`outcome`、`similarity`、`retrieval` 模式）写进 State，最终进轨迹——阶段 18 做 A/B 时就是靠这个字段判断“这次到底有没有经验可用”。`build_plan_user_message(..., experience_context="")` 与阶段 15 之前逐字一致：**没有相关经验，行为就完全不变**。Chroma/BGE-M3 不可用时自动退回阶段 15 的关键词召回，并把模式标注成 `keyword`（同时 `logger.warning` 记录原因，避免静默降级再次掩盖故障——这条是被自己的验收脚本用出来的）。
+
+**验收**：`lg_practice/day16_experience_retrieval_check.py` **11/11**——含真实 BGE-M3 的语义召回（“这个 endpoint 为什么找不到？”与历史任务无任何共同词，仍命中正确轨迹）、accepted/rejected 区分、无命中时提示词逐字不变、关键词降级、`top_k`/相关性下限、空库无命中。阶段 14 7/7、阶段 15 11/11 同步回归通过。
+
+**过关题：为什么经验检索必须区分“这么做能成功”和“这么做会失败”？** 两种经验的用法正好相反：accepted 是“可以照这个思路做”，rejected 是“这条路走不通，别重复踩”。如果混在一起当正面示范喂给模型，等于把已知的坑重新推荐一遍——失败经验的价值恰恰在于它标出了不该走的方向，以及（配合轨迹）当时失败在哪一步。
+
 ---
 
 ## 5. 文件清单
@@ -717,6 +739,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/reviewer.py` | **新增** | Reviewer：只读独立评审 + 结构化裁决 |
 | `src/agents/trajectory.py` | **新增** | JSONL 轨迹构建、脱敏、持久化与聚合 |
 | `src/agents/experience.py` | **新增** | 轨迹→经验派生 + SQLite 经验库（回链 / 去重 / 脱敏 / 召回） |
+| `src/agents/coding_memory.py` | **新增** | BGE-M3 + Chroma 经验检索、接入 Planner、关键词降级 |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
@@ -744,6 +767,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day13_hitl_check.py` | HITL 的 8 项验收脚本（暂停 / 批准 / 拒绝 / 关开关 / 只读不打扰） |
 | `day14_trajectory_check.py` | Trajectory 的 7 项验收脚本（持久化 / 脱敏 / 失败路径 / 聚合） |
 | `day15_experience_check.py` | Experience Memory 的 11 项验收脚本（派生 / 去重 / 回链 / 脱敏 / 召回 / 接线） |
+| `day16_experience_retrieval_check.py` | Experience Retrieval 的 11 项验收脚本（真实语义召回 / 无命中不变 / 降级 / 下限） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -755,6 +779,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `D:\codex\working\logs` | 服务与前端运行日志 |
 | `.codex\trajectories\coding_agent.jsonl` | 阶段 14 的任务轨迹（JSONL） |
 | `.codex\experience\experience.db` | 阶段 15 的经验库（SQLite） |
+| `.codex\experience\chroma` | 阶段 16 的经验向量索引（Chroma） |
 | `.env` | Key 与配置（git 忽略） |
 
 ---
@@ -798,6 +823,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十：HITL（写操作前 `interrupt()` 等人批准；拒绝也会留下记录，验收 8/8）
 - [x] 魔改十一：Trajectory（统一终态收口 + JSONL + 脱敏 + 基础聚合，验收 7/7）
 - [x] 魔改十二：Experience Memory（轨迹→经验派生 + SQLite 经验库 + 回链去重，验收 11/11）
+- [x] 魔改十三：Experience Retrieval（BGE-M3 + Chroma 语义召回 + Planner 注入 + 无命中零影响，验收 11/11）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -859,23 +885,23 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 13 HITL**：验收 8/8，设计与过关题回答见 §4.14
 - **阶段 14 Trajectory**：验收 7/7，设计与过关题回答见 §4.15
 - **阶段 15 Experience Memory**：验收 11/11，设计与过关题回答见 §4.16
+- **阶段 16 Experience Retrieval**：验收 11/11，设计与过关题回答见 §4.17
 
-### 9.2 下一步（阶段 16）：Experience Retrieval（把经验接回 Planner）
+### 9.2 下一步（阶段 17）：Experience-Guided Self-Correction（让经验进入修复环节）
 
-**目标**：新任务开始时先检索相似历史经验，把命中的经验作为额外上下文交给 Planner。路线图 §26 的形态是：`User Task → Experience Retrieval → 找类似历史任务 → Planner`，例如历史“FastAPI 404”能在新任务“FastAPI endpoint 找不到”时被召回。
+**目标**：阶段 16 只把经验用在了“开始规划之前”。本阶段把经验推进到“已经失败之后”——`debugger` 节点重试时，用失败摘要检索同类失败的历史经验，看看上次是怎么修好的。
 
 **本阶段要做的**：
 
-- 新增 `src/agents/coding_memory.py`：在阶段 15 的关键词召回之上接 BGE-M3 + Chroma，做语义检索
-- Planner 节点读取召回结果，把“过去这类任务失败在哪、什么做法通过了”注入计划上下文
-- 保持无命中即退化的性质：召回为空时，Planner 的输入与阶段 15 之前完全一致
-- 检索必须标注来源 `trajectory_id`，模型不能把经验当成无来源的先验知识
+- `debugger` 节点在生成修复建议前，用「任务 + 本次失败摘要」检索经验
+- 检索结果按“同类失败后来被修好”（accepted）与“同类失败仍然失败”（rejected）分组注入
+- 仍是同一套零影响约束：无命中时 `debugger` 的提示词与阶段 11 逐字一致
 
-**验收标准**：相似任务能召回相关经验；无相关经验时行为不变；注入内容可回链到具体轨迹；不得把 `rejected` 经验当作正面示范（失败经验只能作为“避免这么做”的提示）。
+**验收标准**：修复环节能拿到相关经验且可回链 `trajectory_id`；无命中时行为不变；经验不得覆盖真实测试结果；`MAX_RETRIES` 上限不得被经验绕过。
 
-**过关题**：为什么经验检索必须区分“这么做能成功”和“这么做会失败”？
+**过关题**：为什么“失败经验”要配上“后来怎么修好的”才真正有用？
 
-**提交信息**：`feat(coding): retrieve similar experiences for planning`
+**提交信息**：`feat(coding): feed past failures into the debug loop`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

@@ -29,6 +29,7 @@ from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel, Field, ValidationError
 
 from agents.code_tools import PROJECT_ROOT, git_diff, list_files, read_file, search_code
+from agents.coding_memory import format_experience_context, recall_experiences
 from core import get_model, settings
 
 MAX_RECON_STEPS = 3
@@ -83,7 +84,27 @@ PLAN_PROMPT = """你是 Coding Agent 的规划器。请基于"需求 + 侦察结
 5. 需求信息不足时（没说改哪个模块、达到什么标准、是否需要兼容旧行为等），
    把问题写进 open_questions，不要在 steps 里瞎猜。
 6. 不要计划引入大型新依赖，也不要把范围扩到当前仓库之外。
+7. 如果给了"历史经验"：它来自真实轨迹，accepted 表示这类做法通过了测试，
+   rejected 表示这类做法失败过、应当避开。经验只是参考，**不能替代你对当前仓库的侦察**；
+   经验与当前代码冲突时，以你实际读到的代码为准。
 """
+
+
+def build_plan_user_message(
+    requirement: str, findings: str, experience_context: str = ""
+) -> str:
+    """拼装规划阶段的用户消息。
+
+    `experience_context` 为空时输出与阶段 15 之前逐字一致——没有相关经验，
+    行为就不该发生任何变化。
+    """
+    parts = [
+        f"需求：{requirement}",
+        f"仓库侦察结果（可能不完整，仅供参考）：\n{findings or '（未做侦察）'}",
+    ]
+    if experience_context:
+        parts.append(experience_context)
+    return "\n\n".join(parts)
 
 
 def _extract_json_object(text: str) -> str | None:
@@ -200,14 +221,10 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     model = get_model(config["configurable"].get("model", settings.DEFAULT_MODEL))
 
     findings = await _recon(model, requirement)
+    hits, retrieval = recall_experiences(requirement, config)
     plan_messages = [
         SystemMessage(content=PLAN_PROMPT),
-        HumanMessage(
-            content=(
-                f"需求：{requirement}\n\n"
-                f"仓库侦察结果（可能不完整，仅供参考）：\n{findings or '（未做侦察）'}"
-            )
-        ),
+        HumanMessage(content=build_plan_user_message(requirement, findings, format_experience_context(hits))),
     ]
     ai = await model.ainvoke(plan_messages)
     parsed = _parse_plan(str(getattr(ai, "content", "") or ""))
@@ -222,4 +239,7 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
             ],
         )
     plan = _validate_plan(parsed)
-    return {"plan": plan.model_dump()}
+    return {
+        "plan": plan.model_dump(),
+        "experience_hits": [{**hit, "retrieval": retrieval} for hit in hits],
+    }

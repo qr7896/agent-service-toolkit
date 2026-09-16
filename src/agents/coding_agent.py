@@ -97,6 +97,7 @@ class CodingState(MessagesState):
     test_result: dict[str, Any]
     review: dict[str, Any]
     approvals: list[dict[str, Any]]
+    experience_hits: list[dict[str, Any]]
     trajectory: dict[str, Any]
     trajectory_started_at: str
     attempts: int

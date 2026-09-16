@@ -231,6 +231,13 @@ class ExperienceStore:
         scored.sort(key=lambda item: (item[0], item[1]), reverse=True)
         return [item[2] for item in scored[:limit]]
 
+    def all(self) -> list[Experience]:
+        """按写入时间读出全部经验，供阶段 16 建向量索引。"""
+        return [
+            Experience.from_row(row)
+            for row in self._conn.execute("SELECT * FROM experiences ORDER BY created_at")
+        ]
+
     def stats(self) -> dict[str, Any]:
         total = self._conn.execute("SELECT COUNT(*) FROM experiences").fetchone()[0]
         outcomes = {

@@ -107,6 +107,7 @@ def build_trajectory(state: dict[str, Any], config: dict[str, Any]) -> dict[str,
         "test_result": state.get("test_result") or {},
         "review": state.get("review") or {},
         "approvals": approvals,
+        "experience_hits": state.get("experience_hits") or [],
         "model": str(configurable.get("model") or ""),
         "status": _status(state),
     }
