@@ -65,15 +65,19 @@ def _status(state: dict[str, Any]) -> str:
     return "completed_read_only"
 
 
-def _safe(value: Any, key: str = "") -> Any:
+def redact(value: Any, key: str = "") -> Any:
     """递归清除敏感字段，保证轨迹不能意外变成凭据存储。"""
     if any(marker in key.lower() for marker in SENSITIVE_KEY_MARKERS):
         return "[REDACTED]"
     if isinstance(value, dict):
-        return {str(k): _safe(v, str(k)) for k, v in value.items()}
+        return {str(k): redact(v, str(k)) for k, v in value.items()}
     if isinstance(value, list):
-        return [_safe(item) for item in value]
+        return [redact(item) for item in value]
     return value
+
+
+# 旧名字保留，避免已发布的调用点失效
+_safe = redact
 
 
 def build_trajectory(state: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:

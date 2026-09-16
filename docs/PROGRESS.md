@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–14 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7。当前任务是**阶段 15 Experience Memory**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–15 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11。当前任务是**阶段 16 Experience Retrieval**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -169,7 +169,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ✅ 验收 8/8 |
 | 13 | HITL | Graph | `interrupt()` | ✅ 验收 8/8 |
 | 14 | Trajectory | `src/agents/trajectory.py` | Evaluation | ✅ 验收 7/7 |
-| 15 | Experience Memory | `src/agents/experience.py` | Store | ⏳ |
+| 15 | Experience Memory | `src/agents/experience.py` | Store | ✅ 验收 11/11 |
 | 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ⏳ |
 | 17 | Self-Correction | Graph | Experience-guided loop | ⏳ |
 | 18 | Benchmark | `evals/` | Agent Evaluation | ⏳ |
@@ -682,6 +682,24 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么 trajectory 是 evaluation 与 experience 的共同前置？** Evaluation 需要同口径的任务结果、耗时、尝试数和成功率，才能比较基线与改进；Experience 需要知道“哪种任务在哪一步失败、怎样修复后成功”，才能提炼而不是凭印象编造经验。Trajectory 正是两者共享的原始证据。
 
+### 4.16 魔改十二：Experience Memory（阶段 15）
+
+**目标**：把一次任务的轨迹沉淀成可审计的本地经验，为后续检索（阶段 16）与经验驱动的自修复（阶段 17）提供事实来源。
+
+**派生规则**：经验只从 `trajectory` 派生，不采信模型自述。`succeeded → accepted`；失败按优先级分类为 `approval_denied`（人工拒绝）> `test_failed`（测试未过）> `review_rejected`（评审否决）> `unknown_failure`。`completed_read_only` 不入库——只读问答没有可复用的修复信号，进库只会污染后续检索。这一条在真实数据上验证过：本机唯一一条真实轨迹是只读问答，灌库结果是 `experiences_written: 0`。
+
+**存储**：SQLite（`src/agents/experience.py`），默认 `.codex/experience/experience.db`。字段含 `trajectory_id`（唯一索引）、任务、`task_key`（小写分词特征）、outcome、failure_type、effective_steps、tools_used、changed_paths、attempts、test_summary、review_summary、approved、model、耗时。同一 `trajectory_id` 重复写入走 `ON CONFLICT DO UPDATE`，不会产生重复经验。
+
+**两层安全边界**：① 经验只做白名单摘取（如计划步骤只取 `order/action/path`），不整份复制轨迹，轨迹里的 `api_key` 等字段没有机会进库；② 文本字段再过一遍 `redact`。密钥不落盘这条由验收脚本直接扫描数据库文件字节来证明。
+
+**接线**：`finalize_trajectory` 默认顺带沉淀经验（`record_experience: False` 可关）。经验写入失败只记 `experience_error`，不会把一次已完成的任务变成失败任务。
+
+**召回（阶段 16 的骨架）**：`ExperienceStore.recall()` 用 `task_key` 的确定性关键词重叠排序，空库、无重叠、任务键为空都返回空列表且不抛异常。向量检索留到阶段 16 接入 BGE-M3 + Chroma，本阶段不做，也不接进 Planner。
+
+**工具**：`scripts/build_experience.py`（读轨迹 JSONL → 灌库 → 打印统计）。验收 `lg_practice/day15_experience_check.py` **11/11**：派生、分类、只读过滤、去重、统计、脱敏、召回、终态接线、CLI 均通过；阶段 14 的 7/7 同时回归通过（其脚本已显式传 `record_experience: False`，避免两次验收互相污染）。
+
+**过关题：为什么经验不能直接把“上一次模型的回答”当作事实？** 模型回答是对当时上下文的自然语言解释，没有可验证的锚点：它可能本身就是错的，可能和实际改动不一致，也可能在测试没过时仍说“已修复”。经验要能在新任务里被信任，就必须绑定可核验的证据——改动了哪些文件、测试真的过没过、评审结论是什么、谁批准过。所以每条经验都回链 `trajectory_id`，而它背后是真实工具调用与真实测试结果。
+
 ---
 
 ## 5. 文件清单
@@ -698,6 +716,8 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/coding_planner.py` | **新增** | Planning：只读侦察 → JSON 计划 → 确定性校验 |
 | `src/agents/reviewer.py` | **新增** | Reviewer：只读独立评审 + 结构化裁决 |
 | `src/agents/trajectory.py` | **新增** | JSONL 轨迹构建、脱敏、持久化与聚合 |
+| `src/agents/experience.py` | **新增** | 轨迹→经验派生 + SQLite 经验库（回链 / 去重 / 脱敏 / 召回） |
+| `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
 | `.gitignore` | 修改 | 忽略个人练习目录 `study_test11/` |
@@ -723,6 +743,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day12_reviewer_check.py` | Reviewer 的 8 项验收脚本（含两次真实评审） |
 | `day13_hitl_check.py` | HITL 的 8 项验收脚本（暂停 / 批准 / 拒绝 / 关开关 / 只读不打扰） |
 | `day14_trajectory_check.py` | Trajectory 的 7 项验收脚本（持久化 / 脱敏 / 失败路径 / 聚合） |
+| `day15_experience_check.py` | Experience Memory 的 11 项验收脚本（派生 / 去重 / 回链 / 脱敏 / 召回 / 接线） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -732,6 +753,8 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/chroma_db` | 向量库（3 个 chunk） |
 | `src/checkpoints.db` | 会话记忆（SQLite） |
 | `D:\codex\working\logs` | 服务与前端运行日志 |
+| `.codex\trajectories\coding_agent.jsonl` | 阶段 14 的任务轨迹（JSONL） |
+| `.codex\experience\experience.db` | 阶段 15 的经验库（SQLite） |
 | `.env` | Key 与配置（git 忽略） |
 
 ---
@@ -774,6 +797,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改九：Reviewer（只读独立评审 + 结构化裁决 + 评审范围可控，验收 8/8）
 - [x] 魔改十：HITL（写操作前 `interrupt()` 等人批准；拒绝也会留下记录，验收 8/8）
 - [x] 魔改十一：Trajectory（统一终态收口 + JSONL + 脱敏 + 基础聚合，验收 7/7）
+- [x] 魔改十二：Experience Memory（轨迹→经验派生 + SQLite 经验库 + 回链去重，验收 11/11）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -834,18 +858,24 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 12 Reviewer**：验收 8/8，设计见 §4.12
 - **阶段 13 HITL**：验收 8/8，设计与过关题回答见 §4.14
 - **阶段 14 Trajectory**：验收 7/7，设计与过关题回答见 §4.15
+- **阶段 15 Experience Memory**：验收 11/11，设计与过关题回答见 §4.16
 
-### 9.2 下一步（阶段 15）：Experience Memory（从轨迹提炼可复用经验）
+### 9.2 下一步（阶段 16）：Experience Retrieval（把经验接回 Planner）
 
-**目标**：以阶段 14 的轨迹为唯一事实来源，先把成功与失败模式沉淀为可审计的本地经验；不要让模型凭空“记住”。第一版只做 Store / SQLite 的经验条目（任务特征、失败类型、有效步骤、证据轨迹 ID），随后阶段 16 才接 BGE-M3 + Chroma 检索。
+**目标**：新任务开始时先检索相似历史经验，把命中的经验作为额外上下文交给 Planner。路线图 §26 的形态是：`User Task → Experience Retrieval → 找类似历史任务 → Planner`，例如历史“FastAPI 404”能在新任务“FastAPI endpoint 找不到”时被召回。
 
-**第一版必须支持**：
+**本阶段要做的**：
 
-**第一版验收**：经验必须能回链 `trajectory_id`；成功、失败和人工拒绝要能区分；写入与读取都不能含密钥；并且在没有相关经验时保持原有行为。
+- 新增 `src/agents/coding_memory.py`：在阶段 15 的关键词召回之上接 BGE-M3 + Chroma，做语义检索
+- Planner 节点读取召回结果，把“过去这类任务失败在哪、什么做法通过了”注入计划上下文
+- 保持无命中即退化的性质：召回为空时，Planner 的输入与阶段 15 之前完全一致
+- 检索必须标注来源 `trajectory_id`，模型不能把经验当成无来源的先验知识
 
-**过关题**：为什么经验不能直接把“上一次模型的回答”当作事实？
+**验收标准**：相似任务能召回相关经验；无相关经验时行为不变；注入内容可回链到具体轨迹；不得把 `rejected` 经验当作正面示范（失败经验只能作为“避免这么做”的提示）。
 
-**提交信息**：`feat(coding): add trajectory-backed experience memory`
+**过关题**：为什么经验检索必须区分“这么做能成功”和“这么做会失败”？
+
+**提交信息**：`feat(coding): retrieve similar experiences for planning`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

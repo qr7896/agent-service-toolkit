@@ -22,6 +22,7 @@
 from __future__ import annotations
 
 import json
+import sqlite3
 from typing import Any, Literal
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
@@ -39,6 +40,7 @@ from agents.code_tools import (
     write_file,
 )
 from agents.coding_planner import planner
+from agents.experience import record_trajectory
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
 from agents.trajectory import append_trajectory, build_trajectory, trajectory_path, utc_now
@@ -116,6 +118,11 @@ def _allowed_tools(config: RunnableConfig) -> list[Any]:
 def _require_approval(config: RunnableConfig) -> bool:
     """高风险写操作是否需要人工批准（默认需要）。"""
     return bool(_configurable(config).get("require_approval", True))
+
+
+def _record_experience(config: RunnableConfig) -> bool:
+    """终态是否顺带沉淀经验（默认沉淀，自动化脚本可显式关闭）。"""
+    return bool(_configurable(config).get("record_experience", True))
 
 
 def _is_approved(value: Any) -> bool:
@@ -402,6 +409,11 @@ async def finalize_trajectory(state: CodingState, config: RunnableConfig) -> dic
     except OSError as exc:
         # 任务已经完成；观测数据写入失败不能反过来让用户得到一次失败任务。
         record["persistence_error"] = f"{type(exc).__name__}: {exc}"
+    if _record_experience(config):
+        try:
+            record["experience_ids"] = record_trajectory(record, config)
+        except (OSError, sqlite3.Error) as exc:
+            record["experience_error"] = f"{type(exc).__name__}: {exc}"
     return {"trajectory": record}
 
 

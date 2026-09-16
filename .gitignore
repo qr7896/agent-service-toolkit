@@ -197,8 +197,8 @@ smoke_live_app_failure.png
 # Claude Code agent worktrees (ephemeral, per-agent git checkouts)
 .claude/worktrees/
 
-# Local Coding Agent execution trajectories (JSONL telemetry, may contain task text)
-.codex/trajectories/
+# Local Coding Agent runtime data (trajectories + experience store; may contain task text)
+.codex/
 
 # Local study/scratch folder (personal practice code, not part of the project)
 study_test11/
