@@ -10,7 +10,12 @@
 
 原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
 
-改造路线已升级到 **v3**（完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）：整条路线拆成 21 个阶段（0–20），其中 **阶段 0–12 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8。参考仓库分工见 §3.3，每阶段过关题见 §3.4，v3 的可靠性原则与测试体系见 §3.6。
+改造路线已升级到 **v5**（完整版见 [ROADMAP_v5.md](./ROADMAP_v5.md)；v3 见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）。v5 在原 21 个阶段（0–20）之外新增两个方向（详见 §3.7）：
+
+1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
+2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
+
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–12 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8。当前任务是**阶段 13 HITL**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -143,9 +148,9 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 
 > **把"知识库"从企业 PDF 手册换成"代码仓库"，把"回答问题"升级成"动手改代码"。**
 
-### 3.2 阶段表（对齐 v3 路线，共 21 个阶段）
+### 3.2 阶段表（对齐 v5 路线，共 23 个阶段）
 
-> 完整版见 [ROADMAP_v3.md](./ROADMAP_v3.md)（v3 含十大顾虑与测试体系）；[ROADMAP_v2.md](./ROADMAP_v2.md) 保留为上一版对照。
+> 完整版见 [ROADMAP_v5.md](./ROADMAP_v5.md)（v5 = v3 + 成本感知模型路由 + 可编排 Agent 平台）；[ROADMAP_v3.md](./ROADMAP_v3.md)、[ROADMAP_v2.md](./ROADMAP_v2.md) 保留为历史对照。
 
 | 阶段 | 功能 | 主要文件 | 学习重点 | 状态 |
 |---|---|---|---|---|
@@ -170,6 +175,8 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 18 | Benchmark | `evals/` | Agent Evaluation | ⏳ |
 | 19 | Sandbox | 后期 | 安全执行 | ⏳ |
 | 20 | Docker | 后期 | 工程化 | ⏳ |
+| 21 | Model Routing（成本感知） | `src/agents/model_router.py` | Cost-Aware Routing | ⏳ **v5 新增** |
+| 22 | Agent 平台（Builder / 编排） | Agent 配置 + 服务层 + 前端 | Platform / Multi-Agent | ⏳ **v5 新增** |
 
 ### 3.3 三个参考仓库的分工（学什么 / 不学什么）
 
@@ -277,6 +284,48 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 5. 换模型还能不能工作（Workflow / Tools / Verification 是否独立于模型）？
 6. 怎么证明变好了（有没有 Benchmark / Baseline / A-B）？
 7. 经验有没有真正起作用（有没有减少重复错误、提高成功率）？
+
+### 3.7 v5 新增：两个方向（先做准备，不改变当前实现顺序）
+
+> 完整内容见 [ROADMAP_v5.md](./ROADMAP_v5.md)：§40（成本感知模型路由）与最后一章（从 Knowledge Agent 到可编排 Agent 平台）。
+> **v5 §40.6 明确：这两个方向不改变当前实现顺序**——先把 Coding Agent / Verification / Evaluation 做扎实，最后才做路由与平台化。
+
+#### 方向一：从 Knowledge Agent 到可编排 Agent 平台
+
+**现状（这也是我们要解决的缺口）**：原项目（含目前的改造）**只能通过改代码来新增 Agent**——`src/agents/agents.py` 是一个硬编码字典，每个 Agent 都是一个 Python 模块。所以用户只能"使用"已有 Agent，不能"创建 / 配置 / 编排"Agent。
+
+| 层次 | 原来 | v5 目标 |
+|---|---|---|
+| 能力升级 | Knowledge Agent（RAG 回答） | Task Agent → **AICoding Agent**（真正执行任务） |
+| 产品形态升级 | 单个固定 Agent | 可配置 Agent → Workflow → **Multi-Agent 协同** → Agent Platform |
+| 用户角色 | 使用 Agent | **创建、配置、修改、编排** Agent |
+
+对本项目架构的三点含义：
+
+1. Agent 要逐渐从"硬编码模块"变成"**可配置的数据**"：Prompt / Model / Knowledge / Tools / Skills / Workflow 都能被配置——这是 Agent Builder 的前置条件；
+2. AICoding Agent 的定位要从"新增的一个 Agent"变成"**一种可被其他 Agent 调用的执行能力**"（与上游已有的 Agent Registry + AG-UI 设计天然吻合）；
+3. 面试表达（v5 §39.8）：**从"用户使用 Agent"升级到"用户构建和编排 Agent"**。
+
+#### 方向二：Cost-Aware Adaptive Model Routing（成本感知自适应模型路由）
+
+核心原则：**高能力模型负责高价值决策，低成本模型负责高频执行；确定性工具负责验证事实。**
+
+| 模型层 | 职责 |
+|---|---|
+| Local 7B | 代码摘要、错误分类、检索结果重排、简单修改 / Debug、测试生成 |
+| Cheap API | 常规 Coding、普通 Debug |
+| Strong API | 任务拆解、复杂规划、架构决策、复杂 Debug、最终 Review |
+| Deterministic Tools | Test / Compile / Lint / Type Check（**不交给 LLM 猜**） |
+
+三条具体机制（v5 §40.3）：
+
+1. **先检索再上强模型**：`search_code` → 符号 / 依赖过滤 → Local 重排 → Top-K → 才交给 Strong API（禁止默认把整个仓库塞给强模型）；
+2. **Failure Router**：测试失败先分类（语法/类型 → Local；普通业务 → Cheap；架构/依赖 → Strong），并规定升级链 `Local → Cheap → Strong`；
+3. **Budget-aware State**：State 增加 `llm_calls` / `estimated_tokens` / `budget` / `model_tier`，路由按剩余预算决定是否升级。
+
+**必须用实验证明**（v5 §40.5）：同一批 20–50 个任务，比较 Baseline（全用 Strong）与 Adaptive（三层路由）的 Task Success Rate / First-Try Success Rate / Average Attempts / Tool Calls / **Tokens** / **API Cost** / Time / Human Intervention。目标不是"省 token"，而是"**成功率接近 + 成本明显更低**"。
+
+**工程提醒**（v5 §40.4）：网页端 AI 不适合作为 Agent 后端（不可编程、不可计量、不可审计、不可路由）；后端链路要用可编程 API 或本地模型——这会影响我们后续的模型接入选择。
 
 ---
 
@@ -757,7 +806,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **提交信息**：`feat(coding): add human approval for risky actions`
 
-### 9.3 后续阶段（按 v3 顺序，不跳步）
+### 9.3 后续阶段（按 v5 顺序，不跳步）
 
 | 阶段 | 交付物 | 关键约束 |
 |---|---|---|
@@ -769,8 +818,12 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | 14–17 Trajectory / Experience | `trajectory` + `experience.py` + `coding_memory.py` | 记录 task / errors / attempts / test_result；经验先存 Store 或 SQLite，第二阶段再接 BGE-M3 + Chroma 做检索 |
 | 18 Benchmark | `evals/` + 20~50 个任务 | 对比 Baseline 与 "+Experience" 的成功率、平均尝试次数、工具调用数、测试通过率 |
 | 19–20 Sandbox / Docker | 隔离执行环境 | 先做路径限制 + git diff，再考虑 Docker / WSL2 / Worktree |
+| 21 **Model Routing**（v5 新增） | `model_router.py` + Budget-aware State | 按任务复杂度 / 失败类型 / 上下文规模 / 剩余预算选模型；Failure Router 升级链 `Local → Cheap → Strong`；必须用 A/B 实验证明"成功率接近 + 成本更低" |
+| 22 **Agent 平台**（v5 新增） | Agent 配置化 + Agent Builder 界面 + Workflow 编排 + Multi-Agent | 把 Agent 从"硬编码模块"变成"可配置数据"（Prompt / Model / Knowledge / Tools / Skills / Workflow）；AICoding Agent 变成可被其他 Agent 调用的执行能力 |
 
 **明确不做**（v2 §29）：整体复制 Open SWE、接 Slack / Linear / GitHub App、做 Dashboard、做 QLoRA / KTO、复杂云 Sandbox、多 Agent 大拆分、一次加 20 个工具。
+
+**v5 补充说明**：上面 21–22 两个方向**排在 Evaluation（18）之后**——v5 §40.6 明确要求"先有能跑通的 Coding Agent、Verification 与 Evaluation，再谈路由与平台化"。所以它们现在只作为架构设计记在 §3.7，**不影响阶段 13 起的实现顺序**。
 
 ---
 
