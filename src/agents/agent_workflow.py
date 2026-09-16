@@ -1,20 +1,26 @@
-"""Agent 工作流编排（阶段 22 第二块）。
+"""Agent 工作流编排（阶段 22）。
 
-有了“可配置的 Agent”之后，下一步才是把它们串起来：一个 Agent 的输出成为下一个的输入。
-这里刻意只做**线性串联**这一种最小编排，不做分支、不做并行、不做条件跳转——那三样都
-需要先有可靠的失败传播与回滚设计，现在做只会得到一个看起来很强、实际上很难解释的图。
+三种模式，覆盖"多 Agent 协同"的三种基本形态：
+
+  sequential  上一步的输出成为下一步的输入（链式，最常用）
+  parallel    所有步骤拿到同一个输入、并行执行，输出汇总给下游
+  router      由一个 supervisor 模型在候选 Agent 中**选一个**执行
+
+为什么不做带条件跳转的复杂图：编排的难点不在"怎么连"，而在"出错时怎么办"。
+上面三种模式的失败语义都只有一句话能说清（当前步失败就整条停），复杂图不是。
 
 输入模板占位符：
   `{input}`    —— 用户最初的需求（每一步都能拿到）
-  `{previous}` —— 上一步的输出（第一步没有上一步，会得到空串）
+  `{previous}` —— 上一步/汇总后的输出（第一步没有上一步，会得到空串）
 
-两条校验：引用的 Agent 必须存在；步骤不能为空。与 Agent 配置一样，错了就在加载时抛错。
+所有引用的 Agent 必须存在；配置错误一律在加载时抛错。
 """
 
 from __future__ import annotations
 
+import asyncio
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import yaml
 from langchain_core.messages import AIMessage, HumanMessage
@@ -23,6 +29,7 @@ from langgraph.graph import END, START, MessagesState, StateGraph
 from pydantic import BaseModel, Field, ValidationError
 
 from agents.agent_config import AgentConfigError
+from core import get_model, settings
 
 
 class WorkflowStep(BaseModel):
@@ -34,12 +41,16 @@ class WorkflowStep(BaseModel):
 class WorkflowConfig(BaseModel):
     key: str
     description: str = ""
+    mode: Literal["sequential", "parallel", "router"] = "sequential"
     steps: list[WorkflowStep] = Field(default_factory=list)
+    candidates: list[str] = Field(default_factory=list, description="router 模式的候选 Agent")
+    routing_prompt: str = Field(default="", description="router 模式交给 supervisor 的选人规则")
 
 
 class WorkflowState(MessagesState):
     step_outputs: list[str]
     workflow_input: str
+    chosen: str
 
 
 def render_template(template: str, user_input: str, previous: str) -> str:
@@ -47,30 +58,46 @@ def render_template(template: str, user_input: str, previous: str) -> str:
     return template.replace("{input}", user_input).replace("{previous}", previous)
 
 
-def build_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]):
-    """把工作流编译成线性图：START -> step_1 -> step_2 -> ... -> END。"""
-    if not config.steps:
+def referenced_agents(config: WorkflowConfig) -> list[str]:
+    names = [step.agent for step in config.steps] or list(config.candidates)
+    return names
+
+
+def validate_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]) -> None:
+    """加载与构建共用同一套校验，避免出现"加载过了但构建时才炸"。"""
+    if config.mode == "router":
+        if not config.candidates:
+            raise AgentConfigError(f"工作流 `{config.key}`（router）必须给出 candidates")
+        if not config.routing_prompt.strip():
+            raise AgentConfigError(f"工作流 `{config.key}`（router）必须给出 routing_prompt")
+    elif not config.steps:
         raise AgentConfigError(f"工作流 `{config.key}` 至少要有一步")
-    unknown = sorted({step.agent for step in config.steps} - set(agent_graphs))
+    if config.mode == "router" and config.steps:
+        raise AgentConfigError(f"工作流 `{config.key}`（router）用 candidates 指定候选，不写 steps")
+    unknown = sorted(set(referenced_agents(config)) - set(agent_graphs))
     if unknown:
         raise AgentConfigError(
             f"工作流 `{config.key}` 引用了不存在的 Agent {unknown}；可用：{sorted(agent_graphs)}"
         )
 
+
+def _step_runner(step: WorkflowStep, agent_graph: Any):
+    async def run_step(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
+        outputs = list(state.get("step_outputs") or [])
+        previous = outputs[-1] if outputs else ""
+        prompt = render_template(step.input_template, state.get("workflow_input") or "", previous)
+        result = await agent_graph.ainvoke(
+            {"messages": [HumanMessage(content=prompt)]}, run_config or {}
+        )
+        text = str(result["messages"][-1].content)
+        return {"messages": [AIMessage(content=text)], "step_outputs": [*outputs, text]}
+
+    return run_step
+
+
+def _build_sequential(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     def make_step(step: WorkflowStep):
-        agent_graph = agent_graphs[step.agent]
-
-        async def run_step(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
-            outputs = list(state.get("step_outputs") or [])
-            previous = outputs[-1] if outputs else ""
-            prompt = render_template(step.input_template, state.get("workflow_input") or "", previous)
-            result = await agent_graph.ainvoke(
-                {"messages": [HumanMessage(content=prompt)]}, run_config or {}
-            )
-            text = str(result["messages"][-1].content)
-            return {"messages": [AIMessage(content=text)], "step_outputs": [*outputs, text]}
-
-        return run_step
+        return _step_runner(step, agent_graphs[step.agent])
 
     graph = StateGraph(WorkflowState)
     names: list[str] = []
@@ -83,6 +110,89 @@ def build_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]):
         graph.add_edge(left, right)
     graph.add_edge(names[-1], END)
     return graph.compile()
+
+
+def _build_parallel(config: WorkflowConfig, agent_graphs: dict[str, Any]):
+    """并行：所有步骤拿同一个输入同时跑，输出按声明顺序汇总。
+
+    用一个节点包住 gather，而不是把图摊成扇出扇入——这样失败语义保持"任一失败即整条失败"，
+    不会出现"三个分支成了两个、调用方还得自己判断完整性"的模糊状态。
+    """
+
+    async def run_all(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
+        user_input = state.get("workflow_input") or ""
+        prompts = [
+            render_template(step.input_template, user_input, user_input) for step in config.steps
+        ]
+        results = await asyncio.gather(
+            *[
+                agent_graphs[step.agent].ainvoke(
+                    {"messages": [HumanMessage(content=prompt)]}, run_config or {}
+                )
+                for step, prompt in zip(config.steps, prompts)
+            ]
+        )
+        outputs = [str(result["messages"][-1].content) for result in results]
+        joined = "\n\n".join(
+            f"[{step.name or step.agent}]\n{text}" for step, text in zip(config.steps, outputs)
+        )
+        return {"messages": [AIMessage(content=joined)], "step_outputs": outputs}
+
+    graph = StateGraph(WorkflowState)
+    graph.add_node("parallel", run_all)
+    graph.add_edge(START, "parallel")
+    graph.add_edge("parallel", END)
+    return graph.compile()
+
+
+def make_router_node(config: WorkflowConfig):
+    """supervisor 选人节点：让模型在候选里挑一个，解析不出就退回第一个候选。
+
+    解析结果只认候选名单里的 key（用子串匹配），避免模型自由发挥出一个不存在的 Agent。
+    """
+
+    async def route(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
+        conf = (run_config or {}).get("configurable") or {}
+        model = get_model(conf.get("model") or settings.DEFAULT_MODEL)
+        prompt = (
+            f"{config.routing_prompt}\n\n"
+            f"候选（必须原样回复其中一个 key）：{', '.join(config.candidates)}\n\n"
+            f"用户需求：{state.get('workflow_input') or ''}"
+        )
+        answer = str(getattr(await model.ainvoke([HumanMessage(content=prompt)]), "content", "") or "")
+        chosen = next((name for name in config.candidates if name in answer), config.candidates[0])
+        return {
+            "chosen": chosen,
+            "messages": [AIMessage(content=f"[router] 选择 {chosen}")],
+        }
+
+    return route
+
+
+def _build_router(config: WorkflowConfig, agent_graphs: dict[str, Any]):
+    graph = StateGraph(WorkflowState)
+    graph.add_node("route", make_router_node(config))
+    graph.add_edge(START, "route")
+    mapping: dict[str, str] = {}
+    for name in config.candidates:
+        node = f"agent_{name}"
+        graph.add_node(
+            node, _step_runner(WorkflowStep(agent=name, input_template="{input}"), agent_graphs[name])
+        )
+        mapping[name] = node
+        graph.add_edge(node, END)
+    graph.add_conditional_edges("route", lambda state: state.get("chosen") or config.candidates[0], mapping)
+    return graph.compile()
+
+
+def build_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]):
+    """按 mode 编译工作流。三种模式对外都只是一个普通 Agent 图。"""
+    validate_workflow(config, agent_graphs)
+    if config.mode == "parallel":
+        return _build_parallel(config, agent_graphs)
+    if config.mode == "router":
+        return _build_router(config, agent_graphs)
+    return _build_sequential(config, agent_graphs)
 
 
 def load_workflow_config(path: Path, known_agents: set[str] | None = None) -> WorkflowConfig:
@@ -100,14 +210,14 @@ def load_workflow_config(path: Path, known_agents: set[str] | None = None) -> Wo
         first = exc.errors()[0]
         field = ".".join(str(part) for part in first.get("loc", ()))
         raise AgentConfigError(f"{path.name}: 字段 `{field}` 不合法：{first.get('msg')}") from exc
-    if not config.steps:
-        raise AgentConfigError(f"{path.name}: `steps` 不能为空")
     if known_agents is not None:
-        unknown = sorted({step.agent for step in config.steps} - known_agents)
-        if unknown:
-            raise AgentConfigError(
-                f"{path.name}: 引用了不存在的 Agent {unknown}；可用：{sorted(known_agents)}"
-            )
+        try:
+            validate_workflow(config, {name: None for name in known_agents})
+        except AgentConfigError as exc:
+            raise AgentConfigError(f"{path.name}: {exc}") from exc
+    else:
+        validate_workflow(config, {**{s.agent: None for s in config.steps},
+                                   **{c: None for c in config.candidates}})
     return config
 
 
@@ -134,7 +244,10 @@ __all__ = [
     "WorkflowState",
     "WorkflowStep",
     "build_workflow",
+    "make_router_node",
     "load_workflow_config",
     "load_workflow_configs",
     "render_template",
+    "referenced_agents",
+    "validate_workflow",
 ]

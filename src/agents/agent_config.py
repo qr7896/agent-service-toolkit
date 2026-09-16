@@ -26,6 +26,9 @@ class AgentConfigError(ValueError):
     """配置不可用（语法、字段、工具名、重名）。消息里必须带文件与字段。"""
 
 
+CONFIG_SUFFIXES = {".yaml", ".yml", ".json"}
+
+
 class AgentConfig(BaseModel):
     key: str = Field(description="Agent 标识，注册表里的键")
     description: str = Field(default="", description="给人看的说明")
@@ -81,7 +84,7 @@ def load_agent_configs(
     configs: list[AgentConfig] = []
     seen: dict[str, str] = {}
     for path in sorted(directory.iterdir()):
-        if path.suffix not in {".yaml", ".yml", ".json"} or not path.is_file():
+        if path.suffix not in CONFIG_SUFFIXES or not path.is_file():
             continue
         config = load_agent_config(path, known_tools)
         if config.key in seen:
@@ -92,6 +95,7 @@ def load_agent_configs(
 
 
 __all__ = [
+    "CONFIG_SUFFIXES",
     "AgentConfig",
     "AgentConfigError",
     "load_agent_config",

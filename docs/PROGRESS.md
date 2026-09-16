@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**路线图全部阶段已完成**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21），阶段 21 基础成本控制 10/10（§4.22），阶段 22 可配置 Agent 9/9（§4.23）+ 工作流编排 10/10（§4.24）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**路线图全部阶段已完成**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21），阶段 21 基础成本控制 10/10（§4.22），阶段 22 可配置 Agent 9/9（§4.23）+ 工作流编排 10/10（§4.24）+ 并行 / 路由 / Builder 14/14（§4.25）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -908,6 +908,28 @@ steps:
 
 **过关题：为什么工作流的第一版应该只做线性串联？** 因为编排的复杂度不在"怎么连"，而在"出错时怎么办"：并行分支要回答部分失败如何回滚，条件跳转要回答状态不一致如何判定，多 Agent 要回答谁对最终结果负责。线性串联只有一个失败方向（当前步失败就整条停），语义清晰、可解释、可回收；等失败传播有了确定设计，再往上加分支才不是空中楼阁。
 
+### 4.25 魔改二十一：并行编排 / 多 Agent 路由 / Agent Builder（阶段 22 收尾）
+
+上一节说"第一版只做线性串联"，这一节把另外两种基本形态和界面补上了。**三种模式现在都在配置里选**（`mode` 字段）：
+
+| 模式 | 语义 | 失败语义 |
+|---|---|---|
+| `sequential` | 上一步输出成为下一步输入 | 当前步失败即整条停 |
+| `parallel` | 所有步骤拿同一个输入并行跑，输出按声明顺序汇总 | 任一失败即整条失败 |
+| `router` | 一个 supervisor 在候选里**选一个**执行 | 选谁执行谁；解析不出就退回第一个候选 |
+
+**并行模式为什么只用一个节点**：把图摊成扇出扇入会让失败语义变模糊（"三个分支成了两个"时调用方还得自己判断完整性）。用一个节点包住 `asyncio.gather`，失败就整条失败，一句话能说清。验收脚本直接断言了图里只有 `parallel` 一个节点。
+
+**路由模式按最小实现做**：`routing_prompt` 写选人规则，模型只回复候选 key，代码用**子串匹配白名单**确认（不信任模型自由发挥出来的名字），匹配不上就退回第一个候选。验收里两种情况都测了：模型答"选 b"→ 执行 b；模型答一段没提任何候选的话 → 退回 a，不会造出一个不存在的 Agent。
+
+**Agent Builder 界面**（`src/agent_builder_app.py`，独立入口 `streamlit run src/agent_builder_app.py`）：列出现有配置、编辑提示词/工具/轮数上限、保存与删除。**逻辑全在 `agents/agent_builder.py`**，那一层不依赖 Streamlit，所以可以离线测——这也是为什么验收里能断言"逻辑层源码里没有 streamlit"，界面只是薄壳，不存在"只有点开页面才能验证"的死角。
+
+两个写入上的约束：保存前先校验（未知工具拒绝落盘，半成品不进 `config/` 目录，避免下次启动直接崩）；删除只按 key 推导文件名并拒绝非法字符，不接受任意路径。
+
+**验收**：`lg_practice/day24_platform_check.py` **14/14**，全程不调用 LLM（编排用打桩图、路由用打桩模型）。注册表现在是 11 内置 + 1 配置型 + 3 工作流 = 15 个。
+
+**过关题：为什么 Agent Builder 的逻辑层要和界面分开？** 因为界面是数据的编辑器，而"什么配置算合法"是业务规则。规则一旦长在按钮的回调里，就只能靠人点开页面来验证，改一次要重新点一遍，也做不到回归测试。把规则抽到不依赖框架的模块，界面只剩渲染与收集输入，逻辑才能被脚本反复验证——本节的 14 项验收里，Builder 那 4 项就是这么来的。
+
 ---
 
 ## 5. 文件清单
@@ -934,6 +956,10 @@ steps:
 | `config/agents/repo-explainer.yaml` | **新增** | 示例配置型 Agent（只读代码讲解） |
 | `src/agents/agent_workflow.py` | **新增** | 线性工作流编排：配置校验 + 编译成链式图 |
 | `config/workflows/explain-then-summarize.yaml` | **新增** | 示例工作流（定位 → 总结） |
+| `src/agents/agent_builder.py` | **新增** | Agent Builder 纯逻辑层（列出 / 保存 / 删除，不依赖 Streamlit） |
+| `src/agent_builder_app.py` | **新增** | Agent Builder 界面（薄壳，独立 Streamlit 入口） |
+| `config/workflows/parallel-review.yaml` | **新增** | 并行编排示例（两路同时跑，汇总输出） |
+| `config/workflows/route-to-specialist.yaml` | **新增** | 多 Agent 路由示例（supervisor 选一个执行） |
 | `scripts/sandboxed_task.py` | **新增** | 在隔离副本里跑一次任务（`--no-agent` 只验隔离） |
 | `docker/Dockerfile.service.local` | **新增** | 保留 src/ 层级的服务镜像：补 git、CPU torch、sentence-transformers |
 | `compose.local-models.yaml` | **新增** | compose 覆盖层：挂载模型 / 向量库 / .codex，覆盖 Windows 模型路径 |
@@ -972,6 +998,7 @@ steps:
 | `day21_model_routing_check.py` | 成本控制的 10 项验收脚本（零影响 / 阶梯 / 记账 / 预算冻结 / 打桩接线） |
 | `day22_agent_config_check.py` | 可配置 Agent 的 9 项验收脚本（校验 / 图结构 / 循环上限 / 注册表合并） |
 | `day23_workflow_check.py` | 工作流编排的 10 项验收脚本（串联传递 / 模板 / 校验 / 注册） |
+| `day24_platform_check.py` | 并行 / 路由 / Builder 的 14 项验收脚本（打桩图与打桩模型，零 API 调用） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -1036,6 +1063,7 @@ steps:
 - [x] 魔改十八：基础成本控制（记账 + 免费档优先 + 预算冻结升级，最高档 flash，验收 10/10）
 - [x] 魔改十九：可配置 Agent（YAML 定义 + 编译成图 + 只读白名单 + 注册表合并，验收 9/9）
 - [x] 魔改二十：工作流编排（线性串联 + 模板占位符 + 以 Agent 身份注册，验收 10/10）
+- [x] 魔改二十一：并行编排 + 多 Agent 路由 + Agent Builder（配置里选 mode，验收 14/14）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -1105,19 +1133,21 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 21 基础成本控制**：验收 10/10，设计与过关题回答见 §4.22
 - **阶段 22 可配置 Agent**：验收 9/9，设计与“做到哪一步”的边界见 §4.23
 - **阶段 22 工作流编排**：验收 10/10，设计与边界见 §4.24
+- **阶段 22 并行 / 路由 / Builder**：验收 14/14，设计与过关题回答见 §4.25
 
-### 9.2 后续（路线图全部完成，剩下的是两笔待补的账）
+### 9.2 后续（路线图全部完成，剩下的是三笔待补的账）
 
 路线图 §22 的 20 个阶段已经走完（阶段 18 Evaluation 已完成，因此 v5 里“排在 Evaluation 之后”的两个新方向现在才轮到）。
 
 **21 · 基础成本控制**：已完成（§4.22）。最高档只到 `deepseek-v4-flash`。
 
-**22 · 可配置 Agent**：已完成两块（§4.23 数据化、§4.24 线性编排）——Agent 是可校验的数据、能编译成图、能串成工作流，并以同一个注册表对外服务。**剩余未做**：Agent Builder 界面（数据的编辑器）、分支/并行编排、Multi-Agent 协同。
+**22 · Agent 平台**：三块全部完成——§4.23 数据化、§4.24/§4.25 三种编排模式（线性 / 并行 / 路由）、§4.25 Builder 界面。注册表 15 个 Agent，全部走同一套注册与校验。
 
-**两件待补的账**（不隐藏）：
+**三件待补的账**（不隐藏）：
 
 - **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。
 - **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。
+- **平台层的真实调用**：阶段 22 的编排与路由都用打桩验证了机制（零 API 调用），但**没有真跑过一次**。等额度充裕时至少各跑一次：`parallel-review`、`route-to-specialist`、以及 Builder 新建一个 Agent 后用服务端 `/invoke` 调一次。
 
 **过关题**：如果下一步要做 Agent Builder 界面，为什么必须先给配置加“工具白名单 + 权限分级”，而不是先把界面做出来？
 
@@ -1136,7 +1166,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | 18 Benchmark | `evals/` + 20~50 个任务 | 对比 Baseline 与 "+Experience" 的成功率、平均尝试次数、工具调用数、测试通过率 |
 | 19–20 Sandbox / Docker | 隔离执行环境 | 先做路径限制 + git diff，再考虑 Docker / WSL2 / Worktree |
 | 21 **Model Routing**（v5 新增） | `src/agents/model_router.py` | ✅ 验收 10/10：最高档只到 `deepseek-v4-flash`，只做记账 + 预算冻结升级（见 §4.22） |
-| 22 **Agent 平台**（v5 新增） | `agent_config.py` + `declarative_agent.py` + `agent_workflow.py` + `config/{agents,workflows}/` | ✅ 验收 9/9 + 10/10：Agent 可配置化并能线性编排；Builder 界面与 Multi-Agent 未做，见 §4.23/§4.24 |
+| 22 **Agent 平台**（v5 新增） | `agent_config.py` + `declarative_agent.py` + `agent_workflow.py` + `agent_builder.py` + `agent_builder_app.py` | ✅ 验收 9/9 + 10/10 + 14/14：配置化 / 三种编排模式 / Builder 界面齐备，见 §4.23–§4.25 |
 
 **明确不做**（v2 §29）：整体复制 Open SWE、接 Slack / Linear / GitHub App、做 Dashboard、做 QLoRA / KTO、复杂云 Sandbox、多 Agent 大拆分、一次加 20 个工具。
 

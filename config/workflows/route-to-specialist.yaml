@@ -1,0 +1,13 @@
+# 多 Agent 协同示例：由一个 supervisor 在候选里选一个执行。
+# routing_prompt 写清选人规则；解析不出候选就退回第一个，不会凭空造一个 Agent 出来。
+key: route-to-specialist
+description: 按需求类型在候选 Agent 中挑一个执行。
+mode: router
+routing_prompt: |
+  你是调度员。根据用户需求，在候选 Agent 里选一个最合适的执行：
+  - repo-explainer：需要读代码、定位实现、给出文件路径与行号
+  - chatbot：普通问答、总结、列清单
+  只回复候选 key，不要解释。
+candidates:
+  - repo-explainer
+  - chatbot

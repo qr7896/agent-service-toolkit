@@ -1,0 +1,11 @@
+# 并行编排示例：同一个需求同时交给两个只读 Agent，输出按声明顺序汇总。
+key: parallel-review
+description: 同时做代码定位与风格检查，两路输出汇总返回。
+mode: parallel
+steps:
+  - agent: repo-explainer
+    name: locate
+    input_template: "定位与需求相关的代码，给出文件路径与行号：{input}"
+  - agent: chatbot
+    name: checklist
+    input_template: "针对这个需求列一份人工检查清单（5 条以内）：{input}"

@@ -7,7 +7,7 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.pregel import Pregel
 
 from agents.agent_config import AgentConfigError, load_agent_configs
-from agents.agent_workflow import build_workflow, load_workflow_configs
+from agents.agent_workflow import build_workflow, load_workflow_configs, referenced_agents
 from agents.bg_task_agent.bg_task_agent import bg_task_agent
 from agents.chatbot import chatbot
 from agents.code_tools import git_diff, list_files, read_file, search_code
@@ -90,13 +90,13 @@ def _workflow_agents() -> dict[str, "Agent"]:
     built: dict[str, Agent] = {}
     for config in configs:
         graphs: dict[str, AgentGraph] = {}
-        for step in config.steps:
-            graph_like = agents[step.agent].graph_like
+        for name in referenced_agents(config):
+            graph_like = agents[name].graph_like
             if isinstance(graph_like, LazyLoadingAgent):
                 raise AgentConfigError(
-                    f"工作流 `{config.key}` 引用了延迟加载的 Agent `{step.agent}`，暂不支持"
+                    f"工作流 `{config.key}` 引用了延迟加载的 Agent `{name}`，暂不支持"
                 )
-            graphs[step.agent] = graph_like
+            graphs[name] = graph_like
         built[config.key] = Agent(
             description=config.description,
             graph_like=build_workflow(config, graphs),
