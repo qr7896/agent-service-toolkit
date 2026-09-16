@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–17 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7。当前任务是**阶段 18 Benchmark**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–18 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19）。当前任务是**阶段 19 Sandbox / 隔离执行**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -172,7 +172,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 15 | Experience Memory | `src/agents/experience.py` | Store | ✅ 验收 11/11 |
 | 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ✅ 验收 11/11 |
 | 17 | Self-Correction | Graph | Experience-guided loop | ✅ 验收 7/7 |
-| 18 | Benchmark | `evals/` | Agent Evaluation | ⏳ |
+| 18 | Benchmark | `evals/` | Agent Evaluation | ✅ 已跑通（n=3） |
 | 19 | Sandbox | 后期 | 安全执行 | ⏳ |
 | 20 | Docker | 后期 | 工程化 | ⏳ |
 | 21 | Model Routing（成本感知） | `src/agents/model_router.py` | Cost-Aware Routing | ⏳ **v5 新增** |
@@ -736,6 +736,46 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 
 **过关题：为什么“失败经验”要配上“后来怎么修好的”才真正有用？** 只知道“这样会失败”只能排除一条路，却不知道往哪走；配上后来成功的改动，经验才从“警示牌”变成“绕行路线”。这也是为什么经验条目要同时存 `outcome` 和 `changed_paths`，并且两类经验在提示词里分组呈现。
 
+### 4.19 魔改十五：Coding Benchmark（阶段 18）
+
+**设计**：`evals/coding_benchmark.py` 用**同一批任务跑两遍**——第一遍冷启动（`experience_top_k=0`），把这些轨迹沉淀成经验；第二遍热启动（同一个经验库、开启检索）。两遍的模型、提示词、任务完全一致，唯一变量是“有没有经验可查”。
+
+三个口径上的讲究：① **独立判分**——跑完自己再执行一次 pytest，不信 Agent 自报的结论；② 基线臂**仍然记录经验**（否则处理臂没有东西可查，实验从设计上就废了），只是不检索；③ 记录每次运行命中的经验条数，用来证明处理臂真的查到了东西。
+
+**实测结果（n=3，每臂 3 次真实 LLM 任务）**：
+
+| 指标 | Baseline | +Experience |
+|---|---|---|
+| 独立判分通过率 | 1.000 | 1.000 |
+| 首次通过率 | 0.667 | 0.333 |
+| 平均 attempts | 1.33 | 1.67 |
+| 平均工具调用 | 27.0 | 23.0 |
+| 平均耗时 | 103.7 s | 64.2 s |
+| 命中经验的运行数 | 0 / 3 | 3 / 3 |
+
+逐条明细（两个臂都 3/3 修对）：
+
+| 任务 | 基线 attempts / 工具调用 | 处理臂 attempts / 工具调用 / 命中 |
+|---|---|---|
+| `stats_mean_empty` | 1 / 22 | 1 / 25 / 3 |
+| `stats_median_even` | 1 / 34 | 2 / 23 / 6 |
+| `math_safe_divide` | 2 / 25 | 2 / 21 / 6 |
+
+**怎么读这组数（不许包装）**：
+
+- **可以通过管道验证的**：整条链路在真实任务上跑通，包括经验检索真的触发（处理臂 3/3 命中）；工具调用数 −15%、耗时 −38%，说明有经验时探索更省。
+- **不能声称的**：任务太简单，两臂都是 3/3，成功率撞到天花板，**无法区分好坏**；而且首次通过率反而下降（0.667 → 0.333）、平均 attempts 上升（1.33 → 1.67），方向和“经验减少试错”的预期相反。
+- **统计上不许说的话**：n=3，任何单个任务翻转都会改变 33 个百分点，这只能算方向性观察，不能宣称显著性，也不能下“经验有用/没用”的结论。
+
+**这次跑出来的两个真问题**（比数字更有价值）：
+
+1. **沙箱文件必须 `git add -N`**：第一轮里 Agent 明明改对了（独立 pytest 2 passed），Reviewer 却判 `review_rejected`——因为新建的沙箱文件未被 git 跟踪，`git_diff` 看不到改动，评审员只看到“diff 里没有目标文件”。这正是阶段 12 加“评审范围”时踩过的同一类坑。
+2. **递归上限不能拍脑袋定**：最初设 `recursion_limit=40`，一次正常的 25 次工具调用就会触发 `GraphRecursionError`。改成 80（与 day12 一致）后全部正常收敛。另外给 planner 加了 `planner_recon_steps` 配置（默认 3，本次基准用 1，两臂一致），因为需求里已经点名文件时多轮侦察纯属浪费调用。
+
+**成本提醒**：一轮 12 次运行的基准会消耗大量 API 额度（本次中途就遇到过 402）。所以最终把规模收敛成 3 任务 × 2 臂，宁可样本小、口径清楚，也不拿一次跑不完的实验充数。
+
+**过关题：为什么 Benchmark 必须用“同一批任务跑两次”，而不能用“加了经验之后挑几个成功案例”来证明变好了？** 挑案例是在已经知道结果的前提下选证据，任何系统都能挑出漂亮样本；只有固定任务、固定模型、只改一个变量、并且失败样本也照实计入，才能把“变好了”归因到经验本身。这也是本次即使结果不利于假设、也必须照原样记录的原因。
+
 ---
 
 ## 5. 文件清单
@@ -754,6 +794,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/trajectory.py` | **新增** | JSONL 轨迹构建、脱敏、持久化与聚合 |
 | `src/agents/experience.py` | **新增** | 轨迹→经验派生 + SQLite 经验库（回链 / 去重 / 脱敏 / 召回） |
 | `src/agents/coding_memory.py` | **新增** | BGE-M3 + Chroma 经验检索、接入 Planner、关键词降级 |
+| `evals/coding_benchmark.py` | **新增** | 阶段 18 基准：同批任务跑两遍 + 独立判分 + 指标汇总 |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
@@ -840,6 +881,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改十二：Experience Memory（轨迹→经验派生 + SQLite 经验库 + 回链去重，验收 11/11）
 - [x] 魔改十三：Experience Retrieval（BGE-M3 + Chroma 语义召回 + Planner 注入 + 无命中零影响，验收 11/11）
 - [x] 魔改十四：Experience-Guided Self-Correction（debugger 检索同类经验并按成败分组，验收 7/7）
+- [x] 魔改十五：Coding Benchmark（Baseline vs +Experience 同批任务两遍跑，独立判分，n=3 见 §4.19）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -903,23 +945,24 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 15 Experience Memory**：验收 11/11，设计与过关题回答见 §4.16
 - **阶段 16 Experience Retrieval**：验收 11/11，设计与过关题回答见 §4.17
 - **阶段 17 Experience-Guided Self-Correction**：验收 7/7，设计与过关题回答见 §4.18
+- **阶段 18 Coding Benchmark**：已跑通，结果与局限见 §4.19；报告在 `.codex/benchmark/report.json`
 
-### 9.2 下一步（阶段 18）：Benchmark（证明经验真的让 Agent 变好了）
+### 9.2 下一步（阶段 19）：Sandbox / 隔离执行
 
-**目标**：前面 17 个阶段都在“搭系统”，阶段 18 要回答一个更硬的问题：**加入经验记忆之后，Agent 到底有没有变好？** 这需要同一批任务跑两次（Baseline vs +Experience），而不是拿单个案例讲故事。
+**已完成的阶段 18 结论**：管线跑通、检索真的生效（处理臂 3/3 命中）、工具调用与耗时下降；但任务太简单（两臂都 3/3），首次通过率与 attempts 反而变差，n=3 也谈不上显著。**要得到能写进结论的数字，下一步得先扩大样本量与任务难度**（这条留作阶段 18 的后续迭代，不阻塞阶段 19）。
+
+**阶段 19 的目标**：现在 Agent 的写权限直接作用在真实工作区上，靠“路径必须落在项目内”这一条约束兜底，一旦模型跑偏，改坏的是开发者自己的仓库。本阶段要把执行环境真正隔离起来。
 
 **本阶段要做的**：
 
-- `evals/` 下准备 20~50 个可自动判定成败的 Coding Task（每个任务带初始仓库状态 + 期望的测试）
-- 两组配置跑同一批任务：`record_experience=False`（基线）与开启经验检索
-- 指标从轨迹里聚合（阶段 14 的 `scripts/trajectory_metrics.py` 已经能算一部分）：任务成功率、首次通过率、平均 attempts、平均工具调用数、平均耗时、人工干预次数
-- 明确记录**统计口径与样本量**，小样本只能作为方向性证据，不能宣称显著性
+- 每个任务在独立的 git worktree / 临时副本里执行，而不是直接改主工作区
+- 路径约束 + `git diff` 之外，再加一层“任务结束后可整体丢弃”的隔离
+- 明确写清哪些动作仍在主仓库执行（读代码、跑测试），哪些必须隔离（写文件）
+- 验收要能证明：故意越权写入不会污染主工作区；失败任务的残留可以被完整回收
 
-**当前阻塞**：DeepSeek 账号余额不足（`402 Insufficient Balance`），任何真实 LLM 任务都无法执行，因此 Benchmark 暂时跑不出数据。单元级验收（14/15/16/17）都不花额度，已全部通过；等额度恢复后即可直接跑基准。
+**过关题**：为什么“路径必须落在项目内”这条约束不足以代替真正的沙箱？
 
-**过关题**：为什么 Benchmark 必须用“同一批任务跑两次”，而不能用“加了经验之后挑几个成功案例”来证明系统变好了？
-
-**提交信息**：`feat(evals): benchmark baseline vs experience memory`
+**提交信息**：`feat(coding): isolate task execution`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

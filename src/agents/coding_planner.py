@@ -186,7 +186,16 @@ def _last_human_text(messages: list[Any]) -> str:
     return ""
 
 
-async def _recon(model: Any, requirement: str) -> str:
+def recon_steps(config: RunnableConfig) -> int:
+    """侦察轮数上限：默认 3；需求已经把目标文件说清楚时可以调小以省调用。"""
+    raw = (config.get("configurable") or {}).get("planner_recon_steps", MAX_RECON_STEPS)
+    try:
+        return max(0, int(raw))
+    except (TypeError, ValueError):
+        return MAX_RECON_STEPS
+
+
+async def _recon(model: Any, requirement: str, steps: int = MAX_RECON_STEPS) -> str:
     """只读侦察：最多 MAX_RECON_STEPS 轮工具调用，返回拼接后的发现（有长度上限）。"""
     bound = model.bind_tools(PLANNER_TOOLS)
     messages: list[Any] = [
@@ -194,7 +203,7 @@ async def _recon(model: Any, requirement: str) -> str:
         HumanMessage(content=f"开发需求：{requirement}"),
     ]
     findings: list[str] = []
-    for _ in range(MAX_RECON_STEPS):
+    for _ in range(steps):
         ai = await bound.ainvoke(messages)
         messages.append(ai)
         calls = getattr(ai, "tool_calls", None) or []
@@ -220,7 +229,7 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     requirement = _last_human_text(state.get("messages", []))
     model = get_model(config["configurable"].get("model", settings.DEFAULT_MODEL))
 
-    findings = await _recon(model, requirement)
+    findings = await _recon(model, requirement, recon_steps(config))
     hits, retrieval = recall_experiences(requirement, config)
     plan_messages = [
         SystemMessage(content=PLAN_PROMPT),
