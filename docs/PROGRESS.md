@@ -15,7 +15,7 @@
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–12 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8。当前任务是**阶段 13 HITL**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**当前实现顺序不变**（v5 §40.6 明确要求）：阶段 **0–13 已完成**——阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8。当前任务是**阶段 14 Trajectory**。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -167,7 +167,7 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 | 10 | `run_tests` | `src/agents/test_tools.py` | Execution | ✅ 验收 9/9 |
 | 11 | Debug Loop | `src/agents/coding_agent.py` | Conditional Loop | ✅ 验收 11/11 |
 | 12 | Reviewer | `src/agents/reviewer.py` | Subgraph / Agent | ✅ 验收 8/8 |
-| 13 | HITL | Graph | `interrupt()` | ⏳ |
+| 13 | HITL | Graph | `interrupt()` | ✅ 验收 8/8 |
 | 14 | Trajectory | `trajectory` | Evaluation | ⏳ |
 | 15 | Experience Memory | `src/agents/experience.py` | Store | ⏳ |
 | 16 | Experience Retrieval | `src/agents/coding_memory.py` | RAG + Memory | ⏳ |
@@ -634,6 +634,42 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 3. **职责单一**：Coder 对"能不能跑通"负责，Reviewer 对"符不符合需求、有没有引入风险"负责；
 4. **边界清晰之后才能换模型**（v3 §28 的 Model Routing）：强模型评审、本地模型编码，各司其职。
 
+### 4.14 魔改十：Human-in-the-loop（阶段 13）
+
+**目标**：把"写权限开关"升级成"**高风险动作先暂停、等人批准**"。
+
+| 设计 | 实现 | 为什么 |
+|---|---|---|
+| 只在写操作前暂停 | `act` 节点在执行前检查本批 `tool_calls` 里是否有 `write_file` / `edit_file` | 只读动作（search / read / diff / run_tests）照常执行，体验不受影响 |
+| **审批必须在副作用之前** | `interrupt()` 放在**第一遍纯判断**里，批准后才进入第二遍执行 | LangGraph 在 resume 时**从头重跑该节点**——若先执行再暂停，被批准的那批写操作会被执行两次 |
+| 审批信息可决策 | payload 含：改哪个文件、`change` 预览（content 前 200 字 / old→new）、**计划里给的理由** | 人要知道"改什么、为什么"才能决定；reason 直接取自 `plan.steps` |
+| 保守的判定 | `_is_approved`：只有明确同意（`True` / "批准" / "yes" / "approve"…）才算批准，**无法识别一律拒绝** | 安全默认：宁可多问一次，也不能误执行写操作 |
+| 拒绝也要有结果 | 写操作被拒 → 返回 `ERROR: 用户拒绝执行这次写入…` 的 ToolMessage + State 记录 `approvals[{approved: False}]` | 让模型知道"没改"，改为给建议或询问，而不是假装改好了 |
+| 开关可控 | `require_approval` 默认 **True**；自动化测试显式传 False | 生产默认安全，自动化闭环可显式关闭 |
+
+图结构不变，只是 `act` 节点内部多了一道闸门：`coder → tools(act) → [有写操作?] → interrupt（等人批准）→ 执行 / 拒绝`。
+
+**实测（真实 LLM + 真实文件 + `MemorySaver` checkpointer）**
+
+| 场景 | 结果 |
+|---|---|
+| 写模式 + 默认审批 | 第一次 invoke **停在 `__interrupt__`**，payload 含 `path=_day13_sandbox/approve_me.txt` 与理由"…目标文件不存在，直接新建并写入单行文本 hello approval" |
+| 暂停时的副作用 | **文件尚未创建**（证明审批确实在副作用之前） |
+| `resume("批准")` | 文件被创建，内容正确 |
+| `resume("拒绝")` | 文件**未被创建**，State 记录 `approvals=[{..., approved: False}]` |
+| `require_approval=False` | 不中断，直接执行 |
+| 只读模式 | 完全不触发审批 |
+
+验收：`lg_practice/day13_hitl_check.py` **8/8**。回归：day11 11/11、day12 8/8（这两个自动化脚本现在显式传 `require_approval=False`）。
+
+**过关题：哪些动作必须人工批准？为什么不是所有动作都批准？**
+
+- **必须批准**：写/覆盖/删除文件、执行命令、安装依赖、`git push` 这类**有副作用且难以撤销**的动作；
+- **不该批准**：search / read / diff / run_tests 这类只读或可重复执行的动作——它们没有破坏性，反复确认只会让人"闭眼批准"，HITL 反而失效；
+- 判断标准可以概括成三个问题：**能不能撤销？会不会影响仓库之外？出错代价大不大？**
+
+**工程细节**：`interrupt()` 依赖 checkpointer——服务端启动时会给注册表里的图挂上 SQLite checkpointer，验收脚本用 `MemorySaver`。
+
 ---
 
 ## 5. 文件清单
@@ -649,7 +685,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `src/agents/test_tools.py` | **新增** | `run_tests`（只允许 pytest，结构化结果） |
 | `src/agents/coding_planner.py` | **新增** | Planning：只读侦察 → JSON 计划 → 确定性校验 |
 | `src/agents/reviewer.py` | **新增** | Reviewer：只读独立评审 + 结构化裁决 |
-| `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环 |
+| `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
 | `.gitignore` | 修改 | 忽略个人练习目录 `study_test11/` |
 
@@ -672,6 +708,7 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 | `day10_planner_check.py` | Planning 的 10 项验收脚本 |
 | `day11_self_correction_check.py` | 自修复闭环的 11 项验收脚本（含两次真实端到端运行） |
 | `day12_reviewer_check.py` | Reviewer 的 8 项验收脚本（含两次真实评审） |
+| `day13_hitl_check.py` | HITL 的 8 项验收脚本（暂停 / 批准 / 拒绝 / 关开关 / 只读不打扰） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -721,11 +758,11 @@ START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
 - [x] 魔改七：Planning（`coding_planner.py`：只读侦察 → JSON 计划 → 确定性校验 → 写入 State，验收 10/10）
 - [x] 魔改八：Debug / Self-Correction（写权限受控开放 + tester/debugger/giveup 闭环，验收 11/11）
 - [x] 魔改九：Reviewer（只读独立评审 + 结构化裁决 + 评审范围可控，验收 8/8）
+- [x] 魔改十：HITL（写操作前 `interrupt()` 等人批准；拒绝也会留下记录，验收 8/8）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
 
-- [ ] HITL 未做：写权限目前只有"开关"（`allow_write`），高风险动作还没有"先暂停等批准"的机制（阶段 13）
 - [ ] DeepSeek 偶发流式超时（`No streaming chunk received for 120.0s`）会让单次规划/回答失败；后续需要加超时与重试配置（如 `stream_chunk_timeout`）
 - [ ] 没有评测（benchmark）与指标（成功率 / 测试通过率 / 迭代次数 / 延迟 / token 成本）
 - [ ] 知识库仍只有 3 个 chunk（手册太小），检索效果不具代表性
@@ -771,7 +808,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ## 9. 下一步
 
-### 9.1 已完成（阶段 6–12）
+### 9.1 已完成（阶段 6–13）
 
 - **阶段 6 `search_code`**：验收 9/9，对照实验数据见 §4.7
 - **阶段 7 `write_file` / `edit_file`**：验收 11/11，设计见 §4.8
@@ -780,31 +817,32 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 10 `run_tests`**：验收 9/9，设计与过关题回答见 §4.9
 - **阶段 11 Debug / Self-Correction**：验收 11/11，设计与过关题回答见 §4.11
 - **阶段 12 Reviewer**：验收 8/8，设计见 §4.12
+- **阶段 13 HITL**：验收 8/8，设计与过关题回答见 §4.14
 
-### 9.2 当前任务（阶段 13）：Human-in-the-loop
+### 9.2 当前任务（阶段 14）：Trajectory（把每次执行记录下来）
 
-**目标**：把"写权限开关"升级成"**高风险动作先暂停、等人批准**"——这是 v3 可靠性自检里"改错了怎么办"的最后一块拼图。
+**目标**：把每次任务的"过程"变成**结构化、可分析的数据**——这是 Evaluation（阶段 18）与 Experience Memory（阶段 15）共同的底座。没有 trajectory，就无法回答"这次任务跑了几轮、调了哪些工具、卡在哪一步、成本多少"。
 
 **第一版必须支持**：
 
-- 用 LangGraph 的 `interrupt()` 在**高风险动作前**暂停：`write_file` 覆盖已有文件、`edit_file` 修改已有文件（未来还包括删文件、执行命令）
-- 暂停时给出**可决策的信息**：要改哪个文件、改成什么（diff 预览）、为什么（对应计划里的哪一步）
-- 批准 → `Command(resume=...)` 继续；拒绝 → 中止并记录原因
-- 复用项目已有能力：`src/agents/interrupt_agent.py` 是现成参考，服务端 `_handle_input` 已经会处理 `Command(resume=...)`
-- **低风险动作（search / read / diff / run_tests）不要暂停**，否则体验崩坏
-- 暂停与恢复必须能被验收脚本自动测试：用 `graph.aget_state()` 检查 interrupt，再用 `Command(resume=...)` 恢复
+- 新增 `src/agents/trajectory.py`：定义可序列化的 `Trajectory`（task / plan / 每轮动作 / 工具调用统计 / attempts / test_result / review / approvals / 模型 / 耗时 / 最终状态）
+- 在图上落点：任务收尾处统一写出（由 `reviewer` 与 `giveup` 两条终态路径都会经过的节点收口）
+- 存储从简：先落 JSONL 或 SQLite 文件（例如仓库外的 `D:\codex\working\trajectories\` 或已在 `.gitignore` 里的目录），**不要**一上来就上数据库服务
+- 每条记录要能回答：任务是什么、改了哪些文件、跑了几轮、最终通过没有、谁批准过
+- 提供一个聚合脚本，能算出"任务数 / 成功率 / 平均 attempts / 平均工具调用数 / 平均耗时"
 
 **验收标准**：
 
-- [ ] 写操作前触发 interrupt，state 里能看到待批准的动作与理由
-- [ ] `resume(True)` 后动作真正执行
-- [ ] `resume(False)` 后动作被跳过/中止，且不产生"假装成功"的结论
-- [ ] 只读工具不触发 interrupt
-- [ ] 服务端 `/invoke` 能把 interrupt 值返回给客户端（复用上游已有逻辑）
+- [ ] 一次真实任务结束后，磁盘上出现一条 trajectory 记录
+- [ ] 字段齐全（task / plan / tool_calls / attempts / test_result / review / status / duration）
+- [ ] 失败路径（`giveup`）同样会被记录，且 status 明确为失败
+- [ ] 能从记录里聚合出基础指标（成功率、平均 attempts）
+- [ ] 轨迹目录不污染 git（放仓库外或加进 `.gitignore`）
+- [ ] 记录中不含密钥等敏感内容
 
-**过关题**：哪些动作必须人工批准？为什么不是所有动作都批准？
+**过关题**：为什么 trajectory 是 evaluation 与 experience 的共同前置？
 
-**提交信息**：`feat(coding): add human approval for risky actions`
+**提交信息**：`feat(coding): record coding task trajectories`
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

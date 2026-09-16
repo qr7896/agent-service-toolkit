@@ -27,6 +27,7 @@ from typing import Any, Literal
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, MessagesState, StateGraph
+from langgraph.types import interrupt
 
 from agents.code_tools import (
     PROJECT_ROOT,
@@ -50,6 +51,14 @@ READ_TOOLS = [search_code, read_file, list_files, git_diff, run_tests]
 WRITE_TOOLS = [write_file, edit_file]
 ALL_TOOLS = [*READ_TOOLS, *WRITE_TOOLS]
 _TOOL_BY_NAME = {t.name: t for t in ALL_TOOLS}
+# 会被人工审批拦下的工具（high risk）
+WRITE_TOOL_NAMES = {t.name for t in WRITE_TOOLS}
+
+# 判定"批准"的词表：只有明确表示同意才算批准，其他一律按拒绝处理（保守默认）
+APPROVE_WORDS = {
+    "y", "yes", "true", "1", "ok", "approve", "approved", "confirm", "go",
+    "批准", "同意", "是", "允许", "继续", "确认",
+}
 
 # 对外暴露的默认工具集（只读），供文档与验收脚本引用
 TOOLS = READ_TOOLS
@@ -84,6 +93,7 @@ class CodingState(MessagesState):
     plan: dict[str, Any]
     test_result: dict[str, Any]
     review: dict[str, Any]
+    approvals: list[dict[str, Any]]
     attempts: int
     allow_write: bool
 
@@ -98,6 +108,58 @@ def _allow_write(config: RunnableConfig) -> bool:
 
 def _allowed_tools(config: RunnableConfig) -> list[Any]:
     return READ_TOOLS + (WRITE_TOOLS if _allow_write(config) else [])
+
+
+def _require_approval(config: RunnableConfig) -> bool:
+    """高风险写操作是否需要人工批准（默认需要）。"""
+    return bool(_configurable(config).get("require_approval", True))
+
+
+def _is_approved(value: Any) -> bool:
+    """把 resume 值解释成"批准 / 拒绝"。
+
+    - 报务端传进来的是用户输入的字符串（见 service.py 的 `Command(resume=user_input.message)`）；
+    - 直接调用图时也可能传 bool 或 dict；
+    - **无法识别一律按拒绝处理**——这是安全默认：宁可多问一次，也不能误执行写操作。
+    """
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return bool(value)
+    if isinstance(value, dict):
+        if "approved" in value:
+            return _is_approved(value["approved"])
+        return False
+    if isinstance(value, str):
+        return value.strip().lower() in APPROVE_WORDS
+    return False
+
+
+def _plan_reason(state: CodingState, path: str) -> str:
+    """从计划里找出这个文件对应的修改理由（审批信息里需要"为什么"）。"""
+    for step in (state.get("plan") or {}).get("steps") or []:
+        if str(step.get("path") or "") == path:
+            return str(step.get("reason") or "")
+    return ""
+
+
+def _describe_action(state: CodingState, call: dict[str, Any]) -> dict[str, Any]:
+    """把一次写操作整理成"人能据此决策"的信息：改哪个文件、改成什么、为什么。"""
+    args = call.get("args") or {}
+    name = call.get("name", "")
+    path = str(args.get("path") or "")
+    action: dict[str, Any] = {"tool": name, "path": path, "reason": _plan_reason(state, path)}
+    if name == "write_file":
+        action["change"] = f"写入/覆盖文件（内容前 200 字）：{str(args.get('content') or '')[:200]}"
+        action["overwrite"] = bool(args.get("overwrite", False))
+    elif name == "edit_file":
+        action["change"] = (
+            f"替换片段（old → new）：\n- {str(args.get('old_text') or '')[:200]}\n"
+            f"+ {str(args.get('new_text') or '')[:200]}"
+        )
+    else:
+        action["change"] = str(args)[:200]
+    return action
 
 
 async def make_plan(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
@@ -153,18 +215,69 @@ def should_act(state: CodingState) -> Literal["tools", "tester", "end"]:
 
 
 async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
-    """工具执行节点（自己实现的 dispatcher）。
+    """工具执行节点（自己实现的 dispatcher + 人工审批闸门）。
 
     为什么不用 ToolNode：工具白名单要**按运行模式动态决定**。这里对每个 tool_call
     再校验一次"当前模式是否允许"，越权调用只会得到一条 ERROR 的 ToolMessage，
     而不是真的执行——这就是"不绑给模型"之外的第二道闸门。
+
+    HITL（阶段 13）：如果本批里有写操作、且 `require_approval=True`（默认），
+    先 `interrupt()` 暂停等人批准，**批准之后才开始执行**。
+    关键细节：LangGraph 在 resume 时会**从头重跑本节点**，所以审批必须在任何副作用
+    之前完成——否则被批准的那批写操作会被执行两次。
     """
     allowed = {t.name for t in _allowed_tools(config)}
     last = state["messages"][-1]
+    calls = getattr(last, "tool_calls", None) or []
+
+    # ---- 第一遍：只做判断，不产生任何副作用 ----
+    pending = [c for c in calls if c.get("name") in WRITE_TOOL_NAMES and c.get("name") in allowed]
+    decisions: dict[str, bool] = {}
+    if pending and _require_approval(config):
+        answer = interrupt(
+            {
+                "type": "approval_request",
+                "question": (
+                    "以下操作会修改仓库文件，是否批准执行？"
+                    "回复「批准」继续，回复「拒绝」放弃本次修改。"
+                ),
+                "actions": [_describe_action(state, call) for call in pending],
+                "read_only_tools_are_not_asked": True,
+            }
+        )
+        approved = _is_approved(answer)
+        decisions = {str(c.get("id", "")): approved for c in pending}
+
+    # ---- 第二遍：执行（此时审批已完成） ----
     results: list[ToolMessage] = []
-    for call in getattr(last, "tool_calls", None) or []:
+    approval_records: list[dict[str, Any]] = []
+    for call in calls:
         name = call.get("name", "")
+        call_id = str(call.get("id", ""))
         tool = _TOOL_BY_NAME.get(name)
+        if call_id in decisions:
+            approved = decisions[call_id]
+            approval_records.append(
+                {
+                    "tool": name,
+                    "path": str((call.get("args") or {}).get("path") or ""),
+                    "approved": approved,
+                    "reason": _plan_reason(state, str((call.get("args") or {}).get("path") or "")),
+                }
+            )
+            if not approved:
+                results.append(
+                    ToolMessage(
+                        content=(
+                            "ERROR: 用户拒绝执行这次写入，文件未被修改。"
+                            "请停止修改，改为说明你的建议（文件路径 + 行号 + 建议内容）"
+                            "或询问用户希望怎么做。"
+                        ),
+                        tool_call_id=call_id,
+                        name=name,
+                    )
+                )
+                continue
         if tool is None:
             content = f"ERROR: 未知工具: {name}"
         elif name not in allowed:
@@ -177,8 +290,12 @@ async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
                 content = str(tool.invoke(call.get("args") or {}))
             except Exception as e:
                 content = f"ERROR: {e}"
-        results.append(ToolMessage(content=content, tool_call_id=call.get("id", ""), name=name))
-    return {"messages": results}
+        results.append(ToolMessage(content=content, tool_call_id=call_id, name=name))
+
+    out: dict[str, Any] = {"messages": results}
+    if approval_records:
+        out["approvals"] = [*(state.get("approvals") or []), *approval_records]
+    return out
 
 
 def _parse_test_result(text: str) -> dict[str, Any]:
@@ -273,8 +390,12 @@ async def giveup(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     return {"messages": [AIMessage(content=content)]}
 
 
-def build_graph():
-    """建图：planner → coder ↔ tools，并在放开写权限时接上 tester/debugger 闭环。"""
+def build_graph(checkpointer: Any | None = None):
+    """建图：planner → coder ↔ tools，并在放开写权限时接上 tester/debugger 闭环。
+
+    checkpointer 必须传：HITL 的 interrupt() 需要它来持久化"暂停点"，
+    否则图无法恢复（服务端在启动时会给注册表里的图挂上 SQLite checkpointer）。
+    """
     graph = StateGraph(CodingState)
 
     graph.add_node("planner", make_plan)
@@ -299,7 +420,7 @@ def build_graph():
     graph.add_edge("giveup", END)
     graph.add_edge("reviewer", END)
 
-    return graph.compile()
+    return graph.compile(checkpointer=checkpointer)
 
 
 # agents.py 注册表需要的是一个已编译的图对象（和 rag_assistant 一样的约定）
