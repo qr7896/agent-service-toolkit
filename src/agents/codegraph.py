@@ -33,6 +33,42 @@ TOOLS = (
 )
 TIMEOUT_SECONDS = 60
 
+# 本项目沿用的规范名 → CodeGraph 真实工具名。
+# 对照来源：v0.20.1 二进制 `--mcp` 模式 tools/list 的实际输出（42 个工具，前缀 codegraph_），
+# 与 README 中点名的 get_ai_context / get_edit_context / analyze_impact / find_related_tests 一致。
+CODEGRAPH_TOOL_NAMES = {
+    "symbol_search": "codegraph_symbol_search",
+    "get_ai_context": "codegraph_get_ai_context",
+    "get_edit_context": "codegraph_get_edit_context",
+    "get_callers": "codegraph_get_callers",
+    "get_callees": "codegraph_get_callees",
+    "analyze_impact": "codegraph_analyze_impact",
+    "find_related_tests": "codegraph_find_related_tests",
+    "get_detailed_symbol": "codegraph_get_detailed_symbol",
+}
+
+
+def cli_style() -> str:
+    """`run-tool` = CodeGraph 原生契约（`--run-tool <name> --tool-args <json>`）；
+    `generic` = 本仓库自带 CLI 的契约（`<tool> --json <json>`）。"""
+    return str(os.getenv("CODEGRAPH_CLI_STYLE") or "generic").strip().lower()
+
+
+def workspace() -> str:
+    from agents.code_tools import PROJECT_ROOT
+
+    return str(os.getenv("CODEGRAPH_WORKSPACE") or PROJECT_ROOT)
+
+
+def _native_command(cli: str, tool: str, arguments: dict[str, Any]) -> list[str]:
+    name = CODEGRAPH_TOOL_NAMES.get(tool, tool)
+    command = [cli]
+    if str(os.getenv("CODEGRAPH_GRAPH_ONLY", "1")) != "0":
+        # graph-only：跳过 embedding 模型下载，只服务结构化工具（CI / 一次性查询都该用它）
+        command.append("--graph-only")
+    command += ["-w", workspace(), "--run-tool", name, "--tool-args", json.dumps(arguments, ensure_ascii=False)]
+    return command
+
 
 class CodeGraphUnavailable(RuntimeError):
     """没有可用的 CodeGraph 后端（不是错误，是回退信号）。"""
@@ -70,15 +106,24 @@ def call(tool: str, **arguments: Any) -> str:
 
     if status["backend"] == "cli":
         payload = json.dumps(arguments, ensure_ascii=False)
+        if cli_style() == "run-tool":
+            command = _native_command(str(status["target"]), tool, arguments)
+        else:
+            command = [str(status["target"]), tool, "--json", payload]
         try:
             proc = subprocess.run(
-                [str(status["target"]), tool, "--json", payload],
-                capture_output=True, text=True, timeout=TIMEOUT_SECONDS,
+                command,
+                capture_output=True, timeout=TIMEOUT_SECONDS,
+                # 必须显式指定 UTF-8：默认按系统代码页（本机 GBK）解码，
+                # CodeGraph 的 JSON 输出会让读取线程直接抛 UnicodeDecodeError，
+                # stdout 变成 None（这个坑实测踩过）
+                encoding="utf-8", errors="replace",
             )
         except (OSError, subprocess.SubprocessError) as exc:
             raise CodeGraphUnavailable(f"CLI 调用失败：{exc}") from exc
         if proc.returncode != 0:
             raise CodeGraphUnavailable(f"CLI 返回 {proc.returncode}：{proc.stderr.strip()[:200]}")
+        # CodeGraph 的日志走 stderr；stdout 是纯 JSON 结果，直接透传
         return proc.stdout.strip()
 
     # MCP：用最小 JSON-RPC 载荷，避免引入额外客户端依赖
@@ -105,4 +150,12 @@ def call(tool: str, **arguments: Any) -> str:
     return json.dumps(result if result is not None else body, ensure_ascii=False)
 
 
-__all__ = ["TOOLS", "CodeGraphUnavailable", "call", "probe"]
+__all__ = [
+    "CODEGRAPH_TOOL_NAMES",
+    "TOOLS",
+    "CodeGraphUnavailable",
+    "call",
+    "cli_style",
+    "probe",
+    "workspace",
+]

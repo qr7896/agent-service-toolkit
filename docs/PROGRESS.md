@@ -1066,7 +1066,20 @@ steps:
 
 新增 `scripts/codegraph_cli.py`——把本仓库的代码智能能力按 CodeGraph 的 CLI 契约暴露成**进程外后端**，适配层走的是真实子进程调用而不是测试桩；接入第三方 CodeGraph 时只改 `CODEGRAPH_CLI` 指向。
 
-**关于第三方 CodeGraph 的实话**：本机没有 node/npm，`codegraph` 也未安装；npm registry 上确实存在同名包（`codegraph@1.0.0`），但无法确认它是否就是设计文档所指的项目（文档引用的 arXiv 编号超出当前时间，无法核实）。所以这里**不声称已接入第三方 CodeGraph**，只保证契约对齐、换后端不用改代码。
+**更正（同日）**：上面这段判断是错的。经核实 `codegraph-ai/CodeGraph` **确实存在**（91 stars，tree-sitter 解析 38 种语言，42 个 MCP 工具），并且**已经装到本机**：
+
+```text
+下载  codegraph-server-win32-x64.exe（v0.20.1，101MB）+ .sha256
+校验  SHA256 与官方发布一致（aa1b6108…5b15b1）
+存放  D:\codex\working\tools\codegraph\（仓库外，101MB 不进 git）
+启用  CODEGRAPH_CLI=<exe>  CODEGRAPH_CLI_STYLE=run-tool  [CODEGRAPH_WORKSPACE=<要索引的目录>]
+```
+
+**它是不是设计文档指的那个？是。** 两条独立证据：① README 里正好出现文档点名的四个能力（`get_ai_context` / `get_edit_context` / `analyze_impact` / `find_related_tests`）；② 二进制 `--mcp` 模式 `tools/list` 返回的 42 个工具里，四个全在——`codegraph_get_ai_context`、`codegraph_get_edit_context`、`codegraph_analyze_impact`、`codegraph_find_related_tests`，另有 `codegraph_memory_*` 持久记忆层。
+
+**已实测跑通**：`code_intel.symbol_search('add')` 在配置后走真实二进制（`backend: cli`），返回 CodeGraph 自己的 JSON（`match_reason: SymbolName`、`embedding_status` 等）。工具名映射与 `--run-tool` 契约已锁进 day30 验收（13/13）。
+
+**顺带修掉一个通用坑**：`subprocess.run(text=True)` 默认按系统代码页解码，本机是 GBK，而 CodeGraph 输出 UTF-8，读取线程直接抛 `UnicodeDecodeError` 导致 `stdout` 为 None。`codegraph.py` / `code_tools.py` / `test_tools.py` / `evals/swe_tasks.py` 四处统一显式指定 `encoding="utf-8", errors="replace"`。
 
 #### 二、真实任务集：从本仓库的修复史生成
 

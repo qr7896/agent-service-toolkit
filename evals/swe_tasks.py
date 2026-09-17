@@ -83,7 +83,8 @@ def prepare(spec: TaskSpec, root: Path, with_gold: bool = False) -> Path:
 def _run_node(root: Path, node: str) -> bool:
     proc = subprocess.run(
         [sys.executable, "-m", "pytest", "-q", node],
-        cwd=str(root), capture_output=True, text=True, timeout=300,
+        cwd=str(root), capture_output=True, timeout=300,
+        encoding="utf-8", errors="replace",
     )
     return proc.returncode == 0
 
