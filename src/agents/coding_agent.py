@@ -43,6 +43,8 @@ from agents.code_tools import (
 from agents.coding_planner import planner
 from agents.coding_memory import format_experience_context, recall_experiences
 from agents.experience import record_trajectory
+from agents.evidence import reconcile
+from agents import code_intel
 from agents.model_router import estimate_tokens, route_model, routing_enabled
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
@@ -109,6 +111,10 @@ class CodingState(MessagesState):
     review: dict[str, Any]
     approvals: list[dict[str, Any]]
     experience_hits: list[dict[str, Any]]
+    evidence_cards: list[dict[str, Any]]
+    evidence_gate: dict[str, Any]
+    evidence_trace: list[dict[str, Any]]
+    evidence_mismatch: dict[str, Any]
     llm_calls: int
     estimated_tokens: int
     model_tier: str
@@ -127,8 +133,16 @@ def _allow_write(config: RunnableConfig) -> bool:
     return bool(_configurable(config).get("allow_write", False))
 
 
-def _allowed_tools(config: RunnableConfig) -> list[Any]:
-    return READ_TOOLS + (WRITE_TOOLS if _allow_write(config) else [])
+def _evidence_gate_passed(state: dict[str, Any], config: RunnableConfig) -> bool:
+    """门控没开时永远算通过（不改变原有行为）；开了才看结论。"""
+    if not bool(_configurable(config).get("evidence_gate", False)):
+        return True
+    return bool((state.get("evidence_gate") or {}).get("passed"))
+
+
+def _allowed_tools(config: RunnableConfig, state: dict[str, Any] | None = None) -> list[Any]:
+    can_write = _allow_write(config) and _evidence_gate_passed(state or {}, config)
+    return READ_TOOLS + (WRITE_TOOLS if can_write else [])
 
 
 def _require_approval(config: RunnableConfig) -> bool:
@@ -203,7 +217,7 @@ async def call_model(state: CodingState, config: RunnableConfig) -> dict[str, An
         raise ValueError("`model` is required in the configuration")
     decision = route_model(state, config, "coder")
     model = get_model(decision.model)
-    bound_model = model.bind_tools(_allowed_tools(config))
+    bound_model = model.bind_tools(_allowed_tools(config, state))
 
     messages: list[Any] = [SystemMessage(content=SYSTEM_PROMPT)]
 
@@ -225,6 +239,17 @@ async def call_model(state: CodingState, config: RunnableConfig) -> dict[str, An
                     "本次运行**没有写权限**：你不能修改仓库里的任何文件。"
                     "如果需要修改，请给出具体的修改建议（文件路径 + 行号 + 建议内容），"
                     "并说明需要人工授权。"
+                )
+            )
+        )
+    elif not _evidence_gate_passed(state, config):
+        debt = ", ".join((state.get("evidence_gate") or {}).get("debt") or [])
+        messages.append(
+            SystemMessage(
+                content=(
+                    f"证据门控未通过，本轮**不允许写文件**：还缺 {debt or '关键'} 证据。"
+                    "请继续用只读工具补证据；确实补不到就把不确定的地方写清楚交给人确认，"
+                    "不要凭猜测开始修改。"
                 )
             )
         )
@@ -261,7 +286,7 @@ async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     关键细节：LangGraph 在 resume 时会**从头重跑本节点**，所以审批必须在任何副作用
     之前完成——否则被批准的那批写操作会被执行两次。
     """
-    allowed = {t.name for t in _allowed_tools(config)}
+    allowed = {t.name for t in _allowed_tools(config, state)}
     last = state["messages"][-1]
     calls = getattr(last, "tool_calls", None) or []
 
@@ -409,12 +434,21 @@ def _debug_experience_context(state: CodingState, config: RunnableConfig) -> tup
     )
 
 
+def _paths_from_diff(diff_text: str) -> list[str]:
+    """从 unified diff 里取出真实被改动的文件（对账用）。"""
+    paths = set()
+    for line in str(diff_text or "").splitlines():
+        if line.startswith("+++ b/"):
+            paths.add(line[len("+++ b/") :].strip())
+    return sorted(paths)
+
+
 async def debugger(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     """把失败信息整理成"给 coder 的修复指令"，并附上当前 diff 让改动可见。"""
     result = state.get("test_result") or {}
     attempts = int(state.get("attempts") or 0)
     diff = str(git_diff.invoke({})) if _allow_write(config) else "（无写权限，未取 diff）"
-    base = (
+    content = (
         f"第 {attempts} 次尝试的测试**没有通过**，需要你继续修复。\n"
         f"测试命令：{result.get('command')}\n"
         f"状态：{result.get('status')}（exit_code={result.get('exit_code')}）\n"
@@ -424,11 +458,39 @@ async def debugger(state: CodingState, config: RunnableConfig) -> dict[str, Any]
         "请先定位失败原因（引用具体的 `文件名:行号`），再用 edit_file 做最小修复；"
         "不要重写整个文件，也不要改动与失败无关的代码。"
     )
+
+    # 对账 + 重新取证（doc 01 §11）：失败时拿真实 diff 反查"我以为要改的"是不是真的改了
+    mismatch = reconcile(state.get("plan") or {}, _paths_from_diff(diff), test_passed=False)
+    extra: dict[str, Any] = {}
+    if mismatch.detected:
+        probes: list[str] = []
+        for path in [*mismatch.unexpected, *mismatch.missing]:
+            stem = path.split("/")[-1].rsplit(".", 1)[0]
+            probes.append(f"[{path}]\n{code_intel.symbol_search(stem)}")
+        content += (
+            "\n\n**预测与实际不一致，已重新取证**：\n"
+            f"- 计划要改但没改：{mismatch.missing or '（无）'}\n"
+            f"- 改了但不在计划里：{mismatch.unexpected or '（无）'}\n"
+            f"{chr(10).join(probes)[:1200]}\n"
+            "请先解释这个偏差，再决定是修正计划还是回滚越界改动。"
+        )
+        extra["evidence_mismatch"] = {
+            "predicted_paths": mismatch.predicted_paths,
+            "actual_paths": mismatch.actual_paths,
+            "unexpected": mismatch.unexpected,
+            "missing": mismatch.missing,
+            "detected": True,
+        }
+
     context, hits = _debug_experience_context(state, config)
     # 无命中时 content 与阶段 11 的提示词逐字一致
-    content = f"{base}\n\n{context}" if context else base
+    content = f"{content}\n\n{context}" if context else content
     prior = state.get("experience_hits") or []
-    return {"messages": [HumanMessage(content=content)], "experience_hits": [*prior, *hits]}
+    return {
+        "messages": [HumanMessage(content=content)],
+        "experience_hits": [*prior, *hits],
+        **extra,
+    }
 
 
 async def giveup(state: CodingState, config: RunnableConfig) -> dict[str, Any]:

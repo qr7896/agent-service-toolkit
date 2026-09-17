@@ -2,7 +2,13 @@
 
 > 基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit) 的魔改项目
 > 我的 fork：<https://github.com/qr7896/agent-service-toolkit>
-> 最后更新：2026-09-15
+> 最后更新：2026-09-17
+
+**项目定位已收敛**：这份日志记录"做了什么"，而**中心问题与冻结清单以 [RUNTIME.md](./RUNTIME.md) 为准**——
+> 如何让 Coding Agent 更准确、更少读取无关代码、更少越权、更容易验证？
+
+对应设计原件在 `docs/design/`：01 EGCP 证据门控规划器、02 轨迹到经验的深化、03 项目收敛定位、
+04 模块设计卡（**学习资料，不是实现规格**）。
 
 ---
 
@@ -965,6 +971,54 @@ steps:
 
 三种模式都按设计运行：分支按关键词走对、循环在条件满足时提前停（不是靠硬上限）、层级分工的"派活 → 执行 → 收工"闭环完整且有可追溯记录。这一笔账结清后，编排的六种模式全部既机制验证、也端到端验证过。
 
+### 4.30 项目收敛 + EGCP 落地 + 经验深化（2026-09-17）
+
+**为什么做这次收敛**：前面 22 个阶段是"看到能力就加能力"，功能很多但缺一个中心问题。按 doc 03 的要求，项目定位改为 **CodeGraph-Guided Reliable Coding Agent Runtime**，中心问题是"更准确 / 少读取 / 少越权 / 易验证"（详见 [RUNTIME.md](./RUNTIME.md)）。**Skill 热插拔、大规模 Multi-Agent、Agent Builder 平台化、复杂 Model Routing 全部冻结**（保留代码，不再横向扩张）。
+
+#### 一、本地代码智能（CodeGraph 的可用替身）
+
+新增 `src/agents/code_intel.py`：用标准库 `ast` 提供与 CodeGraph 对齐的只读证据动作——`symbol_search` / `get_callers` / `get_callees` / `analyze_impact` / `find_related_tests`。技术选型原则是**基础设施成熟就复用，实验对象才自己做**：不重写 tree-sitter / 调用图引擎，接入真正的 CodeGraph 时替换实现即可，Planner 与 EGCP 不用改。已知边界：只看得到 Python 静态调用关系，动态分发、生成代码、跨语言引用都看不到，`impact` 可能低估。
+
+#### 二、EGCP：证据门控式规划（doc 01）
+
+新增 `src/agents/evidence.py`，把"模型觉得自己懂了"变成可计算对象：
+
+| 概念 | 实现 |
+|---|---|
+| Evidence State | `target / impact / verification` 三维覆盖度，由**真实代码事实**折算（文件是否存在、是否定位到符号、调用方数量、是否有相关测试） |
+| Evidence Card | 每个计划步骤掌握的结构证据：符号 / 调用方 / 相关测试 / 影响等级 |
+| Evidence Gate | 三维都过线（0.8 / 0.6 / 0.6）才允许进入写阶段 |
+| Evidence Debt | 还欠哪一维；欠债时 `_allowed_tools` **直接不给写工具**，不是靠提示词劝阻 |
+| 主动取证 | 门控失败时自动执行确定性只读动作（选效用最高的），复评，最多 2 轮 |
+| Abstention | 补不到就写进 `open_questions`，**弃权而不是猜** |
+| Reconciliation | 改完拿真实 diff 反查修改前的预测，不一致就在 debugger 里给出偏差说明并重新取证 |
+
+**几个刻意的取舍**：① 判断"证据够不够"**不花模型调用**——如果门控本身要一次 LLM 调用，它就成了成本来源而不是能力；② `evidence_gate` **默认关闭**，先做 A/B 再谈改默认值，打开后才会拦写操作；③ 弃权走的是既有的 `open_questions` 通道，不新增一套状态机。
+
+#### 三、经验深化（doc 02）
+
+`experience.py` / `coding_memory.py` 从"记忆记录"升级为"**结果 + 证据 + 条件 + 版本 + 效用**"：
+
+| 深化 | 实现 |
+|---|---|
+| 任务签名 | 确定性抽取 `domain / issue_type / language` |
+| 适用条件 | `applicable_when` / `not_applicable_when`——经验带边界，不是"以后照做" |
+| 代码版本 | 记录 `repo_commit`，版本变化时降权 |
+| 规则式归因 | `likely_effective`：跑通测试且有实际改动才算这一步可能有效 |
+| 两层检索 | 第一层语义相似（BGE-M3），第二层**证据兼容性**：语言硬冲突判 0，领域不同 / 版本变化 / 该经验当时无效都降权 |
+| 记忆弃权 | 有候选但全被判不兼容时返回 `abstain`——**"找到一条相似经验"不等于"应该使用它"** |
+| 效用闭环 | `record_usage(ids, helped)` 记录用过几次、帮上几次，`utility()` 给出 `help_rate` |
+
+**状态语义上的一个修正**：语义阶段没有候选 → `none`；有候选但兼容性判不通过 → `abstain`。两种"不注入"含义不同，混在一起会让上游分不清是"没找到"还是"不敢用"（这个区分是被 day16 的回归用例逼出来的）。
+
+#### 四、验收与回归
+
+新增 `lg_practice/day29_egcp_check.py` **14/14**（代码智能索引与影响分析、证据卡、三维覆盖度、门控放行与拦截、主动取证轨迹、效用排序、弃权、对账、任务签名、适用条件与版本、兼容性硬冲突、效用闭环）。全程不调用 LLM。
+
+回归全绿：day14 7/7、day15 11/11、day16 11/11、day17 7/7、day21 10/10、day22 9/9、day23 10/10、day24 15/15、day25 4/4、day27 11/11。
+
+**没做的部分**：真正的 CodeGraph 尚未接入（用本地 `ast` 等价实现顶着）；`evidence_gate` 默认关闭，A/B 实验未做；doc 02 的 §12 探索效率、§16 大规模基准、§14 留出任务上的效用统计都需要额度与更大任务集，仍是待办。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1025,6 +1079,8 @@ steps:
 | `src/agents/agent_workflow.py` | **新增** | 线性工作流编排：配置校验 + 编译成链式图 |
 | `config/workflows/explain-then-summarize.yaml` | **新增** | 示例工作流（定位 → 总结） |
 | `src/agents/agent_builder.py` | **新增** | Agent Builder 纯逻辑层（列出 / 保存 / 删除，不依赖 Streamlit） |
+| `src/agents/code_intel.py` | **新增** | 本地代码智能：符号 / 调用关系 / 影响分析 / 相关测试（CodeGraph 替身） |
+| `src/agents/evidence.py` | **新增** | EGCP：Evidence State / Card / Gate / Debt / 主动取证 / 弃权 / 对账 |
 | `src/agent_builder_app.py` | **新增** | Agent Builder 界面（薄壳，独立 Streamlit 入口） |
 | `config/workflows/parallel-review.yaml` | **新增** | 并行编排示例（两路同时跑，汇总输出） |
 | `config/workflows/route-to-specialist.yaml` | **新增** | 多 Agent 路由示例（supervisor 选一个执行） |
@@ -1074,6 +1130,7 @@ steps:
 | `day26_platform_live_check.py` | 平台功能真跑脚本（并行 / 路由 / Builder，真实 LLM，3/3） |
 | `day27_branch_loop_hierarchy_check.py` | 条件分支 / 循环 / 层级分工的 11 项验收脚本（零 API 调用） |
 | `day28_extended_live_check.py` | 三种新模式的真跑脚本（真实 LLM，3/3） |
+| `day29_egcp_check.py` | EGCP + 经验深化的 14 项验收脚本（零 API 调用） |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -1140,6 +1197,7 @@ steps:
 - [x] 魔改二十：工作流编排（线性串联 + 模板占位符 + 以 Agent 身份注册，验收 10/10）
 - [x] 魔改二十一：并行编排 + 多 Agent 路由 + Agent Builder（配置里选 mode，验收 14/14）
 - [x] 魔改二十二：条件分支 + 循环 + 层级分工（编排扩到六种模式，验收 11/11）
+- [x] 魔改二十三：项目收敛 + 本地代码智能 + EGCP 证据门控 + 经验深化（验收 14/14）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -1220,6 +1278,13 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 **22 · Agent 平台**：三块全部完成——§4.23 数据化、§4.24/§4.25 三种编排模式（线性 / 并行 / 路由）、§4.25 Builder 界面。注册表 15 个 Agent，全部走同一套注册与校验。
 
 **两件待补的账**（不隐藏；"平台功能没真跑过"这一笔已在 §4.27 结清）：
+
+**按新定位（[RUNTIME.md](./RUNTIME.md)）重排后的待办**：
+
+1. **接真正的 CodeGraph**：当前 `code_intel.py` 用标准库 `ast` 顶着，接口与语义已对齐，替换实现即可。
+2. **EGCP 的 A/B 实验**：`evidence_gate` 默认关闭，需要跑 `list_files+read` / `search_code` / `code_intel` / `code_intel+gate` 四组对照。
+3. **真实任务基准**：真实 GitHub issue + frozen base commit + 可执行测试 + 独立判分（当前 6 个自造任务、n=3）。
+4. **经验效用统计**：`record_usage` 的计数已就位，但要在时间切分的留出任务上统计才有意义。
 
 - **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。**成本口径已在 §4.26 补上**，重跑时每行会带 `llm_calls` / `estimated_tokens`。
 - **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。

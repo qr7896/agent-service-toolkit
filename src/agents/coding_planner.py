@@ -21,6 +21,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Literal
 
@@ -30,6 +31,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from agents.code_tools import PROJECT_ROOT, git_diff, list_files, read_file, search_code
 from agents.coding_memory import format_experience_context, recall_experiences
+from agents.evidence import audit_plan, decision_to_dict
 from agents.model_router import estimate_tokens, route_model
 from core import get_model, settings
 
@@ -255,8 +257,34 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
             ],
         )
     plan = _validate_plan(parsed)
+    plan_dict = plan.model_dump()
+
+    # EGCP：证据门控（默认关闭，打开后才改变行为——先做 A/B，再谈改默认值）
+    evidence_cards: list[dict[str, Any]] = []
+    evidence_gate: dict[str, Any] = {}
+    evidence_trace: list[dict[str, Any]] = []
+    conf = config.get("configurable") or {}
+    if bool(conf.get("evidence_gate", False)):
+        decision, cards, trace = audit_plan(
+            plan_dict,
+            thresholds=conf.get("evidence_thresholds"),
+            max_rounds=int(conf.get("evidence_max_rounds", 2)),
+        )
+        evidence_cards = [asdict(card) for card in cards]
+        evidence_gate = decision_to_dict(decision)
+        evidence_trace = trace
+        if not decision.passed:
+            # 弃权：证据不足时不进入写阶段，把缺口作为待确认问题交出去
+            plan_dict["open_questions"] = [
+                *plan_dict.get("open_questions", []),
+                f"证据门控未通过（缺 {', '.join(decision.debt)}）：补足证据前不应开始修改",
+            ]
+
     return {
-        "plan": plan.model_dump(),
+        "plan": plan_dict,
+        "evidence_cards": evidence_cards,
+        "evidence_gate": evidence_gate,
+        "evidence_trace": evidence_trace,
         "experience_hits": [{**hit, "retrieval": retrieval, "phase": "planning"} for hit in hits],
         "llm_calls": int(state.get("llm_calls") or 0) + 1 + recon_rounds,
         "estimated_tokens": int(state.get("estimated_tokens") or 0)

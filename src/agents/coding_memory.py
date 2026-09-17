@@ -19,7 +19,15 @@ from pathlib import Path
 from typing import Any
 
 from agents.code_tools import PROJECT_ROOT
-from agents.experience import ACCEPTED, Experience, ExperienceStore, experience_path
+from agents.experience import (
+    ACCEPTED,
+    Experience,
+    ExperienceStore,
+    compatibility,
+    experience_path,
+    repo_commit,
+    task_signature,
+)
 
 DEFAULT_CHROMA_DIR = PROJECT_ROOT / ".codex" / "experience" / "chroma"
 COLLECTION_NAME = "coding_experience"
@@ -82,6 +90,11 @@ def format_experience_context(hits: list[dict[str, Any]], mode: str = "planning"
             f"   - {verdict}\n"
             f"   - 证据：trajectory_id={hit.get('trajectory_id')}"
             + (f"；涉及 {paths}" if paths else "")
+            + (
+                f"\n   - 兼容性 {hit.get('compatibility')}：{'；'.join(hit.get('compatibility_notes') or [])}"
+                if hit.get("compatibility_notes")
+                else ""
+            )
             + (f"\n   - 结果摘要：{detail}" if detail else "")
         )
     return "\n".join(lines)
@@ -199,6 +212,8 @@ def recall_experiences(task: str, config: dict[str, Any]) -> tuple[list[dict[str
     if k == 0 or not Path(path).exists():
         return [], "none"
 
+    # 第二层检索的判据：当前任务的签名 + 当前代码版本（doc 02 §8/§11）
+    context = {**task_signature(task), "repo_commit": repo_commit()}
     with ExperienceStore(path) as store:
         if not store.stats()["total"]:
             return [], "none"
@@ -212,10 +227,39 @@ def recall_experiences(task: str, config: dict[str, Any]) -> tuple[list[dict[str
                 hits = [h for h in index.search(task, k=k) if h["similarity"] >= floor]
             # 向量检索成功就用它的结果（哪怕为空）：判"没有相关经验"要靠相关性下限，
             # 而不是靠改回关键词匹配硬凑出几条弱命中。
-            return hits, ("vector" if hits else "none")
+            kept = _apply_compatibility(hits, store, context)
+            if kept:
+                return kept, "vector"
+            # 语义阶段本来就没有候选 → none；有候选但被判不兼容 → abstain。
+            # 两种"不注入"的语义不同，混在一起会让上游分不清是"没找到"还是"不敢用"。
+            return [], ("none" if not hits else "abstain")
         except Exception:  # 依赖缺失 / 模型加载失败都不该让规划失败
             logger.warning("experience vector retrieval unavailable, falling back to keyword recall", exc_info=True)
-            return [_hit(e) for e in store.recall(task, limit=k)], "keyword"
+            kept = _apply_compatibility(
+                [_hit(e) for e in store.recall(task, limit=k)], store, context
+            )
+            return kept, ("keyword" if kept else "abstain")
+
+
+def _apply_compatibility(
+    hits: list[dict[str, Any]], store: ExperienceStore, context: dict[str, str]
+) -> list[dict[str, Any]]:
+    """证据兼容性过滤 + 弃权（doc 02 §8/§10）。
+
+    硬冲突（分数为 0，例如语言不同）直接丢弃；全被丢掉就返回空列表——
+    **"找到一条相似经验"不等于"应该使用它"**。调用方看到空列表即退回原有行为。
+    """
+    kept: list[dict[str, Any]] = []
+    for hit in hits:
+        experience = store.get(str(hit.get("trajectory_id") or ""))
+        if experience is None:
+            kept.append(hit)
+            continue
+        score, notes = compatibility(experience, context)
+        enriched = {**hit, "compatibility": score, "compatibility_notes": notes}
+        if score > 0:
+            kept.append(enriched)
+    return kept
 
 
 __all__ = [

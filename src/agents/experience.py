@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
+import subprocess
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -45,11 +46,117 @@ CREATE TABLE IF NOT EXISTS experiences (
     review_summary   TEXT NOT NULL DEFAULT '',
     approved         INTEGER,
     model            TEXT NOT NULL DEFAULT '',
-    duration_seconds REAL NOT NULL DEFAULT 0
+    duration_seconds REAL NOT NULL DEFAULT 0,
+    extra            TEXT NOT NULL DEFAULT '{}'
 );
 CREATE INDEX IF NOT EXISTS idx_experiences_task_key ON experiences(task_key);
 CREATE INDEX IF NOT EXISTS idx_experiences_outcome ON experiences(outcome);
 """
+
+# 深化用的附加字段都塞进一列 JSON：本地单进程够用，也避免每次加字段都改表结构
+EXTRA_COLUMNS: dict[str, str] = {
+    "task_signature": "dict[str, str]",
+    "reuse_constraints": "dict[str, list[str]]",
+    "repo_commit": "str",
+    "likely_effective": "bool | None",
+    "retrieval_count": "int",
+    "used_count": "int",
+    "helped_count": "int",
+    "harmful_count": "int",
+}
+
+DOMAIN_HINTS = {
+    "fastapi": ("fastapi", "route", "endpoint", "uvicorn", "http"),
+    "agent": ("agent", "langgraph", "planner", "tool_call", "prompt"),
+    "memory": ("experience", "trajectory", "embedding", "chroma", "retrieval"),
+    "deploy": ("docker", "compose", "container", "镜像"),
+    "data": ("pandas", "csv", "dataframe", "统计"),
+}
+
+
+def repo_commit() -> str:
+    """记录经验对应的代码版本：代码变了，经验可能就过期了（doc 02 §11）。"""
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(PROJECT_ROOT), "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, timeout=10,
+        )
+        return out.stdout.strip() if out.returncode == 0 else ""
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
+def task_signature(task: str, changed_paths: list[str] | None = None) -> dict[str, str]:
+    """任务签名：用确定性规则抽取 domain / issue_type / language，供兼容性判断。"""
+    text = (task or "").lower()
+    paths = [p.lower() for p in (changed_paths or [])]
+    blob = f"{text} {' '.join(paths)}"
+    domain = "general"
+    for name, hints in DOMAIN_HINTS.items():
+        if any(hint in blob for hint in hints):
+            domain = name
+            break
+    if any(word in text for word in ("修复", "报错", "bug", "失败", "fix")):
+        issue = "bug_fix"
+    elif any(word in text for word in ("新增", "添加", "支持", "add", "feat")):
+        issue = "feature"
+    elif any(word in text for word in ("重构", "整理", "简化", "refactor")):
+        issue = "refactor"
+    elif any(word in text for word in ("测试", "test", "验证")):
+        issue = "test"
+    else:
+        issue = "other"
+    if paths:
+        suffix = paths[0].rsplit(".", 1)[-1]
+        language = {"py": "python", "js": "javascript", "ts": "typescript", "go": "go"}.get(suffix, suffix)
+    else:
+        language = "python" if "python" in blob or ".py" in blob else "unknown"
+    return {"domain": domain, "issue_type": issue, "language": language}
+
+
+def reuse_constraints(
+    task: str, changed_paths: list[str], outcome: str, failure_type: str
+) -> dict[str, list[str]]:
+    """适用 / 不适用条件（doc 02 §6）：让经验带上边界，而不是"以后照做"。"""
+    signature = task_signature(task, changed_paths)
+    applicable = [f"domain={signature['domain']}", f"language={signature['language']}"]
+    not_applicable: list[str] = []
+    if outcome == ACCEPTED:
+        applicable.append(f"issue_type={signature['issue_type']}")
+        not_applicable.append("目标文件与当时不同（先确认结构仍相似）")
+    else:
+        not_applicable.append(f"重复这条路径：当时失败类型是 {failure_type or 'unknown'}")
+    return {"applicable_when": applicable, "not_applicable_when": not_applicable}
+
+
+def compatibility(experience: "Experience", context: dict[str, str]) -> tuple[float, list[str]]:
+    """第二层检索：语义相似之外的证据兼容性（doc 02 §8）。
+
+    返回 (0~1 兼容分, 不兼容原因)。任一"硬冲突"会让分数归零，由调用方决定是否弃权。
+    """
+    extra = experience.extra or {}
+    signature = extra.get("task_signature") or {}
+    reasons: list[str] = []
+    score = 1.0
+    if signature.get("language") and context.get("language") not in (None, "", "unknown"):
+        if signature["language"] != context["language"]:
+            score = 0.0
+            reasons.append(f"语言不兼容（{signature['language']} vs {context['language']}）")
+    if signature.get("domain") and context.get("domain"):
+        if signature["domain"] != context["domain"] and "general" not in (
+            signature["domain"], context["domain"],
+        ):
+            score = min(score, 0.4)
+            reasons.append(f"领域不同（{signature['domain']} vs {context['domain']}）")
+    recorded_commit = extra.get("repo_commit") or ""
+    if recorded_commit and context.get("repo_commit") and recorded_commit != context["repo_commit"]:
+        score = min(score, 0.7)
+        reasons.append(f"代码版本已变化（{recorded_commit} → {context['repo_commit']}）")
+    quality = extra.get("likely_effective")
+    if quality is False:
+        score = min(score, 0.5)
+        reasons.append("该经验对应的动作当时并不有效")
+    return round(score, 3), reasons
 
 
 def task_key(task: str, limit: int = 40) -> str:
@@ -103,6 +210,7 @@ class Experience:
     approved: bool | None = None
     model: str = ""
     duration_seconds: float = 0.0
+    extra: dict[str, Any] = field(default_factory=dict)
 
     def to_row(self) -> tuple:
         return (
@@ -122,6 +230,7 @@ class Experience:
             None if self.approved is None else int(self.approved),
             self.model,
             self.duration_seconds,
+            json.dumps(self.extra, ensure_ascii=False, default=str),
         )
 
     @classmethod
@@ -132,6 +241,10 @@ class Experience:
                 data[key] = json.loads(data.get(key) or "[]")
             except json.JSONDecodeError:
                 data[key] = []
+        try:
+            data["extra"] = json.loads(data.get("extra") or "{}")
+        except json.JSONDecodeError:
+            data["extra"] = {}
         if data.get("approved") is not None:
             data["approved"] = bool(data["approved"])
         return cls(**data)
@@ -182,6 +295,25 @@ def build_experiences(trajectory: dict[str, Any]) -> list[Experience]:
             approved=approved if isinstance(approved, bool) else None,
             model=str(trajectory.get("model") or ""),
             duration_seconds=float(trajectory.get("duration_seconds") or 0.0),
+            extra={
+                "task_signature": task_signature(task, [redact(p) for p in trajectory.get("changed_paths") or []]),
+                "reuse_constraints": reuse_constraints(
+                    task,
+                    [redact(p) for p in trajectory.get("changed_paths") or []],
+                    outcome,
+                    failure_type,
+                ),
+                "repo_commit": repo_commit(),
+                # 规则式归因（doc 02 §13）：跑通测试且有实际改动才算"这一步likely有效"
+                "likely_effective": (
+                    True if outcome == ACCEPTED and (trajectory.get("changed_paths") or []) else
+                    False if outcome == REJECTED else None
+                ),
+                "retrieval_count": 0,
+                "used_count": 0,
+                "helped_count": 0,
+                "harmful_count": 0,
+            },
         )
     ]
 
@@ -195,10 +327,16 @@ class ExperienceStore:
         self._conn = sqlite3.connect(str(self.path), timeout=10)
         self._conn.row_factory = sqlite3.Row
         self._conn.executescript(SCHEMA)
+        # 轻量迁移：早期版本的库没有 extra 列，补上而不是让老库直接报错
+        columns = {row["name"] for row in self._conn.execute("PRAGMA table_info(experiences)")}
+        if "extra" not in columns:
+            self._conn.execute(
+                "ALTER TABLE experiences ADD COLUMN extra TEXT NOT NULL DEFAULT '{}'"
+            )
         self._conn.commit()
 
     def record(self, experience: Experience) -> str:
-        placeholders = ", ".join("?" * 16)
+        placeholders = ", ".join("?" * 17)
         self._conn.execute(
             f"INSERT INTO experiences VALUES ({placeholders}) "
             "ON CONFLICT(trajectory_id) DO UPDATE SET "
@@ -213,6 +351,53 @@ class ExperienceStore:
         )
         self._conn.commit()
         return experience.id
+
+    def get(self, trajectory_id: str) -> Experience | None:
+        row = self._conn.execute(
+            "SELECT * FROM experiences WHERE trajectory_id = ?", (trajectory_id,)
+        ).fetchone()
+        return Experience.from_row(row) if row else None
+
+    def record_usage(self, trajectory_ids: list[str], helped: bool) -> int:
+        """记录"这条经验被用过、并且有没有帮上忙"（doc 02 §14 的效用闭环）。
+
+        真实收益统计要用时间切分的留出任务，这里的计数只是原始素材，不是结论。
+        """
+        touched = 0
+        for trajectory_id in trajectory_ids:
+            experience = self.get(trajectory_id)
+            if experience is None:
+                continue
+            extra = dict(experience.extra or {})
+            extra["retrieval_count"] = int(extra.get("retrieval_count") or 0) + 1
+            extra["used_count"] = int(extra.get("used_count") or 0) + 1
+            key = "helped_count" if helped else "harmful_count"
+            extra[key] = int(extra.get(key) or 0) + 1
+            self._conn.execute(
+                "UPDATE experiences SET extra = ? WHERE trajectory_id = ?",
+                (json.dumps(extra, ensure_ascii=False, default=str), trajectory_id),
+            )
+            touched += 1
+        self._conn.commit()
+        return touched
+
+    def utility(self) -> dict[str, dict[str, Any]]:
+        """按经验汇总"用了多少次、帮上多少次"。样本少时只作参考。"""
+        report: dict[str, dict[str, Any]] = {}
+        for row in self._conn.execute("SELECT trajectory_id, task, extra FROM experiences"):
+            try:
+                extra = json.loads(row["extra"] or "{}")
+            except json.JSONDecodeError:
+                extra = {}
+            used = int(extra.get("used_count") or 0)
+            report[row["trajectory_id"]] = {
+                "task": row["task"][:60],
+                "used": used,
+                "helped": int(extra.get("helped_count") or 0),
+                "harmful": int(extra.get("harmful_count") or 0),
+                "help_rate": round(int(extra.get("helped_count") or 0) / used, 3) if used else None,
+            }
+        return report
 
     def record_trajectory(self, trajectory: dict[str, Any]) -> list[str]:
         return [self.record(exp) for exp in build_experiences(trajectory)]
@@ -278,11 +463,16 @@ def record_trajectory(trajectory: dict[str, Any], config: dict[str, Any]) -> lis
 
 __all__ = [
     "DEFAULT_EXPERIENCE_PATH",
+    "EXTRA_COLUMNS",
     "Experience",
     "ExperienceStore",
     "asdict",
     "build_experiences",
+    "compatibility",
     "experience_path",
+    "repo_commit",
     "record_trajectory",
+    "reuse_constraints",
+    "task_signature",
     "task_key",
 ]
