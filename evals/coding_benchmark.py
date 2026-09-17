@@ -43,6 +43,8 @@ RECURSION_LIMIT = 80  # 与 day12 一致；40 会在一次正常的多轮工具�
 SANDBOX = PROJECT_DIR / "_eval_sandbox"
 EVAL_DATA = PROJECT_DIR / ".codex" / "benchmark"
 REPORT = EVAL_DATA / "report.json"
+PROBE_TASKS = PROJECT_DIR / "evals" / "tasks" / "probe.jsonl"
+PROBE_WORKDIR = EVAL_DATA / "probe"
 
 # EGCP 实验的四组对照（doc 03 §9）：同任务、同模型、同提示词，只改检索/证据策略
 ARMS: dict[str, dict] = {
@@ -370,9 +372,62 @@ def calibration(rows: list[dict]) -> dict:
     return {"pass_rate_by_arm": rates, "first_try_by_arm": first_try, "warnings": warnings}
 
 
+def probe_check(path: Path = PROBE_TASKS) -> dict:
+    """探针门禁：先证明**判分器自己**有判别力，再拿它去比模型。
+
+    判分器如果永远说通过、或永远说失败，后面所有成功率都是假的。
+    探针任务各带 `expected_resolved`，实测结果与期望不符直接判定门禁失败。
+    """
+    import json as _json
+
+    sys.path.insert(0, str(PROJECT_DIR / "evals"))
+    import swe_tasks  # noqa: PLC0415
+
+    expectations: dict[str, bool] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            item = _json.loads(line)
+            expectations[item["instance_id"]] = bool(item.get("expected_resolved"))
+
+    results = []
+    for spec in swe_tasks.load_tasks(path):
+        workdir = PROBE_WORKDIR / spec.instance_id
+        if workdir.exists():
+            shutil.rmtree(workdir, ignore_errors=True)
+        swe_tasks.prepare(spec, workdir)
+        graded = swe_tasks.grade(spec, workdir)
+        expected = expectations.get(spec.instance_id)
+        results.append(
+            {
+                "instance_id": spec.instance_id,
+                "expected": expected,
+                "actual": graded["resolved"],
+                "passed": expected is None or graded["resolved"] == expected,
+            }
+        )
+        shutil.rmtree(workdir, ignore_errors=True)
+    ok = bool(results) and all(item["passed"] for item in results)
+    return {"ok": ok, "probes": results}
+
+
 async def main_async(
-    limit: int | None, model: str, arms: list[str] | None = None, holdout: int = 0
+    limit: int | None,
+    model: str,
+    arms: list[str] | None = None,
+    holdout: int = 0,
+    skip_probe: bool = False,
 ) -> int:
+    if not skip_probe:
+        probe = probe_check()
+        print(f"探针门禁：{'通过' if probe['ok'] else '未通过'}")
+        for item in probe["probes"]:
+            print(
+                f"  {str(item.get('instance_id', '?')):32s} "
+                f"期望={item.get('expected')} 实测={item.get('actual')}"
+            )
+        if not probe["ok"]:
+            print("探针未通过：判分器没有判别力，这次基准的结果不可信，已中止。")
+            return 2
     tasks = TASKS[:limit] if limit else TASKS
     seed_tasks, eval_tasks = split_tasks(tasks, holdout)
     EVAL_DATA.mkdir(parents=True, exist_ok=True)
@@ -433,6 +488,8 @@ def main() -> None:
         "--holdout", type=int, default=0,
         help="最后 N 个任务作为留出集：经验只从前面的任务积累，评测只在留出集上做",
     )
+    parser.add_argument("--probe-only", action="store_true", help="只跑探针门禁")
+    parser.add_argument("--skip-probe", action="store_true", help="跳过探针门禁（不推荐）")
     parser.add_argument(
         "--arms",
         default="",
@@ -445,8 +502,16 @@ def main() -> None:
         for task in TASKS:
             print(f"{task.name:24s} {task.kind}")
         return
+    if args.probe_only:
+        report = probe_check()
+        for item in report["probes"]:
+            print(f"{item['instance_id']:32s} 期望={item['expected']} 实测={item['actual']}")
+        print("探针门禁：" + ("通过" if report["ok"] else "未通过"))
+        raise SystemExit(0 if report["ok"] else 1)
     chosen = [item.strip() for item in args.arms.split(",") if item.strip()] or None
-    raise SystemExit(asyncio.run(main_async(args.limit, args.model, chosen, args.holdout)))
+    raise SystemExit(
+        asyncio.run(main_async(args.limit, args.model, chosen, args.holdout, args.skip_probe))
+    )
 
 
 if __name__ == "__main__":
