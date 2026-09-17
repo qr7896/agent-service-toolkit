@@ -31,7 +31,6 @@ from pydantic import BaseModel, Field, ValidationError
 from agents.agent_config import AgentConfigError
 from core import get_model, settings
 
-
 MAX_INLINE_DEPTH = 4
 
 
@@ -47,20 +46,22 @@ class WorkflowStep(BaseModel):
     name: str = Field(default="", description="这一步的显示名，留空则用 agent key")
     input_template: str = Field(default="{input}", description="支持 {input} / {previous}")
     # ---- 内联子工作流（与 WorkflowConfig 同构）----
-    mode: Literal["sequential", "parallel", "router", "conditional", "loop", "hierarchy"] | None = None
-    steps: list["WorkflowStep"] = Field(default_factory=list)
+    mode: Literal["sequential", "parallel", "router", "conditional", "loop", "hierarchy"] | None = (
+        None
+    )
+    steps: list[WorkflowStep] = Field(default_factory=list)
     candidates: list[str] = Field(default_factory=list)
     routing_prompt: str = ""
     condition: Condition | None = None
-    then: list["WorkflowStep"] = Field(default_factory=list)
-    otherwise: list["WorkflowStep"] = Field(default_factory=list)
+    then: list[WorkflowStep] = Field(default_factory=list)
+    otherwise: list[WorkflowStep] = Field(default_factory=list)
     until: Condition | None = None
     max_iterations: int = Field(default=3, ge=1, le=20)
     supervisor_prompt: str = ""
     workers: list[str] = Field(default_factory=list)
     max_rounds: int = Field(default=3, ge=1, le=20)
 
-    def inline_config(self, fallback_key: str) -> "WorkflowConfig | None":
+    def inline_config(self, fallback_key: str) -> WorkflowConfig | None:
         """把内联字段转成一个等价的工作流配置；不是内联步骤则返回 None。"""
         if not self.mode:
             return None
@@ -92,9 +93,9 @@ class Condition(BaseModel):
 class WorkflowConfig(BaseModel):
     key: str
     description: str = ""
-    mode: Literal[
-        "sequential", "parallel", "router", "conditional", "loop", "hierarchy"
-    ] = "sequential"
+    mode: Literal["sequential", "parallel", "router", "conditional", "loop", "hierarchy"] = (
+        "sequential"
+    )
     steps: list[WorkflowStep] = Field(default_factory=list)
     candidates: list[str] = Field(default_factory=list, description="router 模式的候选 Agent")
     routing_prompt: str = Field(default="", description="router 模式交给 supervisor 的选人规则")
@@ -123,7 +124,7 @@ def render_template(template: str, user_input: str, previous: str) -> str:
     return template.replace("{input}", user_input).replace("{previous}", previous)
 
 
-def user_input(state: dict[str, Any]) -> str:
+def user_input(state: Any) -> str:
     """工作流的原始输入。
 
     优先用显式传入的 `workflow_input`；**缺省时必须能从 messages 里取出来**——
@@ -182,10 +183,14 @@ def matches(condition: Condition | None, requirement: str, previous: str) -> boo
     return any(word in haystack for word in condition.contains)
 
 
-def _validate_step(step: WorkflowStep, agent_graphs: dict[str, Any], depth: int, where: str) -> None:
+def _validate_step(
+    step: WorkflowStep, agent_graphs: dict[str, Any], depth: int, where: str
+) -> None:
     inner = step.inline_config(step.name or "inline")
     if inner is not None and step.agent:
-        raise AgentConfigError(f"{where} 的步骤 `{step.name or step.mode}` 同时写了 agent 和 mode，只能选一种")
+        raise AgentConfigError(
+            f"{where} 的步骤 `{step.name or step.mode}` 同时写了 agent 和 mode，只能选一种"
+        )
     if inner is None and not step.agent:
         raise AgentConfigError(f"{where} 的步骤 `{step.name}` 既没有 agent 也没有内联 mode")
     if inner is not None:
@@ -197,9 +202,7 @@ def _validate_step(step: WorkflowStep, agent_graphs: dict[str, Any], depth: int,
         raise AgentConfigError(f"{where} 引用了不存在的 Agent：{step.agent}")
 
 
-def validate_workflow(
-    config: WorkflowConfig, agent_graphs: dict[str, Any], depth: int = 0
-) -> None:
+def validate_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any], depth: int = 0) -> None:
     """加载与构建共用同一套校验（递归），避免出现"加载过了但构建时才炸"。"""
     where = f"工作流 `{config.key}`"
     if config.mode == "router":
@@ -208,10 +211,14 @@ def validate_workflow(
         if not config.routing_prompt.strip():
             raise AgentConfigError(f"工作流 `{config.key}`（router）必须给出 routing_prompt")
         if config.steps:
-            raise AgentConfigError(f"工作流 `{config.key}`（router）用 candidates 指定候选，不写 steps")
+            raise AgentConfigError(
+                f"工作流 `{config.key}`（router）用 candidates 指定候选，不写 steps"
+            )
     elif config.mode == "conditional":
         if config.condition is None or not config.condition.contains:
-            raise AgentConfigError(f"工作流 `{config.key}`（conditional）必须给出 condition.contains")
+            raise AgentConfigError(
+                f"工作流 `{config.key}`（conditional）必须给出 condition.contains"
+            )
         if not config.then:
             raise AgentConfigError(f"工作流 `{config.key}`（conditional）必须给出 then 分支")
     elif config.mode == "loop":
@@ -317,7 +324,9 @@ def make_router_node(config: WorkflowConfig):
             f"候选（必须原样回复其中一个 key）：{', '.join(config.candidates)}\n\n"
             f"用户需求：{user_input(state)}"
         )
-        answer = str(getattr(await model.ainvoke([HumanMessage(content=prompt)]), "content", "") or "")
+        answer = str(
+            getattr(await model.ainvoke([HumanMessage(content=prompt)]), "content", "") or ""
+        )
         chosen = next((name for name in config.candidates if name in answer), config.candidates[0])
         return {
             "chosen": chosen,
@@ -331,7 +340,7 @@ def _build_router(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     graph = StateGraph(WorkflowState)
     graph.add_node("route", make_router_node(config))
     graph.add_edge(START, "route")
-    mapping: dict[str, str] = {}
+    mapping: dict[Any, str] = {}
     for name in config.candidates:
         node = f"agent_{name}"
         graph.add_node(
@@ -343,11 +352,15 @@ def _build_router(config: WorkflowConfig, agent_graphs: dict[str, Any]):
         )
         mapping[name] = node
         graph.add_edge(node, END)
-    graph.add_conditional_edges("route", lambda state: state.get("chosen") or config.candidates[0], mapping)
+    graph.add_conditional_edges(
+        "route", lambda state: state.get("chosen") or config.candidates[0], mapping
+    )
     return graph.compile()
 
 
-def _add_chain(graph: StateGraph, steps: list[WorkflowStep], agent_graphs: dict[str, Any], prefix: str) -> list[str]:
+def _add_chain(
+    graph: StateGraph, steps: list[WorkflowStep], agent_graphs: dict[str, Any], prefix: str
+) -> list[str]:
     """往图里加一条顺序执行的节点链，返回节点名（调用方负责连 START/END）。"""
     names: list[str] = []
     for index, step in enumerate(steps, start=1):
@@ -376,7 +389,7 @@ def _build_conditional(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     graph = StateGraph(WorkflowState)
     graph.add_node("branch", branch)
     graph.add_edge(START, "branch")
-    mapping: dict[str, Any] = {}
+    mapping: dict[Any, Any] = {}
     for label, steps in (("then", config.then), ("otherwise", config.otherwise)):
         if not steps:
             mapping[label] = END
@@ -450,7 +463,9 @@ def _build_hierarchy(config: WorkflowConfig, agent_graphs: dict[str, Any]):
             f"总任务：{user_input(state)}\n\n"
             f"已有进展：\n{history}"
         )
-        answer = str(getattr(await model.ainvoke([HumanMessage(content=prompt)]), "content", "") or "")
+        answer = str(
+            getattr(await model.ainvoke([HumanMessage(content=prompt)]), "content", "") or ""
+        )
         worker, task = parse_assignment(answer, config.workers)
         note = f"[supervisor] {answer.strip()[:180]}"
         return {
@@ -470,7 +485,11 @@ def _build_hierarchy(config: WorkflowConfig, agent_graphs: dict[str, Any]):
             result = f"ERROR: 未知 worker {worker}"
         else:
             out = await agent_graph.ainvoke(
-                {"messages": [HumanMessage(content=state.get("pending_task") or user_input(state))]},
+                {
+                    "messages": [
+                        HumanMessage(content=state.get("pending_task") or user_input(state))
+                    ]
+                },
                 run_config or {},
             )
             result = str(out["messages"][-1].content)

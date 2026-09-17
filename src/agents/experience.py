@@ -99,7 +99,10 @@ def fingerprint(paths: list[str], root: Path | None = None, rev: str | None = No
         if rev:
             proc = subprocess.run(
                 ["git", "-C", str(base), "show", f"{rev}:{rel}"],
-                capture_output=True, encoding="utf-8", errors="replace", timeout=30,
+                capture_output=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=30,
             )
             digest = (
                 hashlib.sha256((proc.stdout or "").encode("utf-8", "replace")).hexdigest()[:16]
@@ -117,7 +120,9 @@ def repo_commit(root: Path | None = None) -> str:
     try:
         out = subprocess.run(
             ["git", "-C", str(root or PROJECT_ROOT), "rev-parse", "--short", "HEAD"],
-            capture_output=True, text=True, timeout=10,
+            capture_output=True,
+            text=True,
+            timeout=10,
         )
         return out.stdout.strip() if out.returncode == 0 else ""
     except (OSError, subprocess.SubprocessError):
@@ -146,7 +151,9 @@ def task_signature(task: str, changed_paths: list[str] | None = None) -> dict[st
         issue = "other"
     if paths:
         suffix = paths[0].rsplit(".", 1)[-1]
-        language = {"py": "python", "js": "javascript", "ts": "typescript", "go": "go"}.get(suffix, suffix)
+        language = {"py": "python", "js": "javascript", "ts": "typescript", "go": "go"}.get(
+            suffix, suffix
+        )
     else:
         language = "python" if "python" in blob or ".py" in blob else "unknown"
     return {"domain": domain, "issue_type": issue, "language": language}
@@ -167,7 +174,7 @@ def reuse_constraints(
     return {"applicable_when": applicable, "not_applicable_when": not_applicable}
 
 
-def compatibility(experience: "Experience", context: dict[str, str]) -> tuple[float, list[str]]:
+def compatibility(experience: Experience, context: dict[str, str]) -> tuple[float, list[str]]:
     """第二层检索：语义相似之外的证据兼容性（doc 02 §8）。
 
     返回 (0~1 兼容分, 不兼容原因)。任一"硬冲突"会让分数归零，由调用方决定是否弃权。
@@ -187,7 +194,8 @@ def compatibility(experience: "Experience", context: dict[str, str]) -> tuple[fl
             reasons.append(f"语言不兼容（{signature['language']} vs {context['language']}）")
     if signature.get("domain") and context.get("domain"):
         if signature["domain"] != context["domain"] and "general" not in (
-            signature["domain"], context["domain"],
+            signature["domain"],
+            context["domain"],
         ):
             score = min(score, 0.4)
             reasons.append(f"领域不同（{signature['domain']} vs {context['domain']}）")
@@ -277,7 +285,7 @@ class Experience:
         )
 
     @classmethod
-    def from_row(cls, row: sqlite3.Row) -> "Experience":
+    def from_row(cls, row: sqlite3.Row) -> Experience:
         data = dict(row)
         for key in ("effective_steps", "tools_used", "changed_paths"):
             try:
@@ -293,9 +301,7 @@ class Experience:
         return cls(**data)
 
 
-def build_experiences(
-    trajectory: dict[str, Any], root: Path | None = None
-) -> list[Experience]:
+def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> list[Experience]:
     """从一条轨迹派生经验；无可复用信号时返回空列表。"""
     if not isinstance(trajectory, dict):
         return []
@@ -341,7 +347,9 @@ def build_experiences(
             model=str(trajectory.get("model") or ""),
             duration_seconds=float(trajectory.get("duration_seconds") or 0.0),
             extra={
-                "task_signature": task_signature(task, [redact(p) for p in trajectory.get("changed_paths") or []]),
+                "task_signature": task_signature(
+                    task, [redact(p) for p in trajectory.get("changed_paths") or []]
+                ),
                 "reuse_constraints": reuse_constraints(
                     task,
                     [redact(p) for p in trajectory.get("changed_paths") or []],
@@ -351,8 +359,11 @@ def build_experiences(
                 "repo_commit": repo_commit(),
                 # 规则式归因（doc 02 §13）：跑通测试且有实际改动才算"这一步likely有效"
                 "likely_effective": (
-                    True if outcome == ACCEPTED and (trajectory.get("changed_paths") or []) else
-                    False if outcome == REJECTED else None
+                    True
+                    if outcome == ACCEPTED and (trajectory.get("changed_paths") or [])
+                    else False
+                    if outcome == REJECTED
+                    else None
                 ),
                 "retrieval_count": 0,
                 "used_count": 0,
@@ -513,19 +524,19 @@ class ExperienceStore:
     def close(self) -> None:
         self._conn.close()
 
-    def __enter__(self) -> "ExperienceStore":
+    def __enter__(self) -> ExperienceStore:
         return self
 
     def __exit__(self, *exc: object) -> None:
         self.close()
 
 
-def experience_path(config: dict[str, Any]) -> Path:
+def experience_path(config: Any) -> Path:
     configured = (config.get("configurable") or {}).get("experience_path")
     return Path(str(configured)).expanduser() if configured else DEFAULT_EXPERIENCE_PATH
 
 
-def record_trajectory(trajectory: dict[str, Any], config: dict[str, Any]) -> list[str]:
+def record_trajectory(trajectory: dict[str, Any], config: Any) -> list[str]:
     """把一条轨迹写进经验库，返回经验 id 列表。"""
     with ExperienceStore(experience_path(config)) as store:
         return store.record_trajectory(trajectory)
@@ -597,7 +608,11 @@ def reevaluate_survival(store: ExperienceStore, root: Path | None = None) -> dic
     侥幸通过（当时测试过了、后来被 revert）在这一步才会暴露；只靠写入时的质量分看不出来。
     """
     report: dict[str, list[str]] = {
-        "intact": [], "reverted": [], "modified": [], "unknown": [], "not_applied": [],
+        "intact": [],
+        "reverted": [],
+        "modified": [],
+        "unknown": [],
+        "not_applied": [],
     }
     for experience in store.all():
         state = survival_of(experience, root)
@@ -615,9 +630,7 @@ def reevaluate_survival(store: ExperienceStore, root: Path | None = None) -> dic
     return report
 
 
-def record_usage_for_trajectory(
-    trajectory: dict[str, Any], config: dict[str, Any]
-) -> dict[str, Any]:
+def record_usage_for_trajectory(trajectory: dict[str, Any], config: Any) -> dict[str, Any]:
     """把"这次任务用过哪些经验、有没有帮上忙"写回经验库（doc 02 §14 的闭环）。
 
     这是经验唯一能被评价的入口：没有它，`helped_count` 永远是 0，

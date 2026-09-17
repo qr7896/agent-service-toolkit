@@ -30,9 +30,15 @@ def _precision(gold: list[str], found: list[str]) -> float | None:
 def task_metrics(record: dict[str, Any], gold: dict[str, Any]) -> dict[str, Any]:
     """单个任务的检索指标。`record` 是轨迹里的一条检索记录。"""
     trace = record.get("retrieval_trace") or []
-    found_files = sorted({item for step in trace for item in (step.get("artifacts") or {}).get("files", [])})
-    found_symbols = sorted({item for step in trace for item in (step.get("artifacts") or {}).get("symbols", [])})
-    found_tests = sorted({item for step in trace for item in (step.get("artifacts") or {}).get("tests", [])})
+    found_files = sorted(
+        {item for step in trace for item in (step.get("artifacts") or {}).get("files", [])}
+    )
+    found_symbols = sorted(
+        {item for step in trace for item in (step.get("artifacts") or {}).get("symbols", [])}
+    )
+    found_tests = sorted(
+        {item for step in trace for item in (step.get("artifacts") or {}).get("tests", [])}
+    )
 
     file_recall = _recall(list(gold.get("gold_files") or []), found_files)
     symbol_recall = _recall(list(gold.get("gold_symbols") or []), found_symbols)
@@ -63,6 +69,7 @@ def task_metrics(record: dict[str, Any], gold: dict[str, Any]) -> dict[str, Any]
 
 def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
     """把逐任务指标汇总成一组均值。空值（没有 gold 或没有记录）不计入均值。"""
+
     def mean(key: str) -> float | None:
         values = [row[key] for row in rows if row.get(key) is not None]
         return round(sum(values) / len(values), 4) if values else None

@@ -1,7 +1,7 @@
 """把阶段 14 的轨迹 JSONL 灌进阶段 15 的经验库，并打印统计。
 
-    python scripts/build_experience.py                      # 用默认路径
-    python scripts/build_experience.py --db .codex/experience/experience.db
+python scripts/build_experience.py                      # 用默认路径
+python scripts/build_experience.py --db .codex/experience/experience.db
 """
 
 from __future__ import annotations

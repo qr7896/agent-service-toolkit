@@ -44,22 +44,22 @@ class RoutingDecision:
     reasons: list[str] = field(default_factory=list)
 
 
-def _conf(config: dict[str, Any] | None) -> dict[str, Any]:
-    return ((config or {}).get("configurable") or {})
+def _conf(config: Any) -> dict[str, Any]:
+    return (config or {}).get("configurable") or {}
 
 
-def routing_enabled(config: dict[str, Any] | None) -> bool:
+def routing_enabled(config: Any) -> bool:
     return bool(_conf(config).get("model_routing", False))
 
 
-def tier_model(tier: Tier, config: dict[str, Any] | None) -> str:
+def tier_model(tier: Tier, config: Any) -> str:
     conf = _conf(config)
     if tier == "local":
         return str(conf.get("local_model") or settings.OLLAMA_MODEL or "")
     return str(conf.get("cheap_model") or DEFAULT_CHEAP_MODEL)
 
 
-def ladder(config: dict[str, Any] | None, upto: int = 1) -> list[Tier]:
+def ladder(config: Any, upto: int = 1) -> list[Tier]:
     """可用阶梯。没配本地模型时本地档直接不出现，而不是让它在运行时失败。"""
     tiers: list[Tier] = list(TIER_ORDER[: upto + 1])
     if not tier_model("local", config):
@@ -77,7 +77,7 @@ def estimate_tokens(*texts: Any) -> int:
     return total
 
 
-def task_complexity(state: dict[str, Any]) -> int:
+def task_complexity(state: Any) -> int:
     """0=简单 1=中等 2=复杂。用可解释的确定性信号，不靠模型自我评估。"""
     plan = state.get("plan") or {}
     steps = plan.get("steps") or []
@@ -92,7 +92,7 @@ def task_complexity(state: dict[str, Any]) -> int:
     return min(2, score)
 
 
-def base_tier(state: dict[str, Any], config: dict[str, Any] | None, role: str) -> Tier:
+def base_tier(state: Any, config: Any, role: str) -> Tier:
     """起点：能用免费档就用免费档；复杂任务直接上默认档，别在关键处省错地方。"""
     available = ladder(config)
     if available[0] == "local" and task_complexity(state) >= 2:
@@ -101,8 +101,8 @@ def base_tier(state: dict[str, Any], config: dict[str, Any] | None, role: str) -
 
 
 def route_model(
-    state: dict[str, Any],
-    config: dict[str, Any] | None,
+    state: Any,
+    config: Any,
     role: str,
 ) -> RoutingDecision:
     """给某个节点选模型。未启用路由时原样返回配置里的 `model`。"""

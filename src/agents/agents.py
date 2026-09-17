@@ -11,8 +11,8 @@ from agents.agent_workflow import build_workflow, load_workflow_configs, referen
 from agents.bg_task_agent.bg_task_agent import bg_task_agent
 from agents.chatbot import chatbot
 from agents.code_tools import git_diff, list_files, read_file, search_code
-from agents.command_agent import command_agent
 from agents.coding_agent import coding_agent
+from agents.command_agent import command_agent
 from agents.declarative_agent import build_declarative_agent
 from agents.github_mcp_agent.github_mcp_agent import github_mcp_agent
 from agents.interrupt_agent import interrupt_agent

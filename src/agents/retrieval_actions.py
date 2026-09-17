@@ -13,9 +13,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from agents import code_intel
 from agents.code_tools import PROJECT_ROOT
@@ -95,15 +96,24 @@ def _target_symbol(query: str, plan: dict[str, Any]) -> str:
 ACTIONS: dict[str, RetrievalAction] = {
     # --- target 证据 ---
     "lexical_search": RetrievalAction(
-        "lexical_search", "target", 1.5, 0.3,
+        "lexical_search",
+        "target",
+        1.5,
+        0.3,
         lambda q, plan, root: code_intel.symbol_search(_target_symbol(q, plan), root),
     ),
     "symbol_search": RetrievalAction(
-        "symbol_search", "target", 1.0, 0.1,
+        "symbol_search",
+        "target",
+        1.0,
+        0.1,
         lambda q, plan, root: code_intel.symbol_search(_target_symbol(q, plan), root),
     ),
     "list_symbols_in_file": RetrievalAction(
-        "list_symbols_in_file", "target", 1.0, 0.1,
+        "list_symbols_in_file",
+        "target",
+        1.0,
+        0.1,
         lambda q, plan, root: "\n".join(
             code_intel.symbols_in_file(str(step.get("path") or ""), root)
             for step in plan.get("steps") or []
@@ -111,24 +121,36 @@ ACTIONS: dict[str, RetrievalAction] = {
     ),
     # --- impact 证据（需要先知道目标符号）---
     "get_callers": RetrievalAction(
-        "get_callers", "impact", 0.8, 0.1,
+        "get_callers",
+        "impact",
+        0.8,
+        0.1,
         lambda q, plan, root: code_intel.get_callers(_target_symbol(q, plan), root),
         requires="target",
     ),
     "analyze_impact": RetrievalAction(
-        "analyze_impact", "impact", 1.2, 0.2,
+        "analyze_impact",
+        "impact",
+        1.2,
+        0.2,
         lambda q, plan, root: code_intel.analyze_impact(_target_symbol(q, plan), root),
         requires="target",
     ),
     # --- verification 证据 ---
     "find_related_tests": RetrievalAction(
-        "find_related_tests", "verification", 0.9, 0.1,
+        "find_related_tests",
+        "verification",
+        0.9,
+        0.1,
         lambda q, plan, root: code_intel.find_related_tests(_target_symbol(q, plan), root),
         requires="target",
     ),
     # --- episodic 证据（历史经验，作为先验而不是覆盖度）---
     "experience_retrieval": RetrievalAction(
-        "experience_retrieval", "episodic", 1.0, 0.2,
+        "experience_retrieval",
+        "episodic",
+        1.0,
+        0.2,
         lambda q, plan, root: "",  # 由调用方注入 config 后走 coding_memory，见 recall_for_policy
     ),
 }
@@ -151,8 +173,7 @@ def recall_for_policy(query: str, config: dict[str, Any]) -> Observation:
 def available_actions(state: EvidenceState, tried: set[str] | None = None) -> list[RetrievalAction]:
     blocked = tried or set()
     return [
-        action for name, action in ACTIONS.items()
-        if name not in blocked and action.can_run(state)
+        action for name, action in ACTIONS.items() if name not in blocked and action.can_run(state)
     ]
 
 

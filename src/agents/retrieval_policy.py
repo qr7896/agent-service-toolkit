@@ -16,8 +16,8 @@ from typing import Any
 
 from agents.evidence import (
     DEFAULT_THRESHOLDS,
-    EvidenceState,
     LAMBDA_RISK,
+    EvidenceState,
     detect_gaps,
 )
 from agents.retrieval_actions import ACTIONS, Observation, RetrievalAction, available_actions
@@ -38,7 +38,9 @@ class Plan:
         return not self.action
 
 
-def utility(action: RetrievalAction, state: EvidenceState, thresholds: dict[str, float] | None = None) -> float:
+def utility(
+    action: RetrievalAction, state: EvidenceState, thresholds: dict[str, float] | None = None
+) -> float:
     """预期增益按"缺口在列表里的位置"递减——先补最缺的那一维。"""
     gaps = detect_gaps(state, thresholds or DEFAULT_THRESHOLDS)
     if action.fills not in gaps:
@@ -80,7 +82,9 @@ def choose(
     )
 
 
-def execute(action_name: str, query: str, plan: dict[str, Any], root: Path | None = None) -> Observation:
+def execute(
+    action_name: str, query: str, plan: dict[str, Any], root: Path | None = None
+) -> Observation:
     """执行选中的动作。找不到动作名就返回空观察，由调用方决定怎么记。"""
     action = ACTIONS.get(action_name)
     if action is None:

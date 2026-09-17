@@ -27,7 +27,7 @@ from agents.code_tools import git_diff, list_files, read_file, search_code
 from agents.coding_planner import _extract_json_object
 from agents.model_router import estimate_tokens, route_model
 from agents.test_tools import run_tests
-from core import get_model, settings
+from core import get_model
 
 # 评审阶段只读：结构上就不给写工具（验收脚本会断言这一点）
 REVIEWER_TOOLS = [git_diff, read_file, search_code, list_files, run_tests]
@@ -98,13 +98,17 @@ def _fallback_review(reason: str, raw: str = "") -> Review:
     issues = [reason]
     if raw:
         issues.append(f"原始输出片段：{raw[:200]}")
-    return Review(approved=False, score=0.0, issues=issues, summary="评审器输出不可用，按未通过处理")
+    return Review(
+        approved=False, score=0.0, issues=issues, summary="评审器输出不可用，按未通过处理"
+    )
 
 
 def format_verdict(review: Review) -> str:
     """把裁决渲染成人类可读的一段话（作为最终消息返回给调用方）。"""
     tag = "[APPROVED]" if review.approved else "[CHANGES REQUESTED]"
-    lines = [f"{tag} 评审结论：{'通过' if review.approved else '未通过'}（score={review.score:.2f}）"]
+    lines = [
+        f"{tag} 评审结论：{'通过' if review.approved else '未通过'}（score={review.score:.2f}）"
+    ]
     if review.summary:
         lines.append(f"摘要：{review.summary}")
     if review.issues:
@@ -138,7 +142,7 @@ def _review_scope(state: dict[str, Any], config: RunnableConfig) -> str:
     return ""
 
 
-async def reviewer(state: dict[str, Any], config: RunnableConfig) -> dict[str, Any]:
+async def reviewer(state: Any, config: RunnableConfig) -> dict[str, Any]:
     """评审节点：读需求 / 计划 / 测试结果 / diff → 产出结构化裁决。"""
     decision = route_model(state, config, "reviewer")
     model = get_model(decision.model)

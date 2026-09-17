@@ -29,13 +29,13 @@ from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel, Field, ValidationError
 
+from agents.code_intel import CODE_INTEL_TOOLS
 from agents.code_tools import PROJECT_ROOT, git_diff, list_files, read_file, search_code
 from agents.coding_memory import format_experience_context, recall_experiences
-from agents.code_intel import CODE_INTEL_TOOLS
-from agents.evidence import audit_plan, decision_to_dict
 from agents.conflict import resolve as resolve_conflicts
+from agents.evidence import audit_plan, decision_to_dict
 from agents.model_router import estimate_tokens, route_model
-from core import get_model, settings
+from core import get_model
 
 MAX_RECON_STEPS = 3
 MAX_FINDING_CHARS = 1500
@@ -95,9 +95,7 @@ PLAN_PROMPT = """你是 Coding Agent 的规划器。请基于"需求 + 侦察结
 """
 
 
-def build_plan_user_message(
-    requirement: str, findings: str, experience_context: str = ""
-) -> str:
+def build_plan_user_message(requirement: str, findings: str, experience_context: str = "") -> str:
     """拼装规划阶段的用户消息。
 
     `experience_context` 为空时输出与阶段 15 之前逐字一致——没有相关经验，
@@ -232,12 +230,14 @@ async def _recon(
                 except Exception as e:  # 工具失败也不该炸掉规划
                     result = f"ERROR: {e}"
             messages.append(ToolMessage(content=result, tool_call_id=call.get("id", "")))
-            findings.append(f"[{call.get('name')}({call.get('args')})]\n{result[:MAX_FINDING_CHARS]}")
+            findings.append(
+                f"[{call.get('name')}({call.get('args')})]\n{result[:MAX_FINDING_CHARS]}"
+            )
     joined = "\n\n".join(findings)
     return joined[:MAX_FINDINGS_CHARS], rounds
 
 
-async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, Any]:
+async def planner(state: Any, config: RunnableConfig) -> dict[str, Any]:
     """规划节点：侦察 → 产出结构化计划 → 确定性校验 → 写进 State 的 plan 字段。"""
     requirement = _last_human_text(state.get("messages", []))
     conf = config.get("configurable") or {}
@@ -253,7 +253,9 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     hits, retrieval = recall_experiences(requirement, config)
     plan_messages = [
         SystemMessage(content=PLAN_PROMPT),
-        HumanMessage(content=build_plan_user_message(requirement, findings, format_experience_context(hits))),
+        HumanMessage(
+            content=build_plan_user_message(requirement, findings, format_experience_context(hits))
+        ),
     ]
     ai = await model.ainvoke(plan_messages)
     parsed = _parse_plan(str(getattr(ai, "content", "") or ""))

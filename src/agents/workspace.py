@@ -126,10 +126,20 @@ def _commit_baseline(sandbox: Path) -> None:
     这样 `git diff` 得到的**只有任务期间的改动**，不会把原仓库里本来就有的未提交改动
     混进补丁。用 `-c user.*` 显式给身份，不依赖机器上的 git 配置。
     """
-    git = ["git", "-C", str(sandbox), "-c", "user.name=codex-sandbox", "-c", "user.email=sandbox@local"]
+    git = [
+        "git",
+        "-C",
+        str(sandbox),
+        "-c",
+        "user.name=codex-sandbox",
+        "-c",
+        "user.email=sandbox@local",
+    ]
     try:
         subprocess.run([*git, "add", "-A"], capture_output=True, timeout=120)
-        subprocess.run([*git, "commit", "-q", "-m", "sandbox baseline"], capture_output=True, timeout=120)
+        subprocess.run(
+            [*git, "commit", "-q", "-m", "sandbox baseline"], capture_output=True, timeout=120
+        )
     except (OSError, subprocess.SubprocessError):
         pass  # 没有 git 或提交失败都不阻塞任务，patch 退化为对比 HEAD
 
@@ -142,7 +152,10 @@ def _pid_alive(pid: int) -> bool:
         try:
             out = subprocess.run(
                 ["tasklist", "/FI", f"PID eq {pid}", "/NH"],
-                capture_output=True, encoding="utf-8", errors="replace", timeout=30,
+                capture_output=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=30,
             )
         except (OSError, subprocess.SubprocessError):
             return True  # 查不了就保守地当成活着，避免误删
@@ -204,11 +217,17 @@ def export_patch(sandbox: Path) -> dict[str, Any]:
         [*git, "diff"], capture_output=True, encoding="utf-8", errors="replace", timeout=120
     )
     names = subprocess.run(
-        [*git, "diff", "--name-only"], capture_output=True, encoding="utf-8", errors="replace", timeout=120
+        [*git, "diff", "--name-only"],
+        capture_output=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=120,
     )
     return {
         "patch": diff.stdout or "",
-        "changed_files": [line.strip() for line in (names.stdout or "").splitlines() if line.strip()],
+        "changed_files": [
+            line.strip() for line in (names.stdout or "").splitlines() if line.strip()
+        ],
     }
 
 

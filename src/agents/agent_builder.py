@@ -14,7 +14,7 @@ from typing import Any
 
 import yaml
 
-from agents.agent_config import AgentConfig, AgentConfigError, CONFIG_SUFFIXES
+from agents.agent_config import CONFIG_SUFFIXES, AgentConfig, AgentConfigError
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 AGENTS_DIR = PROJECT_ROOT / "config" / "agents"

@@ -94,20 +94,24 @@ def main() -> None:
     experiment = typical * 2  # 两个候选方案各跑一遍；验证本身不花 token
 
     print("\n== 单次冲突的解决成本 ==")
-    print(f"  静态判定（路径/符号/版本哈希）：0 token，0 次 LLM 调用")
+    print("  静态判定（路径/符号/版本哈希）：0 token，0 次 LLM 调用")
     print(f"  沙箱 A/B（跑两个候选方案）：约 {experiment:,} tok（= 典型单次 {typical:,} × 2）")
     print(f"  最坏情况（本机实测单次峰值 {worst:,} tok → 一次实验 ≈ {worst * 2:,} tok）")
-    print(f"  倍数关系：一次实验 ≈ 静态判定的无穷倍（静态是 0），量级差 2 个数量级起步")
+    print("  倍数关系：一次实验 ≈ 静态判定的无穷倍（静态是 0），量级差 2 个数量级起步")
 
     conflicts = args.tasks * args.conflict_rate
     static_part = conflicts * args.static_share
     experiment_part = conflicts - static_part
     naive = conflicts * experiment
     static_first = experiment_part * experiment
-    print(f"\n== 外推（{args.tasks} 任务，冲突率 {args.conflict_rate:.0%}，其中静态可判 {args.static_share:.0%}）==")
+    print(
+        f"\n== 外推（{args.tasks} 任务，冲突率 {args.conflict_rate:.0%}，其中静态可判 {args.static_share:.0%}）=="
+    )
     print(f"  冲突数：{conflicts:.0f} 个")
     print(f"  全部走实验：约 {naive:,.0f} tok")
-    print(f"  静态优先：  约 {static_first:,.0f} tok（省下 {naive - static_first:,.0f} tok，{(1 - static_first / naive):.0%}）")
+    print(
+        f"  静态优先：  约 {static_first:,.0f} tok（省下 {naive - static_first:,.0f} tok，{(1 - static_first / naive):.0%}）"
+    )
     print("\n注意：这是量级估算，不是账单；冲突率与静态可判比例是假设，跑真实任务时应实测。")
 
 

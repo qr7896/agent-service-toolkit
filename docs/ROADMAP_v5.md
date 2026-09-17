@@ -12,8 +12,8 @@
 
 主项目：
 
--   `JoshuaC215/agent-service-toolkit`
--   自己的 fork：`qr7896/agent-service-toolkit`
+- `JoshuaC215/agent-service-toolkit`
+- 自己的 fork：`qr7896/agent-service-toolkit`
 
 原项目本质是一个：
 
@@ -134,17 +134,17 @@ read_file
 
 应该明确分工：
 
-  -----------------------------------------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------
   参考仓库                                   主要学习什么                                                   在你的项目中的定位
-  ------------------------------------------ -------------------------------------------------------------- -------------------------
+  ------------------------------------------------------------------------
   `langchain-ai/open-swe`                    成熟 Coding Agent                                              **架构参考**
-                                             架构、Planning、Sandbox、Tools、Middleware、Subagent、Review   
+                                             架构、Planning、Sandbox、Tools、Middleware、Subagent、Review  
 
   `wusuiling-if/mini-code-agent-langgraph`   LangGraph Coding                                               **最适合局部移植/重写**
-                                             Loop、验证、patch、trajectory、transaction、安全边界、memory   
+                                             Loop、验证、patch、trajectory、transaction、安全边界、memory  
 
-  `IoanRoume/self-improving-code-agent`      Critic → Score → Retry → Memory → 自进化                       **自进化创新参考**
-  -----------------------------------------------------------------------------------------------------------------------------------
+`IoanRoume/self-improving-code-agent`      Critic → Score → Retry → Memory → 自进化                       **自进化创新参考**
+-----------------------------------------------------------------------------------------------------------------------------------
 
 最终不是：
 
@@ -178,19 +178,19 @@ A + B + C = 大杂烩
 
 它现在的体系已经包含：
 
--   Planning / investigation
--   isolated sandbox
--   code modification
--   validation
--   PR delivery
--   reviewer
--   analyzer
--   chat
--   scheduler
--   subagents
--   middleware
--   repository instructions
--   GitHub / Slack / Linear 等触发入口
+- Planning / investigation
+- isolated sandbox
+- code modification
+- validation
+- PR delivery
+- reviewer
+- analyzer
+- chat
+- scheduler
+- subagents
+- middleware
+- repository instructions
+- GitHub / Slack / Linear 等触发入口
 
 Open SWE 当前使用 Deep Agents 作为 harness，而 LangGraph 负责 durable
 runtime。
@@ -339,7 +339,7 @@ Docker / WSL2 / Git Worktree
 # 4. Open SWE：哪些值得抄
 
   Open SWE 思路     是否移植               你的实现位置
-  ----------------- ---------------------- --------------------------------------------
+  ------------------------------------------------------------------------
   Agent assembly    **强烈建议学习**       `src/agents/coding_agent.py`
   curated tools     **直接采用思想**       `src/agents/code_tools.py`
   prompt 分模块     **建议**               `src/agents/coding_prompt.py`
@@ -481,7 +481,7 @@ Retrieve
 # 6. mini-code-agent：哪些值得抄
 
   模块/思想      是否移植           目标
-  -------------- ------------------ ---------------------
+  ------------------------------------------------------------------------
   Agent Loop     **强烈建议重写**   深入 LangGraph
   Executor       **部分重写**       统一 Coding Tools
   Verification   **强烈建议学习**   测试可信度
@@ -1111,7 +1111,7 @@ class CodingState(TypedDict):
 
 推荐：
 
-### 第一版
+## 第一版
 
 ``` text
 messages
@@ -1149,31 +1149,31 @@ experience
 
 # 19. 三个仓库对应你的文件
 
-  ---------------------------------------------------------------------------
+  ------------------------------------------------------------------------
   你的文件             Open SWE            mini-code-agent   self-improving
-  -------------------- ------------------- ----------------- ----------------
+  ------------------------------------------------------------------------
   `coding_agent.py`    `agent/server.py` / `agent.py`        orchestrator
-                       Agent assembly                        
+                       Agent assembly  
 
   `code_tools.py`      Deep Agents         `executor.py`     coder tools
-                       file/search tools                     
+                       file/search tools  
 
   `agents.py`          graph entrypoints   agent entry       orchestrator
 
   `coding_prompt.py`   `agent/prompt.py`   ---               coder prompt
 
   `test_tools.py`      shell / validation  executor /        critic
-                                           verification      
+                                           verification  
 
   `experience.py`      memory / learned    memory_store.py   memory agent
-                       guidance 思想                         
+                       guidance 思想  
 
   `reviewer.py`        reviewer graph      verification      critic
 
   `middleware.py`      middleware          ---               ---
 
-  `coding_memory.py`   thread/state 思想   memory_store      memory
-  ---------------------------------------------------------------------------
+`coding_memory.py`   thread/state 思想   memory_store      memory
+---------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
@@ -1218,7 +1218,7 @@ QLoRA/KTO training
 # 21. 魔改阶段总表
 
   阶段   功能                   文件                 学习重点                 状态
-  ------ ---------------------- -------------------- ------------------------ ----------
+  ------------------------------------------------------------------------
   0      原项目运行             全项目               Service 架构             ✅
   1      LangGraph Mini Graph   `lg_practice/`       State/Node/Edge          ✅
   2      RAG                    `tools.py`           Retriever                ✅
@@ -1354,7 +1354,7 @@ Coder
  ↓
 Test
  ↓
-PASS? 
+PASS?
  ├── YES → Reviewer
  └── NO → Debugger
              ↓
@@ -1503,7 +1503,7 @@ FastAPI endpoint 找不到
 
 分两组：
 
-### Baseline
+## Baseline
 
 ``` text
 Coding Agent
@@ -1940,17 +1940,18 @@ Experience-Guided Self-Correction
 
 # 38. 参考资料
 
--   Open SWE: `https://github.com/langchain-ai/open-swe`
--   Open SWE Customization:
-    `https://github.com/langchain-ai/open-swe/blob/main/docs/CUSTOMIZATION.md`
--   mini-code-agent-langgraph:
-    `https://github.com/wusuiling-if/mini-code-agent-langgraph`
--   self-improving-code-agent:
-    `https://github.com/IoanRoume/self-improving-code-agent`
+- Open SWE: `https://github.com/langchain-ai/open-swe`
+- Open SWE Customization:
+  `https://github.com/langchain-ai/open-swe/blob/main/docs/CUSTOMIZATION.md`
+- mini-code-agent-langgraph:
+  `https://github.com/wusuiling-if/mini-code-agent-langgraph`
+- self-improving-code-agent:
+  `https://github.com/IoanRoume/self-improving-code-agent`
 
 本文中的参考仓库能力判断以 2026-09-15
 检索到的仓库内容为准；这些项目仍在变化，因此真正开始移植某个模块时，应再次查看对应仓库当前版本源码。
----
+
+------------------------------------------------------------------------
 
 # 19. 新增：AICoding Agent 的核心顾虑、解决方案与测试体系
 
@@ -2097,13 +2098,13 @@ experience
 
 而应该测试：
 
-1.  能不能找到正确文件？
-2.  能不能定位正确函数 / 类？
-3.  能不能完成代码修改？
-4.  修改后能不能运行？
-5.  测试能不能通过？
-6.  测试失败后能不能利用错误信息继续修复？
-7.  最终任务能不能完成？
+1. 能不能找到正确文件？
+2. 能不能定位正确函数 / 类？
+3. 能不能完成代码修改？
+4. 修改后能不能运行？
+5. 测试能不能通过？
+6. 测试失败后能不能利用错误信息继续修复？
+7. 最终任务能不能完成？
 
 核心指标：
 
@@ -2125,7 +2126,7 @@ Human Intervention Rate
 ## 两者不要定义成同一种东西
 
   数据源            主要内容                 主要回答的问题
-  ----------------- ------------------------ --------------------
+  ------------------------------------------------------------------------
   Code Repository   当前项目源代码           "代码现在是什么？"
   RAG Knowledge     文档、规范、经验、方案   "应该怎么做？"
 
@@ -2378,7 +2379,7 @@ Latency
 
 最终可以逐渐覆盖六类任务：
 
-### ① 新功能开发
+## ① 新功能开发
 
 ``` text
 Requirement
@@ -3192,15 +3193,15 @@ Experience Retrieval
 比较：
 
   指标                       Baseline   Improved
-  ------------------------ ---------- ----------
-  Task Success Rate                   
-  First-Try Success Rate              
-  Average Attempts                    
-  Average Tool Calls                  
-  Test Pass Rate                      
-  Human Intervention                  
-  Token Cost                          
-  Task Time                           
+  ------------------------------------------------------------------------
+  Task Success Rate  
+  First-Try Success Rate  
+  Average Attempts  
+  Average Tool Calls  
+  Test Pass Rate  
+  Human Intervention  
+  Token Cost  
+  Task Time  
 
 如果加入 Experience Memory 后：
 
@@ -3420,7 +3421,7 @@ Security
 
 后续每一个功能都用下面这套问题检查：
 
-### ① 能不能验证？
+## ① 能不能验证？
 
 ``` text
 有没有确定性测试？
@@ -3472,17 +3473,17 @@ Experience Retrieval
 
 # 36. 与三个参考仓库的对应关系重新整理
 
-  -------------------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------
   参考仓库                    本项目主要学习内容                                        当前是否直接移植
-  --------------------------- --------------------------------------------------------- -----------------------
+  ------------------------------------------------------------------------
   open-swe                    Agent 架构、工具体系、Sandbox、Review、CI、Middleware     否，主要学习架构
 
   mini-code-agent-langgraph   Transaction、Verification、Trajectory、Memory、安全边界   部分移植思想
 
   self-improving-code-agent   Critic、Score、Retry、Memory、自修复闭环                  部分移植思想
 
-  本项目                      LangGraph + Coding + RAG + Verification + Experience      主体
-  -------------------------------------------------------------------------------------------------------------
+本项目                      LangGraph + Coding + RAG + Verification + Experience      主体
+-------------------------------------------------------------------------------------------------------------
 
 最终不要变成：
 
@@ -3940,7 +3941,7 @@ Model Routing
 
 也就是说，Model Routing 是后期在已有 Coding Agent、Verification、Evaluation 都跑通之后再实现。
 
----
+------------------------------------------------------------------------
 
 # 41. 更新后的最终项目定位
 
@@ -3993,7 +3994,7 @@ Evaluation：证明系统是否真的变好
 Model Router：控制能力、速度与成本之间的平衡
 ```
 
----
+------------------------------------------------------------------------
 
 # 39. 新增：从 Knowledge Agent 到可编排 Agent 平台
 
@@ -4051,7 +4052,7 @@ Agent Platform
 共同完成复杂任务
 ```
 
----
+------------------------------------------------------------------------
 
 ## 39.2 用户使用流程的变化
 
@@ -4101,7 +4102,7 @@ Agent 检索知识
 
 > **用户可以参与 Agent 的创建、配置、编排和持续优化。**
 
----
+------------------------------------------------------------------------
 
 ## 39.3 Agent Builder / Agent 工作台
 
@@ -4147,7 +4148,7 @@ Agent 检索知识
 - 测试 Agent
 - 保存 Agent 配置
 
----
+------------------------------------------------------------------------
 
 ## 39.4 Agent 可以被“修改”
 
@@ -4194,7 +4195,7 @@ Security Review
 
 > **可以被用户持续配置和修改的生产单元。**
 
----
+------------------------------------------------------------------------
 
 ## 39.5 Agent 之间可以协同
 
@@ -4275,7 +4276,7 @@ Security Review
 
 > **Agent 协同体系中的一个执行节点。**
 
----
+------------------------------------------------------------------------
 
 ## 39.6 AICoding Agent 在这个体系中的位置
 
@@ -4320,7 +4321,7 @@ Coding Agent
  └── Research Agent
 ```
 
----
+------------------------------------------------------------------------
 
 ## 39.7 最终产品定位变化
 
@@ -4384,7 +4385,7 @@ Agent Platform
                    Task Completion
 ```
 
----
+------------------------------------------------------------------------
 
 ## 39.8 面试时的核心表达
 

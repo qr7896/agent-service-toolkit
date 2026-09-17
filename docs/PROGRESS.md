@@ -44,7 +44,7 @@
 
 ### 1.2 目录结构
 
-```
+```text
 project20260827/
 ├── src/
 │   ├── agents/          # 所有 Agent 与工具（rag_assistant.py、tools.py、agents.py 注册表…）
@@ -63,7 +63,7 @@ project20260827/
 
 ### 1.3 请求链路（Day 1 的核心认知）
 
-```
+```text
 用户在 Streamlit 输入
         ↓
 AgentClient（client.py，Python 客户端）
@@ -109,7 +109,7 @@ SSE 流式返回 → Streamlit 逐字显示
 
 `.env`（被 git 忽略，不进版本库）：
 
-```
+```text
 DEEPSEEK_API_KEY=...
 DEFAULT_MODEL=deepseek-v4-flash
 AGENT_URL=http://localhost:8080
@@ -442,7 +442,7 @@ Chroma 一条记录 = `ids` + `embeddings` + `documents` + `metadatas`（分数�
 
 Remote 配置：
 
-```
+```text
 origin   → https://github.com/qr7896/agent-service-toolkit.git      （自己的 fork）
 upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作者）
 ```
@@ -570,7 +570,7 @@ upstream → https://github.com/JoshuaC215/agent-service-toolkit.git  （原作�
 
 **图结构**
 
-```
+```text
 START → planner → coder → (有 tool_calls ? tools → coder : tester/END)
                       ↑                              │
                       │                      PASS → END
@@ -1272,7 +1272,7 @@ Windows 上判 pid 存活不能用 `os.kill(pid, 0)`——那会真的去终止�
 
 | 机制 | 实现 |
 |---|---|
-| 稳定审批标识 | `approval_id_for(config, calls)` = `ap-` + `sha1(thread_id + 排序后的 tool_call id)[:16]` |
+| 稳定审批标识 | `approval_id_for` 取 thread_id 与排序后的 tool_call id 做 sha1，前缀 `ap-`，取前 16 位 |
 | 审批记录可追溯 | `approvals[]` 现在含 `approval_id` / `tool_call_id` / `tool` / `path` / `approved` / `reason` / `executed` |
 | 幂等（已执行） | 同一批再次出现且 `executed=True` → **跳过写入**，返回"已执行过同样的写入（approval_id=…）"，既不重复问也不重复写 |
 | 幂等（已批准未执行） | 记录存在但没有 `executed` → 复用结论，不再弹第二次审批 |

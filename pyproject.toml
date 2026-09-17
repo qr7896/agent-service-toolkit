@@ -113,6 +113,15 @@ plugins.md033.enabled = false
 plugins.md041.enabled = false
 # Allow repeated heading text as long as it's not adjacent siblings.
 plugins.md024.siblings_only = true
+# docs/ROADMAP_v{2,3,5}.md are verbatim copies of the roadmap documents: each
+# section carries its own top-level heading and uses `---` separators, so the
+# rules about single-title / heading style / heading placement / run-in bold
+# don't apply to them. Everything else stays enforced.
+plugins.md003.enabled = false
+plugins.md022.enabled = false
+plugins.md023.enabled = false
+plugins.md025.enabled = false
+plugins.md036.enabled = false
 
 [tool.pyrefly]
 project-includes = ["src"]

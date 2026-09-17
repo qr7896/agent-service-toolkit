@@ -66,7 +66,14 @@ def _native_command(cli: str, tool: str, arguments: dict[str, Any]) -> list[str]
     if str(os.getenv("CODEGRAPH_GRAPH_ONLY", "1")) != "0":
         # graph-only：跳过 embedding 模型下载，只服务结构化工具（CI / 一次性查询都该用它）
         command.append("--graph-only")
-    command += ["-w", workspace(), "--run-tool", name, "--tool-args", json.dumps(arguments, ensure_ascii=False)]
+    command += [
+        "-w",
+        workspace(),
+        "--run-tool",
+        name,
+        "--tool-args",
+        json.dumps(arguments, ensure_ascii=False),
+    ]
     return command
 
 
@@ -89,7 +96,11 @@ def probe() -> dict[str, Any]:
         resolved = shutil.which(cli) or cli
         if os.path.exists(resolved):
             return {"available": True, "backend": "cli", "target": resolved}
-        return {"available": False, "backend": "", "reason": f"CODEGRAPH_CLI 指向的路径不存在：{cli}"}
+        return {
+            "available": False,
+            "backend": "",
+            "reason": f"CODEGRAPH_CLI 指向的路径不存在：{cli}",
+        }
     url = _mcp_url()
     if url:
         return {"available": True, "backend": "mcp", "target": url}
@@ -113,11 +124,13 @@ def call(tool: str, **arguments: Any) -> str:
         try:
             proc = subprocess.run(
                 command,
-                capture_output=True, timeout=TIMEOUT_SECONDS,
+                capture_output=True,
+                timeout=TIMEOUT_SECONDS,
                 # 必须显式指定 UTF-8：默认按系统代码页（本机 GBK）解码，
                 # CodeGraph 的 JSON 输出会让读取线程直接抛 UnicodeDecodeError，
                 # stdout 变成 None（这个坑实测踩过）
-                encoding="utf-8", errors="replace",
+                encoding="utf-8",
+                errors="replace",
             )
         except (OSError, subprocess.SubprocessError) as exc:
             raise CodeGraphUnavailable(f"CLI 调用失败：{exc}") from exc
@@ -133,8 +146,12 @@ def call(tool: str, **arguments: Any) -> str:
         request = urllib.request.Request(
             str(status["target"]),
             data=json.dumps(
-                {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
-                 "params": {"name": tool, "arguments": arguments}},
+                {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {"name": tool, "arguments": arguments},
+                },
                 ensure_ascii=False,
             ).encode("utf-8"),
             headers={"Content-Type": "application/json"},

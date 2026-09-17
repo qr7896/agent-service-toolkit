@@ -19,10 +19,10 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
-import re
 
 from agents import code_intel
 
@@ -154,13 +154,12 @@ def evaluate_step(
     # 用"已知符号名 + 词边界"匹配，而不是猜标识符形状：
     # 只认 snake_case / 驼峰会让 add 这类普通小写函数名被漏掉（踩过）。
     named = [
-        name for name in sorted(symbols_in_file)
+        name
+        for name in sorted(symbols_in_file)
         if re.search(rf"(?<![A-Za-z0-9_]){re.escape(name)}(?![A-Za-z0-9_])", text)
     ]
     acquired = [name for name in (acquired_symbols or {}).get(path, []) if name in symbols_in_file]
-    chosen = named or acquired or (
-        sorted(symbols_in_file)[:1] if len(symbols_in_file) == 1 else []
-    )
+    chosen = named or acquired or (sorted(symbols_in_file)[:1] if len(symbols_in_file) == 1 else [])
 
     callers: list[str] = []
     related_tests: list[str] = []
@@ -199,7 +198,9 @@ def _max_level(*levels: str) -> str:
     return max(levels, key=lambda level: order.get(level, 0))
 
 
-def state_from_cards(cards: list[EvidenceCard], plan: dict[str, Any], root: Path | None = None) -> EvidenceState:
+def state_from_cards(
+    cards: list[EvidenceCard], plan: dict[str, Any], root: Path | None = None
+) -> EvidenceState:
     """把证据卡折算成 0~1 的三维覆盖度。规则固定、可解释、可复现。"""
     if not cards:
         return EvidenceState()
@@ -208,7 +209,9 @@ def state_from_cards(cards: list[EvidenceCard], plan: dict[str, Any], root: Path
     verification_scores: list[float] = []
     verification_plan = [str(v) for v in (plan.get("verification") or [])]
     for card in cards:
-        exists = (Path(root or code_intel.PROJECT_ROOT) / card.path).exists() if card.path else False
+        exists = (
+            (Path(root or code_intel.PROJECT_ROOT) / card.path).exists() if card.path else False
+        )
         if not exists:
             target_scores.append(0.0)
         elif card.target_symbols:

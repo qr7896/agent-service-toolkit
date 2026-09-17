@@ -94,7 +94,9 @@ def blind_spot_metrics(records: list[dict], root: Path = PROJECT_ROOT) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Aggregate coding-agent trajectory JSONL")
-    parser.add_argument("--path", type=Path, default=DEFAULT_TRAJECTORY_PATH, help="JSONL trajectory path")
+    parser.add_argument(
+        "--path", type=Path, default=DEFAULT_TRAJECTORY_PATH, help="JSONL trajectory path"
+    )
     parser.add_argument("--blind-spots", action="store_true", help="额外输出盲区指标")
     args = parser.parse_args()
     report = aggregate_trajectories(args.path)

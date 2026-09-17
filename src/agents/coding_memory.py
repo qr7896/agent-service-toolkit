@@ -74,7 +74,9 @@ def format_experience_context(hits: list[dict[str, Any]], mode: str = "planning"
         paths = ", ".join(hit.get("changed_paths") or [])
         if hit.get("outcome") == ACCEPTED:
             if mode == "debug":
-                verdict = f"同类问题后来被修好过（改动：{paths}）" if paths else "同类问题后来被修好过"
+                verdict = (
+                    f"同类问题后来被修好过（改动：{paths}）" if paths else "同类问题后来被修好过"
+                )
             else:
                 verdict = "这类做法跑通了测试，可以作为思路参考"
         else:
@@ -176,7 +178,9 @@ class ExperienceIndex:
                     "task": str(meta.get("task") or ""),
                     "outcome": str(meta.get("outcome") or ""),
                     "failure_type": str(meta.get("failure_type") or ""),
-                    "changed_paths": [p for p in str(meta.get("changed_paths") or "").split(",") if p],
+                    "changed_paths": [
+                        p for p in str(meta.get("changed_paths") or "").split(",") if p
+                    ],
                     "test_summary": str(meta.get("test_summary") or ""),
                     "review_summary": str(meta.get("review_summary") or ""),
                     "distance": float(distance),
@@ -191,7 +195,7 @@ def chroma_path(config: dict[str, Any]) -> Path:
     return Path(str(configured)).expanduser() if configured else DEFAULT_CHROMA_DIR
 
 
-def top_k(config: dict[str, Any]) -> int:
+def top_k(config: Any) -> int:
     raw = (config.get("configurable") or {}).get("experience_top_k", DEFAULT_TOP_K)
     try:
         return max(0, int(raw))
@@ -200,14 +204,16 @@ def top_k(config: dict[str, Any]) -> int:
 
 
 def min_similarity(config: dict[str, Any]) -> float:
-    raw = (config.get("configurable") or {}).get("experience_min_similarity", DEFAULT_MIN_SIMILARITY)
+    raw = (config.get("configurable") or {}).get(
+        "experience_min_similarity", DEFAULT_MIN_SIMILARITY
+    )
     try:
         return float(raw)
     except (TypeError, ValueError):
         return DEFAULT_MIN_SIMILARITY
 
 
-def recall_experiences(task: str, config: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
+def recall_experiences(task: str, config: Any) -> tuple[list[dict[str, Any]], str]:
     """返回 (命中列表, 检索方式)。库为空 / 无命中时是 ([], "none")。"""
     path = experience_path(config)
     k = top_k(config)
@@ -236,7 +242,10 @@ def recall_experiences(task: str, config: dict[str, Any]) -> tuple[list[dict[str
             # 两种"不注入"的语义不同，混在一起会让上游分不清是"没找到"还是"不敢用"。
             return [], ("none" if not hits else "abstain")
         except Exception:  # 依赖缺失 / 模型加载失败都不该让规划失败
-            logger.warning("experience vector retrieval unavailable, falling back to keyword recall", exc_info=True)
+            logger.warning(
+                "experience vector retrieval unavailable, falling back to keyword recall",
+                exc_info=True,
+            )
             kept = _apply_compatibility(
                 [_hit(e) for e in store.recall(task, limit=k)], store, context
             )
@@ -263,7 +272,8 @@ def _apply_compatibility(
             **hit,
             "compatibility": score,
             "compatibility_notes": notes,
-            "repo_commit": (experience.extra or {}).get("repo_commit") or hit.get("repo_commit", ""),
+            "repo_commit": (experience.extra or {}).get("repo_commit")
+            or hit.get("repo_commit", ""),
             "changed_paths": experience.changed_paths or hit.get("changed_paths") or [],
         }
         if score > 0:

@@ -103,7 +103,10 @@ TASKS: list[dict] = [
 def show(rev: str, path: str) -> str:
     out = subprocess.run(
         ["git", "-C", str(PROJECT_DIR), "show", f"{rev}:{path}"],
-        capture_output=True, text=True, encoding="utf-8", errors="replace",
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     if out.returncode != 0:
         raise SystemExit(f"git show 失败：{rev}:{path} -> {out.stderr.strip()[:120]}")
@@ -128,7 +131,9 @@ def build(task: dict) -> dict:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate SWE-style tasks from this repo's history")
+    parser = argparse.ArgumentParser(
+        description="Generate SWE-style tasks from this repo's history"
+    )
     parser.add_argument("--list", action="store_true")
     args = parser.parse_args()
     if args.list:

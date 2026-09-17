@@ -16,9 +16,9 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
 import hashlib
 import subprocess
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -74,14 +74,19 @@ def _content_changed_since(path: str, rev: str, base: Path) -> bool:
     try:
         proc = subprocess.run(
             ["git", "-C", str(base), "show", f"{rev}:{path}"],
-            capture_output=True, encoding="utf-8", errors="replace", timeout=30,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=30,
         )
     except (OSError, subprocess.SubprocessError):
         return False
     if proc.returncode != 0:
         return True  # 那个提交里没有这个文件
     old = hashlib.sha256((proc.stdout or "").encode("utf-8", "replace")).hexdigest()
-    new = hashlib.sha256(current.read_text(encoding="utf-8", errors="replace").encode("utf-8")).hexdigest()
+    new = hashlib.sha256(
+        current.read_text(encoding="utf-8", errors="replace").encode("utf-8")
+    ).hexdigest()
     return old != new
 
 
@@ -126,7 +131,8 @@ def detect_static_conflicts(
         if symbols and not named and len(symbols) > 1:
             conflicts.append(
                 Conflict(
-                    "symbol_missing", True,
+                    "symbol_missing",
+                    True,
                     f"{raw} 里没有匹配计划描述的符号（该文件定义了 {len(symbols)} 个）",
                     EXIT_INSUFFICIENT,
                 )
@@ -139,7 +145,8 @@ def detect_static_conflicts(
         if gone:
             conflicts.append(
                 Conflict(
-                    "stale_experience", True,
+                    "stale_experience",
+                    True,
                     f"经验引用的文件已不存在：{gone}（经验失效，不该再生效）",
                     EXIT_STALE,
                 )
@@ -149,7 +156,8 @@ def detect_static_conflicts(
             # 后者几乎每次都成立，用它当失效条件等于把所有经验一次作废。
             conflicts.append(
                 Conflict(
-                    "stale_experience", True,
+                    "stale_experience",
+                    True,
                     f"经验来自 {recorded}，它引用的文件此后已被改动，需重新确认",
                     EXIT_STALE,
                 )
@@ -189,7 +197,9 @@ def resolve(
     )
     if static:
         # 先出静态冲突的结论：stale 优先于 insufficient（失效经验要显式作废）
-        verdict.exit = EXIT_STALE if any(c.exit == EXIT_STALE for c in static) else EXIT_INSUFFICIENT
+        verdict.exit = (
+            EXIT_STALE if any(c.exit == EXIT_STALE for c in static) else EXIT_INSUFFICIENT
+        )
     elif require:
         verdict.exit = EXIT_EXPERIMENT
     else:

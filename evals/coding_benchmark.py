@@ -73,10 +73,7 @@ TASKS: list[Task] = [
         kind="edge_case_guard",
         prompt="修复 src/stats_util.py 的 mean：空列表应当返回 0.0，而不是抛异常。只改必要的代码。",
         source_file="stats_util.py",
-        source=(
-            "def mean(values):\n"
-            "    return sum(values) / len(values)\n"
-        ),
+        source=("def mean(values):\n    return sum(values) / len(values)\n"),
         test_file="test_stats_util.py",
         test=(
             "from stats_util import mean\n\n\n"
@@ -110,10 +107,7 @@ TASKS: list[Task] = [
         kind="edge_case_guard",
         prompt="修复 src/math_util.py 的 safe_divide：除数为 0 时应返回 0.0。只改必要的代码。",
         source_file="math_util.py",
-        source=(
-            "def safe_divide(a, b):\n"
-            "    return a / b\n"
-        ),
+        source=("def safe_divide(a, b):\n    return a / b\n"),
         test_file="test_math_util.py",
         test=(
             "from math_util import safe_divide\n\n\n"
@@ -128,10 +122,7 @@ TASKS: list[Task] = [
         kind="case_normalization",
         prompt="修复 src/text_util.py 的 slugify：结果应当全部小写，空格换成连字符。只改必要的代码。",
         source_file="text_util.py",
-        source=(
-            "def slugify(text):\n"
-            "    return text.replace(' ', '-')\n"
-        ),
+        source=("def slugify(text):\n    return text.replace(' ', '-')\n"),
         test_file="test_text_util.py",
         test=(
             "from text_util import slugify\n\n\n"
@@ -201,7 +192,13 @@ def setup_task(task: Task) -> Path:
     source.write_text(task.source, encoding="utf-8")
     test.write_text(task.test, encoding="utf-8")
     subprocess.run(
-        ["git", "add", "-N", str(source.relative_to(PROJECT_DIR)), str(test.relative_to(PROJECT_DIR))],
+        [
+            "git",
+            "add",
+            "-N",
+            str(source.relative_to(PROJECT_DIR)),
+            str(test.relative_to(PROJECT_DIR)),
+        ],
         cwd=str(PROJECT_DIR),
         capture_output=True,
         text=True,
@@ -212,7 +209,9 @@ def setup_task(task: Task) -> Path:
 def unstage_sandbox() -> None:
     subprocess.run(["git", "reset", "--", SANDBOX.name], cwd=str(PROJECT_DIR), capture_output=True)
     subprocess.run(
-        ["git", "restore", "--staged", "--", SANDBOX.name], cwd=str(PROJECT_DIR), capture_output=True
+        ["git", "restore", "--staged", "--", SANDBOX.name],
+        cwd=str(PROJECT_DIR),
+        capture_output=True,
     )
 
 
@@ -270,8 +269,10 @@ async def run_one(task: Task, arm: str, model: str) -> dict:
     try:
         await coding_agent.ainvoke(
             {"messages": [HumanMessage(content=task.prompt)]},
-            config={"configurable": {**config["configurable"], "thread_id": f"{arm}-{task.name}"},
-                    "recursion_limit": RECURSION_LIMIT},
+            config={
+                "configurable": {**config["configurable"], "thread_id": f"{arm}-{task.name}"},
+                "recursion_limit": RECURSION_LIMIT,
+            },
         )
     except Exception as exc:  # 单任务失败不该中断整场基准
         error = f"{type(exc).__name__}: {exc}"[:200]
@@ -330,7 +331,7 @@ def summarize(rows: list[dict]) -> dict:
     }
 
 
-def split_tasks(tasks: list["Task"], holdout: int) -> tuple[list["Task"], list["Task"]]:
+def split_tasks(tasks: list[Task], holdout: int) -> tuple[list[Task], list[Task]]:
     """时间切分：前 N-k 个任务用来"积累经验"，最后 k 个只用来"评测经验"。
 
     为什么必须切：如果评测用的经验来自同一个任务，那就是自己给自己泄题，
@@ -358,7 +359,8 @@ def calibration(rows: list[dict]) -> dict:
     }
     first_try = {
         arm: round(
-            sum(bool(r.get("passed")) and int(r.get("attempts") or 0) <= 1 for r in items) / len(items),
+            sum(bool(r.get("passed")) and int(r.get("attempts") or 0) <= 1 for r in items)
+            / len(items),
             3,
         )
         for arm, items in by_arm.items()
@@ -472,8 +474,13 @@ async def main_async(
     }
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print("\n=== 汇总 ===")
-    print(json.dumps(report["arms"] or {k: report[k] for k in ("baseline", "experience")},
-                     ensure_ascii=False, indent=2))
+    print(
+        json.dumps(
+            report["arms"] or {k: report[k] for k in ("baseline", "experience")},
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
     for warning in report["calibration"]["warnings"]:
         print(f"[校准警告] {warning}")
     print(f"\n明细：{REPORT}")
@@ -485,7 +492,9 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=None, help="只跑前 N 个任务（冒烟用）")
     parser.add_argument("--model", default=settings.DEFAULT_MODEL)
     parser.add_argument(
-        "--holdout", type=int, default=0,
+        "--holdout",
+        type=int,
+        default=0,
         help="最后 N 个任务作为留出集：经验只从前面的任务积累，评测只在留出集上做",
     )
     parser.add_argument("--probe-only", action="store_true", help="只跑探针门禁")
@@ -494,7 +503,7 @@ def main() -> None:
         "--arms",
         default="",
         help="逗号分隔的组名。预置：baseline / experience / A_files_only / B_search / "
-             "C_codeintel / D_codeintel_gate",
+        "C_codeintel / D_codeintel_gate",
     )
     parser.add_argument("--list", action="store_true", help="列出任务后退出")
     args = parser.parse_args()

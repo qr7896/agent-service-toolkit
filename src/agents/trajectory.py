@@ -21,8 +21,15 @@ DEFAULT_TRAJECTORY_PATH = PROJECT_ROOT / ".codex" / "trajectories" / "coding_age
 # 第一版是"键名里含 token 就脱敏"，结果把 estimated_tokens 也脱敏成了 [REDACTED]，
 # 成本指标一直是坏的（真实基准跑起来才暴露）。所以这里改成精确匹配 + 后缀匹配。
 SENSITIVE_KEYS = {
-    "key", "apikey", "api_key", "secret", "token", "password",
-    "authorization", "credential", "credentials",
+    "key",
+    "apikey",
+    "api_key",
+    "secret",
+    "token",
+    "password",
+    "authorization",
+    "credential",
+    "credentials",
 }
 SENSITIVE_SUFFIXES = ("_key", "_secret", "_token", "_password", "_authorization", "_credential")
 SENSITIVE_KEY_MARKERS = (*SENSITIVE_KEYS, *SENSITIVE_SUFFIXES)  # 兼容旧引用
@@ -96,7 +103,7 @@ def redact(value: Any, key: str = "") -> Any:
 _safe = redact
 
 
-def build_trajectory(state: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
+def build_trajectory(state: Any, config: Any) -> dict[str, Any]:
     """从图的最终 State 生成纯 JSON 可序列化的记录，不执行任何 IO。"""
     messages = state.get("messages") or []
     calls = _tool_calls(messages)
@@ -104,7 +111,10 @@ def build_trajectory(state: dict[str, Any], config: dict[str, Any]) -> dict[str,
     ended_at = utc_now()
     started_at = str(state.get("trajectory_started_at") or ended_at)
     try:
-        duration_seconds = max(0.0, (datetime.fromisoformat(ended_at) - datetime.fromisoformat(started_at)).total_seconds())
+        duration_seconds = max(
+            0.0,
+            (datetime.fromisoformat(ended_at) - datetime.fromisoformat(started_at)).total_seconds(),
+        )
     except ValueError:
         duration_seconds = 0.0
     configurable = config.get("configurable") or {}
@@ -139,7 +149,7 @@ def build_trajectory(state: dict[str, Any], config: dict[str, Any]) -> dict[str,
     return _safe(record)
 
 
-def trajectory_path(config: dict[str, Any]) -> Path:
+def trajectory_path(config: Any) -> Path:
     configured = (config.get("configurable") or {}).get("trajectory_path")
     return Path(str(configured)).expanduser() if configured else DEFAULT_TRAJECTORY_PATH
 
@@ -164,11 +174,19 @@ def aggregate_trajectories(path: Path) -> dict[str, float | int]:
                 records.append(item)
     total = len(records)
     if not total:
-        return {"tasks": 0, "success_rate": 0.0, "avg_attempts": 0.0, "avg_tool_calls": 0.0, "avg_duration_seconds": 0.0}
+        return {
+            "tasks": 0,
+            "success_rate": 0.0,
+            "avg_attempts": 0.0,
+            "avg_tool_calls": 0.0,
+            "avg_duration_seconds": 0.0,
+        }
     return {
         "tasks": total,
         "success_rate": round(sum(r.get("status") == "succeeded" for r in records) / total, 4),
         "avg_attempts": round(sum(float(r.get("attempts") or 0) for r in records) / total, 3),
         "avg_tool_calls": round(sum(len(r.get("tool_calls") or []) for r in records) / total, 3),
-        "avg_duration_seconds": round(sum(float(r.get("duration_seconds") or 0) for r in records) / total, 3),
+        "avg_duration_seconds": round(
+            sum(float(r.get("duration_seconds") or 0) for r in records) / total, 3
+        ),
     }

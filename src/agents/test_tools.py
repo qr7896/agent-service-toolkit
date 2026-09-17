@@ -15,7 +15,6 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
-from pathlib import Path
 
 from langchain_core.tools import tool
 
@@ -158,7 +157,9 @@ def run_tests(
             *kept,
         ]
         if truncated:
-            out.append(f"(output truncated at {max_lines_n} lines; {len(combined.splitlines())} lines total)")
+            out.append(
+                f"(output truncated at {max_lines_n} lines; {len(combined.splitlines())} lines total)"
+            )
         return "\n".join(out)
     except Exception as e:  # 任何异常都不抛出图外
         return f"ERROR: {e}"

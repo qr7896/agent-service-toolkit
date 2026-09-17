@@ -21,9 +21,9 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
-import hashlib
 import sqlite3
 from typing import Any, Literal
 
@@ -32,6 +32,8 @@ from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.types import interrupt
 
+from agents import code_intel
+from agents.code_intel import CODE_INTEL_TOOLS
 from agents.code_tools import (
     PROJECT_ROOT,
     edit_file,
@@ -41,8 +43,9 @@ from agents.code_tools import (
     search_code,
     write_file,
 )
-from agents.coding_planner import planner
 from agents.coding_memory import format_experience_context, recall_experiences
+from agents.coding_planner import planner
+from agents.evidence import reconcile
 from agents.experience import (
     ExperienceStore,
     experience_path,
@@ -51,9 +54,6 @@ from agents.experience import (
     reevaluate_survival,
     reevaluate_utility,
 )
-from agents.evidence import reconcile
-from agents import code_intel
-from agents.code_intel import CODE_INTEL_TOOLS
 from agents.model_router import estimate_tokens, route_model, routing_enabled
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
@@ -81,8 +81,21 @@ WRITE_TOOL_NAMES = {t.name for t in WRITE_TOOLS}
 
 # 判定"批准"的词表：只有明确表示同意才算批准，其他一律按拒绝处理（保守默认）
 APPROVE_WORDS = {
-    "y", "yes", "true", "1", "ok", "approve", "approved", "confirm", "go",
-    "批准", "同意", "是", "允许", "继续", "确认",
+    "y",
+    "yes",
+    "true",
+    "1",
+    "ok",
+    "approve",
+    "approved",
+    "confirm",
+    "go",
+    "批准",
+    "同意",
+    "是",
+    "允许",
+    "继续",
+    "确认",
 }
 
 # 对外暴露的默认工具集（只读），供文档与验收脚本引用
@@ -142,14 +155,14 @@ def _allow_write(config: RunnableConfig) -> bool:
     return bool(_configurable(config).get("allow_write", False))
 
 
-def _evidence_gate_passed(state: dict[str, Any], config: RunnableConfig) -> bool:
+def _evidence_gate_passed(state: Any, config: RunnableConfig) -> bool:
     """门控没开时永远算通过（不改变原有行为）；开了才看结论。"""
     if not bool(_configurable(config).get("evidence_gate", False)):
         return True
     return bool((state.get("evidence_gate") or {}).get("passed"))
 
 
-def _allowed_tools(config: RunnableConfig, state: dict[str, Any] | None = None) -> list[Any]:
+def _allowed_tools(config: RunnableConfig, state: Any = None) -> list[Any]:
     can_write = _allow_write(config) and _evidence_gate_passed(state or {}, config)
     tools = list(READ_TOOLS)
     if bool(_configurable(config).get("disable_search_code", False)):
@@ -209,7 +222,7 @@ def approval_id_for(config: RunnableConfig, calls: list[dict[str, Any]]) -> str:
     return f"ap-{digest[:16]}"
 
 
-def _recorded_approval(state: CodingState, approval_id: str) -> dict[str, Any] | None:
+def _recorded_approval(state: Any, approval_id: str) -> dict[str, Any] | None:
     for item in state.get("approvals") or []:
         if item.get("approval_id") == approval_id:
             return item
@@ -401,10 +414,7 @@ async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
         if tool is None:
             content = f"ERROR: 未知工具: {name}"
         elif name not in allowed:
-            content = (
-                f"ERROR: 当前模式不允许调用工具 {name}"
-                f"（allow_write={_allow_write(config)}）"
-            )
+            content = f"ERROR: 当前模式不允许调用工具 {name}（allow_write={_allow_write(config)}）"
         else:
             try:
                 content = str(tool.invoke(call.get("args") or {}))
@@ -481,7 +491,9 @@ def check_test(state: CodingState) -> Literal["pass", "retry", "giveup"]:
     return "retry"
 
 
-def _debug_experience_context(state: CodingState, config: RunnableConfig) -> tuple[str, list[dict[str, Any]]]:
+def _debug_experience_context(
+    state: CodingState, config: RunnableConfig
+) -> tuple[str, list[dict[str, Any]]]:
     """失败后检索同类经验；检索本身出问题也只降级，绝不影响修复流程。"""
     task = human_task(state.get("messages") or [])
     if not task:

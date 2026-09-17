@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import re
 import posixpath
 import sys
 from pathlib import Path
@@ -144,10 +143,18 @@ def main() -> int:
 
     if (PROJECT_DIR / "docker" / "Dockerfile.service.local").exists():
         upstream_root = derived_root(
-            image_path(CODE_TOOLS_IN_REPO, copy_map(DOCKERFILES["upstream"]), workdir_of(DOCKERFILES["upstream"])) or ""
+            image_path(
+                CODE_TOOLS_IN_REPO,
+                copy_map(DOCKERFILES["upstream"]),
+                workdir_of(DOCKERFILES["upstream"]),
+            )
+            or ""
         )
         local_root = derived_root(
-            image_path(CODE_TOOLS_IN_REPO, copy_map(DOCKERFILES["local"]), workdir_of(DOCKERFILES["local"])) or ""
+            image_path(
+                CODE_TOOLS_IN_REPO, copy_map(DOCKERFILES["local"]), workdir_of(DOCKERFILES["local"])
+            )
+            or ""
         )
         print(f"[结论] 上游镜像里 PROJECT_ROOT = {upstream_root}（失准）；本 fork = {local_root}")
         if local_root != "/app":

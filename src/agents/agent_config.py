@@ -75,9 +75,7 @@ def load_agent_config(path: Path, known_tools: set[str] | None = None) -> AgentC
     return config
 
 
-def load_agent_configs(
-    directory: Path, known_tools: set[str] | None = None
-) -> list[AgentConfig]:
+def load_agent_configs(directory: Path, known_tools: set[str] | None = None) -> list[AgentConfig]:
     """读目录下所有配置。目录不存在就返回空列表——没配置等于没这层。"""
     if not directory.exists():
         return []

@@ -18,13 +18,23 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from agents import codegraph
-from agents.code_tools import PROJECT_ROOT
 from langchain_core.tools import tool
 
+from agents import codegraph
+from agents.code_tools import PROJECT_ROOT
+
 SKIP_DIRS = {
-    ".git", ".venv", "venv", "__pycache__", "node_modules", "models", "chroma_db",
-    ".codex", ".pytest_cache", "build", "dist",
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "node_modules",
+    "models",
+    "chroma_db",
+    ".codex",
+    ".pytest_cache",
+    "build",
+    "dist",
 }
 # 注意：不要把 `_eval_sandbox` 排除掉。评测任务的文件就在那里，索引看不见它们，
 # 证据门控就会永远判"目标未知"（A/B 的 D 组实测踩过：任务一直做不完）。
@@ -90,7 +100,9 @@ def _iter_py_files(root: Path):
 
 
 def _is_test_file(rel: str, name: str) -> bool:
-    return Path(rel).name.startswith("test_") or Path(rel).name.endswith("_test.py") or "tests" in rel
+    return (
+        Path(rel).name.startswith("test_") or Path(rel).name.endswith("_test.py") or "tests" in rel
+    )
 
 
 def build_index(root: Path | None = None, refresh: bool = False) -> CodeIndex:
@@ -144,9 +156,7 @@ def build_index(root: Path | None = None, refresh: bool = False) -> CodeIndex:
                                 else None
                             )
                             if callee:
-                                index.tests.setdefault(callee, set()).add(
-                                    f"{rel}::{node.name}"
-                                )
+                                index.tests.setdefault(callee, set()).add(f"{rel}::{node.name}")
 
     for caller, callee in pending_calls:
         index.callers.setdefault(callee, set()).add(caller)
@@ -223,10 +233,14 @@ def analyze_impact(symbol: str, root: Path | None = None, max_depth: int = MAX_I
     defs = index.definitions(symbol)
     files = sorted({d.path for d in defs})
     target = defs[0] if defs else None
-    level = "none" if target is None else "low" if not seen else "medium" if len(seen) <= 3 else "high"
+    level = (
+        "none" if target is None else "low" if not seen else "medium" if len(seen) <= 3 else "high"
+    )
     lines = [
         f"symbol: {symbol}",
-        f"defined at: {target.path}:{target.lineno}" if target else "defined at: （未在索引中找到）",
+        f"defined at: {target.path}:{target.lineno}"
+        if target
+        else "defined at: （未在索引中找到）",
         f"affected callers ({len(seen)}): {', '.join(sorted(seen)) or '（无）'}",
         f"affected files: {', '.join(files) or '（无）'}",
         f"impact_level: {level}",
@@ -257,7 +271,12 @@ def symbols_in_file(path: str, root: Path | None = None, limit: int = 40) -> str
     index = build_index(root)
     target = str(path or "").replace("\\", "/")
     hits = sorted(
-        (symbol for symbols in index.symbols.values() for symbol in symbols if symbol.path == target),
+        (
+            symbol
+            for symbols in index.symbols.values()
+            for symbol in symbols
+            if symbol.path == target
+        ),
         key=lambda item: item.lineno,
     )
     if not hits:
@@ -271,9 +290,9 @@ def index_summary(root: Path | None = None) -> dict[str, Any]:
         "files_scanned": index.files_scanned,
         "files_seen": index.files_seen,
         "parse_failures": len(index.parse_failures),
-        "parse_failure_rate": round(
-            len(index.parse_failures) / index.files_seen, 4
-        ) if index.files_seen else 0.0,
+        "parse_failure_rate": round(len(index.parse_failures) / index.files_seen, 4)
+        if index.files_seen
+        else 0.0,
         "parse_failure_files": index.parse_failures[:10],
         "symbols": len(index.symbols),
         "call_edges": sum(len(v) for v in index.callers.values()),

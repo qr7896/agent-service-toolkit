@@ -49,7 +49,10 @@ PERMISSION_CHECKS = [
 def changed_files(base: str) -> list[str]:
     proc = subprocess.run(
         ["git", "-C", str(PROJECT_DIR), "diff", "--name-only", f"{base}...HEAD"],
-        capture_output=True, encoding="utf-8", errors="replace", timeout=60,
+        capture_output=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=60,
     )
     if proc.returncode != 0:
         print(f"git diff 失败：{proc.stderr.strip()[:200]}", file=sys.stderr)
@@ -80,7 +83,10 @@ def run_checks(checks: list[str]) -> bool:
             continue
         proc = subprocess.run(
             [sys.executable, str(path)],
-            capture_output=True, encoding="utf-8", errors="replace", timeout=1800,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=1800,
             cwd=str(PROJECT_DIR / "src"),
         )
         status = "OK" if proc.returncode == 0 else "FAIL"

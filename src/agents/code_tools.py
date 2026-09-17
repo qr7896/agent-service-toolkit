@@ -11,6 +11,7 @@
 验收方式：
     D:\\codex\\working\\project20260827\\.venv\\Scripts\\python.exe D:\\codex\\working\\lg_practice\\day3_code_tools_check.py
 """
+
 from __future__ import annotations
 
 import re
@@ -187,9 +188,9 @@ def search_code(
             candidates.append(p)
         candidates.sort(key=lambda p: p.relative_to(PROJECT_ROOT).as_posix())
 
-        total_matches = 0      # 已命中的总行数（含因截断停止前的所有命中）
-        matched_files = 0      # 有命中的文件数
-        files_scanned = 0      # 实际扫描过的文件数（跳过的不算）
+        total_matches = 0  # 已命中的总行数（含因截断停止前的所有命中）
+        matched_files = 0  # 有命中的文件数
+        files_scanned = 0  # 实际扫描过的文件数（跳过的不算）
         truncated = False
         out: list[str] = []
 
@@ -319,10 +320,7 @@ def write_file(path: str, content: str, overwrite: bool = False) -> str:
             if target.is_dir():
                 return f"ERROR: 目标是目录: {path}"
             if not overwrite:
-                return (
-                    f"ERROR: 文件已存在，请用 edit_file 局部修改，"
-                    f"或显式 overwrite=True: {path}"
-                )
+                return f"ERROR: 文件已存在，请用 edit_file 局部修改，或显式 overwrite=True: {path}"
             old_n = _count_lines(target.read_text(encoding="utf-8", errors="replace"))
             target.write_text(content, encoding="utf-8")
             return f"OK: overwrote {rel} ({old_n} -> {_count_lines(content)} lines)"
@@ -484,9 +482,7 @@ def git_diff(path: str = "", staged: bool = False, max_lines: int = 400) -> str:
             out.append("diff:")
             out.extend(diff_lines[:max_lines])
             if truncated:
-                out.append(
-                    f"(diff truncated at {max_lines} lines; {len(diff_lines)} lines total)"
-                )
+                out.append(f"(diff truncated at {max_lines} lines; {len(diff_lines)} lines total)")
         return "\n".join(out)
     except subprocess.TimeoutExpired:
         return "ERROR: git 命令超时"
