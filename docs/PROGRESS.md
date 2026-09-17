@@ -10,6 +10,10 @@
 对应设计原件在 `docs/design/`：01 EGCP 证据门控规划器、02 轨迹到经验的深化、03 项目收敛定位、
 04 模块设计卡（**学习资料，不是实现规格**）。
 
+> **下一步做什么**：**当前执行计划统一放在 §9.2（Research Mode 五关：数据 → 轨迹 → 算法 → 实验 → 结论）**；
+> 研究问题、假设与评测协议见 [research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)。
+> 本日志前面各节记录"已经做了什么"，**计划只看 §9.2**。
+
 ---
 
 ## 0. 一句话现状
@@ -1718,31 +1722,50 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 22 工作流编排**：验收 10/10，设计与边界见 §4.24
 - **阶段 22 并行 / 路由 / Builder**：验收 14/14，设计与过关题回答见 §4.25
 
-### 9.2 后续（路线图全部完成，剩下的是两笔待补的账）
+### 9.2 当前执行计划（Research Mode）
 
-路线图 §22 的 20 个阶段已经走完（阶段 18 Evaluation 已完成，因此 v5 里“排在 Evaluation 之后”的两个新方向现在才轮到）。
+**计划在哪**：研究问题 / 假设 / 算法定义 / 评测协议写在 [research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)；
+**这里只放按顺序执行的待办**——上一版这段还停留在"平台阶段"的收尾，已过期，整段替换。
 
-**21 · 基础成本控制**：已完成（§4.22）。最高档只到 `deepseek-v4-flash`。
+工程阶段的收尾状态（供追溯）：阶段 0–22 全部完成；平台三块见 §4.23–§4.25；成本控制 §4.22；
+`record_usage` 早已接入 Agent 循环（§4.33）、隔离与延迟复评见 §4.39。
 
-**22 · Agent 平台**：三块全部完成——§4.23 数据化、§4.24/§4.25 三种编排模式（线性 / 并行 / 路由）、§4.25 Builder 界面。注册表 15 个 Agent，全部走同一套注册与校验。
+**第一关：数据（当前最大瓶颈）**
 
-**两件待补的账**（不隐藏；"平台功能没真跑过"这一笔已在 §4.27 结清）：
+- [ ] 20 个任务，覆盖 T1–T10 类型，且**必须包含"同类问题簇"**（同一类问题出现 2–3 次）——否则经验迁移根本测不出来
+- [ ] 每个任务补齐 Gold Evidence（`gold_files` / `gold_symbols` / `gold_callers` / `gold_tests` / `gold_context`），**前 20 条人工核验**，不接受 LLM 自动标注直接采信
+- [ ] train / dev / test 时间切分（`--holdout` 已具备，缺的是有意义的规模）
 
-**按新定位（[RUNTIME.md](./RUNTIME.md)）重排后的待办**：
+**第二关：轨迹（把日志变成数据集）**
 
-1. ✅ **接真实 CodeGraph 后端**（§4.32）：已提供进程外可运行后端；第三方 CodeGraph 无法在本机核实，未声称已接入。
-2. ✅ **跑 EGCP 的四组对照**（§4.32）：A/B/C/D 各跑通过；样本 1–2 个任务，**不足以下任何结论**，只见 C 组成本显著高于 B 组。
-3. ✅ **真实任务集**（§4.32）：已能从本仓库修复史生成 SWE 风格任务并正确判分；扩展到真实 GitHub issue 只是换数据。
-4. ⬜ **经验效用统计**：`record_usage` / `utility` 已就位但**尚未接入 Agent 循环**，也没有留出任务集。
-5. ⬜ **Docker 构建验证**：本机无 Docker/podman、WSL 无发行版；已交付 `scripts/verify_container.ps1`，待有 Docker 的机器执行。
+- [ ] 每轮检索记 trace：`round` / `evidence_state` / `action` / `observation` / `gain` / `cost` / `artifacts`
+      （已有 `evidence_trace` 与 `retrieval_actions.Observation.artifacts`，缺"gain 与 cost 的逐轮记录"）
+- [ ] 轨迹里带上"用了哪条经验、哪类证据、最终是否成功"，供 Decision Episode 复用
 
-- **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。**成本口径已在 §4.26 补上**，重跑时每行会带 `llm_calls` / `estimated_tokens`。
-- **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。
-- ✅ **平台层的真实调用**（已结清，见 §4.27）：并行、路由、Builder 新建 Agent 三项各真跑一次，3/3 通过，并因此发现并修掉了"工作流通过服务调用时收到空输入"的 bug。
+**第三关：算法（V0 骨架已就位，缺三块）**
 
-**过关题**：如果下一步要做 Agent Builder 界面，为什么必须先给配置加“工具白名单 + 权限分级”，而不是先把界面做出来？
+- [ ] `context_packer`：固定 budget 下从候选里挑证据（**未做**）
+- [ ] **语义代码检索**（**未做**）：BGE-M3 目前只服务经验库与手册知识库，不是代码语义检索
+- [ ] Experience Prior 接入策略（V1）：把"历史相似状态下什么动作有用"变成 `utility` 的先验
 
-**提交信息**：`feat(platform): add an agent builder UI`
+**第四关：实验**
+
+- [ ] 基线分轮跑：先 A/B/C/D → 再 D/E/F → 最后 F/G（不要一次跑完七组）
+- [ ] 固定 budget 对照：2K / 4K / 8K / 16K
+- [ ] 停止策略对照：Fixed K=3/5/10 vs Evidence Gate vs Utility Gate
+- [ ] 消融：`-Coverage` / `-Uncertainty` / `-Redundancy` / `-Cost` / `-CodeGraph` / `-Experience`
+- [ ] 抗干扰与版本漂移：同名符号的 distractor 任务、旧 commit 经验在新 commit 上的表现
+
+**第五关：结论（先别急着说"新算法"）**
+
+- [ ] 说清什么时候 adaptive 有用、什么时候无用
+- [ ] 留下失败案例与方法边界
+- [ ] V0 的通过条件（只在满足时才进 V1）：成功率持平但 context/token/工具调用更低，**或**同 token budget 下 gold recall 更高
+
+**遗留的工程账**
+
+- [ ] **Docker 构建验证**：本机无 Docker/podman、WSL 无发行版；`scripts/verify_container.ps1` 已就位，待有 Docker 的机器执行
+- [ ] 阶段 18 的样本量：n=3 只能算方向性观察；扩样本属于第一关的事
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 
