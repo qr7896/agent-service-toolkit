@@ -82,25 +82,36 @@ def _workflow_agents() -> dict[str, "Agent"]:
     if os.getenv("CONFIG_AGENTS", "1") == "0":
         return {}
     try:
-        configs = load_workflow_configs(WORKFLOWS_DIR, set(agents))
+        # 不在这里校验引用：工作流之间可以互相引用（组合），引用关系在建图阶段统一校验
+        configs = load_workflow_configs(WORKFLOWS_DIR)
     except AgentConfigError as exc:
         logger.error("加载工作流失败：%s", exc)
         raise
 
+    # 按依赖顺序建图：一个工作流可以把另一个工作流当成"一个 Agent"来引用，
+    # 于是"循环里套并行"这类组合通过**引用**实现，而不需要在 schema 里加嵌套字段。
+    graphs: dict[str, AgentGraph] = {}
+    for name, agent in agents.items():
+        if isinstance(agent.graph_like, LazyLoadingAgent):
+            continue  # 延迟加载的图启动时还不存在，不能被引用
+        graphs[name] = agent.graph_like
+
     built: dict[str, Agent] = {}
-    for config in configs:
-        graphs: dict[str, AgentGraph] = {}
-        for name in referenced_agents(config):
-            graph_like = agents[name].graph_like
-            if isinstance(graph_like, LazyLoadingAgent):
-                raise AgentConfigError(
-                    f"工作流 `{config.key}` 引用了延迟加载的 Agent `{name}`，暂不支持"
-                )
-            graphs[name] = graph_like
-        built[config.key] = Agent(
-            description=config.description,
-            graph_like=build_workflow(config, graphs),
-        )
+    pending = list(configs)
+    while pending:
+        progressed = False
+        for config in list(pending):
+            if set(referenced_agents(config)) <= set(graphs):
+                compiled = build_workflow(config, graphs)
+                built[config.key] = Agent(description=config.description, graph_like=compiled)
+                graphs[config.key] = compiled
+                pending.remove(config)
+                progressed = True
+        if not progressed:
+            raise AgentConfigError(
+                "工作流互相引用成环，或引用了未定义的工作流/延迟加载的 Agent："
+                f"{sorted(config.key for config in pending)}"
+            )
     return built
 
 

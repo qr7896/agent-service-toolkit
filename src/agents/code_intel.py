@@ -47,6 +47,8 @@ class CodeIndex:
     callees: dict[str, set[str]] = field(default_factory=dict)
     tests: dict[str, set[str]] = field(default_factory=dict)  # symbol -> test 名称
     files_scanned: int = 0
+    files_seen: int = 0
+    parse_failures: list[str] = field(default_factory=list)
 
     def definitions(self, name: str) -> list[Symbol]:
         return self.symbols.get(name, [])
@@ -102,9 +104,12 @@ def build_index(root: Path | None = None, refresh: bool = False) -> CodeIndex:
     pending_calls: list[tuple[str, str]] = []
     for path in _iter_py_files(base):
         rel = path.relative_to(base).as_posix()
+        index.files_seen += 1
         try:
             tree = ast.parse(path.read_text(encoding="utf-8", errors="replace"))
         except SyntaxError:
+            # 解析失败要记账：索引"看不见"的文件多了，门控的 target 证据就是假的
+            index.parse_failures.append(rel)
             continue
         index.files_scanned += 1
         is_test = _is_test_file(rel, path.name)
@@ -264,6 +269,12 @@ def index_summary(root: Path | None = None) -> dict[str, Any]:
     index = build_index(root)
     return {
         "files_scanned": index.files_scanned,
+        "files_seen": index.files_seen,
+        "parse_failures": len(index.parse_failures),
+        "parse_failure_rate": round(
+            len(index.parse_failures) / index.files_seen, 4
+        ) if index.files_seen else 0.0,
+        "parse_failure_files": index.parse_failures[:10],
         "symbols": len(index.symbols),
         "call_edges": sum(len(v) for v in index.callers.values()),
         "tested_symbols": len(index.tests),

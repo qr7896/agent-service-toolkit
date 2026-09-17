@@ -1,0 +1,37 @@
+# 权限差异门禁：权限相关文件被改动时，必须显式确认并跑权限专项验收。
+#
+# 为什么单独一道门：这个项目最贵的事故不是"算错"，而是**权限被悄悄放宽**——
+# 路径约束、工具白名单、HITL 审批、沙箱隔离改松之后，其它 CI 依然全绿，
+# 因为功能是对的、权限是错的。普通 test / deploy / live-smoke 看不出这类变化。
+name: permission-gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  workflow_dispatch:
+
+jobs:
+  permission-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 安装依赖（只跑权限专项验收，不需要全部依赖）
+        run: |
+          python -m pip install --upgrade pip
+          pip install langchain-core langgraph pydantic pyyaml
+      - name: 识别权限差异并跑专项验收
+        env:
+          # PR 上由维护者打 `permission-ack` 标签表示已人工确认过权限变更
+          PERMISSION_ACK: ${{ contains(github.event.pull_request.labels.*.name, 'permission-ack') }}
+        run: |
+          BASE="origin/${{ github.base_ref || 'main' }}"
+          if [ "$PERMISSION_ACK" = "true" ]; then
+            python scripts/permission_diff_gate.py --base "$BASE" --ack
+          else
+            python scripts/permission_diff_gate.py --base "$BASE"
+          fi

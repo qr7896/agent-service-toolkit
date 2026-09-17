@@ -340,6 +340,36 @@ def split_tasks(tasks: list["Task"], holdout: int) -> tuple[list["Task"], list["
     return list(tasks[:-k]), list(tasks[-k:])
 
 
+def calibration(rows: list[dict]) -> dict:
+    """难度校准：任务难度有没有落在"能区分"的区间。
+
+    如果每个臂的通过率都是 0 或都是 1，说明题目太难或太容易——这时比出来的差异
+    全是噪声。第一版就是各臂首次通过率全 0（任务对模型太难），结论只能算方向性观察。
+    """
+    by_arm: dict[str, list[dict]] = {}
+    for row in rows:
+        by_arm.setdefault(str(row.get("arm")), []).append(row)
+    rates = {
+        arm: round(sum(bool(r.get("passed")) for r in items) / len(items), 3)
+        for arm, items in by_arm.items()
+        if items
+    }
+    first_try = {
+        arm: round(
+            sum(bool(r.get("passed")) and int(r.get("attempts") or 0) <= 1 for r in items) / len(items),
+            3,
+        )
+        for arm, items in by_arm.items()
+        if items
+    }
+    warnings: list[str] = []
+    if rates and all(rate in (0.0, 1.0) for rate in rates.values()):
+        warnings.append("所有臂通过率都是 0 或 1：难度不在可区分区间，差异没有意义")
+    if first_try and all(rate == 0.0 for rate in first_try.values()):
+        warnings.append("所有臂首次通过率都是 0：任务对当前模型太难")
+    return {"pass_rate_by_arm": rates, "first_try_by_arm": first_try, "warnings": warnings}
+
+
 async def main_async(
     limit: int | None, model: str, arms: list[str] | None = None, holdout: int = 0
 ) -> int:
@@ -374,6 +404,7 @@ async def main_async(
         "model": model,
         "task_count": len(tasks),
         "holdout": [task.name for task in eval_tasks] if holdout else [],
+        "calibration": calibration(rows),
         # 按组汇总（EGCP 四组对照用）。baseline/experience 保留是为了兼容旧报告口径。
         "arms": {
             name: summarize([row for row in rows if row["arm"] == name])
@@ -388,6 +419,8 @@ async def main_async(
     print("\n=== 汇总 ===")
     print(json.dumps(report["arms"] or {k: report[k] for k in ("baseline", "experience")},
                      ensure_ascii=False, indent=2))
+    for warning in report["calibration"]["warnings"]:
+        print(f"[校准警告] {warning}")
     print(f"\n明细：{REPORT}")
     return 0
 

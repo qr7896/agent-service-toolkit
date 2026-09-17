@@ -1335,6 +1335,40 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 
 **依然没做的**：这两个回路只有单测覆盖，**没有在真实任务流上积累统计**——`helped/harmful` 要在留出任务集上跑才有意义；`survival` 也只在测试用的临时仓库里验证过三态，真实仓库里还没有"改动落地 → 后来被 revert"的完整案例。
 
+### 4.40 补齐四项：权限差异门禁 / 盲区指标 / 探针集与难度校准 / 工作流组合
+
+#### 一、CI 权限差异门禁
+
+新增 `scripts/permission_diff_gate.py` + `.github/workflows/permission-gate.yml`。理由是**最贵的事故不是"算错"而是"权限被悄悄放宽"**：路径约束、工具白名单、HITL 审批、沙箱隔离只要改松一点，其它 CI 依然全绿——功能是对的、权限是错的，普通 test / deploy / live-smoke 看不出来。
+
+门禁逻辑：拿 diff 与敏感清单比对（`code_tools` 路径约束 / `coding_agent` 审批闸门 / `workspace` 沙箱 / `conflict` 分流 / `agent_config` 白名单 / `config/agents/*` / `.github/workflows/*`）→ 命中就**跑权限专项验收**（day13 HITL、day19 沙箱、day32 冲突分类、day33 跨进程恢复）→ 没有 `--ack` 就退出码 1。CI 里用 `permission-ack` 标签充当人工确认，不需要在代码里埋开关。
+
+#### 二、盲区指标
+
+`trajectory_metrics.py --blind-spots` 现在会输出：
+
+| 指标 | 回答的问题 |
+|---|---|
+| `ast_parse_failure_rate` + 失败文件清单 | 索引"看不见"的文件有多少——它们越多，门控的 target 证据越假（"目标未知"其实是"读不到"） |
+| `unknown_symbol_rate` | 计划步骤点名的符号在目标文件里找不到的比例：模型在改"想象中的代码"，还是索引与仓库不同步 |
+| `gate_pass_rate` / `gate_exits` | 门控通过率与三类出口分布（`evidence_insufficient` / `diminishing_returns` / `budget_exhausted`） |
+| `conflict_exits` | 冲突分流出口分布（静态 / 需要实验） |
+
+这正是我原先"门控失效了也不知道"缺的那只眼睛。
+
+#### 三、探针集与难度校准
+
+- **探针集** `evals/tasks/probe.jsonl`：一个"开局就该判已解决"的必过任务 + 一个"怎么改都不该判过"的必不过任务。判分器如果只会说通过、或只会说失败，这一对立刻暴露——先证明工具有判别力，再谈用它比模型。
+- **难度校准** `calibration()`：各臂通过率全落在 {0,1} 就报警（"难度不在可区分区间，差异没有意义"），首次通过率全 0 再报一条（"任务对当前模型太难"）。这直接对应之前的观察：各臂首次通过率全 0，说明题目没落在能区分的区间。
+
+#### 四、工作流组合（能做的部分 + 老实说的边界）
+
+**能做的**：一个工作流可以把另一个工作流当成"一个 Agent"来引用，于是"循环里套并行"这类组合**通过引用实现**，而不需要在 schema 里加嵌套字段。`_workflow_agents()` 改成按依赖顺序建图（fixpoint），互相引用成环或引用了未定义的工作流会给明确报错，而不是静默丢弃。
+
+**边界（仍然不支持）**：schema 里**没有** `nested` / `children` / `sub-workflow` 字段，`mode` 是单值枚举——**在同一个 YAML 里内联嵌套**做不到，只能靠"多文件引用 + 跨文件组合"。真要做内联嵌套，需要把 `WorkflowStep` 变成可递归结构并重写建图逻辑，这是下一步的收敛方向，不是现在顺手能加的。
+
+**验收**：`lg_practice/day35_gaps_check.py` **8/8**（零 API 调用）：AST 失败记账、unknown 符号占比与门控统计、探针集判别力、校准报警、外层 loop 套内层 parallel 能编译、成环被拒、权限敏感文件识别、门禁三种行为（放行 / 拦下 / `--ack` 放行）。回归 day23 10/10、day24 15/15、day32 8/8，注册表仍是 18 个 Agent。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1412,6 +1446,9 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 | `scripts/check_container_config.py` | **新增** | 容器配置静态校验（含镜像内 `__file__` 路径推导） |
 | `src/agents/conflict.py` | **新增** | 冲突分类：静态可判 vs 必须实验，确定性分流 |
 | `scripts/cost_model.py` | **新增** | 实验 vs 静态判定的 token 成本模型（读已有产物，不调 LLM） |
+| `scripts/permission_diff_gate.py` | **新增** | 权限差异门禁（敏感清单 + 专项验收 + 人工确认） |
+| `.github/workflows/permission-gate.yml` | **新增** | CI 权限门禁（用 `permission-ack` 标签当人工确认） |
+| `evals/tasks/probe.jsonl` | **新增** | 探针集：必过 / 必不过各一个，先证判分器有判别力 |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
