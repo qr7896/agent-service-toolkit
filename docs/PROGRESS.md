@@ -1019,6 +1019,47 @@ steps:
 
 **没做的部分**：真正的 CodeGraph 尚未接入（用本地 `ast` 等价实现顶着）；`evidence_gate` 默认关闭，A/B 实验未做；doc 02 的 §12 探索效率、§16 大规模基准、§14 留出任务上的效用统计都需要额度与更大任务集，仍是待办。
 
+### 4.31 待办推进：CodeGraph 适配层 + SWE 风格任务判分 + A/B 四组对照（2026-09-17）
+
+按 [RUNTIME.md](./RUNTIME.md) 的待办逐条推进，能离线做完的都做完了。
+
+#### 一、CodeGraph 适配层（待办 1）
+
+新增 `src/agents/codegraph.py`：CodeGraph 是**基础设施**，本项目只依赖它的语义、不依赖传输方式。三种后端按优先级：
+
+| 后端 | 触发条件 | 说明 |
+|---|---|---|
+| CLI | `CODEGRAPH_CLI` 指向可执行文件 | 调 `<cli> <tool> --json '<args>'` |
+| MCP | `CODEGRAPH_MCP_URL` | 最小 JSON-RPC 载荷，不引入额外客户端依赖 |
+| 回退 | 都没有 / 调用失败 | 抛 `CodeGraphUnavailable`，由 `code_intel` 退回本地 `ast` |
+
+**关键设计：回退不是静默降级**。`code_intel.LAST_BACKEND` 记录最近一次真实后端与回退原因（`{'backend': 'local-ast', 'reason': '...'}`），验收里直接断言"配了 CLI 就真的走 CodeGraph、路径失效就回退并说明原因"。这样不会出现"以为在用 CodeGraph、其实在用本地索引"这种说不清的事。
+
+**当前状态**：本机没有 CodeGraph，所以适配层是用**假 CLI** 验证的——探针、真实调用、失败回退三条路径都跑通了；接真实后端只需配一个环境变量。
+
+#### 二、代码智能工具 + A/B 四组对照（待办 2）
+
+四个只读工具（`symbol_search` / `get_callers` / `analyze_impact` / `find_related_tests`）现在可以按配置绑给 Agent，Planning 侦察阶段同样生效。`evals/coding_benchmark.py` 里定义了四组对照，**同任务、同模型、同提示词，只改检索与证据策略**：
+
+| 组 | 配置 | 目的 |
+|---|---|---|
+| A `A_files_only` | `disable_search_code` | 基线：只有 list/read/diff/test |
+| B `B_search` | — | 当前默认能力 |
+| C `C_codeintel` | `code_intel_tools` | 结构化代码智能 |
+| D `D_codeintel_gate` | `code_intel_tools` + `evidence_gate` | C 之上唯一变量是证据门控 |
+
+**执行状态**：矩阵已就位并验收（A 组工具列表里确实没有 `search_code`，C/D 组才有代码智能工具，D 组独有门控）；**四组对照本身还没跑**，需要额度。
+
+#### 三、SWE 风格任务与独立判分（待办 3）
+
+新增 `evals/swe_tasks.py` + `evals/tasks/demo_swe.jsonl`：任务定义成 SWE-bench 结构（`instance_id` / `problem_statement` / `base_commit` / `FAIL_TO_PASS` / `PASS_TO_PASS` / 测试文件 / 标准修复），以后接真实 GitHub issue 只是换数据，判分逻辑不动。
+
+判分原则：**逐条**跑 `FAIL_TO_PASS` 与 `PASS_TO_PASS`（不是只看一个总 exit code），两组都过才算 `resolved`，且不读模型的自我报告。demo 任务上验证了三件事：修好之前 `F2P 0/1、P2P 1/1` 判未解决；打上标准修复后 `1/1、1/1` 判 resolved；**故意把 P2P 测试改坏后，即使 F2P 通过也判未解决**——这条证明它检查的是"没退步"，不是"新测试过了"。
+
+#### 四、验收与回归
+
+新增 `lg_practice/day30_ab_harness_check.py` **11/11**（零 API 调用）。全量回归 11 个脚本全绿：day14 7/7、day15 11/11、day16 11/11、day17 7/7、day21 10/10、day23 10/10、day24 15/15、day25 4/4、day27 11/11、day29 14/14、day30 11/11。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1081,6 +1122,9 @@ steps:
 | `src/agents/agent_builder.py` | **新增** | Agent Builder 纯逻辑层（列出 / 保存 / 删除，不依赖 Streamlit） |
 | `src/agents/code_intel.py` | **新增** | 本地代码智能：符号 / 调用关系 / 影响分析 / 相关测试（CodeGraph 替身） |
 | `src/agents/evidence.py` | **新增** | EGCP：Evidence State / Card / Gate / Debt / 主动取证 / 弃权 / 对账 |
+| `src/agents/codegraph.py` | **新增** | CodeGraph 适配层（CLI / MCP / 本地回退，记录真实后端） |
+| `evals/swe_tasks.py` | **新增** | SWE 风格任务加载与逐条独立判分（F2P + P2P） |
+| `evals/tasks/demo_swe.jsonl` | **新增** | SWE 格式 demo 任务（含标准修复，用于验证判分器） |
 | `src/agent_builder_app.py` | **新增** | Agent Builder 界面（薄壳，独立 Streamlit 入口） |
 | `config/workflows/parallel-review.yaml` | **新增** | 并行编排示例（两路同时跑，汇总输出） |
 | `config/workflows/route-to-specialist.yaml` | **新增** | 多 Agent 路由示例（supervisor 选一个执行） |
@@ -1131,6 +1175,7 @@ steps:
 | `day27_branch_loop_hierarchy_check.py` | 条件分支 / 循环 / 层级分工的 11 项验收脚本（零 API 调用） |
 | `day28_extended_live_check.py` | 三种新模式的真跑脚本（真实 LLM，3/3） |
 | `day29_egcp_check.py` | EGCP + 经验深化的 14 项验收脚本（零 API 调用） |
+| `day30_ab_harness_check.py` | CodeGraph 适配层 + SWE 判分 + A/B 配置的 11 项验收脚本 |
 
 ### 5.3 本地数据（不进版本库）
 
@@ -1198,6 +1243,7 @@ steps:
 - [x] 魔改二十一：并行编排 + 多 Agent 路由 + Agent Builder（配置里选 mode，验收 14/14）
 - [x] 魔改二十二：条件分支 + 循环 + 层级分工（编排扩到六种模式，验收 11/11）
 - [x] 魔改二十三：项目收敛 + 本地代码智能 + EGCP 证据门控 + 经验深化（验收 14/14）
+- [x] 魔改二十四：CodeGraph 适配层 + SWE 风格判分 + A/B 四组对照（验收 11/11）
 - [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
 
 ### 7.2 已知限制 / 待办
@@ -1281,10 +1327,10 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **按新定位（[RUNTIME.md](./RUNTIME.md)）重排后的待办**：
 
-1. **接真正的 CodeGraph**：当前 `code_intel.py` 用标准库 `ast` 顶着，接口与语义已对齐，替换实现即可。
-2. **EGCP 的 A/B 实验**：`evidence_gate` 默认关闭，需要跑 `list_files+read` / `search_code` / `code_intel` / `code_intel+gate` 四组对照。
-3. **真实任务基准**：真实 GitHub issue + frozen base commit + 可执行测试 + 独立判分（当前 6 个自造任务、n=3）。
-4. **经验效用统计**：`record_usage` 的计数已就位，但要在时间切分的留出任务上统计才有意义。
+1. **接真实 CodeGraph 后端**：适配层与回退已就绪并验证，只差一个能连通的后端（`CODEGRAPH_CLI` 或 `CODEGRAPH_MCP_URL`）。
+2. **跑 EGCP 的四组对照**：矩阵与配置已就位（§4.31），执行需要额度。
+3. **换真实任务集**：SWE 风格判分器已就位，差的是一批真实 issue 任务（`base commit + 可执行测试 + 独立判分`）。
+4. **经验效用统计**：`record_usage` 的计数已就位，需要在时间切分的留出任务上统计。
 
 - **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。**成本口径已在 §4.26 补上**，重跑时每行会带 `llm_calls` / `estimated_tokens`。
 - **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。

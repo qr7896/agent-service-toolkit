@@ -31,6 +31,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from agents.code_tools import PROJECT_ROOT, git_diff, list_files, read_file, search_code
 from agents.coding_memory import format_experience_context, recall_experiences
+from agents.code_intel import CODE_INTEL_TOOLS
 from agents.evidence import audit_plan, decision_to_dict
 from agents.model_router import estimate_tokens, route_model
 from core import get_model, settings
@@ -198,12 +199,15 @@ def recon_steps(config: RunnableConfig) -> int:
         return MAX_RECON_STEPS
 
 
-async def _recon(model: Any, requirement: str, steps: int = MAX_RECON_STEPS) -> tuple[str, int]:
+async def _recon(
+    model: Any, requirement: str, steps: int = MAX_RECON_STEPS, tools: list[Any] | None = None
+) -> tuple[str, int]:
     """只读侦察：最多 steps 轮工具调用，返回（发现, 实际轮数）。
 
     返回轮数是为了让上游如实统计 LLM 调用次数——侦察提前收敛时不该按上限记账。
     """
-    bound = model.bind_tools(PLANNER_TOOLS)
+    available = list(tools if tools is not None else PLANNER_TOOLS)
+    bound = model.bind_tools(available)
     messages: list[Any] = [
         SystemMessage(content=RECON_PROMPT),
         HumanMessage(content=f"开发需求：{requirement}"),
@@ -218,7 +222,7 @@ async def _recon(model: Any, requirement: str, steps: int = MAX_RECON_STEPS) -> 
         if not calls:
             break
         for call in calls:
-            tool = _TOOL_BY_NAME.get(call.get("name", ""))
+            tool = {t.name: t for t in available}.get(call.get("name", ""))
             if tool is None:
                 result = f"ERROR: 侦察阶段不允许调用工具 {call.get('name')}"
             else:
@@ -235,10 +239,16 @@ async def _recon(model: Any, requirement: str, steps: int = MAX_RECON_STEPS) -> 
 async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, Any]:
     """规划节点：侦察 → 产出结构化计划 → 确定性校验 → 写进 State 的 plan 字段。"""
     requirement = _last_human_text(state.get("messages", []))
+    conf = config.get("configurable") or {}
     decision = route_model(state, config, "planner")
     model = get_model(decision.model)
 
-    findings, recon_rounds = await _recon(model, requirement, recon_steps(config))
+    recon_tools = list(PLANNER_TOOLS)
+    if bool(conf.get("disable_search_code", False)):
+        recon_tools = [t for t in recon_tools if t.name != "search_code"]
+    if bool(conf.get("code_intel_tools", False)):
+        recon_tools += CODE_INTEL_TOOLS
+    findings, recon_rounds = await _recon(model, requirement, recon_steps(config), recon_tools)
     hits, retrieval = recall_experiences(requirement, config)
     plan_messages = [
         SystemMessage(content=PLAN_PROMPT),
@@ -263,7 +273,6 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     evidence_cards: list[dict[str, Any]] = []
     evidence_gate: dict[str, Any] = {}
     evidence_trace: list[dict[str, Any]] = []
-    conf = config.get("configurable") or {}
     if bool(conf.get("evidence_gate", False)):
         decision, cards, trace = audit_plan(
             plan_dict,

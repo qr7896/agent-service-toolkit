@@ -44,6 +44,14 @@ SANDBOX = PROJECT_DIR / "_eval_sandbox"
 EVAL_DATA = PROJECT_DIR / ".codex" / "benchmark"
 REPORT = EVAL_DATA / "report.json"
 
+# EGCP 实验的四组对照（doc 03 §9）：同任务、同模型、同提示词，只改检索/证据策略
+ARMS: dict[str, dict] = {
+    "A_files_only": {"disable_search_code": True, "planner_recon_steps": 2},
+    "B_search": {"planner_recon_steps": 2},
+    "C_codeintel": {"code_intel_tools": True, "planner_recon_steps": 2},
+    "D_codeintel_gate": {"code_intel_tools": True, "evidence_gate": True, "planner_recon_steps": 2},
+}
+
 
 @dataclass
 class Task:
@@ -236,6 +244,8 @@ def config_for(task: Task, arm: str, model: str) -> dict:
         # 基线 = "没有经验可查"，但仍然把这次的轨迹沉淀下来，
         # 否则处理臂没有任何历史经验可检索，实验就没法比。
         conf["experience_top_k"] = 0
+    # EGCP 对照臂：把策略覆盖叠加在上面（A 组会移除 search_code）
+    conf.update(ARMS.get(arm, {}))
     return {"configurable": conf, "recursion_limit": RECURSION_LIMIT}
 
 

@@ -45,6 +45,7 @@ from agents.coding_memory import format_experience_context, recall_experiences
 from agents.experience import record_trajectory
 from agents.evidence import reconcile
 from agents import code_intel
+from agents.code_intel import CODE_INTEL_TOOLS
 from agents.model_router import estimate_tokens, route_model, routing_enabled
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
@@ -142,7 +143,12 @@ def _evidence_gate_passed(state: dict[str, Any], config: RunnableConfig) -> bool
 
 def _allowed_tools(config: RunnableConfig, state: dict[str, Any] | None = None) -> list[Any]:
     can_write = _allow_write(config) and _evidence_gate_passed(state or {}, config)
-    return READ_TOOLS + (WRITE_TOOLS if can_write else [])
+    tools = list(READ_TOOLS)
+    if bool(_configurable(config).get("disable_search_code", False)):
+        tools = [t for t in tools if t.name != "search_code"]
+    if bool(_configurable(config).get("code_intel_tools", False)):
+        tools += CODE_INTEL_TOOLS
+    return tools + (WRITE_TOOLS if can_write else [])
 
 
 def _require_approval(config: RunnableConfig) -> bool:

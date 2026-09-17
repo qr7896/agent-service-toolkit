@@ -18,7 +18,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from agents import codegraph
 from agents.code_tools import PROJECT_ROOT
+from langchain_core.tools import tool
 
 SKIP_DIRS = {
     ".git", ".venv", "venv", "__pycache__", "node_modules", "models", "chroma_db",
@@ -49,6 +51,31 @@ class CodeIndex:
 
 
 _INDEX_CACHE: dict[str, CodeIndex] = {}
+
+# 记录最近一次实际使用的后端，供轨迹与验收查询"到底是 CodeGraph 还是本地索引"
+LAST_BACKEND: dict[str, str] = {"backend": "local-ast"}
+
+
+def _prefer_codegraph(tool: str, **arguments: Any) -> str | None:
+    """优先走 CodeGraph；不可用时返回 None，由调用方回退本地实现。
+
+    回退不是静默的：`LAST_BACKEND` 会记下真实后端与回退原因。
+    """
+    status = codegraph.probe()
+    if not status["available"]:
+        LAST_BACKEND.update({"backend": "local-ast", "reason": status.get("reason", "")})
+        return None
+    try:
+        text = codegraph.call(tool, **arguments)
+    except codegraph.CodeGraphUnavailable as exc:
+        LAST_BACKEND.update({"backend": "local-ast", "reason": f"CodeGraph 调用失败：{exc}"})
+        return None
+    LAST_BACKEND.update({"backend": status["backend"], "reason": ""})
+    return text
+
+
+def backend() -> dict[str, str]:
+    return dict(LAST_BACKEND)
 
 
 def _iter_py_files(root: Path):
@@ -123,6 +150,9 @@ def build_index(root: Path | None = None, refresh: bool = False) -> CodeIndex:
 
 def symbol_search(query: str, root: Path | None = None, limit: int = 30) -> str:
     """按名字（不区分大小写的子串）搜索符号，返回 `路径:行号 类型 名字`。"""
+    remote = _prefer_codegraph("symbol_search", query=query, limit=limit)
+    if remote is not None:
+        return remote
     index = build_index(root)
     needle = (query or "").strip().lower()
     if not needle:
@@ -143,6 +173,9 @@ def symbol_search(query: str, root: Path | None = None, limit: int = 30) -> str:
 
 
 def get_callers(symbol: str, root: Path | None = None, limit: int = 20) -> str:
+    remote = _prefer_codegraph("get_callers", symbol=symbol, limit=limit)
+    if remote is not None:
+        return remote
     index = build_index(root)
     names = sorted(index.callers.get(symbol, set()))
     if not names:
@@ -151,6 +184,9 @@ def get_callers(symbol: str, root: Path | None = None, limit: int = 20) -> str:
 
 
 def get_callees(symbol: str, root: Path | None = None, limit: int = 20) -> str:
+    remote = _prefer_codegraph("get_callees", symbol=symbol, limit=limit)
+    if remote is not None:
+        return remote
     index = build_index(root)
     names = sorted(index.callees.get(symbol, set()))
     if not names:
@@ -160,6 +196,9 @@ def get_callees(symbol: str, root: Path | None = None, limit: int = 20) -> str:
 
 def analyze_impact(symbol: str, root: Path | None = None, max_depth: int = MAX_IMPACT_DEPTH) -> str:
     """按调用关系反向展开受影响范围（BFS，有深度上限）。"""
+    remote = _prefer_codegraph("analyze_impact", symbol=symbol, max_depth=max_depth)
+    if remote is not None:
+        return remote
     index = build_index(root)
     seen: set[str] = set()
     frontier = [symbol]
@@ -190,6 +229,9 @@ def analyze_impact(symbol: str, root: Path | None = None, max_depth: int = MAX_I
 
 def find_related_tests(symbol: str, root: Path | None = None, limit: int = 20) -> str:
     """找直接调用该符号、或调用其 caller 的测试。"""
+    remote = _prefer_codegraph("find_related_tests", symbol=symbol, limit=limit)
+    if remote is not None:
+        return remote
     index = build_index(root)
     related = set(index.tests.get(symbol, set()))
     for caller in index.callers.get(symbol, set()):
@@ -209,9 +251,48 @@ def index_summary(root: Path | None = None) -> dict[str, Any]:
     }
 
 
+# ---- 给 Agent 用的工具封装 -------------------------------------------------
+# 与 search_code / read_file 并列，由配置决定是否绑定（A/B 实验里"用了代码智能"这一组）
+
+
+@tool("symbol_search")
+def symbol_search_tool(query: str) -> str:
+    """按符号名（函数 / 类，不区分大小写）搜索，返回 路径:行号 与类型。
+    比全文搜索更准：它只认代码里真实定义过的符号。"""
+    return symbol_search(query)
+
+
+@tool("get_callers")
+def get_callers_tool(symbol: str) -> str:
+    """查某个符号被谁调用（反向依赖）。改之前用它确认影响面。"""
+    return get_callers(symbol)
+
+
+@tool("analyze_impact")
+def analyze_impact_tool(symbol: str) -> str:
+    """按调用关系反向展开影响范围，返回受影响的调用者与文件、影响等级。"""
+    return analyze_impact(symbol)
+
+
+@tool("find_related_tests")
+def find_related_tests_tool(symbol: str) -> str:
+    """找与某个符号相关的测试用例，用于确定"改完怎么证明它对"。"""
+    return find_related_tests(symbol)
+
+
+CODE_INTEL_TOOLS = [
+    symbol_search_tool,
+    get_callers_tool,
+    analyze_impact_tool,
+    find_related_tests_tool,
+]
+
+
 __all__ = [
     "CodeIndex",
+    "CODE_INTEL_TOOLS",
     "Symbol",
+    "backend",
     "analyze_impact",
     "build_index",
     "find_related_tests",
@@ -219,4 +300,5 @@ __all__ = [
     "get_callers",
     "index_summary",
     "symbol_search",
+    "symbol_search_tool",
 ]
