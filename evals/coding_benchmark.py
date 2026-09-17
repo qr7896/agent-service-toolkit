@@ -328,8 +328,23 @@ def summarize(rows: list[dict]) -> dict:
     }
 
 
-async def main_async(limit: int | None, model: str, arms: list[str] | None = None) -> int:
+def split_tasks(tasks: list["Task"], holdout: int) -> tuple[list["Task"], list["Task"]]:
+    """时间切分：前 N-k 个任务用来"积累经验"，最后 k 个只用来"评测经验"。
+
+    为什么必须切：如果评测用的经验来自同一个任务，那就是自己给自己泄题，
+    统计出来的"经验有用率"没有意义（doc 02 §14 明确要求这个约束）。
+    """
+    if holdout <= 0 or len(tasks) <= 1:
+        return list(tasks), list(tasks)
+    k = min(holdout, len(tasks) - 1)
+    return list(tasks[:-k]), list(tasks[-k:])
+
+
+async def main_async(
+    limit: int | None, model: str, arms: list[str] | None = None, holdout: int = 0
+) -> int:
     tasks = TASKS[:limit] if limit else TASKS
+    seed_tasks, eval_tasks = split_tasks(tasks, holdout)
     EVAL_DATA.mkdir(parents=True, exist_ok=True)
     for stale in ("trajectories.jsonl", "experience.db"):
         (EVAL_DATA / stale).unlink(missing_ok=True)
@@ -340,7 +355,10 @@ async def main_async(limit: int | None, model: str, arms: list[str] | None = Non
     rows: list[dict] = []
     for arm in arms or ["baseline", "experience"]:
         print(f"\n=== arm: {arm} ===")
-        for task in tasks:
+        # 记忆臂只在留出任务上评测（经验只能来自 seed 任务，避免泄题）；
+        # 其余臂跑 seed 集，既当基线又负责把经验沉淀下来。
+        subset = eval_tasks if arm == "experience" else seed_tasks
+        for task in subset:
             row = await run_one(task, arm, model)
             rows.append(row)
             print(
@@ -355,6 +373,7 @@ async def main_async(limit: int | None, model: str, arms: list[str] | None = Non
     report = {
         "model": model,
         "task_count": len(tasks),
+        "holdout": [task.name for task in eval_tasks] if holdout else [],
         # 按组汇总（EGCP 四组对照用）。baseline/experience 保留是为了兼容旧报告口径。
         "arms": {
             name: summarize([row for row in rows if row["arm"] == name])
@@ -378,6 +397,10 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=None, help="只跑前 N 个任务（冒烟用）")
     parser.add_argument("--model", default=settings.DEFAULT_MODEL)
     parser.add_argument(
+        "--holdout", type=int, default=0,
+        help="最后 N 个任务作为留出集：经验只从前面的任务积累，评测只在留出集上做",
+    )
+    parser.add_argument(
         "--arms",
         default="",
         help="逗号分隔的组名。预置：baseline / experience / A_files_only / B_search / "
@@ -390,7 +413,7 @@ def main() -> None:
             print(f"{task.name:24s} {task.kind}")
         return
     chosen = [item.strip() for item in args.arms.split(",") if item.strip()] or None
-    raise SystemExit(asyncio.run(main_async(args.limit, args.model, chosen)))
+    raise SystemExit(asyncio.run(main_async(args.limit, args.model, chosen, args.holdout)))
 
 
 if __name__ == "__main__":

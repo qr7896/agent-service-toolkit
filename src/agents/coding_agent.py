@@ -42,7 +42,7 @@ from agents.code_tools import (
 )
 from agents.coding_planner import planner
 from agents.coding_memory import format_experience_context, recall_experiences
-from agents.experience import record_trajectory
+from agents.experience import record_trajectory, record_usage_for_trajectory
 from agents.evidence import reconcile
 from agents import code_intel
 from agents.code_intel import CODE_INTEL_TOOLS
@@ -526,6 +526,11 @@ async def finalize_trajectory(state: CodingState, config: RunnableConfig) -> dic
             record["experience_ids"] = record_trajectory(record, config)
         except (OSError, sqlite3.Error) as exc:
             record["experience_error"] = f"{type(exc).__name__}: {exc}"
+        # 经验效用闭环：这次用过的经验要记"被用过、有没有帮上忙"
+        try:
+            record["experience_usage"] = record_usage_for_trajectory(record, config)
+        except (OSError, sqlite3.Error) as exc:
+            record["experience_usage_error"] = f"{type(exc).__name__}: {exc}"
     return {"trajectory": record}
 
 

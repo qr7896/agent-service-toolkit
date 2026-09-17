@@ -1101,6 +1101,39 @@ steps:
 - **留出集效用统计**：`ExperienceStore.record_usage()` / `utility()` 已就位并单测，但 **Agent 循环还没有调用它**，所以没有真实计数；要在时间切分的留出任务上统计，先得有更大任务集。
 - **Docker 构建验证**：本机没有 Docker / podman，WSL 也未安装发行版，**确实无法执行**。新增 `scripts/verify_container.ps1`，把"构建 → 起服务 → 探活 → 检查模型与向量库挂载 → 容器重建后 `.codex` 是否还在"固定成脚本，换台有 Docker 的机器直接跑。
 
+### 4.33 经验效用接入循环 + 留出集切分（doc 02 §14/§16 回填）
+
+**一、效用计数接入 Agent 循环**（这是经验唯一能被评价的入口）
+
+`finalize_trajectory` 现在做三件事：写轨迹 → 写经验 → **把"这次用过哪些经验、有没有帮上忙"写回经验库**。轨迹里多一个 `experience_usage` 字段（`retrieved` / `recorded` / `helped` / `phases`），可直接审计。
+
+判据刻意不用模型自述：**任务最终状态成功 = helped，失败 = harmful**。原因和"经验只从轨迹派生"是同一条原则——模型说"这条经验很有用"不构成证据。
+
+**二、留出集切分**（避免自己给自己泄题）
+
+基准新增 `--holdout N`：最后 N 个任务作为**留出集**，经验只从前面的任务积累，评测只在留出集上做。之前的做法是同一批任务先跑基线再跑经验臂，等于评测用的经验正好来自被评测的任务本身，统计出来的"经验有用率"没有意义。
+
+新增 `split_tasks()` 纯函数，切分逻辑可离线断言（不相交、取自末尾、`holdout=0` 时保持旧行为）。
+
+**三、验收与现状**
+
+`lg_practice/day31_experience_loop_check.py` **6/6**（零 API 调用）：记账正确、失败记 harmful、能算命中率、无命中不污染统计、收尾节点写入轨迹、切分正确。回归 day14 8/8、day15 11/11、day16 11/11、day17 7/7、day29 14/14、day30 11/11。
+
+**必须说清的现状**：基础设施（记账 + 切分）齐了，但**还没有在留出集上真跑过**，所以 `help_rate` 目前只有单测数据，不能用来评价任何一条经验的真实价值。真跑需要更大的任务集与额度。
+
+**doc 02 的实现盘点**（哪些做了、哪些没做）：
+
+| 深化项 | 状态 |
+|---|---|
+| 任务签名 / 适用条件 / 版本新鲜度 | ✅ §4.30 |
+| 两层检索（语义 + 证据兼容性）+ 记忆弃权 | ✅ §4.30 |
+| 规则式归因 `likely_effective` | ✅ §4.30 |
+| 效用计数（`record_usage` / `utility`） | ✅ §4.30，§4.33 接入循环 |
+| 留出集切分 | ✅ §4.33 |
+| 决策片段（Decision Episodes，§5） | ⬜ 未做 |
+| 探索效率指标（§12） | ⬜ 未做（需要成规模的任务集） |
+| 真实效用统计（§14/§16） | ⬜ 待留出集真跑 |
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1404,6 +1437,40 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 ---
 
 ## 10. 命令速查
+
+### 在这台机器上装 Docker（给容器化验证用）
+
+本机现状：没有 Docker / podman；`wsl.exe` 存在但**没有任何发行版**。所以要先装 WSL2 发行版，再选一种 Docker：
+
+```powershell
+# 1) 装 WSL2 + Ubuntu（需要管理员 PowerShell，装完要重启一次）
+wsl --install -d Ubuntu
+
+# 2) 重启后确认是 WSL2
+wsl -l -v
+```
+
+之后两种选择：
+
+```text
+A. Docker Desktop（最省事，个人/小团队免费）
+   下载 docker.com/products/docker-desktop 安装，安装时勾选 WSL integration，
+   重启后在 PowerShell 里 docker version 能看到 Server 版本即成功。
+
+B. 只在 WSL 里装 Docker Engine（不用 Desktop）
+   在 Ubuntu 里执行：
+     curl -fsSL https://get.docker.com | sh
+     sudo usermod -aG docker $USER
+     sudo service docker start
+   若 service 不可用，需要先启用 systemd：/etc/wsl.conf 写 [boot] systemd=true 后 wsl --shutdown 重进。
+   国内网络拉镜像慢时，可在 /etc/docker/daemon.json 配 registry-mirrors。
+```
+
+装好后回到仓库根目录验证：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/verify_container.ps1
+```
 
 ```powershell
 # 开发循环

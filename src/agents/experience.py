@@ -461,6 +461,32 @@ def record_trajectory(trajectory: dict[str, Any], config: dict[str, Any]) -> lis
         return store.record_trajectory(trajectory)
 
 
+def record_usage_for_trajectory(
+    trajectory: dict[str, Any], config: dict[str, Any]
+) -> dict[str, Any]:
+    """把"这次任务用过哪些经验、有没有帮上忙"写回经验库（doc 02 §14 的闭环）。
+
+    这是经验唯一能被评价的入口：没有它，`helped_count` 永远是 0，
+    "哪条经验真的有用"就只能靠印象说。
+
+    `helped` 的判据用**任务最终状态**，不用模型自述：成功算帮上，失败算有害/无用。
+    单条经验的真实效用还需要留出任务与时间切分才能统计（见 benchmark 的 --holdout）。
+    """
+    hits = trajectory.get("experience_hits") or []
+    source_ids = sorted({str(hit.get("trajectory_id") or "") for hit in hits} - {""})
+    outcome = {
+        "retrieved": len(source_ids),
+        "recorded": 0,
+        "helped": bool(trajectory.get("status") == "succeeded"),
+        "phases": sorted({str(hit.get("phase") or "unknown") for hit in hits}),
+    }
+    if not source_ids:
+        return outcome
+    with ExperienceStore(experience_path(config)) as store:
+        outcome["recorded"] = store.record_usage(source_ids, helped=outcome["helped"])
+    return outcome
+
+
 __all__ = [
     "DEFAULT_EXPERIENCE_PATH",
     "EXTRA_COLUMNS",
