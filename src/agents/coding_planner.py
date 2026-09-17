@@ -286,9 +286,15 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
         evidence_trace = trace
         if not gate_decision.passed:
             # 弃权：证据不足时不进入写阶段，把缺口作为待确认问题交出去
+            # 出口不同、行动信号不同：补检索 / 换策略 / 放宽预算，不能糊成一句"证据不足"
+            advice = {
+                "evidence_insufficient": "补检索手段，或把问题交给人确认",
+                "diminishing_returns": "继续取证收益递减：换策略，而不是再加检索",
+                "budget_exhausted": "预算用尽但仍有值得做的取证：放宽预算或换模型",
+            }.get(gate_decision.exit, "补足证据前不应开始修改")
             plan_dict["open_questions"] = [
                 *plan_dict.get("open_questions", []),
-                f"证据门控未通过（缺 {', '.join(gate_decision.debt)}）：补足证据前不应开始修改",
+                f"证据门控未通过（{gate_decision.exit}，缺 {', '.join(gate_decision.debt)}）：{advice}",
             ]
 
     return {

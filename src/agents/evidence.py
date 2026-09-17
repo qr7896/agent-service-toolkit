@@ -31,6 +31,16 @@ DEFAULT_THRESHOLDS = {"target": 0.8, "impact": 0.6, "verification": 0.6}
 LAMBDA_RISK = 0.5
 EPS = 0.1
 MAX_EVIDENCE_ROUNDS = 2
+# 低于这个效用就不值得再取一次证：代价相对收益不划算
+MIN_UTILITY = 0.35
+
+# 三种"停"的出口，给用户的行动信号完全不同，必须分开（合并会把成本问题伪装成正确性问题）
+EXIT_MESSAGES = {
+    "passed": "证据充分",
+    "evidence_insufficient": "取不到需要的证据：补检索手段，或把问题交给人确认",
+    "diminishing_returns": "继续取证收益递减：该换策略，而不是再加检索",
+    "budget_exhausted": "预算用尽但仍有值得做的取证：放宽预算或换模型",
+}
 
 # 证据动作空间（doc 01 §6）。local_action 是本地实现能真正执行的动作；None 表示当前不可用。
 ACTION_SPACE: dict[str, dict[str, Any]] = {
@@ -77,6 +87,7 @@ class GateDecision:
     state: EvidenceState = field(default_factory=EvidenceState)
     rounds_used: int = 0
     actions_taken: list[str] = field(default_factory=list)
+    exit: str = "passed"
     reason: str = ""
 
 
@@ -232,6 +243,51 @@ def detect_gaps(state: EvidenceState, thresholds: dict[str, float] | None = None
     return [dim for dim, limit in limits.items() if getattr(state, dim) < limit]
 
 
+# ---- 两个判据拆开：够不够（正确性） vs 还值不值得再取（成本） ---------------
+
+
+def sufficient(state: EvidenceState, thresholds: dict[str, float] | None = None) -> bool:
+    """确定性谓词：证据够不够。只看覆盖度，不掺任何成本考量。"""
+    return not detect_gaps(state, thresholds)
+
+
+def worth_more(
+    state: EvidenceState,
+    thresholds: dict[str, float] | None = None,
+    tried: set[str] | None = None,
+    rounds_left: int = MAX_EVIDENCE_ROUNDS,
+    budget_left: int | None = None,
+    min_utility: float = MIN_UTILITY,
+) -> tuple[bool, str]:
+    """还值不值得再取一次证。返回 (是否继续, 出口名)。
+
+    三种"不继续"要分开，因为行动信号不同：
+      evidence_insufficient — 没有可用的动作能补上缺口（换手段 / 问人）
+      diminishing_returns   — 有动作，但效用低于阈值（换策略）
+      budget_exhausted      — 还有值得做的动作，但轮次/预算用完了（放宽预算或换模型）
+    """
+    gaps = detect_gaps(state, thresholds)
+    if not gaps:
+        return False, "passed"
+
+    untried = [
+        (score_action(action, gaps), action)
+        for action in ACTION_SPACE
+        if action not in (tried or set()) and score_action(action, gaps) > 0
+    ]
+    if not untried:
+        return False, "evidence_insufficient"
+
+    best = max(untried)[0]
+    out_of_budget = rounds_left <= 0 or (budget_left is not None and budget_left <= 0)
+    if out_of_budget:
+        # 还值得做但没预算了 —— 这是成本问题，不能报成"证据不足"
+        return False, "budget_exhausted"
+    if best < min_utility:
+        return False, "diminishing_returns"
+    return True, "continue"
+
+
 def score_action(action: str, gaps: list[str]) -> float:
     """Utility = 预期证据增益 / (成本 + λ×风险)。增益按"缺口在列表里的位置"递减。"""
     spec = ACTION_SPACE.get(action)
@@ -293,6 +349,7 @@ def audit_plan(
     root: Path | None = None,
     thresholds: dict[str, float] | None = None,
     max_rounds: int = MAX_EVIDENCE_ROUNDS,
+    min_utility: float = MIN_UTILITY,
 ) -> tuple[GateDecision, list[EvidenceCard], list[dict[str, Any]]]:
     """Evidence Gate 主流程：评估 → 缺口 → 主动取证 → 复评 → 通过或弃权。
 
@@ -305,13 +362,24 @@ def audit_plan(
     rounds = 0
     acquired: dict[str, list[str]] = {}
     tried: set[str] = set()
+    exit_reason = "passed"
 
-    while rounds < max_rounds:
-        gaps = detect_gaps(state, limits)
-        if not gaps:
+    while True:
+        # 先问"还值不值得再取"，再决定取不取：够不够（sufficient）与划不划算（worth_more）是两个判据
+        keep_going, why = worth_more(
+            state,
+            limits,
+            tried=tried,
+            rounds_left=max_rounds - rounds,
+            min_utility=min_utility,
+        )
+        if not keep_going:
+            exit_reason = why
             break
+        gaps = detect_gaps(state, limits)
         action = pick_action(gaps, exclude=tried)
         if action == "ask_clarification":
+            exit_reason = "evidence_insufficient"
             break
         tried.add(action)
         observation = execute_action(action, plan, root)
@@ -347,7 +415,9 @@ def audit_plan(
         state=state,
         rounds_used=rounds,
         actions_taken=[item["action"] for item in trace],
-        reason="证据充分" if not debt else f"证据不足：{', '.join(debt)}",
+        exit=exit_reason,
+        reason=EXIT_MESSAGES.get(exit_reason, exit_reason)
+        + (f"（缺 {'、'.join(debt)}）" if debt else ""),
     )
     return decision, cards, trace
 
