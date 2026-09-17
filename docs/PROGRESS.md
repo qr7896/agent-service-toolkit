@@ -1231,6 +1231,39 @@ Windows 上判 pid 存活不能用 `os.kill(pid, 0)`——那会真的去终止�
 
 **验收**：`lg_practice/day32_conflict_classify_check.py` **8/8**（零 API 调用），回归 day14 8/8、day16 11/11、day29 17/17。
 
+### 4.37 实验的 token 花费：一次简单评估
+
+新增 `scripts/cost_model.py`：读本机已有的基准报告与轨迹，算"每个冲突都跑沙箱 A/B"到底多贵。**不调 LLM**。
+
+**口径**：实验成本 = 典型单次运行 × 2（两个候选方案各跑一遍；pytest 验证本身不消耗 token）；静态判定 = 0 token、0 次 LLM 调用。`estimated_tokens` 是"字符数 ÷ 3"的粗估，只用于比较量级。
+
+**本机实测的单次运行成本**（真实 LLM，来自 §4.32 与 §4.27 的运行记录）：
+
+| 场景 | 单次 tok 估算 | 说明 |
+|---|---:|---|
+| 并行 / 路由工作流 | — | 未记 token（那次只记了耗时） |
+| A 只读文件 | ~94k | 2 任务均值 |
+| B search_code | ~121k | 2 任务均值 |
+| C 代码智能（工具更多） | ~384k | 2 任务均值，**比 B 贵 3 倍** |
+| D 证据门控（修复后） | ~135k | 1 任务 |
+| **D 修复前（门控没有可用出口）** | **654k / 1.54M** | 单任务峰值，任务最后还没做完 |
+
+**由这张表能直接读出的三件事**：
+
+1. **静态判定与实验差两个数量级起步**：前者 0 token、0 次模型调用，后者一次就是 19 万–27 万 token（按 94k–135k 的典型值 ×2）。
+2. **"没有出口"比"出口选错"贵得多**：门控修复前单个任务烧掉 654k–1.54M token 且**没做完**——这正是"冲突没有分类、也没有确定出口"的真实代价，不是假设。
+3. **给模型更多证据工具会让成本先涨**：C 组是 B 组的 3 倍多。所以"更准"和"更省"不会自动一起发生，必须靠停止策略和分类来约束。
+
+**外推**（`--tasks 30 --conflict-rate 0.3 --static-share 0.9`，即 30 个任务、30% 触发冲突、其中 90% 静态可判）：
+
+```text
+冲突 9 个
+全部走实验：约 2,429,514 tok
+静态优先：  约   242,951 tok（省 2,186,563 tok，约 90%）
+```
+
+**这些数字的边界（不许当结论用）**：冲突率 30% 与静态可判 90% 是**假设**，不是实测；样本量只有 1–2 个任务/组；token 是粗估而非账单。它的用途是给出**量级判断**——在这个假设下静态优先能省一个数量级；真实比例要等接了真实任务集再实测。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1306,6 +1339,8 @@ Windows 上判 pid 存活不能用 `os.kill(pid, 0)`——那会真的去终止�
 | `docker/Dockerfile.service.local` | **新增** | 保留 src/ 层级的服务镜像：补 git、CPU torch、sentence-transformers |
 | `compose.local-models.yaml` | **新增** | compose 覆盖层：挂载模型 / 向量库 / .codex，覆盖 Windows 模型路径 |
 | `scripts/check_container_config.py` | **新增** | 容器配置静态校验（含镜像内 `__file__` 路径推导） |
+| `src/agents/conflict.py` | **新增** | 冲突分类：静态可判 vs 必须实验，确定性分流 |
+| `scripts/cost_model.py` | **新增** | 实验 vs 静态判定的 token 成本模型（读已有产物，不调 LLM） |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
