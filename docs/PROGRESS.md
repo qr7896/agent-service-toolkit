@@ -1264,6 +1264,41 @@ Windows 上判 pid 存活不能用 `os.kill(pid, 0)`——那会真的去终止�
 
 **这些数字的边界（不许当结论用）**：冲突率 30% 与静态可判 90% 是**假设**，不是实测；样本量只有 1–2 个任务/组；token 是粗估而非账单。它的用途是给出**量级判断**——在这个假设下静态优先能省一个数量级；真实比例要等接了真实任务集再实测。
 
+### 4.38 HITL 中断的跨进程恢复与幂等
+
+你列的三件事里，前两件本次会话已完成：① EGCP 门控拆成 `sufficient()` / `worth_more()` 与三类弃权出口（§4.34，day29 17/17）；② Sandbox 启动兜底 GC + 产物改成 patch（§4.35，day19 14/14）。这一节做第三件。
+
+#### 实现
+
+| 机制 | 实现 |
+|---|---|
+| 稳定审批标识 | `approval_id_for(config, calls)` = `ap-` + `sha1(thread_id + 排序后的 tool_call id)[:16]` |
+| 审批记录可追溯 | `approvals[]` 现在含 `approval_id` / `tool_call_id` / `tool` / `path` / `approved` / `reason` / `executed` |
+| 幂等（已执行） | 同一批再次出现且 `executed=True` → **跳过写入**，返回"已执行过同样的写入（approval_id=…）"，既不重复问也不重复写 |
+| 幂等（已批准未执行） | 记录存在但没有 `executed` → 复用结论，不再弹第二次审批 |
+| 跨进程恢复 | 中断状态走 checkpointer；另一个进程 `aget_state` 能看到"这线程还悬着"，`Command(resume=...)` 直接续跑 |
+
+#### 跨进程验证（不是同进程跑两遍）
+
+`lg_practice/day33_hitl_durable_check.py` **6/6**，两个独立进程共用同一个 SQLite checkpointer：
+
+| 步骤 | 结果 |
+|---|---|
+| 进程 A 调 invoke | 停在 `__interrupt__`，`approval_id=ap-b8c228f85c89da86`，**文件未创建** |
+| 中断是否落盘 | checkpointer 文件 40KB（不是进程内存） |
+| 进程 B 只读状态 | 能看到该线程仍有待处理任务 |
+| 进程 B `Command(resume=批准)` | 文件写出，内容正确 |
+| 进程 B 再 resume 一次 | **内容不变、只有一份**（没有二次写入） |
+| `approval_id` 稳定性 | 同一批 tool_call 每次算出同一个 id |
+
+回归：**day13 8/8**（`act` 改动最大，用真实 LLM 重跑过）。
+
+#### 过程中踩到的三个坑（都是真实的）
+
+1. **`SqliteSaver` 不支持异步**：图用 `ainvoke`，必须换 `AsyncSqliteSaver`（`aiosqlite` 已在依赖里）。
+2. **桩模型要逐个模块替换**：`coding_agent` / `coding_planner` / `reviewer` 各自 import 了 `get_model`，只换一处会让 planner 拿到真模型并抛 `Unsupported model`。
+3. **桩模型必须收敛**：如果它每轮都要求调工具，图会一直转到递归上限——这类"桩写得不收敛"导致的失败看起来像框架问题，其实是测试自己的问题。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1381,6 +1416,7 @@ Windows 上判 pid 存活不能用 `os.kill(pid, 0)`——那会真的去终止�
 | `day27_branch_loop_hierarchy_check.py` | 条件分支 / 循环 / 层级分工的 11 项验收脚本（零 API 调用） |
 | `day28_extended_live_check.py` | 三种新模式的真跑脚本（真实 LLM，3/3） |
 | `day29_egcp_check.py` | EGCP + 经验深化的 14 项验收脚本（零 API 调用） |
+| `day33_hitl_durable_check.py` | HITL 跨进程恢复与幂等的 6 项验收脚本（两个独立进程 + SQLite checkpointer） |
 | `day30_ab_harness_check.py` | CodeGraph 适配层 + SWE 判分 + A/B 配置的 11 项验收脚本 |
 
 ### 5.3 本地数据（不进版本库）

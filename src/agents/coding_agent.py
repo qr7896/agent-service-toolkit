@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import logging
+import hashlib
 import sqlite3
 from typing import Any, Literal
 
@@ -189,6 +190,25 @@ def _plan_reason(state: CodingState, path: str) -> str:
     return ""
 
 
+def approval_id_for(config: RunnableConfig, calls: list[dict[str, Any]]) -> str:
+    """一批待批写操作的稳定标识：同一 thread + 同一组 tool_call 必然得到同一个 id。
+
+    它解决的是**幂等**：跨进程恢复或重复 resume 时，靠这个 id 认出"这批操作批过了/做过了"，
+    而不是把写操作再做一遍。
+    """
+    thread = str(_configurable(config).get("thread_id") or "")
+    ids = sorted(str(call.get("id") or "") for call in calls)
+    digest = hashlib.sha1(("|".join([thread, *ids])).encode("utf-8")).hexdigest()
+    return f"ap-{digest[:16]}"
+
+
+def _recorded_approval(state: CodingState, approval_id: str) -> dict[str, Any] | None:
+    for item in state.get("approvals") or []:
+        if item.get("approval_id") == approval_id:
+            return item
+    return None
+
+
 def _describe_action(state: CodingState, call: dict[str, Any]) -> dict[str, Any]:
     """把一次写操作整理成"人能据此决策"的信息：改哪个文件、改成什么、为什么。"""
     args = call.get("args") or {}
@@ -299,20 +319,33 @@ async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     # ---- 第一遍：只做判断，不产生任何副作用 ----
     pending = [c for c in calls if c.get("name") in WRITE_TOOL_NAMES and c.get("name") in allowed]
     decisions: dict[str, bool] = {}
+    approval_id = ""
+    already_executed: set[str] = set()
     if pending and _require_approval(config):
-        answer = interrupt(
-            {
-                "type": "approval_request",
-                "question": (
-                    "以下操作会修改仓库文件，是否批准执行？"
-                    "回复「批准」继续，回复「拒绝」放弃本次修改。"
-                ),
-                "actions": [_describe_action(state, call) for call in pending],
-                "read_only_tools_are_not_asked": True,
-            }
-        )
-        approved = _is_approved(answer)
-        decisions = {str(c.get("id", "")): approved for c in pending}
+        approval_id = approval_id_for(config, pending)
+        recorded = _recorded_approval(state, approval_id)
+        if recorded and recorded.get("executed"):
+            # 这批写操作之前已经批准并执行过：幂等跳过，既不重复问也不重复写
+            already_executed = {str(c.get("id", "")) for c in pending}
+            logger.warning("approval %s already executed, skipping duplicate writes", approval_id)
+        elif recorded:
+            # 已经批过但还没执行（例如同一批被重复 resume）：直接复用结论
+            decisions = {str(c.get("id", "")): bool(recorded.get("approved")) for c in pending}
+        else:
+            answer = interrupt(
+                {
+                    "type": "approval_request",
+                    "approval_id": approval_id,
+                    "question": (
+                        "以下操作会修改仓库文件，是否批准执行？"
+                        "回复「批准」继续，回复「拒绝」放弃本次修改。"
+                    ),
+                    "actions": [_describe_action(state, call) for call in pending],
+                    "read_only_tools_are_not_asked": True,
+                }
+            )
+            approved = _is_approved(answer)
+            decisions = {str(c.get("id", "")): approved for c in pending}
 
     # ---- 第二遍：执行（此时审批已完成） ----
     results: list[ToolMessage] = []
@@ -321,14 +354,28 @@ async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
         name = call.get("name", "")
         call_id = str(call.get("id", ""))
         tool = _TOOL_BY_NAME.get(name)
+        if call_id in already_executed:
+            results.append(
+                ToolMessage(
+                    content=(
+                        f"已执行过同样的写入（approval_id={approval_id}），本次跳过以免重复修改。"
+                    ),
+                    tool_call_id=call_id,
+                    name=name,
+                )
+            )
+            continue
         if call_id in decisions:
             approved = decisions[call_id]
             approval_records.append(
                 {
+                    "approval_id": approval_id,
+                    "tool_call_id": call_id,
                     "tool": name,
                     "path": str((call.get("args") or {}).get("path") or ""),
                     "approved": approved,
                     "reason": _plan_reason(state, str((call.get("args") or {}).get("path") or "")),
+                    "executed": False,
                 }
             )
             if not approved:
@@ -360,6 +407,9 @@ async def act(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
 
     out: dict[str, Any] = {"messages": results}
     if approval_records:
+        # 真正执行过的标记 executed=True：下次再跑到同一批时据此幂等跳过
+        for record in approval_records:
+            record["executed"] = bool(record["approved"])
         out["approvals"] = [*(state.get("approvals") or []), *approval_records]
     return out
 
