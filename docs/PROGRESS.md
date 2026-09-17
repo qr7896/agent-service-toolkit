@@ -1418,6 +1418,38 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 
 **验收**：`lg_practice/day37_probe_gate_check.py` **4/4**（零 API 调用）：真实探针通过且期望来自数据文件、期望写反时门禁失败、探针没过时基准返回 2 且不跑任务、跳过开关存在。回归 day35 8/8。
 
+### 4.43 项目再定位：进入 Research Mode（两份新路线图落地）
+
+读完两份新路线图（Trajectory/Experience 补强、RAG 深度研究路线）后，项目定位再收一次窄：**停止横向加功能，转入研究模式**。
+
+**研究主线（写进 [RUNTIME.md](./RUNTIME.md)）**：
+
+> 不研究"怎么把更多代码找回来"，而研究 **"Coding Agent 如何以最少的检索成本，主动获取足够且可靠的代码证据"**。
+
+完整方案落在 [docs/research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)，只写四件事：研究问题（`sufficient()` / `worth_more()`）、假设（H1–H3）、算法定义、评测协议。
+
+**冻结清单**（研究模式的前提）：不再加 Agent 类型 / Multi-Agent、不重做前端、不训练 embedding、不上 RL/学习型策略——理由逐条写在研究文档里。
+
+#### 落地的代码（两份文档点名的"最小执行单元"）
+
+| 文件 | 作用 |
+|---|---|
+| `src/agents/retrieval_actions.py` | 检索动作统一接口：每个动作声明补哪一维证据、成本、风险、能否执行，并能真的跑（`can_run` / `run` / `estimate`），执行**不含 LLM** |
+| `src/agents/retrieval_policy.py` | V0 确定性策略：`utility = 增益 / (成本 + λ×风险)`，候选只含"可用且没试过"的动作，选不出来就 abstain |
+| `evals/retrieval_metrics.py` | 把检索质量从成功率里拆出来：Gold File/Symbol/Test Recall、Context Precision/Recall、**Evidence Efficiency = 召回 / token**、Abstention Rate |
+| `evals/swe_tasks.py` | 任务支持 Gold Evidence（`gold_files` / `gold_symbols` / `gold_callers` / `gold_tests` / `gold_context`） |
+| `src/agents/evidence.py` | EvidenceState 新增 `redundancy` / `uncertainty` / `retrieval_round` |
+
+**三个诚实标注**（都写在研究文档的"当前边界"里）：
+
+1. **语义代码检索尚未实现**。项目里的 BGE-M3 服务的是经验库与手册知识库，**不是**代码语义检索——所以四类证据里，`semantic` 这一类目前只有 episodic（经验）那一路，代码语义检索是待做项。这是两份路线图里最容易被我含糊带过的地方，明确写出来。
+2. `redundancy` / `uncertainty` **只被记录、还没进决策公式**，验收里专门断言"同样的缺口选出同样的动作"来证明这一点，避免假装它们已生效。
+3. 停止策略仍是关键词条件 + 轮数/预算上限，没有学习型策略（V3 才做）。
+
+**顺带修掉一个命名撞车**：`gold_files` 原本指"标准修复的文件内容"（dict），与检索 gold 的 `gold_files`（list）同名。按语义把前者改名为 `gold_sources`，并保留对旧 JSONL 的兼容解析（dict 塞在 `gold_files` 里的老格式仍能读）。
+
+**验收**：`lg_practice/day38_retrieval_policy_check.py` **14/14**（零 API 调用）：四类动作齐全、依赖未满足不可用、最缺哪维先补哪维、只缺验证时选查测试、充分即停/无解弃权、效用可比、新字段未进决策、观察可解析成文件/符号/测试、动作真执行、单任务与汇总指标正确、`abstention_rate` 正确、缺 gold 不计入均值、SWE 任务支持 Gold Evidence。回归 day29 17/17、day30 13/13、day35 8/8、day37 4/4、day16 11/11。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1499,6 +1531,12 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 | `.github/workflows/permission-gate.yml` | **新增** | CI 权限门禁（用 `permission-ack` 标签当人工确认） |
 | `evals/tasks/probe.jsonl` | **新增** | 探针集：必过 / 必不过各一个，先证判分器有判别力 |
 | `config/workflows/nested-review.yaml` | **新增** | 内联嵌套示例（外层 loop 里内联 parallel） |
+| `src/agents/retrieval_actions.py` | **新增** | 检索动作统一接口（四类证据来源） |
+| `src/agents/retrieval_policy.py` | **新增** | V0 确定性检索策略（utility 选动作 / 弃权） |
+| `evals/retrieval_metrics.py` | **新增** | 检索质量指标（Gold Recall / Context Precision / Evidence Efficiency） |
+| `docs/research/ADAPTIVE_CODE_RAG.md` | **新增** | 研究方案（问题 / 假设 / 算法 / 评测协议） |
+| `docs/design/Trajectory_Experience_CodeRetrieval_不足补强路线.md` | **新增** | 设计原件（补强路线） |
+| `docs/design/RAG深度研究路线_2026-09.md` | **新增** | 设计原件（RAG 深度研究） |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |

@@ -66,6 +66,10 @@ class EvidenceState:
     risk: float = 0.0
     queries_used: int = 0
     tokens_spent: int = 0
+    # 研究主线新增（doc §6）：先记录，暂时不进决策公式——这一点写在研究文档里，不假装已生效
+    redundancy: float = 0.0
+    uncertainty: float = 0.0
+    retrieval_round: int = 0
 
 
 @dataclass

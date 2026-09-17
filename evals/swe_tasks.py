@@ -26,11 +26,18 @@ class TaskSpec:
     problem_statement: str
     setup_files: dict[str, str] = field(default_factory=dict)
     test_files: dict[str, str] = field(default_factory=dict)
-    gold_files: dict[str, str] = field(default_factory=dict)
+    # 标准修复的文件内容（判分器用它验证"打上 gold 应该 resolved"）
+    gold_sources: dict[str, str] = field(default_factory=dict)
     FAIL_TO_PASS: list[str] = field(default_factory=list)
     PASS_TO_PASS: list[str] = field(default_factory=list)
     repo: str = ""
     base_commit: str = ""
+    # Gold Evidence（doc §18）：没有它就只能看最终成功率，看不出"检索找没找对"
+    gold_files: list[str] = field(default_factory=list)
+    gold_symbols: list[str] = field(default_factory=list)
+    gold_callers: list[str] = field(default_factory=list)
+    gold_tests: list[str] = field(default_factory=list)
+    gold_context: list[str] = field(default_factory=list)
 
 
 def _spec_from_dict(data: dict) -> TaskSpec:
@@ -46,11 +53,28 @@ def _spec_from_dict(data: dict) -> TaskSpec:
         problem_statement=str(data["problem_statement"]),
         setup_files={str(k): str(v) for k, v in (data.get("setup_files") or {}).items()},
         test_files={str(k): str(v) for k, v in (data.get("test_files") or {}).items()},
-        gold_files={str(k): str(v) for k, v in (data.get("gold_files") or {}).items()},
+        # 兼容两种写法：新格式用 gold_sources；旧的 JSONL 把 dict 塞在 gold_files 里
+        gold_sources={
+            str(k): str(v)
+            for k, v in (
+                data.get("gold_sources")
+                or (data.get("gold_files") if isinstance(data.get("gold_files"), dict) else {})
+                or {}
+            ).items()
+        },
         FAIL_TO_PASS=list(data["FAIL_TO_PASS"]),
         PASS_TO_PASS=list(data.get("PASS_TO_PASS") or []),
         repo=str(data.get("repo") or ""),
         base_commit=str(data.get("base_commit") or ""),
+        gold_files=[
+            str(item)
+            for item in (data.get("gold_files") if isinstance(data.get("gold_files"), list) else [])
+            or []
+        ],
+        gold_symbols=list(data.get("gold_symbols") or []),
+        gold_callers=list(data.get("gold_callers") or []),
+        gold_tests=list(data.get("gold_tests") or []),
+        gold_context=list(data.get("gold_context") or []),
     )
 
 
@@ -76,7 +100,7 @@ def prepare(spec: TaskSpec, root: Path, with_gold: bool = False) -> Path:
     _write(root, spec.setup_files)
     _write(root, spec.test_files)
     if with_gold:
-        _write(root, spec.gold_files)
+        _write(root, spec.gold_sources)
     return root
 
 

@@ -121,7 +121,7 @@ def build(task: dict) -> dict:
         "problem_statement": task["problem_statement"],
         "setup_files": setup,
         "test_files": {task["test_file"]: task["test_code"]},
-        "gold_files": gold,
+        "gold_sources": gold,
         "FAIL_TO_PASS": task["FAIL_TO_PASS"],
         "PASS_TO_PASS": task["PASS_TO_PASS"],
     }
