@@ -43,7 +43,14 @@ from agents.code_tools import (
 )
 from agents.coding_planner import planner
 from agents.coding_memory import format_experience_context, recall_experiences
-from agents.experience import record_trajectory, record_usage_for_trajectory
+from agents.experience import (
+    ExperienceStore,
+    experience_path,
+    record_trajectory,
+    record_usage_for_trajectory,
+    reevaluate_survival,
+    reevaluate_utility,
+)
 from agents.evidence import reconcile
 from agents import code_intel
 from agents.code_intel import CODE_INTEL_TOOLS
@@ -581,6 +588,13 @@ async def finalize_trajectory(state: CodingState, config: RunnableConfig) -> dic
             record["experience_usage"] = record_usage_for_trajectory(record, config)
         except (OSError, sqlite3.Error) as exc:
             record["experience_usage_error"] = f"{type(exc).__name__}: {exc}"
+        # 两个回评回路：下游命中率超标就隔离；改动被回退就标成不可用（侥幸通过在这一步暴露）
+        try:
+            with ExperienceStore(experience_path(config)) as store:
+                record["experience_utility"] = reevaluate_utility(store)
+                record["experience_survival"] = reevaluate_survival(store)
+        except (OSError, sqlite3.Error) as exc:
+            record["experience_reeval_error"] = f"{type(exc).__name__}: {exc}"
     return {"trajectory": record}
 
 

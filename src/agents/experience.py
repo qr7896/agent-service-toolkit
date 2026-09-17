@@ -6,6 +6,7 @@ review / approvals 的轨迹才算。第一版落 SQLite 本地文件；向量�
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sqlite3
@@ -74,11 +75,48 @@ DOMAIN_HINTS = {
 }
 
 
-def repo_commit() -> str:
+# 下游命中驱动的降权阈值：样本太少不判（两次没帮上就隔离太激进），样本够了才按命中率判
+UTILITY_MIN_SAMPLES = 3
+UTILITY_HELP_RATE_FLOOR = 0.34
+
+
+def _file_digest(path: Path) -> str:
+    if not path.is_file():
+        return "missing"
+    text = path.read_text(encoding="utf-8", errors="replace")
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def fingerprint(paths: list[str], root: Path | None = None, rev: str | None = None) -> str:
+    """对一组文件取指纹：`rev` 给定时取那个提交的内容，否则取工作区。
+
+    用途是**延迟复评**：记录时留两个指纹——改动后的工作区（change）与提交基线（baseline），
+    以后就能判断这次改动是"还在 / 被回退 / 又被改过"。
+    """
+    base = Path(root or PROJECT_ROOT)
+    parts: list[str] = []
+    for rel in sorted(set(paths or [])):
+        if rev:
+            proc = subprocess.run(
+                ["git", "-C", str(base), "show", f"{rev}:{rel}"],
+                capture_output=True, encoding="utf-8", errors="replace", timeout=30,
+            )
+            digest = (
+                hashlib.sha256((proc.stdout or "").encode("utf-8", "replace")).hexdigest()[:16]
+                if proc.returncode == 0
+                else "missing"
+            )
+        else:
+            digest = _file_digest(base / rel)
+        parts.append(f"{rel}:{digest}")
+    return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:16] if parts else ""
+
+
+def repo_commit(root: Path | None = None) -> str:
     """记录经验对应的代码版本：代码变了，经验可能就过期了（doc 02 §11）。"""
     try:
         out = subprocess.run(
-            ["git", "-C", str(PROJECT_ROOT), "rev-parse", "--short", "HEAD"],
+            ["git", "-C", str(root or PROJECT_ROOT), "rev-parse", "--short", "HEAD"],
             capture_output=True, text=True, timeout=10,
         )
         return out.stdout.strip() if out.returncode == 0 else ""
@@ -137,6 +175,11 @@ def compatibility(experience: "Experience", context: dict[str, str]) -> tuple[fl
     extra = experience.extra or {}
     signature = extra.get("task_signature") or {}
     reasons: list[str] = []
+    # 下游命中驱动的硬冲突：被隔离的、以及改动被回退的经验都不该再被注入
+    if extra.get("isolated"):
+        return 0.0, [f"已被隔离：{extra.get('isolation_reason') or '下游命中失败率超标'}"]
+    if extra.get("survival") == "reverted":
+        return 0.0, ["改动之后被回退（延迟复评发现），不能当正面例子"]
     score = 1.0
     if signature.get("language") and context.get("language") not in (None, "", "unknown"):
         if signature["language"] != context["language"]:
@@ -250,7 +293,9 @@ class Experience:
         return cls(**data)
 
 
-def build_experiences(trajectory: dict[str, Any]) -> list[Experience]:
+def build_experiences(
+    trajectory: dict[str, Any], root: Path | None = None
+) -> list[Experience]:
     """从一条轨迹派生经验；无可复用信号时返回空列表。"""
     if not isinstance(trajectory, dict):
         return []
@@ -313,6 +358,23 @@ def build_experiences(trajectory: dict[str, Any]) -> list[Experience]:
                 "used_count": 0,
                 "helped_count": 0,
                 "harmful_count": 0,
+                # 延迟复评用：改动后的工作区指纹 vs 提交基线指纹
+                "change_fingerprint": fingerprint(
+                    [redact(p) for p in trajectory.get("changed_paths") or []], root
+                ),
+                "baseline_fingerprint": fingerprint(
+                    [redact(p) for p in trajectory.get("changed_paths") or []],
+                    root,
+                    rev=repo_commit(root) or None,
+                ),
+                "applied": fingerprint(
+                    [redact(p) for p in trajectory.get("changed_paths") or []], root
+                )
+                != fingerprint(
+                    [redact(p) for p in trajectory.get("changed_paths") or []],
+                    root,
+                    rev=repo_commit(root) or None,
+                ),
             },
         )
     ]
@@ -381,6 +443,14 @@ class ExperienceStore:
         self._conn.commit()
         return touched
 
+    def update_extra(self, trajectory_id: str, extra: dict[str, Any]) -> bool:
+        cursor = self._conn.execute(
+            "UPDATE experiences SET extra = ? WHERE trajectory_id = ?",
+            (json.dumps(extra, ensure_ascii=False, default=str), trajectory_id),
+        )
+        self._conn.commit()
+        return cursor.rowcount > 0
+
     def utility(self) -> dict[str, dict[str, Any]]:
         """按经验汇总"用了多少次、帮上多少次"。样本少时只作参考。"""
         report: dict[str, dict[str, Any]] = {}
@@ -399,8 +469,8 @@ class ExperienceStore:
             }
         return report
 
-    def record_trajectory(self, trajectory: dict[str, Any]) -> list[str]:
-        return [self.record(exp) for exp in build_experiences(trajectory)]
+    def record_trajectory(self, trajectory: dict[str, Any], root: Path | None = None) -> list[str]:
+        return [self.record(exp) for exp in build_experiences(trajectory, root)]
 
     def recall(self, task: str, limit: int = 3) -> list[Experience]:
         """确定性关键词召回：空库 / 无重叠时返回空列表（阶段 16 换成向量检索）。"""
@@ -461,6 +531,90 @@ def record_trajectory(trajectory: dict[str, Any], config: dict[str, Any]) -> lis
         return store.record_trajectory(trajectory)
 
 
+def survival_of(experience: Experience, root: Path | None = None) -> str:
+    """这次改动活下来了吗：intact / reverted / modified / unknown。
+
+    trajectory 记的是"当时测试通过"，不等于改动后来存活——所以这里做**延迟复评**：
+    拿当前内容跟"改动后指纹"和"提交基线指纹"比。回到基线 = 被回退；两个都不一样 = 又被改过。
+    """
+    extra = experience.extra or {}
+    paths = list(experience.changed_paths or [])
+    change = str(extra.get("change_fingerprint") or "")
+    baseline = str(extra.get("baseline_fingerprint") or "")
+    if not paths or not change:
+        return "unknown"
+    if extra.get("applied") is False:
+        return "not_applied"  # 沙箱里跑完但补丁没落地：不是回退，只是还没应用
+    current = fingerprint(paths, root)
+    if current == change:
+        return "intact"
+    if baseline and current == baseline:
+        return "reverted"
+    return "modified"
+
+
+def reevaluate_utility(
+    store: ExperienceStore,
+    min_samples: int = UTILITY_MIN_SAMPLES,
+    help_rate_floor: float = UTILITY_HELP_RATE_FLOOR,
+) -> dict[str, list[str]]:
+    """下游命中驱动的衰减与隔离：样本够了但命中率低于底线 → 隔离。
+
+    隔离是可逆的：后续命中把命中率拉回底线以上会自动解除——记忆应该能"改过自新"，
+    但不该在被证明有害之后继续被注入。
+    """
+    report: dict[str, list[str]] = {"isolated": [], "revived": [], "kept": []}
+    for experience in store.all():
+        extra = dict(experience.extra or {})
+        used = int(extra.get("used_count") or 0)
+        helped = int(extra.get("helped_count") or 0)
+        if used < min_samples:
+            report["kept"].append(experience.trajectory_id)
+            continue
+        rate = helped / used
+        should_isolate = rate < help_rate_floor
+        was_isolated = bool(extra.get("isolated"))
+        if should_isolate and not was_isolated:
+            extra["isolated"] = True
+            extra["isolation_reason"] = (
+                f"下游命中 {used} 次仅帮上 {helped} 次（命中率 {rate:.2f} < {help_rate_floor}）"
+            )
+            store.update_extra(experience.trajectory_id, extra)
+            report["isolated"].append(experience.trajectory_id)
+        elif not should_isolate and was_isolated:
+            extra["isolated"] = False
+            extra["isolation_reason"] = f"命中率回升到 {rate:.2f}，解除隔离"
+            store.update_extra(experience.trajectory_id, extra)
+            report["revived"].append(experience.trajectory_id)
+        else:
+            report["kept"].append(experience.trajectory_id)
+    return report
+
+
+def reevaluate_survival(store: ExperienceStore, root: Path | None = None) -> dict[str, list[str]]:
+    """延迟复评：把"改动是否存活"写回经验，被回退的直接标成不可再用。
+
+    侥幸通过（当时测试过了、后来被 revert）在这一步才会暴露；只靠写入时的质量分看不出来。
+    """
+    report: dict[str, list[str]] = {
+        "intact": [], "reverted": [], "modified": [], "unknown": [], "not_applied": [],
+    }
+    for experience in store.all():
+        state = survival_of(experience, root)
+        extra = dict(experience.extra or {})
+        if extra.get("survival") == state:
+            report[state].append(experience.trajectory_id)
+            continue
+        extra["survival"] = state
+        if state == "reverted":
+            # 改动被回退 → 这条经验不能再当正面例子
+            extra["likely_effective"] = False
+            extra["reverted_reason"] = "改动之后回到提交基线（被回退或撤销）"
+        store.update_extra(experience.trajectory_id, extra)
+        report[state].append(experience.trajectory_id)
+    return report
+
+
 def record_usage_for_trajectory(
     trajectory: dict[str, Any], config: dict[str, Any]
 ) -> dict[str, Any]:
@@ -496,9 +650,14 @@ __all__ = [
     "build_experiences",
     "compatibility",
     "experience_path",
+    "fingerprint",
+    "reevaluate_survival",
+    "reevaluate_utility",
     "repo_commit",
     "record_trajectory",
+    "record_usage_for_trajectory",
     "reuse_constraints",
+    "survival_of",
     "task_signature",
     "task_key",
 ]

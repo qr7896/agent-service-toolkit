@@ -1299,6 +1299,42 @@ Windows 上判 pid 存活不能用 `os.kill(pid, 0)`——那会真的去终止�
 2. **桩模型要逐个模块替换**：`coding_agent` / `coding_planner` / `reviewer` 各自 import 了 `get_model`，只换一处会让 planner 拿到真模型并抛 `Unsupported model`。
 3. **桩模型必须收敛**：如果它每轮都要求调工具，图会一直转到递归上限——这类"桩写得不收敛"导致的失败看起来像框架问题，其实是测试自己的问题。
 
+### 4.39 记忆的两个回评回路：下游降权/隔离 + 延迟复评
+
+之前只有**写入时的质量分**（`likely_effective`）和**命中计数**（`used/helped/harmful`），缺两条回路：
+
+#### 一、下游命中驱动的衰减与隔离
+
+`reevaluate_utility(store)`：样本数 ≥ `UTILITY_MIN_SAMPLES`（3）且命中率 < `UTILITY_HELP_RATE_FLOOR`（0.34）→ 打上 `isolated` 并写明原因；命中率回升则**自动解除**。
+
+两个刻意的设计：
+
+- **样本不够不判**：只被用过 1–2 次就隔离太激进，噪声会被当成结论。
+- **可逆**：记忆应该能"改过自新"，但在被证明有害之后不该继续被注入。
+
+隔离在检索侧是**硬冲突**：`compatibility()` 直接返回 0 并给出原因，因此不会再被注入提示词。
+
+#### 二、延迟复评：改动活下来了吗
+
+trajectory 记的是"当时测试通过"，**不等于改动后来存活**——侥幸通过或被 revert 只有拖后看才知道。做法是记录时留两个指纹：
+
+| 指纹 | 取值 | 用途 |
+|---|---|---|
+| `change_fingerprint` | 改动后工作区内容的哈希 | 判断改动是否还在 |
+| `baseline_fingerprint` | **提交基线**（`git show HEAD:path`）的哈希 | 判断是否被回退 |
+
+`survival_of()` 给出四种结论：`intact`（原样还在）/ `reverted`（回到基线 = 被回退）/ `modified`（又被改过，说不清是演进还是部分回退，不当作负面）/ `not_applied`（沙箱里跑完但补丁没落地——**不是回退**，只是还没应用）。
+
+`reverted` 的经验会被 `likely_effective=False` 并写 `reverted_reason`，检索侧同样归零。
+
+#### 三、接线
+
+`finalize_trajectory` 在两处回评都跑一遍（`experience_utility` / `experience_survival` 写进轨迹），所以每次任务收尾都会顺带维护记忆库；出错只记 `experience_reeval_error`，不影响任务结果。
+
+**验收**：`lg_practice/day34_memory_decay_check.py` **11/11**（零 API 调用）：样本不足不判、超标隔离、检索侧归零、命中率回升自动解除、两个指纹不同、intact / reverted / modified 三态、被回退经验在检索侧归零。回归 day14 8/8、day15 11/11、day16 11/11、day31 6/6、day29 17/17。
+
+**依然没做的**：这两个回路只有单测覆盖，**没有在真实任务流上积累统计**——`helped/harmful` 要在留出任务集上跑才有意义；`survival` 也只在测试用的临时仓库里验证过三态，真实仓库里还没有"改动落地 → 后来被 revert"的完整案例。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
