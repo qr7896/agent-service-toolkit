@@ -33,6 +33,7 @@ from agents.code_tools import PROJECT_ROOT, git_diff, list_files, read_file, sea
 from agents.coding_memory import format_experience_context, recall_experiences
 from agents.code_intel import CODE_INTEL_TOOLS
 from agents.evidence import audit_plan, decision_to_dict
+from agents.conflict import resolve as resolve_conflicts
 from agents.model_router import estimate_tokens, route_model
 from core import get_model, settings
 
@@ -273,6 +274,27 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     evidence_cards: list[dict[str, Any]] = []
     evidence_gate: dict[str, Any] = {}
     evidence_trace: list[dict[str, Any]] = []
+    conflict_verdict: dict[str, Any] = {}
+    # 冲突分流（静态优先，实验兜底）：纯静态判断，不跑任何实验
+    verdict = resolve_conflicts(
+        plan_dict,
+        experiences=hits,
+        options=plan_dict.get("alternatives") or [],
+        experiments_allowed=int(conf.get("conflict_experiments_allowed", 1)),
+    )
+    conflict_verdict = {
+        "exit": verdict.exit,
+        "static_conflicts": verdict.static_conflicts,
+        "experiment": verdict.experiment,
+        "experiments_allowed": verdict.experiments_allowed,
+        "experiments_requested": verdict.experiments_requested,
+    }
+    if verdict.exit == "stale_experience":
+        # 失效经验当场停用：不注入、不参与后续决策，但把原因留下来
+        plan_dict["open_questions"] = [
+            *plan_dict.get("open_questions", []),
+            "存在失效经验（引用文件此后已改动）：已停用，需重新确认后再复用",
+        ]
     if bool(conf.get("evidence_gate", False)):
         # 注意变量名：这里不能叫 decision——上面 route_model 的 decision 还要用来取 model/tier，
         # 覆盖它会让开启门控的路径直接 AttributeError（A/B 的 D 组实测崩过）
@@ -302,6 +324,7 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
         "evidence_cards": evidence_cards,
         "evidence_gate": evidence_gate,
         "evidence_trace": evidence_trace,
+        "conflicts": conflict_verdict,
         "experience_hits": [{**hit, "retrieval": retrieval, "phase": "planning"} for hit in hits],
         "llm_calls": int(state.get("llm_calls") or 0) + 1 + recon_rounds,
         "estimated_tokens": int(state.get("estimated_tokens") or 0)

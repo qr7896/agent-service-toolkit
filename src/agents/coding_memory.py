@@ -107,6 +107,8 @@ def _hit(experience: Experience, distance: float | None = None) -> dict[str, Any
         "outcome": experience.outcome,
         "failure_type": experience.failure_type,
         "changed_paths": experience.changed_paths,
+        # 带上记录时的版本：冲突分流要据此判断"这条经验引用的文件是否已经变了"
+        "repo_commit": (experience.extra or {}).get("repo_commit") or "",
         "test_summary": experience.test_summary,
         "review_summary": experience.review_summary,
         "distance": distance,
@@ -256,7 +258,14 @@ def _apply_compatibility(
             kept.append(hit)
             continue
         score, notes = compatibility(experience, context)
-        enriched = {**hit, "compatibility": score, "compatibility_notes": notes}
+        # 补齐冲突分流需要的静态信息（向量命中的 metadata 里可能没有这两项）
+        enriched = {
+            **hit,
+            "compatibility": score,
+            "compatibility_notes": notes,
+            "repo_commit": (experience.extra or {}).get("repo_commit") or hit.get("repo_commit", ""),
+            "changed_paths": experience.changed_paths or hit.get("changed_paths") or [],
+        }
         if score > 0:
             kept.append(enriched)
     return kept
