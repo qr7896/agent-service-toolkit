@@ -1060,6 +1060,47 @@ steps:
 
 新增 `lg_practice/day30_ab_harness_check.py` **11/11**（零 API 调用）。全量回归 11 个脚本全绿：day14 7/7、day15 11/11、day16 11/11、day17 7/7、day21 10/10、day23 10/10、day24 15/15、day25 4/4、day27 11/11、day29 14/14、day30 11/11。
 
+### 4.32 外部资源补齐：真实后端、四组对照真跑、真实任务集（2026-09-17）
+
+#### 一、CodeGraph：给出可运行的后端，而不是只有假 CLI
+
+新增 `scripts/codegraph_cli.py`——把本仓库的代码智能能力按 CodeGraph 的 CLI 契约暴露成**进程外后端**，适配层走的是真实子进程调用而不是测试桩；接入第三方 CodeGraph 时只改 `CODEGRAPH_CLI` 指向。
+
+**关于第三方 CodeGraph 的实话**：本机没有 node/npm，`codegraph` 也未安装；npm registry 上确实存在同名包（`codegraph@1.0.0`），但无法确认它是否就是设计文档所指的项目（文档引用的 arXiv 编号超出当前时间，无法核实）。所以这里**不声称已接入第三方 CodeGraph**，只保证契约对齐、换后端不用改代码。
+
+#### 二、真实任务集：从本仓库的修复史生成
+
+新增 `scripts/make_repo_tasks.py`：从 git 取"修复前 / 修复后"两个版本的**真实文件内容**生成 SWE 风格任务，仓库里不存重复源码，扩展只是往列表里加一条。
+
+过程中踩到两个坑：
+
+1. **commit 顺序记反了**：第一版把 `28ef9cb` 当 buggy 版本，但那个提交其实**比修复提交 `3183ac9` 更新**，任务因此永远通过。教训：判断"哪一版是坏的"要去 git 里查，不能凭记忆。
+2. **editable 安装会截走 import**：测试里 `import agents.agent_workflow` 拿到的是**工作区版本**而不是沙箱里被测的版本（setuptools 的 meta-path finder 优先于 `sys.path`），任务同样永远通过。改成按文件路径 `importlib` 加载才真正测到沙箱那份。
+
+修正后任务能正确区分：**修复前 F2P 0/1、P2P 1/1（未解决）；打上标准修复后 1/1、1/1（resolved）**。
+
+#### 三、四组对照真跑（每臂前 2 个任务，真实 LLM）
+
+| 组 | 独立判分通过 | 平均 attempts | 平均工具调用 | 平均 token 估算 |
+|---|---|---|---:|---:|---:|
+| A `A_files_only` | 2/2 | 2.0 | 23.5 | ~94k |
+| B `B_search` | 2/2 | 1.5 | 29.5 | ~121k |
+| C `C_codeintel` | 2/2 | 2.0 | 41.0 | ~384k |
+| D `D_codeintel_gate`（修复后） | 1/1 | 2.0 | 34.0 | ~135k |
+
+**能说与不能说**：能说的是"四组都能跑通、判分链路正常"；**不能**说任何一组更好——每臂只有 1–2 个任务，且首次通过率全是 0。C 组 token 是 B 组的 3 倍多，只说明"给了更多证据工具但没给停止策略时成本会上去"，这正是 D 组要解决的问题。
+
+#### 四、这次真跑抓到的三个真 bug（打桩测不出来）
+
+1. **脱敏规则把成本数据吃掉了**：`redact()` 原本是"键名含 `token` 就脱敏"，于是 `estimated_tokens` 变成 `[REDACTED]`，成本指标一直是坏的。改成精确匹配 + 后缀匹配（`_token` 结尾才算凭据），并补了回归断言。
+2. **变量名覆盖导致 D 组直接崩**：planner 里 `decision` 先接 `route_model`、又被 `audit_plan` 的结果覆盖，取 `decision.tier` 时 `AttributeError`。
+3. **门控从"门"变成"墙"**（最严重）：`code_intel` 的索引把 `_eval_sandbox` 当噪声排除了，而评测任务的文件正在那里 → 目标证据永远补不满；同时**主动取证结果没有回灌到证据卡**、每轮还会重选同一个动作；另外 `impact` 把"影响面大小"当成了"影响证据是否拿到"。三处一起修后，D 组从 `0/2、654k–1.54M token` 变成 `1/1、135k token`。
+
+#### 五、还没补上的两件
+
+- **留出集效用统计**：`ExperienceStore.record_usage()` / `utility()` 已就位并单测，但 **Agent 循环还没有调用它**，所以没有真实计数；要在时间切分的留出任务上统计，先得有更大任务集。
+- **Docker 构建验证**：本机没有 Docker / podman，WSL 也未安装发行版，**确实无法执行**。新增 `scripts/verify_container.ps1`，把"构建 → 起服务 → 探活 → 检查模型与向量库挂载 → 容器重建后 `.codex` 是否还在"固定成脚本，换台有 Docker 的机器直接跑。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1327,10 +1368,11 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **按新定位（[RUNTIME.md](./RUNTIME.md)）重排后的待办**：
 
-1. **接真实 CodeGraph 后端**：适配层与回退已就绪并验证，只差一个能连通的后端（`CODEGRAPH_CLI` 或 `CODEGRAPH_MCP_URL`）。
-2. **跑 EGCP 的四组对照**：矩阵与配置已就位（§4.31），执行需要额度。
-3. **换真实任务集**：SWE 风格判分器已就位，差的是一批真实 issue 任务（`base commit + 可执行测试 + 独立判分`）。
-4. **经验效用统计**：`record_usage` 的计数已就位，需要在时间切分的留出任务上统计。
+1. ✅ **接真实 CodeGraph 后端**（§4.32）：已提供进程外可运行后端；第三方 CodeGraph 无法在本机核实，未声称已接入。
+2. ✅ **跑 EGCP 的四组对照**（§4.32）：A/B/C/D 各跑通过；样本 1–2 个任务，**不足以下任何结论**，只见 C 组成本显著高于 B 组。
+3. ✅ **真实任务集**（§4.32）：已能从本仓库修复史生成 SWE 风格任务并正确判分；扩展到真实 GitHub issue 只是换数据。
+4. ⬜ **经验效用统计**：`record_usage` / `utility` 已就位但**尚未接入 Agent 循环**，也没有留出任务集。
+5. ⬜ **Docker 构建验证**：本机无 Docker/podman、WSL 无发行版；已交付 `scripts/verify_container.ps1`，待有 Docker 的机器执行。
 
 - **阶段 18 的样本量**：n=3 只能算方向性观察，成功率和首次通过率都还不足以下结论。要写进简历或答辩，需要扩充任务数并提高任务难度，让成功率不再撞天花板。**成本口径已在 §4.26 补上**，重跑时每行会带 `llm_calls` / `estimated_tokens`。
 - **阶段 20 的构建验证**：本机没有 Docker。有 Docker 的环境里应补一次 `docker compose -f compose.yaml -f compose.local-models.yaml up --build`，确认服务能起来、能回答普通问题，并确认重启后 `.codex` 数据仍在。

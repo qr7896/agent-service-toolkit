@@ -274,19 +274,21 @@ async def planner(state: dict[str, Any], config: RunnableConfig) -> dict[str, An
     evidence_gate: dict[str, Any] = {}
     evidence_trace: list[dict[str, Any]] = []
     if bool(conf.get("evidence_gate", False)):
-        decision, cards, trace = audit_plan(
+        # 注意变量名：这里不能叫 decision——上面 route_model 的 decision 还要用来取 model/tier，
+        # 覆盖它会让开启门控的路径直接 AttributeError（A/B 的 D 组实测崩过）
+        gate_decision, cards, trace = audit_plan(
             plan_dict,
             thresholds=conf.get("evidence_thresholds"),
             max_rounds=int(conf.get("evidence_max_rounds", 2)),
         )
         evidence_cards = [asdict(card) for card in cards]
-        evidence_gate = decision_to_dict(decision)
+        evidence_gate = decision_to_dict(gate_decision)
         evidence_trace = trace
-        if not decision.passed:
+        if not gate_decision.passed:
             # 弃权：证据不足时不进入写阶段，把缺口作为待确认问题交出去
             plan_dict["open_questions"] = [
                 *plan_dict.get("open_questions", []),
-                f"证据门控未通过（缺 {', '.join(decision.debt)}）：补足证据前不应开始修改",
+                f"证据门控未通过（缺 {', '.join(gate_decision.debt)}）：补足证据前不应开始修改",
             ]
 
     return {

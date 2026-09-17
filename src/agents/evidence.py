@@ -104,7 +104,28 @@ def _identifier_tokens(text: str) -> list[str]:
     return tokens
 
 
-def evaluate_step(step: dict[str, Any], task: str = "", root: Path | None = None) -> EvidenceCard:
+def _symbols_from_observation(observation: str, path: str) -> list[str]:
+    """从取证结果里抠出"这个文件里真实定义的符号"，用来补 target 证据。
+
+    没有这一步，主动取证就只是往轨迹里记一段文本、覆盖度永远不动——
+    门控会从"门"变成"墙"（A/B 的 D 组实测过：一直拦着写，任务做不完）。
+    """
+    names: list[str] = []
+    for line in str(observation or "").splitlines():
+        parts = line.strip().split()
+        if len(parts) >= 3 and ":" in parts[0]:
+            file_part, _, _line = parts[0].rpartition(":")
+            if file_part.replace("\\", "/") == path.replace("\\", "/"):
+                names.append(parts[-1])
+    return names
+
+
+def evaluate_step(
+    step: dict[str, Any],
+    task: str = "",
+    root: Path | None = None,
+    acquired_symbols: dict[str, list[str]] | None = None,
+) -> EvidenceCard:
     """给一个计划步骤生成证据卡：只写"我查到了什么"，不写"我觉得"。"""
     index = code_intel.build_index(root)
     path = str(step.get("path") or "")
@@ -121,7 +142,10 @@ def evaluate_step(step: dict[str, Any], task: str = "", root: Path | None = None
         name for name in sorted(symbols_in_file)
         if re.search(rf"(?<![A-Za-z0-9_]){re.escape(name)}(?![A-Za-z0-9_])", text)
     ]
-    chosen = named or (sorted(symbols_in_file)[:1] if len(symbols_in_file) == 1 else [])
+    acquired = [name for name in (acquired_symbols or {}).get(path, []) if name in symbols_in_file]
+    chosen = named or acquired or (
+        sorted(symbols_in_file)[:1] if len(symbols_in_file) == 1 else []
+    )
 
     callers: list[str] = []
     related_tests: list[str] = []
@@ -177,11 +201,18 @@ def state_from_cards(cards: list[EvidenceCard], plan: dict[str, Any], root: Path
         else:
             target_scores.append(0.4)  # 知道文件但不知道具体符号
 
-        impact_scores.append({"none": 0.0, "low": 0.4, "medium": 0.8, "high": 1.0}[card.impact_level])
+        # impact 维度衡量的是"影响证据拿没拿到"，不是影响面大小：
+        # 定位到符号并且分析跑过（哪怕结论是"没有调用方"）就算拿到了。
+        # 影响面大小（low/medium/high）仍然记录在证据卡里，供人阅读。
+        impact_scores.append(1.0 if card.target_symbols else 0.0)
 
         if card.related_tests:
             verification_scores.append(1.0)
-        elif any(str(item).split()[0].endswith(".py") for item in verification_plan):
+        elif any(
+            token.endswith(".py")
+            for item in verification_plan
+            for token in str(item).replace("=", " ").split()
+        ):
             verification_scores.append(0.6)  # 计划里写了测试文件，但没确认它覆盖目标
         else:
             verification_scores.append(0.0)
@@ -214,9 +245,16 @@ def score_action(action: str, gaps: list[str]) -> float:
     return round(gain / (spec["cost"] + LAMBDA_RISK * spec["risk"] + EPS), 4)
 
 
-def pick_action(gaps: list[str]) -> str:
-    """选当前最高效的取证动作；没有任何动作能补缺口时退回"问人"。"""
-    scored = [(score_action(action, gaps), action) for action in ACTION_SPACE]
+def pick_action(gaps: list[str], exclude: set[str] | None = None) -> str:
+    """选当前最高效的取证动作；没有任何动作能补缺口时退回"问人"。
+
+    `exclude` 用来排除本轮已经试过、但没带来进展的动作——否则会在同一个动作上
+    原地打转（每轮效用一样高，等于白花一轮）。
+    """
+    blocked = exclude or set()
+    scored = [
+        (score_action(action, gaps), action) for action in ACTION_SPACE if action not in blocked
+    ]
     scored = [item for item in scored if item[0] > 0]
     if not scored:
         return "ask_clarification"
@@ -227,6 +265,10 @@ def execute_action(action: str, plan: dict[str, Any], root: Path | None = None) 
     """执行只读取证动作，返回给规划器看的证据文本。写操作不在动作空间里。"""
     cards = [evaluate_step(step, plan.get("task") or "", root) for step in plan.get("steps") or []]
     symbols = [name for card in cards for name in card.target_symbols]
+    target_paths = [str(step.get("path") or "") for step in plan.get("steps") or []]
+    if action in {"get_ai_context", "read_file"} and target_paths:
+        # 已知文件、未知符号时：直接问"这个文件里定义了什么"
+        return "\n".join(code_intel.symbols_in_file(path, root) for path in target_paths if path)
     query = symbols[0] if symbols else _fallback_symbol_query(plan)
     if action in {"symbol_search", "search_code"}:
         return code_intel.symbol_search(query, root)
@@ -238,9 +280,6 @@ def execute_action(action: str, plan: dict[str, Any], root: Path | None = None) 
         return code_intel.analyze_impact(query, root)
     if action == "find_related_tests":
         return code_intel.find_related_tests(query, root)
-    if action == "get_ai_context":
-        path = (plan.get("steps") or [{}])[0].get("path") or ""
-        return code_intel.symbol_search(Path(path).stem if path else query, root)
     return f"（{action} 需要模型参与，本阶段只自动执行确定性动作）"
 
 
@@ -264,21 +303,34 @@ def audit_plan(
     limits = thresholds or DEFAULT_THRESHOLDS
     trace: list[dict[str, Any]] = []
     rounds = 0
+    acquired: dict[str, list[str]] = {}
+    tried: set[str] = set()
 
     while rounds < max_rounds:
         gaps = detect_gaps(state, limits)
         if not gaps:
             break
-        action = pick_action(gaps)
+        action = pick_action(gaps, exclude=tried)
         if action == "ask_clarification":
             break
+        tried.add(action)
         observation = execute_action(action, plan, root)
+        # 把取证结果回灌进证据：只在"看的正是计划要改的那个文件"时采纳，
+        # 避免检索到别处的东西被当成目标证据
+        for step in plan.get("steps") or []:
+            path = str(step.get("path") or "")
+            found = _symbols_from_observation(observation, path)
+            if found:
+                acquired[path] = sorted({*acquired.get(path, []), *found})
         rounds += 1
         state.queries_used += 1
         trace.append(
             {"round": rounds, "action": action, "filled": gaps[0], "observation": observation[:800]}
         )
-        cards = [evaluate_step(step, plan.get("task") or "", root) for step in plan.get("steps") or []]
+        cards = [
+            evaluate_step(step, plan.get("task") or "", root, acquired)
+            for step in plan.get("steps") or []
+        ]
         new_state = state_from_cards(cards, plan, root)
         # 只保留本轮真正提升的维度，避免"原地打转"被当成进展
         for dim in ("target", "impact", "verification"):

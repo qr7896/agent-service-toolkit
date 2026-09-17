@@ -24,8 +24,10 @@ from langchain_core.tools import tool
 
 SKIP_DIRS = {
     ".git", ".venv", "venv", "__pycache__", "node_modules", "models", "chroma_db",
-    ".codex", "_eval_sandbox", ".pytest_cache", "build", "dist",
+    ".codex", ".pytest_cache", "build", "dist",
 }
+# 注意：不要把 `_eval_sandbox` 排除掉。评测任务的文件就在那里，索引看不见它们，
+# 证据门控就会永远判"目标未知"（A/B 的 D 组实测踩过：任务一直做不完）。
 MAX_IMPACT_DEPTH = 4
 
 
@@ -241,6 +243,23 @@ def find_related_tests(symbol: str, root: Path | None = None, limit: int = 20) -
     return "\n".join(sorted(related)[:limit])
 
 
+def symbols_in_file(path: str, root: Path | None = None, limit: int = 40) -> str:
+    """列出某个文件里定义的符号，输出格式与 symbol_search 一致（`路径:行号 类型 名字`）。
+
+    这是"已知要改哪个文件、但还不知道具体改哪个符号"时的取证动作：
+    没有它，证据门控的 target 维度补不满，门就从"门"变成"墙"。
+    """
+    index = build_index(root)
+    target = str(path or "").replace("\\", "/")
+    hits = sorted(
+        (symbol for symbols in index.symbols.values() for symbol in symbols if symbol.path == target),
+        key=lambda item: item.lineno,
+    )
+    if not hits:
+        return f"no symbols found in {path}"
+    return "\n".join(f"{s.path}:{s.lineno} {s.kind} {s.name}" for s in hits[:limit])
+
+
 def index_summary(root: Path | None = None) -> dict[str, Any]:
     index = build_index(root)
     return {
@@ -301,4 +320,5 @@ __all__ = [
     "index_summary",
     "symbol_search",
     "symbol_search_tool",
+    "symbols_in_file",
 ]

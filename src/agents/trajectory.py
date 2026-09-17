@@ -17,7 +17,20 @@ from uuid import uuid4
 from agents.code_tools import PROJECT_ROOT
 
 DEFAULT_TRAJECTORY_PATH = PROJECT_ROOT / ".codex" / "trajectories" / "coding_agent.jsonl"
-SENSITIVE_KEY_MARKERS = ("api_key", "apikey", "secret", "token", "password", "authorization")
+# 只认"看起来就是在装凭据"的键名。
+# 第一版是"键名里含 token 就脱敏"，结果把 estimated_tokens 也脱敏成了 [REDACTED]，
+# 成本指标一直是坏的（真实基准跑起来才暴露）。所以这里改成精确匹配 + 后缀匹配。
+SENSITIVE_KEYS = {
+    "key", "apikey", "api_key", "secret", "token", "password",
+    "authorization", "credential", "credentials",
+}
+SENSITIVE_SUFFIXES = ("_key", "_secret", "_token", "_password", "_authorization", "_credential")
+SENSITIVE_KEY_MARKERS = (*SENSITIVE_KEYS, *SENSITIVE_SUFFIXES)  # 兼容旧引用
+
+
+def is_sensitive_key(key: str) -> bool:
+    normalized = str(key or "").strip().lower().replace("-", "_")
+    return normalized in SENSITIVE_KEYS or normalized.endswith(SENSITIVE_SUFFIXES)
 
 
 def utc_now() -> str:
@@ -70,7 +83,7 @@ def _status(state: dict[str, Any]) -> str:
 
 def redact(value: Any, key: str = "") -> Any:
     """递归清除敏感字段，保证轨迹不能意外变成凭据存储。"""
-    if any(marker in key.lower() for marker in SENSITIVE_KEY_MARKERS):
+    if is_sensitive_key(key):
         return "[REDACTED]"
     if isinstance(value, dict):
         return {str(k): redact(v, str(k)) for k, v in value.items()}

@@ -29,6 +29,7 @@ TOOLS = (
     "get_callees",
     "analyze_impact",
     "find_related_tests",
+    "symbols_in_file",
 )
 TIMEOUT_SECONDS = 60
 

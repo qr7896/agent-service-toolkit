@@ -328,7 +328,7 @@ def summarize(rows: list[dict]) -> dict:
     }
 
 
-async def main_async(limit: int | None, model: str) -> int:
+async def main_async(limit: int | None, model: str, arms: list[str] | None = None) -> int:
     tasks = TASKS[:limit] if limit else TASKS
     EVAL_DATA.mkdir(parents=True, exist_ok=True)
     for stale in ("trajectories.jsonl", "experience.db"):
@@ -338,7 +338,7 @@ async def main_async(limit: int | None, model: str) -> int:
     unstage_sandbox()
 
     rows: list[dict] = []
-    for arm in ("baseline", "experience"):
+    for arm in arms or ["baseline", "experience"]:
         print(f"\n=== arm: {arm} ===")
         for task in tasks:
             row = await run_one(task, arm, model)
@@ -355,13 +355,20 @@ async def main_async(limit: int | None, model: str) -> int:
     report = {
         "model": model,
         "task_count": len(tasks),
+        # 按组汇总（EGCP 四组对照用）。baseline/experience 保留是为了兼容旧报告口径。
+        "arms": {
+            name: summarize([row for row in rows if row["arm"] == name])
+            for name in {row["arm"] for row in rows}
+            if name not in {"baseline", "experience"}
+        },
         "baseline": summarize([r for r in rows if r["arm"] == "baseline"]),
         "experience": summarize([r for r in rows if r["arm"] == "experience"]),
         "rows": rows,
     }
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print("\n=== 汇总 ===")
-    print(json.dumps({k: report[k] for k in ("baseline", "experience")}, ensure_ascii=False, indent=2))
+    print(json.dumps(report["arms"] or {k: report[k] for k in ("baseline", "experience")},
+                     ensure_ascii=False, indent=2))
     print(f"\n明细：{REPORT}")
     return 0
 
@@ -370,13 +377,20 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Coding benchmark: baseline vs experience memory")
     parser.add_argument("--limit", type=int, default=None, help="只跑前 N 个任务（冒烟用）")
     parser.add_argument("--model", default=settings.DEFAULT_MODEL)
+    parser.add_argument(
+        "--arms",
+        default="",
+        help="逗号分隔的组名。预置：baseline / experience / A_files_only / B_search / "
+             "C_codeintel / D_codeintel_gate",
+    )
     parser.add_argument("--list", action="store_true", help="列出任务后退出")
     args = parser.parse_args()
     if args.list:
         for task in TASKS:
             print(f"{task.name:24s} {task.kind}")
         return
-    raise SystemExit(asyncio.run(main_async(args.limit, args.model)))
+    chosen = [item.strip() for item in args.arms.split(",") if item.strip()] or None
+    raise SystemExit(asyncio.run(main_async(args.limit, args.model, chosen)))
 
 
 if __name__ == "__main__":

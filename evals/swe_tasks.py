@@ -34,8 +34,11 @@ class TaskSpec:
 
 
 def _spec_from_dict(data: dict) -> TaskSpec:
-    required = ("instance_id", "problem_statement", "FAIL_TO_PASS", "PASS_TO_PASS")
+    # PASS_TO_PASS 允许为空列表（有些任务确实没有需要保住的用例），但字段必须存在
+    required = ("instance_id", "problem_statement", "FAIL_TO_PASS")
     missing = [key for key in required if not data.get(key)]
+    if "PASS_TO_PASS" not in data:
+        missing.append("PASS_TO_PASS")
     if missing:
         raise ValueError(f"任务缺少必填字段 {missing}：{data.get('instance_id') or data}")
     return TaskSpec(
@@ -45,7 +48,7 @@ def _spec_from_dict(data: dict) -> TaskSpec:
         test_files={str(k): str(v) for k, v in (data.get("test_files") or {}).items()},
         gold_files={str(k): str(v) for k, v in (data.get("gold_files") or {}).items()},
         FAIL_TO_PASS=list(data["FAIL_TO_PASS"]),
-        PASS_TO_PASS=list(data["PASS_TO_PASS"]),
+        PASS_TO_PASS=list(data.get("PASS_TO_PASS") or []),
         repo=str(data.get("repo") or ""),
         base_commit=str(data.get("base_commit") or ""),
     )
