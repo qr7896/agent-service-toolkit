@@ -1,9 +1,13 @@
-"""在隔离副本里跑一次 Coding Agent 任务（阶段 19）。
+"""在隔离副本里跑一次 Coding Agent 任务（阶段 19 + 缺口修复）。
 
     python scripts/sandboxed_task.py --task "修复 calc.py 的 add" [--keep] [--agent]
     python scripts/sandboxed_task.py --task "..." --no-agent   # 只建副本，验证隔离
 
 不带 --agent 时只创建副本、打印它的位置，用来确认隔离与回收是否正常，不调用任何 LLM。
+
+**产物是 patch，不是"一个改好的仓库"**：任务跑完导出 `git diff` + 测试结果，写进
+`.codex/patches/`，原始仓库全程没有被写过；要不要回写由人决定（`git apply`）。
+启动时会先做一次 `gc_sandboxes()`，清掉上次被强杀留下的孤儿副本。
 """
 
 from __future__ import annotations
@@ -16,7 +20,15 @@ from pathlib import Path
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_DIR / "src"))
 
-from agents.workspace import create_sandbox, reclaim_sandbox, sandbox_env  # noqa: E402
+from agents.workspace import (  # noqa: E402
+    collect_result,
+    create_sandbox,
+    gc_sandboxes,
+    reclaim_sandbox,
+    sandbox_env,
+)
+
+PATCH_DIR = PROJECT_DIR / ".codex" / "patches"
 
 RUNNER = """
 import asyncio, json, sys
@@ -46,6 +58,7 @@ def main() -> None:
 
     sandbox = create_sandbox(args.name)
     print(f"sandbox: {sandbox}")
+    result: dict | None = None
     try:
         if not args.no_agent:
             proc = subprocess.run(
@@ -59,12 +72,27 @@ def main() -> None:
             print(proc.stdout.strip()[-800:])
             if proc.returncode != 0:
                 print(proc.stderr.strip()[-800:], file=sys.stderr)
+            result = collect_result(sandbox)
     finally:
+        if result is None:
+            result = collect_result(sandbox)
+        # patch 永远写出来：它是这次任务的产物，保留副本只是方便排查
+        PATCH_DIR.mkdir(parents=True, exist_ok=True)
+        patch_file = PATCH_DIR / f"{args.name}.patch"
+        patch_file.write_text(result["patch"], encoding="utf-8")
+        print(
+            f"patch: {patch_file}（{len(result['changed_files'])} 个文件改动："
+            f"{', '.join(result['changed_files']) or '无'}）"
+        )
+        print(f"apply: git -C {PROJECT_DIR} apply {patch_file}")
         if args.keep:
             print("kept (remove it manually when done)")
         else:
             reclaim_sandbox(sandbox)
             print("sandbox reclaimed")
+    gc_report = gc_sandboxes()
+    if gc_report["removed"]:
+        print(f"gc: 清理孤儿副本 {gc_report['removed']}")
 
 
 if __name__ == "__main__":

@@ -1170,6 +1170,47 @@ steps:
 
 **为什么这个区分重要**：合并成一个出口时，用户拿到的行动指令是错的——缺证据该补检索，收益递减该换策略，预算耗尽该放宽预算。把三种混成"证据不足"，等于让人去修一个不是问题的问题。
 
+### 4.35 修复沙箱的两个设计缺口（缺口一：孤儿回收 / 缺口二：产物是 patch）
+
+这两个是**设计缺口**，不是实现细节。
+
+#### 缺口一：孤儿副本没人回收
+
+原来只在 `finally` 里删目录，只覆盖正常路径；`kill -9` / OOM / 断电留下的副本会一直堆着。改法是"**任务结束时 + 启动时**"两侧都要：
+
+| 机制 | 实现 |
+|---|---|
+| 副本名可判定 | `sandbox_path(name, pid, stamp)` → `<name>-<pid>-<时间戳>` |
+| 副本自述 | 副本内写 `sandbox.json`（name / pid / created_at / source） |
+| 启动时兜底 | `create_sandbox()` 先调 `gc_sandboxes()` |
+| GC 判据 | 记录的 pid 还活着 → 保留；pid 已消失 → 删（`orphan_pid`）；没有元数据的老目录 → 按 mtime 删（`stale`） |
+
+Windows 上判 pid 存活不能用 `os.kill(pid, 0)`——那会真的去终止进程，所以走 `tasklist`。
+
+**顺带抓到一个真 bug**：`.git` 里的对象是只读的，Windows 上 `rmtree` 会失败，而原实现用了 `ignore_errors=True` **并且照样返回 True**——"回收成功"是假的，副本照样堆积。新增 `_remove_tree()`：先清只读位再删，删完检查目录是否真的消失；`reclaim_sandbox` / `gc_sandboxes` 现在如实返回结果。这个 bug 正是这次改动引入 `.git` 后才暴露的。
+
+#### 缺口二：产物是 patch，不是"一个改好的仓库"
+
+原来沙箱跑完就删了，没有回写路径；更糟的是副本里**没有 `.git`**（被我当噪声排除了），所以沙箱内 Agent 的 `git_diff` 工具其实是坏的，也没法产出补丁。
+
+现在的形态：
+
+```text
+副本里跑任务 → git diff 导出 patch → 与测试结果一起交给上层 / 用户 apply
+原始仓库从头到尾没有被写过
+```
+
+| 机制 | 实现 |
+|---|---|
+| 副本是真仓库 | `.git` 不再排除（只有 3.5MB），沙箱内 `git_diff` 因此可用 |
+| baseline 固化 | 创建时在副本里提交一次 `sandbox baseline`（用 `-c user.*` 显式身份），因此 `git diff` **只包含任务期间的改动**，不会混进原仓库已有的未提交改动 |
+| 导出 | `export_patch()` → `{patch, changed_files}`；`collect_result()` → patch + 测试结果 + apply 提示 |
+| 交付 | `scripts/sandboxed_task.py` 把 patch 写到 `.codex/patches/<name>.patch`，并打印 `git apply` 命令；**不做自动回写** |
+
+自动同步回去等于只保护了"中间过程的越权"，没保护"最终结果"——所以这里明确不自动 apply。
+
+**验收**：`lg_practice/day19_sandbox_check.py` **14/14**（新增：副本名带 pid、GC 保留活进程副本、GC 删死 pid 孤儿、GC 按 mtime 清无元数据老目录、patch 含本次改动、**原始仓库全程未被写入**）。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
