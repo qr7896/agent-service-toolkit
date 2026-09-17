@@ -32,10 +32,54 @@ from agents.agent_config import AgentConfigError
 from core import get_model, settings
 
 
+MAX_INLINE_DEPTH = 4
+
+
 class WorkflowStep(BaseModel):
-    agent: str = Field(description="已有 Agent 的 key")
+    """一个步骤：要么**引用**已有 Agent（含另一个工作流），要么**内联**一个子工作流。
+
+    内联字段与顶层 `WorkflowConfig` 同构，所以 `WorkflowStep` 是**可递归**的——
+    "循环里套并行、外层再包条件"可以直接写在同一个 YAML 里，不必拆成多个文件。
+    两者只能选一种：同时写 `agent` 和 `mode` 会被校验拒绝。
+    """
+
+    agent: str | None = Field(default=None, description="已有 Agent 的 key（含其他工作流）")
     name: str = Field(default="", description="这一步的显示名，留空则用 agent key")
     input_template: str = Field(default="{input}", description="支持 {input} / {previous}")
+    # ---- 内联子工作流（与 WorkflowConfig 同构）----
+    mode: Literal["sequential", "parallel", "router", "conditional", "loop", "hierarchy"] | None = None
+    steps: list["WorkflowStep"] = Field(default_factory=list)
+    candidates: list[str] = Field(default_factory=list)
+    routing_prompt: str = ""
+    condition: Condition | None = None
+    then: list["WorkflowStep"] = Field(default_factory=list)
+    otherwise: list["WorkflowStep"] = Field(default_factory=list)
+    until: Condition | None = None
+    max_iterations: int = Field(default=3, ge=1, le=20)
+    supervisor_prompt: str = ""
+    workers: list[str] = Field(default_factory=list)
+    max_rounds: int = Field(default=3, ge=1, le=20)
+
+    def inline_config(self, fallback_key: str) -> "WorkflowConfig | None":
+        """把内联字段转成一个等价的工作流配置；不是内联步骤则返回 None。"""
+        if not self.mode:
+            return None
+        return WorkflowConfig(
+            key=self.name or fallback_key,
+            description="（内联子工作流）",
+            mode=self.mode,
+            steps=self.steps,
+            candidates=self.candidates,
+            routing_prompt=self.routing_prompt,
+            condition=self.condition,
+            then=self.then,
+            otherwise=self.otherwise,
+            until=self.until,
+            max_iterations=self.max_iterations,
+            supervisor_prompt=self.supervisor_prompt,
+            workers=self.workers,
+            max_rounds=self.max_rounds,
+        )
 
 
 class Condition(BaseModel):
@@ -97,13 +141,37 @@ def user_input(state: dict[str, Any]) -> str:
 
 
 def referenced_agents(config: WorkflowConfig) -> list[str]:
+    """递归收集所有**真实引用的 Agent**（内联子工作流要往下钻，否则注册表排不出依赖顺序）。"""
+    names: list[str] = []
     if config.mode == "router":
-        return list(config.candidates)
+        names += list(config.candidates)
     if config.mode == "hierarchy":
-        return list(config.workers)
+        names += list(config.workers)
+    steps = [*config.steps]
     if config.mode == "conditional":
-        return [step.agent for step in [*config.then, *config.otherwise]]
-    return [step.agent for step in config.steps]
+        steps = [*config.then, *config.otherwise]
+    for step in steps:
+        inner = step.inline_config(step.name or "inline")
+        if inner is not None:
+            names += referenced_agents(inner)
+        elif step.agent:
+            names.append(step.agent)
+    return names
+
+
+def _graph_for(node: Any, agent_graphs: dict[str, Any], depth: int = 0):
+    """取一个步骤对应的图：内联子工作流现场递归编译，否则按名字取已注册的图。"""
+    if isinstance(node, WorkflowStep):
+        inner = node.inline_config(node.name or "inline")
+        if inner is not None:
+            return _compile_config(inner, agent_graphs, depth + 1)
+        name = str(node.agent or "")
+    else:
+        name = str(node)
+    graph = agent_graphs.get(name)
+    if graph is None:
+        raise AgentConfigError(f"引用了不存在的 Agent：{name}")
+    return graph
 
 
 def matches(condition: Condition | None, requirement: str, previous: str) -> bool:
@@ -114,8 +182,26 @@ def matches(condition: Condition | None, requirement: str, previous: str) -> boo
     return any(word in haystack for word in condition.contains)
 
 
-def validate_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]) -> None:
-    """加载与构建共用同一套校验，避免出现"加载过了但构建时才炸"。"""
+def _validate_step(step: WorkflowStep, agent_graphs: dict[str, Any], depth: int, where: str) -> None:
+    inner = step.inline_config(step.name or "inline")
+    if inner is not None and step.agent:
+        raise AgentConfigError(f"{where} 的步骤 `{step.name or step.mode}` 同时写了 agent 和 mode，只能选一种")
+    if inner is None and not step.agent:
+        raise AgentConfigError(f"{where} 的步骤 `{step.name}` 既没有 agent 也没有内联 mode")
+    if inner is not None:
+        if depth + 1 > MAX_INLINE_DEPTH:
+            raise AgentConfigError(f"{where} 内联嵌套超过 {MAX_INLINE_DEPTH} 层，拒绝编译")
+        validate_workflow(inner, agent_graphs, depth + 1)
+        return
+    if step.agent not in agent_graphs:
+        raise AgentConfigError(f"{where} 引用了不存在的 Agent：{step.agent}")
+
+
+def validate_workflow(
+    config: WorkflowConfig, agent_graphs: dict[str, Any], depth: int = 0
+) -> None:
+    """加载与构建共用同一套校验（递归），避免出现"加载过了但构建时才炸"。"""
+    where = f"工作流 `{config.key}`"
     if config.mode == "router":
         if not config.candidates:
             raise AgentConfigError(f"工作流 `{config.key}`（router）必须给出 candidates")
@@ -142,10 +228,15 @@ def validate_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]) -> N
     elif not config.steps:
         raise AgentConfigError(f"工作流 `{config.key}` 至少要有一步")
     unknown = sorted(set(referenced_agents(config)) - set(agent_graphs))
-    if unknown:
+    if unknown and depth == 0:
         raise AgentConfigError(
             f"工作流 `{config.key}` 引用了不存在的 Agent {unknown}；可用：{sorted(agent_graphs)}"
         )
+    steps = [*config.steps]
+    if config.mode == "conditional":
+        steps = [*config.then, *config.otherwise]
+    for step in steps:
+        _validate_step(step, agent_graphs, depth, where)
 
 
 def _step_runner(step: WorkflowStep, agent_graph: Any):
@@ -164,7 +255,7 @@ def _step_runner(step: WorkflowStep, agent_graph: Any):
 
 def _build_sequential(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     def make_step(step: WorkflowStep):
-        return _step_runner(step, agent_graphs[step.agent])
+        return _step_runner(step, _graph_for(step, agent_graphs))
 
     graph = StateGraph(WorkflowState)
     names: list[str] = []
@@ -193,7 +284,7 @@ def _build_parallel(config: WorkflowConfig, agent_graphs: dict[str, Any]):
         ]
         results = await asyncio.gather(
             *[
-                agent_graphs[step.agent].ainvoke(
+                _graph_for(step, agent_graphs).ainvoke(
                     {"messages": [HumanMessage(content=prompt)]}, run_config or {}
                 )
                 for step, prompt in zip(config.steps, prompts)
@@ -244,7 +335,11 @@ def _build_router(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     for name in config.candidates:
         node = f"agent_{name}"
         graph.add_node(
-            node, _step_runner(WorkflowStep(agent=name, input_template="{input}"), agent_graphs[name])
+            node,
+            _step_runner(
+                WorkflowStep(agent=name, input_template="{input}"),
+                _graph_for(name, agent_graphs),
+            ),
         )
         mapping[name] = node
         graph.add_edge(node, END)
@@ -257,7 +352,7 @@ def _add_chain(graph: StateGraph, steps: list[WorkflowStep], agent_graphs: dict[
     names: list[str] = []
     for index, step in enumerate(steps, start=1):
         node = f"{prefix}_{index}_{step.name or step.agent}"
-        graph.add_node(node, _step_runner(step, agent_graphs[step.agent]))
+        graph.add_node(node, _step_runner(step, _graph_for(step, agent_graphs)))
         names.append(node)
     for left, right in zip(names, names[1:]):
         graph.add_edge(left, right)
@@ -302,7 +397,7 @@ def _build_loop(config: WorkflowConfig, agent_graphs: dict[str, Any]):
         produced: list[str] = []
         for step in config.steps:
             prompt = render_template(step.input_template, user_input(state), previous)
-            result = await agent_graphs[step.agent].ainvoke(
+            result = await _graph_for(step, agent_graphs).ainvoke(
                 {"messages": [HumanMessage(content=prompt)]}, run_config or {}
             )
             previous = str(result["messages"][-1].content)
@@ -367,7 +462,10 @@ def _build_hierarchy(config: WorkflowConfig, agent_graphs: dict[str, Any]):
 
     async def work(state: WorkflowState, run_config: RunnableConfig | None = None) -> dict:
         worker = state.get("chosen") or ""
-        agent_graph = agent_graphs.get(worker)
+        try:
+            agent_graph = _graph_for(worker, agent_graphs)
+        except AgentConfigError:
+            agent_graph = None
         if agent_graph is None:  # 理论上不会发生：配置校验已保证 worker 合法
             result = f"ERROR: 未知 worker {worker}"
         else:
@@ -401,9 +499,7 @@ def _build_hierarchy(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     return graph.compile()
 
 
-def build_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]):
-    """按 mode 编译工作流。六种模式对外都只是一个普通 Agent 图。"""
-    validate_workflow(config, agent_graphs)
+def _compile_config(config: WorkflowConfig, agent_graphs: dict[str, Any], depth: int = 0):
     if config.mode == "parallel":
         return _build_parallel(config, agent_graphs)
     if config.mode == "router":
@@ -415,6 +511,12 @@ def build_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any]):
     if config.mode == "hierarchy":
         return _build_hierarchy(config, agent_graphs)
     return _build_sequential(config, agent_graphs)
+
+
+def build_workflow(config: WorkflowConfig, agent_graphs: dict[str, Any], depth: int = 0):
+    """按 mode 编译工作流；步骤可以是内联子工作流，因此这里是递归的。"""
+    validate_workflow(config, agent_graphs, depth)
+    return _compile_config(config, agent_graphs, depth)
 
 
 def load_workflow_config(path: Path, known_agents: set[str] | None = None) -> WorkflowConfig:

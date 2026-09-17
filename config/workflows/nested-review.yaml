@@ -1,0 +1,22 @@
+# 内联嵌套示例：外层是循环，里面套一个并行子工作流。
+# 这正是"循环里套并行"的写法——step 里直接内联 mode/steps，不用拆成两个文件。
+key: nested-review
+description: 反复做"定位 + 检查清单"直到出现「通过」，外层循环内联并行子工作流。
+mode: loop
+until:
+  contains: ["通过"]
+  text: previous
+max_iterations: 2
+steps:
+  - name: fanout
+    mode: parallel
+    steps:
+      - agent: repo-explainer
+        name: locate
+        input_template: "定位与需求相关的代码，给出文件路径与行号：{input}"
+      - agent: chatbot
+        name: checklist
+        input_template: |
+          针对这个需求列一份人工检查清单（5 条以内）。
+          如果看起来已经没问题，就在结尾写「通过」。
+          需求：{input}

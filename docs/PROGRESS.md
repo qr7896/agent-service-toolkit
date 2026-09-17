@@ -1369,6 +1369,40 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 
 **验收**：`lg_practice/day35_gaps_check.py` **8/8**（零 API 调用）：AST 失败记账、unknown 符号占比与门控统计、探针集判别力、校准报警、外层 loop 套内层 parallel 能编译、成环被拒、权限敏感文件识别、门禁三种行为（放行 / 拦下 / `--ack` 放行）。回归 day23 10/10、day24 15/15、day32 8/8，注册表仍是 18 个 Agent。
 
+### 4.41 内联嵌套：WorkflowStep 可递归 + 递归编译
+
+上一节说"内联嵌套做不到"，这一节把它做掉了。
+
+#### 改了什么
+
+| 改动 | 说明 |
+|---|---|
+| `WorkflowStep` 可递归 | 新增与顶层同构的字段（`mode` / `steps` / `then` / `otherwise` / `candidates` / `until` / `workers`…），`agent` 变为可选 |
+| 步骤二选一 | 一个步骤要么**引用**已有 Agent（含其他工作流），要么**内联**子工作流；同时写 `agent` 和 `mode`、或都不写，都会被校验拒绝 |
+| 递归编译 | `_graph_for()` 遇到内联步骤就现场递归编译成子图；`build_workflow` 与 `validate_workflow` 都带 `depth` |
+| 递归收集引用 | `referenced_agents()` 钻进内联子图，注册表才能排出正确的依赖顺序 |
+| 深度上限 | `MAX_INLINE_DEPTH = 4`，超了明确报错——防止把配置错误变成"编译到天荒地老" |
+
+**于是"循环里套并行、外层再包条件"可以直接写在一个 YAML 里**，示例见 `config/workflows/nested-review.yaml`（外层 loop，step 里内联 parallel）。内联子图在父图里就是**一个节点**，不会被炸开成散乱节点。
+
+#### 验收
+
+`lg_practice/day36_inline_nesting_check.py` **7/7**（零 API 调用）：
+
+| 检查 | 结果 |
+|---|---|
+| 外层 loop 里的内联 parallel 两个分支都被调用 | a=1 b=1 iterations=1 |
+| 内联子图编译成父图的一个节点 | 节点只有 `body` |
+| 条件分支的 `then` 里放内联 loop | chosen=then，a 被调 2 次、b 未被调用 |
+| `otherwise` 走普通 Agent | chosen=otherwise |
+| 引用收集会钻进内联子图 | `{a, b}` |
+| 同时写 agent+mode / 都不写 | 都被拒绝 |
+| 嵌套超过 4 层 | 明确报错 |
+
+回归：day23 10/10、day24 15/15、day27 11/11、day35 8/8；注册表 19 个 Agent（新增 `nested-review`）。
+
+**仍然的边界**：内联嵌套只支持**有限深度**（4 层），也不支持动态生成子图（子结构必须在配置里写死）；跨文件引用与内联写法可以混用，但成环（A 引用 B、B 又引用 A）仍会被明确拒绝。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1449,6 +1483,7 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 | `scripts/permission_diff_gate.py` | **新增** | 权限差异门禁（敏感清单 + 专项验收 + 人工确认） |
 | `.github/workflows/permission-gate.yml` | **新增** | CI 权限门禁（用 `permission-ack` 标签当人工确认） |
 | `evals/tasks/probe.jsonl` | **新增** | 探针集：必过 / 必不过各一个，先证判分器有判别力 |
+| `config/workflows/nested-review.yaml` | **新增** | 内联嵌套示例（外层 loop 里内联 parallel） |
 | `scripts/build_experience.py` | **新增** | 把轨迹 JSONL 灌进经验库并输出统计 |
 | `src/agents/coding_agent.py` | **新增** | Coding Agent 图：planner → coder ↔ tools，`allow_write=True` 时接 tester/debugger/giveup 自修复闭环；写操作前有 HITL 审批闸门 |
 | `src/agents/agents.py` | 修改 | 注册 `coding-agent` |
