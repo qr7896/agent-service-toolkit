@@ -18,14 +18,14 @@
 
 ## 0. 一句话现状
 
-原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码已推送到自己的 GitHub fork，历史干净（3 个提交）。
+原项目（一个 LangGraph + FastAPI + Streamlit 的通用 Agent 服务骨架）已经在本地跑通，并且完成了两处真正的改造：**把 RAG 的向量模型从 OpenAI 换成完全本地的 BGE-M3**，以及**新增一个能自己查看代码仓库并给出带行号答案的 Coding Agent**。代码持续同步到自己的 GitHub fork。
 
 改造路线已升级到 **v5**（完整版见 [ROADMAP_v5.md](./ROADMAP_v5.md)；v3 见 [ROADMAP_v3.md](./ROADMAP_v3.md)，v2 见 [ROADMAP_v2.md](./ROADMAP_v2.md)）。v5 在原 21 个阶段（0–20）之外新增两个方向（详见 §3.7）：
 
 1. **从 Knowledge Agent 到可编排 Agent 平台**：Agent Builder / 可配置 Agent / Workflow 编排 / Multi-Agent 协同；
 2. **Cost-Aware Adaptive Model Routing**：Local 7B + Cheap API + Strong API + Failure Router + Budget-aware State。
 
-**路线图全部阶段已完成**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11（镜像构建未验证，见 §4.21），阶段 21 基础成本控制 10/10（§4.22），阶段 22 可配置 Agent 9/9（§4.23）+ 工作流编排 10/10（§4.24）+ 并行 / 路由 / Builder 14/14（§4.25）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
+**路线图全部阶段已完成**（v5 §40.6 要求顺序不跳步）：阶段 6 `search_code` 9/9（对照实验：工具调用 12→7、读取文件 9→4），阶段 7 `write_file` / `edit_file` 11/11，阶段 8 `git_diff` 8/8，阶段 9 Planning 10/10，阶段 10 `run_tests` 9/9，阶段 11 自修复闭环 11/11，阶段 12 Reviewer 8/8，阶段 13 HITL 8/8，阶段 14 Trajectory 7/7，阶段 15 Experience Memory 11/11，阶段 16 Experience Retrieval 11/11，阶段 17 Experience-Guided Self-Correction 7/7，阶段 18 Benchmark 已跑通（n=3，结论见 §4.19），阶段 19 Sandbox 8/8，阶段 20 容器化静态验收 11/11且 GitHub Actions 镜像构建、启动和集成检查成功（见 §9.2），阶段 21 基础成本控制 10/10（§4.22），阶段 22 可配置 Agent 9/9（§4.23）+ 工作流编排 10/10（§4.24）+ 并行 / 路由 / Builder 14/14（§4.25）。参考仓库分工见 §3.3，每阶段过关题见 §3.4，可靠性原则与测试体系见 §3.6。
 
 ---
 
@@ -1665,7 +1665,7 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 - [x] 魔改十四：Experience-Guided Self-Correction（debugger 检索同类经验并按成败分组，验收 7/7）
 - [x] 魔改十五：Coding Benchmark（Baseline vs +Experience 同批任务两遍跑，独立判分，n=3 见 §4.19）
 - [x] 魔改十六：Workspace Sandbox（整树复制 + 副本内执行 + 完整回收，主工作区零污染，验收 8/8）
-- [x] 魔改十七：容器化（保留 src/ 层级的镜像 + compose 覆盖层 + 静态校验 11/11，构建未验证）
+- [x] 魔改十七：容器化（保留 src/ 层级的镜像 + compose 覆盖层 + 静态校验 11/11；GitHub Actions 已完成双镜像构建、启动和集成检查）
 - [x] 魔改十八：基础成本控制（记账 + 免费档优先 + 预算冻结升级，最高档 flash，验收 10/10）
 - [x] 魔改十九：可配置 Agent（YAML 定义 + 编译成图 + 只读白名单 + 注册表合并，验收 9/9）
 - [x] 魔改二十：工作流编排（线性串联 + 模板占位符 + 以 Agent 身份注册，验收 10/10）
@@ -1673,12 +1673,12 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 - [x] 魔改二十二：条件分支 + 循环 + 层级分工（编排扩到六种模式，验收 11/11）
 - [x] 魔改二十三：项目收敛 + 本地代码智能 + EGCP 证据门控 + 经验深化（验收 14/14）
 - [x] 魔改二十四：CodeGraph 适配层 + SWE 风格判分 + A/B 四组对照（验收 11/11）
-- [x] 3 个提交推送到自己的 GitHub fork，且已 rebase 到上游最新
+- [x] 改造与 Research Mode 提交已推送到自己的 GitHub fork
 
 ### 7.2 已知限制 / 待办
 
 - [ ] DeepSeek 偶发流式超时（`No streaming chunk received for 120.0s`）会让单次规划/回答失败；后续需要加超时与重试配置（如 `stream_chunk_timeout`）
-- [ ] 没有评测（benchmark）与指标（成功率 / 测试通过率 / 迭代次数 / 延迟 / token 成本）
+- [ ] 检索层 benchmark 已扩到 20 条；真实端到端补丁评测仍只有早期 n=3，尚不足以证明最终成功率
 - [ ] 知识库仍只有 3 个 chunk（手册太小），检索效果不具代表性
 - [ ] `format_contexts()` 丢弃 metadata，答案无法溯源到页码（Citation 未做）
 - [ ] 服务无鉴权（未设 `AUTH_SECRET`），仅限本机使用
@@ -1738,7 +1738,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - **阶段 17 Experience-Guided Self-Correction**：验收 7/7，设计与过关题回答见 §4.18
 - **阶段 18 Coding Benchmark**：已跑通，结果与局限见 §4.19；报告在 `.codex/benchmark/report.json`
 - **阶段 19 Workspace Sandbox**：验收 8/8，设计与过关题回答见 §4.20
-- **阶段 20 容器化**：静态验收 11/11，设计与“未验证”边界见 §4.21
+- **阶段 20 容器化**：静态验收 11/11；GitHub Actions 已完成 service/app 双镜像构建、启动和集成检查，见 §9.2
 - **阶段 21 基础成本控制**：验收 10/10，设计与过关题回答见 §4.22
 - **阶段 22 可配置 Agent**：验收 9/9，设计与“做到哪一步”的边界见 §4.23
 - **阶段 22 工作流编排**：验收 10/10，设计与边界见 §4.24
@@ -1752,7 +1752,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 工程阶段的收尾状态（供追溯）：阶段 0–22 全部完成；平台三块见 §4.23–§4.25；成本控制 §4.22；
 `record_usage` 早已接入 Agent 循环（§4.33）、隔离与延迟复评见 §4.39。
 
-**第一关：数据（当前最大瓶颈）**
+**第一关：数据**
 
 - [x] 20 个任务，T1–T10 各 2 条，并含多个 2–3 条的同类问题簇（`evals/tasks/research_v0.jsonl`）
 - [x] 20 条均补齐五类 Gold Evidence 并人工核验；脚本验证修复前失败、Gold 后通过（20/20）
@@ -1761,10 +1761,9 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 **第二关：轨迹（把日志变成数据集）**
 
 - [x] 每轮检索记 trace：`round` / `evidence_state` / `action` / `observation` / `gain` / `cost` / `artifacts`
-      （已有 `evidence_trace` 与 `retrieval_actions.Observation.artifacts`，缺"gain 与 cost 的逐轮记录"）
 - [x] 轨迹带 `experience_ids` / `evidence_types` / `final_success`，供 Decision Episode 复用
 
-**第三关：算法（V0 骨架已就位，缺三块）**
+**第三关：算法**
 
 - [x] `context_packer`：固定 budget 下按 relevance/token 选择证据，并已接 Planner 主流程
 - [x] **语义代码检索**：本地 BGE-M3 对 Python 符号块检索，已注册为策略动作
