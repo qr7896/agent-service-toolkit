@@ -39,20 +39,25 @@ def task_metrics(record: dict[str, Any], gold: dict[str, Any]) -> dict[str, Any]
     found_tests = sorted(
         {item for step in trace for item in (step.get("artifacts") or {}).get("tests", [])}
     )
+    found_callers = sorted(
+        {item for step in trace for item in (step.get("artifacts") or {}).get("callers", [])}
+    )
 
     file_recall = _recall(list(gold.get("gold_files") or []), found_files)
     symbol_recall = _recall(list(gold.get("gold_symbols") or []), found_symbols)
     test_recall = _recall(list(gold.get("gold_tests") or []), found_tests)
+    caller_recall = _recall(list(gold.get("gold_callers") or []), found_callers)
     tokens = int(record.get("estimated_tokens") or 0)
     rounds = len(trace)
     # Evidence Efficiency：recall 越高、token 越少越好。用文件/符号 recall 的均值做分子。
-    recalls = [r for r in (file_recall, symbol_recall, test_recall) if r is not None]
+    recalls = [r for r in (file_recall, symbol_recall, caller_recall, test_recall) if r is not None]
     mean_recall = round(sum(recalls) / len(recalls), 4) if recalls else None
     return {
         "instance_id": record.get("instance_id") or record.get("task") or "",
         "gold_file_recall": file_recall,
         "gold_symbol_recall": symbol_recall,
         "gold_test_recall": test_recall,
+        "gold_caller_recall": caller_recall,
         "context_precision": _precision(
             [*(gold.get("gold_files") or []), *(gold.get("gold_symbols") or [])],
             [*found_files, *found_symbols],
@@ -80,6 +85,7 @@ def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "gold_file_recall": mean("gold_file_recall"),
         "gold_symbol_recall": mean("gold_symbol_recall"),
         "gold_test_recall": mean("gold_test_recall"),
+        "gold_caller_recall": mean("gold_caller_recall"),
         "context_precision": mean("context_precision"),
         "context_recall": mean("context_recall"),
         "context_tokens": mean("context_tokens"),

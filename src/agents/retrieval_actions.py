@@ -61,6 +61,7 @@ def extract_artifacts(text: str) -> dict[str, list[str]]:
     """从观察文本里抽出 文件 / 符号 / 测试——指标全靠它算。"""
     files: set[str] = set()
     symbols: set[str] = set()
+    callers: set[str] = set()
     tests: set[str] = set()
     for line in str(text or "").splitlines():
         stripped = line.strip()
@@ -71,14 +72,18 @@ def extract_artifacts(text: str) -> dict[str, list[str]]:
             files.add(head.split(":")[0].replace("\\", "/"))
         if "::" in stripped:
             tests.add(stripped.split()[0])
-        parts = stripped.replace(":", " ").split()
-        if len(parts) >= 3 and parts[0].endswith(".py"):
-            symbols.add(parts[-1])
+        parts = stripped.split()
+        location = parts[0].split(":", 1)[0].replace("\\", "/")
+        if len(parts) >= 3 and location.endswith(".py") and "::" not in parts[0]:
+            symbols.add(parts[2])
         elif len(parts) >= 2 and parts[0] in {"caller", "callee"}:
             symbols.add(parts[-1])
+            if parts[0] == "caller":
+                callers.add(parts[-1])
     return {
         "files": sorted(files),
         "symbols": sorted(symbols),
+        "callers": sorted(callers),
         "tests": sorted(tests),
     }
 

@@ -1466,7 +1466,15 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 - `code_semantic.py` 对 Python 符号块使用现有本地 BGE-M3 做余弦检索，已注册为 `semantic_search` 动作；测试通过注入假 embedding 离线验证，不重复加载真实模型；
 - Experience 在入库时从历史检索轨迹派生 `action_prior`，召回后经兼容性加权进入 `retrieval_policy.utility`；它会改变动作排序，但不绕过 evidence gate。
 
-验收：`tests/evals/test_research_mode.py` **6/6**；pyrefly 0 errors；回归 day29 **17/17**、day38 **14/14**、day16 **11/11**、day14 **8/8**。以上均未调用付费模型（day16 只使用本地 BGE-M3）。
+验收：`tests/evals/test_research_mode.py` **9/9**；pyrefly 0 errors；回归 day29 **17/17**、day38 **14/14**、day16 **11/11**、day14 **8/8**。以上均未调用付费模型（day16 只使用本地 BGE-M3）。
+
+### 4.45 V0 离线实验：A–G、预算、停止、消融与抗干扰
+
+`evals/adaptive_retrieval_benchmark.py` 在同一份候选缓存上分轮计算 A/B/C/D → D/E/F → F/G，并输出 `evals/results/retrieval_v0.json`；完整表格、失败案例与边界见 [research/RESULTS_V0.md](./research/RESULTS_V0.md)。20 条任务中 12 条 train 学 Experience Prior，8 条 dev/test 只评估；0 次付费模型调用，Semantic 使用本地 BGE-M3。
+
+8K 下：D/F/G 的 Context Recall 均为 **0.8906**；F 为 120.88 tokens / 2.00 calls，G 为 **94.38 tokens / 1.25 calls**。同一 16K 上限下 Utility Gate 召回 **0.8906**，Fixed K=10 为 **0.7344**，V0 达到“同 budget 下 Gold Recall 更高”的预设门槛。
+
+负面结果同样保留：2K 已容纳全部最小复现上下文，四档 budget 曲线无差异；`-Uncertainty` 与 full G 完全相同（字段尚未进公式）；12 个同名 distractor 使 precision 0.4000 → **0.3054**、efficiency 9.80 → **2.36**；旧先验不降召回但增加 tokens。这个 V0 证明的是检索层，不是端到端补丁成功率。
 
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
@@ -1764,22 +1772,22 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **第四关：实验**
 
-- [ ] 基线分轮跑：先 A/B/C/D → 再 D/E/F → 最后 F/G（不要一次跑完七组）
-- [ ] 固定 budget 对照：2K / 4K / 8K / 16K
-- [ ] 停止策略对照：Fixed K=3/5/10 vs Evidence Gate vs Utility Gate
-- [ ] 消融：`-Coverage` / `-Uncertainty` / `-Redundancy` / `-Cost` / `-CodeGraph` / `-Experience`
-- [ ] 抗干扰与版本漂移：同名符号的 distractor 任务、旧 commit 经验在新 commit 上的表现
+- [x] 基线分轮跑：A/B/C/D → D/E/F → F/G（离线候选缓存，0 次付费模型调用）
+- [x] 固定 budget 对照：2K / 4K / 8K / 16K（本批在 2K 已饱和，记为数据边界）
+- [x] 停止策略对照：Fixed K=3/5/10 vs Evidence Gate vs Utility Gate
+- [x] 消融：`-Coverage` / `-Uncertainty` / `-Redundancy` / `-Cost` / `-CodeGraph` / `-Experience`
+- [x] 抗干扰与版本漂移：12 个同名 distractor + 错位旧先验
 
 **第五关：结论（先别急着说"新算法"）**
 
-- [ ] 说清什么时候 adaptive 有用、什么时候无用
-- [ ] 留下失败案例与方法边界
-- [ ] V0 的通过条件（只在满足时才进 V1）：成功率持平但 context/token/工具调用更低，**或**同 token budget 下 gold recall 更高
+- [x] 说清什么时候 adaptive 有用、什么时候无用（`research/RESULTS_V0.md`）
+- [x] 留下失败案例与方法边界（预算饱和、干扰 precision、uncertainty 未生效、非端到端）
+- [x] V0 通过条件：同 16K 上限下 Utility Gate Gold Recall 0.8906 > Fixed K=10 的 0.7344
 
 **遗留的工程账**
 
-- [ ] **Docker 构建验证**：本机无 Docker/podman、WSL 无发行版；`scripts/verify_container.ps1` 已就位，待有 Docker 的机器执行
-- [ ] 阶段 18 的样本量：n=3 只能算方向性观察；扩样本属于第一关的事
+- [x] **Docker 构建验证**：GitHub Actions `49d39dc` 的 `test-docker` 成功（3m03s），service/app 两个镜像均构建、启动并通过 health/integration 检查；本机仍无 Docker
+- [x] 阶段 18 的检索层样本已扩到 20（12 train + 8 dev/test）；原端到端 n=3 仍仅作方向性观察
 
 ### 9.3 后续阶段（按 v5 顺序，不跳步）
 

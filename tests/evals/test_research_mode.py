@@ -3,8 +3,11 @@ from pathlib import Path
 from agents.code_semantic import semantic_search
 from agents.context_packer import ContextItem, pack_context
 from agents.evidence import EvidenceState, audit_plan
+from agents.retrieval_actions import extract_artifacts
 from agents.retrieval_policy import choose
 from agents.trajectory import build_trajectory
+from evals.adaptive_retrieval_benchmark import _merge, adaptive
+from evals.retrieval_metrics import task_metrics
 from evals.swe_tasks import load_tasks
 
 
@@ -101,3 +104,29 @@ def test_experience_prior_changes_action_choice() -> None:
         experience_hits=[{"action_prior": {"semantic_search": 1.0}, "compatibility": 1.0}],
     )
     assert plan.action == "semantic_search"
+
+
+def test_semantic_artifact_parser_ignores_score() -> None:
+    artifacts = extract_artifacts("src/a.py:7 semantic do_work score=0.9000\ncaller api\n")
+    assert artifacts["symbols"] == ["api", "do_work"]
+    assert artifacts["callers"] == ["api"]
+
+
+def test_adaptive_and_experience_prior_stop_earlier() -> None:
+    outputs = {
+        "files": "src/a.py",
+        "lexical": "src/a.py:1 lexical do_work",
+        "semantic": "src/a.py:1 semantic do_work score=1.0",
+        "structural": "src/a.py:1 function do_work\ncaller api\ntest_a.py::test_fix",
+    }
+    assert adaptive(outputs) == ["lexical", "structural"]
+    assert adaptive(outputs, preferred="structural") == ["structural"]
+    assert _merge(outputs, adaptive(outputs), 2000).tool_calls == 2
+
+
+def test_caller_recall_is_measured() -> None:
+    row = task_metrics(
+        {"retrieval_trace": [{"artifacts": {"callers": ["api"]}}]},
+        {"gold_callers": ["api", "cli"]},
+    )
+    assert row["gold_caller_recall"] == 0.5
