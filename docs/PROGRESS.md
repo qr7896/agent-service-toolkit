@@ -1466,7 +1466,7 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 - `code_semantic.py` 对 Python 符号块使用现有本地 BGE-M3 做余弦检索，已注册为 `semantic_search` 动作；测试通过注入假 embedding 离线验证，不重复加载真实模型；
 - Experience 在入库时从历史检索轨迹派生 `action_prior`，召回后经兼容性加权进入 `retrieval_policy.utility`；它会改变动作排序，但不绕过 evidence gate。
 
-验收：`tests/evals/test_research_mode.py` **9/9**；pyrefly 0 errors；回归 day29 **17/17**、day38 **14/14**、day16 **11/11**、day14 **8/8**。以上均未调用付费模型（day16 只使用本地 BGE-M3）。
+验收：`tests/test_research_mode.py` **9/9**；pyrefly 0 errors；回归 day29 **17/17**、day38 **14/14**、day16 **11/11**、day14 **8/8**。以上均未调用付费模型（day16 只使用本地 BGE-M3）。
 
 ### 4.45 V0 离线实验：A–G、预算、停止、消融与抗干扰
 
