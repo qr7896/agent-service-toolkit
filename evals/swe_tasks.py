@@ -38,6 +38,11 @@ class TaskSpec:
     gold_callers: list[str] = field(default_factory=list)
     gold_tests: list[str] = field(default_factory=list)
     gold_context: list[str] = field(default_factory=list)
+    task_type: str = ""
+    cluster: str = ""
+    split: str = ""
+    source_commit: str = ""
+    gold_verified: bool = False
 
 
 def _spec_from_dict(data: dict) -> TaskSpec:
@@ -75,6 +80,11 @@ def _spec_from_dict(data: dict) -> TaskSpec:
         gold_callers=list(data.get("gold_callers") or []),
         gold_tests=list(data.get("gold_tests") or []),
         gold_context=list(data.get("gold_context") or []),
+        task_type=str(data.get("task_type") or ""),
+        cluster=str(data.get("cluster") or ""),
+        split=str(data.get("split") or ""),
+        source_commit=str(data.get("source_commit") or ""),
+        gold_verified=bool(data.get("gold_verified")),
     )
 
 

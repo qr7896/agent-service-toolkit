@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 from pathlib import Path
 from typing import Any
@@ -114,6 +115,7 @@ def _hit(experience: Experience, distance: float | None = None) -> dict[str, Any
         "test_summary": experience.test_summary,
         "review_summary": experience.review_summary,
         "distance": distance,
+        "action_prior": (experience.extra or {}).get("action_prior") or {},
     }
 
 
@@ -158,6 +160,9 @@ class ExperienceIndex:
                         "changed_paths": ",".join(e.changed_paths),
                         "test_summary": e.test_summary,
                         "review_summary": e.review_summary,
+                        "action_prior": json.dumps(
+                            (e.extra or {}).get("action_prior") or {}, ensure_ascii=False
+                        ),
                     }
                     for e in experiences
                 ],
@@ -185,6 +190,7 @@ class ExperienceIndex:
                     "review_summary": str(meta.get("review_summary") or ""),
                     "distance": float(distance),
                     "similarity": round(similarity, 4),
+                    "action_prior": json.loads(str(meta.get("action_prior") or "{}")),
                 }
             )
         return hits
@@ -275,6 +281,9 @@ def _apply_compatibility(
             "repo_commit": (experience.extra or {}).get("repo_commit")
             or hit.get("repo_commit", ""),
             "changed_paths": experience.changed_paths or hit.get("changed_paths") or [],
+            "action_prior": (experience.extra or {}).get("action_prior")
+            or hit.get("action_prior")
+            or {},
         }
         if score > 0:
             kept.append(enriched)

@@ -39,7 +39,10 @@ class Plan:
 
 
 def utility(
-    action: RetrievalAction, state: EvidenceState, thresholds: dict[str, float] | None = None
+    action: RetrievalAction,
+    state: EvidenceState,
+    thresholds: dict[str, float] | None = None,
+    prior: float = 0.0,
 ) -> float:
     """预期增益按"缺口在列表里的位置"递减——先补最缺的那一维。"""
     gaps = detect_gaps(state, thresholds or DEFAULT_THRESHOLDS)
@@ -47,21 +50,37 @@ def utility(
         return 0.0
     rank = gaps.index(action.fills)
     gain = 1.0 if rank == 0 else 0.6 / rank
-    return round(gain / (action.cost + LAMBDA_RISK * action.risk + 0.1), 4)
+    base = gain / (action.cost + LAMBDA_RISK * action.risk + 0.1)
+    return round(base * (1.0 + max(-0.5, min(1.0, prior))), 4)
+
+
+def experience_prior(hits: list[dict[str, Any]] | None = None) -> dict[str, float]:
+    """Average action priors from compatible retrieved experiences."""
+    values: dict[str, list[float]] = {}
+    for hit in hits or []:
+        weight = float(hit.get("compatibility", 1.0) or 0.0)
+        for action, score in (hit.get("action_prior") or {}).items():
+            values.setdefault(str(action), []).append(float(score) * weight)
+    return {action: sum(scores) / len(scores) for action, scores in values.items()}
 
 
 def choose(
     state: EvidenceState,
     tried: set[str] | None = None,
     thresholds: dict[str, float] | None = None,
+    experience_hits: list[dict[str, Any]] | None = None,
 ) -> Plan:
     """选下一个检索动作；选不出来就是 abstain（不猜）。"""
     gaps = detect_gaps(state, thresholds or DEFAULT_THRESHOLDS)
     if not gaps:
         return Plan(gaps=gaps, reason="证据已充分，停止检索")
+    priors = experience_prior(experience_hits)
     candidates = available_actions(state, tried)
     scored = sorted(
-        ((action, utility(action, state, thresholds)) for action in candidates),
+        (
+            (action, utility(action, state, thresholds, priors.get(action.name, 0.0)))
+            for action in candidates
+        ),
         key=lambda pair: pair[1],
         reverse=True,
     )
@@ -92,4 +111,4 @@ def execute(
     return action.run(query, plan, root)
 
 
-__all__ = ["Plan", "choose", "execute", "utility"]
+__all__ = ["Plan", "choose", "execute", "experience_prior", "utility"]

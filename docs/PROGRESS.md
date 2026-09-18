@@ -1454,6 +1454,20 @@ trajectory 记的是"当时测试通过"，**不等于改动后来存活**——
 
 **验收**：`lg_practice/day38_retrieval_policy_check.py` **14/14**（零 API 调用）：四类动作齐全、依赖未满足不可用、最缺哪维先补哪维、只缺验证时选查测试、充分即停/无解弃权、效用可比、新字段未进决策、观察可解析成文件/符号/测试、动作真执行、单任务与汇总指标正确、`abstention_rate` 正确、缺 gold 不计入均值、SWE 任务支持 Gold Evidence。回归 day29 17/17、day30 13/13、day35 8/8、day37 4/4、day16 11/11。
 
+### 4.44 Research Mode 前三关完成：20 条数据、Decision Episode、V1 离线算法
+
+**第一关（数据）**：新增 `evals/tasks/research_v0.jsonl`，20 条均是本仓库真实修复提交的最小复现，不复制整份历史源码。T1–T10 各 2 条；同类问题簇覆盖 validation / memory-quality / observability / input-normalization / evidence-decision / sandbox-output / durable-approval；按提交时间固定为 train/dev/test = **12/4/4**。每条均带 `source_commit` / `base_commit` / `task_type` / `cluster` / `split` / `gold_verified`，五类 Gold Evidence 全部非空。`scripts/make_research_tasks.py --verify` 实测 **20/20 修复前失败、Gold 后通过**（80 次本地 pytest 节点检查，零 API）。
+
+**第二关（轨迹）**：每轮 `evidence_trace` 现在记录 `round / evidence_state(before, after) / action / observation / gain / gain_by_dimension / cost / observation_tokens / artifacts / policy`；终态轨迹另有 `experience_ids / evidence_types / final_success / context_pack`，Decision Episode 已具备“用了哪条经验、哪种证据、成本与收益、最后成功与否”。
+
+**第三关（算法）**：
+
+- `context_packer.py` 用 relevance/token 在固定预算内选择上下文，Planner 主流程默认 8K budget，可配置；
+- `code_semantic.py` 对 Python 符号块使用现有本地 BGE-M3 做余弦检索，已注册为 `semantic_search` 动作；测试通过注入假 embedding 离线验证，不重复加载真实模型；
+- Experience 在入库时从历史检索轨迹派生 `action_prior`，召回后经兼容性加权进入 `retrieval_policy.utility`；它会改变动作排序，但不绕过 evidence gate。
+
+验收：`tests/evals/test_research_mode.py` **6/6**；pyrefly 0 errors；回归 day29 **17/17**、day38 **14/14**、day16 **11/11**、day14 **8/8**。以上均未调用付费模型（day16 只使用本地 BGE-M3）。
+
 ### 4.26 补账：基准的成本口径（阶段 18 的回填）
 
 **为什么要补**：阶段 18 的 A/B 只报成功率、首次通过率、attempts、工具调用与耗时——**没有成本**。而这一阶段真正要验证的主张是"成功率接近 + 成本更低"，缺了成本口径，基准就证明不了"更省"。阶段 21 加的 `llm_calls` / `estimated_tokens` 正好补上这一块：轨迹里有，基准把它读出来就行。
@@ -1732,21 +1746,21 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **第一关：数据（当前最大瓶颈）**
 
-- [ ] 20 个任务，覆盖 T1–T10 类型，且**必须包含"同类问题簇"**（同一类问题出现 2–3 次）——否则经验迁移根本测不出来
-- [ ] 每个任务补齐 Gold Evidence（`gold_files` / `gold_symbols` / `gold_callers` / `gold_tests` / `gold_context`），**前 20 条人工核验**，不接受 LLM 自动标注直接采信
-- [ ] train / dev / test 时间切分（`--holdout` 已具备，缺的是有意义的规模）
+- [x] 20 个任务，T1–T10 各 2 条，并含多个 2–3 条的同类问题簇（`evals/tasks/research_v0.jsonl`）
+- [x] 20 条均补齐五类 Gold Evidence 并人工核验；脚本验证修复前失败、Gold 后通过（20/20）
+- [x] train / dev / test 时间切分固定为 12/4/4，并保留真实 `source_commit` / `base_commit`
 
 **第二关：轨迹（把日志变成数据集）**
 
-- [ ] 每轮检索记 trace：`round` / `evidence_state` / `action` / `observation` / `gain` / `cost` / `artifacts`
+- [x] 每轮检索记 trace：`round` / `evidence_state` / `action` / `observation` / `gain` / `cost` / `artifacts`
       （已有 `evidence_trace` 与 `retrieval_actions.Observation.artifacts`，缺"gain 与 cost 的逐轮记录"）
-- [ ] 轨迹里带上"用了哪条经验、哪类证据、最终是否成功"，供 Decision Episode 复用
+- [x] 轨迹带 `experience_ids` / `evidence_types` / `final_success`，供 Decision Episode 复用
 
 **第三关：算法（V0 骨架已就位，缺三块）**
 
-- [ ] `context_packer`：固定 budget 下从候选里挑证据（**未做**）
-- [ ] **语义代码检索**（**未做**）：BGE-M3 目前只服务经验库与手册知识库，不是代码语义检索
-- [ ] Experience Prior 接入策略（V1）：把"历史相似状态下什么动作有用"变成 `utility` 的先验
+- [x] `context_packer`：固定 budget 下按 relevance/token 选择证据，并已接 Planner 主流程
+- [x] **语义代码检索**：本地 BGE-M3 对 Python 符号块检索，已注册为策略动作
+- [x] Experience Prior（V1）：历史 Decision Episode 的 `action_prior` 已接入 `utility`
 
 **第四关：实验**
 

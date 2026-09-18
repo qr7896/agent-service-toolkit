@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from agents import code_intel
+from agents import code_intel, code_semantic
 from agents.code_tools import PROJECT_ROOT
 from agents.evidence import EvidenceState
 
@@ -118,6 +118,13 @@ ACTIONS: dict[str, RetrievalAction] = {
             code_intel.symbols_in_file(str(step.get("path") or ""), root)
             for step in plan.get("steps") or []
         ),
+    ),
+    "semantic_search": RetrievalAction(
+        "semantic_search",
+        "target",
+        2.0,
+        0.2,
+        lambda q, plan, root: code_semantic.semantic_search(q, root),
     ),
     # --- impact 证据（需要先知道目标符号）---
     "get_callers": RetrievalAction(

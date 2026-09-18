@@ -136,6 +136,7 @@ class CodingState(MessagesState):
     evidence_cards: list[dict[str, Any]]
     evidence_gate: dict[str, Any]
     evidence_trace: list[dict[str, Any]]
+    context_pack: dict[str, Any]
     evidence_mismatch: dict[str, Any]
     llm_calls: int
     estimated_tokens: int

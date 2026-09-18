@@ -119,6 +119,19 @@ def build_trajectory(state: Any, config: Any) -> dict[str, Any]:
         duration_seconds = 0.0
     configurable = config.get("configurable") or {}
     approvals = state.get("approvals") or []
+    experience_hits = state.get("experience_hits") or []
+    evidence_cards = state.get("evidence_cards") or []
+    evidence_trace = state.get("evidence_trace") or []
+    status = _status(state)
+    evidence_types = {str(item.get("filled")) for item in evidence_trace if item.get("filled")}
+    if any(card.get("target_symbols") for card in evidence_cards):
+        evidence_types.add("target")
+    if any(card.get("callers") or card.get("impact_analysis") for card in evidence_cards):
+        evidence_types.add("impact")
+    if any(card.get("related_tests") for card in evidence_cards):
+        evidence_types.add("verification")
+    if experience_hits:
+        evidence_types.add("episodic")
     record = {
         "id": str(uuid4()),
         "started_at": started_at,
@@ -133,10 +146,19 @@ def build_trajectory(state: Any, config: Any) -> dict[str, Any]:
         "test_result": state.get("test_result") or {},
         "review": state.get("review") or {},
         "approvals": approvals,
-        "experience_hits": state.get("experience_hits") or [],
+        "experience_hits": experience_hits,
+        "experience_ids": sorted(
+            {
+                str(hit.get("trajectory_id") or hit.get("id"))
+                for hit in experience_hits
+                if hit.get("trajectory_id") or hit.get("id")
+            }
+        ),
         "evidence_gate": state.get("evidence_gate") or {},
-        "evidence_cards": state.get("evidence_cards") or [],
-        "evidence_trace": state.get("evidence_trace") or [],
+        "evidence_cards": evidence_cards,
+        "evidence_trace": evidence_trace,
+        "evidence_types": sorted(evidence_types),
+        "context_pack": state.get("context_pack") or {},
         "evidence_mismatch": state.get("evidence_mismatch") or {},
         "conflicts": state.get("conflicts") or {},
         "model": str(configurable.get("model") or ""),
@@ -144,7 +166,8 @@ def build_trajectory(state: Any, config: Any) -> dict[str, Any]:
         "model_used": str(state.get("model_used") or ""),
         "llm_calls": int(state.get("llm_calls") or 0),
         "estimated_tokens": int(state.get("estimated_tokens") or 0),
-        "status": _status(state),
+        "status": status,
+        "final_success": status == "succeeded",
     }
     return _safe(record)
 

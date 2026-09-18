@@ -44,7 +44,10 @@ EXIT_MESSAGES = {
 
 # 证据动作空间（doc 01 §6）。local_action 是本地实现能真正执行的动作；None 表示当前不可用。
 ACTION_SPACE: dict[str, dict[str, Any]] = {
+    "lexical_search": {"fills": "target", "cost": 1.5, "risk": 0.3},
     "symbol_search": {"fills": "target", "cost": 1.0, "risk": 0.1},
+    "list_symbols_in_file": {"fills": "target", "cost": 1.0, "risk": 0.1},
+    "semantic_search": {"fills": "target", "cost": 2.0, "risk": 0.2},
     "get_ai_context": {"fills": "target", "cost": 1.5, "risk": 0.15},
     "get_callers": {"fills": "impact", "cost": 1.0, "risk": 0.1},
     "get_callees": {"fills": "impact", "cost": 1.0, "risk": 0.1},
@@ -357,6 +360,7 @@ def audit_plan(
     thresholds: dict[str, float] | None = None,
     max_rounds: int = MAX_EVIDENCE_ROUNDS,
     min_utility: float = MIN_UTILITY,
+    experience_hits: list[dict[str, Any]] | None = None,
 ) -> tuple[GateDecision, list[EvidenceCard], list[dict[str, Any]]]:
     """Evidence Gate 主流程：评估 → 缺口 → 主动取证 → 复评 → 通过或弃权。
 
@@ -383,13 +387,17 @@ def audit_plan(
         if not keep_going:
             exit_reason = why
             break
-        gaps = detect_gaps(state, limits)
-        action = pick_action(gaps, exclude=tried)
-        if action == "ask_clarification":
+        from agents.retrieval_policy import choose, execute
+
+        choice = choose(state, tried, limits, experience_hits)
+        action = choice.action
+        if not action:
             exit_reason = "evidence_insufficient"
             break
         tried.add(action)
-        observation = execute_action(action, plan, root)
+        before_state = asdict(state)
+        observed = execute(action, str(plan.get("task") or ""), plan, root)
+        observation = observed.text
         # 把取证结果回灌进证据：只在"看的正是计划要改的那个文件"时采纳，
         # 避免检索到别处的东西被当成目标证据
         for step in plan.get("steps") or []:
@@ -399,9 +407,6 @@ def audit_plan(
                 acquired[path] = sorted({*acquired.get(path, []), *found})
         rounds += 1
         state.queries_used += 1
-        trace.append(
-            {"round": rounds, "action": action, "filled": gaps[0], "observation": observation[:800]}
-        )
         cards = [
             evaluate_step(step, plan.get("task") or "", root, acquired)
             for step in plan.get("steps") or []
@@ -411,7 +416,28 @@ def audit_plan(
         for dim in ("target", "impact", "verification"):
             setattr(new_state, dim, max(getattr(state, dim), getattr(new_state, dim)))
         new_state.queries_used = state.queries_used
-        new_state.tokens_spent = state.tokens_spent
+        observation_tokens = max(1, len(observation) // 4) if observation else 0
+        new_state.tokens_spent = state.tokens_spent + observation_tokens
+        new_state.retrieval_round = rounds
+        gain_by_dimension = {
+            dim: round(max(0.0, getattr(new_state, dim) - getattr(state, dim)), 3)
+            for dim in ("target", "impact", "verification")
+        }
+        trace.append(
+            {
+                "round": rounds,
+                "evidence_state": {"before": before_state, "after": asdict(new_state)},
+                "action": action,
+                "filled": ACTION_SPACE[action]["fills"],
+                "observation": observation[:800],
+                "gain": round(sum(gain_by_dimension.values()), 3),
+                "gain_by_dimension": gain_by_dimension,
+                "cost": ACTION_SPACE[action]["cost"],
+                "observation_tokens": observation_tokens,
+                "artifacts": observed.artifacts,
+                "policy": {"utility": choice.utility, "considered": choice.considered},
+            }
+        )
         state = new_state
 
     debt = detect_gaps(state, limits)

@@ -327,6 +327,15 @@ def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> l
     approvals = [a for a in trajectory.get("approvals") or [] if isinstance(a, dict)]
     approved = next((a.get("approved") for a in approvals if "approved" in a), None)
     task = str(trajectory.get("task") or "")
+    sign = 1.0 if outcome == ACCEPTED else -0.5
+    action_prior: dict[str, float] = {}
+    for item in trajectory.get("evidence_trace") or []:
+        action = str(item.get("action") or "")
+        if not action:
+            continue
+        gain = float(item.get("gain") or 0.0)
+        cost = max(0.1, float(item.get("cost") or 1.0))
+        action_prior[action] = round(sign * gain / cost, 4)
 
     return [
         Experience(
@@ -369,6 +378,7 @@ def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> l
                 "used_count": 0,
                 "helped_count": 0,
                 "harmful_count": 0,
+                "action_prior": action_prior,
                 # 延迟复评用：改动后的工作区指纹 vs 提交基线指纹
                 "change_fingerprint": fingerprint(
                     [redact(p) for p in trajectory.get("changed_paths") or []], root

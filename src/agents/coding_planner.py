@@ -33,6 +33,7 @@ from agents.code_intel import CODE_INTEL_TOOLS
 from agents.code_tools import PROJECT_ROOT, git_diff, list_files, read_file, search_code
 from agents.coding_memory import format_experience_context, recall_experiences
 from agents.conflict import resolve as resolve_conflicts
+from agents.context_packer import blocks, pack_context
 from agents.evidence import audit_plan, decision_to_dict
 from agents.model_router import estimate_tokens, route_model
 from core import get_model
@@ -251,10 +252,18 @@ async def planner(state: Any, config: RunnableConfig) -> dict[str, Any]:
         recon_tools += CODE_INTEL_TOOLS
     findings, recon_rounds = await _recon(model, requirement, recon_steps(config), recon_tools)
     hits, retrieval = recall_experiences(requirement, config)
+    experience_context = format_experience_context(hits)
+    context_budget = max(0, int(conf.get("context_budget", 8000)))
+    packed = pack_context(
+        [*blocks("recon", findings, 1.0), *blocks("experience", experience_context, 0.8)],
+        context_budget,
+    )
+    packed_findings = packed.text("recon")
+    packed_experience = packed.text("experience")
     plan_messages = [
         SystemMessage(content=PLAN_PROMPT),
         HumanMessage(
-            content=build_plan_user_message(requirement, findings, format_experience_context(hits))
+            content=build_plan_user_message(requirement, packed_findings, packed_experience)
         ),
     ]
     ai = await model.ainvoke(plan_messages)
@@ -304,6 +313,7 @@ async def planner(state: Any, config: RunnableConfig) -> dict[str, Any]:
             plan_dict,
             thresholds=conf.get("evidence_thresholds"),
             max_rounds=int(conf.get("evidence_max_rounds", 2)),
+            experience_hits=hits,
         )
         evidence_cards = [asdict(card) for card in cards]
         evidence_gate = decision_to_dict(gate_decision)
@@ -328,6 +338,12 @@ async def planner(state: Any, config: RunnableConfig) -> dict[str, Any]:
         "evidence_trace": evidence_trace,
         "conflicts": conflict_verdict,
         "experience_hits": [{**hit, "retrieval": retrieval, "phase": "planning"} for hit in hits],
+        "context_pack": {
+            "budget": context_budget,
+            "tokens": packed.tokens,
+            "selected": len(packed.items),
+            "dropped": packed.dropped,
+        },
         "llm_calls": int(state.get("llm_calls") or 0) + 1 + recon_rounds,
         "estimated_tokens": int(state.get("estimated_tokens") or 0)
         + estimate_tokens(requirement, findings, getattr(ai, "content", "")),
