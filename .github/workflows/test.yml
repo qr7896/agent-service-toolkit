@@ -14,6 +14,7 @@ jobs:
   test-python:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.12", "3.13", "3.14"]
 
@@ -42,8 +43,16 @@ jobs:
         uv run pyrefly check
 
     - name: Test with pytest
+      shell: bash
       run: |
-        uv run pytest --cov=src/ --cov-report=xml
+        set +e
+        uv run pytest --cov=src/ --cov-report=xml 2>&1 | tee pytest.log
+        status=${PIPESTATUS[0]}
+        if [ "$status" -ne 0 ]; then
+          summary=$(tail -c 3500 pytest.log | tr '\n' ' ' | sed 's/%/%25/g')
+          echo "::error title=pytest ${{ matrix.python-version }}::$summary"
+        fi
+        exit "$status"
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v7
