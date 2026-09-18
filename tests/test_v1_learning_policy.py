@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from evals.v1_evaluate_frozen import verify_manifest
+from evals.v1_evaluate_frozen import sha256, verify_manifest
 from evals.v1_train_ranker import PRE_ACTION_FEATURES
 from evals.v1_train_stopper import STATE_FEATURES, choose_threshold
 
@@ -32,6 +32,14 @@ def test_manifest_mismatch_is_detected(tmp_path):
     mismatches = verify_manifest(manifest)
     assert len(mismatches) == 1
     assert mismatches[0]["path"] == str(artifact)
+
+
+def test_manifest_text_hash_is_newline_portable(tmp_path):
+    windows_file = tmp_path / "artifact.json"
+    linux_file = tmp_path / "artifact-copy.json"
+    windows_file.write_bytes(b'{\r\n  "frozen": true\r\n}\r\n')
+    linux_file.write_bytes(b'{\n  "frozen": true\n}\n')
+    assert sha256(windows_file) == sha256(linux_file)
 
 
 def test_stop_threshold_tie_break_is_safety_conservative():

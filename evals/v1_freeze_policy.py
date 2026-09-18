@@ -16,7 +16,11 @@ FILES = (
 
 
 def sha256(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    path = Path(path)
+    data = path.read_bytes()
+    if path.suffix in {".json", ".jsonl", ".py"}:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def main():

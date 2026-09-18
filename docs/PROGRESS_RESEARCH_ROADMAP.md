@@ -1924,7 +1924,7 @@ Structural 分支：EvidencePolicy → structural → CodeGraphAdapter → symbo
 - [x] evals/codegraph_adapter.py：Python AST 只读 structural evidence，支持 symbols/imports/callers；坏 Python 文件隔离，不拖垮整次检索。
 - [x] CodeGraph bounded traversal：neighbors(symbol) + traverse(seed,max_depth,max_nodes)；图扩张同时受 traversal budget、Evidence action/cost/risk budget 与 SafeWorkspace read budget 约束。
 - [x] Structural traversal 已暴露到 WorkspaceRetrievalAdapter.structural_traverse(...)，CodeGraph 不绕过 EvidenceLedger。
-- [x] 最新完整非模型回归：Runtime（含 semantic/frozen-policy adapters）+ E1 smoke + E1B harness + V1 decision/policy = **74 passed in 25.03s**。
+- [x] 最新完整非模型回归：Runtime（含 semantic/frozen-policy adapters）+ E1 smoke + E1B harness + V1 decision/policy = **75 passed in 25.46s**。
 - [x] 历史测试生成问题已修复并保留记录：SafeWorkspace search_limit fixture 的字面换行、CodeGraph fixture 的多行字符串转义均属于测试 fixture 生成错误，不包装成 runtime failure。
 
 **当前 claim boundary**：以上证明的是安全边界、证据预算、结构检索与控制循环的确定性工程机制通过本地回归；它不证明 Autonomous Repair Rate、patch success 泛化、learned policy 优于 V0/V1，也不改变 frozen V1/E1-B 实验结论。
@@ -1941,12 +1941,12 @@ E1 非模型实验已重跑：`test_e1_smoke.py` 3/3；20 条原始任务完整�
 - [x] R4：SafeWorkspace 六类 denied/not-found/budget-exceeded 已变成结构化 `workspace_error` 事件，同时保留兼容异常类型。
 - [x] R5：新增 `runtime-v1` redundancy-aware / depth-aware scoring；原 `runtime-v0` 行为保留，未覆盖 frozen V1。
 - [x] R6：V1 frozen ranker/stopper 已包装成只读 Policy Adapter；加载前校验 manifest，固定 fixture regression 通过，未重训或覆盖冻结产物。
-- [x] R7：Runtime + E1 smoke + V1 decision/policy 完整非模型回归最终 74 passed，frozen research plumbing 未破坏。
+- [x] R7：Runtime + E1 smoke + V1 decision/policy 完整非模型回归最终 75 passed，frozen research plumbing 未破坏。
 - [x] R8：已新增 `docs/research/RELIABLE_EDITOR_RUNTIME.md`，固定模块职责、budget 层级、trace schema、failure taxonomy 与未来 LangGraph 接线点。
 - [x] R9：已同步 `PENDING_E1B_AUTONOMOUS_TESTS.md`：P1 hardening 完成；P0 real-model DEV/final freeze/sealed TEST 保持 paused。
 - [ ] R10（PAUSED）：真实模型实验恢复后才执行：4 DEV → evidence protocol/config freeze → 6 sealed TEST one-shot；当前保持 0 新增付费模型调用与 6 条 TEST sealed。
 
-**R1–R9 完成记录（2026-09-18）**：Structural schema、Controller traversal、SafeWorkspace error taxonomy、完整非模型回归、Runtime/PENDING 文档、Semantic Adapter、`runtime-v1` policy 和 frozen V1 Policy Adapter 均已落地。研究门槛 74/74 通过；全仓本地回归 274 passed、4 skipped、1 failed，唯一失败是 Windows 用户主目录无法解析导致的既有 Streamlit AppTest 3 秒超时。R10 未执行，真实模型调用新增 0，sealed TEST 打开 0，未产生或声称 Autonomous Repair Rate / patch-success 结果。
+**R1–R9 完成记录（2026-09-18）**：Structural schema、Controller traversal、SafeWorkspace error taxonomy、完整非模型回归、Runtime/PENDING 文档、Semantic Adapter、`runtime-v1` policy 和 frozen V1 Policy Adapter 均已落地。研究门槛 75/75 通过；全仓本地回归 274 passed、4 skipped、1 failed，唯一失败是 Windows 用户主目录无法解析导致的既有 Streamlit AppTest 3 秒超时。CI 首轮还暴露了 frozen manifest 文本哈希的 CRLF/LF 差异，现已改为仅对 `.py/.json/.jsonl` 规范化换行后校验，二进制模型仍按原始字节校验；冻结模型、数据与实验结果未改动。R10 未执行，真实模型调用新增 0，sealed TEST 打开 0，未产生或声称 Autonomous Repair Rate / patch-success 结果。
 
 #### 9.3.5 必须保留的基线与消融
 

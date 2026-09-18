@@ -14,7 +14,11 @@ from evals.v1_train_stopper import load_rows as load_stopper_rows
 
 
 def sha256(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    path = Path(path)
+    data = path.read_bytes()
+    if path.suffix in {".json", ".jsonl", ".py"}:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def verify_manifest(manifest):
