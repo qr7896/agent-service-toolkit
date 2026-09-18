@@ -86,13 +86,27 @@ def test_async_model_adapter_without_network():
     assert parse_patch_response(raw) == {"src/a.py": "x"}
 
 
-def test_run_identity_and_dry_run_artifact():
+def test_usage_metadata_is_normalized():
+    from evals.e1b_editor_adapter import usage_tokens
+
+    class Response:
+        usage_metadata = {"input_tokens": 10, "output_tokens": 4, "total_tokens": 14}
+        response_metadata = {}
+
+    assert usage_tokens(Response()) == {
+        "input_tokens": 10,
+        "output_tokens": 4,
+        "total_tokens": 14,
+    }
+
+
+def test_run_identity_and_dry_run_artifact(tmp_path):
     from evals.e1b_autonomous_runlog import experiment_identity, write_dev_run
 
     a = experiment_identity("fake-model")
     b = experiment_identity("fake-model")
     assert a == b and len(a["config_sha256"]) == 64 and len(a["prompt_sha256"]) == 64
-    report = write_dev_run("fake-model", [], dry_run=True)
+    report = write_dev_run("fake-model", [], dry_run=True, output=tmp_path / "run.json")
     assert report["dry_run"] is True
     assert report["scope"] == "DEV only; sealed TEST outcomes unopened"
     assert report["summary"]["total_model_calls"] == 0

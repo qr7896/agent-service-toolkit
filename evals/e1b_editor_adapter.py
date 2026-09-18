@@ -16,6 +16,20 @@ def content_text(response):
     return str(content)
 
 
+def usage_tokens(response):
+    usage = getattr(response, "usage_metadata", None) or {}
+    metadata = getattr(response, "response_metadata", None) or {}
+    fallback = metadata.get("token_usage", {})
+    input_tokens = int(usage.get("input_tokens") or fallback.get("prompt_tokens") or 0)
+    output_tokens = int(usage.get("output_tokens") or fallback.get("completion_tokens") or 0)
+    total_tokens = int(usage.get("total_tokens") or fallback.get("total_tokens") or 0)
+    return {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "total_tokens": total_tokens or input_tokens + output_tokens,
+    }
+
+
 async def propose_patch(model, payload):
     response = await model.ainvoke(build_messages(payload))
     return content_text(response)

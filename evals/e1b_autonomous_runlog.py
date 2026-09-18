@@ -34,25 +34,31 @@ def experiment_identity(model_id, config=None):
 
 def summarize_rows(rows):
     n = len(rows)
+    resolved = sum(bool(r.get("resolved")) for r in rows)
     return {
         "tasks": n,
-        "resolved": sum(bool(r.get("resolved")) for r in rows),
-        "repair_rate": sum(bool(r.get("resolved")) for r in rows) / n if n else 0.0,
+        "attempted_tasks": sum(int(r.get("model_calls", 0)) > 0 for r in rows),
+        "resolved": resolved,
+        "resolved_fraction": resolved / n if n else 0.0,
         "parse_failures": sum(r.get("failure") == "parse_failure" for r in rows),
         "model_failures": sum(r.get("failure") == "model_failure" for r in rows),
+        "budget_exhaustions": sum(r.get("failure") == "budget_exhaustion" for r in rows),
         "total_model_calls": sum(int(r.get("model_calls", 0)) for r in rows),
+        "input_tokens": sum(int(r.get("input_tokens", 0)) for r in rows),
+        "output_tokens": sum(int(r.get("output_tokens", 0)) for r in rows),
+        "total_tokens": sum(int(r.get("total_tokens", 0)) for r in rows),
         "wall_time_ms": sum(float(r.get("wall_time_ms", 0)) for r in rows),
     }
 
 
-def write_dev_run(model_id, rows, dry_run=False):
+def write_dev_run(model_id, rows, dry_run=False, config=None, output=OUT):
     report = {
         "protocol": "e1b-autonomous-dev-run-v0",
         "scope": "DEV only; sealed TEST outcomes unopened",
         "dry_run": dry_run,
-        "identity": experiment_identity(model_id),
+        "identity": experiment_identity(model_id, config),
         "summary": summarize_rows(rows),
         "rows": rows,
     }
-    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    Path(output).write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report

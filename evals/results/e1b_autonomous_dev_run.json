@@ -1,25 +1,103 @@
 {
   "protocol": "e1b-autonomous-dev-run-v0",
   "scope": "DEV only; sealed TEST outcomes unopened",
-  "dry_run": true,
+  "dry_run": false,
   "identity": {
-    "model_id": "fake-model",
+    "model_id": "deepseek-v4-flash",
     "prompt_sha256": "a69cc3b1badb2f8b58dc84bf037aac50e5f3ae8a0f21a7af50aa66409ff6bc7e",
-    "max_iterations": 4,
+    "max_iterations": 1,
     "max_files_written": 3,
     "allow_test_file_writes": false,
     "split_sha256": "3a22ef4c75fe8d3ee2c5c15e85ccc6048f9462351806b70bce9fefc020bc6083",
     "tasks_sha256": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
-    "config_sha256": "73b5e8e0330ae51208b7741988c777184a5b6cc7384becb203625095671ee599"
+    "config_sha256": "592ff3f22bab308d7564bd4070a73df27a4d93d54a05404179286e56790d1620"
   },
   "summary": {
-    "tasks": 0,
-    "resolved": 0,
-    "repair_rate": 0.0,
+    "tasks": 4,
+    "attempted_tasks": 3,
+    "resolved": 1,
+    "resolved_fraction": 0.25,
     "parse_failures": 0,
     "model_failures": 0,
-    "total_model_calls": 0,
-    "wall_time_ms": 0
+    "budget_exhaustions": 1,
+    "total_model_calls": 3,
+    "input_tokens": 1693,
+    "output_tokens": 6723,
+    "total_tokens": 8416,
+    "wall_time_ms": 39927.0
   },
-  "rows": []
+  "rows": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v1",
+      "input_tokens": 475,
+      "output_tokens": 4506,
+      "total_tokens": 4981,
+      "patch_sha256": "7a7e6a1a991ae13cb5316af87e1cf5b8c346b697aa6cdee6dd85171869ca6c56",
+      "files_written": ["src/agents/async_runner.py"],
+      "resolved": true,
+      "fail_to_pass": {"test_e1b_22.py::test_fix": true},
+      "pass_to_pass": {"test_e1b_22.py::test_regression": true},
+      "failure": null,
+      "wall_time_ms": 22438.1
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v1",
+      "input_tokens": 606,
+      "output_tokens": 1197,
+      "total_tokens": 1803,
+      "patch_sha256": "35a5626cef169cb788c5c5c1b4bf985f3b27af1ce63f1b415650d5cdff046a38",
+      "files_written": ["src/agents/budget.py"],
+      "resolved": false,
+      "fail_to_pass": {"test_e1b_25.py::test_fix": false},
+      "pass_to_pass": {"test_e1b_25.py::test_regression": true},
+      "failure": null,
+      "wall_time_ms": 9272.2
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v1",
+      "input_tokens": 612,
+      "output_tokens": 1020,
+      "total_tokens": 1632,
+      "patch_sha256": "f7c50acabae4bdbbccebe68fd98f3995e4318154b1558e93539fe1d943df6d7f",
+      "files_written": ["src/service/task_adapter.py"],
+      "resolved": false,
+      "fail_to_pass": {"test_e1b_26.py::test_fix": true},
+      "pass_to_pass": {
+        "test_e1b_26.py::test_regression_ok": true,
+        "test_e1b_26.py::test_regression_pending": false
+      },
+      "failure": null,
+      "wall_time_ms": 8216.7
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "model_calls": 0,
+      "resolved": false,
+      "failure": "budget_exhaustion",
+      "total_tokens": 0,
+      "wall_time_ms": 0
+    }
+  ],
+  "execution": {
+    "temperature": 0,
+    "max_output_tokens": 1000,
+    "token_budget": 8000,
+    "max_iterations": 1,
+    "evidence_protocol": "declared-seed-read-v1",
+    "provider": "deepseek",
+    "seed": null,
+    "sandbox_required": true,
+    "budget_status": "exceeded_after_atomic_call",
+    "budget_overrun_tokens": 416,
+    "test_outcomes_opened": 0
+  }
 }

@@ -1838,6 +1838,8 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **目标**：从 V1 静态排序升级为序列决策，同时保持可解释、可离线评估和 fail-closed，不直接做昂贵的端到端 RL。
 
+- [x] V2-0（启动）：建立 candidate action 的 `propensity / policy_score / chosen_action / pre-action state` 契约和 reward 函数；当前仅离线 schema 与回归，新增模型调用=0，结果声明=none。详见 [research/RESULTS_V2.md](./research/RESULTS_V2.md)。
+
 - [ ] V2-1：扩到 200–500 个任务、多个问题簇和 commit；state 保存候选动作及 propensity / policy score。
 - [ ] V2-2：比较 LinUCB / Thompson Sampling / 小型 contextual policy；reward = `evidence_gain - λ_token*token - λ_call*tool_call - λ_risk*risk`。
 - [ ] V2-3：Counterfactual replay；有 propensity 时增加 IPS / SNIPS / Doubly Robust。
@@ -1944,9 +1946,9 @@ E1 非模型实验已重跑：`test_e1_smoke.py` 3/3；20 条原始任务完整�
 - [x] R7：Runtime + E1 smoke + V1 decision/policy 完整非模型回归最终 75 passed，frozen research plumbing 未破坏。
 - [x] R8：已新增 `docs/research/RELIABLE_EDITOR_RUNTIME.md`，固定模块职责、budget 层级、trace schema、failure taxonomy 与未来 LangGraph 接线点。
 - [x] R9：已同步 `PENDING_E1B_AUTONOMOUS_TESTS.md`：P1 hardening 完成；P0 real-model DEV/final freeze/sealed TEST 保持 paused。
-- [ ] R10（PAUSED）：真实模型实验恢复后才执行：4 DEV → evidence protocol/config freeze → 6 sealed TEST one-shot；当前保持 0 新增付费模型调用与 6 条 TEST sealed。
+- [~] R10（DEV BUDGET STOP）：`deepseek-v4-flash` one-shot DEV 已执行；3 次调用累计 8,416 tokens，1/3 attempted resolved，第 4 条因总预算耗尽未调用。配置不冻结、TEST 不解封，6 条 sealed TEST 打开/调用均为 0。
 
-**R1–R9 完成记录（2026-09-18）**：Structural schema、Controller traversal、SafeWorkspace error taxonomy、完整非模型回归、Runtime/PENDING 文档、Semantic Adapter、`runtime-v1` policy 和 frozen V1 Policy Adapter 均已落地。研究门槛 75/75 通过；全仓本地回归 274 passed、4 skipped、1 failed，唯一失败是 Windows 用户主目录无法解析导致的既有 Streamlit AppTest 3 秒超时。CI 首轮还暴露了 frozen manifest 文本哈希的 CRLF/LF 差异，现已改为仅对 `.py/.json/.jsonl` 规范化换行后校验，二进制模型仍按原始字节校验；冻结模型、数据与实验结果未改动。R10 未执行，真实模型调用新增 0，sealed TEST 打开 0，未产生或声称 Autonomous Repair Rate / patch-success 结果。
+**R1–R10/V2 启动记录（2026-09-18）**：R1–R9 已完成；加入 R10 runlog 与 V2-0 schema 后，最新研究非模型回归 79/79 通过。R10 DEV 使用 `deepseek-v4-flash`、temperature=0、one-shot、`declared-seed-read-v1`：前三条消耗 8,416 tokens，分别为 resolved、F2P failure、P2P regression；第 4 条记 budget exhaustion，未调用模型。因为第三次原子调用后超出 8,000 ceiling 416 tokens，当前不冻结最终配置、不打开 TEST，也不把 partial DEV 包装成 Autonomous Repair Rate。V2 已进入 V2-0 schema/reward 阶段，未产生 V2 效果结果或新增模型调用。
 
 #### 9.3.5 必须保留的基线与消融
 
