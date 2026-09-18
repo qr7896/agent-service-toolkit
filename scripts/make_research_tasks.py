@@ -11,13 +11,16 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import sys
 import tempfile
 from collections import Counter
 from pathlib import Path
 
-from evals.swe_tasks import grade, load_tasks, prepare
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from evals.swe_tasks import grade, load_tasks, prepare  # noqa: E402
+
 OUTPUT = ROOT / "evals" / "tasks" / "research_v0.jsonl"
 
 LOADER = """\

@@ -1,3 +1,5 @@
+import subprocess
+import sys
 from pathlib import Path
 
 from agents.code_semantic import semantic_search
@@ -9,6 +11,17 @@ from agents.trajectory import build_trajectory
 from evals.adaptive_retrieval_benchmark import _merge, adaptive
 from evals.retrieval_metrics import task_metrics
 from evals.swe_tasks import load_tasks
+
+
+def test_research_cli_entrypoints_import() -> None:
+    for script in ("scripts/make_research_tasks.py", "evals/adaptive_retrieval_benchmark.py"):
+        result = subprocess.run(
+            [sys.executable, script, "--help"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        assert result.returncode == 0, result.stderr
 
 
 def test_research_seed_metadata() -> None:
