@@ -346,13 +346,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tasks", type=Path, default=TASKS)
     parser.add_argument("--output", type=Path, default=RESULT)
+    parser.add_argument("--include-rows", action="store_true")
     args = parser.parse_args()
     report = run_benchmark(args.tasks)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(
-        json.dumps({k: v for k, v in report.items() if k != "rows"}, ensure_ascii=False, indent=2)
+    persisted = (
+        report
+        if args.include_rows
+        else {key: value for key, value in report.items() if key != "rows"}
     )
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(persisted, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps(persisted, ensure_ascii=False, indent=2))
     print(f"wrote {args.output}")
 
 
