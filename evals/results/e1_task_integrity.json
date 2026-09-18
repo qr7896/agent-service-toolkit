@@ -1,0 +1,589 @@
+{
+  "tasks": 20,
+  "base_unresolved": 20,
+  "gold_resolved": 20,
+  "valid_tasks": 20,
+  "invalid_tasks": [],
+  "rows": [
+    {
+      "instance_id": "research__test-command-guard-01",
+      "split": "train",
+      "cluster": "validation",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__test-command-guard-01",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__test_command_guard_01.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__test_command_guard_01.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__test-command-guard-01",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__test_command_guard_01.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__test_command_guard_01.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__debug-prompt-no-hit-02",
+      "split": "dev",
+      "cluster": "memory-quality",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__debug-prompt-no-hit-02",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__debug_prompt_no_hit_02.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__debug_prompt_no_hit_02.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__debug-prompt-no-hit-02",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__debug_prompt_no_hit_02.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__debug_prompt_no_hit_02.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__benchmark-cost-03",
+      "split": "train",
+      "cluster": "observability",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__benchmark-cost-03",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__benchmark_cost_03.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__benchmark_cost_03.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__benchmark-cost-03",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__benchmark_cost_03.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__benchmark_cost_03.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__workflow-message-input-04",
+      "split": "train",
+      "cluster": "input-normalization",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__workflow-message-input-04",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__workflow_message_input_04.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__workflow_message_input_04.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__workflow-message-input-04",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__workflow_message_input_04.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__workflow_message_input_04.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__related-tests-05",
+      "split": "train",
+      "cluster": "validation",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__related-tests-05",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__related_tests_05.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__related_tests_05.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__related-tests-05",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__related_tests_05.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__related_tests_05.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__conflict-exit-06",
+      "split": "train",
+      "cluster": "evidence-decision",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__conflict-exit-06",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__conflict_exit_06.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__conflict_exit_06.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__conflict-exit-06",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__conflict_exit_06.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__conflict_exit_06.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__dual-evidence-gates-07",
+      "split": "train",
+      "cluster": "evidence-decision",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__dual-evidence-gates-07",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__dual_evidence_gates_07.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__dual_evidence_gates_07.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__dual-evidence-gates-07",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__dual_evidence_gates_07.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__dual_evidence_gates_07.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__sandbox-result-08",
+      "split": "test",
+      "cluster": "sandbox-output",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__sandbox-result-08",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__sandbox_result_08.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_result_08.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__sandbox-result-08",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__sandbox_result_08.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_result_08.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__sandbox-gc-09",
+      "split": "test",
+      "cluster": "sandbox-output",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__sandbox-gc-09",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__sandbox_gc_09.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_gc_09.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__sandbox-gc-09",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__sandbox_gc_09.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_gc_09.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__approval-id-10",
+      "split": "test",
+      "cluster": "durable-approval",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__approval-id-10",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__approval_id_10.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__approval_id_10.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__approval-id-10",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__approval_id_10.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__approval_id_10.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__async-checkpointer-11",
+      "split": "test",
+      "cluster": "durable-approval",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__async-checkpointer-11",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__async_checkpointer_11.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__async_checkpointer_11.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__async-checkpointer-11",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__async_checkpointer_11.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__async_checkpointer_11.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__experience-isolation-12",
+      "split": "dev",
+      "cluster": "memory-quality",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__experience-isolation-12",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__experience_isolation_12.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__experience_isolation_12.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__experience-isolation-12",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__experience_isolation_12.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__experience_isolation_12.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__experience-survival-13",
+      "split": "dev",
+      "cluster": "memory-quality",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__experience-survival-13",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__experience_survival_13.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__experience_survival_13.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__experience-survival-13",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__experience_survival_13.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__experience_survival_13.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__permission-ack-14",
+      "split": "train",
+      "cluster": "policy-gate",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__permission-ack-14",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__permission_ack_14.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__permission_ack_14.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__permission-ack-14",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__permission_ack_14.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__permission_ack_14.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__blind-spot-metrics-15",
+      "split": "train",
+      "cluster": "observability",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__blind-spot-metrics-15",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__blind_spot_metrics_15.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__blind_spot_metrics_15.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__blind-spot-metrics-15",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__blind_spot_metrics_15.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__blind_spot_metrics_15.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__difficulty-calibration-16",
+      "split": "train",
+      "cluster": "validation",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__difficulty-calibration-16",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__difficulty_calibration_16.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__difficulty_calibration_16.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__difficulty-calibration-16",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__difficulty_calibration_16.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__difficulty_calibration_16.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__probe-expectation-17",
+      "split": "train",
+      "cluster": "validation",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__probe-expectation-17",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__probe_expectation_17.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__probe_expectation_17.py::test_regression": false
+        },
+        "detail": "F2P 0/1，P2P 0/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__probe-expectation-17",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__probe_expectation_17.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__probe_expectation_17.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__inline-workflow-18",
+      "split": "dev",
+      "cluster": "workflow-composition",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__inline-workflow-18",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__inline_workflow_18.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__inline_workflow_18.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__inline-workflow-18",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__inline_workflow_18.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__inline_workflow_18.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__gold-field-split-19",
+      "split": "train",
+      "cluster": "input-normalization",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__gold-field-split-19",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__gold_field_split_19.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__gold_field_split_19.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__gold-field-split-19",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__gold_field_split_19.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__gold_field_split_19.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    },
+    {
+      "instance_id": "research__legacy-gold-compat-20",
+      "split": "train",
+      "cluster": "input-normalization",
+      "base_unresolved": true,
+      "gold_resolved": true,
+      "base_grade": {
+        "instance_id": "research__legacy-gold-compat-20",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__legacy_gold_compat_20.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__legacy_gold_compat_20.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "gold_grade": {
+        "instance_id": "research__legacy-gold-compat-20",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__legacy_gold_compat_20.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__legacy_gold_compat_20.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "comparison_scope": "paired exact-task comparison against V1-train-only group-aware V0 Utility Gate",
+  "task_ids": [
+    "research__approval-id-10",
+    "research__async-checkpointer-11",
+    "research__sandbox-gc-09",
+    "research__sandbox-result-08"
+  ],
+  "v1_frozen": {
+    "tasks": 4,
+    "gold_file_recall": 0.875,
+    "gold_symbol_recall": 1.0,
+    "gold_test_recall": 1.0,
+    "gold_caller_recall": 0.25,
+    "context_precision": 0.3833,
+    "context_recall": 0.7812,
+    "context_tokens": 87.0,
+    "retrieval_rounds": 1.25,
+    "evidence_efficiency": 9.0702,
+    "abstention_rate": 0.0,
+    "avg_tool_calls": 1.25,
+    "avg_cost": 1.05,
+    "avg_selection_latency_ms": 0.179
+  },
+  "v0_utility_gate_groupaware": {
+    "tasks": 4,
+    "gold_file_recall": 0.875,
+    "gold_symbol_recall": 1.0,
+    "gold_test_recall": 1.0,
+    "gold_caller_recall": 0.25,
+    "context_precision": 0.4,
+    "context_recall": 0.7812,
+    "context_tokens": 122.5,
+    "retrieval_rounds": 2.0,
+    "evidence_efficiency": 6.9047,
+    "abstention_rate": 0.0,
+    "avg_tool_calls": 2.0,
+    "avg_cost": 2.5,
+    "avg_selection_latency_ms": 0.1998
+  },
+  "prior_coverage": 0.0,
+  "fallback_count": 4,
+  "delta": {
+    "context_recall": 0.0,
+    "mean_context_token_reduction_pct": 28.98,
+    "mean_tool_call_reduction_pct": 37.5,
+    "median_context_tokens": {
+      "v1": 87.0,
+      "v0": 134.5,
+      "reduction_pct": 35.32
+    },
+    "median_tool_calls": {
+      "v1": 1.0,
+      "v0": 2.0,
+      "reduction_pct": 50.0
+    }
+  },
+  "go_no_go": {
+    "recall_not_below_v0": true,
+    "median_cost_reduction_at_least_10pct": true,
+    "multi_seed_consistency": "not_yet_evaluated",
+    "provisional_go": true,
+    "final_go": false,
+    "reason": "final Go additionally requires >=3 paired resampling seeds with consistent direction"
+  }
+}

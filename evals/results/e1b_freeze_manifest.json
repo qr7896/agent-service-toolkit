@@ -1,0 +1,77 @@
+{
+  "protocol": "e1b-freeze-candidate-v1",
+  "created": "2026-09-18",
+  "claim_boundary": "Executable 30-task pool; not an untouched 30-task held-out test and not autonomous Coding Agent success.",
+  "pool": {
+    "tasks": 30,
+    "existing": 20,
+    "e1b": 10
+  },
+  "files": {
+    "evals\\tasks\\research_v0.jsonl": "534b309d31a690601be9e38d2200c6b3787e8e010ee29b53d637215ac15e5175",
+    "evals\\tasks\\e1b_candidates.jsonl": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
+    "evals\\results\\e1b_pool_audit.json": "9cef5f0ad332f9e0aea45207dd16ff759502e03308b90c4927af3179c07b0b3f"
+  },
+  "e1b_instance_ids": [
+    "e1b__multifile-policy-21",
+    "e1b__async-propagation-22",
+    "e1b__resume-approval-23",
+    "e1b__symbol-hard-negative-24",
+    "e1b__config-code-budget-25",
+    "e1b__cross-module-status-26",
+    "e1b__async-cancel-27",
+    "e1b__hard-negative-router-28",
+    "e1b__state-version-29",
+    "e1b__multifile-sandbox-cleanup-30"
+  ],
+  "e1b_source_commits": [
+    "e1b-src-21",
+    "e1b-src-22",
+    "e1b-src-23",
+    "e1b-src-24",
+    "e1b-src-25",
+    "e1b-src-26",
+    "e1b-src-27",
+    "e1b-src-28",
+    "e1b-src-29",
+    "e1b-src-30"
+  ],
+  "existing_source_commits": [
+    "1df3c67",
+    "28ab094",
+    "28c6b12",
+    "3183ac9",
+    "39ffc20",
+    "3e7b27c",
+    "59e9bdd",
+    "5a14425",
+    "994fd72",
+    "cd6a3f3",
+    "d76338f",
+    "e196446",
+    "ead5691",
+    "fcbe49e"
+  ],
+  "cross_pool_source_commit_overlap": [],
+  "integrity": {
+    "e1b_base_unresolved": 10,
+    "e1b_gold_resolved": 10
+  },
+  "complexity": {
+    "gold_file_distribution": {
+      "1": 24,
+      "2": 6
+    },
+    "test_node_distribution": {
+      "2": 26,
+      "3": 4
+    },
+    "multi_file_gold": 6,
+    "async_signal": 2,
+    "state_signal": 5,
+    "config_signal": 2,
+    "hard_negative_signal": 2,
+    "multi_p2p": 4
+  },
+  "next_protocol": "Create a new explicit E1-B evaluation split/freeze before autonomous-editor comparison; do not relabel the opened V1 frozen test."
+}

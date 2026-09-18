@@ -1,0 +1,23 @@
+{
+  "protocol": "one-shot frozen V1 test evaluation",
+  "manifest_verified": true,
+  "ranker": {
+    "rows": 36,
+    "episodes": 12,
+    "actionable_episodes": 8,
+    "top1_oracle_action_accuracy": 0.5,
+    "row_accuracy": 0.805556,
+    "auroc": 0.866071
+  },
+  "stopper": {
+    "episodes": 12,
+    "stop_rate": 0.333333,
+    "accuracy": 1.0,
+    "false_stop": 0,
+    "missed_stop": 0,
+    "auprc": 1.0,
+    "brier": 0.007355,
+    "ece_5bin": 0.054056,
+    "auroc": 1.0
+  }
+}

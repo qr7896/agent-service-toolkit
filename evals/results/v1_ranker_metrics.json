@@ -1,0 +1,207 @@
+{
+  "feature_schema": [
+    "round",
+    "actions_tried",
+    "tokens_spent",
+    "cost_spent",
+    "artifact_files",
+    "artifact_symbols",
+    "artifact_tests",
+    "artifact_callers",
+    "candidate_cost",
+    "candidate_risk",
+    "action_files",
+    "action_lexical",
+    "action_semantic",
+    "action_structural",
+    "task_hash_0",
+    "task_hash_1",
+    "task_hash_2",
+    "task_hash_3",
+    "task_hash_4",
+    "task_hash_5",
+    "task_hash_6",
+    "task_hash_7",
+    "task_hash_8",
+    "task_hash_9",
+    "task_hash_10",
+    "task_hash_11",
+    "task_hash_12",
+    "task_hash_13",
+    "task_hash_14",
+    "task_hash_15",
+    "task_hash_16",
+    "task_hash_17",
+    "task_hash_18",
+    "task_hash_19",
+    "task_hash_20",
+    "task_hash_21",
+    "task_hash_22",
+    "task_hash_23",
+    "task_hash_24",
+    "task_hash_25",
+    "task_hash_26",
+    "task_hash_27",
+    "task_hash_28",
+    "task_hash_29",
+    "task_hash_30",
+    "task_hash_31"
+  ],
+  "runtime_boundary": "pre_action_only; counterfactual candidate outputs excluded",
+  "gold_features": [],
+  "models": {
+    "logreg": {
+      "train": {
+        "rows": 88,
+        "episodes": 26,
+        "actionable_episodes": 14,
+        "top1_oracle_action_accuracy": 0.857143,
+        "row_accuracy": 0.977273,
+        "auroc": 0.972973
+      },
+      "dev": {
+        "rows": 34,
+        "episodes": 11,
+        "actionable_episodes": 7,
+        "top1_oracle_action_accuracy": 0.571429,
+        "row_accuracy": 0.794118,
+        "auroc": 0.888889
+      }
+    },
+    "small_mlp": {
+      "train": {
+        "rows": 88,
+        "episodes": 26,
+        "actionable_episodes": 14,
+        "top1_oracle_action_accuracy": 1.0,
+        "row_accuracy": 1.0,
+        "auroc": 1.0
+      },
+      "dev": {
+        "rows": 34,
+        "episodes": 11,
+        "actionable_episodes": 7,
+        "top1_oracle_action_accuracy": 0.571429,
+        "row_accuracy": 0.794118,
+        "auroc": 0.873016
+      }
+    }
+  },
+  "selected_on_dev": "logreg",
+  "ablations": {
+    "full": {
+      "runtime_features": [
+        "round",
+        "actions_tried",
+        "tokens_spent",
+        "cost_spent",
+        "artifact_files",
+        "artifact_symbols",
+        "artifact_tests",
+        "artifact_callers",
+        "candidate_cost",
+        "candidate_risk"
+      ],
+      "include_text": true,
+      "dev": {
+        "rows": 34,
+        "episodes": 11,
+        "actionable_episodes": 7,
+        "top1_oracle_action_accuracy": 0.571429,
+        "row_accuracy": 0.794118,
+        "auroc": 0.888889
+      }
+    },
+    "no_cost": {
+      "runtime_features": [
+        "round",
+        "actions_tried",
+        "tokens_spent",
+        "cost_spent",
+        "artifact_files",
+        "artifact_symbols",
+        "artifact_tests",
+        "artifact_callers",
+        "candidate_risk"
+      ],
+      "include_text": true,
+      "dev": {
+        "rows": 34,
+        "episodes": 11,
+        "actionable_episodes": 7,
+        "top1_oracle_action_accuracy": 0.571429,
+        "row_accuracy": 0.794118,
+        "auroc": 0.888889
+      }
+    },
+    "no_risk": {
+      "runtime_features": [
+        "round",
+        "actions_tried",
+        "tokens_spent",
+        "cost_spent",
+        "artifact_files",
+        "artifact_symbols",
+        "artifact_tests",
+        "artifact_callers",
+        "candidate_cost"
+      ],
+      "include_text": true,
+      "dev": {
+        "rows": 34,
+        "episodes": 11,
+        "actionable_episodes": 7,
+        "top1_oracle_action_accuracy": 0.571429,
+        "row_accuracy": 0.794118,
+        "auroc": 0.888889
+      }
+    },
+    "state_only": {
+      "runtime_features": [
+        "round",
+        "actions_tried",
+        "tokens_spent",
+        "cost_spent",
+        "artifact_files",
+        "artifact_symbols",
+        "artifact_tests",
+        "artifact_callers"
+      ],
+      "include_text": true,
+      "dev": {
+        "rows": 34,
+        "episodes": 11,
+        "actionable_episodes": 7,
+        "top1_oracle_action_accuracy": 0.571429,
+        "row_accuracy": 0.794118,
+        "auroc": 0.888889
+      }
+    },
+    "no_task_text": {
+      "runtime_features": [
+        "round",
+        "actions_tried",
+        "tokens_spent",
+        "cost_spent",
+        "artifact_files",
+        "artifact_symbols",
+        "artifact_tests",
+        "artifact_callers",
+        "candidate_cost",
+        "candidate_risk"
+      ],
+      "include_text": false,
+      "dev": {
+        "rows": 34,
+        "episodes": 11,
+        "actionable_episodes": 7,
+        "top1_oracle_action_accuracy": 0.571429,
+        "row_accuracy": 0.823529,
+        "auroc": 0.936508
+      }
+    }
+  },
+  "lightgbm_status": "not_installed",
+  "test_status": "frozen_not_evaluated",
+  "test_rows": 36
+}

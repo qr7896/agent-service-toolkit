@@ -1,0 +1,18 @@
+{
+  "protocol": "V1 frozen policy before test evaluation",
+  "ranker": "logreg",
+  "stopper": "logreg",
+  "stop_threshold": 0.942382,
+  "split_policy": "group-aware cluster-disjoint and source-commit-disjoint; not claimed temporal",
+  "test_status": "frozen_not_evaluated",
+  "files": {
+    "evals/v1_decision_dataset.py": "233c495eda3324491cac2721c5beeb2151f9b190d8a2c2865818849474f5e0e0",
+    "evals/v1_train_ranker.py": "5bd258946234da431968827004c43cff743ada799311cec507dec0d8e3716788",
+    "evals/v1_train_stopper.py": "029c7bc6bd30b44f92e1f1cc996977a8409fc6d84fb572b50188882f88b86ea4",
+    "evals/results/v1_decision_episodes.jsonl": "f0596fb5e2e40004111f7909607b9835abf2bff91b59706c27930a5de72a65e8",
+    "evals/results/v1_ranker_metrics.json": "14483f0f3e02b86f2d299cfc0ddf4ef5cdb92e06edf9df7ae04be9973117addd",
+    "evals/results/v1_stopper_metrics.json": "c3d26b6b00e4eed52a4115fce31012701b283686765c56f42c95eed206b524ff",
+    "evals/results/v1_logreg_ranker.joblib": "fb74614cd202b9cab6e5643ffed1c79fd485cac1cae9100c5d0a35e80c1772e4",
+    "evals/results/v1_logreg_stopper.joblib": "4656cbfee3a0ec2a3ccd6317a1759f8f0d4bbdffb9b34c862cc17d2a6ecb097c"
+  }
+}

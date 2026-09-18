@@ -1,0 +1,103 @@
+{
+  "name": "E1 end-to-end coding smoke benchmark",
+  "version": "e1-v1",
+  "status": "stage1_hardened_e1b_30_task_freeze_candidate_ready",
+  "protocol": {
+    "arms": [
+      "v0_groupaware",
+      "v1_frozen"
+    ],
+    "editor": "oracle_gold_editor_constrained_to_retrieved_files",
+    "budget": 8000,
+    "primary_metrics": [
+      "oracle_pass_at_1",
+      "sufficient_evidence_rate",
+      "retrieval_blocked_rate",
+      "regression_failure_rate"
+    ],
+    "efficiency_metrics": [
+      "context_tokens",
+      "tool_calls",
+      "retrieved_files_count",
+      "irrelevant_read_ratio",
+      "wall_time_ms"
+    ],
+    "failure_taxonomy": [
+      "invalid_base",
+      "retrieval_blocked",
+      "patch_failure",
+      "regression_failure",
+      "resolved"
+    ]
+  },
+  "current_smoke": {
+    "task_source": "exact V1 frozen test subset",
+    "task_count": 4,
+    "purpose": "validate retrieval-to-editability transmission and harness correctness",
+    "claim_boundary": "oracle editor only; not autonomous coding success",
+    "integrity_validation": {
+      "pool_tasks": 20,
+      "base_unresolved": 20,
+      "gold_resolved": 20,
+      "invalid_tasks": 0
+    },
+    "result": {
+      "v0_groupaware": {
+        "oracle_pass_at_1": 1.0,
+        "sufficient_evidence_rate": 1.0,
+        "avg_tool_calls": 2.0,
+        "avg_context_tokens": 122.5,
+        "avg_irrelevant_read_ratio": 0.0
+      },
+      "v1_frozen": {
+        "oracle_pass_at_1": 1.0,
+        "sufficient_evidence_rate": 1.0,
+        "avg_tool_calls": 1.25,
+        "avg_context_tokens": 87.0,
+        "avg_irrelevant_read_ratio": 0.125
+      }
+    }
+  },
+  "target_e1": {
+    "task_count_min": 30,
+    "task_count_max": 50,
+    "requirements": [
+      "gold-verified FAIL_TO_PASS and PASS_TO_PASS",
+      "source commit recorded",
+      "no train/test source-commit overlap",
+      "task families broader than the current two frozen test clusters",
+      "same model and retrieval budget across compared arms",
+      "autonomous editor evaluated separately from oracle editor"
+    ]
+  },
+  "e1b_pool": {
+    "status": "freeze_candidate",
+    "task_count": 30,
+    "existing_tasks": 20,
+    "new_e1b_tasks": 10,
+    "new_task_integrity": {
+      "base_unresolved": 10,
+      "gold_resolved": 10
+    },
+    "new_task_source_commit_unique": true,
+    "cross_pool_source_commit_overlap": [],
+    "complexity": {
+      "multi_file_gold": 6,
+      "async_signal": 2,
+      "state_signal": 5,
+      "config_signal": 2,
+      "hard_negative_signal": 2,
+      "multi_p2p": 4
+    },
+    "freeze_manifest": "evals/results/e1b_freeze_manifest.json",
+    "claim_boundary": "30-task executable pool and freeze candidate; not an untouched 30-task held-out test"
+  },
+  "next_gate": {
+    "name": "autonomous_editor",
+    "requirements": [
+      "create a new explicit E1-B evaluation split/freeze without relabeling the opened V1 test",
+      "hide Gold sources and labels from Autonomous Editor",
+      "report Retrieval Gap, Editor/Reasoning Gap, and Regression Gap separately"
+    ]
+  }
+}

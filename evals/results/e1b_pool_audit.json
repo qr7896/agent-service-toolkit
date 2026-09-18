@@ -1,0 +1,78 @@
+{
+  "pool_tasks": 30,
+  "existing_tasks": 20,
+  "e1b_tasks": 10,
+  "unique_instance_ids": true,
+  "existing_unique_source_commits": 14,
+  "e1b_unique_source_commits": true,
+  "cross_pool_source_commit_overlap": [],
+  "e1b_integrity_valid": true,
+  "e1b_base_unresolved": 10,
+  "e1b_gold_resolved": 10,
+  "gold_file_distribution": {
+    "1": 24,
+    "2": 6
+  },
+  "test_node_distribution": {
+    "2": 26,
+    "3": 4
+  },
+  "multi_file_gold": 6,
+  "async_signal": 2,
+  "state_signal": 5,
+  "config_signal": 2,
+  "hard_negative_signal": 2,
+  "multi_p2p": 4,
+  "e1b_integrity": [
+    {
+      "instance_id": "e1b__multifile-policy-21",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__resume-approval-23",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__symbol-hard-negative-24",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__async-cancel-27",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__hard-negative-router-28",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "base_unresolved": true,
+      "gold_resolved": true
+    },
+    {
+      "instance_id": "e1b__multifile-sandbox-cleanup-30",
+      "base_unresolved": true,
+      "gold_resolved": true
+    }
+  ]
+}

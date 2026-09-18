@@ -1,0 +1,13 @@
+{
+  "episodes": 49,
+  "tasks": 20,
+  "splits": {
+    "train": 12,
+    "dev": 4,
+    "test": 4
+  },
+  "runtime_gold_leakage": [],
+  "cross_split_clusters": [],
+  "cross_split_commits": [],
+  "stop_positive": 20
+}

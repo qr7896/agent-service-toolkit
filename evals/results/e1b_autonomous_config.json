@@ -1,0 +1,97 @@
+{
+  "config": {
+    "protocol": "e1b-autonomous-editor-v0",
+    "model_mode": "not_configured",
+    "max_iterations": 4,
+    "max_files_written": 3,
+    "allow_test_file_writes": false,
+    "gold_sources_visible": false,
+    "gold_labels_visible": false,
+    "grader_visible_during_edit": false,
+    "sandbox_required": true,
+    "dev_only_until_freeze": true
+  },
+  "status": "dev_harness_contract_ready_model_not_configured",
+  "claim_boundary": "No autonomous repair result is produced by this protocol file.",
+  "dev_task_count": 4,
+  "sealed_test_task_count": 6,
+  "dev_tasks_public_view": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "problem_statement": "异步工具失败必须 await 并传播失败状态，不能把 coroutine 当成功结果。",
+      "setup_files": [
+        "src/agents/async_runner.py"
+      ],
+      "test_files": [
+        "test_e1b_22.py"
+      ],
+      "repo": "qr7896/agent-service-toolkit",
+      "base_commit": "e1b-base-22",
+      "source_commit": "e1b-src-22"
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "problem_statement": "检索预算必须同时受配置和运行时 clamp 约束，不能让配置超过硬上限。",
+      "setup_files": [
+        "config/retrieval.json",
+        "src/agents/budget.py"
+      ],
+      "test_files": [
+        "test_e1b_25.py"
+      ],
+      "repo": "qr7896/agent-service-toolkit",
+      "base_commit": "e1b-base-25",
+      "source_commit": "e1b-src-25"
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "problem_statement": "工具错误必须经 service adapter 映射为 failed，不能在上层被统一标成 completed。",
+      "setup_files": [
+        "src/agents/tool_result.py",
+        "src/service/task_adapter.py"
+      ],
+      "test_files": [
+        "test_e1b_26.py"
+      ],
+      "repo": "qr7896/agent-service-toolkit",
+      "base_commit": "e1b-base-26",
+      "source_commit": "e1b-src-26"
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "problem_statement": "恢复旧 checkpoint 时必须迁移 version 1 的 approval 字段并保持 version 2 数据不变。",
+      "setup_files": [
+        "src/agents/state_migration.py"
+      ],
+      "test_files": [
+        "test_e1b_29.py"
+      ],
+      "repo": "qr7896/agent-service-toolkit",
+      "base_commit": "e1b-base-29",
+      "source_commit": "e1b-src-29"
+    }
+  ],
+  "sealed_test_ids": [
+    "e1b__async-cancel-27",
+    "e1b__hard-negative-router-28",
+    "e1b__multifile-policy-21",
+    "e1b__multifile-sandbox-cleanup-30",
+    "e1b__resume-approval-23",
+    "e1b__symbol-hard-negative-24"
+  ],
+  "inputs": {
+    "evals\\tasks\\e1b_candidates.jsonl": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
+    "evals\\results\\e1b_evaluation_split.json": "3a22ef4c75fe8d3ee2c5c15e85ccc6048f9462351806b70bce9fefc020bc6083"
+  },
+  "failure_decomposition": {
+    "retrieval_gap": "retrieved evidence is insufficient for constrained Oracle repair",
+    "editor_reasoning_gap": "Oracle resolves under matched evidence but Autonomous Editor does not",
+    "regression_gap": "FAIL_TO_PASS is repaired but PASS_TO_PASS regresses"
+  },
+  "freeze_gate": [
+    "Choose model/provider on DEV only.",
+    "Freeze prompt, tools, iteration budget, write policy, and model identifier before TEST.",
+    "Hash the final autonomous configuration before opening TEST outcomes.",
+    "Never expose gold_sources, gold_files, gold_symbols, gold_callers, gold_tests, or gold_context to the editor."
+  ]
+}

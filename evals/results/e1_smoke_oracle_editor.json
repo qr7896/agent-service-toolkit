@@ -1,0 +1,465 @@
+{
+  "protocol": "E1 retrieval-to-patch smoke with constrained Oracle Editor",
+  "scope": "retrieval-policy-to-editability upper bound; not autonomous Coding Agent success",
+  "tasks": 4,
+  "budget": 8000,
+  "summaries": {
+    "v1_frozen": {
+      "tasks": 4,
+      "oracle_pass_at_1": 1.0,
+      "sufficient_evidence_rate": 1.0,
+      "avg_tool_calls": 1.25,
+      "avg_context_tokens": 87.0,
+      "avg_retrieved_files": 1.25,
+      "avg_irrelevant_read_ratio": 0.125,
+      "retrieval_blocked_rate": 0.0,
+      "outcomes": {
+        "invalid_base": 0,
+        "retrieval_blocked": 0,
+        "patch_failure": 0,
+        "regression_failure": 0,
+        "resolved": 4
+      }
+    },
+    "v0_groupaware": {
+      "tasks": 4,
+      "oracle_pass_at_1": 1.0,
+      "sufficient_evidence_rate": 1.0,
+      "avg_tool_calls": 2.0,
+      "avg_context_tokens": 122.5,
+      "avg_retrieved_files": 1.0,
+      "avg_irrelevant_read_ratio": 0.0,
+      "retrieval_blocked_rate": 0.0,
+      "outcomes": {
+        "invalid_base": 0,
+        "retrieval_blocked": 0,
+        "patch_failure": 0,
+        "regression_failure": 0,
+        "resolved": 4
+      }
+    }
+  },
+  "rows": [
+    {
+      "instance_id": "research__sandbox-result-08",
+      "policy": "v1_frozen",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "structural"
+      ],
+      "tool_calls": 1,
+      "context_tokens": 85,
+      "patch_files_written": [
+        "src/agents/workspace.py"
+      ],
+      "wall_time_ms": 1451.612,
+      "base_grade": {
+        "instance_id": "research__sandbox-result-08",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__sandbox_result_08.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_result_08.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__sandbox-result-08",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__sandbox_result_08.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_result_08.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/agents/workspace.py"
+      ],
+      "retrieved_gold_files": [
+        "src/agents/workspace.py"
+      ],
+      "missing_gold_files": [],
+      "irrelevant_files": [],
+      "retrieved_files_count": 1,
+      "irrelevant_read_ratio": 0.0
+    },
+    {
+      "instance_id": "research__sandbox-result-08",
+      "policy": "v0_groupaware",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "lexical",
+        "structural"
+      ],
+      "tool_calls": 2,
+      "context_tokens": 137,
+      "patch_files_written": [
+        "src/agents/workspace.py"
+      ],
+      "wall_time_ms": 1490.158,
+      "base_grade": {
+        "instance_id": "research__sandbox-result-08",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__sandbox_result_08.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_result_08.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__sandbox-result-08",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__sandbox_result_08.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_result_08.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/agents/workspace.py"
+      ],
+      "retrieved_gold_files": [
+        "src/agents/workspace.py"
+      ],
+      "missing_gold_files": [],
+      "irrelevant_files": [],
+      "retrieved_files_count": 1,
+      "irrelevant_read_ratio": 0.0
+    },
+    {
+      "instance_id": "research__sandbox-gc-09",
+      "policy": "v1_frozen",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "structural"
+      ],
+      "tool_calls": 1,
+      "context_tokens": 78,
+      "patch_files_written": [
+        "src/agents/workspace.py"
+      ],
+      "wall_time_ms": 1468.795,
+      "base_grade": {
+        "instance_id": "research__sandbox-gc-09",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__sandbox_gc_09.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_gc_09.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__sandbox-gc-09",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__sandbox_gc_09.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_gc_09.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/agents/workspace.py",
+        "src/agents/workspace_config.py"
+      ],
+      "retrieved_gold_files": [
+        "src/agents/workspace.py"
+      ],
+      "missing_gold_files": [
+        "src/agents/workspace_config.py"
+      ],
+      "irrelevant_files": [],
+      "retrieved_files_count": 1,
+      "irrelevant_read_ratio": 0.0
+    },
+    {
+      "instance_id": "research__sandbox-gc-09",
+      "policy": "v0_groupaware",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "lexical",
+        "structural"
+      ],
+      "tool_calls": 2,
+      "context_tokens": 78,
+      "patch_files_written": [
+        "src/agents/workspace.py"
+      ],
+      "wall_time_ms": 1552.53,
+      "base_grade": {
+        "instance_id": "research__sandbox-gc-09",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__sandbox_gc_09.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_gc_09.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__sandbox-gc-09",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__sandbox_gc_09.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__sandbox_gc_09.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/agents/workspace.py",
+        "src/agents/workspace_config.py"
+      ],
+      "retrieved_gold_files": [
+        "src/agents/workspace.py"
+      ],
+      "missing_gold_files": [
+        "src/agents/workspace_config.py"
+      ],
+      "irrelevant_files": [],
+      "retrieved_files_count": 1,
+      "irrelevant_read_ratio": 0.0
+    },
+    {
+      "instance_id": "research__approval-id-10",
+      "policy": "v1_frozen",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "structural",
+        "files"
+      ],
+      "tool_calls": 2,
+      "context_tokens": 96,
+      "patch_files_written": [
+        "src/agents/coding_agent.py"
+      ],
+      "wall_time_ms": 1440.112,
+      "base_grade": {
+        "instance_id": "research__approval-id-10",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__approval_id_10.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__approval_id_10.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__approval-id-10",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__approval_id_10.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__approval_id_10.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/agents/coding_agent.py"
+      ],
+      "retrieved_gold_files": [
+        "src/agents/coding_agent.py"
+      ],
+      "missing_gold_files": [],
+      "irrelevant_files": [
+        "test_research__approval_id_10.py"
+      ],
+      "retrieved_files_count": 2,
+      "irrelevant_read_ratio": 0.5
+    },
+    {
+      "instance_id": "research__approval-id-10",
+      "policy": "v0_groupaware",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "lexical",
+        "structural"
+      ],
+      "tool_calls": 2,
+      "context_tokens": 132,
+      "patch_files_written": [
+        "src/agents/coding_agent.py"
+      ],
+      "wall_time_ms": 1454.16,
+      "base_grade": {
+        "instance_id": "research__approval-id-10",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__approval_id_10.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__approval_id_10.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__approval-id-10",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__approval_id_10.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__approval_id_10.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/agents/coding_agent.py"
+      ],
+      "retrieved_gold_files": [
+        "src/agents/coding_agent.py"
+      ],
+      "missing_gold_files": [],
+      "irrelevant_files": [],
+      "retrieved_files_count": 1,
+      "irrelevant_read_ratio": 0.0
+    },
+    {
+      "instance_id": "research__async-checkpointer-11",
+      "policy": "v1_frozen",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "structural"
+      ],
+      "tool_calls": 1,
+      "context_tokens": 89,
+      "patch_files_written": [
+        "src/memory/checkpoint.py"
+      ],
+      "wall_time_ms": 1441.433,
+      "base_grade": {
+        "instance_id": "research__async-checkpointer-11",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__async_checkpointer_11.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__async_checkpointer_11.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__async-checkpointer-11",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__async_checkpointer_11.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__async_checkpointer_11.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/memory/checkpoint.py"
+      ],
+      "retrieved_gold_files": [
+        "src/memory/checkpoint.py"
+      ],
+      "missing_gold_files": [],
+      "irrelevant_files": [],
+      "retrieved_files_count": 1,
+      "irrelevant_read_ratio": 0.0
+    },
+    {
+      "instance_id": "research__async-checkpointer-11",
+      "policy": "v0_groupaware",
+      "resolved": true,
+      "failure_type": "resolved",
+      "actions": [
+        "lexical",
+        "structural"
+      ],
+      "tool_calls": 2,
+      "context_tokens": 143,
+      "patch_files_written": [
+        "src/memory/checkpoint.py"
+      ],
+      "wall_time_ms": 1469.99,
+      "base_grade": {
+        "instance_id": "research__async-checkpointer-11",
+        "resolved": false,
+        "fail_to_pass": {
+          "test_research__async_checkpointer_11.py::test_fix": false
+        },
+        "pass_to_pass": {
+          "test_research__async_checkpointer_11.py::test_regression": true
+        },
+        "detail": "F2P 0/1，P2P 1/1"
+      },
+      "final_grade": {
+        "instance_id": "research__async-checkpointer-11",
+        "resolved": true,
+        "fail_to_pass": {
+          "test_research__async_checkpointer_11.py::test_fix": true
+        },
+        "pass_to_pass": {
+          "test_research__async_checkpointer_11.py::test_regression": true
+        },
+        "detail": "F2P 1/1，P2P 1/1"
+      },
+      "f2p_passed": 1,
+      "f2p_count": 1,
+      "p2p_passed": 1,
+      "p2p_count": 1,
+      "required_gold_files": [
+        "src/memory/checkpoint.py"
+      ],
+      "retrieved_gold_files": [
+        "src/memory/checkpoint.py"
+      ],
+      "missing_gold_files": [],
+      "irrelevant_files": [],
+      "retrieved_files_count": 1,
+      "irrelevant_read_ratio": 0.0
+    }
+  ]
+}

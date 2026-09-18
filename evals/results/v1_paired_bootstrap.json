@@ -1,0 +1,122 @@
+{
+  "protocol": "paired task bootstrap against V1-train-only group-aware V0 Utility Gate; positive delta favors V1",
+  "tasks": [
+    "research__approval-id-10",
+    "research__async-checkpointer-11",
+    "research__sandbox-gc-09",
+    "research__sandbox-result-08"
+  ],
+  "n_tasks": 4,
+  "samples_per_seed": 5000,
+  "resampling_seeds": [
+    0,
+    1,
+    2
+  ],
+  "seed_semantics": "bootstrap RNG seeds over the same frozen tasks; not independent training seeds",
+  "prior_coverage": 0.0,
+  "fallback_count": 4,
+  "metrics": {
+    "context_recall": {
+      "mean_delta": 0.0,
+      "wins": 0,
+      "ties": 4,
+      "losses": 0,
+      "direction_consistent_all_seeds": true
+    },
+    "context_tokens": {
+      "mean_delta": 35.5,
+      "wins": 3,
+      "ties": 1,
+      "losses": 0,
+      "direction_consistent_all_seeds": true
+    },
+    "tool_calls": {
+      "mean_delta": 0.75,
+      "wins": 3,
+      "ties": 1,
+      "losses": 0,
+      "direction_consistent_all_seeds": true
+    }
+  },
+  "seed_runs": [
+    {
+      "seed": 0,
+      "metrics": {
+        "context_recall": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "positive_direction": true
+        },
+        "context_tokens": {
+          "ci95": [
+            13.0,
+            53.0
+          ],
+          "positive_direction": true
+        },
+        "tool_calls": {
+          "ci95": [
+            0.25,
+            1.0
+          ],
+          "positive_direction": true
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "metrics": {
+        "context_recall": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "positive_direction": true
+        },
+        "context_tokens": {
+          "ci95": [
+            13.0,
+            53.0
+          ],
+          "positive_direction": true
+        },
+        "tool_calls": {
+          "ci95": [
+            0.25,
+            1.0
+          ],
+          "positive_direction": true
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "metrics": {
+        "context_recall": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "positive_direction": true
+        },
+        "context_tokens": {
+          "ci95": [
+            13.0,
+            53.0
+          ],
+          "positive_direction": true
+        },
+        "tool_calls": {
+          "ci95": [
+            0.25,
+            1.0
+          ],
+          "positive_direction": true
+        }
+      }
+    }
+  ]
+}

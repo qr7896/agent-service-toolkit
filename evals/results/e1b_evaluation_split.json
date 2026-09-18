@@ -1,0 +1,49 @@
+{
+  "protocol": "e1b-evaluation-split-v1",
+  "status": "frozen_before_autonomous_editor",
+  "claim_boundary": "New E1-B candidate tasks only; separate from the previously opened V1 frozen test.",
+  "selection_rule": "Deterministic pre-autonomous-editor split chosen to place 4 tasks in development and 6 tasks in evaluation while retaining multi-file, async, state, and hard-negative cases in evaluation.",
+  "dev_ids": [
+    "e1b__async-propagation-22",
+    "e1b__config-code-budget-25",
+    "e1b__cross-module-status-26",
+    "e1b__state-version-29"
+  ],
+  "test_ids": [
+    "e1b__async-cancel-27",
+    "e1b__hard-negative-router-28",
+    "e1b__multifile-policy-21",
+    "e1b__multifile-sandbox-cleanup-30",
+    "e1b__resume-approval-23",
+    "e1b__symbol-hard-negative-24"
+  ],
+  "dev_count": 4,
+  "test_count": 6,
+  "dev_source_commits": [
+    "e1b-src-22",
+    "e1b-src-25",
+    "e1b-src-26",
+    "e1b-src-29"
+  ],
+  "test_source_commits": [
+    "e1b-src-21",
+    "e1b-src-23",
+    "e1b-src-24",
+    "e1b-src-27",
+    "e1b-src-28",
+    "e1b-src-30"
+  ],
+  "source_commit_overlap": [],
+  "inputs": {
+    "evals\\tasks\\e1b_candidates.jsonl": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
+    "evals\\results\\e1b_freeze_manifest.json": "3933f440e2100d26a8209fc3a9a44c1b5eac4386c205f2e20ec98a59ac2551a2"
+  },
+  "parent_freeze_protocol": "e1b-freeze-candidate-v1",
+  "rules": [
+    "Do not tune Autonomous Editor prompts, tools, or policy against test outcomes.",
+    "Use dev tasks for implementation debugging and prompt/tool selection.",
+    "Open the six test outcomes only after the autonomous configuration is frozen.",
+    "Gold sources and Gold labels are grader-only and unavailable to Autonomous Editor.",
+    "Report Oracle and Autonomous results separately."
+  ]
+}

@@ -1,0 +1,608 @@
+{
+  "protocol": "matched V0 gates on exact V1 frozen-test tasks; Utility prior fit on V1 train only",
+  "split_policy": "V1 group-aware cluster/source-commit disjoint",
+  "tasks": 4,
+  "train_tasks_for_prior": 12,
+  "budget": 8000,
+  "prior_map": {
+    "validation": "structural",
+    "observability": "structural",
+    "input-normalization": "structural",
+    "evidence-decision": "structural",
+    "policy-gate": "structural"
+  },
+  "test_clusters": [
+    "durable-approval",
+    "sandbox-output"
+  ],
+  "prior_coverage": 0.0,
+  "evidence_gate": {
+    "summary": {
+      "tasks": 4,
+      "gold_file_recall": 0.875,
+      "gold_symbol_recall": 1.0,
+      "gold_test_recall": 1.0,
+      "gold_caller_recall": 0.25,
+      "context_precision": 0.4,
+      "context_recall": 0.7812,
+      "context_tokens": 122.5,
+      "retrieval_rounds": 2.0,
+      "evidence_efficiency": 6.9047,
+      "abstention_rate": 0.0,
+      "avg_tool_calls": 2.0,
+      "avg_cost": 2.5,
+      "avg_selection_latency_ms": 0.1762
+    },
+    "rows": [
+      {
+        "instance_id": "research__sandbox-result-08",
+        "arm": "evidence_gate",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [
+                "src/agents/workspace.py"
+              ],
+              "symbols": [
+                "collect_result",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/agents/workspace.py"
+              ],
+              "symbols": [
+                "collect_result",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__sandbox_result_08.py::test_fix",
+                "test_research__sandbox_result_08.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 137,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.194,
+        "retrieval_abstained": false,
+        "gold_file_recall": 1.0,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 0.0,
+        "context_precision": 0.4,
+        "context_recall": 0.75,
+        "context_tokens": 137,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 5.4745,
+        "task_type": "T8",
+        "cluster": "sandbox-output"
+      },
+      {
+        "instance_id": "research__sandbox-gc-09",
+        "arm": "evidence_gate",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [],
+              "symbols": [],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/agents/workspace.py"
+              ],
+              "symbols": [
+                "garbage",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__sandbox_gc_09.py::test_fix",
+                "test_research__sandbox_gc_09.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 78,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.141,
+        "retrieval_abstained": false,
+        "gold_file_recall": 0.5,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 1.0,
+        "context_precision": 0.4,
+        "context_recall": 0.875,
+        "context_tokens": 78,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 11.2179,
+        "task_type": "T2",
+        "cluster": "sandbox-output"
+      },
+      {
+        "instance_id": "research__approval-id-10",
+        "arm": "evidence_gate",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [
+                "src/agents/coding_agent.py"
+              ],
+              "symbols": [
+                "approval_id",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/agents/coding_agent.py"
+              ],
+              "symbols": [
+                "approval_id",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__approval_id_10.py::test_fix",
+                "test_research__approval_id_10.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 132,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.182,
+        "retrieval_abstained": false,
+        "gold_file_recall": 1.0,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 0.0,
+        "context_precision": 0.4,
+        "context_recall": 0.75,
+        "context_tokens": 132,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 5.6818,
+        "task_type": "T3",
+        "cluster": "durable-approval"
+      },
+      {
+        "instance_id": "research__async-checkpointer-11",
+        "arm": "evidence_gate",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [
+                "src/memory/checkpoint.py"
+              ],
+              "symbols": [
+                "load",
+                "saver_name",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/memory/checkpoint.py"
+              ],
+              "symbols": [
+                "load",
+                "saver_name",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__async_checkpointer_11.py::test_fix",
+                "test_research__async_checkpointer_11.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 143,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.188,
+        "retrieval_abstained": false,
+        "gold_file_recall": 1.0,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 0.0,
+        "context_precision": 0.4,
+        "context_recall": 0.75,
+        "context_tokens": 143,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 5.2448,
+        "task_type": "T4",
+        "cluster": "durable-approval"
+      }
+    ],
+    "fallback_count": 0
+  },
+  "utility_gate_groupaware": {
+    "summary": {
+      "tasks": 4,
+      "gold_file_recall": 0.875,
+      "gold_symbol_recall": 1.0,
+      "gold_test_recall": 1.0,
+      "gold_caller_recall": 0.25,
+      "context_precision": 0.4,
+      "context_recall": 0.7812,
+      "context_tokens": 122.5,
+      "retrieval_rounds": 2.0,
+      "evidence_efficiency": 6.9047,
+      "abstention_rate": 0.0,
+      "avg_tool_calls": 2.0,
+      "avg_cost": 2.5,
+      "avg_selection_latency_ms": 0.1998
+    },
+    "rows": [
+      {
+        "instance_id": "research__sandbox-result-08",
+        "arm": "utility_gate_groupaware",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [
+                "src/agents/workspace.py"
+              ],
+              "symbols": [
+                "collect_result",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/agents/workspace.py"
+              ],
+              "symbols": [
+                "collect_result",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__sandbox_result_08.py::test_fix",
+                "test_research__sandbox_result_08.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 137,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.232,
+        "retrieval_abstained": false,
+        "gold_file_recall": 1.0,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 0.0,
+        "context_precision": 0.4,
+        "context_recall": 0.75,
+        "context_tokens": 137,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 5.4745,
+        "task_type": "T8",
+        "cluster": "sandbox-output"
+      },
+      {
+        "instance_id": "research__sandbox-gc-09",
+        "arm": "utility_gate_groupaware",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [],
+              "symbols": [],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/agents/workspace.py"
+              ],
+              "symbols": [
+                "garbage",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__sandbox_gc_09.py::test_fix",
+                "test_research__sandbox_gc_09.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 78,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.147,
+        "retrieval_abstained": false,
+        "gold_file_recall": 0.5,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 1.0,
+        "context_precision": 0.4,
+        "context_recall": 0.875,
+        "context_tokens": 78,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 11.2179,
+        "task_type": "T2",
+        "cluster": "sandbox-output"
+      },
+      {
+        "instance_id": "research__approval-id-10",
+        "arm": "utility_gate_groupaware",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [
+                "src/agents/coding_agent.py"
+              ],
+              "symbols": [
+                "approval_id",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/agents/coding_agent.py"
+              ],
+              "symbols": [
+                "approval_id",
+                "load",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__approval_id_10.py::test_fix",
+                "test_research__approval_id_10.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 132,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.192,
+        "retrieval_abstained": false,
+        "gold_file_recall": 1.0,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 0.0,
+        "context_precision": 0.4,
+        "context_recall": 0.75,
+        "context_tokens": 132,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 5.6818,
+        "task_type": "T3",
+        "cluster": "durable-approval"
+      },
+      {
+        "instance_id": "research__async-checkpointer-11",
+        "arm": "utility_gate_groupaware",
+        "budget": 8000,
+        "actions": [
+          "lexical",
+          "structural"
+        ],
+        "retrieval_trace": [
+          {
+            "round": 1,
+            "action": "lexical",
+            "cost": 1.5,
+            "artifacts": {
+              "files": [
+                "src/memory/checkpoint.py"
+              ],
+              "symbols": [
+                "load",
+                "saver_name",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [],
+              "tests": []
+            }
+          },
+          {
+            "round": 2,
+            "action": "structural",
+            "cost": 1.0,
+            "artifacts": {
+              "files": [
+                "src/memory/checkpoint.py"
+              ],
+              "symbols": [
+                "load",
+                "saver_name",
+                "test_fix",
+                "test_regression"
+              ],
+              "callers": [
+                "test_fix",
+                "test_regression"
+              ],
+              "tests": [
+                "test_research__async_checkpointer_11.py::test_fix",
+                "test_research__async_checkpointer_11.py::test_regression"
+              ]
+            }
+          }
+        ],
+        "estimated_tokens": 143,
+        "tool_calls": 2,
+        "cost": 2.5,
+        "latency_ms": 0.228,
+        "retrieval_abstained": false,
+        "gold_file_recall": 1.0,
+        "gold_symbol_recall": 1.0,
+        "gold_test_recall": 1.0,
+        "gold_caller_recall": 0.0,
+        "context_precision": 0.4,
+        "context_recall": 0.75,
+        "context_tokens": 143,
+        "retrieval_rounds": 2,
+        "abstained": false,
+        "evidence_efficiency": 5.2448,
+        "task_type": "T4",
+        "cluster": "durable-approval"
+      }
+    ],
+    "fallback_count": 4
+  },
+  "fallback_count": 4
+}

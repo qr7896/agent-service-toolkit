@@ -1,0 +1,34 @@
+{
+  "feature_schema": [
+    "round",
+    "actions_tried",
+    "tokens_spent",
+    "cost_spent",
+    "artifact_files",
+    "artifact_symbols",
+    "artifact_tests",
+    "artifact_callers",
+    "candidate_cost",
+    "action_files",
+    "action_lexical",
+    "action_semantic",
+    "action_structural"
+  ],
+  "gold_features": [],
+  "train": {
+    "rows": 105,
+    "episodes": 33,
+    "top1_oracle_action_accuracy": 0.424242,
+    "row_accuracy": 0.87619,
+    "auroc": 0.954118
+  },
+  "dev": {
+    "rows": 21,
+    "episodes": 6,
+    "top1_oracle_action_accuracy": 0.0,
+    "row_accuracy": 0.857143,
+    "auroc": 0.833333
+  },
+  "test_status": "frozen_not_evaluated",
+  "test_rows": 32
+}
