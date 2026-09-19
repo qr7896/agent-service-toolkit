@@ -227,7 +227,10 @@ def recall_experiences(task: str, config: Any) -> tuple[list[dict[str, Any]], st
         return [], "none"
 
     # 第二层检索的判据：当前任务的签名 + 当前代码版本（doc 02 §8/§11）
-    context = {**task_signature(task), "repo_commit": repo_commit()}
+    configured_commit = str(
+        ((config or {}).get("configurable") or {}).get("source_commit_at_execution") or ""
+    )
+    context = {**task_signature(task), "repo_commit": configured_commit or repo_commit()}
     with ExperienceStore(path) as store:
         if not store.stats()["total"]:
             return [], "none"

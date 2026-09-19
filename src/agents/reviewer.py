@@ -25,6 +25,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from agents.code_tools import git_diff, list_files, read_file, search_code
 from agents.coding_planner import _extract_json_object
+from agents.model_budget import budgeted_ainvoke
 from agents.model_router import estimate_tokens, route_model
 from agents.test_tools import run_tests
 from core import get_model
@@ -165,7 +166,12 @@ async def reviewer(state: Any, config: RunnableConfig) -> dict[str, Any]:
         f"工作区 diff（截断）：\n{diff[:MAX_DIFF_CHARS]}"
     )
 
-    ai = await model.ainvoke([SystemMessage(content=REVIEW_PROMPT), HumanMessage(content=context)])
+    ai = await budgeted_ainvoke(
+        model,
+        [SystemMessage(content=REVIEW_PROMPT), HumanMessage(content=context)],
+        config,
+        role="reviewer",
+    )
     raw = str(getattr(ai, "content", "") or "")
     review = _parse_review(raw) or _fallback_review("评审器输出无法解析为 JSON", raw)
 

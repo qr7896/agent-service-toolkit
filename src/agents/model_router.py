@@ -9,7 +9,7 @@
   3. **预算超了就冻结升级**：`budget_tokens` 用尽后不再往上换更贵的模型，
      重试次数仍由 `MAX_RETRIES` 决定——成本控制不越权去改任务终止条件。
 
-**最高档就是 `deepseek-v4-flash`**：本项目不引入更贵的模型档位，所以阶梯只有
+**最高档就是 `deepseek-flash`**：本项目不引入更贵的模型档位，所以阶梯只有
 `local（若配置）→ cheap(flash)`。换句话说，这里的"路由"主要不是换更强模型，
 而是"该省则省、该记则记"，以及在没有更贵模型可买的前提下把花费看清楚。
 
@@ -27,7 +27,7 @@ from core import settings
 Tier = Literal["local", "cheap", "strong"]
 TIER_ORDER: tuple[Tier, ...] = ("local", "cheap")
 
-DEFAULT_CHEAP_MODEL = "deepseek-v4-flash"
+DEFAULT_CHEAP_MODEL = "deepseek-flash"
 
 # 粗略的 token 估算：英文约 4 字符 1 token，中文更密，这里取偏保守的 3。
 CHARS_PER_TOKEN = 3

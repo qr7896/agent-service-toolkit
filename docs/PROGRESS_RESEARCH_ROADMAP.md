@@ -1877,7 +1877,8 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - [x] **V3-6 Negative Experience / Counterfactual Replay**：已完成 strict-past 正/负经验与 compatibility-matched counterfactual readiness artifact，并明确 evidence availability 不等于 causal effect；同时修复 lifetime usage counter 的时间泄漏风险。
 - [x] **V3 Freeze Gate**：机制冻结；下一阶段只采集具备 execution-time provenance 的 non-sealed prospective trajectories，字段与最小计划见 `docs/research/V3_FREEZE_GATE.md`。
 - [x] **Prospective preflight**：真实 Git root/HEAD、trajectory 目录与 readiness import 均通过，`ready_to_collect=true`、`blockers=[]`。
-- [ ] **当前唯一执行项**：按 `V3_PROSPECTIVE_PILOT_PLAN.md` 补齐 fail-closed runner 限额与 3 条 hidden grader；随后在第一条真实任务前创建 cohort marker，收集 trajectory，运行 status；数据达标后补齐可验证来源的 real artifact 入口，再运行 frozen evaluation → real-only artifact audit。
+- [x] **Pilot runner gate**：fail-closed provider 限额、断点恢复与 3 条 hidden grader 已完成；任务预检 3/3 Base-Fail + Gold-Pass。
+- [ ] **当前唯一执行项**：在 clean HEAD 重跑 collection preflight，于第一条真实任务前创建 cohort marker，执行 3-task non-sealed pilot，再运行 collection status；数据达标后补齐 real artifact 入口与默认审计。
 
 **阶段门槛**：V3 mechanism 不再增加新阶段或调公式。prospective 模型实验必须单独固定任务、模型与预算，并保持内部 sealed TEST 关闭；没有 paired prospective evidence 前不得讨论 memory efficacy。
 
@@ -1936,7 +1937,7 @@ V1–V3 至少保留 `Fixed K`、V0 `Evidence Gate`、V0 `Utility Gate`、`No-Co
 2. [x] E1/E1-B protocol/runtime plumbing 完成；真实模型实验保持暂停，六条内部 TEST 继续 sealed。
 3. [x] V3-0~V3-6 mechanism、schema、strict-past replay、四臂 ablation、counterfactual-readiness 与 freeze gate。
 4. [x] 真实 Git prospective preflight。
-5. [ ] **当前：落实 3-task / `deepseek-flash` / 30,000-token pilot 的 runner 硬限与 hidden graders，在首个任务前创建 cohort marker；达到数据门槛后完成 real artifact 入口与默认审计。**
+5. [x] 3-task / `deepseek-flash` / 30,000-token pilot runner 硬限与 hidden graders；本地任务预检 3/3 通过。
 6. [ ] 收集首批真实 trajectory → collection status → frozen evaluation → artifact audit。
 7. [ ] 只有 paired prospective evidence 足够时才讨论 efficacy；E2/E3 或 Test500 private evaluation 均需独立授权。
 

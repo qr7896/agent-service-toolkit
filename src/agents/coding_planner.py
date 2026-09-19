@@ -35,6 +35,7 @@ from agents.coding_memory import format_experience_context, recall_experiences
 from agents.conflict import resolve as resolve_conflicts
 from agents.context_packer import blocks, pack_context
 from agents.evidence import audit_plan, decision_to_dict
+from agents.model_budget import budgeted_ainvoke
 from agents.model_router import estimate_tokens, route_model
 from core import get_model
 
@@ -200,7 +201,11 @@ def recon_steps(config: RunnableConfig) -> int:
 
 
 async def _recon(
-    model: Any, requirement: str, steps: int = MAX_RECON_STEPS, tools: list[Any] | None = None
+    model: Any,
+    requirement: str,
+    steps: int = MAX_RECON_STEPS,
+    tools: list[Any] | None = None,
+    config: RunnableConfig | None = None,
 ) -> tuple[str, int]:
     """只读侦察：最多 steps 轮工具调用，返回（发现, 实际轮数）。
 
@@ -216,7 +221,7 @@ async def _recon(
     rounds = 0
     for _ in range(steps):
         rounds += 1
-        ai = await bound.ainvoke(messages)
+        ai = await budgeted_ainvoke(bound, messages, config or {}, role="planner_recon")
         messages.append(ai)
         calls = getattr(ai, "tool_calls", None) or []
         if not calls:
@@ -250,7 +255,9 @@ async def planner(state: Any, config: RunnableConfig) -> dict[str, Any]:
         recon_tools = [t for t in recon_tools if t.name != "search_code"]
     if bool(conf.get("code_intel_tools", False)):
         recon_tools += CODE_INTEL_TOOLS
-    findings, recon_rounds = await _recon(model, requirement, recon_steps(config), recon_tools)
+    findings, recon_rounds = await _recon(
+        model, requirement, recon_steps(config), recon_tools, config
+    )
     hits, retrieval = recall_experiences(requirement, config)
     experience_context = format_experience_context(hits)
     context_budget = max(0, int(conf.get("context_budget", 8000)))
@@ -266,7 +273,7 @@ async def planner(state: Any, config: RunnableConfig) -> dict[str, Any]:
             content=build_plan_user_message(requirement, packed_findings, packed_experience)
         ),
     ]
-    ai = await model.ainvoke(plan_messages)
+    ai = await budgeted_ainvoke(model, plan_messages, config, role="planner")
     parsed = _parse_plan(str(getattr(ai, "content", "") or ""))
     if parsed is None:
         parsed = Plan(

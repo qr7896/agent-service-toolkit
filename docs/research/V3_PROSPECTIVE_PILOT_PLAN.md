@@ -2,7 +2,7 @@
 
 ## Material Passport
 
-- Status: PROPOSED / NOT STARTED
+- Status: RUNNER READY / LIVE CALLS NOT STARTED
 - Date: 2026-09-19
 - Model/API calls in this planning step: 0
 - Sealed TEST opened/called: 0/0
@@ -49,7 +49,14 @@ This ceiling is intentionally a feasibility budget, not a power-analysis budget.
 
 ## Gate before cohort start
 
-The current normal Coding Agent runner does not yet enforce all limits above, and its DeepSeek enum still uses the retired alias. Before creating the cohort marker, add and test fail-closed call/output/admission limits, switch to the canonical model ID, build the three hidden graders, and rerun the V3 preflight on a clean HEAD.
+The runner now enforces a persistent provider-call ledger, global/task admission ceilings, four completed calls per task, 600 output tokens per call, thinking disabled, and fail-closed handling for ambiguous calls. The canonical model ID and all three hidden graders are implemented. Local task preflight is **3/3 Base-Fail + Gold-Pass**. The cohort marker remains intentionally absent until this implementation is committed and the collection preflight is rerun on that clean HEAD.
+
+## Interruption and top-up recovery
+
+- A provider response with a definite HTTP error such as insufficient balance is recorded as `failed`. After topping up, rerun the same command; the existing task workspace and LangGraph checkpoint are reused.
+- A timeout or connection loss without an authoritative provider outcome is recorded as `ambiguous`. The runner stops and will not automatically retry because the first call might have been charged.
+- Completed tasks are skipped on rerun. An interrupted task is resumed in place; no new cohort or task ID is created.
+- Provider ledger, checkpoint, task workspace, patch, grader output, and trajectory are persisted under `.codex/v3/pilot/`.
 
 ## Sources
 

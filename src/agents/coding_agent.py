@@ -55,6 +55,7 @@ from agents.experience import (
     reevaluate_utility,
     repo_commit,
 )
+from agents.model_budget import budgeted_ainvoke
 from agents.model_router import estimate_tokens, route_model, routing_enabled
 from agents.reviewer import reviewer
 from agents.test_tools import run_tests
@@ -316,7 +317,7 @@ async def call_model(state: CodingState, config: RunnableConfig) -> dict[str, An
         )
 
     messages += state["messages"]
-    response = await bound_model.ainvoke(messages)
+    response = await budgeted_ainvoke(bound_model, messages, config, role="coder")
     return {
         "messages": [response],
         "llm_calls": int(state.get("llm_calls") or 0) + 1,

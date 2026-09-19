@@ -28,6 +28,8 @@ SANDBOX_ROOT = PROJECT_ROOT / ".codex" / "sandboxes"
 
 # 复制时排除：版本库、虚拟环境、本地数据与各类缓存。副本只需要"能跑起来"。
 EXCLUDED_DIRS = {
+    ".env",
+    ".env.local",
     ".venv",
     ".codex",
     "models",
