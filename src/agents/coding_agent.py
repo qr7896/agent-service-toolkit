@@ -521,7 +521,7 @@ def _debug_experience_context(
         return "", []
     return (
         format_experience_context(hits, mode="debug"),
-        [{**hit, "retrieval": retrieval, "phase": "debug"} for hit in hits],
+        [{**hit, "retrieval": retrieval, "phase": "debug", "adopted": bool(hits)} for hit in hits],
     )
 
 

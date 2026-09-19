@@ -344,7 +344,10 @@ async def planner(state: Any, config: RunnableConfig) -> dict[str, Any]:
         "evidence_gate": evidence_gate,
         "evidence_trace": evidence_trace,
         "conflicts": conflict_verdict,
-        "experience_hits": [{**hit, "retrieval": retrieval, "phase": "planning"} for hit in hits],
+        "experience_hits": [
+            {**hit, "retrieval": retrieval, "phase": "planning", "adopted": bool(packed_experience)}
+            for hit in hits
+        ],
         "context_pack": {
             "budget": context_budget,
             "tokens": packed.tokens,
