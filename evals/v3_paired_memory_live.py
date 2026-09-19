@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import json
 import time
 from datetime import UTC, datetime
@@ -101,6 +102,7 @@ async def run_arm(pair: dict[str, Any], arm: dict[str, Any]) -> dict[str, Any]:
     artifact.mkdir(parents=True, exist_ok=True)
     (artifact / "response.txt").write_text(raw, encoding="utf-8")
     (artifact / "patch.diff").write_text(patch["patch"], encoding="utf-8")
+    patch_bytes = patch["patch"].encode("utf-8")
     result = {
         "arm": name,
         "memory_enabled": arm["memory_enabled"],
@@ -110,6 +112,8 @@ async def run_arm(pair: dict[str, Any], arm: dict[str, Any]) -> dict[str, Any]:
         "grade_exit_code": grade["exit_code"],
         "provider_usage": usage,
         "changed_files": patch["changed_files"],
+        "patch_bytes": len(patch_bytes),
+        "patch_sha256": hashlib.sha256(patch_bytes).hexdigest(),
         "eligible_experience_ids": pair["eligible_experience_ids"],
         "adopted_experience_ids": pair["eligible_experience_ids"] if memory else [],
         "adoption_observed": True,
@@ -130,12 +134,23 @@ async def run(manifest_path: Path) -> dict[str, Any]:
     results = []
     for arm in pair["arms"]:
         results.append(await run_arm(pair, arm))
+    same_patch = results[0]["patch_sha256"] == results[1]["patch_sha256"]
+    if results[1]["success"] and not results[0]["success"]:
+        outcome_class = "helpful_memory"
+    elif results[0]["success"] and not results[1]["success"]:
+        outcome_class = "harmful_memory"
+    elif same_patch and results[0]["success"] == results[1]["success"]:
+        outcome_class = "redundant_memory"
+    else:
+        outcome_class = "behavior_changed_no_success_delta"
     comparison = {
         "protocol": "v3-paired-memory-live-v1",
         "run_id": RUN_ID,
         "threshold": manifest["threshold"],
         "pair": pair,
         "results": results,
+        "outcome_class": outcome_class,
+        "same_patch": same_patch,
         "delta": {
             "success": int(results[1]["success"]) - int(results[0]["success"]),
             "provider_tokens": results[1]["provider_usage"]["total_tokens"]
