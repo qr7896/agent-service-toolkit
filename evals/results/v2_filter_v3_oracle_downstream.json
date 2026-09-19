@@ -1,0 +1,117 @@
+{
+  "protocol": "v2-filter-v3-oracle-downstream-v1",
+  "tasks": 10,
+  "resolved": 10,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "resolved": true,
+      "allowed_files": [
+        "src/agents/test_tools.py",
+        "test_research__test_command_guard_01.py"
+      ],
+      "gold_written": [
+        "src/agents/test_tools.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "resolved": true,
+      "allowed_files": [
+        "src/agents/debugger.py",
+        "test_research__debug_prompt_no_hit_02.py"
+      ],
+      "gold_written": [
+        "src/agents/debugger.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "resolved": true,
+      "allowed_files": [
+        "evals/coding_benchmark.py",
+        "test_research__benchmark_cost_03.py"
+      ],
+      "gold_written": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "resolved": true,
+      "allowed_files": [
+        "src/agents/agent_workflow.py",
+        "test_research__workflow_message_input_04.py"
+      ],
+      "gold_written": [
+        "src/agents/agent_workflow.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "resolved": true,
+      "allowed_files": [
+        "src/agents/code_intel.py",
+        "test_research__related_tests_05.py"
+      ],
+      "gold_written": [
+        "src/agents/code_intel.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "resolved": true,
+      "allowed_files": [
+        "src/agents/experience.py",
+        "test_research__experience_survival_13.py"
+      ],
+      "gold_written": [
+        "src/agents/experience.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "resolved": true,
+      "allowed_files": [
+        "evals/coding_benchmark.py",
+        "test_research__probe_expectation_17.py"
+      ],
+      "gold_written": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "resolved": true,
+      "allowed_files": [
+        "src/agents/agent_workflow.py",
+        "test_research__inline_workflow_18.py"
+      ],
+      "gold_written": [
+        "src/agents/agent_workflow.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "resolved": true,
+      "allowed_files": [
+        "evals/swe_tasks.py",
+        "test_research__gold_field_split_19.py"
+      ],
+      "gold_written": [
+        "evals/swe_tasks.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "resolved": true,
+      "allowed_files": [
+        "evals/swe_tasks.py"
+      ],
+      "gold_written": [
+        "evals/swe_tasks.py"
+      ]
+    }
+  ],
+  "claim_boundary": "Constrained Oracle editability after runtime-only structural filtering; not autonomous repair."
+}

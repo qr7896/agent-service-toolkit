@@ -1,0 +1,124 @@
+{
+  "protocol": "v2-compression-preservation-v1",
+  "escalated_tasks": 7,
+  "all_target_coverage_preserved": true,
+  "all_oracle_outcomes_resolved": true,
+  "aggregate_reduction": {
+    "items": 0.8441558441558441,
+    "chars": 0.8274809160305343,
+    "approx_tokens": 0.8159203980099503
+  },
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "items_before": 11,
+      "items_after": 2,
+      "chars_before": 190,
+      "chars_after": 38,
+      "approx_tokens_before": 57,
+      "approx_tokens_after": 11,
+      "target_hit": true,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "items_before": 11,
+      "items_after": 2,
+      "chars_before": 191,
+      "chars_after": 41,
+      "approx_tokens_before": 59,
+      "approx_tokens_after": 13,
+      "target_hit": true,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "items_before": 10,
+      "items_after": 1,
+      "chars_before": 155,
+      "chars_after": 10,
+      "approx_tokens_before": 49,
+      "approx_tokens_after": 5,
+      "target_hit": true,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "items_before": 11,
+      "items_after": 2,
+      "chars_before": 190,
+      "chars_after": 32,
+      "approx_tokens_before": 57,
+      "approx_tokens_after": 11,
+      "target_hit": true,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "items_before": 0,
+      "items_after": 0,
+      "chars_before": 0,
+      "chars_after": 0,
+      "approx_tokens_before": 0,
+      "approx_tokens_after": 0,
+      "target_hit": null,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "items_before": 12,
+      "items_after": 1,
+      "chars_before": 227,
+      "chars_after": 50,
+      "approx_tokens_before": 66,
+      "approx_tokens_after": 12,
+      "target_hit": true,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "items_before": 11,
+      "items_after": 2,
+      "chars_before": 183,
+      "chars_after": 29,
+      "approx_tokens_before": 57,
+      "approx_tokens_after": 11,
+      "target_hit": true,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "items_before": 0,
+      "items_after": 0,
+      "chars_before": 0,
+      "chars_after": 0,
+      "approx_tokens_before": 0,
+      "approx_tokens_after": 0,
+      "target_hit": null,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "items_before": 0,
+      "items_after": 0,
+      "chars_before": 0,
+      "chars_after": 0,
+      "approx_tokens_before": 0,
+      "approx_tokens_after": 0,
+      "target_hit": null,
+      "oracle_resolved": true
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "items_before": 11,
+      "items_after": 2,
+      "chars_before": 174,
+      "chars_after": 26,
+      "approx_tokens_before": 57,
+      "approx_tokens_after": 11,
+      "target_hit": true,
+      "oracle_resolved": true
+    }
+  ],
+  "claim_boundary": "Joint descriptive audit: local evidence compression + retrospective target coverage + constrained Oracle outcome."
+}

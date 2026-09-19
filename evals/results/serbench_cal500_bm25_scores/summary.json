@@ -1,0 +1,17 @@
+{
+  "bm25_starter": {
+    "group_ndcg@5": 0.07996542848178251,
+    "group_ndcg@8": 0.0984212233431259,
+    "group_recall@5": 0.1141,
+    "group_recall@8": 0.16393333333333332,
+    "mss_complete@5": 0.07,
+    "mss_complete@8": 0.104,
+    "necessity_weighted_recall@5": 0.1135510101010101,
+    "necessity_weighted_recall@8": 0.16267561327561328,
+    "required_novelty@5": 0.176,
+    "required_novelty@8": 0.248,
+    "role_coverage@5": 0.13316666666666666,
+    "role_coverage@8": 0.19183333333333333,
+    "states": 500.0
+  }
+}

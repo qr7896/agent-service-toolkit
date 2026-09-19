@@ -1,6 +1,6 @@
 # E1-B Autonomous Editor 未完成测试日志
 
-> 更新：2026-09-18；状态：R10 DEV 已按 8,000-token ceiling 执行，最终配置尚未冻结；6 条 TEST autonomous outcomes sealed。
+> 更新：2026-09-18；状态：R10 DEV 4/4 已调用，但原子推理结算导致预算协议失效；最终配置尚未冻结；6 条 TEST autonomous outcomes sealed。
 
 ## 已完成前置
 
@@ -9,7 +9,7 @@
 - Gold source/label/grader 编辑阶段不可见；strict JSON patch、写路径/测试保护、sandbox、独立 pytest grader 已实现。
 - deterministic DEV plumbing 已跑通；最近 harness + async adapter：11 passed in 15.75s。
 - run_dev_with_editor 已取消隐式 full-workspace evidence；runlog 已绑定 model/prompt/split/tasks/config hashes。
-- DeepSeek V4 Flash DEV one-shot：4 条中 3 条获得模型调用，1 条因总预算耗尽未调用；累计 8,416 tokens，sealed TEST 调用数=0。
+- DeepSeek V4 Flash DEV one-shot：随后只补跑剩余 state-version-29 一次，现 4/4 DEV 均获得模型调用；第 4 条单次 22,860 tokens，累计 31,276 tokens，sealed TEST 调用数=0。
 
 ## P0：真实模型 DEV
 
@@ -17,8 +17,9 @@
 - [x] 已记录 temperature=0、seed=null、prompt SHA、iterations=1、write budget 与 sandbox policy。
 - [x] DEV evidence protocol=`declared-seed-read-v1`；只读取任务公开声明的 setup paths，不读取 Gold/test content。
 - [x] 已记录 calls、wall time、parse/model failure、files written、F2P/P2P、resolved 与 token usage。
-- [x] 已显式记录 budget exhaustion：第 4 条 DEV 未调用；前三条 1 resolved、1 F2P failure、1 P2P regression。
-- [ ] 调整计费 ceiling：第三次原子调用结束后累计 8,416，超出总上限 416；不得在未获新预算授权时补跑第 4 条。
+- [x] resume 逻辑通过 22 项测试，且确认不会覆盖前三条真实结果；只补跑第 4 条 DEV 一次。
+- [x] 第 4 条 state-version-29 已调用但未修复成功、未重试；单次 22,860 tokens，累计 31,276。
+- [ ] 重新定义硬预算协议：当前 provider 只能在原子调用结束后结算推理 token，固定小 ceiling 无法在调用前保证；协议修复前禁止进入 sealed TEST。
 
 ## P0：Evidence 协议冻结
 
@@ -50,5 +51,5 @@ SEALED TEST：async-cancel-27、hard-negative-router-28、multifile-policy-21、
 
 ## Claim Boundary
 
-可说：R10 DEV 在预注册预算下完成了三次 one-shot 调用，并记录一次 budget exhaustion；attempted DEV 中 1/3 resolved。
-不可说：该不完整 DEV 是 Autonomous Repair Rate；Autonomous Editor 已修复成功；V1 gain 已证明 autonomous patch success；6条 TEST 已验证；结果具有统计泛化性。
+可说：R10 DEV 已完成 4 次 one-shot 原子调用；第 4 条暴露 provider 原子推理结算与固定小 token ceiling 不兼容，累计 31,276 tokens；sealed TEST 仍为 0 调用。
+不可说：4 条 DEV 构成可报告的 Autonomous Repair Rate；预算协议已经有效；Autonomous Editor 已验证成功；V1 gain 已证明 autonomous patch success；6条 TEST 已验证；结果具有统计泛化性。

@@ -1,0 +1,161 @@
+{
+  "protocol": "v2-stop-continue-counterfactual-descriptive-v1",
+  "cases": 10,
+  "continue_added_unique_evidence_cases": 0,
+  "zero_unique_gain_cases": 10,
+  "total_incremental_cost": 11.0,
+  "total_incremental_risk": 3.0,
+  "case_details": [
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.0,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false
+    }
+  ],
+  "claim_boundary": "Observed continuation marginal evidence/cost only. Early-stop outcome is unobserved, so this is not a causal counterfactual or proof that stopping is better."
+}

@@ -1,0 +1,47 @@
+{
+  "validation": {
+    "records": 49,
+    "tasks": 20,
+    "ready_for_replay": false,
+    "minimum_records": 200,
+    "duplicate_hashes": 0,
+    "cross_split_clusters": [],
+    "cross_split_commits": [],
+    "chosen_action_counts": {
+      "files": 9,
+      "stop": 20,
+      "structural": 20
+    },
+    "errors": []
+  },
+  "splits": {
+    "dev": 11,
+    "test": 12,
+    "train": 26
+  },
+  "clusters": {
+    "durable-approval": 6,
+    "evidence-decision": 5,
+    "input-normalization": 7,
+    "memory-quality": 8,
+    "observability": 4,
+    "policy-gate": 2,
+    "sandbox-output": 6,
+    "validation": 8,
+    "workflow-composition": 3
+  },
+  "source_commits": 14,
+  "records_without_commit": 0,
+  "candidate_action_counts": {
+    "files": 31,
+    "lexical": 49,
+    "semantic": 49,
+    "stop": 20,
+    "structural": 29
+  },
+  "decision_step_counts": {
+    "0": 20,
+    "1": 20,
+    "2": 9
+  }
+}

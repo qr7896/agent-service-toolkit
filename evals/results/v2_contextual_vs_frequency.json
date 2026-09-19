@@ -1,0 +1,12 @@
+{
+  "protocol": "v2-paired-dev-comparison-v1",
+  "records": 56,
+  "both_correct": 42,
+  "frequency_only_correct": 0,
+  "contextual_only_correct": 10,
+  "neither_correct": 4,
+  "frequency_accuracy": 0.75,
+  "contextual_accuracy": 0.9286,
+  "accuracy_delta_pp": 17.86,
+  "claim_boundary": "Paired behavior-cloning agreement on dev trajectories; not causal policy value."
+}

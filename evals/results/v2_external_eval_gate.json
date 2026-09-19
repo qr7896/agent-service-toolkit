@@ -1,0 +1,19 @@
+{
+  "protocol": "v2-external-eval-gate-v1",
+  "upstream": {
+    "found": false,
+    "root": null,
+    "has_package": false,
+    "has_readme": false,
+    "ready": false,
+    "remediation": "Provide an upstream SERBench checkout via --root or SERBENCH_ROOT; do not vendor benchmark data into this repository."
+  },
+  "example_allowed": false,
+  "cal500_allowed": false,
+  "test500_allowed": false,
+  "blockers": [
+    "upstream_checkout_unavailable"
+  ],
+  "next_action": "provide verified SERBench checkout via SERBENCH_ROOT/--root",
+  "claim_boundary": "Fail-closed orchestration gate; never treats local fixtures as official SERBench evaluation."
+}

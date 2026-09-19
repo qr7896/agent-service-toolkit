@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 import hashlib
 import json
@@ -25,6 +26,7 @@ TOKEN_BUDGET = 8_000
 MAX_OUTPUT_TOKENS = 1_000
 EVIDENCE_PROTOCOL = "declared-seed-read-v1"
 CONFIG = AutonomousConfig(model_mode="deepseek-live", max_iterations=1)
+RESULT_PATH = Path("evals/results/e1b_autonomous_dev_run.json")
 
 
 def evidence_for(task, root):
@@ -41,14 +43,31 @@ def evidence_for(task, root):
     }
 
 
+def resume_state(additional_budget):
+    report = json.loads(RESULT_PATH.read_text(encoding="utf-8"))
+    pending = {
+        row["instance_id"] for row in report["rows"] if row.get("failure") == "budget_exhaustion"
+    }
+    rows = [row for row in report["rows"] if row["instance_id"] not in pending]
+    spent = int(report["summary"]["total_tokens"])
+    return rows, pending, spent, spent + additional_budget
+
+
 async def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--resume-budget", type=int, default=0)
+    args = parser.parse_args()
     model = get_model(MODEL_ID).bind(temperature=0, max_tokens=MAX_OUTPUT_TOKENS)
-    rows = []
-    spent = 0
+    if args.resume_budget:
+        rows, pending, spent, token_ceiling = resume_state(args.resume_budget)
+        tasks = [task for task in dev_tasks() if task.instance_id in pending]
+    else:
+        rows, spent, token_ceiling = [], 0, TOKEN_BUDGET
+        tasks = dev_tasks()
     with tempfile.TemporaryDirectory(prefix="e1b-live-dev-") as directory:
         base = Path(directory)
-        for task in dev_tasks():
-            if spent >= TOKEN_BUDGET:
+        for task in tasks:
+            if spent >= token_ceiling:
                 rows.append(
                     {
                         "instance_id": task.instance_id,
@@ -102,19 +121,19 @@ async def main():
     report["execution"] = {
         "temperature": 0,
         "max_output_tokens": MAX_OUTPUT_TOKENS,
-        "token_budget": TOKEN_BUDGET,
+        "original_token_budget": TOKEN_BUDGET,
+        "additional_token_budget": args.resume_budget,
+        "token_ceiling": token_ceiling,
         "max_iterations": CONFIG.max_iterations,
         "evidence_protocol": EVIDENCE_PROTOCOL,
         "provider": "deepseek",
         "seed": None,
         "sandbox_required": True,
-        "budget_status": "within_limit" if spent <= TOKEN_BUDGET else "exceeded_after_atomic_call",
-        "budget_overrun_tokens": max(0, spent - TOKEN_BUDGET),
+        "budget_status": "within_limit" if spent <= token_ceiling else "exceeded_after_atomic_call",
+        "budget_overrun_tokens": max(0, spent - token_ceiling),
         "test_outcomes_opened": 0,
     }
-    Path("evals/results/e1b_autonomous_dev_run.json").write_text(
-        json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    RESULT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report["summary"], ensure_ascii=False))
 
 

@@ -1,0 +1,51 @@
+{
+  "protocol": "v2-meu-structural-summary-v1",
+  "structural_actions": 7,
+  "positive_meu": 7,
+  "all_positive": true,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "structural_meu": 9.909909909909908,
+      "retained_proxy_tokens": 11,
+      "unique_gain": 11
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "structural_meu": 9.734513274336281,
+      "retained_proxy_tokens": 13,
+      "unique_gain": 11
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "structural_meu": 9.523809523809524,
+      "retained_proxy_tokens": 5,
+      "unique_gain": 10
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "structural_meu": 9.909909909909908,
+      "retained_proxy_tokens": 11,
+      "unique_gain": 11
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "structural_meu": 10.714285714285714,
+      "retained_proxy_tokens": 12,
+      "unique_gain": 12
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "structural_meu": 9.909909909909908,
+      "retained_proxy_tokens": 11,
+      "unique_gain": 11
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "structural_meu": 9.909909909909908,
+      "retained_proxy_tokens": 11,
+      "unique_gain": 11
+    }
+  ],
+  "claim_boundary": "Descriptive under arbitrary frozen diagnostic weights only; positive MEU does not establish optimality or causal downstream benefit."
+}

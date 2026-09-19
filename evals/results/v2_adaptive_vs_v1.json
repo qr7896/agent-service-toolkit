@@ -1,0 +1,8 @@
+{
+  "protocol": "v2-adaptive-vs-v1-summary-v1",
+  "tasks": 10,
+  "v1_oracle_resolved": 4,
+  "adaptive_oracle_resolved": 10,
+  "resolved_delta": 6,
+  "claim_boundary": "Constrained Oracle editability comparison; not autonomous repair rate. Adaptive retrieval uses no Gold for decisions."
+}

@@ -1,0 +1,228 @@
+{
+  "protocol": "v2-runtime-observable-structural-escalation-probe-v1",
+  "tasks": 10,
+  "gold_hit_tasks": 10,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "runtime_seeds": [
+        "startswith",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "allowed",
+        "str",
+        "Path"
+      ],
+      "structural_paths": [
+        "src/agents/test_tools.py",
+        "test_research__test_command_guard_01.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/test_tools.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "runtime_seeds": [
+        "join",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "str",
+        "prompt",
+        "Path"
+      ],
+      "structural_paths": [
+        "src/agents/debugger.py",
+        "test_research__debug_prompt_no_hit_02.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/debugger.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "runtime_seeds": [
+        "len",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "str",
+        "Path",
+        "summarize"
+      ],
+      "structural_paths": [
+        "evals/coding_benchmark.py",
+        "test_research__benchmark_cost_03.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "runtime_seeds": [
+        "get",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "str",
+        "user_input",
+        "Path"
+      ],
+      "structural_paths": [
+        "src/agents/agent_workflow.py",
+        "test_research__workflow_message_input_04.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/agent_workflow.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "runtime_seeds": [
+        "sorted",
+        "startswith",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "str",
+        "related",
+        "Path"
+      ],
+      "structural_paths": [
+        "src/agents/code_intel.py",
+        "test_research__related_tests_05.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/code_intel.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "runtime_seeds": [
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "str",
+        "survival",
+        "Path"
+      ],
+      "structural_paths": [
+        "src/agents/experience.py",
+        "test_research__experience_survival_13.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/experience.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "runtime_seeds": [
+        "all",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "probe_ok",
+        "str",
+        "Path"
+      ],
+      "structural_paths": [
+        "evals/coding_benchmark.py",
+        "test_research__probe_expectation_17.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "runtime_seeds": [
+        "bool",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "str",
+        "valid",
+        "Path"
+      ],
+      "structural_paths": [
+        "src/agents/agent_workflow.py",
+        "test_research__inline_workflow_18.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/agent_workflow.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "runtime_seeds": [
+        "get",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "parse",
+        "str",
+        "Path"
+      ],
+      "structural_paths": [
+        "evals/swe_tasks.py",
+        "test_research__gold_field_split_19.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "evals/swe_tasks.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "runtime_seeds": [
+        "get",
+        "load",
+        "insert",
+        "spec_from_file_location",
+        "module_from_spec",
+        "exec_module",
+        "str",
+        "parse",
+        "Path"
+      ],
+      "structural_paths": [
+        "evals/swe_tasks.py",
+        "test_research__legacy_gold_compat_20.py"
+      ],
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "evals/swe_tasks.py"
+      ]
+    }
+  ],
+  "claim_boundary": "Uses runtime-visible AST call symbols only; Gold is used solely after retrieval to score coverage."
+}

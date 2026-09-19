@@ -1,0 +1,7 @@
+{
+  "states": 3,
+  "predictions": 3,
+  "errors": [],
+  "contract_ready": true,
+  "claim_boundary": "Local preflight only; upstream SERBench validation/scoring remains authoritative."
+}

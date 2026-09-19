@@ -1,0 +1,147 @@
+{
+  "protocol": "v2-matched-retrieval-oracle-downstream-v1",
+  "tasks": 10,
+  "lexical_resolved": 4,
+  "structural_resolved": 10,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "lexical": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/test_tools.py"
+        ]
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/test_tools.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "lexical": {
+        "resolved": false,
+        "gold_written": []
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/debugger.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "lexical": {
+        "resolved": false,
+        "gold_written": []
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "evals/coding_benchmark.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "lexical": {
+        "resolved": false,
+        "gold_written": []
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/agent_workflow.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "lexical": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/code_intel.py"
+        ]
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/code_intel.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "lexical": {
+        "resolved": false,
+        "gold_written": []
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/experience.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "lexical": {
+        "resolved": false,
+        "gold_written": []
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "evals/coding_benchmark.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "lexical": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/agent_workflow.py"
+        ]
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "src/agents/agent_workflow.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "lexical": {
+        "resolved": true,
+        "gold_written": [
+          "evals/swe_tasks.py"
+        ]
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "evals/swe_tasks.py"
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "lexical": {
+        "resolved": false,
+        "gold_written": []
+      },
+      "structural": {
+        "resolved": true,
+        "gold_written": [
+          "evals/swe_tasks.py"
+        ]
+      }
+    }
+  ],
+  "claim_boundary": "Constrained Oracle editability under matched retrieval arms; not autonomous repair and not a causal randomized modality comparison."
+}

@@ -1,0 +1,21 @@
+{
+  "protocol": "v2-feature-ablation-v1",
+  "dev_records": 56,
+  "scores": {
+    "full": 0.9286,
+    "step_only": 0.8571,
+    "no_step": 0.8571,
+    "evidence_only": 0.8571,
+    "budget_only": 0.8571,
+    "no_evidence": 0.875
+  },
+  "delta_vs_full_pp": {
+    "full": 0.0,
+    "step_only": -7.15,
+    "no_step": -7.15,
+    "evidence_only": -7.15,
+    "budget_only": -7.15,
+    "no_evidence": -5.36
+  },
+  "claim_boundary": "Descriptive supervised behavior-agreement ablation; correlated features and small source-problem count prevent causal feature attribution."
+}

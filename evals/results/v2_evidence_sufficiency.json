@@ -1,0 +1,170 @@
+{
+  "protocol": "v2-evidence-sufficiency-diagnostic-v1",
+  "counts": {
+    "redundant_continue": 9,
+    "zero_unique_gain": 1
+  },
+  "cases": [
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.0,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "zero_unique_gain"
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "step": 1,
+      "continue_action": "lexical",
+      "new_unique_evidence": 0,
+      "incremental_cost": 1.1,
+      "incremental_risk": 0.3,
+      "redundancy_delta": 0.5,
+      "descriptive_stop_savings": {
+        "cost": 1.1,
+        "risk": 0.3,
+        "actions": 1
+      },
+      "continue_added_unique_evidence": false,
+      "descriptive_label": "redundant_continue"
+    }
+  ],
+  "claim_boundary": "Labels describe observed evidence deltas, not task sufficiency or correctness after early stopping."
+}

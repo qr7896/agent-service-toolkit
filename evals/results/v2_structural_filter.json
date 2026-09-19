@@ -1,0 +1,92 @@
+{
+  "protocol": "v2-runtime-structural-filter-v1",
+  "structural_before": 77,
+  "structural_after": 10,
+  "reduction": 67,
+  "reduction_rate": 0.8701298701298701,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "structural_before": 11,
+      "structural_after": 0,
+      "reduction": 11,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "structural_before": 11,
+      "structural_after": 2,
+      "reduction": 9,
+      "kept_paths": [
+        "src/agents/debugger.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "structural_before": 10,
+      "structural_after": 1,
+      "reduction": 9,
+      "kept_paths": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "structural_before": 11,
+      "structural_after": 2,
+      "reduction": 9,
+      "kept_paths": [
+        "src/agents/agent_workflow.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "structural_before": 0,
+      "structural_after": 0,
+      "reduction": 0,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "structural_before": 12,
+      "structural_after": 1,
+      "reduction": 11,
+      "kept_paths": [
+        "src/agents/experience.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "structural_before": 11,
+      "structural_after": 2,
+      "reduction": 9,
+      "kept_paths": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "structural_before": 0,
+      "structural_after": 0,
+      "reduction": 0,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "structural_before": 0,
+      "structural_after": 0,
+      "reduction": 0,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "structural_before": 11,
+      "structural_after": 2,
+      "reduction": 9,
+      "kept_paths": [
+        "evals/swe_tasks.py"
+      ]
+    }
+  ],
+  "claim_boundary": "Filter uses only runtime path/relation metadata; coverage impact requires separate retrospective scoring."
+}

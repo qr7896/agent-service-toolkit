@@ -1,0 +1,16 @@
+{
+  "protocol": "v2-early-stop-safety-gate-v1",
+  "tasks": 10,
+  "evidence_count_regressions": [],
+  "all_equal_unique_evidence": true,
+  "all_nonincreasing_actions": true,
+  "aggregate": {
+    "action_delta": -10,
+    "unique_evidence_delta": 0,
+    "cost_delta": -11.0,
+    "risk_delta": -3.0
+  },
+  "eligible_for_control": false,
+  "reason": "Evidence replay is encouraging but downstream editor/test outcome is absent; remain shadow-only.",
+  "claim_boundary": "This gate deliberately cannot authorize control without downstream task-outcome evidence."
+}

@@ -1,0 +1,17 @@
+{
+  "v2_direct_stop_lexical_v2_4_0": {
+    "group_ndcg@5": 0.04254398505176851,
+    "group_ndcg@8": 0.051265333004691827,
+    "group_recall@5": 0.0572,
+    "group_recall@8": 0.0822,
+    "mss_complete@5": 0.046,
+    "mss_complete@8": 0.07,
+    "necessity_weighted_recall@5": 0.05783744588744589,
+    "necessity_weighted_recall@8": 0.08258290043290044,
+    "required_novelty@5": 0.072,
+    "required_novelty@8": 0.096,
+    "role_coverage@5": 0.06466666666666666,
+    "role_coverage@8": 0.08916666666666667,
+    "states": 500.0
+  }
+}

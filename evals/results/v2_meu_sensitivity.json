@@ -1,0 +1,414 @@
+{
+  "protocol": "v2-meu-weight-sensitivity-v1",
+  "grid_points": 45,
+  "structural_higher_points": 45,
+  "structural_higher_fraction": 1.0,
+  "grid": [
+    {
+      "alpha": 0.0,
+      "beta": 0.25,
+      "gamma": 0.25,
+      "lexical_mean": 6.285714285714286,
+      "structural_mean": 44.0,
+      "structural_higher": true,
+      "ratio": 7.0
+    },
+    {
+      "alpha": 0.0,
+      "beta": 0.25,
+      "gamma": 1.0,
+      "lexical_mean": 3.8260869565217397,
+      "structural_mean": 33.84615384615385,
+      "structural_higher": true,
+      "ratio": 8.846153846153845
+    },
+    {
+      "alpha": 0.0,
+      "beta": 0.25,
+      "gamma": 4.0,
+      "lexical_mean": 1.4915254237288136,
+      "structural_mean": 17.6,
+      "structural_higher": true,
+      "ratio": 11.8
+    },
+    {
+      "alpha": 0.0,
+      "beta": 1.0,
+      "gamma": 0.25,
+      "lexical_mean": 1.872340425531915,
+      "structural_mean": 11.891891891891891,
+      "structural_higher": true,
+      "ratio": 6.351351351351351
+    },
+    {
+      "alpha": 0.0,
+      "beta": 1.0,
+      "gamma": 1.0,
+      "lexical_mean": 1.5714285714285714,
+      "structural_mean": 11.0,
+      "structural_higher": true,
+      "ratio": 7.0
+    },
+    {
+      "alpha": 0.0,
+      "beta": 1.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.9565217391304349,
+      "structural_mean": 8.461538461538462,
+      "structural_higher": true,
+      "ratio": 8.846153846153845
+    },
+    {
+      "alpha": 0.0,
+      "beta": 4.0,
+      "gamma": 0.25,
+      "lexical_mean": 0.4916201117318435,
+      "structural_mean": 3.0344827586206895,
+      "structural_higher": true,
+      "ratio": 6.172413793103449
+    },
+    {
+      "alpha": 0.0,
+      "beta": 4.0,
+      "gamma": 1.0,
+      "lexical_mean": 0.46808510638297873,
+      "structural_mean": 2.972972972972973,
+      "structural_higher": true,
+      "ratio": 6.351351351351351
+    },
+    {
+      "alpha": 0.0,
+      "beta": 4.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.39285714285714285,
+      "structural_mean": 2.75,
+      "structural_higher": true,
+      "ratio": 7.0
+    },
+    {
+      "alpha": 0.001,
+      "beta": 0.25,
+      "gamma": 0.25,
+      "lexical_mean": 5.278797121793322,
+      "structural_mean": 42.20352621828978,
+      "structural_higher": true,
+      "ratio": 7.994913470732576
+    },
+    {
+      "alpha": 0.001,
+      "beta": 0.25,
+      "gamma": 1.0,
+      "lexical_mean": 3.4241969442297444,
+      "structural_mean": 32.77258550842533,
+      "structural_higher": true,
+      "ratio": 9.570882178273001
+    },
+    {
+      "alpha": 0.001,
+      "beta": 0.25,
+      "gamma": 4.0,
+      "lexical_mean": 1.4255322382316138,
+      "structural_mean": 17.30501281043684,
+      "structural_higher": true,
+      "ratio": 12.139334591200736
+    },
+    {
+      "alpha": 0.001,
+      "beta": 1.0,
+      "gamma": 0.25,
+      "lexical_mean": 1.7697054993496153,
+      "structural_mean": 11.7564491973352,
+      "structural_higher": true,
+      "ratio": 6.643167013752183
+    },
+    {
+      "alpha": 0.001,
+      "beta": 1.0,
+      "gamma": 1.0,
+      "lexical_mean": 1.49837848848648,
+      "structural_mean": 10.884008211776338,
+      "structural_higher": true,
+      "ratio": 7.26385776051172
+    },
+    {
+      "alpha": 0.001,
+      "beta": 1.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.9288641184958919,
+      "structural_mean": 8.392729121534796,
+      "structural_higher": true,
+      "ratio": 9.035475646454218
+    },
+    {
+      "alpha": 0.001,
+      "beta": 4.0,
+      "gamma": 0.25,
+      "lexical_mean": 0.484190598310178,
+      "structural_mean": 3.025584717283287,
+      "structural_higher": true,
+      "ratio": 6.248747348342899
+    },
+    {
+      "alpha": 0.001,
+      "beta": 4.0,
+      "gamma": 1.0,
+      "lexical_mean": 0.4613441237790032,
+      "structural_mean": 2.9644314757452443,
+      "structural_higher": true,
+      "ratio": 6.425640477357181
+    },
+    {
+      "alpha": 0.001,
+      "beta": 4.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.38809572635132816,
+      "structural_mean": 2.742690033250826,
+      "structural_higher": true,
+      "ratio": 7.067045182476383
+    },
+    {
+      "alpha": 0.01,
+      "beta": 0.25,
+      "gamma": 0.25,
+      "lexical_mean": 2.3167762584314557,
+      "structural_mean": 30.990765201291513,
+      "structural_higher": true,
+      "ratio": 13.376675925656032
+    },
+    {
+      "alpha": 0.01,
+      "beta": 0.25,
+      "gamma": 1.0,
+      "lexical_mean": 1.8444461672448516,
+      "structural_mean": 25.565458323525515,
+      "structural_higher": true,
+      "ratio": 13.86077771069568
+    },
+    {
+      "alpha": 0.01,
+      "beta": 0.25,
+      "gamma": 4.0,
+      "lexical_mean": 1.0361572124310434,
+      "structural_mean": 15.050811338174677,
+      "structural_higher": true,
+      "ratio": 14.525605919262288
+    },
+    {
+      "alpha": 0.01,
+      "beta": 1.0,
+      "gamma": 0.25,
+      "lexical_mean": 1.2110211744457422,
+      "structural_mean": 10.668325917710456,
+      "structural_higher": true,
+      "ratio": 8.80936365344158
+    },
+    {
+      "alpha": 0.01,
+      "beta": 1.0,
+      "gamma": 1.0,
+      "lexical_mean": 1.0748636775805473,
+      "structural_mean": 9.944606878867306,
+      "structural_higher": true,
+      "ratio": 9.251970353349376
+    },
+    {
+      "alpha": 0.01,
+      "beta": 1.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.7434118544603532,
+      "structural_mean": 7.822299011990351,
+      "structural_higher": true,
+      "ratio": 10.522160717585814
+    },
+    {
+      "alpha": 0.01,
+      "beta": 4.0,
+      "gamma": 0.25,
+      "lexical_mean": 0.42747293672614833,
+      "structural_mean": 2.947891911795337,
+      "structural_higher": true,
+      "ratio": 6.896090158062667
+    },
+    {
+      "alpha": 0.01,
+      "beta": 4.0,
+      "gamma": 1.0,
+      "lexical_mean": 0.40951355992281446,
+      "structural_mean": 2.88980671669182,
+      "structural_higher": true,
+      "ratio": 7.056681388612612
+    },
+    {
+      "alpha": 0.01,
+      "beta": 4.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.3506232698972542,
+      "structural_mean": 2.67868450362957,
+      "structural_higher": true,
+      "ratio": 7.639779597100117
+    },
+    {
+      "alpha": 0.1,
+      "beta": 0.25,
+      "gamma": 0.25,
+      "lexical_mean": 0.38475966081205815,
+      "structural_mean": 8.756937455491403,
+      "structural_higher": true,
+      "ratio": 22.759499883665992
+    },
+    {
+      "alpha": 0.1,
+      "beta": 0.25,
+      "gamma": 1.0,
+      "lexical_mean": 0.36503893742885934,
+      "structural_mean": 8.233784047416489,
+      "structural_higher": true,
+      "ratio": 22.55590624225157
+    },
+    {
+      "alpha": 0.1,
+      "beta": 0.25,
+      "gamma": 4.0,
+      "lexical_mean": 0.30683231097937014,
+      "structural_mean": 6.669394777962803,
+      "structural_higher": true,
+      "ratio": 21.736285714744103
+    },
+    {
+      "alpha": 0.1,
+      "beta": 1.0,
+      "gamma": 0.25,
+      "lexical_mean": 0.3234662746167237,
+      "structural_mean": 5.619545424232291,
+      "structural_higher": true,
+      "ratio": 17.372894379455506
+    },
+    {
+      "alpha": 0.1,
+      "beta": 1.0,
+      "gamma": 1.0,
+      "lexical_mean": 0.31078878680732414,
+      "structural_mean": 5.408028824177892,
+      "structural_higher": true,
+      "ratio": 17.40097794303834
+    },
+    {
+      "alpha": 0.1,
+      "beta": 1.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.27013988372897413,
+      "structural_mean": 4.702808302808303,
+      "structural_higher": true,
+      "ratio": 17.408789246117152
+    },
+    {
+      "alpha": 0.1,
+      "beta": 4.0,
+      "gamma": 0.25,
+      "lexical_mean": 0.20830407195011894,
+      "structural_mean": 2.3509944152295934,
+      "structural_higher": true,
+      "ratio": 11.286358414503626
+    },
+    {
+      "alpha": 0.1,
+      "beta": 4.0,
+      "gamma": 1.0,
+      "lexical_mean": 0.20361922381362083,
+      "structural_mean": 2.3137998056365405,
+      "structural_higher": true,
+      "ratio": 11.363366200405691
+    },
+    {
+      "alpha": 0.1,
+      "beta": 4.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.1869446313628447,
+      "structural_mean": 2.1761196012028416,
+      "structural_higher": true,
+      "ratio": 11.640449823772506
+    },
+    {
+      "alpha": 1.0,
+      "beta": 0.25,
+      "gamma": 0.25,
+      "lexical_mean": 0.04183036075930878,
+      "structural_mean": 1.089379075978999,
+      "structural_higher": true,
+      "ratio": 26.042784623524252
+    },
+    {
+      "alpha": 1.0,
+      "beta": 0.25,
+      "gamma": 1.0,
+      "lexical_mean": 0.0415615582899992,
+      "structural_mean": 1.0803272520621316,
+      "structural_higher": true,
+      "ratio": 25.99342509065852
+    },
+    {
+      "alpha": 1.0,
+      "beta": 0.25,
+      "gamma": 4.0,
+      "lexical_mean": 0.0405359483340267,
+      "structural_mean": 1.0457940733404505,
+      "structural_higher": true,
+      "ratio": 25.799176195973924
+    },
+    {
+      "alpha": 1.0,
+      "beta": 1.0,
+      "gamma": 0.25,
+      "lexical_mean": 0.040869385215617754,
+      "structural_mean": 1.0136957978981778,
+      "structural_higher": true,
+      "ratio": 24.80330429611664
+    },
+    {
+      "alpha": 1.0,
+      "beta": 1.0,
+      "gamma": 1.0,
+      "lexical_mean": 0.04061855080348129,
+      "structural_mean": 1.0060177917320774,
+      "structural_higher": true,
+      "ratio": 24.767446692013806
+    },
+    {
+      "alpha": 1.0,
+      "beta": 1.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.03965878018043884,
+      "structural_mean": 0.9765748239982607,
+      "structural_higher": true,
+      "ratio": 24.624429182013596
+    },
+    {
+      "alpha": 1.0,
+      "beta": 4.0,
+      "gamma": 0.25,
+      "lexical_mean": 0.037585653488416595,
+      "structural_mean": 0.799660204820061,
+      "structural_higher": true,
+      "ratio": 21.275676504241325
+    },
+    {
+      "alpha": 1.0,
+      "beta": 4.0,
+      "gamma": 1.0,
+      "lexical_mean": 0.03738829603511191,
+      "structural_mean": 0.7950909158842155,
+      "structural_higher": true,
+      "ratio": 21.265770313189286
+    },
+    {
+      "alpha": 1.0,
+      "beta": 4.0,
+      "gamma": 4.0,
+      "lexical_mean": 0.03662670895927951,
+      "structural_mean": 0.7773576097105509,
+      "structural_higher": true,
+      "ratio": 21.223790829113096
+    }
+  ],
+  "claim_boundary": "Sensitivity audit of an offline proxy metric. The grid is not fitted, statistical inference, policy evaluation, or evidence of causal superiority."
+}

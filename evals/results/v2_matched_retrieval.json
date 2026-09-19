@@ -1,0 +1,2197 @@
+{
+  "protocol": "v2-matched-state-budget-retrieval-v1",
+  "tasks": 10,
+  "action_budget_per_arm": 2,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 3,
+              "new": 3,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 3,
+              "new": 0,
+              "redundant": 3,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 3,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/test_tools.py",
+            "content": "    return command.startswith(('pytest', 'python'))",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "    assert m.allowed('python -m pytest -q') and not m.allowed('python tool.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "    assert m.allowed('pytest -q')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/test_tools.py",
+            "content": "call:startswith@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "startswith",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/test_tools.py",
+            "content": "def allowed(command):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "allowed",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:allowed@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "allowed",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:allowed@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "allowed",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "src/agents/test_tools.py",
+            "content": "call:startswith@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "startswith",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/test_tools.py",
+            "content": "def allowed(command):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "allowed",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 1,
+              "new": 1,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 1,
+              "new": 0,
+              "redundant": 1,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 1,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "m = load('src/agents/debugger.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/debugger.py",
+            "content": "call:join@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "join",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/debugger.py",
+            "content": "def prompt(base, experiences):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "prompt",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:prompt@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "prompt",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "call:prompt@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "prompt",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "src/agents/debugger.py",
+            "content": "call:join@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "join",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/debugger.py",
+            "content": "def prompt(base, experiences):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "prompt",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 1,
+              "new": 1,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 1,
+              "new": 0,
+              "redundant": 1,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 1,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "    assert m.summarize([{'estimated_tokens': 10}, {}])['total_estimated_tokens'] == 10",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "call:len@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "len",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "call:Path@7",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "Path",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "pathlib.Path",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "pathlib.Path",
+            "relation_type": "import",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "def summarize(rows):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "summarize",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "call:len@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "len",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "def summarize(rows):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "summarize",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 2,
+              "new": 2,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 2,
+              "new": 0,
+              "redundant": 2,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 2,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "    assert m.user_input({'messages': [{'role': 'user', 'content': '\u4fee\u4e00\u4e0b'}]}) == '\u4fee\u4e00\u4e0b'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "    assert m.user_input({'workflow_input': '\u663e\u5f0f', 'messages': [{'role': 'user', 'content': '\u6d88\u606f'}]}) == '\u663e\u5f0f'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "call:get@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "get",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "def user_input(state):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "user_input",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:user_input@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "user_input",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "call:user_input@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "user_input",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "call:get@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "get",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "def user_input(state):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "user_input",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 5,
+              "new": 5,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 5,
+              "new": 0,
+              "redundant": 5,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 5,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "    return sorted(n for n in callers if n.startswith('test_'))",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "def test_fix():",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "    c = {'test_add': {'add'}, 'test_sub': {'sub'}, 'main': {'add'}}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "    assert m.related('add', c) == ['test_add']",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "def test_regression():",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 10,
+              "new": 10,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 10,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "call:sorted@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "sorted",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "call:startswith@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "startswith",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "def related(symbol, callers):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "related",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "call:sorted@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "sorted",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "call:startswith@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "startswith",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "def related(symbol, callers):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "related",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 1,
+              "new": 1,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 1,
+              "new": 0,
+              "redundant": 1,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 1,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "    assert m.survival(False, 'base', 'fix', 'base') == 'not_applied'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 12,
+              "new": 12,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 1,
+              "new": 0,
+              "redundant": 1,
+              "redundancy": 1.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 12,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/experience.py",
+            "content": "def survival(applied, current, changed, baseline):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "survival",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:survival@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "survival",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:survival@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "survival",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "call:Path@7",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "Path",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "pathlib.Path",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "pathlib.Path",
+            "relation_type": "import",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "src/agents/experience.py",
+            "content": "def survival(applied, current, changed, baseline):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "survival",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 2,
+              "new": 2,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 2,
+              "new": 0,
+              "redundant": 2,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 2,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "    assert m.probe_ok([{'resolved':True,'expected_resolved':True},{'resolved':False,'expected_resolved':False}])",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "    assert not m.probe_ok([{'resolved':True,'expected_resolved':False}])",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "call:all@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "all",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "def probe_ok(rows):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "probe_ok",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:probe_ok@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "probe_ok",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:probe_ok@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "probe_ok",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "call:all@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "all",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/coding_benchmark.py",
+            "content": "def probe_ok(rows):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "probe_ok",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 4,
+              "new": 4,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 4,
+              "new": 0,
+              "redundant": 4,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 4,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "def valid(agent=None, mode=None, depth=0):",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "    return bool(agent or mode)",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "m = load('src/agents/agent_workflow.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "    assert m.valid(agent='a') and m.valid(mode='parallel')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "call:bool@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "bool",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "def valid(agent=None, mode=None, depth=0):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "valid",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:valid@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "valid",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "call:valid@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "valid",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "call:bool@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "bool",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "def valid(agent=None, mode=None, depth=0):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "valid",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 3,
+              "new": 3,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 3,
+              "new": 0,
+              "redundant": 3,
+              "redundancy": 1.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 3,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.5
+        },
+        "evidence_payload": [
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "    return {'gold_sources': data.get('gold_files', {}), 'gold_files': data.get('gold_files', [])}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "    r=m.parse({'gold_sources':{'a.py':'x'},'gold_files':['a.py']}); assert r=={'gold_sources':{'a.py':'x'},'gold_files':['a.py']}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "    assert m.parse({}) == {'gold_sources':{},'gold_files':[]}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "call:get@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "get",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "def parse(data):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:parse@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:parse@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "call:get@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "get",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "def parse(data):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "lexical": {
+        "summary": {
+          "actions": [
+            {
+              "action": "lexical",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            },
+            {
+              "action": "lexical",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 1.1,
+              "risk": 0.3
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 0,
+          "total_cost": 2.2,
+          "total_risk": 0.6,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": []
+      },
+      "structural": {
+        "summary": {
+          "actions": [
+            {
+              "action": "structural",
+              "returned": 11,
+              "new": 11,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            },
+            {
+              "action": "structural",
+              "returned": 0,
+              "new": 0,
+              "redundant": 0,
+              "redundancy": 0.0,
+              "cost": 0.9,
+              "risk": 0.1
+            }
+          ],
+          "action_count": 2,
+          "unique_evidence": 11,
+          "total_cost": 1.8,
+          "total_risk": 0.2,
+          "mean_redundancy": 0.0
+        },
+        "evidence_payload": [
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "call:get@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "get",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "def load(rel):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:load@15",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "load",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:insert@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "insert",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:spec_from_file_location@9",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "spec_from_file_location",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:module_from_spec@10",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "module_from_spec",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:exec_module@12",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "exec_module",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:str@8",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "str",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "def parse(data):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:parse@18",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "test_research__legacy_gold_compat_20.py",
+            "content": "call:parse@21",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ],
+        "retained_payload": [
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "call:get@2",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "get",
+            "relation_type": "caller",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          },
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "def parse(data):",
+            "source": "structural",
+            "score": 1.0,
+            "symbol": "parse",
+            "relation_type": "definition",
+            "depth": 0,
+            "origin": "matched-state-runtime-visible-call"
+          }
+        ]
+      }
+    }
+  ],
+  "claim_boundary": "Offline matched initial-state/two-action retrieval diagnostic. No Gold, editor, or runtime policy decision; not causal modality superiority."
+}

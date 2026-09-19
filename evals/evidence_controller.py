@@ -1,7 +1,8 @@
 class EvidenceController:
-    def __init__(self, adapter, policy):
+    def __init__(self, adapter, policy, decision_logger=None):
         self.adapter = adapter
         self.policy = policy
+        self.decision_logger = decision_logger
         self.trace = []
 
     def execute(self, action, request):
@@ -26,6 +27,13 @@ class EvidenceController:
         requests = requests or {}
         action = self.policy.choose(self.adapter.ledger, candidates, utility)
         before = self.policy.state(self.adapter.ledger)
+        if self.decision_logger is not None:
+            self.decision_logger.record(
+                before=before,
+                candidates=candidates,
+                chosen_action=action,
+                utility=utility or {},
+            )
         if action == "stop":
             row = {
                 "action": "stop",

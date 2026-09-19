@@ -1,0 +1,17 @@
+{
+  "v2_candidate_compat_v2_4_1": {
+    "group_ndcg@5": 0.08644654360301393,
+    "group_ndcg@8": 0.09807798078115416,
+    "group_recall@5": 0.11103333333333333,
+    "group_recall@8": 0.1416,
+    "mss_complete@5": 0.062,
+    "mss_complete@8": 0.078,
+    "necessity_weighted_recall@5": 0.11086349206349207,
+    "necessity_weighted_recall@8": 0.14141002886002885,
+    "required_novelty@5": 0.178,
+    "required_novelty@8": 0.228,
+    "role_coverage@5": 0.13383333333333333,
+    "role_coverage@8": 0.16816666666666666,
+    "states": 500.0
+  }
+}

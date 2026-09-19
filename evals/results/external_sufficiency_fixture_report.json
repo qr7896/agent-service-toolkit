@@ -1,0 +1,9 @@
+{
+  "protocol": "external-sufficiency-compat-v1",
+  "records": 1,
+  "repositories": 1,
+  "labelled_required_evidence_records": 1,
+  "errors": [],
+  "ready_for_compat_eval": true,
+  "claim_boundary": "Schema adapter only; does not reproduce, vendor, or reimplement an external benchmark/evaluator."
+}

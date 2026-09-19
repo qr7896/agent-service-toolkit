@@ -1,0 +1,18 @@
+{
+  "trajectory_ids": 93,
+  "source_problems": 20,
+  "cross_split_source_problems": {},
+  "evaluation_valid": true,
+  "dev_records": 56,
+  "dev_source_problems": 4,
+  "frequency_accuracy": 0.75,
+  "contextual_accuracy": 0.9286,
+  "delta_pp": 17.86,
+  "paired": {
+    "both": 42,
+    "frequency_only": 0,
+    "contextual_only": 10,
+    "neither": 4
+  },
+  "claim_boundary": "Grouped source-problem audit prevents trajectory aliases crossing splits; agreement remains supervised behavior cloning."
+}

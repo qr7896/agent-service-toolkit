@@ -1,0 +1,30 @@
+{
+  "protocol": "serbench-v2-compatible-v1",
+  "method": "v2_direct_stop_lexical_v2_4_0",
+  "states": 500,
+  "evidence_items": 1512,
+  "evidence_proxy_tokens": 441044,
+  "retrieval_action_count": 189,
+  "stop_count": 311,
+  "stop_rate": 0.622,
+  "modality_distribution": {
+    "supplied_candidate": 189,
+    "stop": 311
+  },
+  "selected_observed_items": 23,
+  "features": [
+    "step",
+    "actions_tried",
+    "evidence_items",
+    "total_cost",
+    "total_risk",
+    "mean_redundancy"
+  ],
+  "unavailable_modalities": [
+    "repository_files",
+    "semantic",
+    "structural_codegraph"
+  ],
+  "filter_v3": "not_applicable: structural-only repository acquisition filter",
+  "claim_boundary": "Supplied-candidate compatibility only; proxy tokens are not provider tokens."
+}

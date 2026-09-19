@@ -1,0 +1,51 @@
+{
+  "protocol": "v2-per-source-problem-ablation-v1",
+  "dev_source_problems": 4,
+  "rows": [
+    {
+      "source_problem": "debug-prompt-no-hit-02",
+      "scores": {
+        "full": 0.9286,
+        "step_only": 0.7857,
+        "no_step": 0.7857,
+        "evidence_only": 0.7857,
+        "budget_only": 0.7857,
+        "no_evidence": 0.8571
+      }
+    },
+    {
+      "source_problem": "experience-isolation-12",
+      "scores": {
+        "full": 0.9167,
+        "step_only": 0.9167,
+        "no_step": 0.9167,
+        "evidence_only": 0.9167,
+        "budget_only": 0.9167,
+        "no_evidence": 0.9167
+      }
+    },
+    {
+      "source_problem": "experience-survival-13",
+      "scores": {
+        "full": 0.9333,
+        "step_only": 0.8667,
+        "no_step": 0.8667,
+        "evidence_only": 0.8667,
+        "budget_only": 0.8667,
+        "no_evidence": 0.8667
+      }
+    },
+    {
+      "source_problem": "inline-workflow-18",
+      "scores": {
+        "full": 0.9333,
+        "step_only": 0.8667,
+        "no_step": 0.8667,
+        "evidence_only": 0.8667,
+        "budget_only": 0.8667,
+        "no_evidence": 0.8667
+      }
+    }
+  ],
+  "claim_boundary": "Per-source-problem descriptive behavior agreement; train set is unchanged and no causal attribution is implied."
+}

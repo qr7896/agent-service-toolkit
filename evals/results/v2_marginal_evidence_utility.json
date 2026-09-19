@@ -1,0 +1,199 @@
+{
+  "protocol": "v2-meu-offline-diagnostic-v1",
+  "weights": {
+    "alpha_token": 1.0,
+    "beta_cost": 1.0,
+    "gamma_risk": 1.0
+  },
+  "records": 17,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 3,
+      "returned": 3,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 2.142857142857143
+    },
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "step": 1,
+      "action": "structural",
+      "unique_gain": 11,
+      "returned": 11,
+      "cost": 0.9,
+      "risk": 0.1,
+      "redundancy": 0.0,
+      "meu_without_token_term": 11.0
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 1,
+      "returned": 1,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 0.7142857142857142
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "step": 1,
+      "action": "structural",
+      "unique_gain": 11,
+      "returned": 11,
+      "cost": 0.9,
+      "risk": 0.1,
+      "redundancy": 0.0,
+      "meu_without_token_term": 11.0
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 1,
+      "returned": 1,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 0.7142857142857142
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "step": 1,
+      "action": "structural",
+      "unique_gain": 10,
+      "returned": 10,
+      "cost": 0.9,
+      "risk": 0.1,
+      "redundancy": 0.0,
+      "meu_without_token_term": 10.0
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 2,
+      "returned": 2,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 1.4285714285714284
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "step": 1,
+      "action": "structural",
+      "unique_gain": 11,
+      "returned": 11,
+      "cost": 0.9,
+      "risk": 0.1,
+      "redundancy": 0.0,
+      "meu_without_token_term": 11.0
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 5,
+      "returned": 5,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 3.571428571428571
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 1,
+      "returned": 1,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 0.7142857142857142
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "step": 1,
+      "action": "structural",
+      "unique_gain": 12,
+      "returned": 12,
+      "cost": 0.9,
+      "risk": 0.1,
+      "redundancy": 0.0,
+      "meu_without_token_term": 12.0
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 2,
+      "returned": 2,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 1.4285714285714284
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "step": 1,
+      "action": "structural",
+      "unique_gain": 11,
+      "returned": 11,
+      "cost": 0.9,
+      "risk": 0.1,
+      "redundancy": 0.0,
+      "meu_without_token_term": 11.0
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 4,
+      "returned": 4,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 2.8571428571428568
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 3,
+      "returned": 3,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 2.142857142857143
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain": 0,
+      "returned": 0,
+      "cost": 1.1,
+      "risk": 0.3,
+      "redundancy": 0.0,
+      "meu_without_token_term": 0.0
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "step": 1,
+      "action": "structural",
+      "unique_gain": 11,
+      "returned": 11,
+      "cost": 0.9,
+      "risk": 0.1,
+      "redundancy": 0.0,
+      "meu_without_token_term": 11.0
+    }
+  ],
+  "claim_boundary": "Offline diagnostic only. No Gold is used. Token term is deliberately excluded until per-action evidence-token accounting is joined; this file must not drive runtime control."
+}

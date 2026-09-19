@@ -1,0 +1,16 @@
+{
+  "protocol": "v2-logo-summary-v1",
+  "folds": 16,
+  "positive": 16,
+  "zero": 0,
+  "negative": 0,
+  "delta_pp": {
+    "min": 9.09,
+    "median": 14.29,
+    "max": 20.0,
+    "mean": 14.51
+  },
+  "weighted_frequency": 0.7751,
+  "weighted_contextual": 0.9235,
+  "claim_boundary": "Descriptive cross-validation robustness summary, not a confidence interval or causal effect."
+}

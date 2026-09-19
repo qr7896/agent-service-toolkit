@@ -1,0 +1,8 @@
+{
+  "protocol": "v2-coverage-escalation-summary-v1",
+  "unresolved_tasks": 6,
+  "structural_gold_hit": 6,
+  "coverage_recovery_rate": 1.0,
+  "candidate_rule": "if lexical yields no target-bearing source evidence and runtime-visible call symbols exist, consider bounded structural neighbors before stop",
+  "claim_boundary": "Retrospective coverage recovery only; does not establish downstream repair benefit or authorize runtime control."
+}

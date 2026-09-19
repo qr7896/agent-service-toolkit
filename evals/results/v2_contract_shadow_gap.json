@@ -1,0 +1,14 @@
+{
+  "records": 30,
+  "agreements": 20,
+  "disagreements": 10,
+  "pair_counts": {
+    "lexical->lexical": 10,
+    "lexical->stop": 10,
+    "stop->stop": 10
+  },
+  "disagreement_by_step": {
+    "1": 10
+  },
+  "claim_boundary": "Diagnostic shadow disagreement decomposition; executed V1 action is not ground truth optimality."
+}

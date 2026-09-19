@@ -1,0 +1,103 @@
+{
+  "protocol": "v2-coverage-failure-taxonomy-v1",
+  "unresolved": 6,
+  "counts": {
+    "target_file_missed_despite_visible_symbol": 5,
+    "empty_retrieval": 1
+  },
+  "recommendations": {
+    "structural_symbol_traversal": 5,
+    "files_then_structural": 1
+  },
+  "rows": [
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "failure_type": "target_file_missed_despite_visible_symbol",
+      "seen_files": [
+        "test_research__debug_prompt_no_hit_02.py"
+      ],
+      "missing_gold_files": [
+        "src/agents/debugger.py"
+      ],
+      "gold_symbols": [
+        "prompt"
+      ],
+      "gold_symbol_runtime_visible": true,
+      "recommended_escalation": "structural_symbol_traversal"
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "failure_type": "target_file_missed_despite_visible_symbol",
+      "seen_files": [
+        "test_research__benchmark_cost_03.py"
+      ],
+      "missing_gold_files": [
+        "evals/coding_benchmark.py"
+      ],
+      "gold_symbols": [
+        "summarize"
+      ],
+      "gold_symbol_runtime_visible": true,
+      "recommended_escalation": "structural_symbol_traversal"
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "failure_type": "target_file_missed_despite_visible_symbol",
+      "seen_files": [
+        "test_research__workflow_message_input_04.py"
+      ],
+      "missing_gold_files": [
+        "src/agents/agent_workflow.py"
+      ],
+      "gold_symbols": [
+        "user_input"
+      ],
+      "gold_symbol_runtime_visible": true,
+      "recommended_escalation": "structural_symbol_traversal"
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "failure_type": "target_file_missed_despite_visible_symbol",
+      "seen_files": [
+        "test_research__experience_survival_13.py"
+      ],
+      "missing_gold_files": [
+        "src/agents/experience.py"
+      ],
+      "gold_symbols": [
+        "survival"
+      ],
+      "gold_symbol_runtime_visible": true,
+      "recommended_escalation": "structural_symbol_traversal"
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "failure_type": "target_file_missed_despite_visible_symbol",
+      "seen_files": [
+        "test_research__probe_expectation_17.py"
+      ],
+      "missing_gold_files": [
+        "evals/coding_benchmark.py"
+      ],
+      "gold_symbols": [
+        "probe_ok"
+      ],
+      "gold_symbol_runtime_visible": true,
+      "recommended_escalation": "structural_symbol_traversal"
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "failure_type": "empty_retrieval",
+      "seen_files": [],
+      "missing_gold_files": [
+        "evals/swe_tasks.py"
+      ],
+      "gold_symbols": [
+        "parse"
+      ],
+      "gold_symbol_runtime_visible": true,
+      "recommended_escalation": "files_then_structural"
+    }
+  ],
+  "claim_boundary": "Gold metadata is used only for retrospective failure diagnosis; recommendations are not runtime labels and must not leak into deployed policy state."
+}

@@ -1,0 +1,37 @@
+{
+  "protocol": "v2-group-bootstrap-v1",
+  "seeds": [
+    {
+      "seed": 11,
+      "frequency": 0.75,
+      "contextual": 0.8929,
+      "delta_pp": 14.29
+    },
+    {
+      "seed": 23,
+      "frequency": 0.75,
+      "contextual": 0.9286,
+      "delta_pp": 17.86
+    },
+    {
+      "seed": 37,
+      "frequency": 0.75,
+      "contextual": 0.9286,
+      "delta_pp": 17.86
+    },
+    {
+      "seed": 51,
+      "frequency": 0.75,
+      "contextual": 0.9286,
+      "delta_pp": 17.86
+    },
+    {
+      "seed": 71,
+      "frequency": 0.75,
+      "contextual": 0.9286,
+      "delta_pp": 17.86
+    }
+  ],
+  "consistent_contextual_direction": true,
+  "claim_boundary": "Group-bootstrap stability of behavior-cloning agreement only."
+}

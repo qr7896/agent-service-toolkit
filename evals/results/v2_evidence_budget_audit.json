@@ -1,0 +1,172 @@
+{
+  "protocol": "v2-evidence-budget-audit-v1",
+  "tokenizer": "deterministic regex proxy, not provider tokenizer",
+  "before": {
+    "items": 77,
+    "chars": 1310,
+    "approx_tokens": 402
+  },
+  "after": {
+    "items": 12,
+    "chars": 226,
+    "approx_tokens": 74
+  },
+  "reduction": {
+    "items": 0.8441558441558441,
+    "chars": 0.8274809160305343,
+    "approx_tokens": 0.8159203980099503
+  },
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "before": {
+        "items": 11,
+        "chars": 190,
+        "approx_tokens": 57
+      },
+      "after": {
+        "items": 2,
+        "chars": 38,
+        "approx_tokens": 11
+      },
+      "char_reduction_rate": 0.8,
+      "approx_token_reduction_rate": 0.8070175438596492
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "before": {
+        "items": 11,
+        "chars": 191,
+        "approx_tokens": 59
+      },
+      "after": {
+        "items": 2,
+        "chars": 41,
+        "approx_tokens": 13
+      },
+      "char_reduction_rate": 0.7853403141361257,
+      "approx_token_reduction_rate": 0.7796610169491526
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "before": {
+        "items": 10,
+        "chars": 155,
+        "approx_tokens": 49
+      },
+      "after": {
+        "items": 1,
+        "chars": 10,
+        "approx_tokens": 5
+      },
+      "char_reduction_rate": 0.935483870967742,
+      "approx_token_reduction_rate": 0.8979591836734694
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "before": {
+        "items": 11,
+        "chars": 190,
+        "approx_tokens": 57
+      },
+      "after": {
+        "items": 2,
+        "chars": 32,
+        "approx_tokens": 11
+      },
+      "char_reduction_rate": 0.8315789473684211,
+      "approx_token_reduction_rate": 0.8070175438596492
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "before": {
+        "items": 0,
+        "chars": 0,
+        "approx_tokens": 0
+      },
+      "after": {
+        "items": 0,
+        "chars": 0,
+        "approx_tokens": 0
+      },
+      "char_reduction_rate": 0,
+      "approx_token_reduction_rate": 0
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "before": {
+        "items": 12,
+        "chars": 227,
+        "approx_tokens": 66
+      },
+      "after": {
+        "items": 1,
+        "chars": 50,
+        "approx_tokens": 12
+      },
+      "char_reduction_rate": 0.7797356828193833,
+      "approx_token_reduction_rate": 0.8181818181818181
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "before": {
+        "items": 11,
+        "chars": 183,
+        "approx_tokens": 57
+      },
+      "after": {
+        "items": 2,
+        "chars": 29,
+        "approx_tokens": 11
+      },
+      "char_reduction_rate": 0.8415300546448088,
+      "approx_token_reduction_rate": 0.8070175438596492
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "before": {
+        "items": 0,
+        "chars": 0,
+        "approx_tokens": 0
+      },
+      "after": {
+        "items": 0,
+        "chars": 0,
+        "approx_tokens": 0
+      },
+      "char_reduction_rate": 0,
+      "approx_token_reduction_rate": 0
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "before": {
+        "items": 0,
+        "chars": 0,
+        "approx_tokens": 0
+      },
+      "after": {
+        "items": 0,
+        "chars": 0,
+        "approx_tokens": 0
+      },
+      "char_reduction_rate": 0,
+      "approx_token_reduction_rate": 0
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "before": {
+        "items": 11,
+        "chars": 174,
+        "approx_tokens": 57
+      },
+      "after": {
+        "items": 2,
+        "chars": 26,
+        "approx_tokens": 11
+      },
+      "char_reduction_rate": 0.8505747126436781,
+      "approx_token_reduction_rate": 0.8070175438596492
+    }
+  ],
+  "claim_boundary": "Approx-token is a deterministic local proxy and must not be reported as provider/model prompt tokens."
+}

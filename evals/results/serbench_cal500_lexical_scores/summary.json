@@ -1,0 +1,17 @@
+{
+  "v2_candidate_lexical_v1": {
+    "group_ndcg@5": 0.07034965751966954,
+    "group_ndcg@8": 0.09535482243104054,
+    "group_recall@5": 0.1032,
+    "group_recall@8": 0.17103333333333334,
+    "mss_complete@5": 0.06,
+    "mss_complete@8": 0.118,
+    "necessity_weighted_recall@5": 0.10176803751803752,
+    "necessity_weighted_recall@8": 0.17035512265512265,
+    "required_novelty@5": 0.162,
+    "required_novelty@8": 0.238,
+    "role_coverage@5": 0.1245,
+    "role_coverage@8": 0.194,
+    "states": 500.0
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "protocol": "v2-structural-filter-v3-coverage-v1",
+  "escalated_tasks": 7,
+  "gold_hit_tasks": 7,
+  "all_gold_hit": true,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "kept": 2,
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/test_tools.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "kept": 2,
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/debugger.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "kept": 1,
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "kept": 2,
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/agent_workflow.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "kept": 1,
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "src/agents/experience.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "kept": 2,
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "kept": 2,
+      "gold_hit": true,
+      "gold_paths_hit": [
+        "evals/swe_tasks.py"
+      ]
+    }
+  ],
+  "claim_boundary": "Gold retrospective only."
+}

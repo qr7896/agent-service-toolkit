@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from evals.e1b_autonomous_harness import (
@@ -98,6 +100,29 @@ def test_usage_metadata_is_normalized():
         "output_tokens": 4,
         "total_tokens": 14,
     }
+
+
+def test_live_resume_selects_only_budget_exhaustion(tmp_path, monkeypatch):
+    from evals import e1b_run_dev_live
+
+    result = tmp_path / "run.json"
+    result.write_text(
+        json.dumps(
+            {
+                "summary": {"total_tokens": 100},
+                "rows": [
+                    {"instance_id": "done", "failure": None},
+                    {"instance_id": "pending", "failure": "budget_exhaustion"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(e1b_run_dev_live, "RESULT_PATH", result)
+    rows, pending, spent, ceiling = e1b_run_dev_live.resume_state(50)
+    assert [row["instance_id"] for row in rows] == ["done"]
+    assert pending == {"pending"}
+    assert (spent, ceiling) == (100, 150)
 
 
 def test_run_identity_and_dry_run_artifact(tmp_path):

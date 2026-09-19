@@ -1,0 +1,128 @@
+{
+  "protocol": "v2-structural-noise-audit-v1",
+  "tasks": 10,
+  "escalated_tasks": 7,
+  "structural_items": 77,
+  "target_items": 12,
+  "source_items": 10,
+  "micro_target_precision": 0.15584415584415584,
+  "micro_source_precision": 0.12987012987012986,
+  "all_escalations_hit_target": true,
+  "rows": [
+    {
+      "structural_items": 11,
+      "target_items": 2,
+      "source_items": 0,
+      "target_precision": 0.18181818181818182,
+      "source_precision": 0.0,
+      "target_paths": [
+        "src/agents/test_tools.py"
+      ],
+      "task_id": "v2obs__research__test-command-guard-01",
+      "decision": "structural"
+    },
+    {
+      "structural_items": 11,
+      "target_items": 2,
+      "source_items": 2,
+      "target_precision": 0.18181818181818182,
+      "source_precision": 0.18181818181818182,
+      "target_paths": [
+        "src/agents/debugger.py"
+      ],
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "decision": "structural"
+    },
+    {
+      "structural_items": 10,
+      "target_items": 1,
+      "source_items": 1,
+      "target_precision": 0.1,
+      "source_precision": 0.1,
+      "target_paths": [
+        "evals/coding_benchmark.py"
+      ],
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "decision": "structural"
+    },
+    {
+      "structural_items": 11,
+      "target_items": 2,
+      "source_items": 2,
+      "target_precision": 0.18181818181818182,
+      "source_precision": 0.18181818181818182,
+      "target_paths": [
+        "src/agents/agent_workflow.py"
+      ],
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "decision": "structural"
+    },
+    {
+      "structural_items": 0,
+      "target_items": 0,
+      "source_items": 0,
+      "target_precision": null,
+      "source_precision": null,
+      "target_paths": [],
+      "task_id": "v2obs__research__related-tests-05",
+      "decision": "stop"
+    },
+    {
+      "structural_items": 12,
+      "target_items": 1,
+      "source_items": 1,
+      "target_precision": 0.08333333333333333,
+      "source_precision": 0.08333333333333333,
+      "target_paths": [
+        "src/agents/experience.py"
+      ],
+      "task_id": "v2obs__research__experience-survival-13",
+      "decision": "structural"
+    },
+    {
+      "structural_items": 11,
+      "target_items": 2,
+      "source_items": 2,
+      "target_precision": 0.18181818181818182,
+      "source_precision": 0.18181818181818182,
+      "target_paths": [
+        "evals/coding_benchmark.py"
+      ],
+      "task_id": "v2obs__research__probe-expectation-17",
+      "decision": "structural"
+    },
+    {
+      "structural_items": 0,
+      "target_items": 0,
+      "source_items": 0,
+      "target_precision": null,
+      "source_precision": null,
+      "target_paths": [],
+      "task_id": "v2obs__research__inline-workflow-18",
+      "decision": "stop"
+    },
+    {
+      "structural_items": 0,
+      "target_items": 0,
+      "source_items": 0,
+      "target_precision": null,
+      "source_precision": null,
+      "target_paths": [],
+      "task_id": "v2obs__research__gold-field-split-19",
+      "decision": "stop"
+    },
+    {
+      "structural_items": 11,
+      "target_items": 2,
+      "source_items": 2,
+      "target_precision": 0.18181818181818182,
+      "source_precision": 0.18181818181818182,
+      "target_paths": [
+        "evals/swe_tasks.py"
+      ],
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "decision": "structural"
+    }
+  ],
+  "claim_boundary": "Gold paths are used retrospectively for precision scoring only; not available to runtime retrieval."
+}

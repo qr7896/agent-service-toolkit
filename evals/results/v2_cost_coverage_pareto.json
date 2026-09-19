@@ -1,0 +1,32 @@
+{
+  "protocol": "v2-cost-coverage-pareto-v1",
+  "tasks": 10,
+  "rows": [
+    {
+      "policy": "v1_repeat_lexical",
+      "actions": 20,
+      "cost": 22.0,
+      "risk": 6.0,
+      "oracle_resolved": 4
+    },
+    {
+      "policy": "pure_early_stop",
+      "actions": 10,
+      "cost": 11.0,
+      "risk": 3.0,
+      "oracle_resolved": 4
+    },
+    {
+      "policy": "adaptive_stop_or_structural",
+      "actions": 17,
+      "cost": 17.3,
+      "risk": 3.7,
+      "oracle_resolved": 10
+    }
+  ],
+  "descriptive_frontier": [
+    "pure_early_stop",
+    "adaptive_stop_or_structural"
+  ],
+  "claim_boundary": "Pareto description uses constrained Oracle editability, not autonomous repair success; no policy winner is claimed."
+}

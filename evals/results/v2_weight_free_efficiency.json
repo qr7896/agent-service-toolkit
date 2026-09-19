@@ -1,0 +1,154 @@
+{
+  "protocol": "v2-weight-free-efficiency-v1",
+  "by_action": {
+    "lexical": {
+      "unique_gain_per_100_proxy_tokens": 4.695464808926823,
+      "unique_gain_per_cost": 2.0,
+      "unique_gain_per_risk": 7.333333333333334
+    },
+    "structural": {
+      "unique_gain_per_100_proxy_tokens": 112.08791208791209,
+      "unique_gain_per_cost": 12.22222222222222,
+      "unique_gain_per_risk": 110.0
+    }
+  },
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 5.660377358490566,
+      "unique_gain_per_cost": 2.727272727272727,
+      "unique_gain_per_risk": 10.0
+    },
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "step": 1,
+      "action": "structural",
+      "unique_gain_per_100_proxy_tokens": 100.0,
+      "unique_gain_per_cost": 12.222222222222221,
+      "unique_gain_per_risk": 110.0
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 7.142857142857143,
+      "unique_gain_per_cost": 0.9090909090909091,
+      "unique_gain_per_risk": 3.3333333333333335
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "step": 1,
+      "action": "structural",
+      "unique_gain_per_100_proxy_tokens": 84.61538461538461,
+      "unique_gain_per_cost": 12.222222222222221,
+      "unique_gain_per_risk": 110.0
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 3.8461538461538463,
+      "unique_gain_per_cost": 0.9090909090909091,
+      "unique_gain_per_risk": 3.3333333333333335
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "step": 1,
+      "action": "structural",
+      "unique_gain_per_100_proxy_tokens": 200.0,
+      "unique_gain_per_cost": 11.11111111111111,
+      "unique_gain_per_risk": 100.0
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 2.5,
+      "unique_gain_per_cost": 1.8181818181818181,
+      "unique_gain_per_risk": 6.666666666666667
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "step": 1,
+      "action": "structural",
+      "unique_gain_per_100_proxy_tokens": 100.0,
+      "unique_gain_per_cost": 12.222222222222221,
+      "unique_gain_per_risk": 110.0
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 6.329113924050633,
+      "unique_gain_per_cost": 4.545454545454545,
+      "unique_gain_per_risk": 16.666666666666668
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 4.166666666666667,
+      "unique_gain_per_cost": 0.9090909090909091,
+      "unique_gain_per_risk": 3.3333333333333335
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "step": 1,
+      "action": "structural",
+      "unique_gain_per_100_proxy_tokens": 100.0,
+      "unique_gain_per_cost": 13.333333333333332,
+      "unique_gain_per_risk": 120.0
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 3.508771929824561,
+      "unique_gain_per_cost": 1.8181818181818181,
+      "unique_gain_per_risk": 6.666666666666667
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "step": 1,
+      "action": "structural",
+      "unique_gain_per_100_proxy_tokens": 100.0,
+      "unique_gain_per_cost": 12.222222222222221,
+      "unique_gain_per_risk": 110.0
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 6.779661016949152,
+      "unique_gain_per_cost": 3.6363636363636362,
+      "unique_gain_per_risk": 13.333333333333334
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": 2.3255813953488373,
+      "unique_gain_per_cost": 2.727272727272727,
+      "unique_gain_per_risk": 10.0
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "step": 0,
+      "action": "lexical",
+      "unique_gain_per_100_proxy_tokens": null,
+      "unique_gain_per_cost": 0.0,
+      "unique_gain_per_risk": 0.0
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "step": 1,
+      "action": "structural",
+      "unique_gain_per_100_proxy_tokens": 100.0,
+      "unique_gain_per_cost": 12.222222222222221,
+      "unique_gain_per_risk": 110.0
+    }
+  ],
+  "claim_boundary": "Weight-free descriptive ratios using runtime-observable unique evidence, not Gold useful evidence or downstream policy value."
+}

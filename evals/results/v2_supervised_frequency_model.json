@@ -1,0 +1,27 @@
+{
+  "protocol": "v2-supervised-frequency-v1",
+  "train_records": 153,
+  "train_tasks": 66,
+  "overall": {
+    "structural": 12,
+    "stop": 66,
+    "files": 14,
+    "lexical": 61
+  },
+  "by_step": {
+    "0": {
+      "structural": 10,
+      "files": 2,
+      "lexical": 54
+    },
+    "1": {
+      "stop": 45,
+      "structural": 2,
+      "files": 12,
+      "lexical": 7
+    },
+    "2": {
+      "stop": 21
+    }
+  }
+}

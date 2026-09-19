@@ -1,0 +1,16 @@
+{
+  "protocol": "serbench-inference-audit-v1",
+  "states": 3,
+  "stages": {
+    "unknown": 3
+  },
+  "candidate_count": {
+    "min": 65,
+    "max": 120,
+    "mean": 88.0
+  },
+  "observed_evidence_mean": 0.0,
+  "errors": [],
+  "inference_ready": true,
+  "claim_boundary": "Inference-only audit. No certificates/Gold labels are accepted or inspected."
+}

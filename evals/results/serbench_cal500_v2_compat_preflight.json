@@ -1,0 +1,16 @@
+{
+  "states": 500,
+  "predictions": 500,
+  "candidate_count": 43451,
+  "ranking_length": {
+    "min": 8,
+    "max": 8,
+    "mean": 8.0
+  },
+  "abstentions": 0,
+  "inference_failures": 0,
+  "compatibility_failures": 0,
+  "errors": [],
+  "contract_ready": true,
+  "claim_boundary": "Local preflight only; upstream SERBench validation/scoring remains authoritative."
+}

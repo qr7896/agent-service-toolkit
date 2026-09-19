@@ -1,0 +1,595 @@
+[
+  {
+    "task_id": "v2rt__research__test-command-guard-01",
+    "split": "train",
+    "cluster": "validation",
+    "source_commit": "1df3c67",
+    "files": {
+      "src/agents/test_tools.py": "def allowed(command):\n    return command.startswith(('pytest', 'python'))\n",
+      "test_research__test_command_guard_01.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/test_tools.py')\n\ndef test_fix():\n    assert m.allowed('python -m pytest -q') and not m.allowed('python tool.py')\n\ndef test_regression():\n    assert m.allowed('pytest -q')\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "allowed"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__debug-prompt-no-hit-02",
+    "split": "dev",
+    "cluster": "memory-quality",
+    "source_commit": "5a14425",
+    "files": {
+      "src/agents/debugger.py": "def prompt(base, experiences):\n    return base + '\\n历史经验：' + '\\n'.join(experiences)\n",
+      "test_research__debug_prompt_no_hit_02.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/debugger.py')\n\ndef test_fix():\n    assert m.prompt('修复失败测试', []) == '修复失败测试'\n\ndef test_regression():\n    assert '经验A' in m.prompt('修复', ['经验A'])\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "prompt"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__benchmark-cost-03",
+    "split": "train",
+    "cluster": "observability",
+    "source_commit": "59e9bdd",
+    "files": {
+      "evals/coding_benchmark.py": "def summarize(rows):\n    return {'tasks': len(rows)}\n",
+      "test_research__benchmark_cost_03.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('evals/coding_benchmark.py')\n\ndef test_fix():\n    assert m.summarize([{'estimated_tokens': 10}, {}])['total_estimated_tokens'] == 10\n\ndef test_regression():\n    assert m.summarize([])['tasks'] == 0\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "summarize"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__workflow-message-input-04",
+    "split": "train",
+    "cluster": "input-normalization",
+    "source_commit": "3183ac9",
+    "files": {
+      "src/agents/agent_workflow.py": "def user_input(state):\n    return state.get('workflow_input') or ''\n",
+      "test_research__workflow_message_input_04.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/agent_workflow.py')\n\ndef test_fix():\n    assert m.user_input({'messages': [{'role': 'user', 'content': '修一下'}]}) == '修一下'\n\ndef test_regression():\n    assert m.user_input({'workflow_input': '显式', 'messages': [{'role': 'user', 'content': '消息'}]}) == '显式'\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "user_input"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__related-tests-05",
+    "split": "train",
+    "cluster": "validation",
+    "source_commit": "fcbe49e",
+    "files": {
+      "src/agents/code_intel.py": "def related(symbol, callers):\n    return sorted(n for n in callers if n.startswith('test_'))\n",
+      "test_research__related_tests_05.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/code_intel.py')\n\ndef test_fix():\n    c = {'test_add': {'add'}, 'test_sub': {'sub'}, 'main': {'add'}}\n    assert m.related('add', c) == ['test_add']\n\ndef test_regression():\n    assert m.related('missing', {}) == []\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "related"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__conflict-exit-06",
+    "split": "train",
+    "cluster": "evidence-decision",
+    "source_commit": "994fd72",
+    "files": {
+      "src/agents/conflict.py": "def classify(kind):\n    return 'experiment'\n",
+      "test_research__conflict_exit_06.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/conflict.py')\n\ndef test_fix():\n    assert m.classify('permission') == 'static'\n\ndef test_regression():\n    assert m.classify('runtime') == 'experiment'\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "classify"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__dual-evidence-gates-07",
+    "split": "train",
+    "cluster": "evidence-decision",
+    "source_commit": "28ab094",
+    "files": {
+      "src/agents/evidence.py": "def sufficient(score, threshold=.8):\n    return score >= threshold\n\ndef worth_more(score, rounds_left):\n    return not sufficient(score)\n",
+      "test_research__dual_evidence_gates_07.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/evidence.py')\n\ndef test_fix():\n    assert m.worth_more(0.1, 0) == (False, 'budget_exhausted')\n\ndef test_regression():\n    assert m.sufficient(.9) is True\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "sufficient"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__experience-isolation-12",
+    "split": "dev",
+    "cluster": "memory-quality",
+    "source_commit": "ead5691",
+    "files": {
+      "src/agents/experience.py": "def isolated(used, helped, minimum=3, floor=.34):\n    return used and helped / used < floor\n",
+      "test_research__experience_isolation_12.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/experience.py')\n\ndef test_fix():\n    assert not m.isolated(2,0) and m.isolated(3,0)\n\ndef test_regression():\n    assert not m.isolated(4,4)\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "isolated"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__experience-survival-13",
+    "split": "dev",
+    "cluster": "memory-quality",
+    "source_commit": "ead5691",
+    "files": {
+      "src/agents/experience.py": "def survival(applied, current, changed, baseline):\n    return 'intact' if current == changed else 'reverted' if current == baseline else 'modified'\n",
+      "test_research__experience_survival_13.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/experience.py')\n\ndef test_fix():\n    assert m.survival(False, 'base', 'fix', 'base') == 'not_applied'\n\ndef test_regression():\n    assert m.survival(True, 'base', 'fix', 'base') == 'reverted'\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "survival"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__permission-ack-14",
+    "split": "train",
+    "cluster": "policy-gate",
+    "source_commit": "e196446",
+    "files": {
+      "scripts/permission_diff_gate.py": "SENSITIVE = {'src/agents/code_tools.py'}\n\ndef allowed(paths, ack=False):\n    return True\n",
+      ".github/workflows/permission-gate.yml": "name: permission-gate\n",
+      "test_research__permission_ack_14.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('scripts/permission_diff_gate.py')\n\ndef test_fix():\n    assert not m.allowed(['src/agents/code_tools.py']) and m.allowed(['src/agents/code_tools.py'], True)\n\ndef test_regression():\n    assert m.allowed(['docs/README.md'])\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "allowed"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__blind-spot-metrics-15",
+    "split": "train",
+    "cluster": "observability",
+    "source_commit": "e196446",
+    "files": {
+      "scripts/trajectory_metrics.py": "import ast\n\ndef failure_rate(sources):\n    for text in sources: \n        try: ast.parse(text)\n        except SyntaxError: pass\n    return 0.0\n",
+      "test_research__blind_spot_metrics_15.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('scripts/trajectory_metrics.py')\n\ndef test_fix():\n    assert m.failure_rate(['x=1', 'def broken(']) == .5\n\ndef test_regression():\n    assert m.failure_rate([]) == 0\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "failure_rate"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__difficulty-calibration-16",
+    "split": "train",
+    "cluster": "validation",
+    "source_commit": "e196446",
+    "files": {
+      "evals/coding_benchmark.py": "def degenerate(rates):\n    return False\n",
+      "test_research__difficulty_calibration_16.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('evals/coding_benchmark.py')\n\ndef test_fix():\n    assert m.degenerate([0,0,0]) and m.degenerate([1,1])\n\ndef test_regression():\n    assert not m.degenerate([0,.5,1])\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "degenerate"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__probe-expectation-17",
+    "split": "train",
+    "cluster": "validation",
+    "source_commit": "cd6a3f3",
+    "files": {
+      "evals/coding_benchmark.py": "def probe_ok(rows):\n    return all(r['resolved'] for r in rows)\n",
+      "test_research__probe_expectation_17.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('evals/coding_benchmark.py')\n\ndef test_fix():\n    assert m.probe_ok([{'resolved':True,'expected_resolved':True},{'resolved':False,'expected_resolved':False}])\n\ndef test_regression():\n    assert not m.probe_ok([{'resolved':True,'expected_resolved':False}])\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "probe_ok"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__inline-workflow-18",
+    "split": "dev",
+    "cluster": "workflow-composition",
+    "source_commit": "39ffc20",
+    "files": {
+      "src/agents/agent_workflow.py": "def valid(agent=None, mode=None, depth=0):\n    return bool(agent or mode)\n",
+      "test_research__inline_workflow_18.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('src/agents/agent_workflow.py')\n\ndef test_fix():\n    assert not m.valid('a','parallel') and not m.valid(mode='loop', depth=5)\n\ndef test_regression():\n    assert m.valid(agent='a') and m.valid(mode='parallel')\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "valid"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__gold-field-split-19",
+    "split": "train",
+    "cluster": "input-normalization",
+    "source_commit": "28c6b12",
+    "files": {
+      "evals/swe_tasks.py": "def parse(data):\n    return {'gold_sources': data.get('gold_files', {}), 'gold_files': data.get('gold_files', [])}\n",
+      "test_research__gold_field_split_19.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('evals/swe_tasks.py')\n\ndef test_fix():\n    r=m.parse({'gold_sources':{'a.py':'x'},'gold_files':['a.py']}); assert r=={'gold_sources':{'a.py':'x'},'gold_files':['a.py']}\n\ndef test_regression():\n    assert m.parse({}) == {'gold_sources':{},'gold_files':[]}\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "parse"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "task_id": "v2rt__research__legacy-gold-compat-20",
+    "split": "train",
+    "cluster": "input-normalization",
+    "source_commit": "28c6b12",
+    "files": {
+      "evals/swe_tasks.py": "def parse(data):\n    return data.get('gold_sources', {}), data.get('gold_files', [])\n",
+      "test_research__legacy_gold_compat_20.py": "import importlib.util\nimport sys\nfrom pathlib import Path\n\n\ndef load(rel):\n    path = Path(__file__).parent / rel\n    sys.path.insert(0, str(path.parent))\n    spec = importlib.util.spec_from_file_location(\"under_test\", path)\n    module = importlib.util.module_from_spec(spec)\n    sys.modules[\"under_test\"] = module\n    spec.loader.exec_module(module)\n    return module\n\nm = load('evals/swe_tasks.py')\n\ndef test_fix():\n    assert m.parse({'gold_files':{'a.py':'fixed'}}) == ({'a.py':'fixed'}, [])\n\ndef test_regression():\n    assert m.parse({'gold_files':['a.py']}) == ({}, ['a.py'])\n"
+    },
+    "max_actions": 2,
+    "plans": [
+      {
+        "candidates": [
+          "files",
+          "lexical"
+        ],
+        "requests": {
+          "lexical": {
+            "query": "parse"
+          }
+        },
+        "utility": {
+          "files": 0.5,
+          "lexical": 1.0
+        }
+      },
+      {
+        "candidates": [
+          "files"
+        ],
+        "requests": {},
+        "utility": {
+          "files": 0.5
+        }
+      }
+    ]
+  }
+]

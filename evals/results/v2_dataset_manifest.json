@@ -1,0 +1,24 @@
+{
+  "protocol": "v2-dataset-manifest-v1",
+  "dataset": "evals/results/v2_seed_decisions_from_v1.jsonl",
+  "dataset_sha256": "d1fbc907e4f4f6d37048d0df683d99e7a791c65cb0a524c6ab04a45df6c506d4",
+  "sources": {
+    "evals/results/v1_decision_episodes.jsonl": "f0596fb5e2e40004111f7909607b9835abf2bff91b59706c27930a5de72a65e8"
+  },
+  "validation": {
+    "records": 49,
+    "tasks": 20,
+    "ready_for_replay": false,
+    "minimum_records": 200,
+    "duplicate_hashes": 0,
+    "cross_split_clusters": [],
+    "cross_split_commits": [],
+    "chosen_action_counts": {
+      "files": 9,
+      "stop": 20,
+      "structural": 20
+    },
+    "errors": []
+  },
+  "claim_boundary": "Replay-ready only when validation.ready_for_replay is true; derived records are not new online V2 decisions."
+}

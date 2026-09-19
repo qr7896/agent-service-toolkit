@@ -1,0 +1,57 @@
+{
+  "protocol": "v2-dataset-manifest-v1",
+  "dataset": "evals/results/v2_combined_decisions.jsonl",
+  "dataset_sha256": "477d5247bbec97ce2f62e5018c7c3dfc8af16132dbce8139a18c40a68d2ba72b",
+  "sources": {
+    "evals/results/v2_seed_decisions_from_v1.jsonl": "d1fbc907e4f4f6d37048d0df683d99e7a791c65cb0a524c6ab04a45df6c506d4",
+    "evals/results/v2_runtime_native.jsonl": "407a91f5ffbff97a52f4473d6ad406b1d4704f6ceb64943c064b5a72af351d3a",
+    "evals/results/v2_observable_runtime_native.jsonl": "b111b6456646e82add8d9e7a019171be632c257ad7f004d20d16e16a4ec49601",
+    "evals/results/v2_diverse_runtime_native.jsonl": "64020c9bda56de7ffa0aa591878ff5048ff30a8dfe0453a1c62ec4308b9eae0c"
+  },
+  "validation": {
+    "records": 221,
+    "tasks": 93,
+    "ready_for_replay": true,
+    "minimum_records": 200,
+    "duplicate_hashes": 0,
+    "cross_split_clusters": [],
+    "cross_split_commits": [],
+    "chosen_action_counts": {
+      "files": 25,
+      "lexical": 83,
+      "stop": 93,
+      "structural": 20
+    },
+    "errors": []
+  },
+  "eligibility": {
+    "schema_ready": true,
+    "sample_ready": true,
+    "generic_replay_ready": true,
+    "supervised_replay_ready": true,
+    "ips_ready": false,
+    "source_provenance": [
+      {
+        "data_origin": "derived_offline",
+        "propensity_semantics": "derived_uniform",
+        "behavior_policy_id": null
+      },
+      {
+        "data_origin": "deterministic_runtime",
+        "propensity_semantics": "plumbing_uniform",
+        "behavior_policy_id": null
+      },
+      {
+        "data_origin": "deterministic_runtime",
+        "propensity_semantics": "plumbing_uniform",
+        "behavior_policy_id": null
+      },
+      {
+        "data_origin": "deterministic_runtime",
+        "propensity_semantics": "plumbing_uniform",
+        "behavior_policy_id": null
+      }
+    ]
+  },
+  "claim_boundary": "Replay-ready only when validation.ready_for_replay is true; derived records are not new online V2 decisions."
+}

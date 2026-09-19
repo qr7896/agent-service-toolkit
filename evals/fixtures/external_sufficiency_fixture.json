@@ -1,0 +1,10 @@
+[
+  {
+    "external_state_id": "fixture-1",
+    "repository": "example/repo",
+    "state_text": "Agent has inspected parser.py and needs the caller contract.",
+    "candidate_evidence": [{"id":"e1","path":"src/parser.py","content":"def parse(x): return x"}],
+    "required_evidence_groups": [["e1"]],
+    "metadata": {"fixture_only": true}
+  }
+]

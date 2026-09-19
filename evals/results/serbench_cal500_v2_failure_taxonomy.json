@@ -1,0 +1,35 @@
+{
+  "protocol": "serbench-v2-failure-taxonomy-v1",
+  "states": 500,
+  "failure_modes": {
+    "state_representation_mismatch": {
+      "count": 500,
+      "evidence": "SERBench has no V2-compatible cost/risk values; both remain 0."
+    },
+    "candidate_only_vs_repository_retrieval_mismatch": {
+      "count": 500,
+      "evidence": "CodeGraph, semantic, and repository file acquisition are unavailable in the core supplied-candidate track."
+    },
+    "stop_calibration_failure": {
+      "count": 311,
+      "evidence": "Direct V2 sufficiency port abstained whenever an observed non-test source chunk existed."
+    },
+    "evidence_ranking_failure_at_8": {
+      "count": 461,
+      "evidence": "Official per-state mss_complete@8 for the frozen compatible method."
+    },
+    "correction_gained_complete_sets": {
+      "count": 7.0,
+      "evidence": "Paired Cal500 comparison against deterministic lexical."
+    },
+    "correction_lost_complete_sets": {
+      "count": 27.0,
+      "evidence": "Path diversity can displace multiple necessary chunks from one source file."
+    },
+    "candidate_budget_mismatch": {
+      "count": 0,
+      "evidence": "All compared ranking methods use the official k=8 budget."
+    }
+  },
+  "decision": "Freeze after one reasoned correction; no further Cal500 tuning."
+}

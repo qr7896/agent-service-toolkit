@@ -1,0 +1,1031 @@
+{
+  "protocol": "v2-safe-early-stop-replay-v1",
+  "tasks": 10,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 3,
+            "new": 3,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 3,
+            "new": 0,
+            "redundant": 3,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 3,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "src/agents/test_tools.py",
+            "content": "    return command.startswith(('pytest', 'python'))",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "    assert m.allowed('python -m pytest -q') and not m.allowed('python tool.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "    assert m.allowed('pytest -q')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 3,
+            "new": 3,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 3,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "src/agents/test_tools.py",
+            "content": "    return command.startswith(('pytest', 'python'))",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "    assert m.allowed('python -m pytest -q') and not m.allowed('python tool.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__test_command_guard_01.py",
+            "content": "    assert m.allowed('pytest -q')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 1,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 0,
+            "redundant": 1,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 1,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "m = load('src/agents/debugger.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 1,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 1,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "test_research__debug_prompt_no_hit_02.py",
+            "content": "m = load('src/agents/debugger.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 1,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 0,
+            "redundant": 1,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 1,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "    assert m.summarize([{'estimated_tokens': 10}, {}])['total_estimated_tokens'] == 10",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 1,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 1,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "test_research__benchmark_cost_03.py",
+            "content": "    assert m.summarize([{'estimated_tokens': 10}, {}])['total_estimated_tokens'] == 10",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 2,
+            "new": 2,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 2,
+            "new": 0,
+            "redundant": 2,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 2,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "    assert m.user_input({'messages': [{'role': 'user', 'content': '\u4fee\u4e00\u4e0b'}]}) == '\u4fee\u4e00\u4e0b'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "    assert m.user_input({'workflow_input': '\u663e\u5f0f', 'messages': [{'role': 'user', 'content': '\u6d88\u606f'}]}) == '\u663e\u5f0f'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 2,
+            "new": 2,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 2,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "    assert m.user_input({'messages': [{'role': 'user', 'content': '\u4fee\u4e00\u4e0b'}]}) == '\u4fee\u4e00\u4e0b'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__workflow_message_input_04.py",
+            "content": "    assert m.user_input({'workflow_input': '\u663e\u5f0f', 'messages': [{'role': 'user', 'content': '\u6d88\u606f'}]}) == '\u663e\u5f0f'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 5,
+            "new": 5,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 5,
+            "new": 0,
+            "redundant": 5,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 5,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "    return sorted(n for n in callers if n.startswith('test_'))",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "def test_fix():",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "    c = {'test_add': {'add'}, 'test_sub': {'sub'}, 'main': {'add'}}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "    assert m.related('add', c) == ['test_add']",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "def test_regression():",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 5,
+            "new": 5,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 5,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "src/agents/code_intel.py",
+            "content": "    return sorted(n for n in callers if n.startswith('test_'))",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "def test_fix():",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "    c = {'test_add': {'add'}, 'test_sub': {'sub'}, 'main': {'add'}}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "    assert m.related('add', c) == ['test_add']",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__related_tests_05.py",
+            "content": "def test_regression():",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 1,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 0,
+            "redundant": 1,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 1,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "    assert m.survival(False, 'base', 'fix', 'base') == 'not_applied'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 1,
+            "new": 1,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 1,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "test_research__experience_survival_13.py",
+            "content": "    assert m.survival(False, 'base', 'fix', 'base') == 'not_applied'",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 2,
+            "new": 2,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 2,
+            "new": 0,
+            "redundant": 2,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 2,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "    assert m.probe_ok([{'resolved':True,'expected_resolved':True},{'resolved':False,'expected_resolved':False}])",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "    assert not m.probe_ok([{'resolved':True,'expected_resolved':False}])",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 2,
+            "new": 2,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 2,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "    assert m.probe_ok([{'resolved':True,'expected_resolved':True},{'resolved':False,'expected_resolved':False}])",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__probe_expectation_17.py",
+            "content": "    assert not m.probe_ok([{'resolved':True,'expected_resolved':False}])",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 4,
+            "new": 4,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 4,
+            "new": 0,
+            "redundant": 4,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 4,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "def valid(agent=None, mode=None, depth=0):",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "    return bool(agent or mode)",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "m = load('src/agents/agent_workflow.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "    assert m.valid(agent='a') and m.valid(mode='parallel')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 4,
+            "new": 4,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 4,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "def valid(agent=None, mode=None, depth=0):",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "src/agents/agent_workflow.py",
+            "content": "    return bool(agent or mode)",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "m = load('src/agents/agent_workflow.py')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__inline_workflow_18.py",
+            "content": "    assert m.valid(agent='a') and m.valid(mode='parallel')",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 3,
+            "new": 3,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 3,
+            "new": 0,
+            "redundant": 3,
+            "redundancy": 1.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 3,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.5,
+        "evidence_payload": [
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "    return {'gold_sources': data.get('gold_files', {}), 'gold_files': data.get('gold_files', [])}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "    r=m.parse({'gold_sources':{'a.py':'x'},'gold_files':['a.py']}); assert r=={'gold_sources':{'a.py':'x'},'gold_files':['a.py']}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "    assert m.parse({}) == {'gold_sources':{},'gold_files':[]}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 3,
+            "new": 3,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 3,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": [
+          {
+            "path": "evals/swe_tasks.py",
+            "content": "    return {'gold_sources': data.get('gold_files', {}), 'gold_files': data.get('gold_files', [])}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "    r=m.parse({'gold_sources':{'a.py':'x'},'gold_files':['a.py']}); assert r=={'gold_sources':{'a.py':'x'},'gold_files':['a.py']}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          },
+          {
+            "path": "test_research__gold_field_split_19.py",
+            "content": "    assert m.parse({}) == {'gold_sources':{},'gold_files':[]}",
+            "source": "lexical",
+            "score": 1.0,
+            "symbol": null,
+            "relation_type": null,
+            "depth": null,
+            "origin": null
+          }
+        ]
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "v1": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 0,
+            "new": 0,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          },
+          {
+            "action": "lexical",
+            "returned": 0,
+            "new": 0,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 2,
+        "unique_evidence": 0,
+        "total_cost": 2.2,
+        "total_risk": 0.6,
+        "mean_redundancy": 0.0,
+        "evidence_payload": []
+      },
+      "early_stop": {
+        "actions": [
+          {
+            "action": "lexical",
+            "returned": 0,
+            "new": 0,
+            "redundant": 0,
+            "redundancy": 0.0,
+            "cost": 1.1,
+            "risk": 0.3
+          }
+        ],
+        "action_count": 1,
+        "unique_evidence": 0,
+        "total_cost": 1.1,
+        "total_risk": 0.3,
+        "mean_redundancy": 0.0,
+        "evidence_payload": []
+      },
+      "delta": {
+        "actions": -1,
+        "unique_evidence": 0,
+        "cost": -1.1,
+        "risk": -0.3
+      }
+    }
+  ],
+  "aggregate": {
+    "action_delta": -10,
+    "unique_evidence_delta": 0,
+    "cost_delta": -11.0,
+    "risk_delta": -3.0
+  },
+  "claim_boundary": "Deterministic evidence-trajectory replay only; no editor/model/downstream repair outcome, so equal evidence count does not prove task sufficiency."
+}

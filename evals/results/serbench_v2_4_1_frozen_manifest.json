@@ -1,0 +1,75 @@
+{
+  "protocol": "serbench-method-freeze-v2",
+  "split": "cal500",
+  "method": "v2_candidate_compat_v2_4_1",
+  "upstream_ref": "8c27a88e48dcbcd4a5745573c95937a4740f4406",
+  "prediction_sha256": "3a712fa228555baee816951d8e0ae94044df701784513350705e8b37078a6c56",
+  "report_sha256": "f17c3d242a6501dd1519ab4659ad94a070e79eb08f28a02e8dbe9f870c045bdc",
+  "config_sha256": "00842de06de6e48b254ab19aa0d996203ab65b2a031b4aef77d5d10b94c396f9",
+  "frozen_config": {
+    "protocol": "serbench-v2-candidate-compat-v2.4.1",
+    "method": "v2_candidate_compat_v2_4_1",
+    "track": "supplied_candidate_selection",
+    "action_space": [
+      "rank_supplied_candidates",
+      "stop"
+    ],
+    "ranking_budget": 8,
+    "stop_rule": {
+      "rule": "abstain_only_when_candidate_pool_is_empty",
+      "correction": "do_not_treat_any_observed_source_as_sufficient_for_SERBench_residual_need"
+    },
+    "ranking_rule": [
+      "deterministic_lexical_overlap",
+      "unobserved_before_observed",
+      "distinct_source_path_before_repeated_path",
+      "stable_input_order_tiebreak"
+    ],
+    "filter_v3": {
+      "status": "not_applicable_to_core_track",
+      "reason": "Filter V3 consumes CodeGraph relation_type; SERBench core exposes supplied repo chunks",
+      "separate_track": "repository_acquisition_control"
+    },
+    "evidence_features": [
+      "step",
+      "actions_tried",
+      "evidence_items",
+      "total_cost",
+      "total_risk",
+      "mean_redundancy"
+    ],
+    "prediction_protocol": {
+      "format": "official_SERBench_JSONL",
+      "fields": [
+        "state_id",
+        "method",
+        "ranked_evidence_ids"
+      ]
+    },
+    "gold_inputs": false,
+    "model_api_calls": 0,
+    "implementation_files": [
+      "evals/serbench_v2_compatible.py",
+      "evals/serbench_candidate_ranker.py",
+      "evals/v2_feature_contract.py",
+      "evals/v2_structural_filter_v3.py"
+    ]
+  },
+  "implementation_sha256": {
+    "evals/serbench_v2_compatible.py": "be19852f3a30bd786bd94a8dfb8746c0ce86d98270abf8975e7c323ff55b9438",
+    "evals/serbench_candidate_ranker.py": "30283f78fed01e55b50321fe8dc4f124818e2f0ff1a67f21debdf88217c34d49",
+    "evals/v2_feature_contract.py": "3ac9a9440d8560caffc6c04a8cc7ed3054c72107b7c4ce18216319968a039dd1",
+    "evals/v2_structural_filter_v3.py": "dada5d835095cd098a51ec6e1886c18b9701c9b009901ab9c694f495c6b6f7dc"
+  },
+  "checks": {
+    "cal500_split": true,
+    "immutable_upstream_ref": true,
+    "complete_config": true,
+    "method_matches_config": true,
+    "prediction_exists": true,
+    "official_report_exists": true
+  },
+  "missing_config_fields": [],
+  "test500_allowed": true,
+  "claim_boundary": "Hash manifest freezes artifacts only; it does not certify benchmark quality or authorize private-label access."
+}

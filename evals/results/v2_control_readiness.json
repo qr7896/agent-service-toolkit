@@ -1,0 +1,14 @@
+{
+  "protocol": "v2-control-readiness-v1",
+  "evidence_replay_preserved": true,
+  "oracle_outcome_preserved": true,
+  "oracle_v1_resolved": 4,
+  "oracle_early_stop_resolved": 4,
+  "eligible_for_autonomous_control": false,
+  "remaining_blockers": [
+    "non-oracle editor outcome preservation",
+    "prospective non-sealed DEV validation",
+    "explicit protocol freeze before any sealed TEST"
+  ],
+  "claim_boundary": "Oracle preservation is necessary evidence but insufficient to authorize autonomous policy control."
+}

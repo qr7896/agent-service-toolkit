@@ -202,3 +202,6 @@ smoke_live_app_failure.png
 
 # Local study/scratch folder (personal practice code, not part of the project)
 study_test11/
+
+# External benchmark checkouts (record URL + commit, never vendor data)
+.external/

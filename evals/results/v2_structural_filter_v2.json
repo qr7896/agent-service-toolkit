@@ -1,0 +1,82 @@
+{
+  "protocol": "v2-structural-filter-v2",
+  "before": 77,
+  "after": 10,
+  "reduction": 67,
+  "reduction_rate": 0.8701298701298701,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "before": 11,
+      "after": 0,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "before": 11,
+      "after": 2,
+      "kept_paths": [
+        "src/agents/debugger.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "before": 10,
+      "after": 1,
+      "kept_paths": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "before": 11,
+      "after": 2,
+      "kept_paths": [
+        "src/agents/agent_workflow.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "before": 0,
+      "after": 0,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "before": 12,
+      "after": 1,
+      "kept_paths": [
+        "src/agents/experience.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "before": 11,
+      "after": 2,
+      "kept_paths": [
+        "evals/coding_benchmark.py"
+      ]
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "before": 0,
+      "after": 0,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "before": 0,
+      "after": 0,
+      "kept_paths": []
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "before": 11,
+      "after": 2,
+      "kept_paths": [
+        "evals/swe_tasks.py"
+      ]
+    }
+  ],
+  "claim_boundary": "Runtime-only metadata filter; Gold is not used by selection."
+}

@@ -1,0 +1,183 @@
+{
+  "protocol": "v2-matched-retrieval-audit-v1",
+  "tasks": 10,
+  "lexical_gold_hit": 4,
+  "structural_gold_hit": 10,
+  "lexical_proxy_tokens": 521,
+  "structural_proxy_tokens": 130,
+  "lexical_unique": 22,
+  "structural_retained_unique": 20,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "lexical": {
+        "unique": 3,
+        "proxy_tokens": 53,
+        "gold_hit": true,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 11,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "lexical": {
+        "unique": 1,
+        "proxy_tokens": 14,
+        "gold_hit": false,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 13,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "lexical": {
+        "unique": 1,
+        "proxy_tokens": 26,
+        "gold_hit": false,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 11,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "lexical": {
+        "unique": 2,
+        "proxy_tokens": 80,
+        "gold_hit": false,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 11,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__related-tests-05",
+      "lexical": {
+        "unique": 5,
+        "proxy_tokens": 79,
+        "gold_hit": true,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 3,
+        "proxy_tokens": 18,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "lexical": {
+        "unique": 1,
+        "proxy_tokens": 24,
+        "gold_hit": false,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 1,
+        "proxy_tokens": 12,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "lexical": {
+        "unique": 2,
+        "proxy_tokens": 57,
+        "gold_hit": false,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 11,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__inline-workflow-18",
+      "lexical": {
+        "unique": 4,
+        "proxy_tokens": 59,
+        "gold_hit": true,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 21,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__gold-field-split-19",
+      "lexical": {
+        "unique": 3,
+        "proxy_tokens": 129,
+        "gold_hit": true,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 11,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "lexical": {
+        "unique": 0,
+        "proxy_tokens": 0,
+        "gold_hit": false,
+        "cost": 2.2,
+        "risk": 0.6
+      },
+      "structural": {
+        "unique": 2,
+        "proxy_tokens": 11,
+        "gold_hit": true,
+        "cost": 1.8,
+        "risk": 0.2
+      }
+    }
+  ],
+  "claim_boundary": "Gold is retrospective scoring only. Matched initial state/action count reduces one confound but does not randomize retrieval semantics or prove causal superiority."
+}

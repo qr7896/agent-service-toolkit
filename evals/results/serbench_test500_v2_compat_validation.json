@@ -1,0 +1,14 @@
+{
+  "candidate_count": 40503,
+  "labels_checked": false,
+  "methods": 1,
+  "per_method": {
+    "v2_candidate_compat_v2_4_1": 500
+  },
+  "prediction_count": 500,
+  "states": 500,
+  "strict": true,
+  "valid": true,
+  "prediction_sha256": "fafbcba882b947373f64ccf69c32fd806f4eee0d942f6d2be6ad4ab658508ed9",
+  "status": "prediction_ready_private_evaluation_not_run"
+}

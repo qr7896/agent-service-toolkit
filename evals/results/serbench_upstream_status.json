@@ -1,0 +1,17 @@
+{
+  "protocol": "v2-external-eval-gate-v1",
+  "upstream": {
+    "found": true,
+    "root": "D:\\codex\\working\\project20260827\\.external\\SERBench",
+    "has_package": true,
+    "has_readme": true,
+    "has_pyproject": true,
+    "ready": true
+  },
+  "example_allowed": true,
+  "cal500_allowed": false,
+  "test500_allowed": false,
+  "blockers": [],
+  "next_action": "run official example integration",
+  "claim_boundary": "Fail-closed orchestration gate; never treats local fixtures as official SERBench evaluation."
+}

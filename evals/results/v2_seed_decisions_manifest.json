@@ -1,0 +1,51 @@
+{
+  "records": 49,
+  "tasks": 20,
+  "ready_for_replay": false,
+  "minimum_records": 200,
+  "duplicate_hashes": 0,
+  "cross_split_clusters": [],
+  "cross_split_commits": [],
+  "chosen_action_counts": {
+    "files": 9,
+    "stop": 20,
+    "structural": 20
+  },
+  "errors": [],
+  "source": "evals/results/v1_decision_episodes.jsonl",
+  "output": "evals/results/v2_seed_decisions_from_v1.jsonl",
+  "source_episodes": 49,
+  "split_records": {
+    "dev": 11,
+    "test": 12,
+    "train": 26
+  },
+  "clusters": [
+    "durable-approval",
+    "evidence-decision",
+    "input-normalization",
+    "memory-quality",
+    "observability",
+    "policy-gate",
+    "sandbox-output",
+    "validation",
+    "workflow-composition"
+  ],
+  "source_commits": [
+    "1df3c67",
+    "28ab094",
+    "28c6b12",
+    "3183ac9",
+    "39ffc20",
+    "3e7b27c",
+    "59e9bdd",
+    "5a14425",
+    "994fd72",
+    "cd6a3f3",
+    "d76338f",
+    "e196446",
+    "ead5691",
+    "fcbe49e"
+  ],
+  "provenance": "derived_from_existing_v1_offline_episodes_no_new_model_calls"
+}

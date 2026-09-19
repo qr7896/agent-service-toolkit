@@ -1,0 +1,53 @@
+{
+  "protocol": "v2-compression-robustness-v1",
+  "tasks": 7,
+  "min_reduction": 0.7796610169491526,
+  "median_reduction": 0.8070175438596492,
+  "max_reduction": 0.8979591836734694,
+  "all_positive": true,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "before": 57,
+      "after": 11,
+      "reduction_rate": 0.8070175438596492
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "before": 59,
+      "after": 13,
+      "reduction_rate": 0.7796610169491526
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "before": 49,
+      "after": 5,
+      "reduction_rate": 0.8979591836734694
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "before": 57,
+      "after": 11,
+      "reduction_rate": 0.8070175438596492
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "before": 66,
+      "after": 12,
+      "reduction_rate": 0.8181818181818181
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "before": 57,
+      "after": 11,
+      "reduction_rate": 0.8070175438596492
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "before": 57,
+      "after": 11,
+      "reduction_rate": 0.8070175438596492
+    }
+  ],
+  "claim_boundary": "Per-task deterministic proxy-token compression; not provider token accounting."
+}

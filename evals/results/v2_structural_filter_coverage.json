@@ -1,0 +1,44 @@
+{
+  "protocol": "v2-structural-filter-coverage-v1",
+  "escalated_tasks": 7,
+  "gold_hit_tasks": 6,
+  "all_gold_hit": false,
+  "rows": [
+    {
+      "task_id": "v2obs__research__test-command-guard-01",
+      "kept": 0,
+      "gold_hit": false
+    },
+    {
+      "task_id": "v2obs__research__debug-prompt-no-hit-02",
+      "kept": 2,
+      "gold_hit": true
+    },
+    {
+      "task_id": "v2obs__research__benchmark-cost-03",
+      "kept": 1,
+      "gold_hit": true
+    },
+    {
+      "task_id": "v2obs__research__workflow-message-input-04",
+      "kept": 2,
+      "gold_hit": true
+    },
+    {
+      "task_id": "v2obs__research__experience-survival-13",
+      "kept": 1,
+      "gold_hit": true
+    },
+    {
+      "task_id": "v2obs__research__probe-expectation-17",
+      "kept": 2,
+      "gold_hit": true
+    },
+    {
+      "task_id": "v2obs__research__legacy-gold-compat-20",
+      "kept": 2,
+      "gold_hit": true
+    }
+  ],
+  "claim_boundary": "Gold used only after runtime-only filtering for retrospective coverage scoring."
+}
