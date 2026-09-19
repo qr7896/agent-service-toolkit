@@ -140,6 +140,11 @@ def _ignore(_directory: str, names: list[str]) -> set[str]:
     return {name for name in names if name in EXCLUDED_DIRS}
 
 
+def _make_writable_and_retry(function: Any, path: str, _exc: Any) -> None:
+    os.chmod(path, 0o700)
+    function(path)
+
+
 def _git(*args: str, cwd: Path = ROOT, check: bool = True) -> subprocess.CompletedProcess:
     return subprocess.run(["git", *args], cwd=cwd, capture_output=True, check=check, timeout=120)
 
@@ -153,7 +158,9 @@ def _write_version(root: Path, commit: str, relative: str) -> None:
 
 def _prepare(root: Path, task: PilotTask) -> None:
     if root.exists():
-        return
+        if all((root / relative).is_file() for relative in task.restore_paths):
+            return
+        shutil.rmtree(root, onexc=_make_writable_and_retry)
     root.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(ROOT, root, ignore=_ignore, symlinks=False)
     for relative in HIDDEN_FROM_AGENT:
