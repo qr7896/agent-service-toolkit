@@ -7,6 +7,7 @@ review / approvals 的轨迹才算。第一版落 SQLite 本地文件；向量�
 from __future__ import annotations
 
 import hashlib
+import inspect
 import json
 import re
 import sqlite3
@@ -67,6 +68,11 @@ EXTRA_COLUMNS: dict[str, str] = {
     "used_count": "int",
     "helped_count": "int",
     "harmful_count": "int",
+    "validation_strength": "dict[str, Any]",
+    "lifecycle_state": "str",
+    "lifecycle_reason": "str",
+    "lifecycle_event_time": "str",
+    "compiler_config_hash": "str",
 }
 
 DOMAIN_HINTS = {
@@ -246,6 +252,37 @@ def _classify(trajectory: dict[str, Any]) -> tuple[str, str]:
     return "", ""
 
 
+def validation_strength(trajectory: dict[str, Any]) -> dict[str, Any]:
+    test = trajectory.get("test_result") or {}
+    review = trajectory.get("review") or {}
+    approvals = [item for item in trajectory.get("approvals") or [] if isinstance(item, dict)]
+    return {
+        "test_observed": bool(test),
+        "test_passed": test.get("status") == "passed" if test else None,
+        "review_observed": bool(review),
+        "review_approved": review.get("approved")
+        if isinstance(review.get("approved"), bool)
+        else None,
+        "approval_observed": bool(approvals),
+        "write_approved": next(
+            (item.get("approved") for item in approvals if isinstance(item.get("approved"), bool)),
+            None,
+        ),
+    }
+
+
+def compiler_config_hash() -> str:
+    payload = {
+        "schema_version": "v3-experience-v2",
+        "classifier": inspect.getsource(_classify),
+        "reuse_constraints": inspect.getsource(reuse_constraints),
+        "validation_strength": inspect.getsource(validation_strength),
+    }
+    return hashlib.sha256(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()
+
+
 @dataclass
 class Experience:
     id: str
@@ -388,6 +425,11 @@ def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> l
                 "used_count": 0,
                 "helped_count": 0,
                 "harmful_count": 0,
+                "validation_strength": validation_strength(trajectory),
+                "lifecycle_state": "active",
+                "lifecycle_reason": "",
+                "lifecycle_event_time": str(trajectory.get("ended_at") or ""),
+                "compiler_config_hash": compiler_config_hash(),
                 "action_prior": action_prior,
                 # 延迟复评用：改动后的工作区指纹 vs 提交基线指纹
                 "change_fingerprint": change_fingerprint,

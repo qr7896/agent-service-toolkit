@@ -3,7 +3,7 @@
 ## Material Passport
 
 - Artifact type: code experiment plan
-- Status: ACTIVE / V3-1
+- Status: MECHANISM FROZEN / PROSPECTIVE DATA GATE
 - Date: 2026-09-19
 - Inputs: existing local trajectories, `agents.experience`, `agents.coding_memory`, V2 frozen boundaries
 - External model/API use: none
@@ -58,3 +58,8 @@ Migration must write a new artifact; it must not overwrite the existing experien
 ## Claim boundary
 
 Until chronological paired evaluation exists, V3 may claim only schema/replay readiness. Retrieval hit rate, behavior agreement, and final task success without a memory counterfactual do not establish experience value.
+
+
+## Replay feedback boundary
+
+Untimestamped lifetime usage/help/harm counters are excluded from replay reliability by default. Usage feedback may enter a replay decision only through an explicitly past-visible snapshot. V3 mechanism development is frozen after V3-6; the next gate is prospective non-sealed data with execution-time provenance.

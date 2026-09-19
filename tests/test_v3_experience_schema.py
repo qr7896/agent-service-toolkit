@@ -1,7 +1,7 @@
 import pytest
 
 import agents.coding_agent as coding_agent
-from agents.experience import build_experiences
+from agents.experience import build_experiences, compiler_config_hash
 
 
 def test_compiler_uses_execution_commit_not_current_head(tmp_path):
@@ -21,6 +21,17 @@ def test_compiler_uses_execution_commit_not_current_head(tmp_path):
     assert experience.extra["source_repo"] == "owner/repo"
     assert experience.extra["repo_commit"] == "deadbeef"
     assert experience.extra["event_time"] == trajectory["ended_at"]
+    assert experience.extra["validation_strength"] == {
+        "test_observed": True,
+        "test_passed": True,
+        "review_observed": True,
+        "review_approved": True,
+        "approval_observed": False,
+        "write_approved": None,
+    }
+    assert experience.extra["lifecycle_state"] == "active"
+    assert experience.extra["lifecycle_event_time"] == trajectory["ended_at"]
+    assert experience.extra["compiler_config_hash"] == compiler_config_hash()
 
 
 def test_compiler_does_not_invent_missing_commit(tmp_path):
@@ -28,6 +39,8 @@ def test_compiler_does_not_invent_missing_commit(tmp_path):
     experience = build_experiences(trajectory, tmp_path)[0]
     assert experience.extra["repo_commit"] == ""
     assert experience.extra["applied"] is None
+    assert experience.extra["validation_strength"]["test_observed"] is False
+    assert experience.extra["lifecycle_state"] == "active"
 
 
 @pytest.mark.asyncio

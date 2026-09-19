@@ -10,7 +10,7 @@
 对应设计原件在 `docs/design/`：01 EGCP 证据门控规划器、02 轨迹到经验的深化、03 项目收敛定位、
 04 模块设计卡（**学习资料，不是实现规格**）。
 
-> **下一步做什么**：**当前执行计划统一放在 §9.2；V2 已冻结，当前活动阶段为 V3-1 Experience Schema v2 / temporal provenance。**
+> **下一步做什么**：**当前执行计划统一放在 §9.2；V2 与 V3 mechanism 均已冻结，当前门槛是 V3 non-sealed prospective collection。**
 > 研究问题、假设与评测协议见 [research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)。
 > 当前计划只看 §9.2；逐轮实验流水统一归档到 [research/PROGRESS_LOG_ARCHIVE.md](./research/PROGRESS_LOG_ARCHIVE.md)，版本结论分别见 `research/RESULTS_V*.md`。
 
@@ -1792,7 +1792,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | V0 | CLOSED | 受控检索层 adaptive gate 有效 | 端到端 repair 泛化 |
 | V1 | FROZEN | frozen retrieval benchmark 上保持 recall、降低 tokens/calls | Autonomous Repair Rate |
 | V2 | **FROZEN** | 内部 adaptive acquisition 原型；官方 SERBench Cal500 完成；Test500 prediction-ready | 优于 MSS-Complement、Test500 分数、patch success |
-| V3 | **ACTIVE — V3-1** | 已完成现有 trajectory/experience readiness audit | 尚无 continual-policy 或 learned-prior 结果 |
+| V3 | **MECHANISM FROZEN — PROSPECTIVE DATA GATE** | Schema v2、non-destructive export、strict chronological replay 已完成；deterministic reliability baseline 已启动 | 尚无 continual-policy efficacy 或 learned-prior 结果 |
 
 **当前唯一主线：V3 Trajectory → Experience → Continual Policy**
 
@@ -1869,18 +1869,19 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 **纪律**：先复用现有 `agents.experience` / `coding_memory` / trajectory plumbing；先规则与离线 replay，后 learned prior；不把“被召回”当“被采用”，不把任务最终成功全部归因于某条经验，不回看未来数据。
 
 - [x] **V3-0 Protocol + Readiness Audit**：冻结研究问题、时间因果边界和 no-leakage 原则；实测8 trajectories、5 compiler-eligible、旧 DB 1 experience、0 original-commit provenance。结论：可开始 schema plumbing，不可开始 continual efficacy claim。
-- [ ] **V3-1 Experience Schema v2（ACTIVE）**：在现有 compiler 上补 `schema_version / source_repo / source_commit_at_execution / event_time / validation_strength / lifecycle_state / compiler_config_hash`；成功与失败经验都必须可追溯。先做 migration/export，不覆盖旧 DB。
-- [ ] **V3-2 Chronological Replay Gate**：按 event time/source commit 生成 past-only stream；同一 source problem/commit 不跨时间泄漏；数据不足时 fail closed。
-- [ ] **V3-3 Reliability Baseline**：只用当时可见的 validation strength、usage help/harm、commit distance、compatibility 计算规则分；低可靠经验只能 abstain/weak prior。learned score 需等独立样本门槛后再决定。
-- [ ] **V3-4 Conflict / Forgetting**：复用现有 isolation/survival，再补显式 invalidation reason 与可逆 decay；对 conflicting experiences 保存裁决证据。
-- [ ] **V3-5 Retrieval / Adoption Ablation**：比较 No-memory / Always-on Top-k / compatibility-filtered / reliability-aware；分别记录 retrieved、adopted、changed-decision，禁止用 retrieval hit 代替 policy effect。
-- [ ] **V3-6 Negative Experience**：保留 `approval_denied / test_failed / review_rejected / unknown_failure`，检验重复错误、无效重试、无效读取是否下降。
-- [ ] **V3-7 Continual + Counterfactual Protocol**：时间滚动评估 success、attempts、reads、tool calls、proxy/provider tokens（严格分开）、harm；关键 changed-decision 保存 without-memory deterministic replay。
-- [ ] **V3-8 Final Delivery**：`RESULTS_V3.md`、schema/migration、frozen chronological manifest、reliability/forgetting policy、reproducibility 与 claim matrix。
+- [x] **V3-1 Experience Schema v2**：schema/provenance/validation/lifecycle/config hash 与 non-destructive export 已完成；不覆盖旧 DB/trajectory。
+- [x] **V3-2 Chronological Replay Gate**：严格 past-only replay 已完成；同时间互不可见、同 repo+commit alias 阻断、缺失 provenance fail closed。
+- [x] **V3-3 Reliability Baseline**：model-free reliability + compatibility + explicit commit distance 已合并为 deterministic adoption/abstention policy，并接入 strict chronological replay；commit distance 缺失时 fail closed。
+- [x] **V3-4 Conflict / Forgetting**：已加入 deterministic event-age decay、opposite-outcome conflict adjudication 与可逆 lifecycle；平分时双方隔离，否则隔离较弱经验，并继续复用 survival/utility reevaluation。
+- [x] **V3-5 Retrieval / Adoption Ablation**：四臂 matched offline artifact 已补 CLI/JSON 输出与 audit-only summary metrics；真实非 sealed trajectory provenance audit 为 8 rows、source_repo 0/8、execution commit 0/8，因此按协议 fail closed，不伪造历史 provenance。
+- [x] **V3-6 Negative Experience / Counterfactual Replay**：已完成 strict-past 正/负经验与 compatibility-matched counterfactual readiness artifact，并明确 evidence availability 不等于 causal effect；同时修复 lifetime usage counter 的时间泄漏风险。
+- [x] **V3 Freeze Gate**：机制冻结；下一阶段只采集具备 execution-time provenance 的 non-sealed prospective trajectories，字段与最小计划见 `docs/research/V3_FREEZE_GATE.md`。
+- [x] **Prospective preflight**：真实 Git root/HEAD、trajectory 目录与 readiness import 均通过，`ready_to_collect=true`、`blockers=[]`。
+- [ ] **当前唯一执行项**：固定 non-sealed task runner、模型与预算；随后在第一条真实任务前创建 cohort marker，收集 trajectory，运行 status；数据达标后补齐可验证来源的 real artifact 入口，再运行 frozen evaluation → real-only artifact audit。
 
-**阶段门槛**：V3-1/2 只允许0模型调用；V3-3前必须同时有 positive/negative experiences 和完整 original-commit provenance；V3-5前必须冻结 replay split/config；prospective模型实验必须单独预算并保持内部 sealed TEST关闭。
+**阶段门槛**：V3 mechanism 不再增加新阶段或调公式。prospective 模型实验必须单独固定任务、模型与预算，并保持内部 sealed TEST 关闭；没有 paired prospective evidence 前不得讨论 memory efficacy。
 
-**V3-1 当前进展（2026-09-19）**：已落地 trajectory `v3-trajectory-v1` 的 execution-time repo/commit 捕获，以及 compiler `v3-experience-v2` 的 provenance fail-closed 基础；旧 DB 未覆盖。V3 readiness/schema/research-mode 定向回归 **14 passed / 0 failed / 4 warnings**。
+**V3 当前进展（2026-09-19）**：V3-0~V3-6 已完成并冻结机制开发，focused V3 regression **38 passed / 0 failed / 4 warnings**。真实 Git preflight 已通过，cohort marker 尚未创建、prospective rows=0；当前 smoke CLI 固定产生 `synthetic=true`，real artifact 入口仍是审计门槛；模型 API=0，sealed TEST opened/called=0/0。
 
 **V3 成功标准**：主结论必须来自 chronological paired evaluation；同时报告效果量/不确定性与 harm，不能用固定“≤2%”替代样本量和置信区间。若只降低成本而不降低成功率，可报告 efficiency gain；若只有 imitation/agreement，则不得称 continual improvement。
 
@@ -1933,12 +1934,11 @@ V1–V3 至少保留 `Fixed K`、V0 `Evidence Gate`、V0 `Utility Gate`、`No-Co
 
 1. [x] V0 closed；V1 frozen；V2 frozen（含 SERBench Cal500、freeze manifest、Test500 prediction-ready）。
 2. [x] E1/E1-B protocol/runtime plumbing 完成；真实模型实验保持暂停，六条内部 TEST 继续 sealed。
-3. [x] V3-0 protocol + existing-memory readiness audit。
-4. [ ] **当前：V3-1 schema v2 / execution-time provenance / non-destructive migration-export。**
-5. [ ] V3-2 chronological replay gate；通过后做 V3-3 reliability 与 V3-4 forgetting/conflict。
-6. [ ] V3-5 retrieval/adoption ablation + V3-6 negative experience + V3-7 counterfactual continual replay。
-7. [ ] V3-8 final freeze；只有 chronological paired evidence 足够时才讨论 prospective/model experiment。
-8. [ ] E2/E3 或 Test500 private evaluation 均作为独立授权步骤，不与 V3 开发数据混用。
+3. [x] V3-0~V3-6 mechanism、schema、strict-past replay、四臂 ablation、counterfactual-readiness 与 freeze gate。
+4. [x] 真实 Git prospective preflight。
+5. [ ] **当前：固定 non-sealed runner/model/budget，在首个任务前创建 cohort marker；达到数据门槛后完成 real artifact 入口与默认审计。**
+6. [ ] 收集首批真实 trajectory → collection status → frozen evaluation → artifact audit。
+7. [ ] 只有 paired prospective evidence 足够时才讨论 efficacy；E2/E3 或 Test500 private evaluation 均需独立授权。
 
 #### 9.3.7 论文 / 简历叙事边界
 

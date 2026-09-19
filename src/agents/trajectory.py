@@ -120,6 +120,18 @@ def build_trajectory(state: Any, config: Any) -> dict[str, Any]:
     configurable = config.get("configurable") or {}
     approvals = state.get("approvals") or []
     experience_hits = state.get("experience_hits") or []
+    adoption_observed = any("adopted" in hit for hit in experience_hits)
+    adopted_experience_ids = (
+        sorted(
+            {
+                str(hit.get("trajectory_id") or hit.get("id"))
+                for hit in experience_hits
+                if hit.get("adopted") is True and (hit.get("trajectory_id") or hit.get("id"))
+            }
+        )
+        if adoption_observed
+        else None
+    )
     evidence_cards = state.get("evidence_cards") or []
     evidence_trace = state.get("evidence_trace") or []
     status = _status(state)
@@ -159,6 +171,8 @@ def build_trajectory(state: Any, config: Any) -> dict[str, Any]:
                 if hit.get("trajectory_id") or hit.get("id")
             }
         ),
+        "adopted_experience_ids": adopted_experience_ids,
+        "adoption_observed": adoption_observed,
         "evidence_gate": state.get("evidence_gate") or {},
         "evidence_cards": evidence_cards,
         "evidence_trace": evidence_trace,

@@ -75,11 +75,14 @@ def audit(trajectory_path: Path, experience_db: Path) -> dict:
         "used_count",
         "helped_count",
         "harmful_count",
+        "validation_strength",
+        "lifecycle_state",
+        "lifecycle_reason",
+        "lifecycle_event_time",
+        "compiler_config_hash",
     }
     complete_experiences = sum(required_extra <= set(extra) for extra in extras)
-    temporal_trajectories = sum(
-        bool(row.get("source_commit") or row.get("repo_commit_at_start")) for row in trajectories
-    )
+    temporal_trajectories = sum(bool(row.get("source_commit_at_execution")) for row in trajectories)
     outcomes = Counter(str(row.get("outcome") or "unknown") for row in experiences)
     has_both_outcomes = outcomes["accepted"] > 0 and outcomes["rejected"] > 0
     return {
