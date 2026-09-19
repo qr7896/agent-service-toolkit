@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
@@ -158,9 +159,12 @@ async def budgeted_ainvoke(
         if role in {"coder", "planner_recon"}
         else 0
     )
+    prompt_reserve = math.ceil(
+        estimate_tokens(prompt) * float(conf.get("provider_prompt_reserve_multiplier") or 1.0)
+    )
     reserve = max(
         int(conf.get("provider_min_call_reserve") or 0),
-        estimate_tokens(prompt) + max_output + tool_schema_reserve,
+        prompt_reserve + max_output + tool_schema_reserve,
     )
     global_ceiling = int(conf.get("provider_total_token_ceiling") or 0)
     task_ceiling = int(conf.get("provider_task_token_ceiling") or 0)

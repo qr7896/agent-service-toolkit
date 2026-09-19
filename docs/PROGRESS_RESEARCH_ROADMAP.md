@@ -1878,7 +1878,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - [x] **V3 Freeze Gate**：机制冻结；下一阶段只采集具备 execution-time provenance 的 non-sealed prospective trajectories，字段与最小计划见 `docs/research/V3_FREEZE_GATE.md`。
 - [x] **Prospective preflight**：真实 Git root/HEAD、trajectory 目录与 readiness import 均通过，`ready_to_collect=true`、`blockers=[]`。
 - [x] **Pilot runner gate**：fail-closed provider 限额、断点恢复与 3 条 hidden grader 已完成；任务预检 3/3 Base-Fail + Gold-Pass。
-- [ ] **当前阻塞**：`v3-prospective-001` 在任务 1 达到 10,814 provider tokens 后按协议停止，未产生 patch，任务 2–3 未启动；需要重新设计更小的 agent/tool context 或显式批准新的 per-task ceiling 后才能开启新 cohort。不得把本次中断计为 repair outcome。
+- [ ] **当前执行项**：原 pilot 在任务 1 达到 10,814 tokens 后停止；compact one-call runner 已完成本地 10-test regression 与 3/3 Base-Fail + Gold-Pass/reserve-fit preflight，等待 WebCodex 独立跑 focused/full tests。通过前不创建 compact cohort、不调用模型；不得把原中断计为 repair outcome。
 
 **阶段门槛**：V3 mechanism 不再增加新阶段或调公式。prospective 模型实验必须单独固定任务、模型与预算，并保持内部 sealed TEST 关闭；没有 paired prospective evidence 前不得讨论 memory efficacy。
 

@@ -137,3 +137,21 @@ async def test_tool_schema_reserve_blocks_coder_before_call(tmp_path):
             role="coder",
         )
     assert model.messages is None
+
+
+@pytest.mark.asyncio
+async def test_prompt_multiplier_can_fail_closed_before_call(tmp_path):
+    model = Model(AIMessage(content="unused"))
+    with pytest.raises(ProviderBudgetExceeded):
+        await budgeted_ainvoke(
+            model,
+            [HumanMessage(content="x" * 300)],
+            config(
+                tmp_path / "calls.jsonl",
+                provider_total_token_ceiling=1000,
+                provider_task_token_ceiling=1000,
+                provider_prompt_reserve_multiplier=10,
+            ),
+            role="compact_editor",
+        )
+    assert model.messages is None
