@@ -1,18 +1,18 @@
-# AI Coding Agent 改造日志
+# AI Coding Agent 研究路线与进展
 
 > 基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit) 的魔改项目
 > 我的 fork：<https://github.com/qr7896/agent-service-toolkit>
 > 最后更新：2026-09-19
 
-**项目定位已收敛**：这份日志记录"做了什么"，而**中心问题与冻结清单以 [RUNTIME.md](./RUNTIME.md) 为准**——
+**项目定位已收敛**：本文只维护当前状态、路线、里程碑与运行入口；**中心问题与冻结清单以 [RUNTIME.md](./RUNTIME.md) 为准**——
 > 如何让 Coding Agent 更准确、更少读取无关代码、更少越权、更容易验证？
 
 对应设计原件在 `docs/design/`：01 EGCP 证据门控规划器、02 轨迹到经验的深化、03 项目收敛定位、
 04 模块设计卡（**学习资料，不是实现规格**）。
 
-> **下一步做什么**：**当前执行计划统一放在 §9.2（Research Mode 五关：数据 → 轨迹 → 算法 → 实验 → 结论）**；
+> **下一步做什么**：**当前执行计划统一放在 §9.2；V2 已冻结，当前活动阶段为 V3-1 Experience Schema v2 / temporal provenance。**
 > 研究问题、假设与评测协议见 [research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)。
-> 本日志前面各节记录"已经做了什么"，**计划只看 §9.2**。
+> 当前计划只看 §9.2；逐轮实验流水统一归档到 [research/PROGRESS_LOG_ARCHIVE.md](./research/PROGRESS_LOG_ARCHIVE.md)，版本结论分别见 `research/RESULTS_V*.md`。
 
 ---
 
@@ -147,6 +147,45 @@ Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 8080,8501 |
 - 前端：<http://localhost:8501>
 - 启动会预热 BGE-M3（首次约 30–60 秒），完成后才会响应请求
 - 日志：`D:\codex\working\logs\`
+
+### 2.3 常用命令速查
+
+```powershell
+# Git 开发循环
+git add <file>; git commit -m "feat(xxx): ..."; git push
+
+# 同步上游
+git fetch upstream; git rebase upstream/main; git push
+
+# 查看历史 / 差异
+git log --oneline -10
+git diff upstream/main --stat
+
+# 服务探活与调用
+Invoke-WebRequest http://localhost:8080/health
+Invoke-RestMethod http://localhost:8080/info
+
+# 查看服务日志
+Get-Content D:\codex\working\logs\service.err.log -Tail 40
+```
+
+### 2.4 Docker / 容器验证（可选）
+
+本机当前没有 Docker / podman；`wsl.exe` 存在但没有 Linux 发行版。先在管理员 PowerShell 安装 WSL2 与 Ubuntu：
+
+```powershell
+wsl --install -d Ubuntu
+# 重启后确认 VERSION=2
+wsl -l -v
+```
+
+随后安装 Docker Desktop（启用 WSL integration），或在 Ubuntu 中安装 Docker Engine。安装完成后，在仓库根目录运行：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/verify_container.ps1
+```
+
+> Docker Engine-only 方案与历史环境说明保留在 Git 历史；路线文件只留可执行入口，避免命令说明和研究日志混杂。
 
 ---
 
@@ -1746,51 +1785,29 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 ### 9.2 当前执行计划（Research Mode）
 
-**计划在哪**：研究问题 / 假设 / 算法定义 / 评测协议写在 [research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)；
-**这里只放按顺序执行的待办**——上一版这段还停留在"平台阶段"的收尾，已过期，整段替换。
+本节只保留当前决策与下一步；V0/V1/V2 的详细过程分别见 `RESULTS_V0.md`、V1 frozen artifacts、`RESULTS_V2.md`，不再把历史日志复制成待办。
 
-工程阶段的收尾状态（供追溯）：阶段 0–22 全部完成；平台三块见 §4.23–§4.25；成本控制 §4.22；
-`record_usage` 早已接入 Agent 循环（§4.33）、隔离与延迟复评见 §4.39。
+| 版本 | 状态 | 已支持 | 明确不支持 |
+|---|---|---|---|
+| V0 | CLOSED | 受控检索层 adaptive gate 有效 | 端到端 repair 泛化 |
+| V1 | FROZEN | frozen retrieval benchmark 上保持 recall、降低 tokens/calls | Autonomous Repair Rate |
+| V2 | **FROZEN** | 内部 adaptive acquisition 原型；官方 SERBench Cal500 完成；Test500 prediction-ready | 优于 MSS-Complement、Test500 分数、patch success |
+| V3 | **ACTIVE — V3-1** | 已完成现有 trajectory/experience readiness audit | 尚无 continual-policy 或 learned-prior 结果 |
 
-**第一关：数据**
+**当前唯一主线：V3 Trajectory → Experience → Continual Policy**
 
-- [x] 20 个任务，T1–T10 各 2 条，并含多个 2–3 条的同类问题簇（`evals/tasks/research_v0.jsonl`）
-- [x] 20 条均补齐五类 Gold Evidence 并人工核验；脚本验证修复前失败、Gold 后通过（20/20）
-- [x] V0 原始任务保留 12/4/4 划分及 `source_commit` / `base_commit`；V1 重新采用 group-aware 的 cluster-disjoint + source-commit-disjoint 12/4/4 划分，当前不宣称 temporal split
+1. 先冻结 Experience Schema v2 与原始 commit/time provenance。
+2. 再建立 chronological replay；任何任务只能读取过去经验。
+3. 然后评估 reliability / conflict / forgetting，先规则基线，后决定是否需要 learned prior。
+4. 最后才运行 prospective/model experiment；此前模型 API 调用保持0，E1-B sealed TEST保持关闭。
 
-**第二关：轨迹（把日志变成数据集）**
+**当前数据门槛（2026-09-19 实测）**：8 trajectories（2 succeeded / 3 review_rejected / 3 read-only），其中5条可由现有 compiler 编译；旧 experience DB 仅1条 accepted record；0/8 trajectories 带原始 commit provenance。故当前可做 schema/replay plumbing，**不可做 continual improvement 结论**。
 
-- [x] 每轮检索记 trace：`round` / `evidence_state` / `action` / `observation` / `gain` / `cost` / `artifacts`
-- [x] 轨迹带 `experience_ids` / `evidence_types` / `final_success`，供 Decision Episode 复用
-
-**第三关：算法**
-
-- [x] `context_packer`：固定 budget 下按 relevance/token 选择证据，并已接 Planner 主流程
-- [x] **语义代码检索**：本地 BGE-M3 对 Python 符号块检索，已注册为策略动作
-- [x] Experience Prior（V1）：历史 Decision Episode 的 `action_prior` 已接入 `utility`
-
-**第四关：实验**
-
-- [x] 基线分轮跑：A/B/C/D → D/E/F → F/G（离线候选缓存，0 次付费模型调用）
-- [x] 固定 budget 对照：2K / 4K / 8K / 16K（本批在 2K 已饱和，记为数据边界）
-- [x] 停止策略对照：Fixed K=3/5/10 vs Evidence Gate vs Utility Gate
-- [x] 消融：`-Coverage` / `-Uncertainty` / `-Redundancy` / `-Cost` / `-CodeGraph` / `-Experience`
-- [x] 抗干扰与版本漂移：12 个同名 distractor + 错位旧先验
-
-**第五关：结论（先别急着说"新算法"）**
-
-- [x] 说清什么时候 adaptive 有用、什么时候无用（`research/RESULTS_V0.md`）
-- [x] 留下失败案例与方法边界（预算饱和、干扰 precision、uncertainty 未生效、非端到端）
-- [x] V0 通过条件：同 16K 上限下 Utility Gate Gold Recall 0.8906 > Fixed K=10 的 0.7344
-
-**遗留的工程账**
-
-- [x] **Docker 构建验证**：GitHub Actions `49d39dc` 的 `test-docker` 成功（3m03s），service/app 两个镜像均构建、启动并通过 health/integration 检查；本机仍无 Docker
-- [x] 阶段 18 的检索层样本已扩到 20（12 train + 8 dev/test）；原端到端 n=3 仍仅作方向性观察
+**活动文件**：[`research/V3_PROTOCOL.md`](./research/V3_PROTOCOL.md)、[`research/RESULTS_V3.md`](./research/RESULTS_V3.md)、`evals/results/v3_experience_readiness.json`。
 
 ### 9.3 后续研究路线：V1–V3 学习型策略 + 大规模端到端评测
 
-> **状态基线（2026-09-18）**：§9.2 Research Mode V0 的 18 项已全部完成；20/20 数据验证通过，Research Mode 测试 10/10，A–G、2K–16K、停止策略、消融、干扰代码与版本漂移实验均已完成，付费模型调用 0 次。V0 的结论与方法边界以 `research/RESULTS_V0.md` 为准。下面全部是**后续计划，不计入 V0 已完成项**。
+> **状态基线（2026-09-19）**：V0 closed；V1/V2 frozen；V3 active。历史结论分别以各版本 RESULTS/frozen manifest 为准，当前待办只看 §9.2 与 §9.3.3。
 
 **总研究问题**：在 V0 已证明“自适应证据获取在受控检索层 benchmark 上有收益”的基础上，下一步不继续堆平台功能，而是回答两个更难的问题：
 
@@ -1836,42 +1853,36 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 #### 9.3.2 V2：Evidence-Sufficiency-Aware Adaptive Retrieval Control
 
-**目标（2026-09-18 已收敛）**：从 V1 静态 evidence ranking 升级为**状态条件化的 evidence acquisition control**：根据 evolving EvidenceLedger 显式决定 `STOP / lexical / structural / files / semantic`，在证据充分时停止冗余读取，在证据不足时切换 modality；全程保持 runtime-observable、cost/risk/redundancy 可审计和 fail-closed。Contextual policy 是实现手段之一，不再把“做一个 bandit”本身当研究目标。直接相关工作与边界见 [research/RELATED_WORK_MSS_COMPLEMENT.md](./research/RELATED_WORK_MSS_COMPLEMENT.md)。
+**状态：V2 FROZEN（2026-09-19），不再改算法或用 Cal500 调参。**
 
-**当前总状态**：**V2 FROZEN。** V2-0～V2-3 内部证据链、V2-4 SERBench Cal500 外部验证、方法冻结与 Test500 prediction-ready 均已完成。Test500 私有证书未访问，尚无 Test500 分数；内部 E1-B sealed TEST 仍为 0 opened / 0 called。
-
-- [x] **V2-0 Protocol Freeze**：safe action space=`files/lexical/semantic/structural/stop`；冻结 DecisionRecord、RewardConfig、atomic budget、append-only logging。写、shell、依赖安装和危险操作不进入探索空间。
-- [x] **V2-1 Dataset / Replay Infrastructure**：冻结 **221 decision records / 93 trajectory IDs / 20 original source problems**；train=153、dev=56；provenance/replay gate、dataset freeze、cross-split source-problem leakage guard 已完成。注意 221 records 不是 221 个独立问题。当前 `generic_replay_ready=true`、`supervised_replay_ready=true`、**`ips_ready=false`**，因为 propensity 为 derived/plumbing uniform，不得伪装成真实 behavior propensity。
-- [x] **V2-2 Offline Policy Diagnostics**：frequency baseline Dev agreement=0.7500；runtime-compatible contextual centroid Dev=0.8750；旧 feature representation 曾达到0.9286。16 个 train+dev source problems 的 LOGO-CV weighted contextual agreement=0.9235 vs frequency=0.7751，16/16 folds 为正向描述性差值。这里只是 behavior-cloning / descriptive robustness，不是 policy value 或 repair success；因此没有为了路线图机械实现 LinUCB/Thompson Sampling。
-- [x] **V2-3 Adaptive Acquisition Prototype**：完成 runtime feature contract、shadow-gap diagnosis、stop-vs-continue、early-stop replay、coverage taxonomy、CodeGraph structural escalation、Filter V3、evidence-budget compression、MEU/sensitivity 与 matched-state/matched-budget audit。10-task deterministic sample 中：repeat lexical constrained-Oracle=4/10；adaptive stop-or-structural=10/10；Filter V3 将 structural evidence 77→12 items，proxy-token volume 402→74（-81.59%），保持 retrospective target coverage 7/7 与 constrained-Oracle 10/10。Matched initial state + 2-action budget 下 lexical target hit=4/10、structural+V3=10/10，proxy tokens=521 vs 130。**这些都是 constrained Oracle/editability 或 evidence-level 结果，不是 Autonomous Repair Rate，也不证明 structural 普遍优越。**
-- [x] **V2-3 Related-work / novelty correction**：MSS-Complement 已覆盖 state-conditioned minimal sufficient evidence recovery，因此停止使用“首次提出 Coding Agent Evidence Sufficiency / Minimal Sufficient Evidence”类 novelty claim。本项目保留的互补问题是：**给定 evolving evidence state，下一步应该 STOP 还是切换 acquisition modality，并如何受 cost/risk/redundancy 约束。**
-- [x] **V2-4 External Integration Foundation**：已完成 reuse-first compatibility seam、SERBench upstream audit 与薄 `serbench_adapter.py`。真实 SERBench 结果必须使用 upstream evaluator，不在本仓库复制 scorer/data。已确认 Cal500=500 states/241 issues/174 repos/public certificates；Test500=500/242/45/private certificates，repository-disjoint。
-- [x] **V2-4a Official Example Integration**：official 3-state loader/audit/abstention/lexical/preflight/validator/scorer 全链通过；lexical `mss_complete@5/@8=0/0.3333`。仅作 integration check。
-- [x] **V2-4b Cal500 External Validation**：official loader/scorer + onboarding BM25 starter、deterministic lexical、V2 direct port、一次有理由的 V2.4.1 correction 均已完成。冻结方法 `mss_complete@5/@8=0.062/0.078`；0 compatibility/inference failures。upstream 未发布 paper BM25 的 Cal500 frozen output，因此不声称精确复现 paper baseline。
-- [x] **V2-4c Method Freeze / Test500**：config/code/prediction/report SHA-256 与 upstream commit 均已冻结，`test500_allowed=true`。frozen Test500 predictions 500/500 通过官方 strict validation；私有证书不可用，停在 prediction-ready，未提交、未评分。
-- [x] **V2-5 Experience Drift**：与 external supplied-candidate 主线无必要关系，明确 deferred to V3，不扩张 V2。
-- [x] **V2-6 Hard Negatives / Robustness**：SERBench supplied pool 已含 40–120 candidates/state 与真实 confounders；标记 covered by external benchmark，不再自造 hard negatives。
-- [x] **V2-7 Cross-repo Generalization**：采用 upstream repository-disjoint Cal500/Test500 protocol；Cal500 覆盖174 repos。这里只证明跨仓评测协议已执行，不宣称 Test500 泛化质量。
-- [x] **V2-8 Final Delivery**：已整理结果、official runner/adapter、冻结 manifest、`V2_FINAL_CLAIMS.md` 与 `V2_REPRODUCIBILITY.md`。
-
-**V2 当前 Go / No-Go**：**V2 FROZEN；停止扩展，且不自动进入 V3。** direct STOP port 的 stop rate=62.2%、`mss_complete@8=0.070`；一次 correction 后为0.078，仍低于 deterministic lexical 0.118。该负结果与 failure taxonomy 保留。Test500 仅 prediction-ready；需要用户经官方提交队列完成一次私有评测，才可能获得 held-out 分数。
-
-**Final regression (2026-09-19)**：V2 + SERBench + external compatibility + E1 smoke + frozen V1 plumbing 共 **121 passed / 0 failed / 4 warnings**。本轮模型 API 调用=0；内部 E1-B sealed TEST opened/called=0/0。
+- 内部：221 decision records；adaptive STOP/structural prototype、Filter V3、matched-budget audit 已完成。内部 Oracle/editability 结果不等于 autonomous repair。
+- 外部：SERBench example 与 Cal500 官方 loader/validator/scorer 全链完成；冻结方法 `mss_complete@5/@8=0.062/0.078`，低于 deterministic lexical 的 `0.060/0.118`，负结果保留。
+- Test500：500/500 frozen predictions strict-valid；未访问 private certificates、未提交、无 Test500 score。
+- 完整性：121 passed / 0 failed / 4 warnings；本阶段模型 API=0；E1-B sealed TEST opened/called=0/0。
+- 冻结证据：[`RESULTS_V2.md`](./research/RESULTS_V2.md)、[`V2_FINAL_CLAIMS.md`](./research/V2_FINAL_CLAIMS.md)、[`V2_REPRODUCIBILITY.md`](./research/V2_REPRODUCIBILITY.md)、`evals/results/serbench_v2_4_1_frozen_manifest.json`。
+- V2-5 Experience Drift 已移交 V3；V2-6 由 SERBench confounders 覆盖；V2-7 采用 repository-disjoint protocol。
 
 #### 9.3.3 V3：Trajectory → Experience → Continual Policy
 
-**目标**：把 Experience Memory 从“检索旧经验并加 prior”推进为可验证的持续学习闭环，重点研究经验何时可信、何时应该忘记。
+**研究问题**：在严格时间顺序且只能使用过去轨迹的条件下，reliability-aware experience memory 能否减少重复失败或检索成本，同时不放大 stale-memory harm？
 
-- [ ] V3-1：Experience compiler 将成功/失败 trajectory 编译成结构化 experience。
-- [ ] V3-2：Reliability score 综合复用成功率、版本新鲜度、结构相似度、验证强度；低可靠经验只能作弱 prior。
-- [ ] V3-3：Conflict / Forgetting：按验证证据与版本距离裁决，增加 TTL / decay / invalidation。
-- [ ] V3-4：学习何时检索经验、检索几条、是否采用，对比 Always-on / Top-k / Rule prior / Learned prior。
-- [ ] V3-5：失败轨迹编译为 negative experience，测重复错误和无效重试是否下降。
-- [ ] V3-6：按时间顺序做 continual protocol，禁止回看未来数据，报告 success / cost / memory hit / stale-memory harm 曲线。
-- [ ] V3-7：对被 experience 改变的关键决策保存 without-memory 反事实对照。
-- [ ] V3-8：交付 `research/RESULTS_V3.md`、experience schema v2、reliability/forgetting policy、continual benchmark。
+**纪律**：先复用现有 `agents.experience` / `coding_memory` / trajectory plumbing；先规则与离线 replay，后 learned prior；不把“被召回”当“被采用”，不把任务最终成功全部归因于某条经验，不回看未来数据。
 
-**V3 成功标准**：相对 V2 frozen policy，在连续任务流中提升端到端成功率或显著降低尝试/读取成本；stale-memory harm rate 首轮目标 ≤2%，且删除 Experience 后收益应在消融中消失。
+- [x] **V3-0 Protocol + Readiness Audit**：冻结研究问题、时间因果边界和 no-leakage 原则；实测8 trajectories、5 compiler-eligible、旧 DB 1 experience、0 original-commit provenance。结论：可开始 schema plumbing，不可开始 continual efficacy claim。
+- [ ] **V3-1 Experience Schema v2（ACTIVE）**：在现有 compiler 上补 `schema_version / source_repo / source_commit_at_execution / event_time / validation_strength / lifecycle_state / compiler_config_hash`；成功与失败经验都必须可追溯。先做 migration/export，不覆盖旧 DB。
+- [ ] **V3-2 Chronological Replay Gate**：按 event time/source commit 生成 past-only stream；同一 source problem/commit 不跨时间泄漏；数据不足时 fail closed。
+- [ ] **V3-3 Reliability Baseline**：只用当时可见的 validation strength、usage help/harm、commit distance、compatibility 计算规则分；低可靠经验只能 abstain/weak prior。learned score 需等独立样本门槛后再决定。
+- [ ] **V3-4 Conflict / Forgetting**：复用现有 isolation/survival，再补显式 invalidation reason 与可逆 decay；对 conflicting experiences 保存裁决证据。
+- [ ] **V3-5 Retrieval / Adoption Ablation**：比较 No-memory / Always-on Top-k / compatibility-filtered / reliability-aware；分别记录 retrieved、adopted、changed-decision，禁止用 retrieval hit 代替 policy effect。
+- [ ] **V3-6 Negative Experience**：保留 `approval_denied / test_failed / review_rejected / unknown_failure`，检验重复错误、无效重试、无效读取是否下降。
+- [ ] **V3-7 Continual + Counterfactual Protocol**：时间滚动评估 success、attempts、reads、tool calls、proxy/provider tokens（严格分开）、harm；关键 changed-decision 保存 without-memory deterministic replay。
+- [ ] **V3-8 Final Delivery**：`RESULTS_V3.md`、schema/migration、frozen chronological manifest、reliability/forgetting policy、reproducibility 与 claim matrix。
+
+**阶段门槛**：V3-1/2 只允许0模型调用；V3-3前必须同时有 positive/negative experiences 和完整 original-commit provenance；V3-5前必须冻结 replay split/config；prospective模型实验必须单独预算并保持内部 sealed TEST关闭。
+
+**V3-1 当前进展（2026-09-19）**：已落地 trajectory `v3-trajectory-v1` 的 execution-time repo/commit 捕获，以及 compiler `v3-experience-v2` 的 provenance fail-closed 基础；旧 DB 未覆盖。V3 readiness/schema/research-mode 定向回归 **14 passed / 0 failed / 4 warnings**。
+
+**V3 成功标准**：主结论必须来自 chronological paired evaluation；同时报告效果量/不确定性与 harm，不能用固定“≤2%”替代样本量和置信区间。若只降低成本而不降低成功率，可报告 efficiency gain；若只有 imitation/agreement，则不得称 continual improvement。
 
 #### 9.3.4 更大规模端到端评测：从 Gold Evidence 到正确 Patch
 
@@ -1914,7 +1925,32 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - [ ] 下一门槛：DEV evidence protocol → 真实模型4 DEV → final config freeze → 6 sealed TEST one-shot。
 - [ ] 未完成测试、封存清单与 claim boundary 统一维护在 [research/PENDING_E1B_AUTONOMOUS_TESTS.md](./research/PENDING_E1B_AUTONOMOUS_TESTS.md)。
 
-### 9.4 Reliable Editor Runtime / Safety Boundary（当前主动工程线，2026-09-18）
+#### 9.3.5 必须保留的基线与消融
+
+V1–V3 至少保留 `Fixed K`、V0 `Evidence Gate`、V0 `Utility Gate`、`No-CodeGraph`、`No-Experience`、`No-Learned-Policy`；端到端阶段增加 **No-RAG / lexical-only / semantic-only**。主表只比较同模型、同预算、同任务集结果。
+
+#### 9.3.6 推荐执行顺序
+
+1. [x] V0 closed；V1 frozen；V2 frozen（含 SERBench Cal500、freeze manifest、Test500 prediction-ready）。
+2. [x] E1/E1-B protocol/runtime plumbing 完成；真实模型实验保持暂停，六条内部 TEST 继续 sealed。
+3. [x] V3-0 protocol + existing-memory readiness audit。
+4. [ ] **当前：V3-1 schema v2 / execution-time provenance / non-destructive migration-export。**
+5. [ ] V3-2 chronological replay gate；通过后做 V3-3 reliability 与 V3-4 forgetting/conflict。
+6. [ ] V3-5 retrieval/adoption ablation + V3-6 negative experience + V3-7 counterfactual continual replay。
+7. [ ] V3-8 final freeze；只有 chronological paired evidence 足够时才讨论 prospective/model experiment。
+8. [ ] E2/E3 或 Test500 private evaluation 均作为独立授权步骤，不与 V3 开发数据混用。
+
+#### 9.3.7 论文 / 简历叙事边界
+
+在 E2 之前，只表述为“**Adaptive Code Retrieval / Evidence Acquisition 的受控实验结果**”，不能把 V0 Gold Recall 直接写成 Coding Agent 修复成功率。V1–V3 的核心创新候选收敛为：
+
+> **A reliability-aware learning policy for code evidence acquisition and experience reuse under explicit cost and safety constraints.**
+
+最终是否称为“新算法”，由跨 commit、跨仓库、端到端消融结果决定；如果学习策略没有稳定超过 V0 rule-based Utility Gate，就保留 V0 为强基线并如实报告负结果。
+
+**暂不扩展**：整体复制 Open SWE、Slack / Linear / GitHub App、Dashboard、QLoRA / KTO、复杂云 Sandbox、大规模 Multi-Agent 拆分、无关工具扩张。后续工程只服务于上述研究问题与可复现评测。
+
+### 9.4 Reliable Editor Runtime / Safety Boundary（已完成基线）
 
 **状态切换**：E1-B Autonomous Editor 的真实模型实验当前主动暂停。冻结纪律保持不变：DEV4/TEST6 prospective split 不改，六条 TEST autonomous outcomes 继续 sealed；本轮没有运行真实模型 DEV、没有打开 sealed TEST、没有新增付费模型调用。当前工作从“继续跑实验”切换为“把可靠性/安全约束做成可复用 Runtime”。
 
@@ -1938,11 +1974,10 @@ Structural 分支：EvidencePolicy → structural → CodeGraphAdapter → symbo
 
 **当前 claim boundary**：以上证明的是安全边界、证据预算、结构检索与控制循环的确定性工程机制通过本地回归；它不证明 Autonomous Repair Rate、patch success 泛化、learned policy 优于 V0/V1，也不改变 frozen V1/E1-B 实验结论。
 
-**本轮推进日志（2026-09-18）**：已按现有文件重新盘点 E1/V1/Runtime 状态。当前基线是 Runtime 六组回归 52 passed、E1-B 30-task executable pool、DEV4/TEST6 prospective split 与 frozen V1 产物均已落盘；这些是待重新验证的已有证据，不在验证前扩大结论。本轮严格按 `R1 → R2 → R4 → R7 → R8/R9 → R3 → R5/R6 → R10` 推进，先补 E1 的完整非模型回归，再进入 R1。真实模型 DEV 仍暂停，6 条 sealed TEST 不打开，新增真实/付费模型调用保持 0；52 passed 只记 Runtime regression，不记 Autonomous Repair Rate 或 patch-success。
 
-E1 非模型实验已重跑：`test_e1_smoke.py` 3/3；20 条原始任务完整性为 Base-Unresolved 20/20、Gold-Resolved 20/20；frozen 4-task Oracle smoke 中 V1 与 fair V0 均为 Oracle Pass@1/SER=1.00，V1 为 1.25 calls、87.0 context tokens，V0 为 2.00 calls、122.5 tokens。该结果仍只证明 constrained Oracle editability，不是 Autonomous Repair Rate；真实模型调用与 sealed TEST 打开数均为 0。
+**历史执行日志**：逐轮实验流水已集中归档到 [research/PROGRESS_LOG_ARCHIVE.md](./research/PROGRESS_LOG_ARCHIVE.md)。本节只保留当前状态与未完成项。
 
-**下一步工程待办（不打开 sealed TEST）**：
+**R1–R10 收口状态（不打开 sealed TEST）**：
 
 - [x] R1：Structural Evidence 已增加 `relation_type` / `depth` / `origin`，可区分 definition/caller/import 与 seed 距离。
 - [x] R2：`structural_traverse` 已接入 `EvidenceController.execute()`；Policy → Controller → traversal → Ledger → STOP 回归通过。
@@ -1953,165 +1988,8 @@ E1 非模型实验已重跑：`test_e1_smoke.py` 3/3；20 条原始任务完整�
 - [x] R7：Runtime + E1 smoke + V1 decision/policy 完整非模型回归最终 75 passed，frozen research plumbing 未破坏。
 - [x] R8：已新增 `docs/research/RELIABLE_EDITOR_RUNTIME.md`，固定模块职责、budget 层级、trace schema、failure taxonomy 与未来 LangGraph 接线点。
 - [x] R9：已同步 `PENDING_E1B_AUTONOMOUS_TESTS.md`：P1 hardening 完成；P0 real-model DEV/final freeze/sealed TEST 保持 paused。
-- [~] R10（DEV 完整执行，但预算协议失效）：`deepseek-v4-flash` one-shot DEV 现已完成 4/4 原子调用。前三条保持原结果与原配置不变；仅对剩余 `state-version-29` 使用 `python -m evals.e1b_run_dev_live --resume-budget 5000` 追加一次调用，不重跑前三条、不改变 prompt/evidence/temperature、不触碰 sealed TEST。resume 逻辑先通过 22 项测试，并确认已有真实结果文件未被覆盖。第 4 条单次推理消耗 22,860 tokens，累计 DEV 达 31,276 tokens，补充 ceiling 超出 17,860；该条未修复成功且未重试。结论：当前 DeepSeek 原子调用的推理 token 只能调用结束后结算，无法满足固定小 token ceiling 的 R10 协议，因此**不冻结配置、不解封 TEST，6 条 sealed TEST 打开/调用仍为 0**。
+- [~] R10：DEV 4/4 已执行，但 `deepseek-v4-flash` 的原子推理计费无法满足固定小 token ceiling；当前**不冻结配置、不追加 DEV、不解封 TEST**，6 条 sealed TEST 打开/调用仍为 0。调用与预算明细见 [执行日志归档](./research/PROGRESS_LOG_ARCHIVE.md)。
 
-**R1–R10/V2 启动记录（2026-09-18，最新）**：R1–R9 已完成；加入 R10 runlog 与 V2-0 schema 后，研究非模型回归为 79/79。R10 DEV 使用 `deepseek-v4-flash`、temperature=0、one-shot、`declared-seed-read-v1`。首轮前三条累计 8,416 tokens，结果分别为 resolved、F2P failure、P2P regression；随后按“只补完剩余 1 条 DEV”追加上限 5,000 tokens，并先用 22 项测试验证 resume 逻辑及结果文件不覆盖。唯一新增调用为 `state-version-29`，未重跑前三条；该原子调用最终消耗 22,860 tokens，累计 DEV 31,276 tokens，补充 ceiling 超出 17,860，任务仍未修复且没有重试。由此 R10 暴露的是**预算控制协议与该 provider 的原子推理计费不兼容**：调用前无法保证固定小 token ceiling。当前配置继续不冻结，sealed TEST 继续保持 0 打开 / 0 调用；不得把 4 条 DEV 结果包装成 Autonomous Repair Rate，也不得进入 TEST。V2 仍只处于 V2-0 schema/reward 阶段，未产生 V2 效果结论。
 
-**R10 当前处置**：暂停继续使用该 DeepSeek 调用路径做固定小 token ceiling 的 R10。下一步应先解决“调用前可执行的硬预算”问题（例如 provider 可控的最大输出/推理预算、可中止的流式预算控制，或更适合固定 ceiling 的模型/适配器），然后重新定义并冻结 DEV 预算协议；在协议修复前不追加 DEV、不解封 TEST。
-
-**V2-0 继续推进（零模型调用）**：新增 `evals/atomic_budget.py` 的 fail-closed 原子调用准入保护；随后冻结 V2 第一版 safe-exploration action space（仅 files/lexical/semantic/structural/stop，明确排除 write/shell）、RewardConfig v1（lambda_token=0.001、lambda_call=0.1、lambda_risk=0.5）及其 SHA-256 fingerprint。DecisionRecord 现记录 schema version、reward config hash、pre-action state、candidate propensity/policy_score 与 chosen action；新增 append-only `DecisionJSONLWriter` 作为后续 200–500 条 decision records 的可审计数据入口。budget/V2/EvidencePolicy/Controller 定向回归 **27 passed**；本轮新增真实/付费模型调用=0，sealed TEST 打开/调用=0。
-
-**V2-1 离线数据管线启动（零模型调用）**：新增 `evals/v2_offline_collector.py` 与 `evals/v2_dataset.py`。前者确定性构造带 propensity 的 DecisionRecord；后者提供 canonical record hash、重复 task-step/record 检测、runtime Gold leakage 检测、safe-action/propensity 校验以及 cluster/source_commit 跨 split leakage 检查，并将 `>=200 records + 零验证错误` 作为离线 replay 的硬 gate。已用 200 条合成记录验证 gate 能开启，同时明确这些合成记录**不计入 V2-1 的 200–500 条真实研究样本**。V1/V2/budget/evidence 联合定向回归 **40 passed / 4 warnings**；新增真实模型调用=0，sealed TEST 仍为 0。
-
-**V2-1 第一批真实来源 seed records（零模型调用）**：新增 `evals/v2_seed_from_v1.py`，将已有冻结 V1 decision episodes 转换为 V2 `v2-decision-v1` 记录，并严格只把 pre-action runtime 字段放入 state；oracle/gold 字段不进入 runtime state。已生成 `evals/results/v2_seed_decisions_from_v1.jsonl` 与 provenance manifest：**49 records / 20 tasks / 9 clusters / 14 source commits**，split records=train 26/dev 11/test 12，duplicate hash=0、cluster leakage=0、commit leakage=0、validator errors=0。当前 `ready_for_replay=false`，因为真实来源记录仍低于 200 门槛；这 49 条可作为 V2 seed dataset，但不能宣称已满足 V2-1 样本量。扩展联合回归 **50 passed / 4 warnings**；新增模型调用=0，sealed TEST=0。
-
-#### 9.3.5 必须保留的基线与消融
-
-V1–V3 至少保留 `Fixed K`、V0 `Evidence Gate`、V0 `Utility Gate`、`No-CodeGraph`、`No-Experience`、`No-Learned-Policy`；端到端阶段增加 **No-RAG / lexical-only / semantic-only**。主表只比较同模型、同预算、同任务集结果。
-
-#### 9.3.6 推荐执行顺序
-
-1. [x] V1 数据与标签审计：Decision Episode 无 runtime Gold 泄漏，cluster/source-commit 跨 split 泄漏均为 0。
-2. [x] V1 ranker + stopper + frozen one-shot test + sequential replay + feature/capability ablation。
-3. [x] **V1 方法学清账完成**：fair matched Utility Gate、median Go/No-Go、task-ID guard、paired small-n robustness、13-test protocol regression；V1 仅在 frozen retrieval benchmark 上 GO。
-4. [~] E1/E1-B：Oracle smoke、30-task executable pool、DEV4/TEST6 prospective split、Autonomous protocol/safety harness/async adapter/runlog 已完成；**真实模型实验当前主动暂停**，六条 TEST autonomous outcomes 继续 sealed；当前转入 §9.4 Reliable Editor Runtime / Safety Boundary 工程线。详见 [research/PENDING_E1B_AUTONOMOUS_TESTS.md](./research/PENDING_E1B_AUTONOMOUS_TESTS.md)。
-5. [ ] E1 有传导再扩 E2 100–200 条；否则回到 reward / evidence definition，不进入 V2。
-6. [ ] V2 bandit + drift + cross-repo：数据量足够后启动。
-7. [ ] V3 continual experience：最后做，因为它依赖可靠 V1/V2 policy 和足够长的时间序列。
-8. [ ] V3 通过后再考虑 E3 / 公开 benchmark / 论文级外部复现。
-
-#### 9.3.7 论文 / 简历叙事边界
-
-在 E2 之前，只表述为“**Adaptive Code Retrieval / Evidence Acquisition 的受控实验结果**”，不能把 V0 Gold Recall 直接写成 Coding Agent 修复成功率。V1–V3 的核心创新候选收敛为：
-
-> **A reliability-aware learning policy for code evidence acquisition and experience reuse under explicit cost and safety constraints.**
-
-最终是否称为“新算法”，由跨 commit、跨仓库、端到端消融结果决定；如果学习策略没有稳定超过 V0 rule-based Utility Gate，就保留 V0 为强基线并如实报告负结果。
-
-**暂不扩展**：整体复制 Open SWE、Slack / Linear / GitHub App、Dashboard、QLoRA / KTO、复杂云 Sandbox、大规模 Multi-Agent 拆分、无关工具扩张。后续工程只服务于上述研究问题与可复现评测。
 
 ---
-
-## 10. 命令速查
-
-### 在这台机器上装 Docker（给容器化验证用）
-
-本机现状：没有 Docker / podman；`wsl.exe` 存在但**没有任何发行版**。所以要先装 WSL2 发行版，再选一种 Docker：
-
-```powershell
-# 1) 装 WSL2 + Ubuntu（需要管理员 PowerShell，装完要重启一次）
-wsl --install -d Ubuntu
-
-# 2) 重启后确认是 WSL2
-wsl -l -v
-```
-
-之后两种选择：
-
-```text
-A. Docker Desktop（最省事，个人/小团队免费）
-   下载 docker.com/products/docker-desktop 安装，安装时勾选 WSL integration，
-   重启后在 PowerShell 里 docker version 能看到 Server 版本即成功。
-
-B. 只在 WSL 里装 Docker Engine（不用 Desktop）
-   在 Ubuntu 里执行：
-     curl -fsSL https://get.docker.com | sh
-     sudo usermod -aG docker $USER
-     sudo service docker start
-   若 service 不可用，需要先启用 systemd：/etc/wsl.conf 写 [boot] systemd=true 后 wsl --shutdown 重进。
-   国内网络拉镜像慢时，可在 /etc/docker/daemon.json 配 registry-mirrors。
-```
-
-装好后回到仓库根目录验证：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/verify_container.ps1
-```
-
-```powershell
-# 开发循环
-git add <file>; git commit -m "feat(xxx): ..."; git push
-
-# 同步上游更新（把本地提交重新叠到最新上游上）
-git fetch upstream; git rebase upstream/main; git push
-
-# 查看历史 / 差异
-git log --oneline -10
-git diff upstream/main --stat
-
-# 服务探活与调用
-Invoke-WebRequest http://localhost:8080/health
-Invoke-RestMethod http://localhost:8080/info
-
-# 查看服务日志
-Get-Content D:\codex\working\logs\service.err.log -Tail 40
-```
-
-
-**V2-1 provenance freeze（零模型调用）**：新增 `evals/v2_manifest.py` 与 `evals/results/v2_dataset_manifest.json`，对当前 49 条 seed dataset 及其 V1 source 进行 SHA-256 内容寻址，并提供 manifest mutation verification。当前 manifest 再次确认 49 records / 20 tasks、duplicate=0、cross-split cluster/commit leakage=0、errors=0、`ready_for_replay=false`。检查了现有 E1-B DEV 与 E1 smoke/frozen replay：E1-B 只有 4 个 autonomous task-level outcomes，不包含可安全恢复 candidate propensity 的逐步 decision log；E1 smoke/frozen replay 含 Gold/evaluation 字段且与已有 V1 任务重叠，因此本轮**不伪造 propensity、不重复灌入 seed dataset**。联合回归 **52 passed / 4 warnings**；模型调用=0，sealed TEST=0。
-
-**V2-1 shadow runtime instrumentation（零模型调用）**：新增 `evals/v2_shadow_logger.py`，并为 `EvidenceController` 增加可选 `decision_logger` 注入点。logger 在 policy choose 后、evidence action 执行前记录 pre-action policy state、候选 action、utility-derived policy score、propensity 与最终 chosen action；同时自动加入 stop candidate。该路径是 shadow-only：不修改 EvidencePolicy 的 choose 结果，也不参与 action execution。新增测试覆盖执行 action、policy stop 与 logging on/off 行为等价性；首次测试暴露测试临时子目录未创建的问题，修复测试 fixture 后联合回归 **55 passed / 4 warnings**。当前仍未生成新的真实 V2 records；模型调用=0，sealed TEST=0。
-
-**V2-1 multi-source merge guard（零模型调用）**：新增 `evals/v2_merge.py`，支持多个合法 V2 JSONL source 合并、canonical hash 去重，并在合并后重新执行完整 dataset validator。完全相同记录可安全去重；若两个来源出现同一 task_id+step 但内容不同，则不会静默覆盖，而会保留冲突并使 `ready_for_replay=false`。这为后续 runtime shadow records 与 49 条 historical seed 合流建立了 fail-closed 入口。联合回归 **57 passed / 4 warnings**；新增模型调用=0，sealed TEST=0。
-
-**V2-1 distribution + freeze gate（零模型调用）**：新增 `evals/v2_distribution.py` 与 `evals/v2_freeze.py`。distribution report 统计 split/cluster/source_commit/candidate action/decision step 分布；当前 49 seed records 的 chosen action 为 files=9、structural=20、stop=20，decision step=0:20/1:20/2:9，且 14 个 source commits 全部可追踪。已生成 `evals/results/v2_seed_distribution.json`。freeze command 采用 fail-closed 语义：只有完整 validator 通过且 records>=200 时才写 frozen manifest/report；当前 49 条数据会被明确拒绝 freeze，不会误标为 replay-ready。联合回归 **60 passed / 4 warnings**；模型调用=0，sealed TEST=0。
-
-**V2-1 deterministic runtime collector（零模型调用）**：新增 `evals/v2_runtime_collect.py`，可从显式 case spec 创建临时 SafeWorkspace，运行真实 EvidenceController + EvidencePolicy + V2ShadowDecisionLogger 链，并直接产出 runtime-native V2 JSONL。collector 使用临时 workspace、不会修改仓库任务文件；输出在每次 collection 前清空，保证重复运行 deterministic。测试构造 2 个离线 case，原生得到 5 条 decision records（含预算结束 stop），并验证两次运行 byte-identical。该 5 条仅为 collector 测试 fixture，不计入 49 条研究 seed dataset。联合回归 **62 passed / 4 warnings**；真实模型调用=0，sealed TEST=0。
-
-**V2-1 formal deterministic runtime dataset（零模型调用）**：新增 `evals/v2_case_registry.py`，从 20 个 research_v0 tasks 中仅选择 frozen V1 split 的 train/dev 且排除 `sandbox-output` / `durable-approval` 两个 TEST clusters，生成 `evals/tasks/v2_runtime_cases.json`。registry 不携带 gold_files/gold_context 等评测 payload；仅使用 gold_symbols 的首个符号作为离线 lexical query seed，运行时 state 不包含 Gold 字段。16 个 eligible tasks 经真实 SafeWorkspace→EvidenceController→EvidencePolicy→ShadowLogger 链产生 **48 条 runtime-native records**。与已有 49 historical seed 合并后得到 `evals/results/v2_combined_decisions.jsonl`：**97 records / 36 tasks**，duplicate=0、cross-split cluster=0、cross-split commit=0、errors=0，仍 `ready_for_replay=false`（<200）。这是第一次研究 dataset 从 49 实质增长到 97；模型调用=0，sealed E1-B TEST 未打开/调用。联合回归 **63 passed / 4 warnings**。
-
-**V2-1 non-Gold observable collection（零模型调用）**：新增 `evals/v2_observable_registry.py`，query seed 只允许来自用户可见 `problem_statement` 与 setup/test source 的 AST 可观察函数/类名，不读取 `gold_symbols/gold_files/gold_context`。在排除 TEST clusters 后，20 个 research_v0 中得到 10 个满足 observable-query 条件的 train/dev tasks，经真实 runtime 链生成 **30 条 non-Gold-seeded runtime-native records**。与前两批合并后 `v2_combined_decisions.jsonl` 达到 **127 records / 46 task ids**；duplicate=0、cross-split cluster=0、cross-split commit=0、errors=0，仍低于 200 gate。注意其中 task ids 使用不同 collection namespace，因此 46 是 decision-trajectory ids，不应表述为 46 个独立原始 benchmark problems。联合回归 **65 passed / 4 warnings**；模型调用=0，sealed TEST=0。
-
-**V2-1 200-record gate reached + first dataset freeze（零模型调用）**：新增 `evals/v2_diverse_registry.py`，仅从 runtime 可观察的文件名与 AST function/class names 构造最多 3 个 retrieval views/task，不读取 Gold 字段，且继续排除 sealed TEST clusters。得到 47 trajectory cases → **94 runtime-native records**。四来源合并后的 `evals/results/v2_combined_decisions.jsonl` 达到 **221 records / 93 trajectory ids**，duplicate=0、cross-split cluster=0、cross-split commit=0、errors=0，首次满足 >=200 generic replay gate。已生成 `v2_combined_distribution.json`，并由 fail-closed `v2_freeze.py` 成功产出 `v2_frozen_manifest.json` + `v2_frozen_distribution.json`，manifest 验证 records=221 / ready_for_replay=true。重要边界：这只是 schema/sample/provenance 层面的 generic replay-ready；当前 historical seed 使用 derived uniform propensity，runtime shadow 也使用 uniform plumbing propensity，因此**不能据此宣称 IPS/off-policy causal evaluation ready，也不能宣称 93 个独立 benchmark problems**。联合回归 **67 passed / 4 warnings**；模型调用=0，sealed TEST=0。
-
-**V2-1 replay eligibility semantics freeze（零模型调用）**：新增 `evals/v2_replay_gate.py`，正式拆分 `schema_ready / sample_ready / generic_replay_ready / supervised_replay_ready / ips_ready`，并引入 source provenance：`data_origin`、`propensity_semantics`、`behavior_policy_id`。规则 fail-closed：只有 `empirical_logged + logged_behavior + 非空 behavior_policy_id` 的所有来源且 generic gate 通过时才允许 `ips_ready=true`；derived_uniform、plumbing_uniform、缺失 policy id 均明确阻断 IPS。已将 221-record frozen manifest 重写为带 eligibility/provenance 的版本：schema=true、sample=true、generic=true、supervised=true、**ips=false**。因此此前 generic replay-ready 不再可能被误读为 off-policy causal readiness。联合回归 **71 passed / 4 warnings**；模型调用=0，sealed TEST=0。
-
-**V2-2 supervised offline policy baseline（零模型调用）**：新增 `evals/v2_supervised_policy.py`，以 frozen 221-record dataset 建立第一个 train-only behavior-cloning baseline。模型仅从 train split 学习 action frequency / step-conditioned frequency，不读取 dev 标签训练；输出 `v2_supervised_frequency_model.json` 与 `v2_supervised_replay.json`。实际 train=153 records / 66 trajectory ids；dev=56 records / 23 trajectory ids。step-conditioned frequency policy 在 dev chosen-action agreement 为 **0.7500**，固定 action-order baseline 为 **0.7321**。该 +1.79pp 仅是 behavior-cloning agreement 的描述性结果，**不是 policy-value improvement、IPS、因果收益或 Autonomous Repair Rate**；当前模型也只是 sanity baseline，不作为 V2 最终算法。联合回归 **73 passed / 4 warnings**；模型 API 调用=0，sealed TEST=0。
-
-**V2-2 contextual action ranker baseline（零模型调用）**：新增 `evals/v2_contextual_policy.py`，以 train-only 的 step/actions_tried/artifact_files/artifact_symbols/tokens_spent/cost_spent 六维 runtime state 建立标准化 action-centroid ranker；仅在当前 candidate set 内选择最近 action centroid。frozen dataset 上 train=153 records，dev=56。Dev behavior agreement = **0.9286**。新增 `v2_contextual_compare.py` 做逐记录 paired comparison：frequency baseline=0.7500，contextual=0.9286，差值 **+17.86pp**；42 条两者都对、0 条仅 frequency 对、10 条仅 contextual 对、4 条两者都错。结果写入 `v2_contextual_centroid_model.json`、`v2_contextual_replay.json`、`v2_contextual_vs_frequency.json`。边界：这是同一 frozen dev trajectories 上的 behavior-cloning agreement，不是 causal policy value、IPS 或 repair-rate improvement；且当前数据有多 trajectory/同原始 problem 结构，后续必须做 source-problem-grouped robustness split 才能判断泛化。联合回归 **76 passed / 4 warnings**；模型 API=0，sealed TEST=0。
-
-**V2-2 source-problem grouped robustness + bootstrap（零模型调用）**：新增 `v2_grouped_robustness.py`，将 `research__/v2rt__/v2obs__/v2divN__` trajectory aliases 还原为原始 source problem ID，并 fail-closed 检查跨 split 泄漏。当前 221 records / 93 trajectory ids 实际对应 **36 source problems**，cross-split source problems=0；Dev 为 56 records / **8 source problems**，因此 grouped audit 有效。paired 结果仍为 frequency=0.7500、contextual=0.9286、+17.86pp（42 both / 0 frequency-only / 10 contextual-only / 4 neither）。另新增 `v2_group_bootstrap.py`，按 train source-problem group 做 5 个固定 seed bootstrap：contextual-vs-frequency delta 分别 +12.50/+17.86/+12.50/+12.50/+17.86pp，5/5 方向一致。边界：这是 source-group leakage audit 与 behavior-cloning 稳定性证据；Dev 仅 8 个独立 source problems，仍不足以宣称广泛泛化，更不是 policy value/IPS/repair-rate。联合回归 **80 passed / 4 warnings**；模型 API=0，sealed TEST=0。
-
-**V2-2 feature ablation + source-ID normalization correction（零模型调用）**：新增 `v2_feature_ablation.py`。Dev behavior agreement：full=0.9286；step_only=0.8571；no_step=0.8571；evidence_only=0.8571；budget_only=0.8571；no_evidence=0.8750。相对 full 分别下降 7.15/7.15/7.15/7.15/5.36pp，说明 full state 在当前数据上优于这些单组/删组版本，但因特征高度相关与独立 problem 很少，不能作因果 feature attribution。新增 per-problem ablation。过程中发现 source namespace 可嵌套（如 `v2obs__research__...`），原 normalization 只剥一层，会把独立 source problem 数从真实 20 错计为 36；已改为迭代剥离并加回归测试。修正后：**93 trajectories = 20 original source problems**，Dev=**4 original source problems**，cross-split leakage=0；paired aggregate accuracy 仍 0.7500 vs 0.9286。修正后的 5-seed group bootstrap delta 为 +14.29/+17.86/+17.86/+17.86/+17.86pp，5/5 方向一致，但因 Dev 只有 4 独立 problems，泛化证据比此前认为的更弱，文档必须按修正数字解释。联合回归 **82 passed / 4 warnings**；模型 API=0，sealed TEST=0。
-
-**V2-2 leave-one-source-problem-out CV（零模型调用）**：在不新增 benchmark、不打开 sealed TEST 的前提下，新增 `v2_logo_cv.py`，对现有 train+dev 的 **16 个可用 original source problems** 做 leave-one-group-out cross-validation：每折完整留出一个 source problem，其所有 trajectory 均不参与该折训练。16/16 folds 中 contextual agreement 均高于 frequency baseline；按 record 加权 frequency=0.7751、contextual=0.9235。新增 `v2_logo_summary.py`：fold delta min=+9.09pp、median=+14.29pp、mean=+14.51pp、max=+20.00pp；positive/tied/negative=16/0/0。该结果比固定 4-problem Dev 更充分利用现有独立 problem，但仍是同一 20-problem benchmark family 上的 supervised behavior-cloning cross-validation，不是外部泛化、IPS、policy value 或 repair-rate 证据。联合回归 **84 passed / 4 warnings**；模型 API=0，sealed TEST=0。
-
-**V2-3 contextual runtime shadow integration（零模型调用）**：新增 `v2_runtime_shadow_policy.py` 与 `v2_runtime_shadow_collect.py`，将 frozen contextual centroid model 接入真实 `EvidenceController` 的 decision_logger 路径，但保持 **shadow-only**：V1 EvidencePolicy 仍决定并执行 action，V2 只在同一 before-state/candidate set 上给出预测，不改变执行。Shadow candidate 先经过 ACTION_COST/ACTION_RISK + remaining actions/cost/risk fail-closed 过滤，并保留 stop。对现有 non-Gold observable runtime cases 实跑：**30 decisions，20 与实际 V1 action 一致，runtime shadow agreement=0.6667**。这明显低于离线 frozen dev 的 0.9286，暴露出 offline feature schema 与真实 runtime state 映射存在 distribution/schema gap（例如 artifact_symbols/tokens_spent 当前 runtime shadow 无直接字段，映射为 0；artifact_files 暂以 unique_evidence proxy）。因此暂不允许 V2 控制实际 action，下一步应优先做 feature-contract 对齐，而不是宣称 runtime 提升。新增 safety/non-interference tests；定向回归 **26 passed**。模型 API=0，sealed TEST=0。
-
-**V2-3 unified EvidenceStateFeatures contract + shadow-gap diagnosis（零模型调用）**：新增 `v2_feature_contract.py`，冻结 runtime-compatible 六维 contract：step/actions_tried/evidence_items/total_cost/total_risk/mean_redundancy；`from_policy_state` 与 `from_decision_record` 共用同一 extractor，避免部署时临时拼 proxy。新增 `v2_contract_policy.py`，用该 contract 重训 centroid：train=153，frozen dev agreement=**0.8750**（低于旧 schema 的 0.9286，说明旧 offline 特征确有额外信息/representation advantage）。runtime shadow 已切到同一 contract；observable runtime 仍为 **20/30=0.6667** agreement，故 schema 统一本身没有消除 gap。新增 `v2_shadow_gap.py` 后定位到非常集中：30 decisions 中 10 个 step0 lexical->lexical 一致、10 个最终 stop->stop 一致，**全部 10 个 disagreement 都发生在 step=1，且全部是 V1 lexical -> V2 stop**。这把问题从笼统 distribution drift 收敛成“second-step stop calibration / sequential-state mismatch”。注意 executed V1 action 不是最优 ground truth，因此不能把这些 disagreement 直接算 V2 错误。定向回归 **25 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Evidence-Sufficiency / Stop-vs-Continue diagnostic（零模型调用）**：新增 `v2_stop_continue_eval.py`，针对 runtime shadow 中全部 V2=stop / V1=continue 的分歧，利用真实已执行 V1 continuation 的 next-state 计算“继续检索实际带来的边际证据与成本”。10/10 disagreement cases 中，第二次 lexical **新增 unique evidence=0**；合计额外 cost=11.0、risk=3.0。新增 `v2_evidence_sufficiency.py`：其中 9/10 continuation 同时使 mean redundancy 上升，标记为 `redundant_continue`；1/10 为 `zero_unique_gain`（无新 unique evidence 且 redundancy 未增加）。这是当前第一个直接支持 adaptive stopping 研究方向的 runtime evidence：V2 恰好在这些 observed continuation 没有增加 unique evidence 的位置建议 stop。但必须严格保留边界：我们观察到了 V1 continuation 的 marginal evidence/cost，却没有实际执行 V2 early-stop 后的 downstream patch/test outcome，因此这**不是因果反事实**，也不能证明 stop 不损害任务成功。定向回归 **22 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Safe Early-Stop Replay + fail-closed control gate（零模型调用）**：新增 `v2_early_stop_replay.py`，在同一 10 个 non-Gold observable deterministic cases 上真正分叉两条 evidence trajectory：baseline 继续由 V1 EvidencePolicy 执行；experimental branch 允许 contextual policy 在安全 candidate mask 后提前 stop。修正 replay policy 的 EvidencePolicy.choose 签名并对齐 shadow candidate safety 后，结果为：**10 tasks 共减少 10 次 retrieval action，unique evidence 总数差=0，cost -11.0，risk -3.0**。即在这批 deterministic evidence trajectories 中，V2 early-stop 删除的正是上一轮识别出的 10 次 zero-unique-gain continuation，且没有减少 ledger 的 unique evidence count。新增 `v2_early_stop_gate.py`，即使 replay 全部通过仍明确 `eligible_for_control=false`：因为尚无 editor/patch/test downstream outcome，unique-evidence count 相等也不证明 evidence 内容充分或修复成功不受影响。因此 runtime 继续 shadow-only，fail closed。定向回归 **24 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Downstream Preservation：Constrained Oracle Editor（零模型调用）**：扩展 early-stop replay 保存实际 evidence payload，并新增 `v2_downstream_oracle.py`。对同一 10 个 non-Gold observable tasks，将 V1 与 V2 early-stop 两条 evidence set 分别交给 constrained Oracle Editor：Oracle 只能修改其 evidence 中已经出现的 gold source file，再运行原 FAIL_TO_PASS/PASS_TO_PASS grader。结果：V1 resolved=**4/10**，V2 early-stop resolved=**4/10**，逐任务 outcome preservation=**10/10**。结合前一步，V2 分支减少 10 retrieval actions、cost -11、risk -3、unique evidence delta=0，同时没有改变该 Oracle editability upper-bound 的 task outcome。新增 `v2_control_readiness.py` 后仍 fail-closed：`eligible_for_autonomous_control=false`。原因：4/10 本身说明现有 observable lexical evidence 对 6 tasks 连 Oracle 都不足；而 10/10 preservation 仅证明 early-stop 没比 V1 更差，不证明 retrieval 已充分，更不代表 autonomous editor success。剩余 blockers 明确冻结为 non-oracle editor preservation、prospective non-sealed DEV、以及 sealed TEST 前显式 protocol freeze。定向回归 **24 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Coverage Failure Taxonomy + Structural Escalation Probe（零模型调用）**：针对 Oracle downstream 中 6 个 unresolved cases 新增 `v2_coverage_failure.py`。诊断结果：**5/6 = target_file_missed_despite_visible_symbol**（runtime-visible Python/test 内容中已出现 gold symbol，但 lexical query 仍只命中测试文件、漏掉目标源码）；**1/6 = empty_retrieval**。Gold 仅用于 retrospective scoring，不进入 runtime state。随后新增 `v2_structural_escalation_probe.py`：仅从 runtime-visible files 的 AST Call 节点抽取 symbol seed，再用现有 CodeGraphAdapter.neighbors 做 bounded structural probe；对全部 10 observable tasks 的 gold source coverage=10/10，而在前述 6 个 unresolved tasks 上 **6/6 命中缺失 gold source，retrospective coverage recovery=100%**。新增 `v2_coverage_escalation_summary.py`，形成候选 runtime 规则：lexical 后若缺少 target-bearing source evidence 且存在 runtime-visible call symbols，则在 stop 前考虑 bounded structural neighbors。严格边界：这是 retrospective coverage probe，不是 downstream repair improvement，也未授权 V2 runtime control；下一步需把 structural escalation 真正放进 deterministic branch replay + Oracle downstream 再验证成本/覆盖/结果。定向回归 **27 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Adaptive Stop-or-Structural-Escalate deterministic branch（零模型调用）**：新增 `v2_adaptive_replay.py`，首次把 runtime-observable sufficiency rule 与 structural escalation 真正合并进一条可执行 evidence branch：先执行原 observable lexical；若 ledger 已含非 test source evidence 则 stop，否则仅从 runtime-visible Python AST Call 抽 symbol，并通过 CodeGraphAdapter.neighbors 加 structural evidence。该 branch 不使用 Gold 做决策。10 tasks 结果：**3 direct stops + 7 structural escalations = 17 actions**，aggregate cost=17.3、risk=3.7。新增 `v2_adaptive_downstream.py` 后把 adaptive evidence 交给同一 constrained Oracle Editor + 原 F2P/P2P grader：**10/10 resolved**，相比原 V1 evidence branch **4/10 resolved，+6 tasks**。新增 `v2_adaptive_compare.py` 固化比较。关键解释：此前 pure early-stop branch 10 actions/cost11/risk3、Oracle 4/10；adaptive branch 为修复 coverage 主动多花 7 structural actions，换来 Oracle editability 4/10→10/10；因此算法已体现“足够则停，不足则升级 modality”，而不是单向追求最少读取。严格边界：10/10 是 constrained Oracle editability upper bound，不是 Autonomous Repair Rate，也不授权 runtime control；下一步需要做与 V1 的成本-覆盖 Pareto 表、逐任务 action trace audit，并验证 structural evidence 是否包含过宽/噪声上下文。定向回归 **25 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Cost–Coverage Pareto + Structural Noise Audit（零模型调用）**：新增 `v2_pareto_audit.py` 统一比较 10-task deterministic evidence policies：V1 repeat-lexical=20 actions/cost22.0/risk6.0/Oracle4；pure early-stop=10/11.0/3.0/Oracle4；adaptive stop-or-structural=17/17.3/3.7/Oracle10。描述性 Pareto frontier 为 pure early-stop 与 adaptive；V1 repeat-lexical 被支配（成本/风险更高且 Oracle coverage 不增）。注意 Oracle resolved 仍只是 editability upper bound。新增 `v2_structural_noise_audit.py` 后发现 adaptive 的 7 次 structural escalation 共返回 **77 structural items，但仅12项位于 gold target path，micro target precision=15.58%；仅10项为 non-test source evidence，micro source precision=12.99%**，虽然 7/7 escalation 都至少命中 target。说明 coverage 很强但 context 明显过宽。随后新增 runtime-only `v2_structural_filter.py`（按 path/relation metadata 去掉 test caller 等噪声），77→**10 items，减少87.01%**；但 retrospective Gold coverage audit 显示只保持 **6/7** escalation target hit，因此当前 filter 过激，不能接入 runtime。下一步应定位这 1 个 lost-coverage case，设计 bounded relevance filter（优先 definition/import + 与 lexical/test target symbol 关联），目标是在 7/7 coverage 下显著降低 77-item context。定向回归 **27 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Structural Filter V3：84.42% noise reduction with 7/7 coverage（零模型调用）**：定位 V1 filter 丢失的唯一 case 为 `test-command-guard-01`。根因不是 caller relation 本身，而是粗糙的 `Path.name.startswith('test_')` 将真实源码 `src/agents/test_tools.py` 错判为测试文件，属于 path-classification false positive。V2 保留 non-test caller 仍因同一判定失败；因此新增 `v2_structural_filter_v3.py`，采用 path-aware test classification：仅 `tests/`、`test_research__*`、`*_test.py` 视为 test，避免把源码模块 `test_tools.py` 当测试。结果 structural evidence **77→12，减少65项/84.42%**，retrospective target coverage 恢复 **7/7**。新增 `v2_filtered_downstream.py`，将 runtime-only V3 filtered evidence 交给同一 constrained Oracle Editor，结果仍 **10/10 resolved**，即在当前 10-task deterministic sample 上，结构上下文压缩84.42%后保持 Oracle editability upper bound。注意这不是 autonomous repair/context-token reduction 的直接证明：当前 item count 不等于真实 LLM token count，且 Gold 只用于 retrospective coverage scoring。V1/V2 filter 保留为失败消融，V3 当前是候选 filter，但尚未授权生产 runtime control。定向回归 **28 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Evidence Budget Compression Audit（零模型调用）**：在 Structural Filter V3 基础上新增 `v2_evidence_budget_audit.py`，除 item count 外测量 structural evidence 的真实字符量与 deterministic regex token proxy。聚合结果：原始 structural evidence **77 items / 1310 chars / 402 proxy tokens**；V3 filter 后 **12 / 226 / 74**；对应减少 **84.42% items、82.75% chars、81.59% proxy tokens**。注意 proxy tokens 明确不是 provider/model tokenizer，不能写成实际 prompt-token reduction。新增 `v2_compression_preservation.py` 将压缩、retrospective target coverage 与 constrained Oracle downstream 联合审计：7/7 structural escalation 保持 target coverage，10/10 tasks 保持 Oracle resolved。新增 `v2_compression_robustness.py` 做逐任务检查：7 个 escalation 的 proxy-token reduction 全为正，**min 77.97%、median 80.70%、max 89.80%**，说明 81.59% aggregate reduction 不是由单一任务主导。当前可严谨表述为：在 10-task deterministic sample 中，runtime-only path-aware structural filter 将 structural evidence proxy-token volume 降低81.59%，同时保持 retrospective 7/7 target coverage 与 constrained Oracle 10/10 editability；不能外推为 autonomous repair 或真实模型 token/cost improvement。定向回归 **27 passed**；模型 API=0，sealed TEST=0。
-
-**2026-09-18 Related-work correction — MSS-Complement (2026 preprint; permanent identifier unverified)**：2026-09-17 新工作 *The Missing Complement: State-Conditioned Minimal Sufficient Evidence for Coding Agents* 已进入直接相关工作。新增 [RELATED_WORK_MSS_COMPLEMENT.md](./research/RELATED_WORK_MSS_COMPLEMENT.md)，立即撤回/禁止“首次提出 Coding Agent Evidence Sufficiency / Minimal Sufficient Evidence”类 novelty claim。公共摘要显示其核心是 state-conditioned jointly sufficient evidence-set recovery，SERBench=500 held-out states/45 repos；因此本项目收敛为互补问题：**Evidence-Sufficiency-Aware Adaptive Retrieval Control**——给定 evolving evidence state，显式决定 STOP 或继续 acquisition，并在不足时切换 lexical/structural/files/semantic modality，同时纳入 cost/risk/redundancy 与 CodeGraph structural escalation。文档已列 RED/YELLOW/GREEN claim 边界、SERBench compatibility / runtime acquisition control / complementarity 三轨对比协议，并要求完整论文+代码审计后才对“论文是否包含 explicit stop/modality switching”等作负面判断。新增 `v2_marginal_evidence_utility.py` 作为 offline-only MEU diagnostic，17 个现有 adaptive actions 均可生成无 Gold 的 unique-gain/cost/risk 诊断；token term 因 action summary 尚无 per-action token accounting 而**主动禁用**，不得伪造，也不得驱动 runtime control。定向回归 **23 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 Per-action Evidence Budget + token-aware MEU diagnostic（零模型调用）**：为回应 MSS-Complement 的 compact sufficient evidence 相关工作，并把本项目的 acquisition-control 差异做成可测量对象，新增 `v2_per_action_evidence_budget.py`：对现有 17 个 adaptive actions 逐 action 记录 raw/retained evidence items、chars、deterministic regex proxy tokens；structural 的 retained volume 使用 runtime-only Filter V3。随后新增 `v2_meu_token_aware.py`，在 offline diagnostic 中首次加入 per-action retained proxy-token term，冻结诊断权重 alpha_proxy_token=0.01、beta_cost=1、gamma_risk=1。结果：10 lexical actions mean MEU=**1.0749**（min0,max2.2831）；7 structural actions mean=**9.9446**（min9.5238,max10.7143），7/7 structural diagnostic MEU>0。该差异仅是当前 deterministic sample + 任意冻结诊断权重下的描述性信号，不能称 structural 最优/优于 MSS，也不能驱动 runtime policy。特别注意当前 numerator 是 runtime-observable unique evidence gain，不是 Gold useful-evidence gain，因此它测的是 acquisition efficiency proxy，不是 complete-set sufficiency。MSS-Complement（2026 preprint；permanent identifier unverified）公开摘要仍报告 SERBench 500 states/45 repos 与 set-level complete recovery；本项目必须继续以 STOP/modality-switching/cost-risk control 为互补问题。定向回归 **23 passed**；模型 API=0，sealed TEST=0。
-
-**V2-3 MEU sensitivity + weight-free efficiency（复用现有 MEU，不重复造轮子）**：本轮没有再造新的 controller/retriever/tokenizer，而是直接复用 `v2_meu_token_aware.calc` 与 `v2_per_action_evidence_budget.json` 做稳健性审计。新增 `v2_meu_sensitivity.py` 仅负责参数网格：alpha_proxy_token∈{0,.001,.01,.1,1}，beta_cost/gamma_risk∈{.25,1,4}，共 **45** 个诊断权重点；当前 10-task deterministic sample 中 structural mean MEU 在 **45/45** 点均高于 lexical mean MEU。为避免“人为加权公式”本身成为新轮子，又新增最小 `v2_weight_free_efficiency.py`，直接报告三个无组合权重比率：lexical vs structural 的 unique-gain/100 proxy tokens = **4.70 vs 112.09**；unique-gain/cost = **2.00 vs 12.22**；unique-gain/risk = **7.33 vs 110.00**。这些 numerator 仍只是 runtime-observable unique evidence，不是 Gold useful evidence，且 structural 只在 controller 判定不足的7个 case上出现，因此不能做随机化/因果 modality superiority claim；它们只说明当前 escalation sample 中信号不依赖单一 MEU 权重。第一次回归命令误引用不存在的 `tests/test_v2_per_action_evidence_budget.py`，pytest status4/no tests ran；修正测试清单后 **22 passed**。模型 API=0，sealed TEST=0。下一步优先做 matched-state/matched-budget comparison 或接 SERBench，而不是继续发明指标。
-
-**V2-3 Matched-state / matched-budget retrieval comparison（零模型调用）**：停止继续发明指标，直接复用现有 `WorkspaceRetrievalAdapter`、`CodeGraphAdapter`、`visible_symbols` 与 Filter V3，新增 `v2_matched_retrieval.py` 做同一 initial runtime-visible state、每 arm **2 retrieval actions** 的 offline comparison：repeat lexical×2 vs structural traversal×2。随后 `v2_matched_retrieval_audit.py` 只在检索结束后用 Gold 做 retrospective scoring。10 tasks 结果：lexical target-path hit **4/10**，V3-retained structural **10/10**；retained evidence proxy tokens **521 vs 130**；lexical unique evidence **22**，structural retained unique **20**。再用同一 constrained Oracle grader 做 matched downstream：lexical **4/10 resolved**，structural **10/10 resolved**。这比此前 controller-selected 7-case efficiency comparison更少一个 selection confound，因为两种 modality 都从相同 initial state、相同 action count执行；但仍不是 randomized causal trial，structural query semantics 与 lexical query semantics 不同，也不能外推为 structural 普遍优越或优于 MSS-Complement。该结果支持下一步将重点放在 external/independent benchmark（优先 SERBench compatibility）而不是继续造本地指标。定向回归 **22 passed**；模型 API=0，sealed TEST=0。
-
-**V2-4 External sufficient-evidence benchmark compatibility seam（reuse-first，零模型调用）**：本轮不继续扩内部10-task指标，也不复制外部 benchmark。新增 `evals/external_sufficiency_compat.py`，只定义最薄 external-state export contract（external_state_id/repository/state_text/candidate_evidence + retrospective required_evidence_groups），并 fail-closed 校验；新增 1 条 synthetic fixture 验证 adapter。新增 `external_complete_set_recovery.py` 仅作为 fixture/compatibility fallback metric，并明确：若 SERBench/upstream 提供官方 evaluator，**官方 evaluator 必须作为 authoritative implementation，禁止重复造轮子**。新增 `EXTERNAL_SUFFICIENCY_BENCHMARK_INTEGRATION.md` 固化 reuse-first 原则、license/commit/schema/candidate construction/Gold/token-budget/evaluator audit checklist，以及 first-real-experiment protocol。当前状态只能写 **integration-ready**，不能写 SERBench-evaluated，更不能与 MSS-Complement 数值比较。特别禁止把 external required-evidence labels 转成 V2 chosen_action behavior-policy data，两者 supervision object 不同。fixture compatibility report ready=true；定向回归 **23 passed**；模型 API=0，sealed TEST=0。下一步应审计 upstream SERBench repo/official evaluator，然后适配官方接口，而不是在本仓库重新实现 SERBench。
-
-**V2-4 SERBench upstream audit + official-contract adapter（零模型调用）**：已核对公开 SERBench 仓库，而不是继续猜 schema。重要纠正：上游 README 当前把论文列为 **2026 preprint**，并明确写“permanent preprint identifier when available”；因此此前文档中把 `arXiv:2609.20050` 当已验证永久编号的写法不再可信，后续以论文标题/作者 + SERBench upstream 为准，直到独立验证永久编号。上游公开接口确认：Cal500=500 states/241 issues/174 repos/public certificates；Test500=500/242/45/private certificates，repository-disjoint。官方 inference fields 包括 state_id/instance_id/repo/issue/information_need/current observation-hypothesis-subgoal/opened_files/search_queries/observed_evidence_ids/candidate_evidence；prediction contract 为 state_id+method+ranked_evidence_ids。官方 primary metrics 是 mss_complete@5/@8、group_recall@5/@8、necessity_weighted_recall@5；因此本项目明确禁止扩写 generic fallback scorer 来复刻 SERBench，真实结果必须委托 upstream evaluator。新增 `SERBENCH_UPSTREAM_AUDIT.md` 与薄 `evals/serbench_adapter.py`，只做官方字段映射/预测契约，不复制 evaluator/data。上游代码 MIT，原始 annotations/state-card material 在其定义范围内 CC BY 4.0，而嵌入的 upstream code/issue/source excerpts 保留原权利，所以默认不 vendor 数据。第一真实接入顺序冻结为 upstream 3-state example → Cal500 → 方法冻结后才 Test500；Test500 certificates 不访问。定向回归 **25 passed**；模型 API=0；内部 sealed E1-B TEST=0。
-
-**V2-4a official-runner seam（reuse upstream，零模型调用）**：已新增 `evals/serbench_official_runner.py`，目标不是复制 SERBench loader/scorer，而是从单独的 upstream checkout 直接 import `serbench.load_dataset`，生成官方 prediction JSONL。首个 integration method 故意使用官方允许的 empty-ranking abstention，避免为了“跑通”而临时发明 ranking 算法；真实 scorer 仍必须由 upstream CLI/API 执行。由于当前 WebCodex workspace 尚无已审计的 SERBench checkout，本轮没有伪造 example/Cal500 结果，也没有 vendor 数据。新增 runner contract test；与 adapter/external/V2 回归合计 **24 passed**。下一步唯一阻塞是把 upstream SERBench checkout 作为外部依赖提供给 runner，然后先跑官方 3-state example；在此之前 V2-4a 保持未完成。
-
-**V2-4a candidate-pool integration arm + prediction preflight（reuse-first，零模型调用）**：在等待独立 SERBench upstream checkout 时，继续补齐不依赖 benchmark 数据的接口层，而没有伪造官方结果。新增 `serbench_candidate_ranker.py`：只使用 inference-visible issue/information_need/current state + 官方 supplied candidate excerpts 做确定性 lexical ranking，输出既有 `serbench_adapter.prediction` 契约；它是 integration/calibration baseline，不是新 retrieval 算法，也不读取 certificate/Gold。新增 `serbench_prediction_preflight.py`：在调用 upstream scorer 前本地 fail-fast 检查 duplicate state/method、duplicate evidence IDs、unknown state、out-of-pool IDs；明确 upstream validator/scorer 仍是 authoritative。定向回归 **24 passed**。当前 V2-4a 的代码路径已具备 upstream loader seam → candidate ranking/abstention → official prediction JSONL → local preflight；剩余阻塞仍是实际 upstream checkout + official 3-state example/scorer execution。模型 API=0，sealed E1-B TEST=0。
-
-**V2-4 external-eval hardening（零模型调用）**：在 upstream checkout 尚未进入当前 workspace 的情况下，只完成不会重复造轮子的外围护栏。新增 `serbench_inference_audit.py`：只审计 inference JSONL 的 state/candidate IDs、candidate count、observed-evidence count 与 stage distribution，明确不接收/检查 certificate/Gold。新增 `serbench_method_freeze.py`：对 Cal500 prediction + official report 做 SHA-256 artifact freeze，并要求显式 verified upstream ref；若 upstream_ref=UNVERIFIED 或 split≠cal500，则 `test500_allowed=false`，防止在 Cal500 方法未冻结时误进 Test500。定向回归 **26 passed**。本轮没有假装已经拿到 SERBench 数据，也没有复制 upstream scorer。模型 API=0，sealed E1-B TEST=0。
-
-**V2-4a upstream dependency resolution / blocker verification（零模型调用）**：本轮实际尝试把 SERBench upstream 拉进当前 WebCodex workspace，而不是继续写假 integration。WebCodex structured runner 拒绝直接启动 `git`/git.exe；随后用 Python HTTPS 访问 upstream raw GitHub，连接在读取阶段 timeout。因此当前环境确实没有可用 upstream checkout，且网络路径不能可靠完成下载。新增最小 `serbench_upstream_resolver.py`，只解析 `--root`、`SERBENCH_ROOT`、`.external/SERBench`、`../SERBench`，要求真实 `serbench/` package + README；当前实测输出 **found=false / ready=false**，并 fail-closed status 2。它不下载、不 vendor、不复制 benchmark。定向回归 **24 passed**。因此 V2-4a 当前阻塞被从“推测缺 upstream”升级为“已执行验证的 external-dependency blocker”；官方 example 仍不能诚实打勾。模型 API=0，E1-B sealed TEST=0。

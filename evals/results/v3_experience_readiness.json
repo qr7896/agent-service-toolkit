@@ -1,0 +1,35 @@
+{
+  "protocol": "v3-experience-readiness-v1",
+  "trajectory_inventory": {
+    "rows": 8,
+    "parse_errors": 0,
+    "statuses": {
+      "completed_read_only": 3,
+      "review_rejected": 3,
+      "succeeded": 2
+    },
+    "compiler_eligible": 5,
+    "with_original_commit_provenance": 0,
+    "with_experience_hits": 6
+  },
+  "experience_inventory": {
+    "rows": 1,
+    "outcomes": {
+      "accepted": 1
+    },
+    "schema_v2_complete_rows": 0,
+    "missing_compiled_rows": 4
+  },
+  "gates": {
+    "inventory_valid": true,
+    "existing_compiler_reusable": true,
+    "schema_v2_ready": false,
+    "temporal_provenance_ready": false,
+    "positive_negative_memory_ready": false,
+    "continual_evaluation_ready": false
+  },
+  "next_gate": "freeze experience schema v2 and capture source commit at trajectory creation",
+  "claim_boundary": "Readiness audit only; no learned policy, causal value, or continual improvement is measured.",
+  "model_api_calls": 0,
+  "sealed_test_opened_or_called": 0
+}

@@ -56,6 +56,9 @@ CREATE INDEX IF NOT EXISTS idx_experiences_outcome ON experiences(outcome);
 
 # 深化用的附加字段都塞进一列 JSON：本地单进程够用，也避免每次加字段都改表结构
 EXTRA_COLUMNS: dict[str, str] = {
+    "schema_version": "str",
+    "source_repo": "str",
+    "event_time": "str",
     "task_signature": "dict[str, str]",
     "reuse_constraints": "dict[str, list[str]]",
     "repo_commit": "str",
@@ -119,7 +122,7 @@ def repo_commit(root: Path | None = None) -> str:
     """记录经验对应的代码版本：代码变了，经验可能就过期了（doc 02 §11）。"""
     try:
         out = subprocess.run(
-            ["git", "-C", str(root or PROJECT_ROOT), "rev-parse", "--short", "HEAD"],
+            ["git", "-C", str(root or PROJECT_ROOT), "rev-parse", "HEAD"],
             capture_output=True,
             text=True,
             timeout=10,
@@ -327,6 +330,10 @@ def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> l
     approvals = [a for a in trajectory.get("approvals") or [] if isinstance(a, dict)]
     approved = next((a.get("approved") for a in approvals if "approved" in a), None)
     task = str(trajectory.get("task") or "")
+    paths = [redact(p) for p in trajectory.get("changed_paths") or []]
+    source_commit = str(trajectory.get("source_commit_at_execution") or "")
+    change_fingerprint = fingerprint(paths, root)
+    baseline_fingerprint = fingerprint(paths, root, rev=source_commit) if source_commit else ""
     sign = 1.0 if outcome == ACCEPTED else -0.5
     action_prior: dict[str, float] = {}
     for item in trajectory.get("evidence_trace") or []:
@@ -348,7 +355,7 @@ def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> l
             failure_type=failure_type,
             effective_steps=steps,
             tools_used=sorted((trajectory.get("tool_call_counts") or {}).keys()),
-            changed_paths=[redact(p) for p in trajectory.get("changed_paths") or []],
+            changed_paths=paths,
             attempts=int(trajectory.get("attempts") or 0),
             test_summary=redact(str(test.get("summary") or ""))[:500],
             review_summary=redact(str(review.get("summary") or ""))[:500],
@@ -365,7 +372,10 @@ def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> l
                     outcome,
                     failure_type,
                 ),
-                "repo_commit": repo_commit(),
+                "schema_version": "v3-experience-v2",
+                "source_repo": str(trajectory.get("source_repo") or ""),
+                "repo_commit": source_commit,
+                "event_time": str(trajectory.get("ended_at") or ""),
                 # 规则式归因（doc 02 §13）：跑通测试且有实际改动才算"这一步likely有效"
                 "likely_effective": (
                     True
@@ -380,21 +390,12 @@ def build_experiences(trajectory: dict[str, Any], root: Path | None = None) -> l
                 "harmful_count": 0,
                 "action_prior": action_prior,
                 # 延迟复评用：改动后的工作区指纹 vs 提交基线指纹
-                "change_fingerprint": fingerprint(
-                    [redact(p) for p in trajectory.get("changed_paths") or []], root
-                ),
-                "baseline_fingerprint": fingerprint(
-                    [redact(p) for p in trajectory.get("changed_paths") or []],
-                    root,
-                    rev=repo_commit(root) or None,
-                ),
-                "applied": fingerprint(
-                    [redact(p) for p in trajectory.get("changed_paths") or []], root
-                )
-                != fingerprint(
-                    [redact(p) for p in trajectory.get("changed_paths") or []],
-                    root,
-                    rev=repo_commit(root) or None,
+                "change_fingerprint": change_fingerprint,
+                "baseline_fingerprint": baseline_fingerprint,
+                "applied": (
+                    change_fingerprint != baseline_fingerprint
+                    if paths and baseline_fingerprint
+                    else None
                 ),
             },
         )
@@ -562,7 +563,7 @@ def survival_of(experience: Experience, root: Path | None = None) -> str:
     paths = list(experience.changed_paths or [])
     change = str(extra.get("change_fingerprint") or "")
     baseline = str(extra.get("baseline_fingerprint") or "")
-    if not paths or not change:
+    if not paths or not change or not baseline:
         return "unknown"
     if extra.get("applied") is False:
         return "not_applied"  # 沙箱里跑完但补丁没落地：不是回退，只是还没应用

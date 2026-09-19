@@ -133,11 +133,16 @@ def build_trajectory(state: Any, config: Any) -> dict[str, Any]:
     if experience_hits:
         evidence_types.add("episodic")
     record = {
+        "schema_version": "v3-trajectory-v1",
         "id": str(uuid4()),
         "started_at": started_at,
         "ended_at": ended_at,
         "duration_seconds": round(duration_seconds, 3),
         "task": _human_task(messages),
+        "source_repo": str(
+            state.get("source_repo") or configurable.get("source_repo") or PROJECT_ROOT.name
+        ),
+        "source_commit_at_execution": str(state.get("source_commit_at_execution") or ""),
         "plan": state.get("plan") or {},
         "tool_calls": calls,
         "tool_call_counts": dict(sorted(counts.items())),

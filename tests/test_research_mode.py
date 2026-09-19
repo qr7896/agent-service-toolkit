@@ -73,11 +73,16 @@ def test_trajectory_has_episode_summary() -> None:
         "experience_hits": [{"trajectory_id": "old-1"}],
         "evidence_cards": [{"target_symbols": ["add"], "related_tests": ["test_add"]}],
         "evidence_trace": [{"filled": "impact"}],
+        "source_repo": "owner/repo",
+        "source_commit_at_execution": "abc123",
     }
     record = build_trajectory(state, {"configurable": {}})
     assert record["experience_ids"] == ["old-1"]
     assert record["evidence_types"] == ["episodic", "impact", "target", "verification"]
     assert record["final_success"] is True
+    assert record["schema_version"] == "v3-trajectory-v1"
+    assert record["source_repo"] == "owner/repo"
+    assert record["source_commit_at_execution"] == "abc123"
 
 
 def test_context_packer_obeys_budget() -> None:

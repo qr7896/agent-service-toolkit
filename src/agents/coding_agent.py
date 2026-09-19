@@ -53,6 +53,7 @@ from agents.experience import (
     record_usage_for_trajectory,
     reevaluate_survival,
     reevaluate_utility,
+    repo_commit,
 )
 from agents.model_router import estimate_tokens, route_model, routing_enabled
 from agents.reviewer import reviewer
@@ -144,6 +145,8 @@ class CodingState(MessagesState):
     model_used: str
     trajectory: dict[str, Any]
     trajectory_started_at: str
+    source_repo: str
+    source_commit_at_execution: str
     attempts: int
     allow_write: bool
 
@@ -251,10 +254,21 @@ def _describe_action(state: CodingState, call: dict[str, Any]) -> dict[str, Any]
 
 async def make_plan(state: CodingState, config: RunnableConfig) -> dict[str, Any]:
     """planner 的包装节点：产出计划，并把本次运行的模式写进 State。"""
+    started_at = state.get("trajectory_started_at") or utc_now()
+    source_repo = state.get("source_repo") or str(
+        _configurable(config).get("source_repo") or PROJECT_ROOT.name
+    )
+    source_commit = (
+        state.get("source_commit_at_execution")
+        or _configurable(config).get("source_commit_at_execution")
+        or repo_commit(PROJECT_ROOT)
+    )
     out = await planner(state, config)
     out["allow_write"] = _allow_write(config)
     out["attempts"] = int(state.get("attempts") or 0)
-    out["trajectory_started_at"] = state.get("trajectory_started_at") or utc_now()
+    out["trajectory_started_at"] = started_at
+    out["source_repo"] = source_repo
+    out["source_commit_at_execution"] = source_commit
     return out
 
 
