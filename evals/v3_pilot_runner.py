@@ -32,6 +32,7 @@ MAX_CALLS_PER_TASK = 4
 MAX_OUTPUT_TOKENS = 600
 TASK_RESERVE = 10_000
 MAX_TOOL_RESULT_CHARS = 8_000
+TOOL_SCHEMA_RESERVE_TOKENS = 3_500
 
 
 @dataclass(frozen=True)
@@ -121,6 +122,7 @@ async def main():
             "provider_max_calls_per_task": spec["max_calls_per_task"],
             "provider_max_output_tokens": spec["max_output_tokens"],
             "provider_max_tool_result_chars": spec["max_tool_result_chars"],
+            "provider_tool_schema_reserve_tokens": spec["tool_schema_reserve_tokens"],
             "provider_min_call_reserve": 1000,
             "provider_disable_thinking": True,
         }
@@ -312,6 +314,7 @@ def _invoke_spec(task: PilotTask, workspace: Path) -> Path:
         "max_calls_per_task": MAX_CALLS_PER_TASK,
         "max_output_tokens": MAX_OUTPUT_TOKENS,
         "max_tool_result_chars": MAX_TOOL_RESULT_CHARS,
+        "tool_schema_reserve_tokens": TOOL_SCHEMA_RESERVE_TOKENS,
     }
     path = workspace / ".codex" / "v3" / "invoke.json"
     _write_json(path, spec)

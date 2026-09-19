@@ -1,0 +1,20 @@
+{
+  "protocol": "v3-prospective-pilot-result-v1",
+  "collection_id": "v3-prospective-001",
+  "model": "deepseek-flash",
+  "sealed_test": false,
+  "status": "stopped_budget_gate",
+  "attempted_tasks": 1,
+  "completed_tasks": 0,
+  "unstarted_tasks": 2,
+  "provider_calls_completed": 3,
+  "provider_input_tokens": 10180,
+  "provider_output_tokens": 634,
+  "provider_total_tokens": 10814,
+  "task_token_ceiling": 10000,
+  "global_token_ceiling": 30000,
+  "patch_produced": false,
+  "prospective_trajectory_finalized": false,
+  "stop_reason": "task_token_ceiling_exceeded_after_atomic_provider_call",
+  "claim_boundary": "Runner-budget feasibility failure only; not a repair outcome or memory-efficacy result."
+}

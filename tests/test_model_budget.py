@@ -117,3 +117,23 @@ async def test_large_tool_result_is_bounded_before_reserve_and_provider_call(tmp
 
     assert len(model.messages[1].content) == 80
     assert "tool output truncated" in model.messages[1].content
+
+
+@pytest.mark.asyncio
+async def test_tool_schema_reserve_blocks_coder_before_call(tmp_path):
+    response = AIMessage(content="unused")
+    response.usage_metadata = {"input_tokens": 1, "output_tokens": 1, "total_tokens": 2}
+    model = Model(response)
+    with pytest.raises(ProviderBudgetExceeded):
+        await budgeted_ainvoke(
+            model,
+            [HumanMessage(content="small")],
+            config(
+                tmp_path / "calls.jsonl",
+                provider_total_token_ceiling=1000,
+                provider_task_token_ceiling=1000,
+                provider_tool_schema_reserve_tokens=3500,
+            ),
+            role="coder",
+        )
+    assert model.messages is None

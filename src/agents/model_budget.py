@@ -153,9 +153,14 @@ async def budgeted_ainvoke(
         messages, int(conf.get("provider_max_tool_result_chars") or 12_000)
     )
     prompt = _prompt_text(bounded_messages)
+    tool_schema_reserve = (
+        int(conf.get("provider_tool_schema_reserve_tokens") or 0)
+        if role in {"coder", "planner_recon"}
+        else 0
+    )
     reserve = max(
         int(conf.get("provider_min_call_reserve") or 0),
-        estimate_tokens(prompt) + max_output,
+        estimate_tokens(prompt) + max_output + tool_schema_reserve,
     )
     global_ceiling = int(conf.get("provider_total_token_ceiling") or 0)
     task_ceiling = int(conf.get("provider_task_token_ceiling") or 0)

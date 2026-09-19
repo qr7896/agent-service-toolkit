@@ -2,7 +2,7 @@
 
 ## Material Passport
 
-- Status: RUNNER READY / LIVE CALLS NOT STARTED
+- Status: PILOT STOPPED AT TASK 1 / BUDGET GATE TRIGGERED
 - Date: 2026-09-19
 - Model/API calls in this planning step: 0
 - Sealed TEST opened/called: 0/0
@@ -57,6 +57,12 @@ The runner now enforces a persistent provider-call ledger, global/task admission
 - A timeout or connection loss without an authoritative provider outcome is recorded as `ambiguous`. The runner stops and will not automatically retry because the first call might have been charged.
 - Completed tasks are skipped on rerun. An interrupted task is resumed in place; no new cohort or task ID is created.
 - Provider ledger, checkpoint, task workspace, patch, grader output, and trajectory are persisted under `.codex/v3/pilot/`.
+
+## Execution outcome
+
+The first task made three completed provider calls (planner + two coder calls): 10,180 input tokens, 634 output tokens, **10,814 total tokens**. It produced no patch before the next call was denied. The initial coder requested a broad search whose tool result was 278,293 characters; the runner was amended to bound tool results before sending them back to the provider. A later call exposed a second accounting gap: tool schemas are billed as input but were absent from the local message-only estimate. A fixed 3,500-token schema reserve now applies to tool-bound calls.
+
+Per the predeclared stop rule, the pilot stopped because task 1 exceeded the 10,000-token task ceiling. Tasks 2 and 3 were not started. This is a runner-budget feasibility failure, not a repair success/failure result and not evidence about memory efficacy. Sealed TEST remains untouched.
 
 ## Sources
 
