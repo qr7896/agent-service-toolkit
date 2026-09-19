@@ -103,3 +103,5 @@ E1 非模型实验已重跑：`test_e1_smoke.py` 3/3；20 条原始任务完整�
 ## 2026-09-19 — V3 mechanism freeze 与 prospective gate
 
 V3-0~V3-6 已完成 schema v2、execution-time provenance、strict-past replay、reliability/lifecycle、四臂 matched ablation、negative/counterfactual readiness、collection gate 与 artifact audit，并冻结机制。focused V3 regression 为 38 passed / 0 failed / 4 dependency warnings。桌面 Git checkout 的只读 preflight 返回 `ready_to_collect=true`、`blockers=[]`；尚未创建 cohort marker，尚未产生 prospective rows，模型 API 调用=0，sealed TEST 打开/调用=0/0。后续流水只在本归档和 `RESULTS_V3.md` 记录，不再追加到 Roadmap。
+
+**V3 non-sealed pilot 任务/模型/预算提案**：首轮推荐 3 条按时间排序的本仓库 commit-replay development tasks（`9ffa8ad` → `a1f4f78` → `54242a0`），其 commit ID 未进入现有 task/result/trajectory artifacts。模型冻结候选改为官方 DeepSeek API 的规范 ID `deepseek-flash`（当前实际服务 V4.1 Flash），不用已退役且会被转发的 `deepseek-v4-flash` 作为冻结 ID；thinking disabled，3 tasks / 30,000 provider-token ceiling / 10,000 reserve per task / max 4 calls per task / 600 output tokens per call。runner 限额与 hidden grader 完成前不创建 cohort。本次模型 API=0，sealed TEST=0/0。

@@ -39,9 +39,9 @@
 6. 运行 collection status；数据达到冻结门槛后，先补齐可验证来源的 real artifact 生成入口，再运行 frozen evaluation 与默认 real-only artifact audit。
 7. 只在获得 paired prospective evidence 后分析 success、attempts、reads、tool calls、proxy/provider tokens 与 stale-memory harm。
 
-## 当前需要用户决定的唯一事项
+## 当前已提议的 pilot
 
-选择 prospective runner、模型和总预算。没有明确预算前，不发起任何真实/付费模型调用，也不提前创建 cohort marker。
+详见 `V3_PROSPECTIVE_PILOT_PLAN.md`：首轮拟用 3 条本仓库未进入现有评测的 chronological commit-replay development tasks，官方 DeepSeek API `deepseek-flash`（V4.1 Flash），thinking disabled，总上限 30,000 provider tokens。当前 runner 尚未实施全部 fail-closed 限额，因此仍不发起真实调用、不创建 cohort marker。
 
 ## 禁止事项
 
