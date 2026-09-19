@@ -11,7 +11,9 @@ from schema.models import OpenAIModelName
 
 def test_app_simple_non_streaming(mock_agent_client):
     """Test the full app - happy path"""
-    at = AppTest.from_file("../../src/streamlit_app.py").run()
+    # A cold Streamlit AppTest start takes ~4.7s on Windows in this environment;
+    # use an explicit integration-test deadline instead of Streamlit's 3s default.
+    at = AppTest.from_file("../../src/streamlit_app.py").run(timeout=8)
 
     WELCOME_START = "Hello! I'm an AI agent. Ask me anything!"
     PROMPT = "Know any jokes?"

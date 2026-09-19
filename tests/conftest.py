@@ -25,5 +25,7 @@ def pytest_collection_modifyitems(config, items):
 @pytest.fixture
 def mock_env():
     """Fixture to ensure environment is clean for each test."""
-    with patch.dict(os.environ, {}, clear=True):
+    # Preserve the user-home variables needed by pathlib/Streamlit on Windows.
+    home_env = {key: os.environ[key] for key in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH") if key in os.environ}
+    with patch.dict(os.environ, home_env, clear=True):
         yield
