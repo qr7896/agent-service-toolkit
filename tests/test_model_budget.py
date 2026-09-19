@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 
 from agents.model_budget import (
     AmbiguousProviderCall,
@@ -14,11 +14,13 @@ class Model:
     def __init__(self, response=None, error=None):
         self.response = response
         self.error = error
+        self.messages = None
 
     def bind(self, **_kwargs):
         return self
 
-    async def ainvoke(self, _messages):
+    async def ainvoke(self, messages):
+        self.messages = messages
         if self.error:
             raise self.error
         return self.response
@@ -90,3 +92,28 @@ async def test_known_payment_failure_can_resume_after_top_up(tmp_path):
 
     rows = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()]
     assert [row["status"] for row in rows] == ["started", "failed", "started", "completed"]
+
+
+@pytest.mark.asyncio
+async def test_large_tool_result_is_bounded_before_reserve_and_provider_call(tmp_path):
+    response = AIMessage(content="ok")
+    response.usage_metadata = {"input_tokens": 20, "output_tokens": 2, "total_tokens": 22}
+    model = Model(response)
+    messages = [
+        HumanMessage(content="small"),
+        ToolMessage(content="x" * 10_000, tool_call_id="tool-1"),
+    ]
+    await budgeted_ainvoke(
+        model,
+        messages,
+        config(
+            tmp_path / "calls.jsonl",
+            provider_total_token_ceiling=1000,
+            provider_task_token_ceiling=1000,
+            provider_max_tool_result_chars=80,
+        ),
+        role="coder",
+    )
+
+    assert len(model.messages[1].content) == 80
+    assert "tool output truncated" in model.messages[1].content

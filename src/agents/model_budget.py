@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
+from langchain_core.messages import ToolMessage
+
 from agents.model_router import estimate_tokens
 from agents.trajectory import utc_now
 
@@ -76,6 +78,27 @@ def _prompt_text(messages: list[Any]) -> str:
     )
 
 
+def _bounded_messages(messages: list[Any], max_tool_result_chars: int) -> list[Any]:
+    bounded = []
+    for message in messages:
+        content = getattr(message, "content", "")
+        if (
+            isinstance(message, ToolMessage)
+            and isinstance(content, str)
+            and max_tool_result_chars > 0
+            and len(content) > max_tool_result_chars
+        ):
+            suffix = f"\n...[tool output truncated from {len(content)} chars]"
+            bounded.append(
+                message.model_copy(
+                    update={"content": content[: max_tool_result_chars - len(suffix)] + suffix}
+                )
+            )
+        else:
+            bounded.append(message)
+    return bounded
+
+
 def _status_code(exc: Exception) -> int | None:
     value = getattr(exc, "status_code", None)
     if value is None:
@@ -126,7 +149,10 @@ async def budgeted_ainvoke(
         )
 
     max_output = int(conf.get("provider_max_output_tokens") or 600)
-    prompt = _prompt_text(messages)
+    bounded_messages = _bounded_messages(
+        messages, int(conf.get("provider_max_tool_result_chars") or 12_000)
+    )
+    prompt = _prompt_text(bounded_messages)
     reserve = max(
         int(conf.get("provider_min_call_reserve") or 0),
         estimate_tokens(prompt) + max_output,
@@ -159,7 +185,7 @@ async def budgeted_ainvoke(
     if conf.get("provider_disable_thinking", False):
         bound = bound.bind(extra_body={"thinking": {"type": "disabled"}})
     try:
-        response = await bound.ainvoke(messages)
+        response = await bound.ainvoke(bounded_messages)
     except Exception as exc:
         status_code = _status_code(exc)
         status = "failed" if status_code is not None else "ambiguous"

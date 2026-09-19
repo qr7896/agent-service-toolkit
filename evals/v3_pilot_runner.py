@@ -31,6 +31,7 @@ TASK_TOKEN_CEILING = 10_000
 MAX_CALLS_PER_TASK = 4
 MAX_OUTPUT_TOKENS = 600
 TASK_RESERVE = 10_000
+MAX_TOOL_RESULT_CHARS = 12_000
 
 
 @dataclass(frozen=True)
@@ -119,6 +120,7 @@ async def main():
             "provider_task_token_ceiling": spec["task_token_ceiling"],
             "provider_max_calls_per_task": spec["max_calls_per_task"],
             "provider_max_output_tokens": spec["max_output_tokens"],
+            "provider_max_tool_result_chars": spec["max_tool_result_chars"],
             "provider_min_call_reserve": 1000,
             "provider_disable_thinking": True,
         }
@@ -309,15 +311,38 @@ def _invoke_spec(task: PilotTask, workspace: Path) -> Path:
         "task_token_ceiling": TASK_TOKEN_CEILING,
         "max_calls_per_task": MAX_CALLS_PER_TASK,
         "max_output_tokens": MAX_OUTPUT_TOKENS,
+        "max_tool_result_chars": MAX_TOOL_RESULT_CHARS,
     }
     path = workspace / ".codex" / "v3" / "invoke.json"
     _write_json(path, spec)
     return path
 
 
+def _sync_runtime_guard(workspace: Path) -> None:
+    relative = Path("src/agents/model_budget.py")
+    source = ROOT / relative
+    target = workspace / relative
+    if target.read_bytes() == source.read_bytes():
+        return
+    shutil.copy2(source, target)
+    _git("add", relative.as_posix(), cwd=workspace)
+    _git(
+        "-c",
+        "user.name=v3-pilot",
+        "-c",
+        "user.email=v3-pilot@local",
+        "commit",
+        "-q",
+        "-m",
+        "sync v3 provider guard",
+        cwd=workspace,
+    )
+
+
 def _run_task(task: PilotTask) -> dict[str, Any]:
     workspace = PILOT_DIR / "workspaces" / task.instance_id
     _prepare(workspace, task)
+    _sync_runtime_guard(workspace)
     spec = _invoke_spec(task, workspace)
     env = dict(os.environ)
     env["PYTHONPATH"] = str(workspace / "src")
