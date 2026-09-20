@@ -30,7 +30,6 @@ from schema.models import DeepseekModelName
 
 RUN_ID = "v3-paired-memory-0375-001"
 RUN_DIR = Path(".codex/v3/paired-0375/live-001")
-LEDGER = RUN_DIR / "provider_calls.jsonl"
 EXPERIENCES = Path(".codex/v3/compact-002/experience.db")
 TOTAL_TOKEN_CEILING = 8000
 TASK_TOKEN_CEILING = 4000
@@ -41,9 +40,9 @@ def _task(commit: str):
     return next(task for task in COMPACT_TASKS if task.base_commit == commit)
 
 
-def _memory(experience_ids: list[str]) -> list[dict[str, Any]]:
+def _memory(experience_ids: list[str], experience_db: Path = EXPERIENCES) -> list[dict[str, Any]]:
     rows = []
-    with ExperienceStore(EXPERIENCES) as store:
+    with ExperienceStore(experience_db) as store:
         for trajectory_id in experience_ids:
             exp = store.get(trajectory_id)
             if exp is None:
@@ -81,16 +80,27 @@ def _validate_pair(pair: dict[str, Any]) -> None:
         raise ValueError("matched-pair invariants are not fully declared")
 
 
-async def run_arm(pair: dict[str, Any], arm: dict[str, Any]) -> dict[str, Any]:
+async def run_arm(
+    pair: dict[str, Any],
+    arm: dict[str, Any],
+    *,
+    run_id: str,
+    run_dir: Path,
+    experience_db: Path,
+) -> dict[str, Any]:
     task = _task(pair["source_commit"])
     name = arm["name"]
-    workspace = RUN_DIR / "workspaces" / name
+    workspace = run_dir / "workspaces" / name
     _prepare(workspace, task)
     before = _grade(task, workspace)
     if before["passed"]:
         raise RuntimeError(f"base unexpectedly passes: {name}")
     payload = _payload(task, workspace)
-    memory = _memory(pair["eligible_experience_ids"]) if arm["memory_enabled"] else []
+    memory = (
+        _memory(pair["eligible_experience_ids"], experience_db)
+        if arm["memory_enabled"]
+        else []
+    )
     payload["memory_condition"] = name
     payload["past_experience"] = memory
     messages = [
@@ -99,8 +109,8 @@ async def run_arm(pair: dict[str, Any], arm: dict[str, Any]) -> dict[str, Any]:
     ]
     config = {
         "configurable": {
-            "provider_ledger_path": str(LEDGER),
-            "provider_run_id": RUN_ID,
+            "provider_ledger_path": str(run_dir / "provider_calls.jsonl"),
+            "provider_run_id": run_id,
             "provider_task_id": f"{task.instance_id}:{name}",
             "provider_total_token_ceiling": TOTAL_TOKEN_CEILING,
             "provider_task_token_ceiling": TASK_TOKEN_CEILING,
@@ -121,7 +131,7 @@ async def run_arm(pair: dict[str, Any], arm: dict[str, Any]) -> dict[str, Any]:
     _apply_edits(workspace, edits)
     grade = _grade(task, workspace)
     patch = export_patch(workspace)
-    artifact = RUN_DIR / "artifacts" / name
+    artifact = run_dir / "artifacts" / name
     artifact.mkdir(parents=True, exist_ok=True)
     (artifact / "response.txt").write_text(raw, encoding="utf-8")
     (artifact / "patch.diff").write_text(patch["patch"], encoding="utf-8")
@@ -148,7 +158,16 @@ async def run_arm(pair: dict[str, Any], arm: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-async def run(manifest_path: Path) -> dict[str, Any]:
+async def run(
+    manifest_path: Path,
+    *,
+    run_id: str = RUN_ID,
+    run_dir: Path = RUN_DIR,
+    experience_db: Path = EXPERIENCES,
+) -> dict[str, Any]:
+    comparison_path = run_dir / "comparison.json"
+    if comparison_path.exists():
+        raise FileExistsError(f"paired run already finalized: {comparison_path}")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     pairs = manifest.get("pairs") or []
     if len(pairs) != 1:
@@ -157,12 +176,20 @@ async def run(manifest_path: Path) -> dict[str, Any]:
     _validate_pair(pair)
     results = []
     for arm in pair["arms"]:
-        results.append(await run_arm(pair, arm))
+        results.append(
+            await run_arm(
+                pair,
+                arm,
+                run_id=run_id,
+                run_dir=run_dir,
+                experience_db=experience_db,
+            )
+        )
     same_patch = results[0]["patch_sha256"] == results[1]["patch_sha256"]
     outcome_class = classify(results[0], results[1])
     comparison = {
         "protocol": "v3-paired-memory-live-v1",
-        "run_id": RUN_ID,
+        "run_id": run_id,
         "threshold": manifest["threshold"],
         "pair": pair,
         "results": results,
@@ -176,8 +203,8 @@ async def run(manifest_path: Path) -> dict[str, Any]:
         },
         "claim_boundary": "Single exploratory matched pair; descriptive evidence only, not a causal efficacy claim.",
     }
-    RUN_DIR.mkdir(parents=True, exist_ok=True)
-    (RUN_DIR / "comparison.json").write_text(
+    run_dir.mkdir(parents=True, exist_ok=True)
+    comparison_path.write_text(
         json.dumps(comparison, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     return comparison
@@ -186,8 +213,19 @@ async def run(manifest_path: Path) -> dict[str, Any]:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--run-id", default=RUN_ID)
+    parser.add_argument("--run-dir", type=Path, default=RUN_DIR)
+    parser.add_argument("--experience-db", type=Path, default=EXPERIENCES)
     args = parser.parse_args()
-    print(json.dumps(asyncio.run(run(args.manifest)), ensure_ascii=False, indent=2))
+    result = asyncio.run(
+        run(
+            args.manifest,
+            run_id=args.run_id,
+            run_dir=args.run_dir,
+            experience_db=args.experience_db,
+        )
+    )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

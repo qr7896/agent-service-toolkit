@@ -1,10 +1,11 @@
+import asyncio
 import json
 from pathlib import Path
 
 import pytest
 
 from evals.v3_paired_memory_experiment import build_pair_manifest, load_distances, preflight
-from evals.v3_paired_memory_live import _validate_pair
+from evals.v3_paired_memory_live import _validate_pair, run
 
 
 def test_load_distances(tmp_path: Path):
@@ -61,3 +62,11 @@ def test_live_pair_validation_is_fail_closed():
     invalid["invariants"]["strict_past_only"] = False
     with pytest.raises(ValueError, match="invariants"):
         _validate_pair(invalid)
+
+
+def test_live_pair_does_not_overwrite_finalized_run(tmp_path: Path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "comparison.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(FileExistsError, match="already finalized"):
+        asyncio.run(run(tmp_path / "missing-manifest.json", run_dir=run_dir))

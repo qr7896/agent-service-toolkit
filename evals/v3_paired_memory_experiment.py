@@ -46,13 +46,19 @@ def preflight(trajectories: Path, distances: Path) -> dict[str, Any]:
 
 
 def build_pair_manifest(
-    trajectories: Path, distances: Path, *, threshold: float = 0.375
+    trajectories: Path,
+    distances: Path,
+    *,
+    threshold: float = 0.375,
+    task_id: str | None = None,
 ) -> dict[str, Any]:
     rows = load_jsonl(trajectories)
     commit_distances = load_distances(distances)
     artifact = build_ablation(rows, commit_distances, threshold)
     candidates = []
     for sample in artifact["samples"]:
+        if task_id is not None and sample["trajectory_id"] != task_id:
+            continue
         selected = sample["arms"]["reliability_aware"]
         if not selected:
             continue
@@ -84,6 +90,7 @@ def build_pair_manifest(
         "protocol": "v3-paired-memory-manifest-v1",
         "provider_calls": 0,
         "threshold": threshold,
+        "task_filter": task_id,
         "pairs": candidates,
         "ready": bool(candidates),
         "claim_boundary": "Experimental manifest only; no provider call and no efficacy claim.",
@@ -130,10 +137,16 @@ def main() -> None:
     parser.add_argument("--commit-distances", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--pair-threshold", type=float)
+    parser.add_argument("--task-id")
     parser.add_argument("--prepare-workspaces", type=Path)
     args=parser.parse_args()
     base = (
-        build_pair_manifest(args.trajectories, args.commit_distances, threshold=args.pair_threshold)
+        build_pair_manifest(
+            args.trajectories,
+            args.commit_distances,
+            threshold=args.pair_threshold,
+            task_id=args.task_id,
+        )
         if args.pair_threshold is not None
         else preflight(args.trajectories, args.commit_distances)
     )
