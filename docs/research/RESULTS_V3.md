@@ -6,7 +6,7 @@
 - Status: V3-0 through V3-6 COMPLETE; MECHANISM FROZEN
 - Date: 2026-09-20
 - Verification status: ANALYZED
-- External model/API calls: 9 V3 calls / 16,297 provider tokens in total; only finalized artifacts are interpreted below
+- External model/API calls: 12 V3 calls / 17,777 provider tokens in total; only finalized artifacts are interpreted below
 - Internal E1-B sealed TEST opened/called: 0/0
 
 ## V3-0 — Readiness audit
@@ -128,3 +128,11 @@ The three-task chronological commit-replay pilot now has persistent workspaces/c
 ## Non-sealed pilot execution stopped at budget gate
 
 Collection `v3-prospective-001` started on clean commit `946c718`. Task 1 completed three `deepseek-flash` calls and consumed **10,814 provider tokens** (10,180 input / 634 output), exceeding its fixed 10,000-token ceiling before producing a patch. Tasks 2–3 were not started. The failure exposed unbounded tool-result context and provider-billed tool schemas missing from the message-only reserve estimate. Tool results are now bounded and tool-bound calls reserve an additional 3,500 tokens; these hardening changes do not retroactively convert the run into a successful task. Prospective finalized trajectories remain 0, sealed TEST opened/called remains 0/0, and no repair-rate or memory-efficacy claim is made.
+
+## Fifth compact trajectory and second matched pair
+
+A fifth non-sealed commit-replay task extended the compact cohort without changing the frozen V3 mechanism. Its offline gate passed Base-Fail + Gold-Pass and its 1,928-token admission reserve was below the 4,000-token task ceiling. The single authorized `deepseek-flash` call used 442 tokens and returned an empty edit list; the hidden grader therefore remained failing. The failure was retained without retry. The compact cohort is now five provenance-complete, replay-ready rows: three successes and two failures using 3,728 provider tokens. This selected pilot is not an Autonomous Repair Rate.
+
+The new row created one strict-past eligible pair at exploratory threshold 0.375. In the matched run, memory OFF used 460 tokens and memory ON used 578 tokens; both returned empty edits, failed the same grader, and had the same empty patch hash. The ON arm did receive and record adoption of the eligible past experience, but success delta was zero and token delta was +118. This pair is classified as `redundant_memory`.
+
+Across the two exploratory pairs, one pair passed in both arms and one failed in both arms. Both had identical OFF/ON patch hashes and zero success delta; ON added 133 and 118 tokens respectively. The aggregate remains descriptive n=2 evidence only: it supports neither a beneficial nor a harmful memory-efficacy claim. Full non-model regression is **447 passed / 4 skipped / 33 warnings**. V3 cumulative provider usage is 12 calls / 17,777 tokens: normal pilot 3/10,814, compact cohort 5/3,728, and paired experiments 4/3,235. Internal E1-B sealed TEST opened/called remains 0/0.
