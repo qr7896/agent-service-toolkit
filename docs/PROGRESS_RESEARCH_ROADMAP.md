@@ -2,7 +2,7 @@
 
 > 基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit) 的魔改项目
 > 我的 fork：<https://github.com/qr7896/agent-service-toolkit>
-> 最后更新：2026-09-19
+> 最后更新：2026-09-20
 
 **项目定位已收敛**：本文只维护当前状态、路线、里程碑与运行入口；**中心问题与冻结清单以 [RUNTIME.md](./RUNTIME.md) 为准**——
 > 如何让 Coding Agent 更准确、更少读取无关代码、更少越权、更容易验证？
@@ -10,7 +10,7 @@
 对应设计原件在 `docs/design/`：01 EGCP 证据门控规划器、02 轨迹到经验的深化、03 项目收敛定位、
 04 模块设计卡（**学习资料，不是实现规格**）。
 
-> **下一步做什么**：**当前执行计划统一放在 §9.2；V2 与 V3 mechanism 均已冻结，当前门槛是 V3 non-sealed prospective collection。**
+> **下一步做什么**：**当前执行计划统一放在 §9.2；V3 exploratory pilot 已封板。下一门槛是另行选择并授权 E1-B/R10 或更大规模 E2，而不是继续追加 V3 pilot 调用。**
 > 研究问题、假设与评测协议见 [research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)。
 > 当前计划只看 §9.2；逐轮实验流水统一归档到 [research/PROGRESS_LOG_ARCHIVE.md](./research/PROGRESS_LOG_ARCHIVE.md)，版本结论分别见 `research/RESULTS_V*.md`。
 
@@ -1792,22 +1792,17 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 | V0 | CLOSED | 受控检索层 adaptive gate 有效 | 端到端 repair 泛化 |
 | V1 | FROZEN | frozen retrieval benchmark 上保持 recall、降低 tokens/calls | Autonomous Repair Rate |
 | V2 | **FROZEN** | 内部 adaptive acquisition 原型；官方 SERBench Cal500 完成；Test500 prediction-ready | 优于 MSS-Complement、Test500 分数、patch success |
-| V3 | **MECHANISM FROZEN — PROSPECTIVE DATA GATE** | Schema v2、non-destructive export、strict chronological replay 已完成；deterministic reliability baseline 已启动 | 尚无 continual-policy efficacy 或 learned-prior 结果 |
+| V3 | **PILOT CLOSED — MECHANISM FROZEN** | Schema v2、strict chronological replay、6 条 prospective trajectories 与 3 组 matched pairs | 无 continual-policy efficacy 或 learned-prior 结论 |
 
-**当前唯一主线：V3 Trajectory → Experience → Continual Policy**
+**当前决策**：V3 exploratory pilot 已按预声明停止规则封板。6 条 compact trajectories 为 3 success / 3 failure；3 组 strict-past matched pairs 全部为 `redundant_memory`，memory ON 没有改变成功结果或 patch，并分别增加 133 / 118 / 118 tokens。该 n=3 结果只说明当前小型、人工筛选 pilot 未观察到 memory 增益，不证明 memory 普遍无效。
 
-1. 先冻结 Experience Schema v2 与原始 commit/time provenance。
-2. 再建立 chronological replay；任何任务只能读取过去经验。
-3. 然后评估 reliability / conflict / forgetting，先规则基线，后决定是否需要 learned prior。
-4. 最后才运行 prospective/model experiment；此前模型 API 调用保持0，E1-B sealed TEST保持关闭。
-
-**当前数据门槛（2026-09-19 实测）**：8 trajectories（2 succeeded / 3 review_rejected / 3 read-only），其中5条可由现有 compiler 编译；旧 experience DB 仅1条 accepted record；0/8 trajectories 带原始 commit provenance。故当前可做 schema/replay plumbing，**不可做 continual improvement 结论**。
+**下一项目级门槛**：不再自动追加 V3 调用。后续只能二选一并单独授权：（1）修复并冻结 E1-B/R10 的真实调用预算协议后处理 6 条 sealed TEST；或（2）重新设计有样本量依据的 E2 paired study。两者都不是当前 V3 pilot 的延续执行。
 
 **活动文件**：[`research/V3_PROTOCOL.md`](./research/V3_PROTOCOL.md)、[`research/RESULTS_V3.md`](./research/RESULTS_V3.md)、`evals/results/v3_experience_readiness.json`。
 
 ### 9.3 后续研究路线：V1–V3 学习型策略 + 大规模端到端评测
 
-> **状态基线（2026-09-19）**：V0 closed；V1/V2 frozen；V3 active。历史结论分别以各版本 RESULTS/frozen manifest 为准，当前待办只看 §9.2 与 §9.3.3。
+> **状态基线（2026-09-20）**：V0 closed；V1/V2 frozen；V3 mechanism frozen、exploratory pilot closed。历史结论分别以各版本 RESULTS/frozen manifest 为准，当前待办只看 §9.2 与 §9.3.3。
 
 **总研究问题**：在 V0 已证明“自适应证据获取在受控检索层 benchmark 上有收益”的基础上，下一步不继续堆平台功能，而是回答两个更难的问题：
 
@@ -1879,13 +1874,13 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - [x] **Prospective preflight**：真实 Git root/HEAD、trajectory 目录与 readiness import 均通过，`ready_to_collect=true`、`blockers=[]`。
 - [x] **Pilot runner gate**：fail-closed provider 限额、断点恢复与 hidden graders 已完成；compact cohort 当前 6 条任务均通过 Base-Fail + Gold-Pass / reserve-fit 预检。
 - [x] **首批真实 prospective collection**：`deepseek-flash` compact runner 已完成 6 条 non-sealed 任务，3 条 hidden-grader pass、3 条 fail，共 4,902 provider tokens；6/6 provenance 完整，失败任务未重试。该小规模、人工筛选结果只作 pilot 描述，不称 Autonomous Repair Rate。
-- [x] **两组 exploratory matched pairs**：两组 memory OFF/ON 均产生相同 patch 与相同成功结果，ON 分别多 133 / 118 tokens，均分类为 `redundant_memory`；当前 n=2，不支持 memory efficacy 因果结论。
-- [x] **第三组 pair 离线门槛**：task-06 已完成单次 compact 调用（1,174 tokens，hidden-grader fail，未重试）；strict-past manifest 只选择 task-03 成功经验，OFF/ON 工作区均 Base-Fail、matched-base=true。
-- [ ] **当前执行项**：经单独精确授权执行 task-06 的第三组 OFF/ON；随后合并 n=3 描述性报告、重跑 artifact audit/full regression 并封板当前 V3 pilot。若第三组仍为 redundant memory，不再为凑样本追加调用；若行为或成功结果改变，只再规划一组独立 replication，不自动执行。
+- [x] **三组 exploratory matched pairs**：三组 memory OFF/ON 均产生相同 patch 与相同成功结果，ON 分别多 133 / 118 / 118 tokens，全部分类为 `redundant_memory`；n=3 不支持 memory efficacy 因果结论。
+- [x] **V3 pilot closeout**：task-06 第三组 OFF/ON 均失败、patch hash 相同；合并报告、real artifact audit 与完整非模型回归均通过。按预声明停止规则不再追加 V3 pilot 模型调用。
+- [ ] **下一项目级决策**：在 E1-B/R10 预算协议修复与 E2 大样本 paired study 之间选择下一主线；选定前不打开 sealed TEST、不继续模型实验。
 
-**阶段门槛**：V3 mechanism 不再增加新阶段或调公式。prospective 模型实验必须单独固定任务、模型与预算，并保持内部 sealed TEST 关闭；没有 paired prospective evidence 前不得讨论 memory efficacy。
+**阶段门槛**：当前 V3 pilot 已关闭，mechanism 不再增加新阶段或调公式。任何新 prospective/E2 模型实验都必须作为新研究阶段单独冻结任务、模型、样本量依据与预算，并保持内部 sealed TEST 关闭，除非 E1-B/R10 协议另行满足解封条件。
 
-**V3 当前进展（2026-09-20）**：V3-0~V3-6 机制保持冻结。compact prospective cohort 为 6 rows（3 success / 3 failure），6/6 replay-ready、provenance completeness=1.0；real frozen artifact `ready=true`、`synthetic=false`，artifact audit 通过。默认 reliability threshold 0.6 仍选中 0 条经验；exploratory threshold 0.375 已完成 n=2 matched pairs，均为 redundant memory，第三组已离线 ready、尚未调用。完整非模型回归 **447 passed / 4 skipped / 33 warnings**；内部 E1-B sealed TEST opened/called=0/0。详细流水只维护在 `research/PROGRESS_LOG_ARCHIVE.md` 与 `research/RESULTS_V3.md`。
+**V3 最终 pilot 状态（2026-09-20）**：V3-0~V3-6 机制冻结；compact cohort 为 6 rows（3 success / 3 failure），6/6 replay-ready、provenance completeness=1.0。exploratory threshold 0.375 的 n=3 matched pairs 全部为 redundant memory；memory ON 的总 token 增量为 369，成功差值均为 0，三组 patch 均与 OFF 相同。real frozen artifact `ready=true`、`synthetic=false`，artifact audit 通过；完整非模型回归 **447 passed / 4 skipped / 33 warnings**；内部 E1-B sealed TEST opened/called=0/0。该 pilot 未观察到 memory 增益，也不支持“memory 无效”的总体结论。详细流水只维护在 `research/PROGRESS_LOG_ARCHIVE.md` 与 `research/RESULTS_V3.md`。
 
 **V3 成功标准**：主结论必须来自 chronological paired evaluation；同时报告效果量/不确定性与 harm，不能用固定“≤2%”替代样本量和置信区间。若只降低成本而不降低成功率，可报告 efficiency gain；若只有 imitation/agreement，则不得称 continual improvement。
 
@@ -1942,7 +1937,7 @@ V1–V3 至少保留 `Fixed K`、V0 `Evidence Gate`、V0 `Utility Gate`、`No-Co
 4. [x] 真实 Git prospective preflight。
 5. [x] 3-task / `deepseek-flash` / 30,000-token pilot runner 硬限与 hidden graders；本地任务预检 3/3 通过。
 6. [x] 收集首批 4 条真实 trajectory → collection status → real frozen evaluation → artifact audit。
-7. [~] 已完成 6 条 compact trajectories 与 2 组 exploratory matched pairs；第三组 pair 已离线 ready。完成第三组与 pilot closeout 后，只有另行设计并授权更大规模 paired study 才讨论 efficacy；E2/E3 或 Test500 private evaluation 均需独立授权。
+7. [x] 完成 6 条 compact trajectories、3 组 exploratory matched pairs 与 V3 pilot closeout；只有另行设计并授权更大规模 paired study 才讨论 efficacy。E2/E3 或 Test500 private evaluation 均需独立授权。
 
 #### 9.3.7 论文 / 简历叙事边界
 

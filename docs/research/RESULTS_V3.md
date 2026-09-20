@@ -3,10 +3,10 @@
 ## Material Passport
 
 - Artifact type: experiment result / living log
-- Status: V3-0 through V3-6 COMPLETE; MECHANISM FROZEN
+- Status: V3-0 through V3-6 COMPLETE; MECHANISM FROZEN; EXPLORATORY PILOT CLOSED
 - Date: 2026-09-20
 - Verification status: ANALYZED
-- External model/API calls: 13 V3 calls / 18,951 provider tokens in total; only finalized artifacts are interpreted below
+- External model/API calls: 15 V3 calls / 21,453 provider tokens in total; only finalized artifacts are interpreted below
 - Internal E1-B sealed TEST opened/called: 0/0
 
 ## V3-0 — Readiness audit
@@ -142,3 +142,11 @@ Across the two exploratory pairs, one pair passed in both arms and one failed in
 The sixth non-sealed commit-replay task passed the offline Base-Fail + Gold-Pass gate with a 3,452-token admission reserve under the 4,000-token ceiling. Its single authorized `deepseek-flash` call used 1,174 tokens and changed `evals/evidence_controller.py`, but the hidden grader failed: the patch treated the logger object as directly callable and emitted `action` instead of the required `record(..., chosen_action=...)` contract. The failure is retained without retry or grader relaxation.
 
 Collection status is now 6/6 replay-ready with provenance completeness 1.0; the real frozen artifact remains `ready=true`, `synthetic=false`, and the audit passes. A third exploratory pair manifest is offline-ready at threshold 0.375, selecting only the strict-past task-03 success; both OFF/ON base workspaces fail identically before model calls. No third-pair provider call has occurred. Full non-model regression remains **447 passed / 4 skipped / 33 warnings**. Cumulative V3 usage is 13 calls / 18,951 tokens: normal pilot 3/10,814, compact cohort 6/4,902, and paired experiments 4/3,235. Internal E1-B sealed TEST opened/called remains 0/0.
+
+## Third matched pair and exploratory pilot closeout
+
+The third pair used 1,192 tokens with memory OFF and 1,310 with memory ON. Both arms produced the same 1,081-byte patch, failed the hidden grader, and had an identical patch hash; the ON arm recorded adoption of the eligible strict-past task-03 experience but added 118 tokens without changing the outcome. It is classified as `redundant_memory`.
+
+The frozen aggregate is n=3: helpful=0, harmful=0, behavior-changed-without-success-delta=0, redundant=3. Every pair had zero success delta and an identical OFF/ON patch; memory ON added 133, 118, and 118 tokens, or 369 tokens in total. This is descriptive evidence from a small selected pilot. It shows no observed benefit under this protocol but cannot establish that experience memory is generally ineffective.
+
+The predeclared stop rule is applied: no additional V3 pilot calls are planned. The real artifact audit passes and the final non-model regression is **447 passed / 4 skipped / 33 warnings**. Cumulative V3 usage is **15 calls / 21,453 tokens**: normal pilot 3/10,814, compact cohort 6/4,902, and paired experiments 6/5,737. Internal E1-B sealed TEST opened/called remains 0/0.
