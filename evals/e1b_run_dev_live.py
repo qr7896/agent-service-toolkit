@@ -2,10 +2,18 @@ import argparse
 import asyncio
 import hashlib
 import json
+import math
 import tempfile
 import time
 from pathlib import Path
 
+from agents.model_budget import (
+    AmbiguousProviderCall,
+    ProviderBudgetExceeded,
+    _prompt_text,
+    budgeted_ainvoke,
+)
+from agents.model_router import estimate_tokens
 from core import get_model
 from evals.e1b_autonomous_harness import (
     apply_patch,
@@ -21,12 +29,16 @@ from evals.safe_workspace import SafeWorkspace
 from evals.swe_tasks import grade, prepare
 from schema.models import DeepseekModelName
 
-MODEL_ID = DeepseekModelName.DEEPSEEK_V4_FLASH
-TOKEN_BUDGET = 8_000
-MAX_OUTPUT_TOKENS = 1_000
+MODEL_ID = DeepseekModelName.DEEPSEEK_FLASH
+RUN_ID = "e1b-r10-dev-v2"
+TOKEN_BUDGET = 8_800
+TASK_TOKEN_CEILING = 2_200
+MAX_OUTPUT_TOKENS = 600
+PROMPT_RESERVE_MULTIPLIER = 2.0
 EVIDENCE_PROTOCOL = "declared-seed-read-v1"
 CONFIG = AutonomousConfig(model_mode="deepseek-live", max_iterations=1)
-RESULT_PATH = Path("evals/results/e1b_autonomous_dev_run.json")
+LEDGER_PATH = Path(".codex/e1b/r10-v2/provider_calls.jsonl")
+RESULT_PATH = Path("evals/results/e1b_autonomous_dev_run_v2.json")
 
 
 def evidence_for(task, root):
@@ -53,11 +65,59 @@ def resume_state(additional_budget):
     return rows, pending, spent, spent + additional_budget
 
 
+def provider_config(task_id, total_ceiling=TOKEN_BUDGET):
+    return {
+        "configurable": {
+            "provider_ledger_path": str(LEDGER_PATH),
+            "provider_run_id": RUN_ID,
+            "provider_task_id": task_id,
+            "provider_total_token_ceiling": total_ceiling,
+            "provider_task_token_ceiling": TASK_TOKEN_CEILING,
+            "provider_max_calls_per_task": 1,
+            "provider_max_output_tokens": MAX_OUTPUT_TOKENS,
+            "provider_prompt_reserve_multiplier": PROMPT_RESERVE_MULTIPLIER,
+            "provider_disable_thinking": True,
+        }
+    }
+
+
+def preflight():
+    rows = []
+    with tempfile.TemporaryDirectory(prefix="e1b-r10-v2-preflight-") as directory:
+        base = Path(directory)
+        for task in dev_tasks():
+            root = base / task.instance_id
+            prepare(task, root)
+            payload = sanitize_editor_payload(task, evidence_for(task, root))
+            prompt_tokens = estimate_tokens(_prompt_text(build_messages(payload)))
+            reserve = math.ceil(prompt_tokens * PROMPT_RESERVE_MULTIPLIER) + MAX_OUTPUT_TOKENS
+            rows.append(
+                {
+                    "instance_id": task.instance_id,
+                    "estimated_prompt_tokens": prompt_tokens,
+                    "reserve": reserve,
+                    "reserve_fits": reserve <= TASK_TOKEN_CEILING,
+                }
+            )
+    return {
+        "protocol": "e1b-r10-budgeted-dev-preflight-v1",
+        "provider_calls": 0,
+        "ready": all(row["reserve_fits"] for row in rows),
+        "rows": rows,
+    }
+
+
 async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--resume-budget", type=int, default=0)
+    parser.add_argument("--preflight", action="store_true")
     args = parser.parse_args()
-    model = get_model(MODEL_ID).bind(temperature=0, max_tokens=MAX_OUTPUT_TOKENS)
+    if args.preflight:
+        print(json.dumps(preflight(), ensure_ascii=False, indent=2))
+        return
+    if not args.resume_budget and (RESULT_PATH.exists() or LEDGER_PATH.exists()):
+        raise FileExistsError("R10 v2 DEV artifacts already exist; refusing to overwrite or rerun")
+    model = get_model(MODEL_ID)
     if args.resume_budget:
         rows, pending, spent, token_ceiling = resume_state(args.resume_budget)
         tasks = [task for task in dev_tasks() if task.instance_id in pending]
@@ -91,7 +151,12 @@ async def main():
                 "evidence_protocol": EVIDENCE_PROTOCOL,
             }
             try:
-                response = await model.ainvoke(build_messages(payload))
+                response = await budgeted_ainvoke(
+                    model,
+                    build_messages(payload),
+                    provider_config(task.instance_id, token_ceiling),
+                    role="compact_editor",
+                )
                 usage = usage_tokens(response)
                 row.update(usage)
                 spent += usage["total_tokens"]
@@ -107,26 +172,35 @@ async def main():
                     pass_to_pass=after["pass_to_pass"],
                     failure=None,
                 )
+            except ProviderBudgetExceeded as exc:
+                row.update(resolved=False, failure="budget_exhaustion", error=str(exc))
+            except AmbiguousProviderCall as exc:
+                row.update(resolved=False, failure="model_failure", error=str(exc))
             except (json.JSONDecodeError, TypeError, ValueError, PermissionError) as exc:
                 row.update(resolved=False, failure="parse_failure", error=str(exc))
             except Exception as exc:
                 row.update(resolved=False, failure="model_failure", error=str(exc))
             row["wall_time_ms"] = round((time.perf_counter() - started) * 1000, 1)
             rows.append(row)
-            write_dev_run(str(MODEL_ID), rows, config=CONFIG)
+            write_dev_run(str(MODEL_ID), rows, config=CONFIG, output=RESULT_PATH)
             print(json.dumps({"task": task.instance_id, "spent": spent, **row}, ensure_ascii=False))
             if row.get("failure") == "model_failure":
                 break
-    report = write_dev_run(str(MODEL_ID), rows, config=CONFIG)
+    report = write_dev_run(str(MODEL_ID), rows, config=CONFIG, output=RESULT_PATH)
     report["execution"] = {
         "temperature": 0,
         "max_output_tokens": MAX_OUTPUT_TOKENS,
+        "task_token_ceiling": TASK_TOKEN_CEILING,
+        "prompt_reserve_multiplier": PROMPT_RESERVE_MULTIPLIER,
         "original_token_budget": TOKEN_BUDGET,
         "additional_token_budget": args.resume_budget,
         "token_ceiling": token_ceiling,
         "max_iterations": CONFIG.max_iterations,
         "evidence_protocol": EVIDENCE_PROTOCOL,
         "provider": "deepseek",
+        "provider_run_id": RUN_ID,
+        "provider_ledger_path": str(LEDGER_PATH),
+        "thinking_disabled": True,
         "seed": None,
         "sandbox_required": True,
         "budget_status": "within_limit" if spent <= token_ceiling else "exceeded_after_atomic_call",

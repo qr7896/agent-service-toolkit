@@ -1,6 +1,6 @@
 # E1-B Autonomous Editor 未完成测试日志
 
-> 更新：2026-09-18；状态：R10 DEV 4/4 已调用，但原子推理结算导致预算协议失效；最终配置尚未冻结；6 条 TEST autonomous outcomes sealed。
+> 更新：2026-09-20；状态：旧 R10 DEV 4/4 已调用但预算协议失效；budgeted DEV v2 已离线 ready、尚未调用；最终配置尚未冻结；6 条 TEST autonomous outcomes sealed。
 
 ## 已完成前置
 
@@ -19,7 +19,8 @@
 - [x] 已记录 calls、wall time、parse/model failure、files written、F2P/P2P、resolved 与 token usage。
 - [x] resume 逻辑通过 22 项测试，且确认不会覆盖前三条真实结果；只补跑第 4 条 DEV 一次。
 - [x] 第 4 条 state-version-29 已调用但未修复成功、未重试；单次 22,860 tokens，累计 31,276。
-- [ ] 重新定义硬预算协议：当前 provider 只能在原子调用结束后结算推理 token，固定小 ceiling 无法在调用前保证；协议修复前禁止进入 sealed TEST。
+- [~] budgeted DEV v2 已改用规范 `deepseek-flash`、thinking disabled、persistent provider ledger、每任务一次调用、600 max output、2× prompt reserve、2,200/task 与 8,800 total；同时修复 tuple-message 被 reserve 低估的问题。离线 preflight 4/4 reserve-fit，完整非模型回归 449 passed / 4 skipped；真实 provider 行为尚未验证，验证前禁止进入 sealed TEST。
+- [ ] 经精确命令授权重新运行 4 条 DEV v2；不沿用旧模型结果、不重试失败任务、不打开 sealed TEST。
 
 ## P0：Evidence 协议冻结
 
@@ -29,7 +30,7 @@ E1-B 没有可直接复用的 V1 frozen retrieval trace；另行建立协议前�
 
 ## P0：最终配置冻结
 
-- [ ] 冻结 editor/prompt/model/evidence/tool/budget/sandbox/task/split SHA 与 Gold-hidden assertion；freeze 后禁止依据 TEST outcome 修改。
+- [ ] DEV v2 通过预算与 artifact audit 后，冻结 editor/prompt/model/evidence/tool/budget/sandbox/task/split SHA 与 Gold-hidden assertion；freeze 后禁止依据 TEST outcome 修改。
 
 ## P0：6条 sealed TEST one-shot
 
@@ -51,5 +52,5 @@ SEALED TEST：async-cancel-27、hard-negative-router-28、multifile-policy-21、
 
 ## Claim Boundary
 
-可说：R10 DEV 已完成 4 次 one-shot 原子调用；第 4 条暴露 provider 原子推理结算与固定小 token ceiling 不兼容，累计 31,276 tokens；sealed TEST 仍为 0 调用。
-不可说：4 条 DEV 构成可报告的 Autonomous Repair Rate；预算协议已经有效；Autonomous Editor 已验证成功；V1 gain 已证明 autonomous patch success；6条 TEST 已验证；结果具有统计泛化性。
+可说：旧 R10 DEV 已完成 4 次 one-shot 原子调用并暴露预算协议失效；budgeted DEV v2 已通过零调用离线 preflight；sealed TEST 仍为 0 调用。
+不可说：旧或新 DEV 构成可报告的 Autonomous Repair Rate；v2 预算协议已经被真实 provider 验证；Autonomous Editor 已验证成功；V1 gain 已证明 autonomous patch success；6条 TEST 已验证；结果具有统计泛化性。

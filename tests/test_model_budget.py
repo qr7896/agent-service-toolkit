@@ -155,3 +155,20 @@ async def test_prompt_multiplier_can_fail_closed_before_call(tmp_path):
             role="compact_editor",
         )
     assert model.messages is None
+
+
+@pytest.mark.asyncio
+async def test_tuple_messages_are_counted_before_call(tmp_path):
+    model = Model(AIMessage(content="unused"))
+    with pytest.raises(ProviderBudgetExceeded):
+        await budgeted_ainvoke(
+            model,
+            [("system", "x" * 600)],
+            config(
+                tmp_path / "calls.jsonl",
+                provider_total_token_ceiling=100,
+                provider_task_token_ceiling=100,
+            ),
+            role="compact_editor",
+        )
+    assert model.messages is None

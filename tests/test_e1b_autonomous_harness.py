@@ -125,6 +125,18 @@ def test_live_resume_selects_only_budget_exhaustion(tmp_path, monkeypatch):
     assert (spent, ceiling) == (100, 150)
 
 
+def test_r10_v2_uses_one_thinking_disabled_call_per_task(tmp_path, monkeypatch):
+    from evals import e1b_run_dev_live
+
+    monkeypatch.setattr(e1b_run_dev_live, "LEDGER_PATH", tmp_path / "calls.jsonl")
+    config = e1b_run_dev_live.provider_config("dev-task")
+    values = config["configurable"]
+    assert values["provider_task_token_ceiling"] == 2_200
+    assert values["provider_max_calls_per_task"] == 1
+    assert values["provider_max_output_tokens"] == 600
+    assert values["provider_disable_thinking"] is True
+
+
 def test_run_identity_and_dry_run_artifact(tmp_path):
     from evals.e1b_autonomous_runlog import experiment_identity, write_dev_run
 

@@ -66,11 +66,15 @@ def _usage(response: Any) -> dict[str, int]:
 def _prompt_text(messages: list[Any]) -> str:
     return json.dumps(
         [
-            {
-                "type": message.__class__.__name__,
-                "content": str(getattr(message, "content", "") or ""),
-                "tool_calls": getattr(message, "tool_calls", None) or [],
-            }
+            (
+                {"type": str(message[0]), "content": str(message[1]), "tool_calls": []}
+                if isinstance(message, tuple) and len(message) == 2
+                else {
+                    "type": message.__class__.__name__,
+                    "content": str(getattr(message, "content", "") or ""),
+                    "tool_calls": getattr(message, "tool_calls", None) or [],
+                }
+            )
             for message in messages
         ],
         ensure_ascii=False,

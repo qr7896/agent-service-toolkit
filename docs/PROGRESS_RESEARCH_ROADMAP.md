@@ -10,7 +10,7 @@
 对应设计原件在 `docs/design/`：01 EGCP 证据门控规划器、02 轨迹到经验的深化、03 项目收敛定位、
 04 模块设计卡（**学习资料，不是实现规格**）。
 
-> **下一步做什么**：**当前执行计划统一放在 §9.2；V3 exploratory pilot 已封板。下一门槛是另行选择并授权 E1-B/R10 或更大规模 E2，而不是继续追加 V3 pilot 调用。**
+> **下一步做什么**：**当前执行计划统一放在 §9.2；V3 exploratory pilot 已封板，下一主线已选为 E1-B/R10 预算协议修复。budgeted DEV v2 离线 ready，真实 4 DEV 仍需精确命令授权。**
 > 研究问题、假设与评测协议见 [research/ADAPTIVE_CODE_RAG.md](./research/ADAPTIVE_CODE_RAG.md)。
 > 当前计划只看 §9.2；逐轮实验流水统一归档到 [research/PROGRESS_LOG_ARCHIVE.md](./research/PROGRESS_LOG_ARCHIVE.md)，版本结论分别见 `research/RESULTS_V*.md`。
 
@@ -1796,7 +1796,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 
 **当前决策**：V3 exploratory pilot 已按预声明停止规则封板。6 条 compact trajectories 为 3 success / 3 failure；3 组 strict-past matched pairs 全部为 `redundant_memory`，memory ON 没有改变成功结果或 patch，并分别增加 133 / 118 / 118 tokens。该 n=3 结果只说明当前小型、人工筛选 pilot 未观察到 memory 增益，不证明 memory 普遍无效。
 
-**下一项目级门槛**：不再自动追加 V3 调用。后续只能二选一并单独授权：（1）修复并冻结 E1-B/R10 的真实调用预算协议后处理 6 条 sealed TEST；或（2）重新设计有样本量依据的 E2 paired study。两者都不是当前 V3 pilot 的延续执行。
+**下一项目级门槛**：不再追加 V3 调用；下一主线采用 E1-B/R10。新的 DEV v2 runner 已改用规范 `deepseek-flash`、thinking disabled、provider ledger、每任务一次调用、2,200/task、8,800 total、600 max output，并修复 tuple-message reserve 漏计；4/4 DEV 离线 reserve-fit。下一步是单独授权后重跑 4 DEV 验证真实 provider 行为；通过后才允许最终配置 freeze，6 条 sealed TEST 继续关闭。E2 延后到 R10 决策之后。
 
 **活动文件**：[`research/V3_PROTOCOL.md`](./research/V3_PROTOCOL.md)、[`research/RESULTS_V3.md`](./research/RESULTS_V3.md)、`evals/results/v3_experience_readiness.json`。
 
@@ -1876,7 +1876,7 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - [x] **首批真实 prospective collection**：`deepseek-flash` compact runner 已完成 6 条 non-sealed 任务，3 条 hidden-grader pass、3 条 fail，共 4,902 provider tokens；6/6 provenance 完整，失败任务未重试。该小规模、人工筛选结果只作 pilot 描述，不称 Autonomous Repair Rate。
 - [x] **三组 exploratory matched pairs**：三组 memory OFF/ON 均产生相同 patch 与相同成功结果，ON 分别多 133 / 118 / 118 tokens，全部分类为 `redundant_memory`；n=3 不支持 memory efficacy 因果结论。
 - [x] **V3 pilot closeout**：task-06 第三组 OFF/ON 均失败、patch hash 相同；合并报告、real artifact audit 与完整非模型回归均通过。按预声明停止规则不再追加 V3 pilot 模型调用。
-- [ ] **下一项目级决策**：在 E1-B/R10 预算协议修复与 E2 大样本 paired study 之间选择下一主线；选定前不打开 sealed TEST、不继续模型实验。
+- [~] **下一项目级执行项 — E1-B/R10**：budgeted DEV v2 已离线 ready（4/4 reserve-fit，0 provider calls）；等待精确命令授权执行 4 DEV。只有 provider usage、预算与结果完整通过后才冻结配置并决定是否一次性打开 6 条 sealed TEST。
 
 **阶段门槛**：当前 V3 pilot 已关闭，mechanism 不再增加新阶段或调公式。任何新 prospective/E2 模型实验都必须作为新研究阶段单独冻结任务、模型、样本量依据与预算，并保持内部 sealed TEST 关闭，除非 E1-B/R10 协议另行满足解封条件。
 
@@ -1987,7 +1987,7 @@ Structural 分支：EvidencePolicy → structural → CodeGraphAdapter → symbo
 - [x] R7：Runtime + E1 smoke + V1 decision/policy 完整非模型回归最终 75 passed，frozen research plumbing 未破坏。
 - [x] R8：已新增 `docs/research/RELIABLE_EDITOR_RUNTIME.md`，固定模块职责、budget 层级、trace schema、failure taxonomy 与未来 LangGraph 接线点。
 - [x] R9：已同步 `PENDING_E1B_AUTONOMOUS_TESTS.md`：P1 hardening 完成；P0 real-model DEV/final freeze/sealed TEST 保持 paused。
-- [~] R10：DEV 4/4 已执行，但 `deepseek-v4-flash` 的原子推理计费无法满足固定小 token ceiling；当前**不冻结配置、不追加 DEV、不解封 TEST**，6 条 sealed TEST 打开/调用仍为 0。调用与预算明细见 [执行日志归档](./research/PROGRESS_LOG_ARCHIVE.md)。
+- [~] R10：旧 `deepseek-v4-flash` DEV 4/4 已执行但预算协议失效；新的 budgeted DEV v2 runner 已离线通过 4/4 reserve-fit，使用 `deepseek-flash`、thinking disabled、provider ledger、2,200/task 与 8,800 total；完整非模型回归 449 passed / 4 skipped。v2 真实 DEV 尚未调用，配置尚未冻结，6 条 sealed TEST 打开/调用仍为 0。调用与预算明细见 [执行日志归档](./research/PROGRESS_LOG_ARCHIVE.md)。
 
 
 
