@@ -62,6 +62,14 @@ COMPACT_TASKS = (
         ("evals/e1b_editor_adapter.py",),
         "usage_tokens",
     ),
+    PilotTask(
+        "v3pilot__preaction-decision-log-06",
+        "b451111c5f3795d15dad556530342551525ab8ed",
+        "997e479e511cd328fb92c75bc3a4bd5da8dad871",
+        "EvidenceController.step chooses an action but does not emit a pre-action decision record. Add an optional decision logger and record the before state, candidates, chosen action, and utility before execution, including for stop, while preserving behavior when no logger is supplied.",
+        ("evals/evidence_controller.py",),
+        "preaction_decision_log",
+    ),
 )
 
 VISIBLE_RANGES = {
@@ -79,6 +87,7 @@ VISIBLE_RANGES = {
         ("evals/v3_pilot_runner.py", 139, 172),
     ),
     "v3pilot__usage-metadata-fallback-05": (("evals/e1b_editor_adapter.py", 1, 24),),
+    "v3pilot__preaction-decision-log-06": (("evals/evidence_controller.py", 1, 76),),
 }
 
 SYSTEM = """You are editing a Python repository from bounded source excerpts.

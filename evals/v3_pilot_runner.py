@@ -294,6 +294,54 @@ assert usage_tokens(Primary()) == {"input_tokens": 10, "output_tokens": 4, "tota
 assert usage_tokens(Fallback()) == {"input_tokens": 7, "output_tokens": 3, "total_tokens": 10}
 """
         return _run([sys.executable, "-c", code], root)
+    if task.grader == "preaction_decision_log":
+        code = """
+from evals.evidence_controller import EvidenceController
+
+events = []
+
+class Ledger:
+    def payload(self):
+        return []
+
+class Adapter:
+    ledger = Ledger()
+    def files(self):
+        events.append("execute")
+        return []
+
+class Policy:
+    budget = type("Budget", (), {"max_actions": 1})()
+    def __init__(self, action):
+        self.action = action
+    def choose(self, _ledger, _candidates, _utility):
+        return self.action
+    def state(self, _ledger):
+        return {"ready": True}
+
+class Logger:
+    def record(self, **row):
+        events.append("record")
+        assert row == {
+            "before": {"ready": True},
+            "candidates": ["files", "stop"],
+            "chosen_action": "files",
+            "utility": {"files": 1.0},
+        }
+
+controller = EvidenceController(Adapter(), Policy("files"), Logger())
+controller.step(["files", "stop"], utility={"files": 1.0})
+assert events == ["record", "execute"]
+
+events.clear()
+controller = EvidenceController(Adapter(), Policy("stop"), Logger())
+controller.decision_logger.record = lambda **_row: events.append("record")
+controller.step(["stop"])
+assert events == ["record"]
+
+EvidenceController(Adapter(), Policy("stop")).step(["stop"])
+"""
+        return _run([sys.executable, "-c", code], root)
     code = (
         "from pathlib import Path; from tempfile import TemporaryDirectory; "
         "from evals.v1_evaluate_frozen import sha256; "
