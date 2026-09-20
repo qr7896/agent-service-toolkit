@@ -6,7 +6,7 @@
 - Status: V3-0 through V3-6 COMPLETE; MECHANISM FROZEN
 - Date: 2026-09-20
 - Verification status: ANALYZED
-- External model/API calls: 12 V3 calls / 17,777 provider tokens in total; only finalized artifacts are interpreted below
+- External model/API calls: 13 V3 calls / 18,951 provider tokens in total; only finalized artifacts are interpreted below
 - Internal E1-B sealed TEST opened/called: 0/0
 
 ## V3-0 — Readiness audit
@@ -136,3 +136,9 @@ A fifth non-sealed commit-replay task extended the compact cohort without changi
 The new row created one strict-past eligible pair at exploratory threshold 0.375. In the matched run, memory OFF used 460 tokens and memory ON used 578 tokens; both returned empty edits, failed the same grader, and had the same empty patch hash. The ON arm did receive and record adoption of the eligible past experience, but success delta was zero and token delta was +118. This pair is classified as `redundant_memory`.
 
 Across the two exploratory pairs, one pair passed in both arms and one failed in both arms. Both had identical OFF/ON patch hashes and zero success delta; ON added 133 and 118 tokens respectively. The aggregate remains descriptive n=2 evidence only: it supports neither a beneficial nor a harmful memory-efficacy claim. Full non-model regression is **447 passed / 4 skipped / 33 warnings**. V3 cumulative provider usage is 12 calls / 17,777 tokens: normal pilot 3/10,814, compact cohort 5/3,728, and paired experiments 4/3,235. Internal E1-B sealed TEST opened/called remains 0/0.
+
+## Sixth compact trajectory and third-pair readiness
+
+The sixth non-sealed commit-replay task passed the offline Base-Fail + Gold-Pass gate with a 3,452-token admission reserve under the 4,000-token ceiling. Its single authorized `deepseek-flash` call used 1,174 tokens and changed `evals/evidence_controller.py`, but the hidden grader failed: the patch treated the logger object as directly callable and emitted `action` instead of the required `record(..., chosen_action=...)` contract. The failure is retained without retry or grader relaxation.
+
+Collection status is now 6/6 replay-ready with provenance completeness 1.0; the real frozen artifact remains `ready=true`, `synthetic=false`, and the audit passes. A third exploratory pair manifest is offline-ready at threshold 0.375, selecting only the strict-past task-03 success; both OFF/ON base workspaces fail identically before model calls. No third-pair provider call has occurred. Full non-model regression remains **447 passed / 4 skipped / 33 warnings**. Cumulative V3 usage is 13 calls / 18,951 tokens: normal pilot 3/10,814, compact cohort 6/4,902, and paired experiments 4/3,235. Internal E1-B sealed TEST opened/called remains 0/0.

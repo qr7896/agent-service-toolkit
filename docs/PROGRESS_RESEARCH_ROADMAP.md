@@ -1877,14 +1877,15 @@ $env:CHROMA_DATA_DIR='../data'; $env:CHROMA_DB_DIR='./chroma_db'
 - [x] **V3-6 Negative Experience / Counterfactual Replay**：已完成 strict-past 正/负经验与 compatibility-matched counterfactual readiness artifact，并明确 evidence availability 不等于 causal effect；同时修复 lifetime usage counter 的时间泄漏风险。
 - [x] **V3 Freeze Gate**：机制冻结；下一阶段只采集具备 execution-time provenance 的 non-sealed prospective trajectories，字段与最小计划见 `docs/research/V3_FREEZE_GATE.md`。
 - [x] **Prospective preflight**：真实 Git root/HEAD、trajectory 目录与 readiness import 均通过，`ready_to_collect=true`、`blockers=[]`。
-- [x] **Pilot runner gate**：fail-closed provider 限额、断点恢复与 hidden graders 已完成；compact cohort 当前 5 条任务均通过 Base-Fail + Gold-Pass / reserve-fit 预检。
-- [x] **首批真实 prospective collection**：`deepseek-flash` compact runner 已完成 5 条 non-sealed 任务，3 条 hidden-grader pass、2 条 fail，共 3,728 provider tokens；5/5 provenance 完整，失败任务未重试。该小规模、人工筛选结果只作 pilot 描述，不称 Autonomous Repair Rate。
+- [x] **Pilot runner gate**：fail-closed provider 限额、断点恢复与 hidden graders 已完成；compact cohort 当前 6 条任务均通过 Base-Fail + Gold-Pass / reserve-fit 预检。
+- [x] **首批真实 prospective collection**：`deepseek-flash` compact runner 已完成 6 条 non-sealed 任务，3 条 hidden-grader pass、3 条 fail，共 4,902 provider tokens；6/6 provenance 完整，失败任务未重试。该小规模、人工筛选结果只作 pilot 描述，不称 Autonomous Repair Rate。
 - [x] **两组 exploratory matched pairs**：两组 memory OFF/ON 均产生相同 patch 与相同成功结果，ON 分别多 133 / 118 tokens，均分类为 `redundant_memory`；当前 n=2，不支持 memory efficacy 因果结论。
-- [ ] **当前执行项**：继续寻找能产生新 strict-past eligible memory 的独立 non-sealed 任务；新增 matched pair 前先做离线 task/provenance/预算预检，每次真实调用仍需单独冻结精确命令与预算，不重跑已完成 pair。
+- [x] **第三组 pair 离线门槛**：task-06 已完成单次 compact 调用（1,174 tokens，hidden-grader fail，未重试）；strict-past manifest 只选择 task-03 成功经验，OFF/ON 工作区均 Base-Fail、matched-base=true。
+- [ ] **当前执行项**：经单独精确授权执行 task-06 的第三组 OFF/ON；随后合并 n=3 描述性报告、重跑 artifact audit/full regression 并封板当前 V3 pilot。若第三组仍为 redundant memory，不再为凑样本追加调用；若行为或成功结果改变，只再规划一组独立 replication，不自动执行。
 
 **阶段门槛**：V3 mechanism 不再增加新阶段或调公式。prospective 模型实验必须单独固定任务、模型与预算，并保持内部 sealed TEST 关闭；没有 paired prospective evidence 前不得讨论 memory efficacy。
 
-**V3 当前进展（2026-09-20）**：V3-0~V3-6 机制保持冻结。compact prospective cohort 为 5 rows（3 success / 2 failure），5/5 replay-ready、provenance completeness=1.0；real frozen artifact `ready=true`、`synthetic=false`，artifact audit 通过。默认 reliability threshold 0.6 仍选中 0 条经验；exploratory threshold 0.375 已完成 n=2 matched pairs，均为 redundant memory，不能据此判断 memory 有效或无效。完整非模型回归 **447 passed / 4 skipped / 33 warnings**；内部 E1-B sealed TEST opened/called=0/0。详细流水只维护在 `research/PROGRESS_LOG_ARCHIVE.md` 与 `research/RESULTS_V3.md`。
+**V3 当前进展（2026-09-20）**：V3-0~V3-6 机制保持冻结。compact prospective cohort 为 6 rows（3 success / 3 failure），6/6 replay-ready、provenance completeness=1.0；real frozen artifact `ready=true`、`synthetic=false`，artifact audit 通过。默认 reliability threshold 0.6 仍选中 0 条经验；exploratory threshold 0.375 已完成 n=2 matched pairs，均为 redundant memory，第三组已离线 ready、尚未调用。完整非模型回归 **447 passed / 4 skipped / 33 warnings**；内部 E1-B sealed TEST opened/called=0/0。详细流水只维护在 `research/PROGRESS_LOG_ARCHIVE.md` 与 `research/RESULTS_V3.md`。
 
 **V3 成功标准**：主结论必须来自 chronological paired evaluation；同时报告效果量/不确定性与 harm，不能用固定“≤2%”替代样本量和置信区间。若只降低成本而不降低成功率，可报告 efficiency gain；若只有 imitation/agreement，则不得称 continual improvement。
 
@@ -1941,7 +1942,7 @@ V1–V3 至少保留 `Fixed K`、V0 `Evidence Gate`、V0 `Utility Gate`、`No-Co
 4. [x] 真实 Git prospective preflight。
 5. [x] 3-task / `deepseek-flash` / 30,000-token pilot runner 硬限与 hidden graders；本地任务预检 3/3 通过。
 6. [x] 收集首批 4 条真实 trajectory → collection status → real frozen evaluation → artifact audit。
-7. [~] 已完成 5 条 compact trajectories 与 2 组 exploratory matched pairs；继续扩展独立任务，只有 paired prospective evidence 足够时才讨论 efficacy。E2/E3 或 Test500 private evaluation 均需独立授权。
+7. [~] 已完成 6 条 compact trajectories 与 2 组 exploratory matched pairs；第三组 pair 已离线 ready。完成第三组与 pilot closeout 后，只有另行设计并授权更大规模 paired study 才讨论 efficacy；E2/E3 或 Test500 private evaluation 均需独立授权。
 
 #### 9.3.7 论文 / 简历叙事边界
 
