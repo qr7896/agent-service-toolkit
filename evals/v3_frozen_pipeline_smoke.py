@@ -39,11 +39,43 @@ def run_frozen_pipeline(
     }
 
 
+def run_real_pipeline(
+    rows: list[dict[str, Any]],
+    commit_distances: dict[tuple[str, str], int],
+    collection: dict[str, Any],
+    status: dict[str, Any],
+) -> dict[str, Any]:
+    if collection.get("protocol") != "v3-prospective-collection-v1":
+        raise ValueError("unsupported collection protocol")
+    if collection.get("sealed_test") is not False:
+        raise ValueError("real evaluation requires an explicitly non-sealed collection")
+    if status.get("collection_id") != collection.get("collection_id"):
+        raise ValueError("collection status does not match manifest")
+    if status.get("prospective_rows") != len(rows):
+        raise ValueError("prospective row count does not match status")
+    readiness = status.get("readiness") or {}
+    if not readiness.get("ready"):
+        raise ValueError("prospective status is not ready")
+    if set(readiness.get("ready_ids") or []) != {str(row.get("id") or "") for row in rows}:
+        raise ValueError("prospective row identities do not match status")
+
+    artifact = run_frozen_pipeline(rows, commit_distances)
+    artifact["protocol"] = "v3-frozen-real-evaluation-v1"
+    artifact["synthetic"] = False
+    artifact["claim_boundary"] = (
+        "Real prospective replay and evidence-availability evaluation only; "
+        "no causal memory efficacy claim."
+    )
+    return artifact
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--trajectories", type=Path, required=True)
     parser.add_argument("--commit-distances", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--collection", type=Path)
+    parser.add_argument("--status", type=Path)
     args = parser.parse_args()
     rows = [
         json.loads(line)
@@ -54,7 +86,17 @@ def main() -> None:
         (item["from"], item["to"]): int(item["distance"])
         for item in json.loads(args.commit_distances.read_text(encoding="utf-8"))
     }
-    artifact = run_frozen_pipeline(rows, distances)
+    if bool(args.collection) != bool(args.status):
+        parser.error("--collection and --status must be provided together")
+    if args.collection:
+        artifact = run_real_pipeline(
+            rows,
+            distances,
+            json.loads(args.collection.read_text(encoding="utf-8")),
+            json.loads(args.status.read_text(encoding="utf-8")),
+        )
+    else:
+        artifact = run_frozen_pipeline(rows, distances)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(artifact, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"ready": artifact["ready"], "synthetic": artifact.get("synthetic", True)}))

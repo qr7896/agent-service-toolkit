@@ -1,4 +1,4 @@
-from evals.v3_collection import collection_status, preflight
+from evals.v3_collection import collection_status, preflight, prospective_rows
 
 
 def test_collection_status_excludes_pre_marker_history():
@@ -32,6 +32,16 @@ def test_collection_status_reports_zero_without_new_rows():
     artifact = collection_status(manifest, [{"id": "old", "ended_at": "2026-09-18T12:00:00+00:00"}])
     assert artifact["prospective_rows"] == 0
     assert artifact["readiness"]["ready"] is False
+
+
+def test_prospective_rows_returns_all_marker_scoped_rows():
+    manifest = {"start_time": "2026-09-19T12:00:00+00:00"}
+    rows = [
+        {"id": "old", "ended_at": "2026-09-18T12:00:00+00:00"},
+        {"id": "success", "ended_at": "2026-09-19T13:00:00+00:00"},
+        {"id": "failure", "ended_at": "2026-09-19T14:00:00+00:00"},
+    ]
+    assert [row["id"] for row in prospective_rows(manifest, rows)] == ["success", "failure"]
 
 
 def test_preflight_does_not_create_trajectory(tmp_path):

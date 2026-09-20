@@ -1,6 +1,7 @@
 import pytest
 
 from evals.v3_compact_pilot import (
+    COMPACT_TASKS,
     MAX_OUTPUT_TOKENS,
     TASK_TOKEN_CEILING,
     TOTAL_TOKEN_CEILING,
@@ -8,14 +9,14 @@ from evals.v3_compact_pilot import (
     _apply_edits,
     _parse_edits,
 )
-from evals.v3_pilot_runner import TASKS
 
 
 def test_compact_pilot_is_one_small_call_per_task():
     assert TOTAL_TOKEN_CEILING == 12_000
     assert TASK_TOKEN_CEILING == 4_000
     assert MAX_OUTPUT_TOKENS == 600
-    assert set(VISIBLE_RANGES) == {task.instance_id for task in TASKS}
+    assert len(COMPACT_TASKS) == 4
+    assert set(VISIBLE_RANGES) == {task.instance_id for task in COMPACT_TASKS}
 
 
 def test_exact_edit_parser_and_apply(tmp_path):

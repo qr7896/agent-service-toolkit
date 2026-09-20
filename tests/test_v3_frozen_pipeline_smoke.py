@@ -1,4 +1,4 @@
-from evals.v3_frozen_pipeline_smoke import run_frozen_pipeline
+from evals.v3_frozen_pipeline_smoke import run_frozen_pipeline, run_real_pipeline
 
 
 def test_synthetic_nonsealed_frozen_pipeline_connects_end_to_end():
@@ -42,3 +42,23 @@ def test_synthetic_nonsealed_frozen_pipeline_connects_end_to_end():
     assert len(artifact["ablation"]["samples"]) == 3
     assert artifact["counterfactual"]["ready_pairs"] == 1
     assert "no efficacy" in artifact["claim_boundary"]
+
+    collection = {
+        "protocol": "v3-prospective-collection-v1",
+        "collection_id": "cohort-1",
+        "sealed_test": False,
+    }
+    status = {
+        "collection_id": "cohort-1",
+        "prospective_rows": 3,
+        "readiness": {"ready": True, "ready_ids": ["a", "b", "c"]},
+    }
+    real = run_real_pipeline(
+        rows,
+        {("c1", "c2"): 1, ("c1", "c3"): 2, ("c2", "c3"): 1},
+        collection,
+        status,
+    )
+    assert real["protocol"] == "v3-frozen-real-evaluation-v1"
+    assert real["synthetic"] is False
+    assert "no causal memory efficacy claim" in real["claim_boundary"]

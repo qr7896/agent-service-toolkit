@@ -22,7 +22,9 @@ from core import get_model
 from evals.e1b_autonomous_harness import validate_write_path
 from evals.e1b_editor_adapter import content_text, usage_tokens
 from evals.v3_pilot_runner import (
-    TASKS,
+    TASKS as PILOT_TASKS,
+)
+from evals.v3_pilot_runner import (
     PilotTask,
     _grade,
     _prepare,
@@ -42,6 +44,18 @@ TOTAL_TOKEN_CEILING = 12_000
 TASK_TOKEN_CEILING = 4_000
 MAX_OUTPUT_TOKENS = 600
 
+COMPACT_TASKS = (
+    *PILOT_TASKS,
+    PilotTask(
+        "v3pilot__rebuild-incomplete-workspace-04",
+        "53cbd6658c10748bcceb83ee826485f7f0b94045",
+        "c5dfd91a3d261990739c27ac8a56ec8e7f045886",
+        "An existing V3 pilot workspace may be incomplete after interruption. Rebuild it instead of silently reusing it, including on Windows where copied Git files can be read-only.",
+        ("evals/v3_pilot_runner.py",),
+        "rebuild_incomplete_workspace",
+    ),
+)
+
 VISIBLE_RANGES = {
     "v3pilot__pytest-evals-import-01": (("pyproject.toml", 90, 104),),
     "v3pilot__direct-research-cli-02": (
@@ -51,6 +65,10 @@ VISIBLE_RANGES = {
     "v3pilot__newline-portable-hash-03": (
         ("evals/v1_evaluate_frozen.py", 1, 25),
         ("evals/v1_freeze_policy.py", 1, 25),
+    ),
+    "v3pilot__rebuild-incomplete-workspace-04": (
+        ("evals/v3_pilot_runner.py", 1, 12),
+        ("evals/v3_pilot_runner.py", 139, 172),
     ),
 }
 
@@ -281,7 +299,7 @@ async def _run(manifest_path: Path) -> dict[str, Any]:
         }
     )
     completed = {row["instance_id"] for row in state["rows"] if row["status"] != "interrupted"}
-    for task in TASKS:
+    for task in COMPACT_TASKS:
         if task.instance_id in completed:
             continue
         if _spent() + TASK_TOKEN_CEILING > TOTAL_TOKEN_CEILING:
@@ -305,7 +323,7 @@ async def _run(manifest_path: Path) -> dict[str, Any]:
 
 def _preflight() -> dict[str, Any]:
     rows = []
-    for task in TASKS:
+    for task in COMPACT_TASKS:
         with tempfile.TemporaryDirectory(prefix="v3-compact-preflight-") as directory:
             workspace = Path(directory) / "repo"
             _prepare(workspace, task)

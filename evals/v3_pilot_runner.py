@@ -235,6 +235,49 @@ def _grade(task: PilotTask, root: Path) -> dict[str, Any]:
             "passed": all(row["passed"] for row in rows),
             "rows": rows,
         }
+    if task.grader == "rebuild_incomplete_workspace":
+        code = """
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import evals.v3_pilot_runner as runner
+
+real_rmtree = runner.shutil.rmtree
+remove_calls = []
+
+def checked_rmtree(path, **kwargs):
+    callback = kwargs.get("onexc") or kwargs.get("onerror")
+    assert callable(callback)
+    remove_calls.append(Path(path))
+    return real_rmtree(path)
+
+def fake_copytree(_source, target, **_kwargs):
+    Path(target).mkdir(parents=True)
+
+def fake_write(root, _commit, relative):
+    target = root / relative
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text("restored", encoding="utf-8")
+
+runner.shutil.rmtree = checked_rmtree
+runner.shutil.copytree = fake_copytree
+runner._write_version = fake_write
+runner._git = lambda *_args, **_kwargs: None
+
+with TemporaryDirectory() as directory:
+    root = Path(directory) / "repo"
+    root.mkdir()
+    task = runner.TASKS[0]
+    runner._prepare(root, task)
+    restored = root / task.restore_paths[0]
+    assert restored.is_file()
+    marker = root / "complete-workspace-marker"
+    marker.write_text("keep", encoding="utf-8")
+    removals_after_rebuild = len(remove_calls)
+    runner._prepare(root, task)
+    assert marker.is_file()
+    assert len(remove_calls) == removals_after_rebuild
+"""
+        return _run([sys.executable, "-c", code], root, timeout=120)
     code = (
         "from pathlib import Path; from tempfile import TemporaryDirectory; "
         "from evals.v1_evaluate_frozen import sha256; "

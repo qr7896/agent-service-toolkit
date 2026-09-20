@@ -7,8 +7,9 @@ from pathlib import Path
 from typing import Any
 
 from evals.v3_chronological_replay import load_jsonl
+from evals.v3_compact_pilot import COMPACT_TASKS
 from evals.v3_memory_ablation import build_ablation
-from evals.v3_pilot_runner import TASKS, _grade, _prepare
+from evals.v3_pilot_runner import _grade, _prepare
 
 DEFAULT_THRESHOLD = 0.6
 SENSITIVITY_THRESHOLDS = (0.30, 0.35, 0.375, 0.38, 0.40, 0.50, 0.60, 0.70)
@@ -90,7 +91,7 @@ def build_pair_manifest(
 
 
 def prepare_pair_workspaces(manifest: dict[str, Any], root: Path) -> dict[str, Any]:
-    by_commit = {task.base_commit: task for task in TASKS}
+    by_commit = {task.base_commit: task for task in COMPACT_TASKS}
     prepared = []
     for pair in manifest.get("pairs") or []:
         task = by_commit.get(str(pair.get("source_commit") or ""))

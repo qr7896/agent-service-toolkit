@@ -4,9 +4,9 @@
 
 - Artifact type: experiment result / living log
 - Status: V3-0 through V3-6 COMPLETE; MECHANISM FROZEN
-- Date: 2026-09-19
+- Date: 2026-09-20
 - Verification status: ANALYZED
-- External model/API calls: 0
+- External model/API calls: 9 V3 calls / 16,297 provider tokens in total; only finalized artifacts are interpreted below
 - Internal E1-B sealed TEST opened/called: 0/0
 
 ## V3-0 — Readiness audit
@@ -112,6 +112,14 @@ Prospective preflight is now fail-closed: it performs read-only Git checks for r
 A real read-only preflight against `.codex/trajectories/coding_agent.jsonl` in the desktop checkout found the trajectory directory writable, readiness importable, and the Git root/HEAD available. It returned `execution_commit_available=true`, `ready_to_collect=true`, and `blockers=[]`. The cohort marker was intentionally not created yet because the frozen mechanism changes must first be committed and the non-sealed runner/model budget fixed. Focused V3 regression: **38 passed / 0 failed / 4 dependency warnings**. A broader V3 + legacy Research Mode run reached **47 passed** but one pre-existing `adaptive_retrieval_benchmark.py --help` import exceeded its 30-second test timeout; no V3 assertion failed. Model/API calls remain 0; sealed TEST opened/called remains 0/0.
 
 The real-artifact path is not yet closed: `evals.v3_frozen_pipeline_smoke` always emits `synthetic=true`, so its output cannot pass the default real-only artifact audit. This is an explicit prospective-evaluation blocker; the marker must not be edited by hand and no efficacy claim is allowed until a provenance-checked real artifact entry point exists.
+
+## Compact prospective cohort and first matched pair
+
+The compact non-sealed cohort now contains four provenance-complete trajectories. The first three tasks passed their hidden graders using 2,379 provider tokens. A fourth real commit-replay task used one `deepseek-flash` call and 907 tokens but failed its hidden grader: the patch rebuilt an incomplete workspace, yet also deleted complete existing workspaces instead of preserving them. The failure was retained and not retried. The cohort therefore has three successes and one failure using 3,286 provider tokens; this small, selected pilot is not reported as an Autonomous Repair Rate.
+
+Collection status reports 4/4 replay-ready rows, zero blocked rows, and provenance completeness 1.0. The real frozen evaluation is `ready=true`, `synthetic=false`, and passes the artifact audit. At the frozen default reliability threshold 0.6, selected experience count remains zero. The new failed trajectory supplies negative experience for future strict-past tasks but does not itself create another eligible pair at threshold 0.375.
+
+The first exploratory matched memory pair remains n=1: memory OFF and ON both passed with the same patch hash; ON consumed 1,165 tokens versus 1,032 OFF (+133, +12.9%). It is classified as `redundant_memory`. This is descriptive only and does not show that memory helps, harms, or is generally useless. Full non-model regression after the update: **446 passed / 4 skipped / 33 warnings**. Internal E1-B sealed TEST opened/called remains 0/0.
 
 ## Non-sealed pilot runner readiness
 

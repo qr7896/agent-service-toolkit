@@ -36,6 +36,20 @@ def create_manifest(
     return artifact
 
 
+def prospective_rows(manifest: dict[str, Any], rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    start = datetime.fromisoformat(str(manifest["start_time"]).replace("Z", "+00:00"))
+    prospective = []
+    for row in rows:
+        value = str(row.get("ended_at") or "")
+        try:
+            ended = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if ended.tzinfo is not None and ended >= start:
+            prospective.append(row)
+    return prospective
+
+
 def collection_status(manifest: dict[str, Any], rows: list[dict[str, Any]]) -> dict[str, Any]:
     if manifest.get("protocol") != "v3-prospective-collection-v1":
         raise ValueError("unsupported collection protocol")
@@ -50,16 +64,7 @@ def collection_status(manifest: dict[str, Any], rows: list[dict[str, Any]]) -> d
             raise ValueError(f"collection manifest missing {key}")
     if manifest["trajectory_schema"] != "v3-trajectory-v1":
         raise ValueError("unsupported trajectory schema")
-    start = datetime.fromisoformat(str(manifest["start_time"]).replace("Z", "+00:00"))
-    prospective = []
-    for row in rows:
-        value = str(row.get("ended_at") or "")
-        try:
-            ended = datetime.fromisoformat(value.replace("Z", "+00:00"))
-        except ValueError:
-            continue
-        if ended.tzinfo is not None and ended >= start:
-            prospective.append(row)
+    prospective = prospective_rows(manifest, rows)
     readiness = build_readiness(prospective)
     return {
         "protocol": "v3-prospective-collection-status-v1",
@@ -134,6 +139,7 @@ def main() -> None:
     status = sub.add_parser("status")
     status.add_argument("--manifest", type=Path, required=True)
     status.add_argument("--output", type=Path, required=True)
+    status.add_argument("--prospective-output", type=Path)
     check = sub.add_parser("preflight")
     check.add_argument("--trajectories", type=Path, required=True)
     check.add_argument("--output", type=Path, required=True)
@@ -147,9 +153,17 @@ def main() -> None:
         )
     elif args.command == "status":
         manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
-        artifact = collection_status(manifest, _rows(Path(manifest["trajectory_path"])))
+        rows = _rows(Path(manifest["trajectory_path"]))
+        artifact = collection_status(manifest, rows)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(artifact, ensure_ascii=False, indent=2), encoding="utf-8")
+        if args.prospective_output:
+            args.prospective_output.parent.mkdir(parents=True, exist_ok=True)
+            selected = prospective_rows(manifest, rows)
+            args.prospective_output.write_text(
+                "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in selected),
+                encoding="utf-8",
+            )
     else:
         artifact = preflight(args.trajectories)
         args.output.parent.mkdir(parents=True, exist_ok=True)

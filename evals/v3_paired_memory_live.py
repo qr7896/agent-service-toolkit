@@ -16,6 +16,7 @@ from agents.model_budget import budgeted_ainvoke
 from agents.workspace import export_patch
 from core import get_model
 from evals.v3_compact_pilot import (
+    COMPACT_TASKS,
     SYSTEM,
     _apply_edits,
     _parse_edits,
@@ -23,7 +24,8 @@ from evals.v3_compact_pilot import (
     content_text,
     usage_tokens,
 )
-from evals.v3_pilot_runner import TASKS, _grade, _prepare
+from evals.v3_paired_memory_report import classify
+from evals.v3_pilot_runner import _grade, _prepare
 from schema.models import DeepseekModelName
 
 RUN_ID = "v3-paired-memory-0375-001"
@@ -36,7 +38,7 @@ MAX_OUTPUT_TOKENS = 600
 
 
 def _task(commit: str):
-    return next(task for task in TASKS if task.base_commit == commit)
+    return next(task for task in COMPACT_TASKS if task.base_commit == commit)
 
 
 def _memory(experience_ids: list[str]) -> list[dict[str, Any]]:
@@ -56,6 +58,27 @@ def _memory(experience_ids: list[str]) -> list[dict[str, Any]]:
                 }
             )
     return rows
+
+
+def _validate_pair(pair: dict[str, Any]) -> None:
+    arms = pair.get("arms") or []
+    expected = [("memory_off", False), ("memory_on", True)]
+    observed = [(arm.get("name"), arm.get("memory_enabled")) for arm in arms]
+    if observed != expected:
+        raise ValueError("pair must contain ordered memory_off and memory_on arms")
+    if not pair.get("eligible_experience_ids"):
+        raise ValueError("memory_on requires at least one eligible experience")
+    invariants = pair.get("invariants") or {}
+    required = {
+        "same_task",
+        "same_source_commit",
+        "same_model",
+        "same_token_ceiling",
+        "same_grader",
+        "strict_past_only",
+    }
+    if any(invariants.get(name) is not True for name in required):
+        raise ValueError("matched-pair invariants are not fully declared")
 
 
 async def run_arm(pair: dict[str, Any], arm: dict[str, Any]) -> dict[str, Any]:
@@ -131,18 +154,12 @@ async def run(manifest_path: Path) -> dict[str, Any]:
     if len(pairs) != 1:
         raise ValueError("expected exactly one matched pair")
     pair = pairs[0]
+    _validate_pair(pair)
     results = []
     for arm in pair["arms"]:
         results.append(await run_arm(pair, arm))
     same_patch = results[0]["patch_sha256"] == results[1]["patch_sha256"]
-    if results[1]["success"] and not results[0]["success"]:
-        outcome_class = "helpful_memory"
-    elif results[0]["success"] and not results[1]["success"]:
-        outcome_class = "harmful_memory"
-    elif same_patch and results[0]["success"] == results[1]["success"]:
-        outcome_class = "redundant_memory"
-    else:
-        outcome_class = "behavior_changed_no_success_delta"
+    outcome_class = classify(results[0], results[1])
     comparison = {
         "protocol": "v3-paired-memory-live-v1",
         "run_id": RUN_ID,
