@@ -54,6 +54,14 @@ COMPACT_TASKS = (
         ("evals/v3_pilot_runner.py",),
         "rebuild_incomplete_workspace",
     ),
+    PilotTask(
+        "v3pilot__usage-metadata-fallback-05",
+        "54242a09bcf1f2874d2c1bca831df72e4bba6fa5",
+        "b451111c5f3795d15dad556530342551525ab8ed",
+        "Normalize provider token usage from usage_metadata, with response_metadata token_usage as a fallback and a computed total when the provider omits it.",
+        ("evals/e1b_editor_adapter.py",),
+        "usage_tokens",
+    ),
 )
 
 VISIBLE_RANGES = {
@@ -70,6 +78,7 @@ VISIBLE_RANGES = {
         ("evals/v3_pilot_runner.py", 1, 12),
         ("evals/v3_pilot_runner.py", 139, 172),
     ),
+    "v3pilot__usage-metadata-fallback-05": (("evals/e1b_editor_adapter.py", 1, 24),),
 }
 
 SYSTEM = """You are editing a Python repository from bounded source excerpts.

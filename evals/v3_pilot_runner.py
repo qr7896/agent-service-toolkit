@@ -278,6 +278,22 @@ with TemporaryDirectory() as directory:
     assert len(remove_calls) == removals_after_rebuild
 """
         return _run([sys.executable, "-c", code], root, timeout=120)
+    if task.grader == "usage_tokens":
+        code = """
+from evals.e1b_editor_adapter import usage_tokens
+
+class Primary:
+    usage_metadata = {"input_tokens": 10, "output_tokens": 4, "total_tokens": 14}
+    response_metadata = {"token_usage": {"prompt_tokens": 99}}
+
+class Fallback:
+    usage_metadata = {}
+    response_metadata = {"token_usage": {"prompt_tokens": 7, "completion_tokens": 3}}
+
+assert usage_tokens(Primary()) == {"input_tokens": 10, "output_tokens": 4, "total_tokens": 14}
+assert usage_tokens(Fallback()) == {"input_tokens": 7, "output_tokens": 3, "total_tokens": 10}
+"""
+        return _run([sys.executable, "-c", code], root)
     code = (
         "from pathlib import Path; from tempfile import TemporaryDirectory; "
         "from evals.v1_evaluate_frozen import sha256; "

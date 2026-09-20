@@ -15,7 +15,7 @@ def test_compact_pilot_is_one_small_call_per_task():
     assert TOTAL_TOKEN_CEILING == 12_000
     assert TASK_TOKEN_CEILING == 4_000
     assert MAX_OUTPUT_TOKENS == 600
-    assert len(COMPACT_TASKS) == 4
+    assert len(COMPACT_TASKS) == 5
     assert set(VISIBLE_RANGES) == {task.instance_id for task in COMPACT_TASKS}
 
 
