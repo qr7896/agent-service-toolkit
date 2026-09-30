@@ -1,0 +1,40 @@
+{
+  "schema": "e1c-strict-successor-source-contract-independent-canary-assessment-v1",
+  "provider_calls": 0,
+  "required_trusted_prepatch_reproducers": 2,
+  "primary_count": 3,
+  "rows": [
+    {
+      "instance_id": "sympy__sympy-13761",
+      "issue_projection_sha256": "73fabd5400d4f1c3a5ffa7f0dbeee657f470832372039069bc2f63105cdaa9f7",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "status": "no_executable_reproducer",
+      "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e",
+      "artifact": ".codex/e1c/source_contract_canary/sympy__sympy-13761/source_contract_preflight.json",
+      "artifact_sha256": "d2e19446f4af156463ca385ddcf9007e92fca4024b8096e044e62f5b66ff0f56"
+    },
+    {
+      "instance_id": "django__django-12453",
+      "issue_projection_sha256": "a9698e7499103b47ce380b999844974a0e2fb9a48f254d627aed10acc6daa373",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "status": "no_executable_reproducer",
+      "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e",
+      "artifact": ".codex/e1c/source_contract_canary/django__django-12453/source_contract_preflight.json",
+      "artifact_sha256": "127d2f786c61b848c3c55ccb566d0a4f839249665082d4c5f11be100bc0534f8"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-21559",
+      "status": "pending_image_materialization"
+    }
+  ],
+  "trusted_prepatch_reproducer_count_so_far": 0,
+  "maximum_possible_final_count": 1,
+  "gate_pass_possible": false,
+  "gate_status": "sealed_negative_threshold_unreachable",
+  "paired_live_authorized": false,
+  "c5_reopened": false,
+  "protocol_changed": false,
+  "reserve_content_inspected": false
+}

@@ -1,0 +1,120 @@
+{
+  "additional_exclusion_identity_count": 64,
+  "additional_exclusion_sources": [
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v10_canary_manifest.json",
+      "sha256": "c220589d8948a423795004e1746f8ec4702b164aff4a3ad76e2c805ffff8b6fb"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v11_canary_manifest.json",
+      "sha256": "1fdfdb6506daa8aed7d34c0e5652eeed32a5af685219405a366b70e71e0c2cb0"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v12_canary_manifest.json",
+      "sha256": "0b78a37aef46a9612b8b15322c1e16bca696040c6988a41bf34a6057cda8581b"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v13_canary_manifest.json",
+      "sha256": "4f6fb1dd86169a2e1163b3f407d926bedd4427590d21a1c8e1f9fc5b443b2abf"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v14_canary_manifest.json",
+      "sha256": "94fa83d5a326e2c18213d73e70bde129a504f6daacfe388c417461298399cb93"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v15_canary_manifest.json",
+      "sha256": "50e4fb415898964756fe125991cebcd6c6e29c46d5add44abeda58ee508a9f97"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v20_canary_manifest.json",
+      "sha256": "8d53256810e3500aa7d0bb1fe83b81343c192874218ed0a77485875fa14c6ec8"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v23_canary_manifest.json",
+      "sha256": "96d3d488c9197a5fbb5a4768433ccfc647d87d5153e1dbb4d3167ed8fb5574b1"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v25_canary_manifest.json",
+      "sha256": "b5d4d7785af315485a9083d7e202bbe2a782daf5702ccac592a97e89c0ef45c5"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v5_canary_manifest.json",
+      "sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v6_canary_manifest.json",
+      "sha256": "ec6f311b806fbac3225d57fcd9858e2334af41af9bae0609640350fe12438fec"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v7_canary_manifest.json",
+      "sha256": "2b576ebf9fefb3cf6e8df99947ed6966924aa6d40ccb73b6a48dde48392c931f"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v8_canary_manifest.json",
+      "sha256": "6db92b9746c1c33419fcf587a58260712e4a95f40da39b1fd41dfdf459a02442"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v9_canary_manifest.json",
+      "sha256": "f9298c056d3116fdb27dc170704b7de6a61eb431cb42080288d8e4ac2bfd21b7"
+    },
+    {
+      "identity_count": 30,
+      "path": "data/e1c_strict_successor_setup_closure_dev30_behavioral_analysis.json",
+      "sha256": "b9af0ce00f109bc0f171075f9977715080eb3880369855fcfc8c9063183c513f"
+    }
+  ],
+  "clean_pool": "data/e1c_strict_v20_clean_metadata_pool.json",
+  "clean_pool_effective_exclusion_count": 256,
+  "clean_pool_sha256": "7f1b59aff7411df40ec5d877f726bcb4161e7238e961cda859fb3b489f764ab2",
+  "cti_freeze_sha256": "8c5ded85816ba276e8e634fde6b1c335324f8d40cedcf0183b38594d8ea37b05",
+  "eligible_identity_count": 2254,
+  "identity_frozen_before_task_yaml_materialization": true,
+  "outcome_inspected": false,
+  "provider_calls": 0,
+  "schema": "e1c-strict-successor-cti-canary-identity-v1",
+  "selection_rule": "sha256(salt+NUL+instance_id), greedy first 3 distinct repo_key after clean-pool and historical-canary/old-DEV exclusions",
+  "selection_salt": "e1c-strict-cti-independent-canary:8c5ded85816ba276e8e634fde6b1c335324f8d40cedcf0183b38594d8ea37b05",
+  "source": "frozen_swebench_git_tree_names_only",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "task_content_inspected": false,
+  "tasks": [
+    {
+      "instance_id": "astropy__astropy-12962",
+      "repo_key": "astropy",
+      "selection_rank_sha256": "003c280a9d231841cf4a37ef85d69a15dd4028d886ebc1962c2e81f84f422fff",
+      "task_yaml_blob_sha": "cad89687c4316e9a7731fd7c05c9d28d2f85a6ed",
+      "task_yaml_path": "tasks/astropy__astropy-12962/task.yaml",
+      "task_yaml_size": 395
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26291",
+      "repo_key": "matplotlib",
+      "selection_rank_sha256": "0063c1cdb7bc707667a5cabe5e8575ef527c6890a41e0836d0bca2c06b05d955",
+      "task_yaml_blob_sha": "47cd2ea44bc555353d9939e068503d1457f18dfa",
+      "task_yaml_path": "tasks/matplotlib__matplotlib-26291/task.yaml",
+      "task_yaml_size": 475
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7757",
+      "repo_key": "sphinx-doc",
+      "selection_rank_sha256": "0095257c2458bcc9f926f98cfa1cff2b243588751fbeea89778242cd7697c2fa",
+      "task_yaml_blob_sha": "9a9bd8e6165718b1e82aaf6905ff19a86425252e",
+      "task_yaml_path": "tasks/sphinx-doc__sphinx-7757/task.yaml",
+      "task_yaml_size": 457
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v14-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v14-independent-canary",
+  "mechanism_prereg_sha256": "f8b59e18894235457a71174f73481dc3aa2e2b7b5bdd60f84e1db2a359c2af02",
+  "tasks": [
+    {
+      "instance_id": "django__django-11880",
+      "repo": "django/django",
+      "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-11880:latest"
+    },
+    {
+      "instance_id": "astropy__astropy-13453",
+      "repo": "astropy/astropy",
+      "base_commit": "19cc80471739bcb67b7e8099246b391c355023ee",
+      "image": "swebench/sweb.eval.x86_64.astropy_1776_astropy-13453:latest"
+    },
+    {
+      "instance_id": "sympy__sympy-17318",
+      "repo": "sympy/sympy",
+      "base_commit": "d4e0231b08147337745dcf601e62de7eefe2fb2d",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-17318:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

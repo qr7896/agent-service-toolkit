@@ -1,0 +1,27 @@
+{
+  "schema": "e1c-strict-v9-selection-boundary-v1",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "canary_selected": false,
+  "mechanism_must_be_frozen_before_canary_selection": true,
+  "selection_salt": "e1c-strict-v9-independent-canary",
+  "contamination_count": 253,
+  "base_v8_boundary_sha256": "311e52bdfdbd34e0c95dae44422c28cf9b6ad8151fec28baee8d53053090b0f1",
+  "explicit_prior_canary_exclusions": [
+    "django__django-15569",
+    "django__django-11734",
+    "sphinx-doc__sphinx-8638",
+    "scikit-learn__scikit-learn-13313",
+    "django__django-13233",
+    "django__django-15995",
+    "django__django-14071",
+    "scikit-learn__scikit-learn-13536",
+    "scikit-learn__scikit-learn-13641"
+  ],
+  "v8_manifest_sha256": "6db92b9746c1c33419fcf587a58260712e4a95f40da39b1fd41dfdf459a02442",
+  "task_repo_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "prior_canary_reuse_allowed": false,
+  "outcome_conditioned_replacement_allowed": false,
+  "boundary_sha256": "891ff51e444f2b0d6b8879aa0c8573f8abe45031300d73359baff20451140630"
+}

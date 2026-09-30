@@ -1,0 +1,57 @@
+{
+  "protocol": "e1b-autonomous-dev-run-v0",
+  "scope": "DEV only; sealed TEST outcomes unopened",
+  "dry_run": false,
+  "identity": {
+    "model_id": "deepseek-flash",
+    "prompt_sha256": "7760c55dd81f80027661045410c15c71f7c59711ea2600c7727198013d740098",
+    "max_iterations": 2,
+    "max_files_written": 3,
+    "allow_test_file_writes": false,
+    "split_sha256": "3a22ef4c75fe8d3ee2c5c15e85ccc6048f9462351806b70bce9fefc020bc6083",
+    "tasks_sha256": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
+    "config_sha256": "e40e57b0f4a979bfc8dc66fff17ddc5e7734b340ff3fe6125d6e27d8025f1557"
+  },
+  "summary": {
+    "tasks": 1,
+    "attempted_tasks": 0,
+    "resolved": 0,
+    "resolved_fraction": 0.0,
+    "parse_failures": 0,
+    "model_failures": 0,
+    "budget_exhaustions": 1,
+    "total_model_calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "total_tokens": 0,
+    "wall_time_ms": 0.2
+  },
+  "rows": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "base_resolved": false,
+      "model_calls": 0,
+      "evidence_protocol": "declared-seed-read-v6-contract-coverage",
+      "resolved": false,
+      "failure": "budget_exhaustion",
+      "error": "task call ceiling reached: 2/2",
+      "wall_time_ms": 0.2
+    }
+  ],
+  "execution": {
+    "temperature": 0,
+    "max_output_tokens": 550,
+    "task_token_ceiling": 4000,
+    "original_token_budget": 16000,
+    "max_iterations": 2,
+    "evidence_protocol": "declared-seed-read-v6-contract-coverage",
+    "provider": "deepseek",
+    "provider_run_id": "e1b-r10-dev-v7",
+    "provider_ledger_path": ".codex\\e1b\\r10-v7\\provider_calls.jsonl",
+    "thinking_disabled": true,
+    "seed": null,
+    "sandbox_required": true,
+    "contract_coverage_enforced": true,
+    "test_outcomes_opened": 0
+  }
+}

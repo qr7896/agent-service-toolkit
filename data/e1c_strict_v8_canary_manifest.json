@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v8-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v8-independent-canary",
+  "mechanism_prereg_sha256": "b30456c21662b0fb937ef32ffe52a31042c2272edb226fa927f347b465400740",
+  "tasks": [
+    {
+      "instance_id": "django__django-14071",
+      "repo": "django/django",
+      "base_commit": "a9cf954e6174450057ea1065aa2ccbbd12f59b65",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-14071:latest"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13536",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "c863ed3d57e3b5ceeb4e7e8001c96aad7110c605",
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13536:latest"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13641",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "badaa153e67ffa56fb1a413b3b7b5b8507024291",
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13641:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

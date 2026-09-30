@@ -1,0 +1,24 @@
+{
+  "environment_probe_count": 2,
+  "environment_probe_repo_count": 2,
+  "gate_passed": true,
+  "gate_sha256": "178b2e40856b748098114b1b77f9d5d2a922926670e0952e64b58c6d2604c6cd",
+  "provider_calls": 0,
+  "requirements": {
+    "all_environment_probes_available": true,
+    "canonical_interpreter_images_ge_2": true,
+    "canonical_interpreter_repos_ge_2": true,
+    "compile_ready_candidates_ge_2": true,
+    "compile_ready_repos_ge_2": true,
+    "focused_tests_passed": true,
+    "full_dev30_denominator": true,
+    "leakage_forbidden_hits_zero": true,
+    "prior_efil_remains_negative": true,
+    "provider_calls_zero": true,
+    "task_specific_rules_zero": true,
+    "trusted_reproducer_gain": true
+  },
+  "schema": "e1c-strict-successor-cti-development-gate-v1",
+  "task_count": 30,
+  "trusted_reproducer_count": 1
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "e1c-strict-v5-stage-b-gate-v1",
+  "stage_b_ready": true,
+  "reason": "stage_b_boundary_ready",
+  "checks": {
+    "inline_assertion_removed": true,
+    "test_definition_removed": true,
+    "production_candidate_only": true,
+    "evaluator_marker_fail_closed": true,
+    "test_path_read_rejected": true
+  },
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "engineering_gate_only": true
+}

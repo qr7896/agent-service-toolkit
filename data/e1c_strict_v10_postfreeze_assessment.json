@@ -1,0 +1,84 @@
+{
+  "schema": "e1c-strict-v10-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-5731",
+      "statement_sha256": "66c1d8feb27402efe1ca5a9e023922357d9cdf7f0832b60593ea85dcdba19bae",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "head": "5db40465955a30acd601d0c3d7ceaebe34d28d11",
+        "base_commit": "5db40465955a30acd601d0c3d7ceaebe34d28d11"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v10-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "f1789ef4f075d6f671a0b62aeab0e6c8c7ce652bea87b62f416c1cd6201d414a"
+      }
+    },
+    {
+      "instance_id": "django__django-16411",
+      "statement_sha256": "a1c4928b9859b260a1593cceadb3a85586856b14c66872cdadb22ad83f0efc35",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "head": "75500feecddcb27b6ab65c9057e7317024cef761",
+        "base_commit": "75500feecddcb27b6ab65c9057e7317024cef761"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v10-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "f1789ef4f075d6f671a0b62aeab0e6c8c7ce652bea87b62f416c1cd6201d414a"
+      }
+    },
+    {
+      "instance_id": "django__django-12912",
+      "statement_sha256": "607c7ecc0ef35fd4ff9ae55b7ff7fd8d5a58e99328c7dac94b6481d57a445bd7",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "head": "42c08ee46539ef44f8658ebb1cbefb408e0d03fe",
+        "base_commit": "42c08ee46539ef44f8658ebb1cbefb408e0d03fe"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v10-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "f1789ef4f075d6f671a0b62aeab0e6c8c7ce652bea87b62f416c1cd6201d414a"
+      }
+    }
+  ],
+  "summary_sha256": "9308975aae252b0bbba85a81099a1e78afcb1a00f0fb112172488ef9e2f69a7f"
+}

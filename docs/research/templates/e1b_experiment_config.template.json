@@ -1,0 +1,16 @@
+{
+  "frozen_identifiers": {
+    "model_id": "<exact-provider/model-version>",
+    "editor_prompt_sha256": "<64-hex-sha256>",
+    "runtime_sha256": "<64-hex-sha256>",
+    "retrieval_policy_sha256": "<64-hex-sha256>",
+    "tool_config_sha256": "<64-hex-sha256>",
+    "sandbox_config_sha256": "<64-hex-sha256>",
+    "analysis_script_sha256": "<64-hex-sha256>",
+    "experiment_arm_id": "<immutable-arm-id>"
+  },
+  "provider_call_ceiling": 0,
+  "provider_token_ceiling": 0,
+  "one_shot_frozen": false,
+  "runtime_features": []
+}

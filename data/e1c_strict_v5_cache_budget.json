@@ -1,0 +1,37 @@
+{
+  "schema": "e1c-strict-v5-cache-budget-v1",
+  "diagnostic_only": true,
+  "changes_admission_gate": false,
+  "pull_timeout_seconds": 900,
+  "required_count": 3,
+  "ready_count": 3,
+  "minimum_required_bytes_per_second_for_all_missing_images": 2244749,
+  "minimum_required_megabytes_per_second_for_all_missing_images": 2.245,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "cache_accounting_ready": true,
+      "remaining_compressed_bytes": 2020273782,
+      "required_bytes_per_second_for_budget": 2244749,
+      "required_megabytes_per_second_for_budget": 2.245
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "cache_accounting_ready": true,
+      "remaining_compressed_bytes": 0,
+      "required_bytes_per_second_for_budget": 0,
+      "required_megabytes_per_second_for_budget": 0.0
+    },
+    {
+      "instance_id": "django__django-16092",
+      "cache_accounting_ready": true,
+      "remaining_compressed_bytes": 1351384554,
+      "required_bytes_per_second_for_budget": 1501539,
+      "required_megabytes_per_second_for_budget": 1.502
+    }
+  ]
+}

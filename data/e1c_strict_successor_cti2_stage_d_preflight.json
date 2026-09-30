@@ -1,0 +1,74 @@
+{
+  "active_set": [
+    "pydata__xarray-4939",
+    "scikit-learn__scikit-learn-25370",
+    "psf__requests-1327"
+  ],
+  "admission_complete": true,
+  "admitted_count": 3,
+  "forbidden_feedback_used": false,
+  "gate_passed": false,
+  "next_gate": "blocked: independent canary requires >=2/3 trusted pre-patch reproducers; do not run paired live canary or open C5",
+  "official_base_or_gold_used_for_probe_generation": false,
+  "provider_calls": 0,
+  "required_trusted_reproducer_count": 2,
+  "sanitized_issue_projected_count": 3,
+  "schema": "e1c-strict-successor-cti2-stage-d-preflight-v1",
+  "tasks": [
+    {
+      "candidate_count": 6,
+      "candidate_paths": [
+        "xarray/core/rolling.py",
+        "xarray/core/common.py",
+        "xarray/core/rolling.py",
+        "xarray/core/variable.py",
+        "xarray/core/dataarray.py",
+        "xarray/core/dataset.py"
+      ],
+      "instance_id": "pydata__xarray-4939",
+      "issue_projection_sha256": "4b42d1f1a48efb9f82f9677b1fb0a3e9622e9dcddd91d4b35e16f574e3837a4d",
+      "localization_sha256": "bf93f5291e428a159a4668f51acf87b807d44c4baa39101b75145cbe110484cb",
+      "reason": "no_safe_behavioral_relation",
+      "trusted_reproducer": false,
+      "witness_plan_sha256": "eaeac03aa8d0304652e104cb0aac2a4d9ab8a5562957821dff2f9b09a4aee98e",
+      "witness_status": "no_reproducer"
+    },
+    {
+      "candidate_count": 6,
+      "candidate_paths": [
+        "sklearn/manifold/_t_sne.py",
+        "sklearn/manifold/_t_sne.py",
+        "sklearn/manifold/_t_sne.py",
+        "sklearn/manifold/_t_sne.py",
+        "sklearn/manifold/_t_sne.py",
+        "sklearn/manifold/_t_sne.py"
+      ],
+      "instance_id": "scikit-learn__scikit-learn-25370",
+      "issue_projection_sha256": "cd018836a3b1c01b590bab5fc6f02a15bae29656edcea94573b4e3b386266017",
+      "localization_sha256": "b02f45eaf7c9dd324aa669b61e8cb532557bb120ed2d7d95339c1271b61e3a73",
+      "reason": "no_safe_behavioral_relation",
+      "trusted_reproducer": false,
+      "witness_plan_sha256": "eaeac03aa8d0304652e104cb0aac2a4d9ab8a5562957821dff2f9b09a4aee98e",
+      "witness_status": "no_reproducer"
+    },
+    {
+      "candidate_count": 6,
+      "candidate_paths": [
+        "requests/sessions.py",
+        "requests/sessions.py",
+        "requests/sessions.py",
+        "requests/sessions.py",
+        "requests/sessions.py",
+        "requests/sessions.py"
+      ],
+      "instance_id": "psf__requests-1327",
+      "issue_projection_sha256": "59f787501f20ed79c40331db0701f60d6aba67354838644352062b758a2db370",
+      "localization_sha256": "d5a39987b9c43b4c9ab16179e7a8f6d7cbb09a41e10f6b83ccbb28df43d5a0ea",
+      "reason": "no_safe_behavioral_relation",
+      "trusted_reproducer": false,
+      "witness_plan_sha256": "eaeac03aa8d0304652e104cb0aac2a4d9ab8a5562957821dff2f9b09a4aee98e",
+      "witness_status": "no_reproducer"
+    }
+  ],
+  "trusted_reproducer_count": 0
+}

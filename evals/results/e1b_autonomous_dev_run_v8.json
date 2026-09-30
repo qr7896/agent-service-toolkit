@@ -1,0 +1,237 @@
+{
+  "protocol": "e1b-autonomous-dev-run-v0",
+  "scope": "DEV only; sealed TEST outcomes unopened",
+  "dry_run": false,
+  "identity": {
+    "model_id": "deepseek-flash",
+    "prompt_sha256": "7760c55dd81f80027661045410c15c71f7c59711ea2600c7727198013d740098",
+    "max_iterations": 2,
+    "max_files_written": 3,
+    "allow_test_file_writes": false,
+    "split_sha256": "3a22ef4c75fe8d3ee2c5c15e85ccc6048f9462351806b70bce9fefc020bc6083",
+    "tasks_sha256": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
+    "config_sha256": "e40e57b0f4a979bfc8dc66fff17ddc5e7734b340ff3fe6125d6e27d8025f1557"
+  },
+  "summary": {
+    "tasks": 4,
+    "attempted_tasks": 4,
+    "resolved": 0,
+    "resolved_fraction": 0.0,
+    "parse_failures": 0,
+    "model_failures": 0,
+    "budget_exhaustions": 0,
+    "total_model_calls": 6,
+    "input_tokens": 4914,
+    "output_tokens": 477,
+    "total_tokens": 5391,
+    "wall_time_ms": 14606.9
+  },
+  "rows": [
+    {
+      "result_schema": "e1b-r10-v8-result-v1",
+      "transition_schema": "e1b-state-transition-v1",
+      "instance_id": "e1b__async-propagation-22",
+      "base_resolved": false,
+      "model_calls": 2,
+      "evidence_protocol": "declared-seed-read-v7-coverage-state-transition",
+      "input_tokens": 1532,
+      "output_tokens": 176,
+      "total_tokens": 1708,
+      "proposal_coverage": {
+        "required_participants": [
+          "src/agents/async_runner.py"
+        ],
+        "written_participants": [
+          "src/agents/async_runner.py"
+        ],
+        "missing_required_participants": [],
+        "unexpected_participants": [],
+        "participant_coverage_complete": true
+      },
+      "proposal_transition": {
+        "schema_version": "e1b-state-transition-v1",
+        "obligations": [],
+        "missing_obligations": [],
+        "truthiness_guards": [],
+        "transition_witness_complete": true,
+        "scope": "static guarded-state witness only; necessary condition for explicit state/version transitions, not semantic equivalence or correctness proof"
+      },
+      "final_coverage": {
+        "required_participants": [
+          "src/agents/async_runner.py"
+        ],
+        "written_participants": [
+          "src/agents/async_runner.py"
+        ],
+        "missing_required_participants": [],
+        "unexpected_participants": [],
+        "participant_coverage_complete": true
+      },
+      "final_transition": {
+        "schema_version": "e1b-state-transition-v1",
+        "obligations": [],
+        "missing_obligations": [],
+        "truthiness_guards": [],
+        "transition_witness_complete": true,
+        "scope": "static guarded-state witness only; necessary condition for explicit state/version transitions, not semantic equivalence or correctness proof"
+      },
+      "proposal_patch_sha256": "bf11bba24e737543473cfe588e819f61248d4881939dc71dbdb095581df02c6d",
+      "patch_sha256": "bf11bba24e737543473cfe588e819f61248d4881939dc71dbdb095581df02c6d",
+      "review_changed_patch": false,
+      "files_written": [
+        "src/agents/async_runner.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_22.py::test_fix": false
+      },
+      "pass_to_pass": {
+        "test_e1b_22.py::test_regression": true
+      },
+      "failure": null,
+      "wall_time_ms": 4993.8
+    },
+    {
+      "result_schema": "e1b-r10-v8-result-v1",
+      "transition_schema": "e1b-state-transition-v1",
+      "instance_id": "e1b__config-code-budget-25",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v7-coverage-state-transition",
+      "input_tokens": 853,
+      "output_tokens": 39,
+      "total_tokens": 892,
+      "resolved": false,
+      "failure": "contract_coverage_failure",
+      "error": "contract coverage incomplete: missing required participants: config/retrieval.json",
+      "wall_time_ms": 606.7
+    },
+    {
+      "result_schema": "e1b-r10-v8-result-v1",
+      "transition_schema": "e1b-state-transition-v1",
+      "instance_id": "e1b__cross-module-status-26",
+      "base_resolved": false,
+      "model_calls": 2,
+      "evidence_protocol": "declared-seed-read-v7-coverage-state-transition",
+      "input_tokens": 1815,
+      "output_tokens": 146,
+      "total_tokens": 1961,
+      "proposal_coverage": {
+        "required_participants": [
+          "src/agents/tool_result.py",
+          "src/service/task_adapter.py"
+        ],
+        "written_participants": [
+          "src/agents/tool_result.py",
+          "src/service/task_adapter.py"
+        ],
+        "missing_required_participants": [],
+        "unexpected_participants": [],
+        "participant_coverage_complete": true
+      },
+      "proposal_transition": {
+        "schema_version": "e1b-state-transition-v1",
+        "obligations": [
+          {
+            "state": "failed",
+            "mode": "change",
+            "witness_count": 2,
+            "guarded_witness": true,
+            "satisfied": true
+          },
+          {
+            "state": "completed",
+            "mode": "identity",
+            "witness_count": 2,
+            "guarded_witness": true,
+            "satisfied": true
+          }
+        ],
+        "missing_obligations": [],
+        "truthiness_guards": [],
+        "transition_witness_complete": true,
+        "scope": "static guarded-state witness only; necessary condition for explicit state/version transitions, not semantic equivalence or correctness proof"
+      },
+      "final_coverage": {
+        "required_participants": [
+          "src/agents/tool_result.py",
+          "src/service/task_adapter.py"
+        ],
+        "written_participants": [
+          "src/agents/tool_result.py",
+          "src/service/task_adapter.py"
+        ],
+        "missing_required_participants": [],
+        "unexpected_participants": [],
+        "participant_coverage_complete": true
+      },
+      "final_transition": {
+        "schema_version": "e1b-state-transition-v1",
+        "obligations": [
+          {
+            "state": "failed",
+            "mode": "change",
+            "witness_count": 2,
+            "guarded_witness": true,
+            "satisfied": true
+          },
+          {
+            "state": "completed",
+            "mode": "identity",
+            "witness_count": 2,
+            "guarded_witness": true,
+            "satisfied": true
+          }
+        ],
+        "missing_obligations": [],
+        "truthiness_guards": [],
+        "transition_witness_complete": true,
+        "scope": "static guarded-state witness only; necessary condition for explicit state/version transitions, not semantic equivalence or correctness proof"
+      },
+      "proposal_patch_sha256": "df84746af3a6bf38a95fe26a8079ad8080c83d1fe3b53b56a090403f8a45f4a2",
+      "patch_sha256": "df84746af3a6bf38a95fe26a8079ad8080c83d1fe3b53b56a090403f8a45f4a2",
+      "review_changed_patch": false,
+      "files_written": [
+        "src/agents/tool_result.py",
+        "src/service/task_adapter.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_26.py::test_fix": true
+      },
+      "pass_to_pass": {
+        "test_e1b_26.py::test_regression_ok": true,
+        "test_e1b_26.py::test_regression_pending": false
+      },
+      "failure": null,
+      "wall_time_ms": 4841.0
+    },
+    {
+      "result_schema": "e1b-r10-v8-result-v1",
+      "transition_schema": "e1b-state-transition-v1",
+      "instance_id": "e1b__state-version-29",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v7-coverage-state-transition",
+      "input_tokens": 714,
+      "output_tokens": 116,
+      "total_tokens": 830,
+      "resolved": false,
+      "failure": "state_transition_failure",
+      "error": "state-transition witness incomplete: identity:version:2",
+      "wall_time_ms": 4165.4
+    }
+  ],
+  "result_schema": "e1b-r10-v8-result-v1",
+  "execution": {
+    "result_schema": "e1b-r10-v8-result-v1",
+    "transition_schema": "e1b-state-transition-v1",
+    "evidence_protocol": "declared-seed-read-v7-coverage-state-transition",
+    "provider_run_id": "e1b-r10-dev-v8",
+    "provider_ledger_path": ".codex\\e1b\\r10-v8\\provider_calls.jsonl",
+    "contract_coverage_enforced": true,
+    "state_transition_enforced": true,
+    "test_outcomes_opened": 0,
+    "freeze_gate": "4/4 resolved + protocol valid + no regression"
+  }
+}

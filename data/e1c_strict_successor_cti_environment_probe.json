@@ -1,0 +1,29 @@
+{
+  "probes": [
+    {
+      "available": true,
+      "canonical_python": "/opt/miniconda3/envs/testbed/bin/python",
+      "image_digest": "swebench/sweb.eval.x86_64.sympy_1776_sympy-14711@sha256:db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+      "network_disabled": true,
+      "repo": "sympy",
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b54548c854bc75488ac4b1c2b82599bd11527e70ae9c6dc175f39752af7f7afc",
+      "version_text": "Python 3.9.20"
+    },
+    {
+      "available": true,
+      "canonical_python": "/opt/miniconda3/envs/testbed/bin/python",
+      "image_digest": "swebench/sweb.eval.x86_64.django_1776_django-11734@sha256:5ddbc111ccc7ed091855034eacff1c58347df158d6acd0c015feab17587d36a2",
+      "network_disabled": true,
+      "repo": "django",
+      "returncode": 0,
+      "stderr_sha256": "b162eb354bf43eb3160f72460c192ee5839428a019558ec969143f7c64b5036f",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version_text": "Python 3.6.13 :: Anaconda, Inc."
+    }
+  ],
+  "provider_calls": 0,
+  "repo_count": 2,
+  "schema": "e1c-strict-successor-cti-environment-probe-v1"
+}

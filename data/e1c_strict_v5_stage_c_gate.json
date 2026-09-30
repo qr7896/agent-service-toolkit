@@ -1,0 +1,23 @@
+{
+  "schema": "e1c-strict-v5-stage-c-gate-v1",
+  "stage_c_ready": true,
+  "reason": "stage_c_taxonomy_ready",
+  "checks": {
+    "denominator_30": true,
+    "row_count_30": true,
+    "unique_identity_count_30": true,
+    "every_row_has_primary_failure": true,
+    "runtime_answer_hints_not_exported": true,
+    "zero_provider_calls": true,
+    "pareto_denominator_30": true,
+    "pareto_aggregate_only": true,
+    "pareto_counts_cover_30": true
+  },
+  "denominator": 30,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "engineering_gate_only": true
+}

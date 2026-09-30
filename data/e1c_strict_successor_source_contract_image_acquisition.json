@@ -1,0 +1,42 @@
+{
+  "blocker": "WebCodex 120s Docker pull channel timed out after reusing six cached layers; image not yet materialized. Do not duplicate the pull in this short channel; resume externally/with a longer-lived route, then inspect digest before runtime validation.",
+  "complete": false,
+  "destructive_actions": [],
+  "policy": "single sequential pull; no duplicate pull, no concurrent second pull, no docker prune",
+  "provider_calls": 0,
+  "rows": [
+    {
+      "cached_layers_observed": [
+        "39a945af8df2",
+        "fd3f01088aa8",
+        "079027039e9d",
+        "407de719c2d3",
+        "0ddda5039dab",
+        "53752545c9b2"
+      ],
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-15569:latest",
+      "instance_id": "django__django-15569",
+      "job_id": "7cbe0576-a632-460b-9af7-bf6329ef144f",
+      "local": false,
+      "pending_layers_observed": [
+        "21a080cb8978",
+        "7e15a8d91bcb",
+        "c425cda090f2",
+        "4f4fb700ef54"
+      ],
+      "repo_digests": null,
+      "state": "pull_timeout_partial_cache",
+      "terminal_job_status": "timeout",
+      "timeout_seconds": 120
+    },
+    {
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13313:latest",
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "job_id": null,
+      "local": false,
+      "repo_digests": null,
+      "state": "not_started_to_avoid_parallel_pull"
+    }
+  ],
+  "schema": "e1c-strict-successor-source-contract-image-acquisition-v1"
+}

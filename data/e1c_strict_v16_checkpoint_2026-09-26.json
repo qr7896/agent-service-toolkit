@@ -1,0 +1,7 @@
+{
+  "schema":"e1c-strict-v16-development-checkpoint-v1","provider_calls":0,"development_only":true,"independent_evidence":false,"sealed_v15_canary_used_for_tuning":false,
+  "focused_tests":"36_passed","development_replay_task_count":6,"development_executable_candidate_task_count":6,"development_consensus_candidate_task_count":4,"development_replay_sha256":"2181e16b80221f2fc0d04d608d1cf2ae57996260c4f3001a1cfa3c88a86fc9c2",
+  "mechanism_frozen":false,"new_canary_selected":false,"official_image_gate":"closed","live_gate":"closed","c5_gate":"closed","dev30_gate":"closed","fresh30_gate":"closed",
+  "blocker":"explicit issue-callable binding adds structurally valid evidence but does not improve same-path evidence-family consensus beyond strict-v15 4/6; django-15995 exposes a real path disagreement between generic Manager semantic binding and explicit create_reverse_many_to_one_manager definition, so fail-closed is retained",
+  "next_gate":"do not freeze strict-v16 and do not consume another independent canary. Continue successor development only on synthetic and previously exposed development material; require consensus coverage >4/6 without task-specific rules or path-forcing before freeze"
+}

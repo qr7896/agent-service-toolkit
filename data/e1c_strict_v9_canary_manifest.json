@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v9-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v9-independent-canary",
+  "mechanism_prereg_sha256": "4a88ca55f11f000d78bc0c3c0a7e4aa8ad8ced667f76d38a1a44feb05af55955",
+  "tasks": [
+    {
+      "instance_id": "matplotlib__matplotlib-26160",
+      "repo": "matplotlib/matplotlib",
+      "base_commit": "9fdf6adf70819c8d34e9f47eeb8470aea35d78c0",
+      "image": "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-26160:latest"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1033",
+      "repo": "pydicom/pydicom",
+      "base_commit": "701c1062bf66de2b29df68fa5540be6009943885",
+      "image": "swebench/sweb.eval.x86_64.pydicom_1776_pydicom-1033:latest"
+    },
+    {
+      "instance_id": "django__django-14404",
+      "repo": "django/django",
+      "base_commit": "de32fe83a2e4a20887972c69a0693b94eb25a88b",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-14404:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "e1c-strict-v5-prelive-admission-seal-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "frozen_instance_ids": [
+    "pydata__xarray-3993",
+    "sympy__sympy-15308",
+    "django__django-16092"
+  ],
+  "admission_ready": false,
+  "trusted_reproducer_count": 0,
+  "minimum_trusted_reproducers": 2,
+  "no_reproducer_count": 3,
+  "admission_prerequisites_complete": false,
+  "decisive_pre_live_failure": false,
+  "live_allowed": false,
+  "decision": "seal_without_live_run",
+  "reason": "admission_prerequisites_incomplete",
+  "outcome_conditioned_replacement_allowed": false,
+  "same_canary_reuse_for_mechanism_tuning_allowed": false,
+  "next_mechanism_must_use_new_independent_canary": true,
+  "admission_report_sha256": "d1eed8af60eefd1519fa00954f3e89096c542f43631efcf8e53116cf91b10f4f",
+  "seal_sha256": "d5d628040d29cb227253745940c9c515f7f58ba1b106f37334c43ca25f526c4b"
+}

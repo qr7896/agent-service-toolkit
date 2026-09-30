@@ -1,0 +1,59 @@
+{
+  "schema": "e1c-strict-v15-postfreeze-assessment-v1",
+  "aggregation_mode": "resumable_from_completed_frozen_per_task_measurements",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 1,
+  "executable_candidate_task_count": 1,
+  "consensus_candidate_task_count": 1,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "rows": [
+    {
+      "instance_id": "django__django-13512",
+      "statement_sha256": "baa4940be2e20f4615465891cad46980dcf9806df39b631a2324b8ef6601e3a1",
+      "source": {
+        "ready": true,
+        "base_commit": "b79088306513d5ed76d31ac40ab3c15f858946ea"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "consensus_path_count": 0,
+      "plan_sha256": "1d3b4b83591cef2ade015d7a6291bfe784c54660f9be1c46a135b35515a4674a",
+      "measurement_provenance": "completed_frozen_per_task_assessment"
+    },
+    {
+      "instance_id": "astropy__astropy-7671",
+      "statement_sha256": "174da01d2f16f56e04724188ec23ad3a6ffadd860ff6cf348fcf4f5493ec1c47",
+      "source": {
+        "ready": true,
+        "base_commit": "a7141cd90019b62688d507ae056298507678c058"
+      },
+      "projection_status": "supported",
+      "candidate_count": 2,
+      "executable_candidate_count": 2,
+      "consensus_path_count": 1,
+      "plan_sha256": "c048947c02b121b9716014db0d7577aba76a0b3d4f3c9a65df7379da0f6e0fe7",
+      "measurement_provenance": "completed_frozen_per_task_assessment"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5631",
+      "statement_sha256": "3f804907c8cfa9546a143f1ae1a71a88044e31834ab5752c59177fde7afcea01",
+      "source": {
+        "ready": true,
+        "base_commit": "cb828ebe70b4fa35cd5f9a7ee024272237eab351"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "consensus_path_count": 0,
+      "plan_sha256": "1d3b4b83591cef2ade015d7a6291bfe784c54660f9be1c46a135b35515a4674a",
+      "measurement_provenance": "completed_frozen_per_task_assessment"
+    }
+  ],
+  "summary_sha256": "00fa45160f510b2786fc3653c0338eee81505142fc80bad844e6078c01905ff8"
+}

@@ -1,0 +1,18 @@
+{
+  "analysis_sha256": "9e02c49134f694fbb59a8903e61d087cec467e7ec7a3c36a957865d6d18dc58e",
+  "candidate_source": "import matplotlib.pyplot as plt\nfrom matplotlib.offsetbox import DrawingArea, HPacker, VPacker, AnchoredOffsetbox, TextArea\nfrom matplotlib.patches import Rectangle\n\nda1 = DrawingArea(10, 20)\nrect1 = Rectangle((0, 0), 10, 20)\nda1.add_artist(rect1)\n\nda2 = DrawingArea(10, 30)\nrect2 = Rectangle((0, 0), 10, 30)\nda2.add_artist(rect2)\n\nalign = \"bottom\"\n\npack = HPacker(children=[da1, da2], pad=10, sep=10, align=align)\ntitle = TextArea(f\"align='{align}'\")\npack = VPacker(children=[title, pack], sep=10, pad=10, align=\"center\")\n\nbox = AnchoredOffsetbox(child=pack, loc=\"center\")\n\n_, ax = plt.subplots()\nax.add_artist(box)",
+  "candidate_source_sha256": "c3bce3d225ebe54b89a8f2a1ca87f25e5026f6abe2f21918ff18c374b6566885",
+  "expected_base_commit": "8f0003ae902952372824c9917975fb372c026a42",
+  "image_digest": "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24570@sha256:5d93272292526ed727fdbf8fcad24e751965c5d62d66f91c64be7119339b323c",
+  "instance_id": "matplotlib__matplotlib-24570",
+  "manifest_sha256": "7d8e6569054195d8d68b406b1e51b9d43778b3b9699df4bc8c3672aa049a4435",
+  "network": "none",
+  "problem_statement_sha256": "574f048f0aa9a04fd7b49033c40a2dbe2f3b5caf92b0aa404b5718aa70dd99da",
+  "provider_calls": 0,
+  "retry_allowed": false,
+  "schema": "e1c-strict-successor-setup-closure-preflight-input-v1",
+  "selection_basis": "already-selected closed DEV30 candidate with infrastructure acquisition started before any scenario outcome; no grader/Gold/test source consulted",
+  "selection_stage": "pre_execution_pre_outcome",
+  "source_root": ".codex/e1c/e1c-dev-v21-n30-7d8e6569/workspaces/matplotlib__matplotlib-24570",
+  "timeout_seconds": 60
+}

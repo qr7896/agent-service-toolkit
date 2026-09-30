@@ -1,0 +1,160 @@
+{
+  "schema": "e1c-reproducer-development-metadata-identity-v1",
+  "role": "development_only_never_independent_canary_or_fresh30",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "pool_path": "data/e1c_strict_v20_clean_metadata_pool.json",
+  "pool_file_sha256": "7f1b59aff7411df40ec5d877f726bcb4161e7238e961cda859fb3b489f764ab2",
+  "selection_rule": "four lowest salted-hash repo keys, then three lowest salted-hash instance IDs per repo",
+  "salt": "e1c-reproducer-development-2026-09-27",
+  "exclusion_files": [
+    {
+      "path": "data/e1c_candidate_manifest.json",
+      "sha256": "77100ff0fa28b0b35eae254d50e00dc72dd5fe25587ed254463d4481963a3722"
+    },
+    {
+      "path": "data/e1c_strict_successor_cti2_canary_identity.json",
+      "sha256": "94be4c30cb70f20ef1da90db800f8aa3bd51929743b009a9d08ed7b7809850d4"
+    },
+    {
+      "path": "data/e1c_strict_successor_cti_canary_identity.json",
+      "sha256": "a7e09ec527606f9a66f364aaad22d48db001701c0300af3460de3cb9bdc2de21"
+    },
+    {
+      "path": "data/e1c_strict_successor_source_contract_canary_identity.json",
+      "sha256": "939ef8b897f12d145d10ddcfdb477d8df42b1d166ff6e341879b010ca1c09499"
+    },
+    {
+      "path": "data/e1c_strict_v10_canary_manifest.json",
+      "sha256": "c220589d8948a423795004e1746f8ec4702b164aff4a3ad76e2c805ffff8b6fb"
+    },
+    {
+      "path": "data/e1c_strict_v11_canary_manifest.json",
+      "sha256": "1fdfdb6506daa8aed7d34c0e5652eeed32a5af685219405a366b70e71e0c2cb0"
+    },
+    {
+      "path": "data/e1c_strict_v12_canary_manifest.json",
+      "sha256": "0b78a37aef46a9612b8b15322c1e16bca696040c6988a41bf34a6057cda8581b"
+    },
+    {
+      "path": "data/e1c_strict_v13_canary_manifest.json",
+      "sha256": "4f6fb1dd86169a2e1163b3f407d926bedd4427590d21a1c8e1f9fc5b443b2abf"
+    },
+    {
+      "path": "data/e1c_strict_v14_canary_manifest.json",
+      "sha256": "94fa83d5a326e2c18213d73e70bde129a504f6daacfe388c417461298399cb93"
+    },
+    {
+      "path": "data/e1c_strict_v15_canary_manifest.json",
+      "sha256": "50e4fb415898964756fe125991cebcd6c6e29c46d5add44abeda58ee508a9f97"
+    },
+    {
+      "path": "data/e1c_strict_v20_canary_manifest.json",
+      "sha256": "8d53256810e3500aa7d0bb1fe83b81343c192874218ed0a77485875fa14c6ec8"
+    },
+    {
+      "path": "data/e1c_strict_v23_canary_manifest.json",
+      "sha256": "96d3d488c9197a5fbb5a4768433ccfc647d87d5153e1dbb4d3167ed8fb5574b1"
+    },
+    {
+      "path": "data/e1c_strict_v25_canary_manifest.json",
+      "sha256": "b5d4d7785af315485a9083d7e202bbe2a782daf5702ccac592a97e89c0ef45c5"
+    },
+    {
+      "path": "data/e1c_strict_v5_canary_manifest.json",
+      "sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140"
+    },
+    {
+      "path": "data/e1c_strict_v6_canary_manifest.json",
+      "sha256": "ec6f311b806fbac3225d57fcd9858e2334af41af9bae0609640350fe12438fec"
+    },
+    {
+      "path": "data/e1c_strict_v7_canary_manifest.json",
+      "sha256": "2b576ebf9fefb3cf6e8df99947ed6966924aa6d40ccb73b6a48dde48392c931f"
+    },
+    {
+      "path": "data/e1c_strict_v8_canary_manifest.json",
+      "sha256": "6db92b9746c1c33419fcf587a58260712e4a95f40da39b1fd41dfdf459a02442"
+    },
+    {
+      "path": "data/e1c_strict_v9_canary_manifest.json",
+      "sha256": "f9298c056d3116fdb27dc170704b7de6a61eb431cb42080288d8e4ac2bfd21b7"
+    }
+  ],
+  "excluded_identity_count": 78,
+  "task_content_inspected_at_selection": false,
+  "provider_calls": 0,
+  "tasks": [
+    {
+      "instance_id": "pyvista__pyvista-4311",
+      "task_yaml_path": "tasks/pyvista__pyvista-4311/task.yaml",
+      "task_yaml_blob_sha": "dfaeb31a048a335b3d9b5e9d0261b32e4f5c03d7",
+      "task_yaml_size": 393
+    },
+    {
+      "instance_id": "pyvista__pyvista-4648",
+      "task_yaml_path": "tasks/pyvista__pyvista-4648/task.yaml",
+      "task_yaml_blob_sha": "58639f5d1b8b9c06d3355c34d15b4591e18b45d4",
+      "task_yaml_size": 393
+    },
+    {
+      "instance_id": "pyvista__pyvista-3747",
+      "task_yaml_path": "tasks/pyvista__pyvista-3747/task.yaml",
+      "task_yaml_blob_sha": "7c70e408221a19b994bf9f67bbac84048b2f170b",
+      "task_yaml_size": 393
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-13496/task.yaml",
+      "task_yaml_blob_sha": "8c9d6f90e24b5234174af791ed8fd3311e37bec4",
+      "task_yaml_size": 507
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-26289/task.yaml",
+      "task_yaml_blob_sha": "e10803520a0e42d5239bdb3727d6a08a65258309",
+      "task_yaml_size": 424
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-15086",
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-15086/task.yaml",
+      "task_yaml_blob_sha": "d7fe0e5db0144ce57452715df1c847611585fc65",
+      "task_yaml_size": 425
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "task_yaml_path": "tasks/marshmallow-code__marshmallow-1252/task.yaml",
+      "task_yaml_blob_sha": "bbd876f2415f8ddefad8ad9da1520326c4ed55a9",
+      "task_yaml_size": 436
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "task_yaml_path": "tasks/marshmallow-code__marshmallow-1359/task.yaml",
+      "task_yaml_blob_sha": "1a1c82acbf2c8c2069f526201215d5ead83109f5",
+      "task_yaml_size": 462
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1164",
+      "task_yaml_path": "tasks/marshmallow-code__marshmallow-1164/task.yaml",
+      "task_yaml_blob_sha": "289d2b3997f30440ff54e796a63c61fe0f0cc4d2",
+      "task_yaml_size": 436
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7432",
+      "task_yaml_path": "tasks/pytest-dev__pytest-7432/task.yaml",
+      "task_yaml_blob_sha": "6751e472358c0c9a523b9dc77305eb8fe8797bab",
+      "task_yaml_size": 480
+    },
+    {
+      "instance_id": "pytest-dev__pytest-6680",
+      "task_yaml_path": "tasks/pytest-dev__pytest-6680/task.yaml",
+      "task_yaml_blob_sha": "785f1ec5c2d80a446b3be096e2b6aa54bfcdf22e",
+      "task_yaml_size": 398
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7985",
+      "task_yaml_path": "tasks/pytest-dev__pytest-7985/task.yaml",
+      "task_yaml_blob_sha": "f3c192319d5c494bc6bbdf5fb0f60d0719ee40c7",
+      "task_yaml_size": 398
+    }
+  ]
+}

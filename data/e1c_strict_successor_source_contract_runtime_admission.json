@@ -1,0 +1,26 @@
+{
+  "blocker": "canonical SWE-bench images for the two stable old-DEV source-failure witnesses are not local; source-level witnesses must not be promoted to trusted runtime reproducers",
+  "canonical_images_local": 0,
+  "cross_repo": true,
+  "gate_passed": false,
+  "provider_calls": 0,
+  "rows": [
+    {
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-15569:latest",
+      "inspect_returncode": 1,
+      "instance_id": "django__django-15569",
+      "local": false,
+      "stderr_sha256": "6bf4a690eca178f8460b72aa39879578fcfdd475f644ef0d9cbd2b040814480f"
+    },
+    {
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13313:latest",
+      "inspect_returncode": 1,
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "local": false,
+      "stderr_sha256": "26d11b4fb653234aaf42b1ded368f92ff39b426c9a29c50a98443e793d9cb5b1"
+    }
+  ],
+  "schema": "e1c-strict-successor-source-contract-runtime-admission-v1",
+  "stable_source_failure_tasks": 2,
+  "trusted_runtime_reproducer_count": 0
+}

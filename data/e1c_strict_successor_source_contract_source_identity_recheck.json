@@ -1,0 +1,25 @@
+{
+  "gate_passed": true,
+  "provider_calls": 0,
+  "rows": [
+    {
+      "clean": true,
+      "exact_base": true,
+      "expected_base_commit": "884b4c27f506b3c29d58509fc83a35c30ea10d94",
+      "instance_id": "django__django-15569",
+      "observed_head": "884b4c27f506b3c29d58509fc83a35c30ea10d94",
+      "source_root": ".codex/e1c/strict-v6/postfreeze-v1/django__django-15569/source",
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "clean": true,
+      "exact_base": true,
+      "expected_base_commit": "cdfca8cba33be63ef50ba9e14d8823cc551baf92",
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "observed_head": "cdfca8cba33be63ef50ba9e14d8823cc551baf92",
+      "source_root": ".codex/e1c/strict-v7/postfreeze-v1/scikit-learn__scikit-learn-13313/source",
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "schema": "e1c-strict-successor-source-contract-source-identity-recheck-v1"
+}

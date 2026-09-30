@@ -1,0 +1,27 @@
+{
+  "schema": "e1c-strict-v5-external-canary-reserve-v1",
+  "source": "external_disjoint_canary_reserve",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "selection_rule": "lowest sha256(e1c-strict-v5-independent-canary|instance_id) after strict metadata validation and prior-lineage contamination exclusion",
+  "identity_frozen_before_statement_materialization": true,
+  "tasks": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "repo": "pydata/xarray",
+      "base_commit": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest"
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "repo": "sympy/sympy",
+      "base_commit": "fb59d703e6863ed803c98177b59197b5513332e9",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest"
+    },
+    {
+      "instance_id": "django__django-16092",
+      "repo": "django/django",
+      "base_commit": "599f3e2cda50ab084915ffd08edb5ad6cad61415",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest"
+    }
+  ]
+}

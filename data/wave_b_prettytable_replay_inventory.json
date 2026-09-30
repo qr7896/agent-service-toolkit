@@ -1,0 +1,260 @@
+{
+  "candidates": [
+    {
+      "commit": "cf5f8fda23d958615ccd272f33d8edd69c8d0fd4",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix bleeding of wrapped colours into table edges (#452)",
+      "test_files": [
+        "tests/test_style.py"
+      ]
+    },
+    {
+      "commit": "6ba75d41436d4400624c3e2f32727e127016b8c6",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix `horizontal_align_char` getter (#445)",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "b3de36f62f65d1853a8f591c1469d089549ffe73",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix `IndexError` for `add_rows()` with an empty list (#378)",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "a18f480bd02eb297d652c4835bb7f0b884182c1d",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix divider intersection for border styles",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "e61816840e5c3cdcffc7dbc0e06a004dc9106a6d",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "fix: #354 sortby at class decoration",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "920cc8dfb1998df40b0ba09eae6e060abfd2aac8",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix default styles not being reset between `set_style()` calls (#344)",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "1deb0c593ca28626b84fece6fa80f02276e4404b",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "fix: autoindex html format (#199)",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "6ec0f196f7a22cbf45ae0e4e2360c6cc38f3afd7",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "fix: consider column args when columns are set after initialization (#272)",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "fd24cf6b4dbde6b25ed79f8188d64f98e63b0cf7",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix for narrow left and right-aligned, add tests",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "5eee1766812b811b851aacf20190948629365624",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix GitHub-Flavoured Markdown for narrow centred columns",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "4d4481aaadd845edd804df0fcbc0fc3ff805d124",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "fix: more tests for vrules set to frame or none",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "b4dfe920d4d435bb965860044c97df2d1ddd2a5d",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "fix: downscaling of table widths when max_table_width is set",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "8cee2e01d0b9b9b96b8536dc7437ff1918a5be45",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fixed markdown table formatting to comply with GitHub Flavored Markdown Specification",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "e1cb8aeff170ae735e05582ea203b5817f972ef2",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Update pre-commit to fix isort/poetry",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "0a9f524e03ddf9af18f227da95948629801565f3",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "added missing tests, fixed width with internal borders, applied suggestions",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "61ee8772a413c410c2b3cc6e92d628e3e4b020b9",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "[pre-commit.ci] auto fixes from pre-commit.com hooks",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "62534698958fe93fe6688ae3e6db8f0f6a950dd7",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Fix to min_table_width parameter",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "bd7183d69877294e92bbab478d1f66e4b122c2d2",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "[pre-commit.ci] auto fixes from pre-commit.com hooks",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "3646520a025bafc220ffbe350b703bc808d88252",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "- Tables with long titles could let the title line be longer than the table. Recalculated this to scale the table correctly. - Added test_prettytable.test_all_lengths_equal_with_long_title() to capture this this error as well.",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "1b8b3eb399b0c2cc61e49209817e349195213f01",
+      "production_files": [
+        "setup.py",
+        "src/prettytable/__init__.py",
+        "src/prettytable/colortable.py",
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "[pre-commit.ci] auto fixes from pre-commit.com hooks",
+      "test_files": [
+        "tests/test_colortable.py",
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "5b1c7f4b8fd1608aa26707e51e2ce864c3528c11",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "[pre-commit.ci] auto fixes from pre-commit.com hooks",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "748923cb93f2a3caae3f54ac7944b07e0b1d291f",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "[pre-commit.ci] auto fixes from pre-commit.com hooks",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "53b3fd30b87c5dd4e1519256958027cdaf447a43",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "[pre-commit.ci] auto fixes from pre-commit.com hooks",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "b396f90412af1caca5c10360152b4000c77bddf7",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "added fix for none_formatting issue #172",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    },
+    {
+      "commit": "d1d9d5500470310476c5e56c98d2b58f482f61d3",
+      "production_files": [
+        "src/prettytable/prettytable.py"
+      ],
+      "subject": "Use concrete built-in exceptions instead of Exception base class",
+      "test_files": [
+        "tests/test_prettytable.py"
+      ]
+    }
+  ],
+  "head": "2a6cd4fb41bc6754eac57b43fc6dbd43b08ae368",
+  "repo": "C:\\Users\\qq\u4eba\\Documents\\Codex\\2026-09-20\\e1b-independent-curator\\work\\prettytable"
+}

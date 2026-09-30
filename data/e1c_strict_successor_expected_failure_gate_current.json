@@ -1,0 +1,26 @@
+{
+  "compile_ready_candidate_count": 2,
+  "compile_ready_repo_count": 2,
+  "exception_contract_candidate_count": 2,
+  "exception_contract_repo_count": 2,
+  "gate_passed": false,
+  "gate_sha256": "63432e05ce00849dee364791f2195d813aa2dc863e1891718adab03f444c607b",
+  "provider_calls": 0,
+  "requirements": {
+    "compile_ready_candidates_ge_2": true,
+    "compile_ready_repos_ge_2": true,
+    "exception_contract_candidates_ge_2": true,
+    "exception_contract_repos_ge_2": true,
+    "focused_tests_passed": true,
+    "forbidden_setup_access_zero": true,
+    "full_dev30_denominator": true,
+    "leakage_forbidden_hits_zero": true,
+    "prior_setup_closure_remains_negative": true,
+    "provider_calls_zero": true,
+    "task_specific_rules_zero": true,
+    "trusted_reproducer_gain": false
+  },
+  "schema": "e1c-strict-successor-expected-failure-development-gate-v1",
+  "task_count": 30,
+  "trusted_reproducer_count": 0
+}

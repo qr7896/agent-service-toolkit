@@ -1,0 +1,92 @@
+{
+  "benchmark_assertion_used": false,
+  "provider_calls": 0,
+  "rows": [
+    {
+      "contracts": [
+        {
+          "kind": "source_effect",
+          "prepatch_failure_witness": true,
+          "result": {
+            "candidate_path": "django/db/models/query_utils.py",
+            "matched_effects": [],
+            "passed": false,
+            "predicate": "has_clear_or_invalidate_effect",
+            "reason": "clear_or_invalidate_effect_missing",
+            "result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed",
+            "schema": "e1c-strict-v8-source-effect-result-v1",
+            "symbol": "_unregister_lookup"
+          },
+          "witness": {
+            "benchmark_assertion_used": false,
+            "candidate_path": "django/db/models/query_utils.py",
+            "kind": "source_effect",
+            "predicate": "has_clear_or_invalidate_effect",
+            "provenance": "projected_issue_plus_production_localization",
+            "schema": "e1c-strict-v8-source-contract-v1",
+            "symbol": "_unregister_lookup",
+            "task_id_used": false,
+            "witness_sha256": "1744d6c9c0e22c5fdce02027056378bd77e810cdf061ab043d3caa414d1312cd"
+          }
+        }
+      ],
+      "instance_id": "django__django-15569",
+      "source_root": ".codex/e1c/strict-v6/postfreeze-v1/django__django-15569/source"
+    },
+    {
+      "contracts": [],
+      "instance_id": "django__django-11734",
+      "source_root": ".codex/e1c/strict-v6/postfreeze-v1/django__django-11734/source"
+    },
+    {
+      "contracts": [],
+      "instance_id": "sphinx-doc__sphinx-8638",
+      "source_root": ".codex/e1c/strict-v6/postfreeze-v1/sphinx-doc__sphinx-8638/source"
+    },
+    {
+      "contracts": [
+        {
+          "kind": "source_usage",
+          "prepatch_failure_witness": true,
+          "result": {
+            "candidate_path": "sklearn/utils/estimator_checks.py",
+            "definition_count": 1,
+            "external_call_count": 0,
+            "external_registration_count": 0,
+            "passed": false,
+            "predicate": "has_external_call_or_registration",
+            "result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526",
+            "sample_calls": [],
+            "sample_registrations": [],
+            "schema": "e1c-strict-v8-source-usage-result-v1",
+            "symbol": "check_class_weight_balanced_classifiers"
+          },
+          "witness": {
+            "benchmark_assertion_used": false,
+            "candidate_path": "sklearn/utils/estimator_checks.py",
+            "kind": "source_usage",
+            "predicate": "has_external_call_or_registration",
+            "provenance": "projected_issue_plus_production_localization",
+            "schema": "e1c-strict-v8-source-contract-v1",
+            "symbol": "check_class_weight_balanced_classifiers",
+            "task_id_used": false,
+            "witness_sha256": "f145d8cc226237232df78fb214e16abebe000cf498da2e8f71fd3430472c4a88"
+          }
+        }
+      ],
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "source_root": ".codex/e1c/strict-v7/postfreeze-v1/scikit-learn__scikit-learn-13313/source"
+    },
+    {
+      "contracts": [],
+      "instance_id": "django__django-13233",
+      "source_root": ".codex/e1c/strict-v7/postfreeze-v1/django__django-13233/source"
+    },
+    {
+      "contracts": [],
+      "instance_id": "django__django-15995",
+      "source_root": ".codex/e1c/strict-v7/postfreeze-v1/django__django-15995/source"
+    }
+  ],
+  "schema": "e1c-strict-successor-existing-source-contract-old-dev-eval-v1"
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "e1c-strict-v5-blob-diagnostic-v1",
+  "diagnostic_only": true,
+  "changes_admission_gate": false,
+  "instance_id": "django__django-16092",
+  "ready_under_same_budget_estimate": false,
+  "formal_admission_ready": false,
+  "network_exit": {
+    "explicit_proxy": true,
+    "proxy_value_recorded": false
+  },
+  "provider_calls": 0,
+  "live_model_run": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "row": {
+    "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest",
+    "ready": false,
+    "reason": "blob_transport_exceeds_pull_budget",
+    "manifest": {
+      "status": 200,
+      "sha256": "f90bf1d0dda83c5c9db42670ea963f480742b420e3c4f04b1d834a04302e2db0",
+      "bytes": 3039
+    },
+    "selected_layer": {
+      "digest": "sha256:51fe70848edc098aed2662d77a8717040a072f1ded059d548c31e86e020ff178",
+      "size": 420169440
+    },
+    "total_layer_bytes": 1351384554,
+    "estimated_full_image_seconds": 4490.1,
+    "blob_probe": {
+      "status": 200,
+      "bytes_read": 1048576,
+      "sample_bytes": 1048576,
+      "duration_seconds": 3.484,
+      "bytes_per_second": 300969.0,
+      "range_requested": true,
+      "sample_sha256": "89107f8c6f3bc7238d3d55c502a8f4ba40e3f335b222cb0e52308cc758a04d0a"
+    },
+    "thresholds": {
+      "min_bytes": 524288,
+      "min_bytes_per_second": 65536,
+      "max_estimated_seconds": 900
+    },
+    "instance_id": "django__django-16092"
+  }
+}

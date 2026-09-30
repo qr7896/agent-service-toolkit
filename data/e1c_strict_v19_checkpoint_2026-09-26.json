@@ -1,0 +1,10 @@
+{
+  "schema":"e1c-strict-v19-development-checkpoint-v1",
+  "provider_calls":0,"development_only":true,"independent_evidence":false,"sealed_v15_canary_used_for_tuning":false,
+  "focused_tests":"48_passed","development_replay_task_count":6,"development_executable_candidate_task_count":6,"development_consensus_candidate_task_count":4,"development_replay_sha256":"00a9e3f7fec6a509b1fe2b3ab804c529ea24f915d79888a950503c7ca49517d9",
+  "complete_exposed_production_source_available":true,"mechanism_frozen":false,"new_canary_selected":false,
+  "official_image_gate":"closed","live_gate":"closed","c5_gate":"closed","dev30_gate":"closed","fresh30_gate":"closed",
+  "blocker":"Complete-source AST is available, but repository-wide self.model assignment ownership is non-unique across legitimate Django subsystems. The fail-closed unique-file rule therefore emits no structural corroboration for django-13233; relaxing it to arbitrary assignment matching would create false agreement. Consensus remains 4/6.",
+  "negative_development_lineage":["strict-v16: 4/6","strict-v17: 4/6","strict-v18: 4/6","strict-v19 full-source repository-wide assignment overlay: 4/6"],
+  "next_gate":"do not freeze strict-v19 or consume an independent canary. A successor may use complete exposed production source only after deriving a task-agnostic type/module boundary from issue/localization evidence, then perform bounded AST/dataflow corroboration inside that boundary. Freeze only after >4/6 exposed-development consensus with fail-closed ambiguity handling."
+}

@@ -1,0 +1,63 @@
+{
+  "protocol": "e1b-dev-v5-audit-v1",
+  "scope": "DEV only; original sealed TEST outcomes unopened by the experiment",
+  "status": "valid_partial_dev",
+  "protocol_valid": true,
+  "freeze_ready": false,
+  "resolved_count": 2,
+  "total_model_calls": 8,
+  "total_tokens": 5707,
+  "ledger_completed_calls": 8,
+  "ledger_total_tokens": 5707,
+  "review_changed_count": 1,
+  "improved_from_v4": [],
+  "regressed_from_v4": [],
+  "remaining_unresolved": [
+    "e1b__cross-module-status-26",
+    "e1b__state-version-29"
+  ],
+  "transitions": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "v4_resolved": true,
+      "v5_resolved": true,
+      "resolved_transition": "1->1",
+      "same_final_patch_as_v4": true,
+      "review_changed_patch": true,
+      "v5_f2p_all": true,
+      "v5_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "v4_resolved": true,
+      "v5_resolved": true,
+      "resolved_transition": "1->1",
+      "same_final_patch_as_v4": true,
+      "review_changed_patch": false,
+      "v5_f2p_all": true,
+      "v5_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "v4_resolved": false,
+      "v5_resolved": false,
+      "resolved_transition": "0->0",
+      "same_final_patch_as_v4": true,
+      "review_changed_patch": false,
+      "v5_f2p_all": true,
+      "v5_p2p_all": false
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "v4_resolved": false,
+      "v5_resolved": false,
+      "resolved_transition": "0->0",
+      "same_final_patch_as_v4": false,
+      "review_changed_patch": false,
+      "v5_f2p_all": false,
+      "v5_p2p_all": false
+    }
+  ],
+  "claim_boundary": "This four-task repeatedly used DEV set is protocol-development evidence, not a population repair-rate estimate.",
+  "next_gate": "Do not freeze or open held-out outcomes unless all four DEV tasks resolve without regression and the artifact audit remains valid."
+}

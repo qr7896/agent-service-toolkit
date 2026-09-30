@@ -1,0 +1,21 @@
+{
+  "candidate_path": "sympy/physics/vector/vector.py",
+  "candidate_source": "from sympy.physics.vector import ReferenceFrame, Vector\nfrom sympy import symbols\nN = ReferenceFrame('N')\nsum([N.x, (0 * N.x)])",
+  "candidate_source_sha256": "7cfc74f494d9e3daaa9945962a8d0a3cebdfda024b576288e6cd46d17e277d4e",
+  "expected_base_commit": "c6753448b5c34f95e250105d76709fe4d349ca1f",
+  "image_digest": "swebench/sweb.eval.x86_64.sympy_1776_sympy-14711@sha256:db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+  "instance_id": "sympy__sympy-14711",
+  "manifest_sha256": "7d8e6569054195d8d68b406b1e51b9d43778b3b9699df4bc8c3672aa049a4435",
+  "network": "none",
+  "problem_statement_sha256": "2040f0884f278a78954414c05c2caedef7411158c41fc2046a6f3d9bac85d64f",
+  "provider_calls": 0,
+  "recovered_names": [
+    "N"
+  ],
+  "retry_allowed": false,
+  "schema": "e1c-strict-successor-setup-closure-preflight-input-v1",
+  "selection_basis": "secondary infrastructure fallback predeclared before any setup-closure scenario outcome; qualified by DEV30 behavioral closure and smaller official compressed image; no grader/Gold/test source consulted",
+  "selection_stage": "pre_execution_pre_outcome",
+  "source_root": ".codex/e1c/e1c-dev-v21-n30-7d8e6569/workspaces/sympy__sympy-14711",
+  "timeout_seconds": 60
+}

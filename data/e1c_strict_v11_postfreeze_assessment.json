@@ -1,0 +1,78 @@
+{
+  "schema": "e1c-strict-v11-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "rows": [
+    {
+      "instance_id": "sympy__sympy-12906",
+      "statement_sha256": "a485119f8513c83bfd5455845f4af3e852c617af5593f9e8fca8455f6ca9e2aa",
+      "source": {
+        "ready": true,
+        "base_commit": "d250ff08a834bb0ba2b636b0a7d63a4cf33f6e22"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v11-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "61cc5f56a51108e32ea3a99f4b6bfe1db8643b6c31fde5c059f59277e337dbbd"
+      }
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5201",
+      "statement_sha256": "fbeb79dbb0214ba51c8b2bb9a9613b3c41c5200905ff2bd9246f408e8bc31ec3",
+      "source": {
+        "ready": true,
+        "base_commit": "772b3dcc0b0770a843653783e5c93b4256e5ec6f"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v11-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "61cc5f56a51108e32ea3a99f4b6bfe1db8643b6c31fde5c059f59277e337dbbd"
+      }
+    },
+    {
+      "instance_id": "django__django-10914",
+      "statement_sha256": "6a49d14f972b4826f9e59a3cf8773a9cddbeecc4b5a65ca093e6c887452e084d",
+      "source": {
+        "ready": true,
+        "base_commit": "e7fd69d051eaa67cb17f172a39b57253e9cb831a"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v11-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "61cc5f56a51108e32ea3a99f4b6bfe1db8643b6c31fde5c059f59277e337dbbd"
+      }
+    }
+  ],
+  "summary_sha256": "d2d0724c6270733671f095a05fd70e0dc2cae2b97e563fcd7fe05e687d87dab5"
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "e1c-strict-v14-postfreeze-assessment-v1",
+  "aggregation_mode": "resumable_from_completed_frozen_per_task_measurements",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 1,
+  "executable_candidate_task_count": 1,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "rows": [
+    {
+      "instance_id": "django__django-11880",
+      "statement_sha256": "e6a289aaf9dea6a363558562bcc0b475cdaa3a0d2e19221ba3bb4d9aaef877fd",
+      "source": {
+        "ready": true,
+        "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c"
+      },
+      "projection_status": "supported",
+      "candidate_count": 1,
+      "executable_candidate_count": 1,
+      "measurement_provenance": "completed_frozen_per_task_assessment_before_aggregation"
+    },
+    {
+      "instance_id": "astropy__astropy-13453",
+      "statement_sha256": "c9b1d2265056de9dca82e96a5efcdd067996e845a587fa48c33941f09a83a9e8",
+      "source": {
+        "ready": true,
+        "base_commit": "19cc80471739bcb67b7e8099246b391c355023ee"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "measurement_provenance": "completed_frozen_per_task_assessment_before_aggregation"
+    },
+    {
+      "instance_id": "sympy__sympy-17318",
+      "statement_sha256": "4f4990aa396704a937aec34f880e6c95f303755bae5897fd0d44aa8edee8d5a0",
+      "source": {
+        "ready": true,
+        "base_commit": "d4e0231b08147337745dcf601e62de7eefe2fb2d"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "measurement_provenance": "completed_frozen_per_task_assessment_before_aggregation"
+    }
+  ],
+  "summary_sha256": "eaa578381154d9193ceb6398faa58ea92d1d765078a53cbe0c9593af8310c3ee"
+}

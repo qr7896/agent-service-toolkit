@@ -1,0 +1,26 @@
+{
+  "schema": "e1c-strict-v6-prelive-seal-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "frozen_instance_ids": [
+    "django__django-15569",
+    "django__django-11734",
+    "sphinx-doc__sphinx-8638"
+  ],
+  "postfreeze_materialization_complete": true,
+  "candidate_reproducer_task_count": 0,
+  "minimum_candidate_reproducer_tasks": 2,
+  "candidate_reproducer_gate_failed": true,
+  "image_pull_allowed": false,
+  "official_admission_allowed": false,
+  "live_allowed": false,
+  "decision": "seal_without_image_or_live",
+  "reason": "candidate_reproducer_minimum_unreachable_on_frozen_v6_canary",
+  "outcome_conditioned_replacement_allowed": false,
+  "same_canary_reuse_for_mechanism_tuning_allowed": false,
+  "next_mechanism_must_use_new_independent_canary": true,
+  "large_image_download_avoided": true,
+  "assessment_sha256": "34fde09d3f54ce466aa800f10dcaa2647a05c05b3323809edf2adf3b3e2a0c31",
+  "assessment_summary_sha256": "d89efa71e4010c295b3b1e84c8c4cd4b89f7eac687037abe5e4c0c5ae15158bc",
+  "seal_sha256": "b1659f7b448dc8f7f11970c247928c75e327211de710498bc34159dba4a728a2"
+}

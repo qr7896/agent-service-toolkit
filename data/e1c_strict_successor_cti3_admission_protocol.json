@@ -1,0 +1,120 @@
+{
+  "development_gate_path": "data/e1c_strict_successor_typed_contract_development_gate.json",
+  "development_gate_required_pass": true,
+  "development_gate_sha256": "248b3bd501e65371183877737f2c3a38ccc5a2363231d65f831017ea1d45851d",
+  "distinct_repo_key_required": true,
+  "excluded_identity_count": 48,
+  "frozen_parser_commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "historical_exclusion_sources": [
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v10_canary_manifest.json",
+      "sha256": "c220589d8948a423795004e1746f8ec4702b164aff4a3ad76e2c805ffff8b6fb"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v11_canary_manifest.json",
+      "sha256": "1fdfdb6506daa8aed7d34c0e5652eeed32a5af685219405a366b70e71e0c2cb0"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v12_canary_manifest.json",
+      "sha256": "0b78a37aef46a9612b8b15322c1e16bca696040c6988a41bf34a6057cda8581b"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v13_canary_manifest.json",
+      "sha256": "4f6fb1dd86169a2e1163b3f407d926bedd4427590d21a1c8e1f9fc5b443b2abf"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v14_canary_manifest.json",
+      "sha256": "94fa83d5a326e2c18213d73e70bde129a504f6daacfe388c417461298399cb93"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v15_canary_manifest.json",
+      "sha256": "50e4fb415898964756fe125991cebcd6c6e29c46d5add44abeda58ee508a9f97"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v20_canary_manifest.json",
+      "sha256": "8d53256810e3500aa7d0bb1fe83b81343c192874218ed0a77485875fa14c6ec8"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v23_canary_manifest.json",
+      "sha256": "96d3d488c9197a5fbb5a4768433ccfc647d87d5153e1dbb4d3167ed8fb5574b1"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v25_canary_manifest.json",
+      "sha256": "b5d4d7785af315485a9083d7e202bbe2a782daf5702ccac592a97e89c0ef45c5"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v5_canary_manifest.json",
+      "sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v6_canary_manifest.json",
+      "sha256": "ec6f311b806fbac3225d57fcd9858e2334af41af9bae0609640350fe12438fec"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v7_canary_manifest.json",
+      "sha256": "2b576ebf9fefb3cf6e8df99947ed6966924aa6d40ccb73b6a48dde48392c931f"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v8_canary_manifest.json",
+      "sha256": "6db92b9746c1c33419fcf587a58260712e4a95f40da39b1fd41dfdf459a02442"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_v9_canary_manifest.json",
+      "sha256": "f9298c056d3116fdb27dc170704b7de6a61eb431cb42080288d8e4ac2bfd21b7"
+    },
+    {
+      "identity_count": 3,
+      "path": "data/e1c_strict_successor_cti_canary_identity.json",
+      "sha256": "a7e09ec527606f9a66f364aaad22d48db001701c0300af3460de3cb9bdc2de21"
+    },
+    {
+      "identity_count": 6,
+      "path": "data/e1c_strict_successor_cti2_canary_identity.json",
+      "sha256": "94be4c30cb70f20ef1da90db800f8aa3bd51929743b009a9d08ed7b7809850d4"
+    }
+  ],
+  "live_requires_three_admitted_tasks": true,
+  "max_substitutions": 3,
+  "no_ad_hoc_test_flags": true,
+  "no_assertion_weakening": true,
+  "no_parser_changes": true,
+  "no_post_result_reordering": true,
+  "outcome_inspected_for_new_identity": false,
+  "primary_task_count": 3,
+  "provider_calls": 0,
+  "reserve_count": 3,
+  "schema": "e1c-strict-successor-cti3-admission-protocol-v1",
+  "selection_source": "frozen_swebench_git_tree_names_only",
+  "selection_source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "stage_d_requires_trusted_prepatch_reproducers": 2,
+  "substitution_allowed_only_for": [
+    "official image unavailable after frozen network/timeout gate",
+    "exact-base/source identity cannot be materialized or verified",
+    "official evaluator cannot produce parser-observable F2P/P2P classification despite suite execution, with frozen parser unchanged",
+    "container/runtime infrastructure failure before valid Base-Fail classification"
+  ],
+  "substitution_forbidden_for": [
+    "valid official Base-Fail result",
+    "valid official Gold-Pass failure",
+    "task difficulty or issue content",
+    "model result or model failure",
+    "reproducer/probe result after admission",
+    "any outcome-based preference"
+  ],
+  "substitution_order": "global deterministic reserve rank; first reserve preserving three distinct active repo_keys",
+  "task_content_inspected_for_new_identity": false
+}

@@ -1,0 +1,11 @@
+{
+  "schema":"e1c-strict-v11-prelive-seal-v1","provider_calls":0,"live_model_run":false,
+  "mechanism_sha256":"9c29fbf092ccdc8807031514404d2869a521062d90e30d435d3a2dc107df6376",
+  "prereg_sha256":"41f9fc9caf928a78452c7fd57ce848bd96bb829efc8212a22f64466fbc59e0b0",
+  "postfreeze_summary_sha256":"d2d0724c6270733671f095a05fd70e0dc2cae2b97e563fcd7fe05e687d87dab5",
+  "source_ready_count":3,"projection_supported_count":3,"candidate_task_count":0,"executable_candidate_task_count":0,"minimum_executable_candidate_tasks":2,"candidate_gate_passed":false,
+  "official_image_acquisition_allowed":false,"official_admission_allowed":false,"live_allowed":false,"c5_allowed":false,"dev30_allowed":false,"fresh30_allowed":false,
+  "canary_reuse_allowed":false,"canary_conditioned_mechanism_tuning_allowed":false,
+  "decision":"seal_strict_v11_independent_negative_canary",
+  "next_legal_step":"successor development on synthetic and already exposed development material only; improve generalization mechanism rather than tuning against strict-v11 canary outcomes"
+}

@@ -1,0 +1,38 @@
+{
+  "identity_sha256": "939ef8b897f12d145d10ddcfdb477d8df42b1d166ff6e341879b010ca1c09499",
+  "provider_calls": 0,
+  "reserve_content_inspected": false,
+  "rows": [
+    {
+      "git_blob_sha": "61a2bfd375c38556abe803238e627d4d26d512ac",
+      "git_path": "tasks/django__django-12453/task.yaml",
+      "instance_id": "django__django-12453",
+      "materialized_path": ".codex/e1c/source_contract_canary/primaries/django__django-12453.task.yaml",
+      "returncode": 0,
+      "sha256": "e94045b521ed3c16c82016c4fe71cf09cbf612a254c2883fc6528c523341267c",
+      "size_bytes": 415
+    },
+    {
+      "git_blob_sha": "bb3b5ca7ff6eacae820054795f87eaa86feec84e",
+      "git_path": "tasks/sympy__sympy-13761/task.yaml",
+      "instance_id": "sympy__sympy-13761",
+      "materialized_path": ".codex/e1c/source_contract_canary/primaries/sympy__sympy-13761.task.yaml",
+      "returncode": 0,
+      "sha256": "3d35f66e8b59faf90a66b0b46942a6b2a2607ab88a23b1c00e9aa447866860a2",
+      "size_bytes": 381
+    },
+    {
+      "git_blob_sha": "d308b8b8f45e0394dec57d267ed8a9e278d9dd5d",
+      "git_path": "tasks/matplotlib__matplotlib-21559/task.yaml",
+      "instance_id": "matplotlib__matplotlib-21559",
+      "materialized_path": ".codex/e1c/source_contract_canary/primaries/matplotlib__matplotlib-21559.task.yaml",
+      "returncode": 0,
+      "sha256": "84c864f0d64b8b11ea767960eb0fca6d05563fb4fb25d5ba3fe692c136fcbf4f",
+      "size_bytes": 416
+    }
+  ],
+  "schema": "e1c-strict-successor-source-contract-primary-materialization-v1",
+  "source_head_verified": true,
+  "source_repo": "D:/codex/working/swe-bench-tasks-frozen",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d"
+}

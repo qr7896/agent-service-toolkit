@@ -1,0 +1,90 @@
+{
+  "schema": "e1c-strict-v5-metadata-pool-audit-v1",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "input_count": 12,
+  "eligible_count": 12,
+  "rejected_count": 0,
+  "locally_touched_identity_count": 232,
+  "eligible": [
+    {
+      "instance_id": "django__django-16092",
+      "repo": "django/django",
+      "base_commit": "599f3e2cda50ab084915ffd08edb5ad6cad61415",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest"
+    },
+    {
+      "instance_id": "django__django-16411",
+      "repo": "django/django",
+      "base_commit": "75500feecddcb27b6ab65c9057e7317024cef761",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16411:latest"
+    },
+    {
+      "instance_id": "pydata__xarray-5731",
+      "repo": "pydata/xarray",
+      "base_commit": "5db40465955a30acd601d0c3d7ceaebe34d28d11",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-5731:latest"
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "repo": "sympy/sympy",
+      "base_commit": "fb59d703e6863ed803c98177b59197b5513332e9",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26160",
+      "repo": "matplotlib/matplotlib",
+      "base_commit": "9fdf6adf70819c8d34e9f47eeb8470aea35d78c0",
+      "image": "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-26160:latest"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1033",
+      "repo": "pydicom/pydicom",
+      "base_commit": "701c1062bf66de2b29df68fa5540be6009943885",
+      "image": "swebench/sweb.eval.x86_64.pydicom_1776_pydicom-1033:latest"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1682",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "ef8ad2fee9840a77d14b0dfd17fc489dd85c9b91",
+      "image": "swebench/sweb.eval.x86_64.pvlib_1776_pvlib-python-1682:latest"
+    },
+    {
+      "instance_id": "django__django-13837",
+      "repo": "django/django",
+      "base_commit": "415f50298f97fb17f841a9df38d995ccf347dfcc",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-13837:latest"
+    },
+    {
+      "instance_id": "sympy__sympy-12906",
+      "repo": "sympy/sympy",
+      "base_commit": "d250ff08a834bb0ba2b636b0a7d63a4cf33f6e22",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-12906:latest"
+    },
+    {
+      "instance_id": "django__django-12912",
+      "repo": "django/django",
+      "base_commit": "42c08ee46539ef44f8658ebb1cbefb408e0d03fe",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-12912:latest"
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5201",
+      "repo": "pylint-dev/pylint",
+      "base_commit": "772b3dcc0b0770a843653783e5c93b4256e5ec6f",
+      "image": "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-5201:latest"
+    },
+    {
+      "instance_id": "pydata__xarray-3993",
+      "repo": "pydata/xarray",
+      "base_commit": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest"
+    }
+  ],
+  "rejected": [],
+  "eligible_sha256": "fa10607f64ff43e521e82e6bf587a9bf4d89636e0d2772908d856ae8b8f00e0e",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "new_task_tree_touched": false,
+  "source_path": "D:/codex/working/project20260827/data/e1c_strict_v5_official_metadata_pool.json",
+  "source_format": "json",
+  "source_file_sha256": "793c4cdc6b78712fdf4433807300796e9dfda4af240ba0bfd3cc2edc21c64d11"
+}

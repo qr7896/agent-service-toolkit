@@ -1,0 +1,185 @@
+{
+  "schema": "e1c-strict-v5-official-metadata-pool-v1",
+  "source_name": "official_swebench_task_repo_task_yaml",
+  "source_repo": "SWE-bench/swe-bench-tasks",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "selection_rule": "lowest sha256(e1c-strict-v5-official-task-repo|instance_id) after current locally-touched/prior-lineage exclusion",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "forbidden_task_files_read": [],
+  "inventory_count": 2519,
+  "candidate_count": 12,
+  "tasks": [
+    {
+      "instance_id": "django__django-16092",
+      "repo": "django/django",
+      "base_commit": "599f3e2cda50ab084915ffd08edb5ad6cad61415",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest"
+    },
+    {
+      "instance_id": "django__django-16411",
+      "repo": "django/django",
+      "base_commit": "75500feecddcb27b6ab65c9057e7317024cef761",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16411:latest"
+    },
+    {
+      "instance_id": "pydata__xarray-5731",
+      "repo": "pydata/xarray",
+      "base_commit": "5db40465955a30acd601d0c3d7ceaebe34d28d11",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-5731:latest"
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "repo": "sympy/sympy",
+      "base_commit": "fb59d703e6863ed803c98177b59197b5513332e9",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26160",
+      "repo": "matplotlib/matplotlib",
+      "base_commit": "9fdf6adf70819c8d34e9f47eeb8470aea35d78c0",
+      "image": "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-26160:latest"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1033",
+      "repo": "pydicom/pydicom",
+      "base_commit": "701c1062bf66de2b29df68fa5540be6009943885",
+      "image": "swebench/sweb.eval.x86_64.pydicom_1776_pydicom-1033:latest"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1682",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "ef8ad2fee9840a77d14b0dfd17fc489dd85c9b91",
+      "image": "swebench/sweb.eval.x86_64.pvlib_1776_pvlib-python-1682:latest"
+    },
+    {
+      "instance_id": "django__django-13837",
+      "repo": "django/django",
+      "base_commit": "415f50298f97fb17f841a9df38d995ccf347dfcc",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-13837:latest"
+    },
+    {
+      "instance_id": "sympy__sympy-12906",
+      "repo": "sympy/sympy",
+      "base_commit": "d250ff08a834bb0ba2b636b0a7d63a4cf33f6e22",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-12906:latest"
+    },
+    {
+      "instance_id": "django__django-12912",
+      "repo": "django/django",
+      "base_commit": "42c08ee46539ef44f8658ebb1cbefb408e0d03fe",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-12912:latest"
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5201",
+      "repo": "pylint-dev/pylint",
+      "base_commit": "772b3dcc0b0770a843653783e5c93b4256e5ec6f",
+      "image": "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-5201:latest"
+    },
+    {
+      "instance_id": "pydata__xarray-3993",
+      "repo": "pydata/xarray",
+      "base_commit": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest"
+    }
+  ],
+  "field_provenance": {
+    "django__django-16092": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-16092/task.yaml",
+      "task_yaml_blob_sha": "d474132975149b08595e399eb4241f3deca51d8f",
+      "task_yaml_sha256": "352ef31133108f41c3e37b007536fd6495e7f18a484e3c77ddcd8a1940e41552",
+      "forbidden_task_files_read": []
+    },
+    "django__django-16411": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-16411/task.yaml",
+      "task_yaml_blob_sha": "ee7bbf2e93330c50a395550f708c302c92875fcc",
+      "task_yaml_sha256": "13a4c299c6234df2c3a893fe64a19f11ea8e4dfb497a8411d4ef19de7a260583",
+      "forbidden_task_files_read": []
+    },
+    "pydata__xarray-5731": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/pydata__xarray-5731/task.yaml",
+      "task_yaml_blob_sha": "dece6298b9d21af3654995f734f49a21e80a2a6a",
+      "task_yaml_sha256": "3fa637b2e7c521d7e2c9313e0b6ad58e1812b33c78aa1df694c6d6e8c02bd74b",
+      "forbidden_task_files_read": []
+    },
+    "sympy__sympy-15308": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/sympy__sympy-15308/task.yaml",
+      "task_yaml_blob_sha": "f0bdf22a5567dcb3b1189633f719e566e5f2e62a",
+      "task_yaml_sha256": "2515f55de8c37367226ba20d754a7192d32abafaf4ec3353ddffee2d16dfff6b",
+      "forbidden_task_files_read": []
+    },
+    "matplotlib__matplotlib-26160": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/matplotlib__matplotlib-26160/task.yaml",
+      "task_yaml_blob_sha": "97baceac28e3a98b20e6c7b74676497801b65f2d",
+      "task_yaml_sha256": "3a6fe8a3872ed8bb5aa1c5fc63c2e770334f76bffe578007f8e9cbd8b282d62f",
+      "forbidden_task_files_read": []
+    },
+    "pydicom__pydicom-1033": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/pydicom__pydicom-1033/task.yaml",
+      "task_yaml_blob_sha": "a4cc1c0df3fe65a3f17be52daa65b16b5b57b816",
+      "task_yaml_sha256": "2968a5b12fc1aabbf8830a4d6dab9139d459130d6949ad46f9f1fd8c43fc45fc",
+      "forbidden_task_files_read": []
+    },
+    "pvlib__pvlib-python-1682": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/pvlib__pvlib-python-1682/task.yaml",
+      "task_yaml_blob_sha": "68b00df1d3ebf4d74dc3ee27d41eb7d00534c3f3",
+      "task_yaml_sha256": "daee968929620cd355c58a9ddd987e2e880badd85ef7f980d90f9d33c4dbaa0c",
+      "forbidden_task_files_read": []
+    },
+    "django__django-13837": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-13837/task.yaml",
+      "task_yaml_blob_sha": "ac6794265f4d9b0e3aa4b4b89581c493282dd956",
+      "task_yaml_sha256": "24231e3dc350a129df30217992b9ef89a0014cff8d16b239600f008d66a88885",
+      "forbidden_task_files_read": []
+    },
+    "sympy__sympy-12906": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/sympy__sympy-12906/task.yaml",
+      "task_yaml_blob_sha": "a17e682addddc2ffef6d67a7b2961545abeaa86d",
+      "task_yaml_sha256": "7f84c206201281c779a0ee2c6e63345573d70ef33b8c822370dd8abfdea07bec",
+      "forbidden_task_files_read": []
+    },
+    "django__django-12912": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-12912/task.yaml",
+      "task_yaml_blob_sha": "72b133cd5201274db37c857c03c9fd5c20e758dd",
+      "task_yaml_sha256": "529c0a0f8f81b5e8bb87fb38940bc7d758ef2e9f1dfb90bcbf36d85fa4041ea4",
+      "forbidden_task_files_read": []
+    },
+    "pylint-dev__pylint-5201": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/pylint-dev__pylint-5201/task.yaml",
+      "task_yaml_blob_sha": "b211baf03f63b18a463cb9a3c792c2b18a9ea4fd",
+      "task_yaml_sha256": "319df66df8695af8a3a64ea8aa3d048dc5848a1e03cf64f4006388b10badd55f",
+      "forbidden_task_files_read": []
+    },
+    "pydata__xarray-3993": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/pydata__xarray-3993/task.yaml",
+      "task_yaml_blob_sha": "b329f256e2bf8a70164b7c3ada854359501f7f0b",
+      "task_yaml_sha256": "dd8202545f5cbe3e2aa2c63cfa8f0f3c97d789a4a3386ca15bfdb46829f9d077",
+      "forbidden_task_files_read": []
+    }
+  },
+  "pool_sha256": "3bd9bb96d44deb33962fe0443ec873a56bf4b18eda03928bf934fd34c8590424"
+}

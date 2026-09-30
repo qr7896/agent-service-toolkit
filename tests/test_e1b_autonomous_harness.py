@@ -88,6 +88,22 @@ def test_async_model_adapter_without_network():
     assert parse_patch_response(raw) == {"src/a.py": "x"}
 
 
+def test_review_adapter_sees_same_public_payload_and_candidate_only():
+    from evals.e1b_editor_adapter import build_review_messages
+
+    payload = {
+        "instance_id": "dev",
+        "problem_statement": "fix both visible layers",
+        "evidence": {"items": [{"path": "src/a.py", "content": "bad"}]},
+    }
+    messages = build_review_messages(payload, {"src/a.py": "better"})
+    body = messages[1][1]
+    assert messages[0][0] == "system"
+    assert '"candidate_patch"' in body
+    assert '"src/a.py": "better"' in body
+    assert "gold_" not in body
+
+
 def test_usage_metadata_is_normalized():
     from evals.e1b_editor_adapter import usage_tokens
 
@@ -135,6 +151,128 @@ def test_r10_v2_uses_one_thinking_disabled_call_per_task(tmp_path, monkeypatch):
     assert values["provider_max_calls_per_task"] == 1
     assert values["provider_max_output_tokens"] == 600
     assert values["provider_disable_thinking"] is True
+
+
+def test_r10_v3_uses_bounded_two_pass_review(tmp_path, monkeypatch):
+    from evals import e1b_run_dev_live_v3
+
+    monkeypatch.setattr(e1b_run_dev_live_v3, "LEDGER_PATH", tmp_path / "calls.jsonl")
+    values = e1b_run_dev_live_v3.provider_config("dev-task")["configurable"]
+    assert values["provider_task_token_ceiling"] == 4_000
+    assert values["provider_total_token_ceiling"] == 16_000
+    assert values["provider_max_calls_per_task"] == 2
+    assert values["provider_max_output_tokens"] == 600
+    assert values["provider_disable_thinking"] is True
+
+
+def test_r10_v3_preflight_is_zero_call_and_reserve_safe():
+    from evals.e1b_run_dev_live_v3 import preflight
+
+    report = preflight()
+    assert report["provider_calls"] == 0
+    assert report["ready"] is True
+    assert len(report["rows"]) == 4
+    assert all(row["proposal_reserve_fits"] for row in report["rows"])
+    assert all(row["review_reserve_fits"] for row in report["rows"])
+
+
+def test_dev_v2_audit_marks_valid_failed_result_without_freeze():
+    from evals.e1b_dev_audit import audit
+
+    old = {
+        "summary": {"tasks": 1, "resolved": 1, "total_model_calls": 1, "total_tokens": 100},
+        "rows": [{"instance_id": "x", "resolved": True, "patch_sha256": "a"}],
+    }
+    current = {
+        "summary": {
+            "tasks": 1,
+            "resolved": 0,
+            "total_model_calls": 1,
+            "total_tokens": 50,
+            "budget_exhaustions": 0,
+            "model_failures": 0,
+            "parse_failures": 0,
+        },
+        "execution": {"budget_status": "within_limit"},
+        "rows": [
+            {
+                "instance_id": "x",
+                "resolved": False,
+                "patch_sha256": "a",
+                "fail_to_pass": {"fix": False},
+                "pass_to_pass": {"regression": True},
+            }
+        ],
+    }
+    report = audit(old, current)
+    assert report["status"] == "valid_failed_dev"
+    assert report["budget_and_call_chain_valid"] is True
+    assert report["freeze_ready"] is False
+    assert report["regressed_from_old_dev"] == ["x"]
+    assert report["repeated_failed_patch"] == ["x"]
+
+
+def test_dev_v3_audit_marks_partial_and_not_freeze_ready():
+    from evals.e1b_dev_v3_audit import audit
+
+    v2 = {
+        "summary": {"tasks": 1},
+        "rows": [{"instance_id": "x", "resolved": False}],
+    }
+    v3 = {
+        "summary": {"tasks": 1, "resolved": 1, "parse_failures": 0, "model_failures": 0, "budget_exhaustions": 0, "total_model_calls": 2, "total_tokens": 100},
+        "execution": {"original_token_budget": 1000, "test_outcomes_opened": 0},
+        "rows": [{"instance_id": "x", "resolved": True, "review_changed_patch": True, "fail_to_pass": {"fix": True}, "pass_to_pass": {"keep": True}}],
+    }
+    report = audit(v2, v3)
+    assert report["protocol_valid"] is False
+    assert report["freeze_ready"] is False
+
+
+def test_r10_v4_contract_review_preflight_is_zero_call_and_safe():
+    from evals.e1b_run_dev_live_v4 import preflight, provider_config
+
+    report = preflight()
+    assert report["provider_calls"] == 0
+    assert report["ready"] is True
+    assert len(report["rows"]) == 4
+    assert all(row["proposal_reserve_fits"] for row in report["rows"])
+    assert all(row["review_reserve_fits"] for row in report["rows"])
+    values = provider_config("dev-task")["configurable"]
+    assert values["provider_max_calls_per_task"] == 2
+    assert values["provider_max_output_tokens"] == 550
+    assert values["provider_task_token_ceiling"] == 4_000
+    assert values["provider_total_token_ceiling"] == 16_000
+
+
+def test_r10_v6_deterministic_contract_preflight_is_zero_call_and_safe():
+    from evals.e1b_run_dev_live_v6 import preflight, provider_config
+
+    report = preflight()
+    assert report["provider_calls"] == 0
+    assert len(report["rows"]) == 4
+    assert all(row["proposal_reserve_fits"] for row in report["rows"])
+    assert all(row["review_reserve_fits"] for row in report["rows"])
+    if report["result_exists"] or report["ledger_exists"]:
+        assert report["ready"] is False
+    else:
+        assert report["ready"] is True
+    values = provider_config("dev-task")["configurable"]
+    assert values["provider_max_calls_per_task"] == 2
+    assert values["provider_max_output_tokens"] == 550
+    assert values["provider_task_token_ceiling"] == 4_000
+    assert values["provider_total_token_ceiling"] == 16_000
+
+
+def test_r10_v6_contract_audit_uses_dev_public_statements_only():
+    from evals.e1b_contract_audit_v6 import audit
+
+    report = audit()
+    assert report["provider_calls"] == 0
+    assert report["scope"] == "DEV public problem statements only"
+    assert report["valid"] is True
+    assert len(report["rows"]) == 4
+    assert all(row["default_transition"] == "identity" for row in report["rows"])
 
 
 def test_run_identity_and_dry_run_artifact(tmp_path):

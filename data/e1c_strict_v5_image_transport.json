@@ -1,0 +1,78 @@
+{
+  "schema": "e1c-strict-v5-image-transport-v1",
+  "provider_calls": 0,
+  "changes_admission": false,
+  "official_ready_count": 0,
+  "mirror_ready_count": 3,
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "official_image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest",
+      "official": {
+        "reachable": false,
+        "status": "transport_error",
+        "digest": null,
+        "error_sha256": "5001045178ac3287f51605e411b146ebe29002c65cfa65ea7fa5518313fe02c9",
+        "error_tail": "failed to configure transport: error pinging v2 registry: Get \"https://registry-1.docker.io/v2/\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:64441->[2600:1f18:2148:bc01:cfe1:477b:50bf:8da3]:443: wsarecv: An existing connection was forcibly closed by the remote host."
+      },
+      "mirror_image": "ghcr.io/epoch-research/swe-bench.eval.x86_64.pydata__xarray-3993:latest",
+      "mirror": {
+        "reachable": true,
+        "status": "manifest_available",
+        "digest": "sha256:af17d82d117d51f47345aa118c22cc4862d366514fb51223e869685ccc18afef",
+        "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        }
+      },
+      "mirror_authoritative_for_admission": false
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "official_image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest",
+      "official": {
+        "reachable": false,
+        "status": "transport_error",
+        "digest": null,
+        "error_sha256": "24d08e36eb5e6a8f9f8bac28813c88b25b9fc119f355e65c494315a4b7e1d902",
+        "error_tail": "failed to configure transport: error pinging v2 registry: Get \"https://registry-1.docker.io/v2/\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:64454->[2600:1f18:2148:bc01:cfe1:477b:50bf:8da3]:443: wsarecv: An existing connection was forcibly closed by the remote host."
+      },
+      "mirror_image": "ghcr.io/epoch-research/swe-bench.eval.x86_64.sympy__sympy-15308:latest",
+      "mirror": {
+        "reachable": true,
+        "status": "manifest_available",
+        "digest": "sha256:b06bb6d6e42fa6d39418948e175d32029c9bf0cea66f3a2d307f9aed355710b8",
+        "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        }
+      },
+      "mirror_authoritative_for_admission": false
+    },
+    {
+      "instance_id": "django__django-16092",
+      "official_image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest",
+      "official": {
+        "reachable": false,
+        "status": "transport_error",
+        "digest": null,
+        "error_sha256": "1d073bb3a99d01b0b1dbf3533e3bf2593ead6f6aea7d5bab60318d0d1b5baa27",
+        "error_tail": "failed to configure transport: error pinging v2 registry: Get \"https://registry-1.docker.io/v2/\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:64464->[2600:1f18:2148:bc01:cfe1:477b:50bf:8da3]:443: wsarecv: An existing connection was forcibly closed by the remote host."
+      },
+      "mirror_image": "ghcr.io/epoch-research/swe-bench.eval.x86_64.django__django-16092:latest",
+      "mirror": {
+        "reachable": true,
+        "status": "manifest_available",
+        "digest": "sha256:1df9e753b2918287d5fec28a134a68617645b5e92b500b9c4606277832a205cd",
+        "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        }
+      },
+      "mirror_authoritative_for_admission": false
+    }
+  ]
+}

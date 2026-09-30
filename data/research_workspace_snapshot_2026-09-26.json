@@ -1,0 +1,4860 @@
+{
+  "schema": "webcodex-research-workspace-snapshot-v1",
+  "head": "ad6426fc9f11c7caecd969ded11cd69c7d8a11cb",
+  "branch": "main",
+  "dirty": true,
+  "changed_path_count": 537,
+  "classification_counts": {
+    "current_lineage": 30,
+    "generated_evidence": 91,
+    "historical_research": 416
+  },
+  "destructive_cleanup_performed": false,
+  "files_moved": 0,
+  "files_deleted": 0,
+  "files_staged": 0,
+  "files_committed": 0,
+  "policy": {
+    "current_lineage": "KEEP",
+    "historical_research": "KEEP_UNLESS_EXPLICITLY_ARCHIVED",
+    "generated_evidence": "KEEP_AS_RESEARCH_EVIDENCE",
+    "cache_or_runtime": "REVIEW_SEPARATELY_BEFORE_CLEANUP",
+    "unknown": "MANUAL_REVIEW_REQUIRED"
+  },
+  "rows": [
+    {
+      "status": " M",
+      "path": "docs/PROGRESS_RESEARCH_ROADMAP.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 187252,
+      "sha256": "68491174f7fa6b1834ccfd67543eded81da85b21fa4d5adda0e4c4c85b9d4c10"
+    },
+    {
+      "status": " M",
+      "path": "docs/research/PENDING_E1B_AUTONOMOUS_TESTS.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 22115,
+      "sha256": "8bdeb40df6980691260566814c66227fa433ecd56e3660f50b746a5633df500b"
+    },
+    {
+      "status": " M",
+      "path": "docs/research/PROGRESS_LOG_ARCHIVE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 161568,
+      "sha256": "904293f7ea53870939752d12116f7b05ca6a61b16f6f526c25d2a28e02b4cd9f"
+    },
+    {
+      "status": " M",
+      "path": "evals/e1b_editor_adapter.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2675,
+      "sha256": "9ac249a8ad6c37af18e02aa3eff95e37482417d6ea9b9247ec4b955e5c31a6c7"
+    },
+    {
+      "status": " M",
+      "path": "evals/v3_compact_pilot.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 20700,
+      "sha256": "20f9c07695db1146b5aff14440590a89194603567fad945f6dc9d2a224d9106a"
+    },
+    {
+      "status": " M",
+      "path": "evals/v3_pilot_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 21568,
+      "sha256": "7195720d4decece6d9a23ba042dc5d8dba719f1b74236c183f781bffd34e58bd"
+    },
+    {
+      "status": " M",
+      "path": "src/agents/model_budget.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 9364,
+      "sha256": "d9c8fe527fb51ed7a8dcf0e4fcd357bccb9bf5838a8b41ba1a86b51086674195"
+    },
+    {
+      "status": " M",
+      "path": "tests/test_e1b_autonomous_harness.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 11242,
+      "sha256": "902af6138b627b63b3702c7b4965b7ed82941736d22aa10f7a722ad9efa21a15"
+    },
+    {
+      "status": " M",
+      "path": "tests/test_model_budget.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8281,
+      "sha256": "1ef319cd35eb1bdaa25f00256594ffd6415be1ca5abfbb854d544a4c58dc55de"
+    },
+    {
+      "status": " M",
+      "path": "tests/test_v3_compact_pilot.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2268,
+      "sha256": "7a1e98efa28487dec23fe2c7e9cd2805f37305bb4c7e0b76abefbb21ae674084"
+    },
+    {
+      "status": " M",
+      "path": "tests/test_v3_pilot_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1777,
+      "sha256": "7f358556a439d9b05c244cb95d9766fbc4027b3b6ad0f391b4e26c30caccd111"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_blind_reproducer_v4_canary_manifest.template.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 575,
+      "sha256": "df83ddf596c2b492d011df1f7d1541bfff55a8c0e5bb547a63e2ea18e7054ceb"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_candidate_manifest.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 16671,
+      "sha256": "77100ff0fa28b0b35eae254d50e00dc72dd5fe25587ed254463d4481963a3722"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_fresh30_v4_prereg_plan.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5714,
+      "sha256": "1049bf1a0adae9d391c8da8240bcb3d0deffb1e67ca8a801f0f1b8a2d5060a05"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_admission_seal.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 917,
+      "sha256": "7f770f18c4e6f021a52e0e766727380ba585a5155cb485c2cfa96060e9696a5b"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_blob_diagnostic.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1474,
+      "sha256": "df954ba3531918dd415628682ebaace07c0fb49ae38cfc2819274b1261e6cd87"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_blob_preflight.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1417,
+      "sha256": "59b22d144616e30edcafd46ccea834c3359eefd30c76dfb09dc7a95aefb1b3a1"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_blob_preflight_ledger.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1929,
+      "sha256": "066405503c79de918d9e298bf3a1e8b3a167e2ab6a3af745c503ace65de01601"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_cache_accounting.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2762,
+      "sha256": "67e23dca7e46d69648c800b5221a0e6fc5525dce33e1a57fc4eb06f616736f9b"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_cache_budget.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1227,
+      "sha256": "cda8089053b4ec29983e85cad1718e10713059f677f86a619cba81f4a9927ec2"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_canary_admission.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3068,
+      "sha256": "d1eed8af60eefd1519fa00954f3e89096c542f43631efcf8e53116cf91b10f4f"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_canary_manifest.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1113,
+      "sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_canary_manifest.template.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 605,
+      "sha256": "058e20886e8f2643825c9d99b035fae6cf789eb859767fed1b7dfcc08df4ad80"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_contamination_ledger.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8227,
+      "sha256": "8468c2f4baa413351dd924f5d418a09857ea59d5a5e2890d3f405ff270e5022b"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_direct_oci_plan.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12210,
+      "sha256": "40925796b42da6bb0d2389f12f4c8c2cc6f4b5bee4368ac8fed33cd74d1bd77a"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_engineering_readiness.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 601,
+      "sha256": "3f8c0ca257439bac4a7f2f45bc25b228bf83a84d6aedea3bcffdffec180715e6"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_failure_pareto.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 918,
+      "sha256": "7cc083e4d9e0ed73fab31d9b8364b0cf583b4f7e233c08700393c86b2bef3e06"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_failure_taxonomy.csv",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3181,
+      "sha256": "236fb07775036bda11cbaa35be4fccd272f062ee23cc5f7195cc3beb739b778a"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_failure_taxonomy.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 18048,
+      "sha256": "47c9f5280dffcbe7b8f60bb68b11fdca7f635c9356ceeab4b8eb5cfa4da58cbe"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_freeze_certificate.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1072,
+      "sha256": "806814fa28259716191e52647787621f714241676b7eb6bc1c0ff5e540bbbaba"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_grader_materialization.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5138,
+      "sha256": "790d2448e645015eac12bb4ebd738c2fe98ca456a4cf4808ef0149dcfabe40ae"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_image_identity.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4385,
+      "sha256": "e5aaad76174a51ddca2f2fe054476ff5985ce1dfe19045d63c288a9860e93b76"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_image_transport.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3713,
+      "sha256": "a01a3b9ff0c697c8dcc578ea673a752a08d376a0b8f17d28178edefe3afad99b"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_infra_gate.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1326,
+      "sha256": "bc5933f6bd96c22fa1c744dcd6715164a72910e23391b46ff00821125c520760"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_legacy_artifact_seal.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6535,
+      "sha256": "11303b1adf9097827e992a174e19726084b8f96187db5c8676f106285028f147"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_materialization_plan.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2436,
+      "sha256": "a55a19206a9e42c5fc724549e2d8480afdc7d3101e572939a82f814aba2c55f6"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_metadata_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3540,
+      "sha256": "c398bef158459a1d3f4914019716baf81e53f606cb9cd65992bf35fb4630f523"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_metadata_source_registry.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1942,
+      "sha256": "45d027a602f4c13422b3054fb2c99514ef79ab10dda6c5d6057487be03752287"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_official_image_acquisition.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2169,
+      "sha256": "d7bc3a7dae67b90335f98a4e846c7e320349849b41e0876d3ded8a2040afd941"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_official_metadata_pool.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8715,
+      "sha256": "793c4cdc6b78712fdf4433807300796e9dfda4af240ba0bfd3cc2edc21c64d11"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_postfreeze_identity.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5915,
+      "sha256": "40b03b497381a90d97cdfe79242a2e014151229b72888699517547f5d4595397"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_protocol_consistency.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1804,
+      "sha256": "ce9d022ad5e957f34078d19fb8ac9d7e5811b5679fff87eb4fbaede82f46faf9"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_stage_a_gate.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1138,
+      "sha256": "eb1b09782e682a0067b16a3c8ae69d6cd62105d04bf469160e58bb3a984c165f"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_stage_b_gate.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 499,
+      "sha256": "2fee63c00b82cd1d9040b2dffaf093fd32020517672796796683c5d24d9ac7bf"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_stage_c_gate.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 653,
+      "sha256": "b0adbd53c7773de90931e9cd0fefead8a90c2ff65a03ac1b0127e42916c64f54"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_stage_d_gate.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 742,
+      "sha256": "73d04256fd8527006845aa9243362cfc1b77c4c07c4e60953b0c2bc6a8276da9"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_stage_e_gate.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 575,
+      "sha256": "2a02b444a36a27a548be0c73f78f2536b1c458c2a7b9112f41103c21e3f2dda1"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_transport_trend.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 817,
+      "sha256": "fb24200d259dde578375ecdcb14f6b393d1f79c3240294df57a7bb3b40730d54"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v5_workspace_snapshot.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 27679,
+      "sha256": "348cb2e554a3468cbade058c5842098cd1fdc0703ec4bee4cf3d7cccdfce84b4"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v6_canary_manifest.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1094,
+      "sha256": "ec6f311b806fbac3225d57fcd9858e2334af41af9bae0609640350fe12438fec"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v6_official_metadata_pool.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7822,
+      "sha256": "6d492442ae0bd15669f1f504f14a847ed9a9b6bbf14634fd7560a8b6309acda5"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v6_postfreeze_assessment.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 61321,
+      "sha256": "34fde09d3f54ce466aa800f10dcaa2647a05c05b3323809edf2adf3b3e2a0c31"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v6_prelive_seal.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1115,
+      "sha256": "77563a93303625b783997999a4bb659cb7c46a800258ec972f64ef21751171ac"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v6_prereg.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1688,
+      "sha256": "e788be8dd3ebcdf6c2e1303bb09d5f3a0a2adfae5b7f11ebf9e5a4215f20bbee"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v6_selection_boundary.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 729,
+      "sha256": "e6f1f9d0e2afc977049be50b4bb6370ee2d93712b43c5f7be77c668c2d1fbfb3"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v7_canary_manifest.json",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1218,
+      "sha256": "2b576ebf9fefb3cf6e8df99947ed6966924aa6d40ccb73b6a48dde48392c931f"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v7_dev_replay.json",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5360,
+      "sha256": "caaa18f66769d9bb1ebe726c9a3d511a4e6029b4c2dc7f1baa6f6ed03a277496"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v7_official_metadata_pool.json",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6268,
+      "sha256": "cbdd95134591b16178a519d9ddf8cecc23fa0baa269835ddaf3c7c9dcca8b4ba"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v7_postfreeze_assessment.json",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5740,
+      "sha256": "4ec87f2753a2dcdf4aaa12c87a0c4b2d7efd3599a3395d96f26ae21f914321ae"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v7_prelive_seal.json",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1229,
+      "sha256": "d571f151c3bc97c1b511ff83362c9559f108e5f62c920e59c0ef4e61228963eb"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v7_prereg.json",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2051,
+      "sha256": "af21589b9f16c7d895d2fbee9343c7d2a89c50bf4f992d9591aac9cc3038365e"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v7_selection_boundary.json",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1032,
+      "sha256": "8aa2a35825182489c44e7f6570ad87775a54b5ee159ab44ee0c7baba17f9bfc9"
+    },
+    {
+      "status": "??",
+      "path": "data/e1c_strict_v8_selection_boundary.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1323,
+      "sha256": "311e52bdfdbd34e0c95dae44422c28cf9b6ad8151fec28baee8d53053090b0f1"
+    },
+    {
+      "status": "??",
+      "path": "data/formal_e1_n30_summary.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1183,
+      "sha256": "112c19061c3e58537a0d789eb3f18ffca8172a52182e3976c093fccc98cb6474"
+    },
+    {
+      "status": "??",
+      "path": "data/research_workspace_snapshot_2026-09-26.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 161218,
+      "sha256": "feb3163adda98efb2d25dd707469b320ae07f73664d69950406c25921aea846f"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_cohort_manifest.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1754,
+      "sha256": "658e70bb4e2ed5e94b0f6e1ba7cf537fe04774a8d99bd2f0a671a4d3bb72a1a4"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_cohort_metadata.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1748,
+      "sha256": "77f513c09d8c6bea9d953ef6903019951e8b2a1b8da7c6ed563940e461db0d67"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_formal_postrun_summary.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 785,
+      "sha256": "dd5b36e80431cacad044ebc1cab74256ea7b88c3ef1fa759bdd47500c2fe86c4"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_more_itertools_replay_inventory.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 22240,
+      "sha256": "08c297c65cfd34dd75dd77a8c36c4223f0be3b69254160ab4f3f8cff86016146"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_preflight_config.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1130,
+      "sha256": "257855c366b260fe591a4c44af941b87dd11a81129c7b61334176c11f9f91859"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_prettytable_replay_inventory.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8017,
+      "sha256": "b51f97287a1e5c3c2d2bd68353c293438e7a6d2b675442e7fbc468251626dce0"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_public_network_probe.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 171,
+      "sha256": "53730002ab0b333697a6281e4a598d480621ac65f9e65ae9aa09b8f95786dd80"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_regression_ledger.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3448,
+      "sha256": "cd6ece2b30798d44fb1d01f95ad29729f97eb02fcd5fb8941c6ad8613c742576"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_replay_verification_queue.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 25647,
+      "sha256": "cbf9dd613d2f008212722a7e6135644a35ddc77014782939e089bff1d3548b96"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_replay_verification_queue_30.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 28937,
+      "sha256": "f9364f7f1ea162673502f52e9857190945d6c7ea5818f0d91d2602f8601a7ccc"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_replay_verification_queue_40.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 31681,
+      "sha256": "fe1011aa36657b2297e7f520c3cd34569109ff896ee293d72f7547182df52488"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_sealed_task_spec.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 18547,
+      "sha256": "287012c558543d967cfd4f634b8dcfaf9980aaeb7fa0cd3a346f707926a4c644"
+    },
+    {
+      "status": "??",
+      "path": "data/wave_b_verification_ledger.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6821,
+      "sha256": "9b2277b441e323f12fbb09d84c3a5f8efde60342d80747bc36761d9cdc5c924a"
+    },
+    {
+      "status": "??",
+      "path": "docs/PROGRESS_RESEARCH_ROADMAP_2.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12787,
+      "sha256": "37ec2547aa946b840da9e2545426955512de843e2a7209f053ef4dceaab99779"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_EXPERIMENT_READINESS_CHECKLIST.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2870,
+      "sha256": "14f678f3d32b367239e9fc432186eb042ccd4ac5121e27cdc10cbc056ef6811e"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_FUTURE_EXPERIMENT_MATRIX.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2674,
+      "sha256": "43cd61217651d93c60bf0bc46e487aa1942c3fdc01c069ef571404f1813c76f3"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_INTERVIEW_DEFENSE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3509,
+      "sha256": "fc5c421fe433f77ab45a36b7e6d45078a9991459b99e96e83405ae396d85610e"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_LIVE_COMMAND_AUTHORIZATION_HANDOFF.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1441,
+      "sha256": "3f1eddf63b7e05b33cb971be172e165a397300a2246644803da1960cc9c9cf10"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_OFFLINE_DRY_RUN_OPERATOR_CHECKLIST.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2194,
+      "sha256": "4e5fcc317bb9151d2748ef6e8950e90e99cb865527dc9a91c6f07cbc6d2a2cf0"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_REPLACEMENT_HELDOUT_PROTOCOL.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2561,
+      "sha256": "8a6eacf25ffa529ce167423e45e888a686ffeb8fe620656ade1df2387bf2caf7"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_REPLACEMENT_PILOT_PREREGISTRATION.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3413,
+      "sha256": "73592af58aab439667e02e0d8b31091970f78c5c78bd1a6b594dab0bf7434550"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_RESEARCH_CONTRIBUTIONS.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3018,
+      "sha256": "7a9f88bfb9df30e42d72e2c22135c098ba28ad78a5c07a85a7095d881a8f34fc"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_SEAL_INTEGRITY.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1649,
+      "sha256": "bf94fa08e54545f1c7f86c53f109e920b233ae5126664b97148b2ec48b8ce9d7"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_1_VERIFICATION_DECISION_POLICY.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2272,
+      "sha256": "ed949c8a6e16cd32590c1b7c9e5d87c7fc0f28ad6f5fe883f2ae0914ad2c03d8"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_2_VERIFICATION_CONTROL_RUNTIME.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1826,
+      "sha256": "48c82cbeccfa43b0056edd04eba827a737f5638e9a1cb82ec3e70677afaaf2a1"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_3_EVIDENCE_ACQUISITION_PROTOCOL.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2016,
+      "sha256": "ed12eacc2a1444adeae21527fc1a8339e09fa325bf37eabe5e712a5f6771cb23"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_4_POLICY_INTERFACE_AND_REPLAY.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1798,
+      "sha256": "f1b44c564075d912e13f6c7ec110861b6cf8a4ba941e00de2913936f925cddd4"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_5_PROTOCOL_INVARIANTS.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1163,
+      "sha256": "cebc167738dd18dcd7286536355316cb25f6d4f648cf054e26c6035143bdc427"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_6_FREEZE_MANIFEST.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1584,
+      "sha256": "4d98b9fcc3168e67f67d1860e70a291f6575f305cd901e899849f5d7087b2e19"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_7_EXPERIMENT_ADMISSION_GATE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1349,
+      "sha256": "5a87967d63a39f993f9c6182c8b81f017f16d787d51154dab09a343c5750277c"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_8_EXPERIMENT_PACKAGE_AND_DRY_RUN.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1780,
+      "sha256": "0c9acd1d29b660976a29a348803044d74adfd78ad2346a99be4bddd85f364d31"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_CONTROL_PLANE_AUDIT.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3041,
+      "sha256": "b66bf4c1efdafaacbd7b7a97519038fe6ccb822e82c0152ff37ed4f8bc7e3a63"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V10_SEMANTIC_EVIDENCE_IR_SPEC.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2247,
+      "sha256": "0170a721f68691b9df86dfa230cb5dd5b9483d6f240f6cf37db3b4d4a8df5b82"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V8_STATE_TRANSITION_GATE_SPEC.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3679,
+      "sha256": "1b45b0cf74827a63560589ea89f20c69c09fc4fb9f8af3a5d2d5f1e23e06bed4"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V9_1_SEMANTIC_EFFECT_SPEC.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2569,
+      "sha256": "4f9168f653bf11abc6460e0539870db10cd5f5a60ec7cf76d9ba1da3297d1aa9"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V9_2_SEMANTIC_DATAFLOW_SPEC.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1926,
+      "sha256": "d0f867d52dbf015f7f1187a006372a9004bfe411b3fed5c335c823628f63194a"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V9_3_BOUNDED_HELPER_SPEC.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1823,
+      "sha256": "449846274da81ffc6c713497b2aa0f36e32f730573b8fb1e52b761c193ed9cbd"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1B_V9_SEMANTIC_PRESERVATION_SPEC.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2861,
+      "sha256": "9827ae2b4f5c5c5a51cbbe69fc97884d184f0fcf3e0dd3ffbd8818fe8bba3cb5"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_ADMISSION_V2_SOURCE_IDENTITY.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1947,
+      "sha256": "051bd0e5689453b858a51f9539d772df4fe8771797019e3363c394a525ba76f9"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_ASSERTION_BLIND_RESTRUCTURE_AND_EXPERIMENT_PLAN_2026-09-25.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12118,
+      "sha256": "d38782d95baa18cd8b5d28cb5a278d79e8fdb94b4d62a69e190273783900bf6f"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_AUTO_LOCATOR_V1_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1279,
+      "sha256": "607d1996e83c9163896b4c32178ed57f836e5f7e3f973d5722a1753e99abdcbb"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_BLIND_POST_B4_OPTIMIZATION_AND_FRESH30_GATE_2026-09-25.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12927,
+      "sha256": "b5f901850a5f5b483ac68459c4c2c0ece2efe9436bafe849dad53e08b5447604"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_BLIND_REPRODUCER_V3_PREREG_AND_FRESH30_GATE_2026-09-25.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5987,
+      "sha256": "7113a7343b3d681a47491c366a6aed9a3808f481515fd1f7dbe43e49892942b9"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_BLIND_REPRODUCER_V4_PREREG_AND_FRESH30_PLAN_2026-09-25.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5991,
+      "sha256": "1aea5da31db6d48035dc093997b9cfe96d6455c6d4609316b517880f5d324258"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_PATCH_UNION_BATCH1_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1348,
+      "sha256": "f15d5d7db26a63492221099abcb8fae09b04c2505cf8c5642c1e7e31258eaffa"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V21_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2738,
+      "sha256": "013b411e3de7dc095182cf2da48b9aa925ba0ef4685b2b51698eb4cf2164c782"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V22_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2638,
+      "sha256": "bc985602ebada45d0e9a01e94b20365433133454402d700a88555c12560db1da"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V23_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2454,
+      "sha256": "ff50763ff53ac6e18c761acef5b882271d0f8173eebf24bb0803cb1186549ddf"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V24_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1832,
+      "sha256": "6013922e11a70ba5cd17b632e91ffc413124444d532a386228468d5e2788ea38"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V25_CAP_PROBE_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1180,
+      "sha256": "a0552bb1cf08229eb7cc32579c7e53c5f2deac8759981ecc619fb80d594e5e13"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V26_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1235,
+      "sha256": "fba470668e405c488b1d74e935cf5ff9181f816d71f4ea609d1c6ecffb5d5d49"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V27_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1171,
+      "sha256": "e80095ad86ab158ccaf9b733b08228bf008c144e9df64408818447d8c369ad26"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V28_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1285,
+      "sha256": "caa09640c3bb67594be56630c68e8bc8379231d21f9c631c975dd26c12808229"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V29_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1210,
+      "sha256": "d9bc9b1bc4b4851cb93828a7e43dc276e7ec8036cb9565c618755636ee6e8b06"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V2_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2744,
+      "sha256": "500258d42c955d3bb302f67d6dddea70b33468a8f0c2183bf85d44e891181650"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V30_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1137,
+      "sha256": "5ac5593b856b8f6813cb46e43b8b829641cad3d57d38396247fb9a5226f71dec"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V31_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1960,
+      "sha256": "b254ac7413345f348de5a4e31d1704473d4ebc34175d11f7f2e0afd3ee4e14af"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V32_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1305,
+      "sha256": "95290552ac386894a3ef913994bcbb3c9bb21d589345974f3a3515d5b4d702a1"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V33_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2013,
+      "sha256": "d67800f8fe887d621e63427f1ed01c78b549234621dde2aff225818021cb7a18"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V34_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1504,
+      "sha256": "73c1ae617e86b7864d60aa0c3edc9c0038d373e2521d8211e6b4c9290b28f57c"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V35_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1754,
+      "sha256": "f51427f897eca10a40c4c9657298e8d3cb7052806dede6736b08944eb1279a0d"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V36_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1605,
+      "sha256": "cd6576015cbca1b0b7eae7d031223f9b997670477b1830d7757319cf74820ba0"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V37_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1287,
+      "sha256": "031b6902ad1cbb40ce9c11d936700822f8def1ab580d2a3afaf8d9eca9bdf4d4"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V38_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1438,
+      "sha256": "253724b037f5ad4c65caf64170f323ebf69b32be1dd84f95efc2f344704fe215"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V39_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1802,
+      "sha256": "8cd21d932b3de21aba9d54bb24e395b9d64262bd508fe8414ead1f254a2db2e6"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V40_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1666,
+      "sha256": "7252e9b30318272816fd462b4f417cca399a98d2b68a2b136b186fa7803bcbd5"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V41_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1587,
+      "sha256": "9191c910259148af00db3f2679b1ea05f266952c5e8661d066ed05f63ef606df"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V42_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1307,
+      "sha256": "88dab37a0ec4512f08e8dc1576405ba089bd15ca8a64e4f1541ced6aaab129ec"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V43_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1945,
+      "sha256": "0f7205ed07c87b673ea1ec18491410e9214e01aef22f99a08643f98443e80c15"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V44_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2287,
+      "sha256": "2db107a99a5da7a12f43f37033edd2a32e9fe0fb35cadd96b0da11f903136415"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V45_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2026,
+      "sha256": "1ebd2607569cb2f60fffc4dd0ae96dd48118ef5d9b0be147c05de7090bc406ac"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V46_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2538,
+      "sha256": "0e728815b3a3ce18cbcd135af8057b3ce1d01db913cd08f51dfe4aec04797d1e"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V47_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2732,
+      "sha256": "93b1c306b18d33f1496bf7eb85fabffeb725b9e7607b9d07a39840168adfd890"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V48_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1997,
+      "sha256": "3fdb265bada82eb12af7d1b5101be141ae7ac285ec6dc7b18a760df46f7d2a20"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V49_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1975,
+      "sha256": "77ad6cd5e3903dbf3e7dc9e1d778a40b8419cdc9d180ac17afe6f42787e552ba"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_DEV_V50_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3010,
+      "sha256": "7b244ece46ef12e97d8e27baf084736411fbb1f85a5f339af3642f890a101f99"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_N30_EXTENSION_PREREGISTRATION.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2497,
+      "sha256": "6ebd8bf010180fd9b8b00c20cc817e034cb2345176f656df4f17cce88b07960b"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_BLIND_DEV30_TO_FRESH30_PLAYBOOK.md",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 24496,
+      "sha256": "35beda4ae0a878851de8aea7446e2618ae98e82825d1ef1dbe029c57f7507859"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_V5_HANDOFF_2026-09-25.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12887,
+      "sha256": "151485a7038b676d2651f0900fb1e79170e663707413810759d138d7af8c8ded"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_V5_IMPLEMENTATION_STATUS_2026-09-25.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 30140,
+      "sha256": "afc5cef26a0136eb43a419be2ebca6747838c4128f9bed04cecb824d20dff071"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_V6_PRELIVE_SEAL_2026-09-26.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2654,
+      "sha256": "a6a2565e62705f73da5f9c4d192217ac4436bc27a78d93a1868fc0a0f6bb9073"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_V6_PREREG_AND_CANARY_PLAN_2026-09-25.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4020,
+      "sha256": "073644d4f6715ab68d53eda5a9104326718da51b24a2e4ad56586df6007d0326"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_V7_PRELIVE_SEAL_2026-09-26.md",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1723,
+      "sha256": "10f38ac4f761bf612627963e14cabdaa2189149d5dc99782630c3a311c330327"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_V7_REPRODUCER_FOCUSED_DEV_PLAN_2026-09-26.md",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3388,
+      "sha256": "a614f37fc1ed974a0bcb4556475917167aec9288777c01741699369b9a7d7c69"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_STRICT_V8_SUCCESSOR_ENTRY_PLAN_2026-09-26.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1473,
+      "sha256": "140af4d142475b86fad6954f8bcde02e84c3e3d281a0fa8274d980e6433fba81"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1C_TO_INDEPENDENT_GATE_2026-09-24.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4466,
+      "sha256": "aac2fb9fe655eb4fd41f96739437979907674f04087eefb474192105a71a0026"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1_E2_FAST_COMPLETION_PLAN.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 13712,
+      "sha256": "a7b14c10beda7865439418af7fbab5fd79e16fa1a97795a046895a1560044869"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E1_WAVE_B_SELECTION_PROTOCOL.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4623,
+      "sha256": "7bd230c46102a014da039c2981a36a01918ab5f47457e2be7b57e981987118f5"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E2_E3_EVALUATION_PROTOCOL.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3448,
+      "sha256": "60f2d9f99b7bb21a98b72bffe86ae18f293753c6235d5f965a00634ccc2c429f"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E2_ENTRY_GATE_STATUS_2026-09-23.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6682,
+      "sha256": "395643909e411397f89d8440275b9d5e118742ecfadd09cbd31fdea831ae41d4"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/E2_ENTRY_PACKAGE_PRELIVE_FREEZE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2299,
+      "sha256": "eb3213f9de29ab5716de0d9af90c21ced488f168923a1666efa7864043e6f88d"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/EXPERIMENT_NETWORK_PREFLIGHT.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8416,
+      "sha256": "11779fd65611ec2f7b5723e5beb468e338c06effa43da8cb435c7ea3560f08ef"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/FORMAL_E1_WAVE_A_POST_RUN_REPORT.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3970,
+      "sha256": "338538ba73ddcdc411d7c958561cc10825dd8cdbba6ccdf60646d4bfeab080c6"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/FORMAL_E1_WAVE_B_PRE_LIVE_SEAL.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2924,
+      "sha256": "edc4987968bcc7a7ca1f0be68c27fdfcc6083b6731a6025021f17724192e383e"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/NEXT_SESSION_HANDOFF.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4045,
+      "sha256": "c152b2cb6406be42159df1bbbd228780cea254bc2388a169af6bf08ceee4f49f"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/README.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7894,
+      "sha256": "9f720e5794c2089c3b328e626338411a31ad20cba66632919e083fbd06d8cade"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/RESEARCH_CLAIM_LEDGER.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2729,
+      "sha256": "8fbcef19b6f9400920fb964f0ffc3b1815a6dd910a5e3d7cd294e70a75007165"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/RESULTS_E1B_DEV.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5865,
+      "sha256": "c5dc51261f67a72629734f9ab13ef61581bf9f4f3ac4d54159658b4ffb8be2f0"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/RESULTS_E1B_R10_V5.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1727,
+      "sha256": "89c7da4e3d4a31490e0751552d8ef56a62a57ffb78de03e99bc55a42e23f23c4"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/RESULTS_E1B_R10_V7.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1818,
+      "sha256": "4c2a476c7ed09753c67112785895648c2275c3e07a747b3d566af9af86f34658"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/RESULTS_E1B_R10_V8.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3163,
+      "sha256": "913d325e021d6bc82d90ecd181aa259ef6682445111ddbe8e75dafc3c1b6ccd7"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/V3_RUNTIME_FREEZE_2026-09-22.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1358,
+      "sha256": "be618ef36064c2b8d488383e4850498775e4359bcee0cda4288cd7cf5680ab35"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/V3_RUNTIME_FREEZE_2026-09-23_GENERIC.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1741,
+      "sha256": "acb797dfcd775cfb3530b7830c7efbdc218e20cb7705b2ca78dce7bdf9baacd0"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/WAVE_B_CURATOR_HANDOFF_2026-09-22.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4267,
+      "sha256": "6f710b46b04aebf9df9b442cca2ce367b90da2d9b477e7f97865d5315ad53d85"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/WAVE_B_NETWORK_TASK_SOURCE_POLICY.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3736,
+      "sha256": "7f919ab4772c2cb16f19893ed0653aada5b3d9e5ded6a791ed6845a59774c6c3"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/WAVE_B_REPLAY_BOUNDARY_PROTOCOL.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3073,
+      "sha256": "b84bbf55aa11fa20d28b3413ae4a0f0336f4198196bfea6112717be9bc0d19a6"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/WAVE_B_SOURCE_COMPATIBILITY_AUDIT.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8230,
+      "sha256": "f77fa44bd2dc821c5758a104d88aae61bd3ede2a17cc204fea72039f83fcce97"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/WEBCODEX_HANDOFF_2026-09-20.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5904,
+      "sha256": "932cd91b754cda11681800e7c3185a1b911e167da123422f51c80b4c74e6c369"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/WORKSPACE_HYGIENE_NONDESTRUCTIVE_POLICY_2026-09-26.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1772,
+      "sha256": "8a1d40bb4cee24cb9d3a37c96da331ba8082474d2290dd91d92b97d6dabc8d90"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/e1b_replacement_cohort_metadata.json",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1458,
+      "sha256": "3b81a7f19bab4ae582bb33bae563eacf2fd3f214abaacd6badab82c9f164af4b"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/e1b_replacement_deepseek_flash_config.json",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 823,
+      "sha256": "2e379612f7b932690fc35eb9501ce524388ecc3c8630460d049329b038d60002"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/templates/E1B_ONE_SHOT_PREREGISTRATION_TEMPLATE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3264,
+      "sha256": "d4f07c7283d4b52abbfaef675e47a8f0457b2967553ae0af241bf474a6220c15"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/templates/E1B_POST_RUN_REPORT_TEMPLATE.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2350,
+      "sha256": "c346ab6b15334e4f03e0b9dc06addd38e73cdedd86acb9f421979d01acb7b3a0"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/templates/E1B_REPLACEMENT_COHORT_METADATA_README.md",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2894,
+      "sha256": "036250f5d7939460a9a44b81e7799f6fae3af538e43e2b7518190292ff0a2ef0"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/templates/e1b_experiment_config.template.json",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 525,
+      "sha256": "5b08a0b19d2d783318f65590699ab97b8b8b7c2759295f957305b260f247c183"
+    },
+    {
+      "status": "??",
+      "path": "docs/research/templates/e1b_replacement_cohort_metadata.template.json",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 272,
+      "sha256": "fc08d9d759157d312141bf4ed774bf0fab135b3dcdad0dac61adfc9b1eb35a5b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_acquisition_counterfactual_v10_4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2828,
+      "sha256": "c27c9c5a8f8f235c721cd4dbfaca9260a8c1f604ebc01bcd7dc53445b3abf8be"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_acquisition_policy_interface_v10_4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3884,
+      "sha256": "28de8c8e1fff342456b17c83b4d76f05e1fc59a9a4266daaf8774aa4c7bc5e3c"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_acquisition_policy_v10_4_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1169,
+      "sha256": "f05b0174dc7a25401fc8a4755a6a4bee300155f0f05f897ba5e94d2d74106f02"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_behavior_witness_v8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1752,
+      "sha256": "188e031b6a4ca0cb6391f3f3e522b90af045d9305ffccd897264ed802c597a75"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_contract_audit_v6.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1013,
+      "sha256": "66388c2606b0e9464284af4acc8f9e4c8ca78598d058e8742896824922d01ad4"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_contract_coverage_v7.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1542,
+      "sha256": "65a1cffa64b296d00509703bb8997ec6d1133aac59099f1c95f16d009c554c79"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_contract_extractor_v6.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2149,
+      "sha256": "197f16907bcdb0927d2c2d3f76c9ea619225414dfe546f6f35dd1fd9e57152b5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_dev_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3219,
+      "sha256": "17bef0287207bcb52dfc907450b69f2a80ca93cc02f4b35420c6cd3906a6a7c2"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_dev_v3_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3160,
+      "sha256": "1957dc7d43a77b61460af20f9ce123e3bf10dd2e73344a847314cec0b9efbb0e"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_dev_v4_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3333,
+      "sha256": "fe80223e8a75c43b6be39ebca606c5bef9433f62809797a5e994ff083404a5a2"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_dev_v5_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4172,
+      "sha256": "33d73557b22d4c21295ec492cbe6f799bbebd8ed48d24626f548146e820e004a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_dev_v6_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4449,
+      "sha256": "1835978415d5fd0e2aa2100cb7475ef0c60eb4399743be7ac9514d07323b0e83"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_dev_v7_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4437,
+      "sha256": "5dfcfb1d390daee50b98cb13a846ca6a12af382fff6d300840bbaf3ea297cf52"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_dev_v8_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6130,
+      "sha256": "d17d9e78aa294dd932865e2a4d1e1d2a312697cb727ad3b9d02554b12143c3fa"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_editor_adapter_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1996,
+      "sha256": "ecf15da3a886e4b9a6a9348359328b6bf1a4bffea1af3016201a15ba7b60a1be"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_editor_adapter_v5.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2138,
+      "sha256": "8639b8b13e2c13e140070dd7f703ece510e3e12b20420d30dfb25b037b3c0da0"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_editor_adapter_v6.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1233,
+      "sha256": "f6f48a06acf96b828a66a97b107f7fcbcfb8c01630d9bd51a528cbabb3905957"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_editor_adapter_v7.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1955,
+      "sha256": "00e4a1b81ac739341282608b583dce862e677d71e4d05d38cc260654cb826722"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_evidence_acquisition_runtime_v10_3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2281,
+      "sha256": "debafe07dc8fb64eee6950472e777fe5df47042e7c9edb4cf61aa6cddc77d89c"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_evidence_acquisition_v10_3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2491,
+      "sha256": "b91e33e5c9cbeed90d39a01313dfbf08f267ce439ab0ff295daef2e760f12f62"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_evidence_acquisition_v10_3_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1170,
+      "sha256": "fa6a7bfd86cc8dcdfb02ef6809dc63860592d3b61ef31c9030ae5dcf8199d537"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_experiment_admission_v10_7.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5102,
+      "sha256": "ccb87996cb646b4e2ac3d65f50be1735678d2d92fecf185a34494654c8a8be55"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_experiment_admission_v10_7_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1258,
+      "sha256": "0f37e66476ca9ddad3ffe020d74e5b4079e5470c6bb07934c082ca65c8384516"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_experiment_package_v10_8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8798,
+      "sha256": "c9cecfa62b7c4138f584447426df5a93c20a317b83fc40220df1f173b60a601b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_experiment_package_v10_8_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1210,
+      "sha256": "f938f8759d8ffcb01db97beff7c961c159c328f33a47ab41e4d59a93f1ac311e"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_freeze_manifest_v10_6.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5368,
+      "sha256": "a774e465a4b622e4302bfa5742e1ffa2f800607a60e3a1c746da87afbdd19db5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_freeze_manifest_v10_6_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 994,
+      "sha256": "8ffb830a7acfc881bee7b949aa796195fbc0d27b43b73e47d62cb20f60bf0512"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_post_run_analysis.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6882,
+      "sha256": "68af155968d7c9aa8cbb67f36e80319cdb6e4a6cc718439a7abf4052745a9662"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_protocol_invariants_v10_5.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3823,
+      "sha256": "8d8bc394e51b110b5d57a3a4f546ee2227432d0569106256a93caec755d6a4f6"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_protocol_invariants_v10_5_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 845,
+      "sha256": "d817ab149956a43c8ce277321e93271f5a922ff1826b5c2876fc399460a0f3a3"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_replacement_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1998,
+      "sha256": "4919a77b6e9548ab1d2d0371b705d60da2fe0a384dd6e12ad249983a8a980585"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_run_dev_live_v3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8611,
+      "sha256": "d0530fab513b8afcb32015fc40d3e2e6d1e2b88f7d76f89d6f5c467db7f68906"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_run_dev_live_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8672,
+      "sha256": "3058577344499493f5a97907004f0beef8c8a6929bb1069b1d84eeb331d7a603"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_run_dev_live_v5.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1733,
+      "sha256": "543b31ef71f254dfe400922e4406b90a7e7126bfc623fd833b00df91e7fa7335"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_run_dev_live_v6.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3438,
+      "sha256": "dfc157703e429ba12b1efbea1daa418f1554bc14ca93a193bcc41d50d9619ff6"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_run_dev_live_v7.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7934,
+      "sha256": "940beea5b220bbe344ce15039adf6ce8be5b280f1effaa9265f37ffa0db3ddb5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_run_dev_live_v8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8033,
+      "sha256": "2121f2072ca2c4aa8580923ddb39ce6ab373fcd9282bf0bfeb6166a4b43de19c"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_dataflow_v9_2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7662,
+      "sha256": "f3b4e1379555d6b176dcbb392ecf574beb72a13392c8010ffabc53d64479ee4b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_dataflow_v9_2_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1114,
+      "sha256": "4436fd8751f0e3708d30e1699742a346f17b631feab5b96aa3d043ece484c0e0"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_effect_v9_1.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5261,
+      "sha256": "3c2fa637c0118d36400e5d05c0a388f9b0b9badcf4cde4078348302c8a31f8f6"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_evidence_ir_v10.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6199,
+      "sha256": "c6d491d42dc5fc84ed35f07632033b12accb4b8df5bf1e2931861ddd0367f08b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_evidence_ir_v10_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 834,
+      "sha256": "06fe99946ebdd8d125c53984db068ff942482b9198db371278858efe3e166fad"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_helper_v9_3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7308,
+      "sha256": "4f4435f5a47dd630958b23a93ca7c9d89e7716f04cae686e7077127538de6b92"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_helper_v9_3_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1168,
+      "sha256": "51de11180513662ec9f876c612e5322c1c81eac469dc72c03a13749d042b0366"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_semantic_preservation_v9.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3329,
+      "sha256": "a952894da0564b3567e06ce8272b945ca7a3bef45e7c3045dbfb04394b7c3144"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_state_transition_audit_v8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1879,
+      "sha256": "5ea8d73cc5e8b7a12b5190e1236a781a22e764c3094e57a0deac45ac7d083344"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_state_transition_v8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3887,
+      "sha256": "ad7ac938cdf90853e12b90e54e60eb4a7cad03606323dd87a7fa6e05077e9922"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_v8_offline_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1755,
+      "sha256": "43beb21f97c30604f6fa6d73c94a6cb4667e2773d5e95cd5edf88fe49571d928"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_verification_control_runtime_v10_2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4331,
+      "sha256": "6b9009b39bc0e91667c3edb0e6f485c0fee53586e0dfc4e58cb457e8538838a3"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_verification_control_runtime_v10_2_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1086,
+      "sha256": "93ad42b3d739aef2bf53b8246cf4e4e71a55891fb874cdae951950302a4c478c"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_verification_decision_v10_1.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2861,
+      "sha256": "2a78cc2e02e770ab4198743ca95e2054a8d40373a0de95773679cf190f89b690"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1b_verification_decision_v10_1_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 973,
+      "sha256": "8a93d52bae765cbf5476ef542693f7be31da2f70b959847991f2888bc816a95f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_aci_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2509,
+      "sha256": "fddbee974b480ee8ed6c8696cec266803c292514874e9582ae0948c802328ea2"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 10439,
+      "sha256": "557fa3e165441a013bf5c3cbaf651d473dd5b64ebb025ab29543d8d3dbad9968"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_admission_batch.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4853,
+      "sha256": "ed64199285b263f1d5e5061edd006800e90e703ffef9bedb8059d73518dd9d0b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5404,
+      "sha256": "52b77aae2f2d485c13d869cef6d419531b712475f4e90ae894eedf0151b6f2a7"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 13763,
+      "sha256": "6ec96da972d60d30b5283f18ba47295e624c8e17162a230d7868197a2f5a293c"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_postb4_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 24949,
+      "sha256": "b921786765572b90121bf32882a9c9b688c4951f1316ed1877f03858b257f496"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_postb4_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2644,
+      "sha256": "3707c1bd5d27881ad1b4efd1707a0e376520770f849cfad2aaac1d047750346a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 25928,
+      "sha256": "76399de28febf1891b185c1c1d0fac323ba2c275aafc2cf64b51569d51f96202"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2250,
+      "sha256": "74aa2b67ca54f6632dc7136c939cc0a7eb7580b9563e543295d0e261fa50abc3"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_v3_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 26470,
+      "sha256": "1caf2f84c79565fe84835d69f8a80f3d3d6504861fff322bc56e8513265e79fb"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_v3_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1960,
+      "sha256": "07f5e938fc8dc3ce382ecf253659aa4ee397aaf2b0850f8f847048934fa6ea04"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_v4_diagnostic.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2664,
+      "sha256": "dc16e5e70cd92a2f70cd4e371d146f37a7cd05bc463f18af831d6db50bfabfe3"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_v4_reserve.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3718,
+      "sha256": "60e1ee2cec72446c284aba72c73ea8e7846eb15cfc2a06669681b34f86023ddd"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_v4_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7442,
+      "sha256": "dec41c4046ea1c63d1458fbd9cb3ce6322bb547c67d378549338253858cd4a94"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_repro_v4_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5306,
+      "sha256": "e4d647ea6e3dea4e13bd696359598089c12c5918a602a28eebddf6baa4c4ff81"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_reproducer_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 16961,
+      "sha256": "ce0ebf40da3570aadd158943d7ab8bbac346c318514208916c2e87a5bd5b5bfb"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_reproducer_v3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 18761,
+      "sha256": "b4181c3fd18cb3173a8078cd16e19bf06793cbbc89d6d4c177e7a158784c894a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_reproducer_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 15467,
+      "sha256": "b477051d672720fd16adda3b0bc72351c780d91aa55b7fae0ce87d3a1364cb3f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_resume.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6815,
+      "sha256": "c4659705eaffa2dfecc1c8aa5c240988363b8d70067245607d2aff7c3d9b7b4f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 9012,
+      "sha256": "cd44da5d913eacd5986e2252b1c516078386fa61c2b13161112dbfe1145c8e68"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_blind_runtime.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 11869,
+      "sha256": "93ed2f8de7a1351873bd5769a089790c7b79da4b631df95a618cd65728e7a527"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_cohort_prepare.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5762,
+      "sha256": "beb18e178b910fd0c9b626d57426a875236fc9b1c134433d3007bcf41ccd1d1f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_missing_import.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7353,
+      "sha256": "6698488ea73fa3e280f71e8d10708024ce50cf928e16b7f14e8130a4c0917369"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_missing_import_batch.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7041,
+      "sha256": "49a99cfbc6b59dcc49e13fbab936619fa32fd701f58e5eeb9448402f88e06db5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_patch_union.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7455,
+      "sha256": "afc7a5ad692d662116637311930d823a3130841cee9ead68cbf5020a61c58342"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12101,
+      "sha256": "9317c1827ac72287d44fae4aeea636b54f6be7cbe892485006129dc5d1743b45"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v21.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12998,
+      "sha256": "02fcaeb7acfdbb0c9c9b1805c45728c45540ee5ffa4640c0bcd4534389465552"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v21_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6101,
+      "sha256": "fedfc0758bdfe0b4a32ad0d1e3853428c66bce5c9ef80a19cebc3ed2b99e33f3"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v22.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 14765,
+      "sha256": "31877d99bdc1ce532f6e4a21fa712255e43964052c2b18cd0cf328dbfd3af1dc"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v22_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6080,
+      "sha256": "81c6a971e7662dd0ef45987717636eaa4c4c32b9a5ab89cf42ad86a8b0e3aafd"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v22_recovery.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6535,
+      "sha256": "94493c4f2ae9046c0a876202e10a5883c9da839e6f2295ce9b7ee78f6be84717"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v23.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 13993,
+      "sha256": "cd803b6eeb94ee53ddb09b136ddc2bdcece3dd7b2a3168d4cddf0f60eee3d5e2"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v24.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8107,
+      "sha256": "30729c211eddf7f8a93c187279d0c190d52776cab97cd928eafc3f815fb49219"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v26.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6087,
+      "sha256": "c577918873df2088e2a01e7908c2022d15d8220b1d8d104674ee6077aaf7dfa5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v27.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4498,
+      "sha256": "979d790a725c6a2fdc0169294e1efb4345943c137ff129f6fb822aebbaa13040"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v28.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7946,
+      "sha256": "de144e6e642cdf9d8ccae6838ae145d20d626a2b9a3c2c1c62f0f7d909b87d9d"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v29.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7693,
+      "sha256": "30dcc34de896f23d64f6a60172d23c72b9fc2f771a8e6d10b8b18c432ced98b2"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v2_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5899,
+      "sha256": "4435ff59031a31c5e6447df2358e9ad0803ef3e1b33252a7c0ce69aeb4e118c2"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v30.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6090,
+      "sha256": "8072c660a2e7d47a76f741724c5413283849173c4968129ad40ce73f73fd6fd0"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v31.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 16219,
+      "sha256": "cae79dd5a37e83921b9aa4986f1726bb56f9173aab90f5f5fd02d419fdbda6c5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v32.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 350,
+      "sha256": "89e17f270bff767551d95fec08a13650b6ac8c417028e62795986eec79d4140a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v33.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 11946,
+      "sha256": "6f42b80c7429f9b425f427c59a4d2a2ce0f2b376c3bce1726879333d849df944"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v34.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5456,
+      "sha256": "bf9d1e289544000d4e149cad21cfa72550dbcf53da919ffd83ad12e449d8e649"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v35.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7243,
+      "sha256": "561c148bffb0410feb2a9a4d1760215a89d7559592620761146384d1a0cf55fa"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v36.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5818,
+      "sha256": "e5955686a3e4ca957aabcccdd6ae3f869e26034918d64b73b9494d3db0891de8"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v37.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4017,
+      "sha256": "2313196a8e81afbbd8f1fbd0a56f8e6f0ef1fd154dd6001931930e1be42b6cd8"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v38.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3768,
+      "sha256": "7fa3f57dcd0b5b614e907de60a1460c173e309ef14049a024e84a47a39f39c01"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v39.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7722,
+      "sha256": "6d76f7fbdb4b528dab9297d6cf0ab3a67595e95768d50ac483a45273c01449b1"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v40.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7883,
+      "sha256": "9558b9eb8621d7c14d71e0a54c07f443b969a003a76a279c0a605453c7ad8f24"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v41.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7181,
+      "sha256": "24026a1c28db1b7e52aae591faa4e59a71f150b892cf5cbf00738d55edeaf481"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v42.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4408,
+      "sha256": "58adf7389cf6b3f59b415e11b6941647c31978f70c70c6345e3093d49846e904"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v43.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7682,
+      "sha256": "768b2efe6498b23b2b25841f5849b958130c1bdfe9c998f4eea86e888b0589b7"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v44.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6607,
+      "sha256": "33ea2c7a068b7f1ae96e77992827c56988909b9c4b9347fbd560ded851b088b1"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v45.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7972,
+      "sha256": "f92405715699f9254a92a191e267c5523ab00fb9644c506235244fc875dc3f6a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v46.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8526,
+      "sha256": "2810e34d4b187d1cc6a4d82bae6818074157e485d0a927662ff389c3bb79a975"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v47.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7926,
+      "sha256": "3e6f2bd492a5271d0316cbab62fde1c39fc0990b4c0847961b21881e722dcffc"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_dev_v50.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8493,
+      "sha256": "a1bf3ba933c2dcc84ccedc3ac1c81c6802db34a75bb14bef79647e7df8116a5d"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_docker_grade.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7122,
+      "sha256": "fa386cae567982dcb95c620bfdd32e304521fe3882658f96e95818fc04023ea7"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2545,
+      "sha256": "c33b60a3b5f2cf51ea9b6421b198269e376cde5a006b406486fd7b3db2f4de91"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_evidence_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5185,
+      "sha256": "b6c7804a76fc62a760afaa315768f41f816722183814e1e07d94da1557e22944"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_evidence_v22.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5700,
+      "sha256": "2ca80d658e1ddcb1c52a07f768fb0c2a0eaaca320ccd6b8a3f70a28ff6a2967e"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_failure_guided_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5942,
+      "sha256": "b65b5afb0dddee0b9176476b4780a0d89d118d2449598618d8c0fa7cc168653c"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_failure_guided_evidence_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6983,
+      "sha256": "76053ad51cfbf06b4b800e5b434571f74c642fecdd9d0a0cf3ba023cabe2f073"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_fresh30_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2149,
+      "sha256": "b4502bbb4fcd0322f798b402cf01cdedb388833662265165c96d3588cd83535c"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_fresh30_gate_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2207,
+      "sha256": "a787fc531884b4d2acc53839e2a96f572e2cd94d424ebf2f5dd910012eb9574e"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_fresh30_gate_v3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2224,
+      "sha256": "755544f3bbeb9d3fad64826e6c91904598424d98ba8fc3a59f3b58293c846063"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_fresh30_gate_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2253,
+      "sha256": "abb99703119215b1febc4f0e4f3d805c92b22afdb74ba472244679f03972a4f4"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_fresh30_plan_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2535,
+      "sha256": "e56e0f933a29f0cb9bd6097a698456b714232cc17c00b595558c7eb63c6872b8"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_live_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7295,
+      "sha256": "ada3ab243f36fdbda44dd08bb67672480d683c77f4d30a74eaa570c1c176f7af"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_live_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4998,
+      "sha256": "2ba90b16b310554ad9f36f9e8cb2eca35cbd55baf7d61cb3dc6cfc657a569966"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_live_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 10192,
+      "sha256": "24858b2b80e727cbe2e9e20d4ed7dea265aa18680404fdd073151304805e75e4"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_materialize.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 16168,
+      "sha256": "28d690cb3d4f33ada6dccee40c605ef3f855de70a52bd2a7dd247341c3abbee6"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_provider_cap_probe.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3031,
+      "sha256": "e78fe885ed74ece21cc0f65a88c4c6ca85aad7b4d0e8e4276c504400244fc44b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_public_test_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1003,
+      "sha256": "6e7bab64f4a9c17dd6f1686b867c4fa1bcb55425bf85d7184d93d2ad84c778f8"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2232,
+      "sha256": "afff0472bdbaebbc1167167d17099058d4b3bc8582a630810f9f22759248d329"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_admission_report.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5102,
+      "sha256": "965827024b5c2670c12387b8635e3f97695e1b469133ca7a65da32d896049302"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_admission_seal.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2987,
+      "sha256": "47d7753475898a34ae7e6354fa3f9f436fe55de823c69b29202e46e92f69767a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_advance_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4629,
+      "sha256": "bfafb134a4523af33dad48690a33ee0ccce737a7e84dfe99b2f43c1a5ec46754"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_blob_diagnostic.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2882,
+      "sha256": "de98bb401ad08fc1b85ddf865893129ee8251a81c78eb1c6522d03704bb03e83"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_blob_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 12837,
+      "sha256": "bba9a9efcc48697a53361f9392f338d5af1f5d7738d866cf0f5b5766285acd2b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5992,
+      "sha256": "019a4f99dcf53c80027408d432aa0794657d9629daa32a0f667cd07f2160f7f7"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_cache_accounting.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6611,
+      "sha256": "1a20891a42839463a86fb4728908e063bf1880352e9b7fc57e68f8f33dd724a6"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_cache_budget.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2569,
+      "sha256": "dfecdca88c578146ba7db76639a5ec983bb293f656e585b71808ef2d97102b57"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_contamination.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2372,
+      "sha256": "9e311cc334d0b484545096ce07f7db3cf4122f53f90dc8533987b61ec1b1b897"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_direct_oci_layout.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8966,
+      "sha256": "3767209a95bb7f3ee268f949412d409a13aca90d3c1079f58a045ffb024d92b4"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_direct_oci_plan.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4250,
+      "sha256": "c1a9dd578db15a91e747d1377d38f159915032aff8665a43cc259859bc75ab70"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_engineering_readiness.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1846,
+      "sha256": "7a27bbef7a128d138c595f953b21d844937671b9552cf1a0dbd99cbf8a0c6a63"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_equivalent_mirror_acquire.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4432,
+      "sha256": "72494b39833563aea9af9ea84d3f2221788509010c1ac5304ce7dcaf7e5574e8"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_failure_taxonomy.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8926,
+      "sha256": "e4f9b3c50ef06d01a3d6e5717df7e0a844fb32b91faab1320069d4c2376666c8"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_freeze_certificate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4238,
+      "sha256": "0c3e06989ecfb53a9afabf5e41c675c2d26f222c0522a9a24e02ac0e39724cdc"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3995,
+      "sha256": "98b7ac8851dca6d8854c6d1ebb61475be809facbb95268e8ce4ccb240625b4b7"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_grader_materialize.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6315,
+      "sha256": "369e8889c5cd95af8836a18b3bbebe36b3943cbefcd571b7c96dcf8ef2a2c809"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_image_identity.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8860,
+      "sha256": "f94a01d01e0374f32fe650e1371ea580a5e26b480b3802541b9b44c164feb297"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_image_transport.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2812,
+      "sha256": "4a2d307cd2853f4ce9b7313adb0797082bb4b9400af86a9213eeecaa6fc5d664"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_infra_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4200,
+      "sha256": "20c8d24228a8d220e5b16e4493856361273a17e55221f14e9680cf67e549a13f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_legacy_artifact_seal.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4982,
+      "sha256": "646a6513ca3d4acba18aa0414ec03d51413268b131ea9777e0d47ef4095a2170"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_materialization_plan.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2698,
+      "sha256": "8b6734aa21592aff93f5c6fcfc6f687cad0725055558b0114a761e02ab3f2fdf"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_metadata.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5613,
+      "sha256": "03bea1e4c0ba999f7dbf0e7720fa01ecdf7cb511ddc373a966c7c1ba9308d568"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_metadata_import.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3720,
+      "sha256": "1e3b375f462cc8be107b936fda6135f4b7c3c9cf728008dac5961832bed7933d"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_metadata_merge.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5085,
+      "sha256": "72cf949198d7c37e22814ebd8ef61b2596015a368b3f204b951f3f05d5ab31f5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_mirror_diagnostic.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6675,
+      "sha256": "add2a5d4c4dbaa1ced84b79fcdd70a0704fab15e0224789f0df3114f45a8816f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_official_image_acquire.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6524,
+      "sha256": "bd478402c9045e4077dabb1fdb8ddbb712269cf8d30afd455faca1b35f417f61"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_official_metadata.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6769,
+      "sha256": "f0237cca7b9ff7bd92c04a9b09242214fb996c4f6acc07fd3f851753931bc3bc"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_postfreeze.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 9782,
+      "sha256": "8272095dfb318e25170e3511e2a38a89b78b4c45e2fe1241965fb29f031c37e7"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1091,
+      "sha256": "71b2c266b7ed384b6a2619fe0e553bfc636c30d60feb13d258a929bf530782ee"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_probe.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 10666,
+      "sha256": "04112e06aaf4b3c12fe1f316e475092c360218f7767bd2404981b58db7034ace"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_protocol_consistency.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6573,
+      "sha256": "1ae1df37dff2f638aca31d44418bc65785d1d47a72cc7a6de151cf80fb99846b"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_reserve.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3791,
+      "sha256": "138d5b5733bf5e36bc8db89dc741383332fca887e8106f270ed84d0d2f3f0209"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_resume_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2413,
+      "sha256": "ac5e0edb17479b5fb87569a8d347a897f9eb6264a728c1c6645d4da5675e6f50"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3355,
+      "sha256": "b2912d58df925bfee88d06fe34a7751e5f11172ca7becbc50a3ed42b6aafb931"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_runtime.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5418,
+      "sha256": "89c58e40cdb1600cc9dc7aa209ab1b2f3478634980d426580aa2f57cd531422d"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3776,
+      "sha256": "ecf504c0b2bc7db482e58b2aa9101e0b16f01df882c0a5734f7ca0c4446de2d9"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_source_registry.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4498,
+      "sha256": "51cc0f3710823f11684f6cfc37da8880a19e7702f2ee9fb27e9e5239dd83f60a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_stage_a_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3700,
+      "sha256": "a4bbfe9a9919add64163db024a01bcef4c84929741cd4095d4ae3b2241f42007"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_stage_b_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3139,
+      "sha256": "3ec1539cf2512a20bede51d4eae164b2ba2a8ccf9cd543c1fb83d8828dd8647f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_stage_c_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2124,
+      "sha256": "2567c329af94b56de07d8805e2c7eddd13676f22a319fac50fa320774f8fa897"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_stage_d_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3312,
+      "sha256": "a641772c2d12ae27ffd4d6836a18780a6f91fe69d49c98bf92f91a59c1aedc27"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_stage_e_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3045,
+      "sha256": "34eefd3aaf169da9e0e4ae9eb6c0dc7674e892dcce37e0c9dfaa7bc642a99979"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_transport_trend.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4055,
+      "sha256": "b97d44f910491e57deb70a2b0d40c7b17c4a6a1edfd454c8e9bd0abac8aa3848"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_verification.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5844,
+      "sha256": "06c118b6c7ff669f641584bd2a03fbaea76198a000bdaa84de18eeccf3d1dec2"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v5_workspace_snapshot.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6782,
+      "sha256": "270d0fdb47c4dd9e550870776ddb914b7988098d927f075911109957d3a3571e"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_official_metadata.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8435,
+      "sha256": "7b0e87623fe97a718d6267c1065d3b3921ec1f032f04aecdf5ef91e8f347b0af"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_postfreeze.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 9257,
+      "sha256": "52b2d80bedd6531ac5ddbd28ae1fbe9abdcd171d1c8aaded696fd42af85b3e9f"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_prelive_seal.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2650,
+      "sha256": "362785e3a5734a80e9b766a596e70edacf6d0cdeb5726fc0fb1cd60ed28a4775"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_prereg.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1884,
+      "sha256": "f865bb085061e800a2847bb0027cf2d57dc1b5e7e669d8530a9b322216b04a6d"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_probe.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7294,
+      "sha256": "58c71eaedd46d4ee70e3073951882d59de319d0bcbac75ed02b2e905937d09bc"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_reserve.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2494,
+      "sha256": "73a8ae89eecae21f19e733b83554d0110b9b86f3146513c0177dfb25e44116c3"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_runtime.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1885,
+      "sha256": "75fa24d8e2c3a283491e06016aab019ee96981330f3ea6ade8921b3e826774b8"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v6_selection_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3064,
+      "sha256": "fb5695aa6f5ba30a5dc1733f35e3cd0004099e31fb9edd2554e39a107e4fddc3"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_dev_replay.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3072,
+      "sha256": "85e4f297cb0f1085ba018bf27d9151da1fdcbc3ea54b28d498179499c6df97c9"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_official_metadata.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4103,
+      "sha256": "329bff30c251e98d4b2215d0b99b50c134b31f5d2e8f779bfda0a9b02478e1c9"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_postfreeze.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8590,
+      "sha256": "129873f8c9473a7f54c3baab9e400ef78a4b5d26c370b79dda580a56d4b02f0d"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_prelive_seal.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2759,
+      "sha256": "6aabc52e5bc736ff32cfa673dd28c670626337f368969487361fb03f81abfa23"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_prereg.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3000,
+      "sha256": "9f22e0e23b0d887259d1d550118f03131d23b2bc6e6c8b7eef30447cc341a598"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_probe.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8943,
+      "sha256": "94bf9acb9ea9b5d86c4342ad77ec8a257644556ace3016bd1141bb638fd0ef69"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_reserve.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2797,
+      "sha256": "cde30b6d956dc44b8d426ce02bd8d5b595731a2cb55e7730350c7ccd1758928e"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_runner.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4255,
+      "sha256": "e886dab11a60350423acf75953443a4f14e854d031fb4ab72cbf0d65bb3aa355"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_selection_boundary.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3942,
+      "sha256": "d9f97959823bcc452d618bd8d3f5421a39646e68ab58b3b90f73f2bf6dec03b5"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v7_witness_ir.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4404,
+      "sha256": "02e52c635ab48dd4eafe8c62af4eb6cdba25af6ea998b08655e37a1fb72e9952"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_strict_v8_selection_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3709,
+      "sha256": "de44bb12e1e5198518fad5a334ecf7ec649505fc3a82957d6a509251f01b768a"
+    },
+    {
+      "status": "??",
+      "path": "evals/e1c_swebench_curator.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2232,
+      "sha256": "43e75ab58500dc5b48e30fabbf9618dc1ff103fbc6b352e2185016cf8c913475"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v2.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4428,
+      "sha256": "bd6a4822c7c52aee3c0afbc4d007b3a31f0e501ea7276bffe55817ac3e478cb3"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v3.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4889,
+      "sha256": "e2567a8027842c5176e03619aabe91593197d7253a2129b5132977efe081e9e7"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v4.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4967,
+      "sha256": "e538d785f836fdc005dec8a49a491019167cab4ab2a24309140b22fe76315a49"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v5.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4986,
+      "sha256": "02d7ce96821b945068869c702672625331274cdf8d21094c4afe22f53b561374"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v6.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4969,
+      "sha256": "37d0ff07ba6e19cff5b39419972ba3cdc10ae7ee4f2a136d463d00b4c0fcec3f"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v7.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1852,
+      "sha256": "a8ed8da239e62cf0b7b2470a2f1cf58f6696edb2c6e948c628a28bdb77a1e233"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v7b.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8088,
+      "sha256": "6e65d5f85a6aad2cf934d8647c219231814e449b180c19ca905e3fd5a7bece6c"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_run_v8.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8601,
+      "sha256": "9d16258d7b4ca7a9a27d3e34a5d6643451f5056002f954c17652a51b33ebe45c"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_v2_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1834,
+      "sha256": "9edd758a7435e370a4c06975f3c3cfe35c3a743a60349a7830ebbe95c90a1b7d"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_v3_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1826,
+      "sha256": "3edf5481d124d50ad1e9faf3de3f5f1977d05ff1c00cfa1ed9ba8590bb7adc6e"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_v4_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1867,
+      "sha256": "bc2c3141c9526b96656dcbf1b2781f2869f0d1764cc80bacfe07ad613cab531f"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_v5_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2014,
+      "sha256": "265b0bb07a7d20b32c10117127a30c699e9f6994447081ac9898133bddc266cd"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_v6_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2304,
+      "sha256": "f3928a3f7d47dd6a96d6fb82082f1bceacdafdeacb2b7c89b104aa6ecbc9274e"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_v7b_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2121,
+      "sha256": "bb9cbb79d562d15308fafbe4df14a920dc25ca1d32dc8a23761617ea85e6358b"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_autonomous_dev_v8_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1836,
+      "sha256": "e8796520c351f15f78aaf63fc443e34d8b0a8e59801b305d86c9c0ca244ce49c"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_replacement_preflight_recheck/artifact_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 63,
+      "sha256": "6eeb2600991697cc25053bf8287a5f5d6bbacc4ac7a0d66a6fb9093c81393ab2"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_replacement_preflight_recheck/experiment_package.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1676,
+      "sha256": "475091b74d060a23674e1545910cc7e377f1a36961a2a30869404df10be13214"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_replacement_preflight_recheck/provider_calls.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_replacement_preflight_recheck/run_summary.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 214,
+      "sha256": "5cc3ae0b04e0cf3d881835193a5dd039cbfed453c4e86e034e7f05f7689182e9"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_replacement_preflight_recheck/task_outcomes.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/e1b_state_transition_v8_offline_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2611,
+      "sha256": "69e50fcc6856bb7e70adc9372a888411166fd03b9935b5ec5f481fe594778af2"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_20260922/artifact_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 63,
+      "sha256": "6eeb2600991697cc25053bf8287a5f5d6bbacc4ac7a0d66a6fb9093c81393ab2"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_20260922/experiment_package.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1676,
+      "sha256": "ac5985b5f5404d072eb9686ee655945fb217c014da359b4b79e6d935e74adfd0"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_20260922/provider_calls.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_20260922/run_summary.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 214,
+      "sha256": "75abfd0d00a7d2b7b31224f94a8c3cedb5482cf839779f37a57733a2349c2561"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_20260922/task_outcomes.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_corrected_20260922/artifact_audit.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 63,
+      "sha256": "6eeb2600991697cc25053bf8287a5f5d6bbacc4ac7a0d66a6fb9093c81393ab2"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_corrected_20260922/experiment_package.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1676,
+      "sha256": "33fc3e295ce2a95e77dd2898d7e3a4ce4543227040d86c25681fd59bc036dd47"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_corrected_20260922/provider_calls.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_corrected_20260922/run_summary.json",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 214,
+      "sha256": "1801710cca1eabba4d4635c77b8e548e17ee87af0af5e3817be828a24ae34ef7"
+    },
+    {
+      "status": "??",
+      "path": "evals/results/wave_b_preflight_corrected_20260922/task_outcomes.jsonl",
+      "classification": "generated_evidence",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "??",
+      "path": "scripts/experiment_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 8396,
+      "sha256": "c0871eb8ddcbe911de6d1c68b96bad821b4ad31ace3ac0c4d90a8b2a566adc38"
+    },
+    {
+      "status": "??",
+      "path": "scripts/research_workspace_snapshot.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4553,
+      "sha256": "6c6a4f2fae0f25c481fd7304d25c6faef173de7e64513f2e7bbd41292d469dbe"
+    },
+    {
+      "status": "??",
+      "path": "scripts/wave_b_public_task_discovery.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1243,
+      "sha256": "257a494df27cccc13ddd8af89eb73ee73852d4fd2ca549ecec9c8aa6428ffdfd"
+    },
+    {
+      "status": "??",
+      "path": "scripts/wave_b_replay_inventory.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2288,
+      "sha256": "d0a39ed5e5c8c53b5c0f935d699fbbc3206c7d4f8966a70870acd823adf7e8d3"
+    },
+    {
+      "status": "??",
+      "path": "scripts/wave_b_replay_select.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2120,
+      "sha256": "bc595a7ebcf6da5a6220dbcb193435096a4dde4b203ffb2617cd20ea10bd87ef"
+    },
+    {
+      "status": "??",
+      "path": "scripts/wave_b_verification_ledger.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1325,
+      "sha256": "44611c98c57eead9bccd0bfb5bf0166f523e472088ff3a032dd614452ad808bd"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_acquisition_policy_v10_4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3274,
+      "sha256": "ca024e85f93de151ff86cf163374bb5e39960a26048115b8f29888c94b791325"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_behavior_witness_v8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1552,
+      "sha256": "ac9326e8c34577e34a9027a3fbe5da09e435881de088eb82510f43941de2d4ef"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_contract_coverage_v7.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2311,
+      "sha256": "3c2adb89729439b682ee807a9548d4ca56370a2866490fe04d10735f264ebb6f"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_contract_extractor_v6.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1453,
+      "sha256": "69911d5a0d9f8bf30c4f3e3cea92770ed62e192d9cd8b64e76064d2fe64dfc3c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_dev_v8_audit.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5064,
+      "sha256": "0c80867bbd38b8555f68d9eaabd1379855fa1daf9d4b2833c54c857589c25ea9"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_evidence_acquisition_v10_3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2911,
+      "sha256": "0f66f58c9a8a712d847d007756a4a23ddd1bef31829df2c7d0ef07cf9727ac3c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_experiment_admission_v10_7.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3473,
+      "sha256": "53f9f0d8bd3e81885014e6c57b199c0de46be2c3490f880928e5ff83bce2d7f0"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_experiment_package_v10_8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5907,
+      "sha256": "994066092ae777f60f4a2de0019fea790f73b6af13469a9f848c1d025d0e8f62"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_freeze_manifest_v10_6.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2133,
+      "sha256": "9712246912136563a89b1b5f55a11084479e362ace3e477dc6010275d63b73b8"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_post_run_analysis.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4064,
+      "sha256": "63e7f956bdb9e287be52a398d69768c29db34afc2a4e3f7e4759d983815c352c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_protocol_invariants_v10_5.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 625,
+      "sha256": "8338dc4d9e640565982b0e47e24ea11fa0c5d19db45ecbe46a7691ae04a23f44"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_replacement_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2025,
+      "sha256": "0547b08b0f7c61eaf04a595b69f47d334e3ee50aa3f7e4e492f86791d7f4dc47"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_run_dev_live_v8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3192,
+      "sha256": "c1f6232ce26529370fc8d1aed2a78009ce1bfe1fa2b4708d623d0fbabaa0c870"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_semantic_dataflow_v9_2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3834,
+      "sha256": "b8148596ec018604f391453f9ce8d9c07815a1c7730555537f3ce9f31d2227f6"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_semantic_effect_v9_1.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4013,
+      "sha256": "0075256deafe537f93c880e62fb96023033275b49470efe7d3f67234e1afb25a"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_semantic_evidence_ir_v10.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3147,
+      "sha256": "83816b427fa0ddc8a0d2a39089304b9bfbb8cc7470ab12cccfdab1e2f76d76be"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_semantic_helper_v9_3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3751,
+      "sha256": "9893cfc7bcb4988c15d8628cf68696a73789491858f689418bbc0b8c309529af"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_semantic_preservation_v9.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2944,
+      "sha256": "980bf5d5474c1f9601628a5121528d291b958689a22bf757cc9190a52b2e755c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_state_transition_v8.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3536,
+      "sha256": "f2231ebbe79d30772930b239a9f8c706ae26f7e6971bb9f8184af0c42f626c4b"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_v8_offline_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 584,
+      "sha256": "a2c3b6b4a560ec7e10966b36c4e0c1dd4eba9a71412485d1fb99aa36d916c313"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_verification_control_runtime_v10_2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3494,
+      "sha256": "062415b43fea4cd54a55f1bfc4e4f4961b1745dcfbd54fe79bbee89dcf1ad329"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1b_verification_decision_v10_1.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3576,
+      "sha256": "3b1fafc73b99ee3a4fa53192c06842b4a860fc16e533fcf5c052f98d4278aaeb"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_aci_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1463,
+      "sha256": "4cce41bbe5010507ecc794061384a75894a36f82e62f11f5a0b5dd34ba061b26"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2623,
+      "sha256": "00d7c57c48f85ebd9117814764704ad5bc407fce831a30b3de7c92ff45e027cb"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_admission_batch.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1748,
+      "sha256": "b721f245a254aedd5d9040b59e270d264868b13cab3a4a76754698345fbf7ea9"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3667,
+      "sha256": "05c15eaa0aa5ca9e73a4c9dbe58358a8f7c257ee5dee5484af1b557526da8f21"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_boundary_extra.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 964,
+      "sha256": "8099eb451a5d6feb871bb9e4b8c652e9feced2b9eec296c173e7790aecfee6e4"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2003,
+      "sha256": "ac47afd71d5e09307b00b8bb42ec3f2d2547dfba662474390f49fe5063d1db4e"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_postb4_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 991,
+      "sha256": "aaafa8fd9e78bb564f169515bc4045befeb14262a0ee3b471f4fcbb12fca0db7"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_repro_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2055,
+      "sha256": "d451a776dfd6eae57d55ec7d4d73f07c65727d330535cfdec5b7d2779b184b94"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_repro_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 933,
+      "sha256": "56bc7d6a3cf10d9136c679137c912c8b5fc5bbcd2af855b06e2fed38612bdc24"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_repro_v3_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2102,
+      "sha256": "1d77e3b12fccca3d2b05bbe927becd9e357a551e49d620d9fc0480db38a01301"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_repro_v3_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 667,
+      "sha256": "f8660a2606711cc1dddcac65efbb021f049054c1edd55a82bba6fbf1839bc778"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_repro_v4_reserve.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1390,
+      "sha256": "4d31270a9bb31f7916f074ce8177730f982f8ff7f675a8eaf0ff902399897e7e"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_repro_v4_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1025,
+      "sha256": "aaa68aea3bec640230648d7831bca56be735289c7761c5321f108b17b9e91517"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_repro_v4_selector.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2706,
+      "sha256": "6de4e6e576a43e375d1df570df8f283b2ee68f1aee471793a304a46a9be86639"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_reproducer_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2578,
+      "sha256": "d8f5a68642567dd55dc8cdebfae080e727a075800568f47742db1729775c3682"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_reproducer_v3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2915,
+      "sha256": "1fd459decb2d0b461e55674fd8cfe70534c948125a1f7552d24e30bb1ffb6a97"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_reproducer_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2661,
+      "sha256": "8bba7a2152a8adf4b6549e4ce9d583868d5fbf9dae6721862ddd16a10a5fa08f"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_resume.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1161,
+      "sha256": "902540097fc39b6cf0b29099ede52df057293d2f1f1e305d6eadabf992364ffa"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1683,
+      "sha256": "9e4ac4e38857746f1854a904459c2de35de39450e234567264cb9d2b4783ab01"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_runtime.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3037,
+      "sha256": "be9c76e932ba29244e2f110bbefe81731b92b9c29aad264ac657e0b073e70c3f"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_blind_structural.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 774,
+      "sha256": "be6b97a207dc3d4a987985ce3cd8b3327719bad986d0d90cb5b717272ffbeeb1"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_cohort_prepare.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2783,
+      "sha256": "c1c424f4c5d67049cd069fcf1f2ec062e6b85362c45750a6093c9f3d2f3a2f5f"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_missing_import.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 471,
+      "sha256": "72176672d3b93f52d27487b7c8ed19d14d70076c0651fb2da4503b6faf52a416"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3079,
+      "sha256": "52e513ff4bd04a4001180b0b77561753957bf920942b130b31fae91db5fe97e5"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_v21.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2544,
+      "sha256": "9f5d5a749af447a3f4b86dea54342c2a4b890c939d78742e5ef610ee8b9c7220"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_v22.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 661,
+      "sha256": "5900f3de265561cefa2f8239530d4149e3ec2d4084ae11e4d0c59ce3e3c61d6b"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_v22_recovery.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1429,
+      "sha256": "0dfcc73dab914dd230d31f5972ca89c2e6feac4cea651432890a88c425acd757"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_v23.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1029,
+      "sha256": "030296b6624e1ae1debb8144f78d26f74b50c8eebbf21b55cf3a9896cca750e4"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_v24.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 530,
+      "sha256": "e3730adf64c3d9deba7ebe3bea6df124760fd53d4afc73a05469e0e782dffc78"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_dev_v31.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 788,
+      "sha256": "39fe35147baac1a2b91ed8b1a493e3017316b4ff48eab3e1bd189e6d809defcd"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 522,
+      "sha256": "051ced775eda0b98fb9978476ce3ca6a87d25f594ec5b0b4462226b2a9fda6af"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_evidence_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1626,
+      "sha256": "dfb5ced48329820a81d0fb01e69fe7178793855a365d5412abf5b56f5cef900c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_evidence_v22.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1003,
+      "sha256": "24763c35e26d617affce277c954482291a26ef88f3be3ea448c8e4103a199506"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_failure_guided_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1445,
+      "sha256": "19181476361533cc7d0a93ff1c133069f70c1b874a9378b85f98189f3e3ae47e"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_failure_guided_evidence_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2707,
+      "sha256": "f4e8413040b4ad1fc67a99ae52efe7721b80049a246b153caf77a669fa834419"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_fresh30_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1236,
+      "sha256": "0c79d9c3805bb2b97f3b9d404f6bc6f0deb8afbf298c6e8bea6b17d971898911"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_fresh30_gate_v2.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1870,
+      "sha256": "6b52910abe910663777804d49c08e6cd25a28c99a5a19d22cce7730ca8b66c19"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_fresh30_gate_v3.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1857,
+      "sha256": "5a82635239f66ff6490e93522f452c128f32d1eff35cf88d833f7b52e30dfa9e"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_fresh30_gate_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 490,
+      "sha256": "576d139a9da94ffd2e32b6a6399e01cd686170685914c0d918ac54bc5893ff2e"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_fresh30_plan_v4.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 488,
+      "sha256": "d0a689ec8ccf7352b38e36a5989bb72d6a2d39876921b31ed60cd77a7d44111b"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_live_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 800,
+      "sha256": "4045b2f709f6252bf8c6a08a95e77bbd45eda02773f221efc5d94228a4a5955d"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_live_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2049,
+      "sha256": "2f2eecf9edc07e88da5f9376cdef4828ec1886f0f40c0e378f7c724ee1e53d2c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_materialize.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3936,
+      "sha256": "6377f4849f26b8b3133264ec07ac664e5f84869301ca5755445dde4b099c003d"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_public_test_evidence.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 726,
+      "sha256": "730275acb278b2521c55690755d6cbd93619499ab3a19a26c4f84c237fe3b376"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1091,
+      "sha256": "2f73fcc96ef160184156983ee5efbecd05f016b5c4a00cd390d5121173a745bd"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_admission_report.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 597,
+      "sha256": "8b1d7511b551b2b17f5b921dc3bc873db7ab317936fb082510bac5a4892c4722"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_admission_seal.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2865,
+      "sha256": "a5f4613472afea03574c38571e2da640c386431ddadcf559572dbfd24da15e57"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_advance_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 6678,
+      "sha256": "831b8ffd659a7b9255948c9de6ff9a2eb9240a778ceffd74238d5fdc8152fa27"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_blob_diagnostic.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2487,
+      "sha256": "1a1cf3020718e31d1fc158bdd15aef4ce629deffc586e42eb6475f96192ecb5c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_blob_preflight.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7238,
+      "sha256": "fdd365f71433232b4688313d0f1e1d8caf4bc6e2822308b8b4c9d8c39d2e7f15"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2480,
+      "sha256": "1d6263b9034a99918c1157e391c47af0f3b82a8f9b6d57d737ff297cf21e3a13"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_cache_accounting.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3057,
+      "sha256": "ec9493f77ec47d6a342b2c79ec19454163837bc081cc528ef68a6653b08f7681"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_cache_budget.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2099,
+      "sha256": "48d60cd2e8a2549e3fe3c176d65425b8f90427d6d44353d981cc0cf6fce25705"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_direct_oci_layout.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1051,
+      "sha256": "2981f639bbcb10281fb476dedb1af24f99a64fe7fffb79ec6ac425ace5faecf9"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_direct_oci_plan.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2169,
+      "sha256": "ee99cffc97b4e48cbb982ad04dba8f318d4e3a549d1cc8566495000588ec7899"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_equivalent_mirror_acquire.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2278,
+      "sha256": "3bb73ae9a79ce6dc0a7574e499f11a79807d2b8e04427aa2ba507f525588a7c6"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_freeze_certificate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1826,
+      "sha256": "dad0557905d40ae036ef57c7c01deac681dd1bc39f6bf2dadf9a46ff81663703"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2071,
+      "sha256": "20eaccddf2bb624c9488393ad71126b4459a0c3a60b84a0b91c60df89aab78a5"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_grader_materialize.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1473,
+      "sha256": "e121259c2c95c767828c3d03118a0541961684f280975b8cd36a3d42820cd80f"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_image_identity.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 7204,
+      "sha256": "669160d767b9b06060f7e7bb176960bb9e266ab91f3f96fe71acef18f1881c62"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_image_transport.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1203,
+      "sha256": "786f0818eba3a45e3e35dc879fd7e610809f657b5da4f39357a0767c1391c69d"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_infra_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5070,
+      "sha256": "40b24904c27ba92ed9e159c4a66b23c19cf0d3e1133a3383647fee42a68d91bb"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_legacy_artifact_seal.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1792,
+      "sha256": "76ce226c30152e0f8fa0791262328f083975d1a4d118b8459a9ffa5334d5bdbd"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_materialization_plan.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1032,
+      "sha256": "24e6a746ebaa3cf3de808b125039478ecee0eaf0828935c1fac8d7f633a564e3"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_metadata.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1853,
+      "sha256": "b9e30064e4b20dd685e3aed8733e0d7aa78c2fbfcaae9084ce626cb3a4b1cc91"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_metadata_import.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1599,
+      "sha256": "434ff99094cb8912f397cd9e9fcd90c008c0631fed000ffdbe852efda5de2978"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_metadata_merge.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2072,
+      "sha256": "abcbcf83f5aaf8d22669c9dc15b34fe83d1f03fc2e528f9018ebbfa2563f0d3d"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_mirror_diagnostic.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 505,
+      "sha256": "c65e5d976f77a1624a7e05c12b1fd83780da0c7a9d40aabb5c7f4b3a2a49d980"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_official_image_acquire.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 4986,
+      "sha256": "407c2d8d4a0d558171ca1b31bd951d67ff69a64b47fcbad1186ad9821422a996"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_official_metadata.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 850,
+      "sha256": "d6275233b0da98dc360b3493baa724087c9adf5f4f3213d239bd6bbd128f4c50"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_postfreeze.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1589,
+      "sha256": "efda8449872e5698546dcc6985ba5820dc54f08c2f34872137d380c31f81d581"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_probe.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2991,
+      "sha256": "76dfedc65cb4563cf037dee25f4576b4dbe97d27421d369fd71c3db069482140"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_protocol_consistency.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 10541,
+      "sha256": "a074d1a7826e2374caf51931ee1bd4b3aa4a25149953790063fe1b011000f278"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_reserve.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1727,
+      "sha256": "ea34dcba7c32f30ec1573eb532648a4a284f576f73e207cac8a1fa9434fb874d"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_resume_admission.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2700,
+      "sha256": "0c763fff443190614603bf378bfc495876cc52787e619fad6035f4c744f7a704"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_runner.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 996,
+      "sha256": "d80427cffc02870627c67e204264f515d01070747201904afdb5b6c9bad62abd"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_runtime.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3616,
+      "sha256": "af3ce8d6ae0561cc931069233cbcf73d9246c971829de1e30c1f1cd8b6aad032"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_stage_a_gate.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3753,
+      "sha256": "3016a7479a815c39aa081cdf596a06cd06b680cd0266b1cf5acbfff5a8aa3c6d"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_stage_b_e_gates.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3264,
+      "sha256": "9c1ef437a9eb26ec47c0f2bef0fcb12436abaa427ccfc01a0034367399303681"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_transport_trend.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2941,
+      "sha256": "361067e352a3f2b083892b765c87a32a42160f66d167b35c7d160773098268c1"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_verification.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2734,
+      "sha256": "bc81a2ebfdbc30e33fd1ca583dc4844065f29b501551b4fc56195041f0f91794"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v5_workspace_snapshot.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3460,
+      "sha256": "b568652fba03c149a02498bde75c716e754a14508989a7ec5818fe1a6e0e0cd7"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v6_official_metadata.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 735,
+      "sha256": "c04625cd3ffc9b9c4459e76f9810d1d7745d9815480bf85d3ebdf48fe74e344c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v6_postfreeze.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 5149,
+      "sha256": "7dcfb9f0bf6a1d3855588244e8ba89df917d5482218af51e931f3422bbf9b18b"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v6_prelive_seal.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2102,
+      "sha256": "f74186235fe8eb6117e4295d6ee8e42b3768a54d7482757967f0f0b9a6c5dac5"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v6_probe.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1625,
+      "sha256": "2572fca7fa83578ecd96a4b556718556218c6c9225367a59f8e340a2cdc185ca"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v6_reserve.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1031,
+      "sha256": "fffdabc0db6d6da0d2a2a25407fece5a6af20518f73231144d69318441d53127"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v6_runtime.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1431,
+      "sha256": "d8910b55aeb787596f518ce46b4159bcd626998c9ea8876c36bfb941b6263263"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v6_selection_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 785,
+      "sha256": "4fb3aaf21d8f59a9aa396ce276677f54a6339b5a2aaffa33da723b9752b2a868"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_dev_replay.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1399,
+      "sha256": "a94c456ede2693b28ad6fc11b256ff6d14733c0c38fcbfede55ed3c0679db1b0"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_official_metadata.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 768,
+      "sha256": "1d6714815fd4753809e1a321797863064d5acad84f00d01b82e5369476294684"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_postfreeze.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3220,
+      "sha256": "58cea066a2a414ddb0e470fc4f0e7c5b6626094b22c754059bf8283cb2b95988"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_prelive_seal.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2068,
+      "sha256": "93229f7e3d7c379ac504e9d9a3576e84f7b4fa331a34b9b12bc997a1151ff557"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_prereg.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 923,
+      "sha256": "2e42dab235823642e80a40333ed10f5fc8c84d4bfe8c4f8e99f86e2280bab19c"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_probe.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 3191,
+      "sha256": "e8ba225659baa82e5a9a2b37a02e6630e0c4319d143d04d34208108ff40189e2"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_reserve.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1255,
+      "sha256": "4d4d5ac88073ce86817179f6cfbda272e7650dab71e55d04d91844a4bf9c6c39"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_runner.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2567,
+      "sha256": "6848cd915b1675b180137705cf7bf472dc0c0f85ff330c5b82292d56e60e8391"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_selection_boundary.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 2268,
+      "sha256": "6744429fe8bee6b0a091efa62ada615394dbccf9e1dc7c9590fd1502d2097c36"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v7_witness_ir.py",
+      "classification": "current_lineage",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1853,
+      "sha256": "65a606d6474ef55e7a2abd8d6691f7daaa40b6d85a79d7ee29aa7b67decdf0ad"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_strict_v8_selection_boundary.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 1380,
+      "sha256": "49e02505fd50d5f833293ee0d58312df3febef6734aa09e01b17beb3ba022b4a"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_e1c_swebench_curator.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 616,
+      "sha256": "bb6ec80dbe5c883bd1a07270c568f72b4f6e84d25bfe87fdda26cd8f594300da"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_wave_b_public_task_discovery.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 579,
+      "sha256": "dc59b26ba436ba0649442430d3c4aa9020c5d8becdfceae224ff701dd4dfe3e6"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_wave_b_replay_select.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 297,
+      "sha256": "16bee3d33ca7b60e83fbb06104add5e9e8063dcbeb5b2a3183f9d0d80df4d263"
+    },
+    {
+      "status": "??",
+      "path": "tests/test_wave_b_verification_ledger.py",
+      "classification": "historical_research",
+      "exists": true,
+      "is_file": true,
+      "size_bytes": 743,
+      "sha256": "fb7faf2479702effc949bfdd250857a725b2db3d8c20611057c05d9324d93c81"
+    }
+  ],
+  "snapshot_sha256": "a91f238351798a2cf7c4a8d3454c6f9e22641d0e5da353dbebfa7e19cb53e1f0"
+}

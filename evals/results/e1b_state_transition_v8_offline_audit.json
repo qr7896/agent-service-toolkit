@@ -1,0 +1,76 @@
+{
+  "protocol": "e1b-v8-state-transition-contract-offline-audit-v1",
+  "provider_calls": 0,
+  "scope": "public DEV problem statements + v7 public result metadata only",
+  "rows": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "resolved": true,
+      "transition_contract": {
+        "target_obligations": [],
+        "preservation_obligations": [],
+        "default_transition": "identity",
+        "provenance": "public-problem-statement deterministic extraction"
+      },
+      "offline_patch_audit_available": false,
+      "reason": "v7 result artifact intentionally does not persist patch bodies"
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "resolved": true,
+      "transition_contract": {
+        "target_obligations": [],
+        "preservation_obligations": [],
+        "default_transition": "identity",
+        "provenance": "public-problem-statement deterministic extraction"
+      },
+      "offline_patch_audit_available": false,
+      "reason": "v7 result artifact intentionally does not persist patch bodies"
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "resolved": false,
+      "transition_contract": {
+        "target_obligations": [
+          {
+            "state": "failed",
+            "mode": "change"
+          }
+        ],
+        "preservation_obligations": [
+          {
+            "state": "completed",
+            "mode": "identity"
+          }
+        ],
+        "default_transition": "identity",
+        "provenance": "public-problem-statement deterministic extraction"
+      },
+      "offline_patch_audit_available": false,
+      "reason": "v7 result artifact intentionally does not persist patch bodies"
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "resolved": false,
+      "transition_contract": {
+        "target_obligations": [
+          {
+            "state": "version:1",
+            "mode": "change"
+          }
+        ],
+        "preservation_obligations": [
+          {
+            "state": "version:2",
+            "mode": "identity"
+          }
+        ],
+        "default_transition": "identity",
+        "provenance": "public-problem-statement deterministic extraction"
+      },
+      "offline_patch_audit_available": false,
+      "reason": "v7 result artifact intentionally does not persist patch bodies"
+    }
+  ],
+  "claim_boundary": "Contract extraction is auditable offline; patch-level transition checking requires candidate patch content and is not inferred from hashes, tests, grader, or gold."
+}

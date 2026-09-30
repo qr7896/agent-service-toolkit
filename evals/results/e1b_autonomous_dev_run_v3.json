@@ -1,0 +1,145 @@
+{
+  "protocol": "e1b-autonomous-dev-run-v0",
+  "scope": "DEV only; sealed TEST outcomes unopened",
+  "dry_run": false,
+  "identity": {
+    "model_id": "deepseek-flash",
+    "prompt_sha256": "7760c55dd81f80027661045410c15c71f7c59711ea2600c7727198013d740098",
+    "max_iterations": 2,
+    "max_files_written": 3,
+    "allow_test_file_writes": false,
+    "split_sha256": "3a22ef4c75fe8d3ee2c5c15e85ccc6048f9462351806b70bce9fefc020bc6083",
+    "tasks_sha256": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
+    "config_sha256": "e40e57b0f4a979bfc8dc66fff17ddc5e7734b340ff3fe6125d6e27d8025f1557"
+  },
+  "summary": {
+    "tasks": 4,
+    "attempted_tasks": 4,
+    "resolved": 1,
+    "resolved_fraction": 0.25,
+    "parse_failures": 0,
+    "model_failures": 0,
+    "budget_exhaustions": 0,
+    "total_model_calls": 8,
+    "input_tokens": 4759,
+    "output_tokens": 552,
+    "total_tokens": 5311,
+    "wall_time_ms": 14913.1
+  },
+  "rows": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "base_resolved": false,
+      "model_calls": 2,
+      "evidence_protocol": "declared-seed-read-v2-review",
+      "input_tokens": 1044,
+      "output_tokens": 116,
+      "total_tokens": 1160,
+      "proposal_patch_sha256": "419cdf51292823b5012a3a6338d165ba9d992e40c010a1a7302bc73836bb1bc7",
+      "patch_sha256": "7a7e6a1a991ae13cb5316af87e1cf5b8c346b697aa6cdee6dd85171869ca6c56",
+      "review_changed_patch": true,
+      "files_written": [
+        "src/agents/async_runner.py"
+      ],
+      "resolved": true,
+      "fail_to_pass": {
+        "test_e1b_22.py::test_fix": true
+      },
+      "pass_to_pass": {
+        "test_e1b_22.py::test_regression": true
+      },
+      "failure": null,
+      "wall_time_ms": 3108.9
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "base_resolved": false,
+      "model_calls": 2,
+      "evidence_protocol": "declared-seed-read-v2-review",
+      "input_tokens": 1300,
+      "output_tokens": 78,
+      "total_tokens": 1378,
+      "proposal_patch_sha256": "35a5626cef169cb788c5c5c1b4bf985f3b27af1ce63f1b415650d5cdff046a38",
+      "patch_sha256": "35a5626cef169cb788c5c5c1b4bf985f3b27af1ce63f1b415650d5cdff046a38",
+      "review_changed_patch": false,
+      "files_written": [
+        "src/agents/budget.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_25.py::test_fix": false
+      },
+      "pass_to_pass": {
+        "test_e1b_25.py::test_regression": true
+      },
+      "failure": null,
+      "wall_time_ms": 3655.4
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "base_resolved": false,
+      "model_calls": 2,
+      "evidence_protocol": "declared-seed-read-v2-review",
+      "input_tokens": 1343,
+      "output_tokens": 140,
+      "total_tokens": 1483,
+      "proposal_patch_sha256": "f1d2820217608b1e05394442fd31aaf1d902411648939c8f7fd22817bad59cfa",
+      "patch_sha256": "f1d2820217608b1e05394442fd31aaf1d902411648939c8f7fd22817bad59cfa",
+      "review_changed_patch": false,
+      "files_written": [
+        "src/agents/tool_result.py",
+        "src/service/task_adapter.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_26.py::test_fix": true
+      },
+      "pass_to_pass": {
+        "test_e1b_26.py::test_regression_ok": true,
+        "test_e1b_26.py::test_regression_pending": false
+      },
+      "failure": null,
+      "wall_time_ms": 4101.9
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "base_resolved": false,
+      "model_calls": 2,
+      "evidence_protocol": "declared-seed-read-v2-review",
+      "input_tokens": 1072,
+      "output_tokens": 218,
+      "total_tokens": 1290,
+      "proposal_patch_sha256": "71f3510693ebd606a344cc312f5e6dd66dfc8566de455658be5cdfd1e62f1f03",
+      "patch_sha256": "71f3510693ebd606a344cc312f5e6dd66dfc8566de455658be5cdfd1e62f1f03",
+      "review_changed_patch": false,
+      "files_written": [
+        "src/agents/state_migration.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_29.py::test_fix": false
+      },
+      "pass_to_pass": {
+        "test_e1b_29.py::test_regression_v2": true,
+        "test_e1b_29.py::test_regression_v1_false": false
+      },
+      "failure": null,
+      "wall_time_ms": 4046.9
+    }
+  ],
+  "execution": {
+    "temperature": 0,
+    "max_output_tokens": 600,
+    "task_token_ceiling": 4000,
+    "original_token_budget": 16000,
+    "max_iterations": 2,
+    "evidence_protocol": "declared-seed-read-v2-review",
+    "provider": "deepseek",
+    "provider_run_id": "e1b-r10-dev-v3",
+    "provider_ledger_path": ".codex\\e1b\\r10-v3\\provider_calls.jsonl",
+    "thinking_disabled": true,
+    "seed": null,
+    "sandbox_required": true,
+    "test_outcomes_opened": 0
+  }
+}

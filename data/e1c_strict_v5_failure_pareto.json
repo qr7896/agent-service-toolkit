@@ -1,0 +1,43 @@
+{
+  "schema": "e1c-strict-v5-failure-pareto-v1",
+  "denominator": 30,
+  "provider_calls": 0,
+  "runtime_input": "aggregate_categories_only",
+  "categories": [
+    {
+      "category": "wrong_file_or_symbol",
+      "count": 8,
+      "share": 0.26666666666666666
+    },
+    {
+      "category": "missing_artifact",
+      "count": 7,
+      "share": 0.23333333333333334
+    },
+    {
+      "category": "invalid_old_match",
+      "count": 6,
+      "share": 0.2
+    },
+    {
+      "category": "other_failure",
+      "count": 4,
+      "share": 0.13333333333333333
+    },
+    {
+      "category": "duplicate_patch",
+      "count": 2,
+      "share": 0.06666666666666667
+    },
+    {
+      "category": "p2p_regression",
+      "count": 2,
+      "share": 0.06666666666666667
+    },
+    {
+      "category": "target_not_fixed",
+      "count": 1,
+      "share": 0.03333333333333333
+    }
+  ]
+}

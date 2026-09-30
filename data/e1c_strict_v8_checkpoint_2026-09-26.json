@@ -1,0 +1,32 @@
+{
+  "schema": "e1c-strict-v8-checkpoint-v1",
+  "provider_calls": 0,
+  "mechanism_frozen": true,
+  "mechanism_sha256": "129201f0512359b53a25d25f07b4eae00004947bb74253b5185792787bc041b9",
+  "prereg_sha256": "b30456c21662b0fb937ef32ffe52a31042c2272edb226fa927f347b465400740",
+  "focused_regression": "12_passed",
+  "independent_canary_frozen": true,
+  "canary_instance_ids": [
+    "django__django-14071",
+    "scikit-learn__scikit-learn-13536",
+    "scikit-learn__scikit-learn-13641"
+  ],
+  "canary_manifest_sha256": "0d06deb0225f3b34d81ace735718899d1109058c2cdde8485905c07f2a4f120d",
+  "statement_or_gold_used_for_selection": false,
+  "postfreeze_assessment_complete": true,
+  "postfreeze_blocker": null,
+  "postfreeze_summary_sha256": "54514349049da98077256462d534f30666155473c39f908321d64c75a1dd5629",
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "docker_server_version_observed": "29.4.0",
+  "candidate_gate_status": "failed_closed_0_of_3_executable",
+  "official_image_gate": "closed_by_candidate_gate",
+  "live_gate": "closed",
+  "c5_gate": "closed",
+  "dev30_gate": "closed",
+  "fresh30_gate": "closed",
+  "next_gate": "seal strict-v8 as an independent negative canary result; do not tune or reuse this canary. Any successor mechanism must be developed only on exposed development material, frozen before selecting another untouched metadata-only canary, and independently clear the preregistered >=2/3 executable-candidate gate before image acquisition"
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "e1c-strict-v5-stage-e-gate-v1",
+  "stage_e_engineering_ready": true,
+  "reason": "stage_e_localization_and_safety_ready",
+  "checks": {
+    "candidate_count_bounded": true,
+    "candidate_paths_production_only": true,
+    "inspect_read_cost_bounded": true,
+    "second_inspect_rejected": true,
+    "unfrozen_test_path_rejected": true
+  },
+  "official_repair_claim_allowed": false,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "engineering_gate_only": true
+}

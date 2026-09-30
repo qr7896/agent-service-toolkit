@@ -1,0 +1,77 @@
+{
+  "schema": "e1c-strict-v25-reproducer-prereg-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "canary_selected_at_freeze": false,
+  "prior_canary_reuse_allowed": false,
+  "selection_salt": "e1c-strict-v25-independent-canary",
+  "canary_task_count": 3,
+  "minimum_candidate_reproducer_tasks": 2,
+  "minimum_trusted_reproducers": 2,
+  "live_allowed_before_admission": false,
+  "mechanism_files": [
+    {
+      "path": "evals/e1c_strict_v15_probe.py",
+      "sha256": "dfedc355e25170898d5670f29f98b677a791a916747a7bdf40618a2089c50699",
+      "size_bytes": 3579
+    },
+    {
+      "path": "evals/e1c_strict_v16_probe.py",
+      "sha256": "4126d7d58e9c281e40f108e84372342db0b5353b22bd945c322463be668e1a39",
+      "size_bytes": 4184
+    },
+    {
+      "path": "evals/e1c_strict_v17_probe.py",
+      "sha256": "06b8e71ed359eca262e54c059091ae6c0a54b65dba93bf7e37252074116850a2",
+      "size_bytes": 3325
+    },
+    {
+      "path": "evals/e1c_strict_v18_probe.py",
+      "sha256": "49d24aeabe2b4a4941208a58db7071e94f63c90c40969992c409a5e9a0326dfb",
+      "size_bytes": 3736
+    },
+    {
+      "path": "evals/e1c_strict_v19_probe.py",
+      "sha256": "ad3ef0d108acc15043a8f87db5fe1b36b5b6f0f1d465a719ce351c9c37d6e6ac",
+      "size_bytes": 3900
+    },
+    {
+      "path": "evals/e1c_strict_v20_probe.py",
+      "sha256": "5baf8deea643395c8d6ea2d3e345721ad5151373c625e04ff2e8145c3083f09b",
+      "size_bytes": 5230
+    },
+    {
+      "path": "evals/e1c_strict_v21_probe.py",
+      "sha256": "0ed3d07aac6602a806fa7e79bb5b53f088d80041124df88aefbd44dc3cf1f900",
+      "size_bytes": 4410
+    },
+    {
+      "path": "evals/e1c_strict_v22_probe.py",
+      "sha256": "d6367dee938beaac55037b0295d92d59853dae597d48e3220bbfabe0f82dd4ea",
+      "size_bytes": 1756
+    },
+    {
+      "path": "evals/e1c_strict_v23_probe.py",
+      "sha256": "05a1a804b635c8ceb9aeeb563b26243b7405a7259d2b6f3617e194106280597f",
+      "size_bytes": 1624
+    },
+    {
+      "path": "evals/e1c_strict_v24_probe.py",
+      "sha256": "16d6934e1709aa41dd6de6389e91262b0442ef7f68525351f18aa3e6d36cb0c2",
+      "size_bytes": 1507
+    },
+    {
+      "path": "evals/e1c_strict_v25_probe.py",
+      "sha256": "c5d276bf0a1dd28de866f3b71c265f625edd9dce23ecf70aac5b180e129b363e",
+      "size_bytes": 2508
+    }
+  ],
+  "mechanism_sha256": "4297b7ff5da4719aec80eb26a70fb8550539ac0aaa146d88a94f9fa0d9d11c29",
+  "development_gate_sha256": "d78e898901fa992ec0b8b14ec07e8ea2c95e26359058539a8fe304db1aa4cf4f",
+  "development_replay_sha256": "ad9ce7c5da2a6cdb53747e6df4c9037c7318ec9efc21081789f87c3c8de07302",
+  "development_consensus_tasks": 6,
+  "development_total_consensus_family_support": 17,
+  "development_minimum_family_support_per_task": 2,
+  "development_replay_is_independent_evidence": false,
+  "prereg_sha256": "c26ed4757dc28545d657f8bae4c9f72a59975265eac9c45a73c04b2828ecf1df"
+}

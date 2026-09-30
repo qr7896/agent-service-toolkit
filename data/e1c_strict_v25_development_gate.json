@@ -1,0 +1,15 @@
+{
+  "schema": "e1c-strict-v25-development-gate-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "independent_evidence": false,
+  "development_source": "old DEV only; V23 canary outcomes prohibited",
+  "predecessor": "strict-v23; V24 preserved as failed development attempt",
+  "v24_result_sha256": "765384070297ffd3bd7da3833dde55a54c4aeba688ac4b4f482edf2a3b46076c",
+  "required_consensus_tasks": 6,
+  "required_minimum_family_support_per_task": 2,
+  "required_total_consensus_family_support": "strictly_greater_than_16",
+  "allowed_change": "add behavioral witness only when issue explicitly names an already localized callable and independently contains an execution/behavior claim; candidate path must come from the frozen callable localization witness; no task ids/assertions/grader/hidden tests",
+  "freeze_only_if_all_requirements_pass": true,
+  "gate_sha256": "d78e898901fa992ec0b8b14ec07e8ea2c95e26359058539a8fe304db1aa4cf4f"
+}

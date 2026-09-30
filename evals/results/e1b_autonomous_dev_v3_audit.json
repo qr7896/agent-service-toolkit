@@ -1,0 +1,59 @@
+{
+  "protocol": "e1b-dev-v3-audit-v1",
+  "scope": "DEV only; sealed TEST outcomes unopened by the experiment",
+  "status": "valid_partial_dev",
+  "protocol_valid": true,
+  "freeze_ready": false,
+  "resolved_count": 1,
+  "total_model_calls": 8,
+  "total_tokens": 5311,
+  "review_changed_count": 1,
+  "improved_from_v2": [
+    "e1b__async-propagation-22"
+  ],
+  "remaining_unresolved": [
+    "e1b__config-code-budget-25",
+    "e1b__cross-module-status-26",
+    "e1b__state-version-29"
+  ],
+  "transitions": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "v2_resolved": false,
+      "v3_resolved": true,
+      "resolved_transition": "0->1",
+      "review_changed_patch": true,
+      "v3_f2p_all": true,
+      "v3_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "v2_resolved": false,
+      "v3_resolved": false,
+      "resolved_transition": "0->0",
+      "review_changed_patch": false,
+      "v3_f2p_all": false,
+      "v3_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "v2_resolved": false,
+      "v3_resolved": false,
+      "resolved_transition": "0->0",
+      "review_changed_patch": false,
+      "v3_f2p_all": true,
+      "v3_p2p_all": false
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "v2_resolved": false,
+      "v3_resolved": false,
+      "resolved_transition": "0->0",
+      "review_changed_patch": false,
+      "v3_f2p_all": false,
+      "v3_p2p_all": false
+    }
+  ],
+  "claim_boundary": "This four-task DEV result is protocol-development evidence, not a population repair-rate estimate.",
+  "next_gate": "Do not freeze. Improve edit reasoning using DEV-only failure classes, version the protocol, and validate offline before any new live run."
+}

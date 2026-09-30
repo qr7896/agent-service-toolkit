@@ -1,0 +1,160 @@
+{
+  "schema": "e1c-strict-v7-official-metadata-pool-v1",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "selection_salt": "e1c-strict-v7-independent-canary",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "forbidden_task_files_read": [],
+  "candidate_limit": 24,
+  "tasks": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "cdfca8cba33be63ef50ba9e14d8823cc551baf92",
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13313:latest"
+    },
+    {
+      "instance_id": "django__django-13233",
+      "repo": "django/django",
+      "base_commit": "41065cfed56d5408dd8f267b9e70089471a7f1be",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-13233:latest"
+    },
+    {
+      "instance_id": "django__django-15995",
+      "repo": "django/django",
+      "base_commit": "0701bb8e1f1771b36cdde45602ad377007e372b3",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-15995:latest"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13641",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "badaa153e67ffa56fb1a413b3b7b5b8507024291",
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13641:latest"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13536",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "c863ed3d57e3b5ceeb4e7e8001c96aad7110c605",
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13536:latest"
+    },
+    {
+      "instance_id": "django__django-14071",
+      "repo": "django/django",
+      "base_commit": "a9cf954e6174450057ea1065aa2ccbbd12f59b65",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-14071:latest"
+    }
+  ],
+  "field_provenance": {
+    "scikit-learn__scikit-learn-13313": {
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-13313/task.yaml",
+      "task_yaml_sha256": "99a2a36ed7d761fb3fab030ee4ed66ef2efcf821c9d58f3b1dff0daf1803525b",
+      "inventory_source": "swebench_tasks_git_tree",
+      "inventory_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d"
+    },
+    "django__django-13233": {
+      "task_yaml_path": "tasks/django__django-13233/task.yaml",
+      "task_yaml_sha256": "b263363ceacfd54dfc4c8e816140ec6d3c4bcb5a5690b20e13b28df9adbc8989",
+      "inventory_source": "swebench_tasks_git_tree",
+      "inventory_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d"
+    },
+    "django__django-15995": {
+      "task_yaml_path": "tasks/django__django-15995/task.yaml",
+      "task_yaml_sha256": "6f81f2d67483778bfecf974d45d7952b761f16e60f4a1f92e110cf94d902f470",
+      "inventory_source": "swebench_tasks_git_tree",
+      "inventory_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d"
+    },
+    "scikit-learn__scikit-learn-13641": {
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-13641/task.yaml",
+      "task_yaml_sha256": "deb57ced03e842f233fb2c804d3ac3b350bd7f6e8ab581af31d50ed483ebfd87",
+      "inventory_source": "swebench_tasks_git_tree",
+      "inventory_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d"
+    },
+    "scikit-learn__scikit-learn-13536": {
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-13536/task.yaml",
+      "task_yaml_sha256": "127c0b27f3a625e7d148601b4276f970152914855046df427c1ad21b5641f719",
+      "inventory_source": "swebench_tasks_git_tree",
+      "inventory_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d"
+    },
+    "django__django-14071": {
+      "task_yaml_path": "tasks/django__django-14071/task.yaml",
+      "task_yaml_sha256": "82acadc8be1c888f62762e2c159f10eab374bd5bef90a673cc1d38a055f66031",
+      "inventory_source": "swebench_tasks_git_tree",
+      "inventory_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d"
+    }
+  },
+  "fetch_errors": [
+    {
+      "instance_id": "sphinx-doc__sphinx-8020",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12827",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-14349",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7374",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-14960",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "sympy__sympy-17809",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-15503",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-15292",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "mwaskom__seaborn-2766",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-15084",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22931",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "sympy__sympy-16334",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-10880",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8362",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-16398",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "mwaskom__seaborn-3187",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-14471",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26208",
+      "reason": "TimeoutError: The read operation timed out"
+    }
+  ],
+  "pool_sha256": "7bca5e523ab1cb40928cbae5bff379c3233151aa44cad1aa609a3abe37127f5d"
+}

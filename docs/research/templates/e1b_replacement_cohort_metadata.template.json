@@ -1,0 +1,11 @@
+{
+  "task_count": 0,
+  "repo_ids": [],
+  "commit_ids": [],
+  "curation_timestamps": [],
+  "overlap_audit_passed": false,
+  "source_commit_overlap": false,
+  "manifest_sha256": "<64-hex-sha256>",
+  "base_fail_attested": false,
+  "gold_pass_independently_attested": false
+}

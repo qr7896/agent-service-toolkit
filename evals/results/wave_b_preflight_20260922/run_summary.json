@@ -1,0 +1,10 @@
+{
+  "run_id": "e1b-e1c703e774119fae",
+  "provider_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "total_tokens": 0,
+  "task_outcome_count": 0,
+  "forbidden_source_accesses": 0,
+  "dry_run": true
+}

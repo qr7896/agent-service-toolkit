@@ -1,0 +1,43 @@
+{
+  "schema": "e1c-strict-v20-external-canary-reserve-v1",
+  "source": "frozen_swebench_git_tree_names_only",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v20-independent-canary",
+  "mechanism_prereg_sha256": "c3c9022e310066ed318489e8929e3f0fd70d91cdbe89d4a054197c991cf7f780",
+  "tasks": [
+    {
+      "instance_id": "sympy__sympy-21586",
+      "task_yaml_path": "tasks/sympy__sympy-21586/task.yaml",
+      "task_yaml_blob_sha": "92671e679d04fe05be1d7ce929cfe394da9874dd",
+      "repo": "sympy/sympy",
+      "base_commit": "1808affb21ee0dd5226134ad7b3bb9f1785d2e56",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-21586:latest",
+      "task_yaml_sha256": "2d9244dc84f66d0dfb2e86b6e4b6624c5eecc06f346879fe1f59156f59af7aad",
+      "statement_sha256": "3a4d5b78395f01c7697e001a427855108ff37c250227a4369ed83e4ad5eceaf4"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1026",
+      "task_yaml_path": "tasks/pvlib__pvlib-python-1026/task.yaml",
+      "task_yaml_blob_sha": "3bcf54bf2980f7304b8f2fdfe4be435d476d997b",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "27872b83b0932cc419116f79e442963cced935bb",
+      "image": "swebench/sweb.eval.x86_64.pvlib_1776_pvlib-python-1026:latest",
+      "task_yaml_sha256": "e4a8526bfbdfefb4102b263ceb1e347398038077661fdbd9f7f1844d2b913ff6",
+      "statement_sha256": "33efe842df3e133a497a849ff5dc69304daa0635c4247b50814b0828a475910e"
+    },
+    {
+      "instance_id": "pydata__xarray-2905",
+      "task_yaml_path": "tasks/pydata__xarray-2905/task.yaml",
+      "task_yaml_blob_sha": "7c8b2b136dd5930d0ee0c4078fc45b44b8d9e31f",
+      "repo": "pydata/xarray",
+      "base_commit": "7c4e2ac83f7b4306296ff9b7b51aaf016e5ad614",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-2905:latest",
+      "task_yaml_sha256": "de185dc3784e65b4127b217f0bc1a774310a61b4698d2667f4f5731ebbc58e9a",
+      "statement_sha256": "0d3a9b692fc42e67214ed21e669b85cd5c6a222b3a4abc2055d93915876b6be8"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": true,
+  "postfreeze_metadata_materialized": true
+}

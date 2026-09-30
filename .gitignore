@@ -140,6 +140,9 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
+!.env.example
+!.env.template
 .python-version
 .venv
 env/
@@ -205,3 +208,7 @@ study_test11/
 
 # External benchmark checkouts (record URL + commit, never vendor data)
 .external/
+
+# Local sealed cohort specification: retain on disk, never publish with handoff.
+data/wave_b_sealed_task_spec.json
+data/e1c_strict_successor_typed_contract_old_dev_inputs.json

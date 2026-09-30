@@ -1,0 +1,46 @@
+{
+  "schema": "e1c-strict-v23-external-canary-reserve-v1",
+  "source": "frozen_swebench_git_tree_names_only",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v23-independent-canary",
+  "mechanism_prereg_sha256": "5a517906a52f8e482d81172782f96fe938c37c0f6ac7e6fc335fc573290b2dbc",
+  "tasks": [
+    {
+      "instance_id": "django__django-14291",
+      "task_yaml_path": "tasks/django__django-14291/task.yaml",
+      "task_yaml_blob_sha": "dd51dd8eabbb6aae6b69345178ee69570aa6a179",
+      "repo": "django/django",
+      "base_commit": "5c73fbb6a93ee214678f02ba4027f18dff49337b",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-14291:latest",
+      "task_yaml_sha256": "a9af01a0ed10e66ab667545f620d5d872a6f6db0e2b2e5a9393f1f372de29228",
+      "statement_sha256": "fd66dc8d73fdf515f9ac03700e35da60d9fe6ded7f943678b8b1acab43ce050c",
+      "statement_blob_sha": "73ded66714990bcccdd16f1bd9dbbf6b6026a344"
+    },
+    {
+      "instance_id": "django__django-16517",
+      "task_yaml_path": "tasks/django__django-16517/task.yaml",
+      "task_yaml_blob_sha": "e43049aa1e749f7c51db94e290d9678414515473",
+      "repo": "django/django",
+      "base_commit": "c626173833784c86920b448793ac45005af4c058",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16517:latest",
+      "task_yaml_sha256": "fb1da625295c2bc8119aff850e7f5c935337e5fa0cf439af7e1381009ebcf1fb",
+      "statement_sha256": "a98f334f1da66f615ed82fa31aac08f5f2f45346d70802b6a931bcb12a53fbc6",
+      "statement_blob_sha": "3ef7225e6c74f225bcb1d0ec1691290b728b7b16"
+    },
+    {
+      "instance_id": "pydata__xarray-3338",
+      "task_yaml_path": "tasks/pydata__xarray-3338/task.yaml",
+      "task_yaml_blob_sha": "ca4797870792f935e71f6d55a8607fc4df25c9ab",
+      "repo": "pydata/xarray",
+      "base_commit": "3f0049ffc51e4c709256cf174c435f741370148d",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3338:latest",
+      "task_yaml_sha256": "9c72b30731d93794bfa6e88ab17ff52e8dcc8b627e9a7e78d6212dfd079050f3",
+      "statement_sha256": "fb8995fcfafe9b58220da1b88114e9d97dc487ee28e17100d4a042d502ade21a",
+      "statement_blob_sha": "260dfec4e517e8d915543c82ba713bc7839aaca1"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": true,
+  "postfreeze_metadata_materialized": true
+}

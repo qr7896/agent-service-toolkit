@@ -1,0 +1,742 @@
+{
+  "schema": "e1c-strict-v5-workspace-snapshot-v1",
+  "head": "ad6426fc9f11c7caecd969ded11cd69c7d8a11cb",
+  "head_is_sufficient_identity": false,
+  "workspace_identity_required": true,
+  "identity_sha256": "03ede235f688353cdc024f60393d055b97cf0e3ec16e149329e20cbbcc9bd495",
+  "identity_file_count": 90,
+  "relevant_dirty_count": 90,
+  "relevant_dirty_paths": [
+    "data/e1c_strict_v5_canary_manifest.json",
+    "data/e1c_strict_v5_contamination_ledger.json",
+    "data/e1c_strict_v5_freeze_certificate.json",
+    "data/e1c_strict_v5_metadata_audit.json",
+    "docs/research/E1C_STRICT_BLIND_DEV30_TO_FRESH30_PLAYBOOK.md",
+    "evals/e1c_strict_v5_admission.py",
+    "evals/e1c_strict_v5_admission_report.py",
+    "evals/e1c_strict_v5_admission_seal.py",
+    "evals/e1c_strict_v5_advance_admission.py",
+    "evals/e1c_strict_v5_blob_diagnostic.py",
+    "evals/e1c_strict_v5_blob_preflight.py",
+    "evals/e1c_strict_v5_boundary.py",
+    "evals/e1c_strict_v5_cache_accounting.py",
+    "evals/e1c_strict_v5_cache_budget.py",
+    "evals/e1c_strict_v5_contamination.py",
+    "evals/e1c_strict_v5_direct_oci_layout.py",
+    "evals/e1c_strict_v5_direct_oci_plan.py",
+    "evals/e1c_strict_v5_engineering_readiness.py",
+    "evals/e1c_strict_v5_equivalent_mirror_acquire.py",
+    "evals/e1c_strict_v5_failure_taxonomy.py",
+    "evals/e1c_strict_v5_freeze_certificate.py",
+    "evals/e1c_strict_v5_gate.py",
+    "evals/e1c_strict_v5_grader_materialize.py",
+    "evals/e1c_strict_v5_image_identity.py",
+    "evals/e1c_strict_v5_image_transport.py",
+    "evals/e1c_strict_v5_infra_gate.py",
+    "evals/e1c_strict_v5_legacy_artifact_seal.py",
+    "evals/e1c_strict_v5_materialization_plan.py",
+    "evals/e1c_strict_v5_metadata.py",
+    "evals/e1c_strict_v5_metadata_import.py",
+    "evals/e1c_strict_v5_metadata_merge.py",
+    "evals/e1c_strict_v5_mirror_diagnostic.py",
+    "evals/e1c_strict_v5_official_image_acquire.py",
+    "evals/e1c_strict_v5_official_metadata.py",
+    "evals/e1c_strict_v5_postfreeze.py",
+    "evals/e1c_strict_v5_preflight.py",
+    "evals/e1c_strict_v5_probe.py",
+    "evals/e1c_strict_v5_protocol_consistency.py",
+    "evals/e1c_strict_v5_reserve.py",
+    "evals/e1c_strict_v5_resume_admission.py",
+    "evals/e1c_strict_v5_runner.py",
+    "evals/e1c_strict_v5_runtime.py",
+    "evals/e1c_strict_v5_selector.py",
+    "evals/e1c_strict_v5_source_registry.py",
+    "evals/e1c_strict_v5_stage_a_gate.py",
+    "evals/e1c_strict_v5_stage_b_gate.py",
+    "evals/e1c_strict_v5_stage_c_gate.py",
+    "evals/e1c_strict_v5_stage_d_gate.py",
+    "evals/e1c_strict_v5_stage_e_gate.py",
+    "evals/e1c_strict_v5_transport_trend.py",
+    "evals/e1c_strict_v5_verification.py",
+    "evals/e1c_strict_v5_workspace_snapshot.py",
+    "tests/test_e1c_strict_v5_admission.py",
+    "tests/test_e1c_strict_v5_admission_report.py",
+    "tests/test_e1c_strict_v5_admission_seal.py",
+    "tests/test_e1c_strict_v5_advance_admission.py",
+    "tests/test_e1c_strict_v5_blob_diagnostic.py",
+    "tests/test_e1c_strict_v5_blob_preflight.py",
+    "tests/test_e1c_strict_v5_boundary.py",
+    "tests/test_e1c_strict_v5_cache_accounting.py",
+    "tests/test_e1c_strict_v5_cache_budget.py",
+    "tests/test_e1c_strict_v5_direct_oci_layout.py",
+    "tests/test_e1c_strict_v5_direct_oci_plan.py",
+    "tests/test_e1c_strict_v5_equivalent_mirror_acquire.py",
+    "tests/test_e1c_strict_v5_freeze_certificate.py",
+    "tests/test_e1c_strict_v5_gate.py",
+    "tests/test_e1c_strict_v5_grader_materialize.py",
+    "tests/test_e1c_strict_v5_image_identity.py",
+    "tests/test_e1c_strict_v5_image_transport.py",
+    "tests/test_e1c_strict_v5_infra_gate.py",
+    "tests/test_e1c_strict_v5_legacy_artifact_seal.py",
+    "tests/test_e1c_strict_v5_materialization_plan.py",
+    "tests/test_e1c_strict_v5_metadata.py",
+    "tests/test_e1c_strict_v5_metadata_import.py",
+    "tests/test_e1c_strict_v5_metadata_merge.py",
+    "tests/test_e1c_strict_v5_mirror_diagnostic.py",
+    "tests/test_e1c_strict_v5_official_image_acquire.py",
+    "tests/test_e1c_strict_v5_official_metadata.py",
+    "tests/test_e1c_strict_v5_postfreeze.py",
+    "tests/test_e1c_strict_v5_probe.py",
+    "tests/test_e1c_strict_v5_protocol_consistency.py",
+    "tests/test_e1c_strict_v5_reserve.py",
+    "tests/test_e1c_strict_v5_resume_admission.py",
+    "tests/test_e1c_strict_v5_runner.py",
+    "tests/test_e1c_strict_v5_runtime.py",
+    "tests/test_e1c_strict_v5_stage_a_gate.py",
+    "tests/test_e1c_strict_v5_stage_b_e_gates.py",
+    "tests/test_e1c_strict_v5_transport_trend.py",
+    "tests/test_e1c_strict_v5_verification.py",
+    "tests/test_e1c_strict_v5_workspace_snapshot.py"
+  ],
+  "identity_entries": [
+    {
+      "path": "data/e1c_strict_v5_canary_manifest.json",
+      "sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_contamination_ledger.json",
+      "sha256": "8468c2f4baa413351dd924f5d418a09857ea59d5a5e2890d3f405ff270e5022b",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_freeze_certificate.json",
+      "sha256": "806814fa28259716191e52647787621f714241676b7eb6bc1c0ff5e540bbbaba",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_metadata_audit.json",
+      "sha256": "c398bef158459a1d3f4914019716baf81e53f606cb9cd65992bf35fb4630f523",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "docs/research/E1C_STRICT_BLIND_DEV30_TO_FRESH30_PLAYBOOK.md",
+      "sha256": "35beda4ae0a878851de8aea7446e2618ae98e82825d1ef1dbe029c57f7507859",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_admission.py",
+      "sha256": "afff0472bdbaebbc1167167d17099058d4b3bc8582a630810f9f22759248d329",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_admission_report.py",
+      "sha256": "965827024b5c2670c12387b8635e3f97695e1b469133ca7a65da32d896049302",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_admission_seal.py",
+      "sha256": "47d7753475898a34ae7e6354fa3f9f436fe55de823c69b29202e46e92f69767a",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_advance_admission.py",
+      "sha256": "bfafb134a4523af33dad48690a33ee0ccce737a7e84dfe99b2f43c1a5ec46754",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_blob_diagnostic.py",
+      "sha256": "de98bb401ad08fc1b85ddf865893129ee8251a81c78eb1c6522d03704bb03e83",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_blob_preflight.py",
+      "sha256": "bba9a9efcc48697a53361f9392f338d5af1f5d7738d866cf0f5b5766285acd2b",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_boundary.py",
+      "sha256": "019a4f99dcf53c80027408d432aa0794657d9629daa32a0f667cd07f2160f7f7",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_cache_accounting.py",
+      "sha256": "1a20891a42839463a86fb4728908e063bf1880352e9b7fc57e68f8f33dd724a6",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_cache_budget.py",
+      "sha256": "dfecdca88c578146ba7db76639a5ec983bb293f656e585b71808ef2d97102b57",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_contamination.py",
+      "sha256": "9e311cc334d0b484545096ce07f7db3cf4122f53f90dc8533987b61ec1b1b897",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_direct_oci_layout.py",
+      "sha256": "3767209a95bb7f3ee268f949412d409a13aca90d3c1079f58a045ffb024d92b4",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_direct_oci_plan.py",
+      "sha256": "c1a9dd578db15a91e747d1377d38f159915032aff8665a43cc259859bc75ab70",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_engineering_readiness.py",
+      "sha256": "7a27bbef7a128d138c595f953b21d844937671b9552cf1a0dbd99cbf8a0c6a63",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_equivalent_mirror_acquire.py",
+      "sha256": "72494b39833563aea9af9ea84d3f2221788509010c1ac5304ce7dcaf7e5574e8",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_failure_taxonomy.py",
+      "sha256": "e4f9b3c50ef06d01a3d6e5717df7e0a844fb32b91faab1320069d4c2376666c8",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_freeze_certificate.py",
+      "sha256": "0c3e06989ecfb53a9afabf5e41c675c2d26f222c0522a9a24e02ac0e39724cdc",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_gate.py",
+      "sha256": "98b7ac8851dca6d8854c6d1ebb61475be809facbb95268e8ce4ccb240625b4b7",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_grader_materialize.py",
+      "sha256": "369e8889c5cd95af8836a18b3bbebe36b3943cbefcd571b7c96dcf8ef2a2c809",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_image_identity.py",
+      "sha256": "f94a01d01e0374f32fe650e1371ea580a5e26b480b3802541b9b44c164feb297",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_image_transport.py",
+      "sha256": "4a2d307cd2853f4ce9b7313adb0797082bb4b9400af86a9213eeecaa6fc5d664",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_infra_gate.py",
+      "sha256": "20c8d24228a8d220e5b16e4493856361273a17e55221f14e9680cf67e549a13f",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_legacy_artifact_seal.py",
+      "sha256": "646a6513ca3d4acba18aa0414ec03d51413268b131ea9777e0d47ef4095a2170",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_materialization_plan.py",
+      "sha256": "8b6734aa21592aff93f5c6fcfc6f687cad0725055558b0114a761e02ab3f2fdf",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_metadata.py",
+      "sha256": "03bea1e4c0ba999f7dbf0e7720fa01ecdf7cb511ddc373a966c7c1ba9308d568",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_metadata_import.py",
+      "sha256": "1e3b375f462cc8be107b936fda6135f4b7c3c9cf728008dac5961832bed7933d",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_metadata_merge.py",
+      "sha256": "72cf949198d7c37e22814ebd8ef61b2596015a368b3f204b951f3f05d5ab31f5",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_mirror_diagnostic.py",
+      "sha256": "add2a5d4c4dbaa1ced84b79fcdd70a0704fab15e0224789f0df3114f45a8816f",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_official_image_acquire.py",
+      "sha256": "bd478402c9045e4077dabb1fdb8ddbb712269cf8d30afd455faca1b35f417f61",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_official_metadata.py",
+      "sha256": "f0237cca7b9ff7bd92c04a9b09242214fb996c4f6acc07fd3f851753931bc3bc",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_postfreeze.py",
+      "sha256": "8272095dfb318e25170e3511e2a38a89b78b4c45e2fe1241965fb29f031c37e7",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_preflight.py",
+      "sha256": "71b2c266b7ed384b6a2619fe0e553bfc636c30d60feb13d258a929bf530782ee",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_probe.py",
+      "sha256": "04112e06aaf4b3c12fe1f316e475092c360218f7767bd2404981b58db7034ace",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_protocol_consistency.py",
+      "sha256": "1ae1df37dff2f638aca31d44418bc65785d1d47a72cc7a6de151cf80fb99846b",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_reserve.py",
+      "sha256": "138d5b5733bf5e36bc8db89dc741383332fca887e8106f270ed84d0d2f3f0209",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_resume_admission.py",
+      "sha256": "ac5e0edb17479b5fb87569a8d347a897f9eb6264a728c1c6645d4da5675e6f50",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_runner.py",
+      "sha256": "b2912d58df925bfee88d06fe34a7751e5f11172ca7becbc50a3ed42b6aafb931",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_runtime.py",
+      "sha256": "89c58e40cdb1600cc9dc7aa209ab1b2f3478634980d426580aa2f57cd531422d",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_selector.py",
+      "sha256": "ecf504c0b2bc7db482e58b2aa9101e0b16f01df882c0a5734f7ca0c4446de2d9",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_source_registry.py",
+      "sha256": "51cc0f3710823f11684f6cfc37da8880a19e7702f2ee9fb27e9e5239dd83f60a",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_stage_a_gate.py",
+      "sha256": "a4bbfe9a9919add64163db024a01bcef4c84929741cd4095d4ae3b2241f42007",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_stage_b_gate.py",
+      "sha256": "3ec1539cf2512a20bede51d4eae164b2ba2a8ccf9cd543c1fb83d8828dd8647f",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_stage_c_gate.py",
+      "sha256": "2567c329af94b56de07d8805e2c7eddd13676f22a319fac50fa320774f8fa897",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_stage_d_gate.py",
+      "sha256": "a641772c2d12ae27ffd4d6836a18780a6f91fe69d49c98bf92f91a59c1aedc27",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_stage_e_gate.py",
+      "sha256": "34eefd3aaf169da9e0e4ae9eb6c0dc7674e892dcce37e0c9dfaa7bc642a99979",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_transport_trend.py",
+      "sha256": "b97d44f910491e57deb70a2b0d40c7b17c4a6a1edfd454c8e9bd0abac8aa3848",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_verification.py",
+      "sha256": "06c118b6c7ff669f641584bd2a03fbaea76198a000bdaa84de18eeccf3d1dec2",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "evals/e1c_strict_v5_workspace_snapshot.py",
+      "sha256": "270d0fdb47c4dd9e550870776ddb914b7988098d927f075911109957d3a3571e",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_admission.py",
+      "sha256": "2f73fcc96ef160184156983ee5efbecd05f016b5c4a00cd390d5121173a745bd",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_admission_report.py",
+      "sha256": "8b1d7511b551b2b17f5b921dc3bc873db7ab317936fb082510bac5a4892c4722",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_admission_seal.py",
+      "sha256": "a5f4613472afea03574c38571e2da640c386431ddadcf559572dbfd24da15e57",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_advance_admission.py",
+      "sha256": "831b8ffd659a7b9255948c9de6ff9a2eb9240a778ceffd74238d5fdc8152fa27",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_blob_diagnostic.py",
+      "sha256": "1a1cf3020718e31d1fc158bdd15aef4ce629deffc586e42eb6475f96192ecb5c",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_blob_preflight.py",
+      "sha256": "fdd365f71433232b4688313d0f1e1d8caf4bc6e2822308b8b4c9d8c39d2e7f15",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_boundary.py",
+      "sha256": "1d6263b9034a99918c1157e391c47af0f3b82a8f9b6d57d737ff297cf21e3a13",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_cache_accounting.py",
+      "sha256": "ec9493f77ec47d6a342b2c79ec19454163837bc081cc528ef68a6653b08f7681",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_cache_budget.py",
+      "sha256": "48d60cd2e8a2549e3fe3c176d65425b8f90427d6d44353d981cc0cf6fce25705",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_direct_oci_layout.py",
+      "sha256": "2981f639bbcb10281fb476dedb1af24f99a64fe7fffb79ec6ac425ace5faecf9",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_direct_oci_plan.py",
+      "sha256": "ee99cffc97b4e48cbb982ad04dba8f318d4e3a549d1cc8566495000588ec7899",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_equivalent_mirror_acquire.py",
+      "sha256": "3bb73ae9a79ce6dc0a7574e499f11a79807d2b8e04427aa2ba507f525588a7c6",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_freeze_certificate.py",
+      "sha256": "dad0557905d40ae036ef57c7c01deac681dd1bc39f6bf2dadf9a46ff81663703",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_gate.py",
+      "sha256": "20eaccddf2bb624c9488393ad71126b4459a0c3a60b84a0b91c60df89aab78a5",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_grader_materialize.py",
+      "sha256": "e121259c2c95c767828c3d03118a0541961684f280975b8cd36a3d42820cd80f",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_image_identity.py",
+      "sha256": "669160d767b9b06060f7e7bb176960bb9e266ab91f3f96fe71acef18f1881c62",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_image_transport.py",
+      "sha256": "786f0818eba3a45e3e35dc879fd7e610809f657b5da4f39357a0767c1391c69d",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_infra_gate.py",
+      "sha256": "40b24904c27ba92ed9e159c4a66b23c19cf0d3e1133a3383647fee42a68d91bb",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_legacy_artifact_seal.py",
+      "sha256": "76ce226c30152e0f8fa0791262328f083975d1a4d118b8459a9ffa5334d5bdbd",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_materialization_plan.py",
+      "sha256": "24e6a746ebaa3cf3de808b125039478ecee0eaf0828935c1fac8d7f633a564e3",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_metadata.py",
+      "sha256": "b9e30064e4b20dd685e3aed8733e0d7aa78c2fbfcaae9084ce626cb3a4b1cc91",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_metadata_import.py",
+      "sha256": "434ff99094cb8912f397cd9e9fcd90c008c0631fed000ffdbe852efda5de2978",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_metadata_merge.py",
+      "sha256": "abcbcf83f5aaf8d22669c9dc15b34fe83d1f03fc2e528f9018ebbfa2563f0d3d",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_mirror_diagnostic.py",
+      "sha256": "c65e5d976f77a1624a7e05c12b1fd83780da0c7a9d40aabb5c7f4b3a2a49d980",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_official_image_acquire.py",
+      "sha256": "407c2d8d4a0d558171ca1b31bd951d67ff69a64b47fcbad1186ad9821422a996",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_official_metadata.py",
+      "sha256": "d6275233b0da98dc360b3493baa724087c9adf5f4f3213d239bd6bbd128f4c50",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_postfreeze.py",
+      "sha256": "efda8449872e5698546dcc6985ba5820dc54f08c2f34872137d380c31f81d581",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_probe.py",
+      "sha256": "76dfedc65cb4563cf037dee25f4576b4dbe97d27421d369fd71c3db069482140",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_protocol_consistency.py",
+      "sha256": "a074d1a7826e2374caf51931ee1bd4b3aa4a25149953790063fe1b011000f278",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_reserve.py",
+      "sha256": "ea34dcba7c32f30ec1573eb532648a4a284f576f73e207cac8a1fa9434fb874d",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_resume_admission.py",
+      "sha256": "0c763fff443190614603bf378bfc495876cc52787e619fad6035f4c744f7a704",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_runner.py",
+      "sha256": "d80427cffc02870627c67e204264f515d01070747201904afdb5b6c9bad62abd",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_runtime.py",
+      "sha256": "af3ce8d6ae0561cc931069233cbcf73d9246c971829de1e30c1f1cd8b6aad032",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_stage_a_gate.py",
+      "sha256": "3016a7479a815c39aa081cdf596a06cd06b680cd0266b1cf5acbfff5a8aa3c6d",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_stage_b_e_gates.py",
+      "sha256": "9c1ef437a9eb26ec47c0f2bef0fcb12436abaa427ccfc01a0034367399303681",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_transport_trend.py",
+      "sha256": "361067e352a3f2b083892b765c87a32a42160f66d167b35c7d160773098268c1",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_verification.py",
+      "sha256": "bc81a2ebfdbc30e33fd1ca583dc4844065f29b501551b4fc56195041f0f91794",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "tests/test_e1c_strict_v5_workspace_snapshot.py",
+      "sha256": "b568652fba03c149a02498bde75c716e754a14508989a7ec5818fe1a6e0e0cd7",
+      "git_status": "??",
+      "tracked_clean": false
+    }
+  ],
+  "mutable_diagnostic_file_count": 15,
+  "mutable_diagnostic_entries": [
+    {
+      "path": "data/e1c_strict_v5_admission_seal.json",
+      "sha256": "7f770f18c4e6f021a52e0e766727380ba585a5155cb485c2cfa96060e9696a5b",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_blob_preflight.json",
+      "sha256": "59b22d144616e30edcafd46ccea834c3359eefd30c76dfb09dc7a95aefb1b3a1",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_blob_preflight_ledger.jsonl",
+      "sha256": "066405503c79de918d9e298bf3a1e8b3a167e2ab6a3af745c503ace65de01601",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_cache_accounting.json",
+      "sha256": "67e23dca7e46d69648c800b5221a0e6fc5525dce33e1a57fc4eb06f616736f9b",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_cache_budget.json",
+      "sha256": "cda8089053b4ec29983e85cad1718e10713059f677f86a619cba81f4a9927ec2",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_canary_admission.json",
+      "sha256": "d1eed8af60eefd1519fa00954f3e89096c542f43631efcf8e53116cf91b10f4f",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_grader_materialization.json",
+      "sha256": "790d2448e645015eac12bb4ebd738c2fe98ca456a4cf4808ef0149dcfabe40ae",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_image_identity.json",
+      "sha256": "e5aaad76174a51ddca2f2fe054476ff5985ce1dfe19045d63c288a9860e93b76",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_image_transport.json",
+      "sha256": "a01a3b9ff0c697c8dcc578ea673a752a08d376a0b8f17d28178edefe3afad99b",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_infra_gate.json",
+      "sha256": "bc5933f6bd96c22fa1c744dcd6715164a72910e23391b46ff00821125c520760",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_materialization_plan.json",
+      "sha256": "a55a19206a9e42c5fc724549e2d8480afdc7d3101e572939a82f814aba2c55f6",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_official_image_acquisition.json",
+      "sha256": "d7bc3a7dae67b90335f98a4e846c7e320349849b41e0876d3ded8a2040afd941",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_postfreeze_identity.json",
+      "sha256": "40b03b497381a90d97cdfe79242a2e014151229b72888699517547f5d4595397",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_protocol_consistency.json",
+      "sha256": "5ed3d566a032af82ee710b6d2bad0921f822a6171e93d7a4e47766a5f5564751",
+      "git_status": "??",
+      "tracked_clean": false
+    },
+    {
+      "path": "data/e1c_strict_v5_transport_trend.json",
+      "sha256": "fb24200d259dde578375ecdcb14f6b393d1f79c3240294df57a7bb3b40730d54",
+      "git_status": "??",
+      "tracked_clean": false
+    }
+  ],
+  "mutable_diagnostics_excluded_from_identity_sha": true,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false
+}

@@ -1,0 +1,22 @@
+{
+  "consensus_candidate_task_count": 6,
+  "gate_passed": false,
+  "gate_sha256": "465383f5cb2db170ddeb8d33f857f7377ba6ea53d1f60e0f4a153486cdd59ca5",
+  "leakage_forbidden_hits": 0,
+  "minimum_consensus_family_support_per_task": 2,
+  "promoted_preflight_count": 0,
+  "provider_calls": 0,
+  "requirements": {
+    "all_promotions_have_complete_provenance": true,
+    "consensus_coverage_6_of_6": true,
+    "execution_preflighted_behavioral_gain": false,
+    "leakage_forbidden_hits_zero": true,
+    "minimum_family_support_ge_2": true,
+    "provider_calls_zero": true,
+    "total_family_support_ge_17": true
+  },
+  "schema": "e1c-strict-successor-development-gate-v1",
+  "task_count": 6,
+  "total_consensus_family_support": 17,
+  "valid_promoted_preflight_count": 0
+}

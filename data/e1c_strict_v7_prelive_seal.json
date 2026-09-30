@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v7-prelive-seal-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "frozen_instance_ids": [
+    "scikit-learn__scikit-learn-13313",
+    "django__django-13233",
+    "django__django-15995"
+  ],
+  "postfreeze_materialization_complete": true,
+  "typed_candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_failed": true,
+  "image_pull_allowed": false,
+  "official_admission_allowed": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "dev30_allowed": false,
+  "fresh30_allowed": false,
+  "decision": "seal_without_image_or_live",
+  "reason": "executable_candidate_minimum_unreachable_on_frozen_v7_canary",
+  "outcome_conditioned_replacement_allowed": false,
+  "same_canary_reuse_for_mechanism_tuning_allowed": false,
+  "next_mechanism_must_use_new_independent_canary": true,
+  "large_image_download_avoided": true,
+  "assessment_sha256": "4ec87f2753a2dcdf4aaa12c87a0c4b2d7efd3599a3395d96f26ae21f914321ae",
+  "assessment_summary_sha256": "23c3c3bd973a3de1850f4aa07768eec13f84c3cb001b5ce3e60541e24de3c1e8",
+  "seal_sha256": "04fd56ace04838be6f9070ee0957964fc9f39f214176fba4040c7eba76e2ebee"
+}

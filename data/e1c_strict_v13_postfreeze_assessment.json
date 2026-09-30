@@ -1,0 +1,78 @@
+{
+  "schema": "e1c-strict-v13-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "statement_sha256": "2f740c5a275e67d702cfe25d06524163e7a80e84ddade3f6611a9bb909892013",
+      "source": {
+        "ready": true,
+        "base_commit": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v13-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "20716c70c145fbacf9ada90deeac210506ec0d36f05108bfd538800a0b0ab609"
+      }
+    },
+    {
+      "instance_id": "django__django-13837",
+      "statement_sha256": "f656f6d162ab8ee23db62ab0667695b7ffac38bc9ef4f0df8d1e6dbcc74d0cff",
+      "source": {
+        "ready": true,
+        "base_commit": "415f50298f97fb17f841a9df38d995ccf347dfcc"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v13-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "20716c70c145fbacf9ada90deeac210506ec0d36f05108bfd538800a0b0ab609"
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12585",
+      "statement_sha256": "10364e89fc84de2ccb671e4d051cdd3d2a418ecf560456cbd0c1ad6ba3eb82c1",
+      "source": {
+        "ready": true,
+        "base_commit": "bfc4a566423e036fbdc9fb02765fd893e4860c85"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v13-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "20716c70c145fbacf9ada90deeac210506ec0d36f05108bfd538800a0b0ab609"
+      }
+    }
+  ],
+  "summary_sha256": "4add94f15a20c4f5571a7fde73b607e906620dc0d411f7ca617ef2bc5c8a6554"
+}

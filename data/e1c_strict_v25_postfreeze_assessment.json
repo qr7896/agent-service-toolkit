@@ -1,0 +1,435 @@
+{
+  "schema": "e1c-strict-v25-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "mechanism_prereg_sha256": "c26ed4757dc28545d657f8bae4c9f72a59975265eac9c45a73c04b2828ecf1df",
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 2,
+  "executable_candidate_task_count": 2,
+  "consensus_candidate_task_count": 2,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": true,
+  "official_image_acquisition_allowed": true,
+  "rows": [
+    {
+      "instance_id": "sympy__sympy-16637",
+      "statement_sha256": "3646a4c0a2f6e59e7e885623ce95346b09a8ff37e19e7bca6029f764289c0237",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/sympy/sympy",
+        "head": "df58361055cbd92b03cef14dba41ac6f0a004fd7",
+        "base_commit": "df58361055cbd92b03cef14dba41ac6f0a004fd7",
+        "archive_sha256": "b03f8e3e453641720cad685bfc14cd2982d872dd980659d341880177cc13e9c0",
+        "archive_bytes": 7338409
+      },
+      "projection_status": "supported",
+      "candidate_count": 9,
+      "executable_candidate_count": 9,
+      "consensus_path_count": 3,
+      "plan": {
+        "schema": "e1c-strict-v25-candidate-plan-v1",
+        "candidate_count": 9,
+        "executable_candidate_count": 9,
+        "consensus_path_count": 3,
+        "consensus_paths": {
+          "sympy/geometry/line.py": [
+            "behavioral",
+            "semantic_localization"
+          ],
+          "sympy/geometry/plane.py": [
+            "behavioral",
+            "semantic_localization"
+          ],
+          "sympy/calculus/util.py": [
+            "behavioral",
+            "semantic_localization",
+            "structural"
+          ]
+        },
+        "status": "no_executable_reproducer",
+        "candidates": [
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "Segment3D",
+              "candidate_path": "sympy/geometry/line.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "a18fce97a3661e7106232a4b46050fe5a4922c0f2ea80eb9efcd293b57e1b562"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "Plane",
+              "candidate_path": "sympy/geometry/plane.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "893373e054aae9a6ba4d81b50d2f394eb2bd771f2c99d6e3d5c0ff3d16171c87"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "points",
+              "candidate_path": "sympy/geometry/line.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "71e44015f1e98e3301a542a172b7fd2313aa886b22894155bc976444fc8ddaef"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "intersection",
+              "candidate_path": "sympy/calculus/util.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "fc276a40e6eb397e79f8fb38acfc4e8a034f51b003692fc48297555e54c76bfe"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_issue_type_corroboration",
+            "witness": {
+              "schema": "e1c-strict-v21-callable-type-corroboration-v1",
+              "kind": "structural_corroboration",
+              "callable": "intersection",
+              "type_nouns": [
+                "in"
+              ],
+              "candidate_path": "sympy/calculus/util.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_issue_type_corroboration",
+              "provenance": "explicit_issue_callable_unique_definition_plus_issue_type_noun_in_production_ast",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "6e136e8f164f41a3be84b5d811fc22c9c3f11918ec3d0f12a77f66f3782223a5"
+            }
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_behavior_claim",
+            "witness": {
+              "schema": "e1c-strict-v25-callable-behavior-v1",
+              "kind": "behavioral_claim",
+              "callable": "segment3d",
+              "candidate_path": "sympy/geometry/line.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_behavior_claim",
+              "provenance": "explicit_issue_callable_name_plus_issue_execution_behavior_claim",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "be35d8d0530a1909f595a7e2ccccebec0218089863591a5f8d743113988e368c"
+            }
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_behavior_claim",
+            "witness": {
+              "schema": "e1c-strict-v25-callable-behavior-v1",
+              "kind": "behavioral_claim",
+              "callable": "plane",
+              "candidate_path": "sympy/geometry/plane.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_behavior_claim",
+              "provenance": "explicit_issue_callable_name_plus_issue_execution_behavior_claim",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "ea9e3441f743b2a4b36e900d739e1f61c11a321c8920a82688a0517174867ab1"
+            }
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_behavior_claim",
+            "witness": {
+              "schema": "e1c-strict-v25-callable-behavior-v1",
+              "kind": "behavioral_claim",
+              "callable": "points",
+              "candidate_path": "sympy/geometry/line.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_behavior_claim",
+              "provenance": "explicit_issue_callable_name_plus_issue_execution_behavior_claim",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "f0379060092b6aa376a75888e75f9f11b3df79012434625458fced65ea11afef"
+            }
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_behavior_claim",
+            "witness": {
+              "schema": "e1c-strict-v25-callable-behavior-v1",
+              "kind": "behavioral_claim",
+              "callable": "intersection",
+              "candidate_path": "sympy/calculus/util.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_behavior_claim",
+              "provenance": "explicit_issue_callable_name_plus_issue_execution_behavior_claim",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "40296a858fa8f327ecf6538eca60fa0d5f0d2dc065b5d2969f1dbd241d42a2d1"
+            }
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "5d4f943086f3ac5028b94b6640516269c96c0d73795f9083b62bc36751698cc7"
+      }
+    },
+    {
+      "instance_id": "django__django-12830",
+      "statement_sha256": "72be3f05340cea117dcd40bf29ac38310a08577207591a1cb7265a958e7068f0",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/django/django",
+        "head": "926148ef019abcac3a9988c78734d9336d69f24e",
+        "base_commit": "926148ef019abcac3a9988c78734d9336d69f24e",
+        "archive_sha256": "96b86e44f06a80fa5fd7905b5cfa137db669b4a52889cfba5e3559f942a7d781",
+        "archive_bytes": 14223113
+      },
+      "projection_status": "supported",
+      "candidate_count": 5,
+      "executable_candidate_count": 5,
+      "consensus_path_count": 1,
+      "plan": {
+        "schema": "e1c-strict-v25-candidate-plan-v1",
+        "candidate_count": 5,
+        "executable_candidate_count": 5,
+        "consensus_path_count": 1,
+        "consensus_paths": {
+          "django/forms/formsets.py": [
+            "behavioral",
+            "semantic_localization",
+            "structural"
+          ]
+        },
+        "status": "candidate_executable_witnesses",
+        "candidates": [
+          {
+            "execution_ready": true,
+            "origin": "multi_evidence_structural_binding",
+            "witness": {
+              "schema": "e1c-strict-v14-observable-contract-v1",
+              "kind": "semantic_postcondition",
+              "subject": "formset_factory",
+              "verb": "preserve_issue_visible_behavior",
+              "object": "",
+              "candidate_path": "django/forms/formsets.py",
+              "execution_ready": true,
+              "origin": "multi_evidence_structural_binding",
+              "provenance": "issue_tokens_plus_ast_symbol_plus_path_margin",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "confidence_evidence": {
+                "score": 10,
+                "margin_required": 3,
+                "issue_overlap": [
+                  "django",
+                  "forms",
+                  "formset_factory",
+                  "formsets"
+                ],
+                "localization_origin": "issue_ast_definition"
+              },
+              "witness_sha256": "81ee9bcd0f9e85ff0532a22af25c24a03e6e6b44976101f66a9e91ae92a344f3"
+            },
+            "v15_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          },
+          {
+            "execution_ready": true,
+            "origin": "unique_localized_symbol_corroboration",
+            "witness": {
+              "schema": "e1c-strict-v15-corroboration-v1",
+              "kind": "structural_binding",
+              "subject": "formset_factory",
+              "candidate_path": "django/forms/formsets.py",
+              "execution_ready": true,
+              "origin": "unique_localized_symbol_corroboration",
+              "provenance": "production_localization_unique_symbol_same_path",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "4ba297911b68c2cae23f20d6951734dd912c7bc6d372a73b1d514f90d23a17c7"
+            },
+            "v15_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "formset_factory",
+              "candidate_path": "django/forms/formsets.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "c6ff1c56bfc9cc198dc72d0d97dc821768794ed509bbf7bb1e6a2cd53fa775dc"
+            },
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_same_module_corroboration",
+            "witness": {
+              "schema": "e1c-strict-v16-callable-context-v1",
+              "kind": "structural_corroboration",
+              "subject": "formset_factory",
+              "callable": "formset_factory",
+              "candidate_path": "django/forms/formsets.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_same_module_corroboration",
+              "provenance": "projected_issue_callable_plus_existing_issue_behavior_plus_same_production_path",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "6d8db5031c10c174002c4178cdbf20cc8f360644da97ee155991944f113fd69b"
+            },
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_behavior_claim",
+            "witness": {
+              "schema": "e1c-strict-v25-callable-behavior-v1",
+              "kind": "behavioral_claim",
+              "callable": "formset_factory",
+              "candidate_path": "django/forms/formsets.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_behavior_claim",
+              "provenance": "explicit_issue_callable_name_plus_issue_execution_behavior_claim",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "ff3cb4eedd23f64ea4f7702ae1671b7c25318132d8a391ee5151e276fb3abcf9"
+            }
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "09b6c7282255e99071a4ba801e583d557b9a883c79edf07c77e7f08d55f84e42"
+      }
+    },
+    {
+      "instance_id": "django__django-12125",
+      "statement_sha256": "d466ceb9860bfb421821c9bab47b1fa2c11295523365b174ea0b2a5a3b125a65",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/django/django",
+        "head": "89d41cba392b759732ba9f1db4ff29ed47da6a56",
+        "base_commit": "89d41cba392b759732ba9f1db4ff29ed47da6a56",
+        "archive_sha256": "bbf5ee0a5bcb6b855fdb9eb668a529c71e27e377cc82b07b83e056f8e934a439",
+        "archive_bytes": 14112992
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "consensus_path_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v25-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "consensus_path_count": 0,
+        "consensus_paths": {},
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "b8c8141099ac966bc5317f8107f7ce145ff27de65f0482842267a34ff0492c24"
+      }
+    }
+  ],
+  "summary_sha256": "1ad542f2f718615afc525b28c9dbe73911249a603fae482022873b4de3ebe1e5"
+}

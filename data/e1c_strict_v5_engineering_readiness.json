@@ -1,0 +1,19 @@
+{
+  "schema": "e1c-strict-v5-engineering-readiness-v1",
+  "engineering_ready_a_through_e": true,
+  "checks": {
+    "stage_a_ready": true,
+    "stage_b_ready": true,
+    "stage_c_ready": true,
+    "stage_d_engineering_ready": true,
+    "stage_e_engineering_ready": true
+  },
+  "independent_canary_admission_ready": false,
+  "trusted_reproducer_requirement_met": false,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "reason": "a_through_e_zero_provider_engineering_ready_but_canary_admission_closed"
+}

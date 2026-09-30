@@ -187,14 +187,28 @@ def _prepare(root: Path, task: PilotTask) -> None:
 def _run(command: list[str], root: Path, timeout: int = 90) -> dict[str, Any]:
     env = dict(os.environ)
     env["PYTHONPATH"] = str(root / "src")
-    result = subprocess.run(
-        command,
-        cwd=root,
-        env=env,
-        capture_output=True,
-        text=True,
-        timeout=timeout,
-    )
+    try:
+        result = subprocess.run(
+            command,
+            cwd=root,
+            env=env,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as exc:
+        stdout = exc.stdout.decode(errors="replace") if isinstance(exc.stdout, bytes) else (exc.stdout or "")
+        stderr = exc.stderr.decode(errors="replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+        combined = f"{stdout}\n{stderr}"
+        return {
+            "command": command,
+            "exit_code": 124,
+            "passed": False,
+            "timed_out": True,
+            "tests_started": any(marker in combined for marker in ("collected ", "::test", "PASSED", "FAILED")),
+            "stdout": stdout[-2000:],
+            "stderr": stderr[-2000:],
+        }
     return {
         "command": command,
         "exit_code": result.returncode,
@@ -202,6 +216,19 @@ def _run(command: list[str], root: Path, timeout: int = 90) -> dict[str, Any]:
         "stdout": result.stdout[-2000:],
         "stderr": result.stderr[-2000:],
     }
+
+
+def _attribute_grade(grade: dict[str, Any]) -> str:
+    if grade.get("passed"):
+        return "none"
+    if grade.get("timed_out"):
+        return "candidate_timeout" if grade.get("tests_started") else "grader_bootstrap_timeout"
+    output = f"{grade.get('stdout', '')}\n{grade.get('stderr', '')}"
+    if "AssertionError" in output or "FAILED " in output:
+        return "candidate_assertion_failure"
+    if "Traceback (most recent call last)" in output:
+        return "candidate_exception"
+    return "verification_failure"
 
 
 def _grade(task: PilotTask, root: Path) -> dict[str, Any]:
@@ -496,6 +523,7 @@ def _run_task(task: PilotTask) -> dict[str, Any]:
     raw = json.loads(raw_path.read_text(encoding="utf-8").splitlines()[-1])
     grade = _grade(task, workspace)
     raw["external_grader"] = grade
+    raw["failure_attribution"] = _attribute_grade(grade)
     raw["test_result"] = {
         "status": "passed" if grade["passed"] else "failed",
         "passed": grade["passed"],
@@ -522,6 +550,7 @@ def _run_task(task: PilotTask) -> dict[str, Any]:
         "provider_tokens_total": _spent(),
         "changed_files": patch["changed_files"],
         "workspace": str(workspace),
+        "failure_attribution": raw["failure_attribution"],
     }
 
 

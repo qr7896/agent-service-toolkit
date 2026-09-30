@@ -1,0 +1,8 @@
+{
+  "schema":"e1c-strict-v17-development-checkpoint-v1","provider_calls":0,"development_only":true,"independent_evidence":false,"sealed_v15_canary_used_for_tuning":false,
+  "focused_tests":"40_passed","development_replay_task_count":6,"development_executable_candidate_task_count":6,"development_consensus_candidate_task_count":4,"development_replay_sha256":"564e68f30916b74e2a8597a8ae454aabb1f0f5372a1f3cbaea8016ce26abbf4d",
+  "mechanism_frozen":false,"new_canary_selected":false,"official_image_gate":"closed","live_gate":"closed","c5_gate":"closed","dev30_gate":"closed","fresh30_gate":"closed",
+  "blocker":"relation-object type corroboration is valid only with a unique same-path production definition. The remaining django-13233 relation witness lacks such a unique same-path type definition in the allowed localization, so consensus remains 4/6 and fail-closed is retained",
+  "negative_development_lineage":["strict-v16 explicit issue-callable binding: 4/6 consensus","strict-v17 relation-object unique-type corroboration: 4/6 consensus"],
+  "next_gate":"do not freeze strict-v17 and do not consume a new independent canary. Continue only generic synthetic/exposed-development robustness or localization-quality work; freeze only after a task-agnostic mechanism exceeds 4/6 consensus without forced path agreement"
+}

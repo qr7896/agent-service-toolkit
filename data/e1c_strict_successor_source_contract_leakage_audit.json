@@ -1,0 +1,17 @@
+{
+  "files": [
+    "data/e1c_strict_successor_existing_source_contract_old_dev_eval.json",
+    "data/e1c_strict_successor_source_contract_repeatability.json"
+  ],
+  "hits": [],
+  "passed": true,
+  "patterns": [
+    "FAIL_TO_PASS",
+    "PASS_TO_PASS",
+    "gold\\.patch",
+    "test\\.patch",
+    "benchmark_assertion_used\\\"\\s*:\\s*true"
+  ],
+  "provider_calls": 0,
+  "schema": "e1c-strict-successor-source-contract-leakage-audit-v1"
+}

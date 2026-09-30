@@ -1,0 +1,9 @@
+# E1-C Strict-v13 checkpoint — 2026-09-26
+
+Strict-v13 was developed without using strict-v12 sealed canary outcomes. Because strict-v12 had already reached the exposed-development ceiling of 6/6 executable tasks, v13 targeted stronger generalization constraints rather than an impossible coverage-count increase: generic clause-symbol witnesses now require explicit behavior-polarity evidence, a unique production symbol inherited from the v12 binder, and a Python production path. Two adversarial regressions were added. Development remained 6/6 executable and the focused suite increased from 23/23 to 25/25 PASS. Replay SHA-256: `7843d021bdfcda8f70ce3a8f3be800bb349d39453500250ed6a4972bee1b1810`.
+
+Before selection, the v13 boundary was explicitly checked to inherit all three strict-v12 sealed identities; 21 prior identities were excluded. The mechanism was frozen with SHA-256 `de18253be50d745deeccb9f1dfc2843ed6879e097c8489960a9ec4e345ef9c6e` and prereg SHA-256 `ac5c5c267d4bcbcd4ad91da664945f951b1f0f5adc5237fd4f881136ca4a53a3`. Metadata-only selection then froze `pydata__xarray-3993`, `django__django-13837`, and `scikit-learn__scikit-learn-12585`.
+
+All three statements and exact base sources materialized successfully. The frozen zero-provider assessment produced 3/3 source-ready, 3/3 projection-supported, 0/3 candidate tasks and 0/3 executable tasks. Assessment SHA-256: `4add94f15a20c4f5571a7fde73b607e906620dc0d411f7ca617ef2bc5c8a6554`. Strict-v13 is sealed as an independent negative canary.
+
+Strict-v12's earlier 1/3 partial transfer and strict-v13's 0/3 result remain separate independent observations and are not pooled into a pass claim. Official images, admission, live, C5, DEV30 and Fresh30 remain closed. The next legal step is successor development using only synthetic and previously exposed development material, followed by freeze and another untouched canary; the >=2/3 executable gate is unchanged.

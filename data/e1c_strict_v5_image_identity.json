@@ -1,0 +1,103 @@
+{
+  "schema": "e1c-strict-v5-image-identity-v1",
+  "authoritative_ready_count": 2,
+  "mirror_equivalent_count": 0,
+  "ready": false,
+  "mirror_transport_ready": false,
+  "network_exit": {
+    "explicit_proxy": true,
+    "proxy_value_recorded": false
+  },
+  "provider_calls": 0,
+  "live_model_run": false,
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "official_image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest",
+      "registry_manifest_digest": null,
+      "dockerhub_registry_v2": {
+        "ready": false,
+        "status": "registry_v2_transport_error",
+        "error_sha256": "22b0c774a2611f209b5d8f002187f0b0e18f6c04d04a125890eb9e802f7e3cbe",
+        "error_tail": "RuntimeError: curl_exit_28: curl: (28) Connection timed out after 5020 milliseconds"
+      },
+      "dockerhub_tag_api": {
+        "ready": false,
+        "status": "tag_api_transport_error",
+        "exit_code": 28,
+        "error_sha256": "4015e560a05aa7494e2627cd409dddc039f147abef85791c4e680aabf6e26f5f",
+        "error_tail": "curl: (28) Operation timed out after 10305 milliseconds with 0 bytes received"
+      },
+      "authoritative_digest": null,
+      "identity_status": "authoritative_digest_unavailable",
+      "mirror_image": "ghcr.io/epoch-research/swe-bench.eval.x86_64.pydata__xarray-3993:latest",
+      "mirror_digest": "sha256:af17d82d117d51f47345aa118c22cc4862d366514fb51223e869685ccc18afef",
+      "mirror_digest_equivalent": false,
+      "mirror_transport_admissible": false
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "official_image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest",
+      "registry_manifest_digest": null,
+      "dockerhub_registry_v2": {
+        "ready": true,
+        "status": "registry_v2_platform_digest_available",
+        "digest": "sha256:13edc0fe53d44216af865ac94a327dc899f01555f440ef4abb9951b986c283a1",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        },
+        "manifest_bytes": 2199
+      },
+      "dockerhub_tag_api": {
+        "ready": true,
+        "status": "tag_api_digest_available",
+        "digest": "sha256:13edc0fe53d44216af865ac94a327dc899f01555f440ef4abb9951b986c283a1",
+        "tag_digest": "sha256:680c0996a3017e221a5c45aa535faf1dab9b0ef38a6ee1863ef894d079f94934",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        },
+        "platform_count": 1
+      },
+      "authoritative_digest": "sha256:13edc0fe53d44216af865ac94a327dc899f01555f440ef4abb9951b986c283a1",
+      "identity_status": "authoritative_digest_consensus",
+      "mirror_image": "ghcr.io/epoch-research/swe-bench.eval.x86_64.sympy__sympy-15308:latest",
+      "mirror_digest": "sha256:b06bb6d6e42fa6d39418948e175d32029c9bf0cea66f3a2d307f9aed355710b8",
+      "mirror_digest_equivalent": false,
+      "mirror_transport_admissible": false
+    },
+    {
+      "instance_id": "django__django-16092",
+      "official_image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest",
+      "registry_manifest_digest": null,
+      "dockerhub_registry_v2": {
+        "ready": true,
+        "status": "registry_v2_platform_digest_available",
+        "digest": "sha256:f90bf1d0dda83c5c9db42670ea963f480742b420e3c4f04b1d834a04302e2db0",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        },
+        "manifest_bytes": 3039
+      },
+      "dockerhub_tag_api": {
+        "ready": true,
+        "status": "tag_api_digest_available",
+        "digest": "sha256:f90bf1d0dda83c5c9db42670ea963f480742b420e3c4f04b1d834a04302e2db0",
+        "tag_digest": "sha256:f90bf1d0dda83c5c9db42670ea963f480742b420e3c4f04b1d834a04302e2db0",
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        },
+        "platform_count": 1
+      },
+      "authoritative_digest": "sha256:f90bf1d0dda83c5c9db42670ea963f480742b420e3c4f04b1d834a04302e2db0",
+      "identity_status": "authoritative_digest_consensus",
+      "mirror_image": "ghcr.io/epoch-research/swe-bench.eval.x86_64.django__django-16092:latest",
+      "mirror_digest": "sha256:1df9e753b2918287d5fec28a134a68617645b5e92b500b9c4606277832a205cd",
+      "mirror_digest_equivalent": false,
+      "mirror_transport_admissible": false
+    }
+  ]
+}

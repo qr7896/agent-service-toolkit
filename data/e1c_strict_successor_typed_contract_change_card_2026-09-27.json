@@ -1,0 +1,35 @@
+{
+  "allowed_inputs": [
+    "projected natural-language issue",
+    "frozen production localization",
+    "exact-base production source",
+    "canonical offline runtime"
+  ],
+  "canary_policy": "do not select/freeze/materialize another independent canary until this development gate passes; if it passes, freeze a new non-overlapping metadata-only identity before task content inspection",
+  "change_scope": "reproducer compiler/executor only; preserve issue projection, localization, edit, model, grader and budget semantics",
+  "cti2_policy": "sealed negative preflight; do not tune on CTI2 task content or rerun it as development evidence",
+  "date": "2026-09-27",
+  "forbidden_inputs": [
+    "independent-canary task-specific tuning",
+    "benchmark test assertions",
+    "FAIL_TO_PASS/PASS_TO_PASS",
+    "Gold patch",
+    "official Base failing assertion",
+    "task-id keyed rules"
+  ],
+  "hypothesis": "compile explicit projected natural-language behavior into typed executable contracts whose pre-patch failure can be classified without benchmark assertions",
+  "problem": "independent preflight shows trusted reproducer coverage, not localization consensus, is the active bottleneck; V25 DEV consensus is 6/6 while CTI2 trusted reproducer preflight is 0/3",
+  "provider_calls": 0,
+  "required_dev_gate": {
+    "canonical_runtime_required": true,
+    "cross_repo_trusted_reproducer_count_min": 2,
+    "focused_tests_required": true,
+    "leakage_hits_required": 0,
+    "network_disabled": true,
+    "old_dev_denominator_preserved": true,
+    "provider_calls_required": 0,
+    "repeat_stability_required": true
+  },
+  "schema": "e1c-strict-successor-typed-contract-change-card-v1",
+  "status": "DEVELOPMENT_ONLY_NOT_FROZEN_FOR_CANARY"
+}

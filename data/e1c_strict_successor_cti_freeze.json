@@ -1,0 +1,25 @@
+{
+  "c5_open": false,
+  "canary_selected": false,
+  "files": {
+    "data/e1c_strict_successor_cti_environment_probe.json": "d0b811ce0f021c60673c7608dfaa4692095357f9239f4e305fd71bced3ed98a9",
+    "data/e1c_strict_successor_cti_gate_current.json": "a104902239b958cbd9a97750963b6549fe5f7188e4df4dacbfb3252eae54b55b",
+    "data/e1c_strict_successor_cti_preflight_input_sympy14711.json": "77fbef185cee27b375fff8c43c6075d0f595833448392b5fb6648fd3ed990d0e",
+    "data/e1c_strict_successor_cti_preflight_result_sympy14711.json": "151808ecbee1b91b600bfbf16d98cefb10ed2d19266fb07c815640d293a78a8f",
+    "data/e1c_strict_successor_expected_failure_dev30_analysis.json": "6d7ce9ef9755711c3b973507f75a0658d94a67aeb02bc901946ff2f448846dc6",
+    "docs/research/E1C_STRICT_SUCCESSOR_CANONICAL_TESTBED_DEV_2026-09-27.md": "1e6089e358f07e216569ebd9090b2acdcd9096c3dfac4fba1e858d73a0abb689",
+    "evals/e1c_strict_successor_canonical_testbed.py": "4fc6ae6ef8b85faae6b1d3e4096057cff26f43e8fcd81f8ae7b47fb1daeafa29",
+    "evals/e1c_strict_successor_canonical_testbed_gate.py": "9d69f6ef74b713b8ef5fa7012573c8b0dbe612696177cd802d15de43b2d9af0c",
+    "evals/e1c_strict_successor_expected_failure.py": "c427ec5145cb4ab6c0534aad32c052ff11ef4f467463d06e844ba1d5978e8d89",
+    "evals/e1c_strict_successor_expected_failure_gate.py": "04a6c6f19c71e45e97b5cbd6433a81db7a624a0af8279b58bf2cce2de3e4a5db"
+  },
+  "focused_regression": "38 passed in 0.32s",
+  "leakage_forbidden_hits": 0,
+  "next_gate": "metadata-only selection of a new independent/non-overlapping 3-task canary, then freeze identity before reading task content",
+  "provider_calls": 0,
+  "schema": "e1c-strict-successor-cti-freeze-v1",
+  "status": "FROZEN_DEVELOPMENT_GATE_PASSED",
+  "task_specific_rules": 0,
+  "v25_probe_sha256": "c5d276bf0a1dd28de866f3b71c265f625edd9dce23ecf70aac5b180e129b363e",
+  "v25_seal_sha256": "25fbdbfb741623bc582529e871dd156037688d597d362682b5652ef5acb76916"
+}

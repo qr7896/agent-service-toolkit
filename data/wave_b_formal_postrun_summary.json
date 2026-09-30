@@ -1,0 +1,19 @@
+{
+    "schema_version":  "wave-b-formal-postrun-summary-v1",
+    "run_id":  "e1b-waveb-c9b00098ca673b01",
+    "sealed_bundle_sha256":  "9e9a14c9c3bf6dbc2e668a30facc1e3fc1f8ca26fa5f1c17415a5b613322a665",
+    "task_count":  18,
+    "provider_calls":  18,
+    "provider_ok":  2,
+    "provider_error":  16,
+    "total_tokens":  2174,
+    "resolved":  0,
+    "provider_infrastructure_failure":  16,
+    "verification_failure":  2,
+    "forbidden_source_accesses":  0,
+    "safety_events":  0,
+    "artifact_schema_valid":  true,
+    "retry_count":  0,
+    "denominator_policy":  "all 18 retained",
+    "interpretation_boundary":  "Formal negative/null autonomous result with severe provider infrastructure attrition; do not interpret 0/18 as pure model repair efficacy."
+}

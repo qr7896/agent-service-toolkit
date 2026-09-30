@@ -1,0 +1,64 @@
+{
+  "schema": "e1c-strict-v5-materialization-plan-v1",
+  "ready": true,
+  "reason": "identity_freeze_certified",
+  "provider_calls": 0,
+  "task_content_materialized": false,
+  "new_task_tree_touched": false,
+  "certificate_manifest_sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "actions": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "ordered_actions": [
+        "fetch_public_statement_after_identity_freeze",
+        "checkout_exact_base_commit",
+        "verify_source_commit_identity",
+        "pull_official_image",
+        "run_independent_base_fail",
+        "run_independent_gold_pass",
+        "project_statement_to_strict_natural_language",
+        "build_production_only_localization",
+        "generate_pre_patch_probe_plan",
+        "run_probe_twice_in_official_image_with_network_none",
+        "audit_repair_visible_bundle_and_trace",
+        "write_zero_provider_admission_row"
+      ]
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "ordered_actions": [
+        "fetch_public_statement_after_identity_freeze",
+        "checkout_exact_base_commit",
+        "verify_source_commit_identity",
+        "pull_official_image",
+        "run_independent_base_fail",
+        "run_independent_gold_pass",
+        "project_statement_to_strict_natural_language",
+        "build_production_only_localization",
+        "generate_pre_patch_probe_plan",
+        "run_probe_twice_in_official_image_with_network_none",
+        "audit_repair_visible_bundle_and_trace",
+        "write_zero_provider_admission_row"
+      ]
+    },
+    {
+      "instance_id": "django__django-16092",
+      "ordered_actions": [
+        "fetch_public_statement_after_identity_freeze",
+        "checkout_exact_base_commit",
+        "verify_source_commit_identity",
+        "pull_official_image",
+        "run_independent_base_fail",
+        "run_independent_gold_pass",
+        "project_statement_to_strict_natural_language",
+        "build_production_only_localization",
+        "generate_pre_patch_probe_plan",
+        "run_probe_twice_in_official_image_with_network_none",
+        "audit_repair_visible_bundle_and_trace",
+        "write_zero_provider_admission_row"
+      ]
+    }
+  ],
+  "plan_sha256": "e9b8193f3ff43bbb187f5dd033774f5206d9e4844246c724454da67cc4d90130"
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "e1c-strict-v5-blob-preflight-v1",
+  "ready": false,
+  "reason": "blob_transport_gate_incomplete",
+  "checked_count": 1,
+  "required_count": 3,
+  "network_exit": {
+    "explicit_proxy": true,
+    "proxy_value_recorded": false
+  },
+  "provider_calls": 0,
+  "live_model_run": false,
+  "rows": [
+    {
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest",
+      "ready": false,
+      "reason": "blob_transport_exceeds_pull_budget",
+      "manifest": {
+        "status": 200,
+        "sha256": "c765fcdd0e1073042cb610b400299ed09394765f6c3e5419d8e2bb4f2258ad52",
+        "bytes": 2200
+      },
+      "selected_layer": {
+        "digest": "sha256:08aa064d3dbc53056d73501b8384cb23334d6057ba86ef2123476984f1283e11",
+        "size": 1376151759
+      },
+      "total_layer_bytes": 2050010331,
+      "estimated_full_image_seconds": 6475.1,
+      "blob_probe": {
+        "status": 200,
+        "bytes_read": 1048576,
+        "sample_bytes": 1048576,
+        "duration_seconds": 3.312,
+        "bytes_per_second": 316599.0,
+        "range_requested": true,
+        "sample_sha256": "be8922c1530dbccd315ae96771ab113ff0594d7c771860a9a30faf0111719129"
+      },
+      "thresholds": {
+        "min_bytes": 524288,
+        "min_bytes_per_second": 65536,
+        "max_estimated_seconds": 900
+      },
+      "instance_id": "pydata__xarray-3993"
+    }
+  ]
+}

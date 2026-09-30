@@ -1,0 +1,9 @@
+{
+  "schema":"e1c-strict-v11-checkpoint-v1","provider_calls":0,"development_only":false,"independent_evidence":true,"sealed_v10_canary_used_for_tuning":false,
+  "focused_tests":"21_passed","development_replay_task_count":6,"development_candidate_task_count":5,"development_executable_candidate_task_count":4,"development_replay_sha256":"4a2e71e77e69347eb070a4447af4302e0d834fffca89a906bb00bb07bb85040e","prior_v10_executable_development_count":3,"material_improvement_over_v10":true,
+  "mechanism_frozen":true,"mechanism_sha256":"9c29fbf092ccdc8807031514404d2869a521062d90e30d435d3a2dc107df6376","prereg_sha256":"41f9fc9caf928a78452c7fd57ce848bd96bb829efc8212a22f64466fbc59e0b0",
+  "new_canary_selected":true,"new_canary_instance_ids":["sympy__sympy-12906","pylint-dev__pylint-5201","django__django-10914"],"postfreeze_assessment_complete":true,"postfreeze_summary_sha256":"d2d0724c6270733671f095a05fd70e0dc2cae2b97e563fcd7fe05e687d87dab5",
+  "source_ready_count":3,"projection_supported_count":3,"candidate_task_count":0,"executable_candidate_task_count":0,"candidate_gate_status":"failed_closed_0_of_3_executable","strict_v11_sealed":true,
+  "official_image_gate":"closed_by_candidate_gate","live_gate":"closed_by_candidate_gate","c5_gate":"closed_by_candidate_gate","dev30_gate":"closed_by_candidate_gate","fresh30_gate":"closed_by_candidate_gate","blocker":null,
+  "next_gate":"do not tune strict-v11 against these canary outcomes or reuse these identities; successor development may use only synthetic and previously exposed development material, and should target a more general structural/behavioral projection mechanism before another freeze"
+}

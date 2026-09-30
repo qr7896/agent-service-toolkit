@@ -1,0 +1,34 @@
+{
+    "task_count":  18,
+    "repo_ids":  [
+                     "more-itertools/more-itertools"
+                 ],
+    "commit_ids":  [
+                       "2b8d5cddce4ea01f88a973551cd50479cf5fa45f",
+                       "dc2664b4a7c66209485c9f5e359137bf4b365eb3",
+                       "069b30002a985c02f1ab18409290a699fd649376",
+                       "71b46b06fb48abcd2f7a26d74c148a650d340386",
+                       "8089263d2374e121ecb8cfdef0f5664bab7bafb1",
+                       "be5793a55f58ee29521d8cbc9f14019f5833454e",
+                       "18c57c720fc5a7672439ea45a5393a8c1ff40d1e",
+                       "def2d821c0a15ede86578660e7dc48e44bad9579",
+                       "073d23421b60e05a99872e7b174902f4aa151f31",
+                       "428a0a2c8d9efa1bf57df6d92563c610eaf817dc",
+                       "1b7f033d50589295f9f9b600e2d76dddf29af920",
+                       "4f399222d0b7953856db06d7f269bd3ede9e32e7",
+                       "ccf96ac64c4d6489d95a4bbf67b00999d341bdd2",
+                       "120ee0a59927a25c93a7f9b105d868b0cc3b8b22",
+                       "21d3d88359437146a6d8882328df4bd73edd685c",
+                       "fb33cf2c24e21a0fbbb5abf2dc5e484ee76ad03f",
+                       "ae37eb38a1d3958d764ff3ec43107116dfe29135",
+                       "a7236314cdb977d154d90a27cd7d5ddc3f86c851"
+                   ],
+    "curation_timestamps":  [
+                                "2026-09-22"
+                            ],
+    "overlap_audit_passed":  true,
+    "source_commit_overlap":  false,
+    "manifest_sha256":  "658e70bb4e2ed5e94b0f6e1ba7cf537fe04774a8d99bd2f0a671a4d3bb72a1a4",
+    "base_fail_attested":  true,
+    "gold_pass_independently_attested":  true
+}

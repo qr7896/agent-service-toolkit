@@ -1,0 +1,40 @@
+{
+  "task_count": 12,
+  "repo_ids": [
+    "more-itertools/more-itertools",
+    "jazzband/prettytable"
+  ],
+  "commit_ids": [
+    "def2dabea858b6ecb84ee0c52e6e07929f2c409c",
+    "d992be0de9383ddcaae3a24866a2d96b52132b07",
+    "958990e22c4ab6daf434d89cf2b86d7a4a7a9e3c",
+    "f51a53bfd2fe9504063a33ef5f4a73e30d82d0e2",
+    "edb3346f835ca917efbfda5e2d6664ab952da369",
+    "06f31819121eb0620d3165fda73a44cbf71b140d",
+    "adeda34bd11ff636f5f19238cf422a73e1455483",
+    "cca32949f12d473fd823e37a5530c30d2faa1332",
+    "6ba75d41436d4400624c3e2f32727e127016b8c6",
+    "b3de36f62f65d1853a8f591c1469d089549ffe73",
+    "920cc8dfb1998df40b0ba09eae6e060abfd2aac8",
+    "cf5b1670e56afc28bcf76142faa3bbcfedcfa85b"
+  ],
+  "curation_timestamps": [
+    "2026-09-20T10:52:21.3631904+00:00",
+    "2026-09-20T10:52:39.3600036+00:00",
+    "2026-09-20T10:52:55.9623668+00:00",
+    "2026-09-20T10:53:32.1320669+00:00",
+    "2026-09-20T10:54:23.9649546+00:00",
+    "2026-09-20T10:55:02.5774260+00:00",
+    "2026-09-20T10:55:48.7197052+00:00",
+    "2026-09-20T10:56:14.1242382+00:00",
+    "2026-09-20T11:04:20.0179466+00:00",
+    "2026-09-20T11:04:21.1035830+00:00",
+    "2026-09-20T11:04:21.9708760+00:00",
+    "2026-09-20T11:04:22.8357170+00:00"
+  ],
+  "overlap_audit_passed": true,
+  "source_commit_overlap": false,
+  "manifest_sha256": "006b96c6a9b106a79a06885e51bf619df5e5afe1d649d38f7df4429c8cac2a12",
+  "base_fail_attested": true,
+  "gold_pass_independently_attested": true
+}

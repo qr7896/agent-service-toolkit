@@ -1,0 +1,9 @@
+{
+  "schema":"e1c-strict-v18-development-checkpoint-v1",
+  "provider_calls":0,"development_only":true,"independent_evidence":false,"sealed_v15_canary_used_for_tuning":false,
+  "focused_tests":"45_passed","development_replay_task_count":6,"development_executable_candidate_task_count":6,"development_consensus_candidate_task_count":4,"development_replay_sha256":"632ed4511c738de8774f05242fa6834faa1a120f5dd4d5b0256be90364b72522",
+  "mechanism_frozen":false,"new_canary_selected":false,"official_image_gate":"closed","live_gate":"closed","c5_gate":"closed","dev30_gate":"closed","fresh30_gate":"closed",
+  "blocker":"attribute/property localization from already-exposed cached windows cannot be established safely: relevant windows are mid-function fragments and are not parseable as complete Python modules. Dedent is insufficient; accepting partial-text regex as structural corroboration would weaken fail-closed evidence semantics. Consensus therefore remains 4/6.",
+  "negative_development_lineage":["strict-v16 explicit issue-callable binding: 4/6 consensus","strict-v17 relation-object unique-type corroboration: 4/6 consensus","strict-v18 visible property/setter AST overlay: 4/6 consensus"],
+  "next_gate":"do not freeze strict-v18 and do not consume a new independent canary. A successor must improve task-agnostic localization using complete allowed production-source structure or another development-only robustness proxy, while preserving fail-closed semantics; freeze only after >4/6 exposed-development consensus."
+}

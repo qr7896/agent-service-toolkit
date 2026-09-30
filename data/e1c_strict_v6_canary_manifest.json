@@ -1,0 +1,29 @@
+{
+  "schema": "e1c-strict-v6-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v6-independent-canary",
+  "tasks": [
+    {
+      "instance_id": "django__django-15569",
+      "repo": "django/django",
+      "base_commit": "884b4c27f506b3c29d58509fc83a35c30ea10d94",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-15569:latest"
+    },
+    {
+      "instance_id": "django__django-11734",
+      "repo": "django/django",
+      "base_commit": "999891bd80b3d02dd916731a7a239e1036174885",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-11734:latest"
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8638",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "4b452338f914d4f6b54704222d70ae8a746e3db5",
+      "image": "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8638:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

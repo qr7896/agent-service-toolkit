@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v12-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v12-independent-canary",
+  "mechanism_prereg_sha256": "ff3e465e279339f36ef13fe206d23aa5d043386a586f6e51abd1792f8735d3d4",
+  "tasks": [
+    {
+      "instance_id": "django__django-16092",
+      "repo": "django/django",
+      "base_commit": "599f3e2cda50ab084915ffd08edb5ad6cad61415",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest"
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1682",
+      "repo": "pvlib/pvlib-python",
+      "base_commit": "ef8ad2fee9840a77d14b0dfd17fc489dd85c9b91",
+      "image": "swebench/sweb.eval.x86_64.pvlib_1776_pvlib-python-1682:latest"
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "repo": "sympy/sympy",
+      "base_commit": "fb59d703e6863ed803c98177b59197b5513332e9",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "e1c-strict-v5-stage-d-gate-v1",
+  "stage_d_engineering_ready": true,
+  "reason": "stage_d_reproducer_engineering_ready",
+  "checks": {
+    "probe_generated_from_prose": true,
+    "benchmark_assertion_not_used": true,
+    "task_id_not_used": true,
+    "rendered_probe_has_no_assert_statement": true,
+    "stable_isolated_failure_trusted": true,
+    "stable_failure_status": true,
+    "unsafe_or_unexpressed_contract_abstains": true
+  },
+  "independent_canary_trusted_reproducer_requirement_met": false,
+  "minimum_canary_trusted_reproducers": 2,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "engineering_gate_only": true
+}

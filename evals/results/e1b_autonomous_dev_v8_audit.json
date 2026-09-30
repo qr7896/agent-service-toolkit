@@ -1,0 +1,61 @@
+{
+  "protocol": "e1b-dev-v8-audit-v1",
+  "result_schema": "e1b-r10-v8-result-v1",
+  "transition_schema": "e1b-state-transition-v1",
+  "protocol_valid": true,
+  "freeze_ready": false,
+  "status": "valid_regressed_dev",
+  "improved_from_v7": [],
+  "regressed_from_v7": [
+    "e1b__async-propagation-22",
+    "e1b__config-code-budget-25"
+  ],
+  "remaining_unresolved": [
+    "e1b__async-propagation-22",
+    "e1b__config-code-budget-25",
+    "e1b__cross-module-status-26",
+    "e1b__state-version-29"
+  ],
+  "transition_gate_failures": [
+    "e1b__state-version-29"
+  ],
+  "transitions": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "v7_resolved": true,
+      "v8_resolved": false,
+      "resolved_transition": "1->0",
+      "failure": null,
+      "proposal_transition_complete": true,
+      "final_transition_complete": true
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "v7_resolved": true,
+      "v8_resolved": false,
+      "resolved_transition": "1->0",
+      "failure": "contract_coverage_failure",
+      "proposal_transition_complete": null,
+      "final_transition_complete": null
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "v7_resolved": false,
+      "v8_resolved": false,
+      "resolved_transition": "0->0",
+      "failure": null,
+      "proposal_transition_complete": true,
+      "final_transition_complete": true
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "v7_resolved": false,
+      "v8_resolved": false,
+      "resolved_transition": "0->0",
+      "failure": "state_transition_failure",
+      "proposal_transition_complete": null,
+      "final_transition_complete": null
+    }
+  ],
+  "claim_boundary": "Repeated four-task DEV evidence only; no held-out outcome opened."
+}

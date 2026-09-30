@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v11-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v11-independent-canary",
+  "mechanism_prereg_sha256": "41f9fc9caf928a78452c7fd57ce848bd96bb829efc8212a22f64466fbc59e0b0",
+  "tasks": [
+    {
+      "instance_id": "sympy__sympy-12906",
+      "repo": "sympy/sympy",
+      "base_commit": "d250ff08a834bb0ba2b636b0a7d63a4cf33f6e22",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-12906:latest"
+    },
+    {
+      "instance_id": "pylint-dev__pylint-5201",
+      "repo": "pylint-dev/pylint",
+      "base_commit": "772b3dcc0b0770a843653783e5c93b4256e5ec6f",
+      "image": "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-5201:latest"
+    },
+    {
+      "instance_id": "django__django-10914",
+      "repo": "django/django",
+      "base_commit": "e7fd69d051eaa67cb17f172a39b57253e9cb831a",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-10914:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

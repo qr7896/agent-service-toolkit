@@ -1,0 +1,9 @@
+# E1-C admission v2: official image setup-only source identity
+
+Frozen before any v2 admission result or E1-C model outcome, 2026-09-23. The 30 candidate task IDs and their order are unchanged; manifest SHA-256 remains `16f86e20a296cc6e555038c0cbe336b6008d3b9252e8dc930a2d1c0a6cd9bca6`. v1 admission artifacts stay in `.codex/e1c/admission/`; v2 writes fresh artifacts in `.codex/e1c/admission_v2/`. This is a disclosed infrastructure protocol revision, not an Agent retry or evidence of repair efficacy.
+
+The v1 strict whole-tree check rejected the official `sphinx-doc__sphinx-9230` image before executing tests. Its image HEAD descends the declared base commit and differs only in `setup.py` (dependency pins) and `tox.ini` (pytest reporting flag); official `eval.sh` re-installs the package, so resetting these files would change the supplied environment. Image digest at diagnosis: `swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:2a18fa57b69c646bf0e1916f1df157a62de80ca8b55325738f9c9eeff9c38c86`.
+
+v2 accepts an image source identity only if: the declared base commit is an ancestor of image HEAD; tracked worktree is clean; and either the whole tree matches base, or **every** base→HEAD changed path is in the frozen setup-only allowlist `{setup.py, tox.ini}`. Gold/test patches must not touch any changed setup-only path. Image digest, diff paths, tree hashes, phase logs and parser commit are recorded. Any other image drift fails closed. Each Base-Fail/Gold-Pass phase starts a fresh container; grading later requires both v2 phases passed and the current image digest still equals their admitted digest. This does not waive actual failing/passing test requirements.
+
+No DeepSeek call is included in this revision. Admission `v2` must finish 30/30 before an E1-C live identity or E2 Entry Gate can be claimed. A task failing the rule is `INFRA_INVALID`/not admitted, never silently replaced or scored as an Agent failure.

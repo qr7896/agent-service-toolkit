@@ -1,0 +1,32 @@
+{
+    "schema_version":  "formal-e1-n30-summary-v1",
+    "waves":  {
+                  "A":  {
+                            "resolved":  0,
+                            "tokens":  5007,
+                            "infra":  7,
+                            "verification":  5,
+                            "n":  12
+                        },
+                  "B":  {
+                            "resolved":  0,
+                            "tokens":  2174,
+                            "infra":  16,
+                            "verification":  2,
+                            "n":  18
+                        }
+              },
+    "n":  30,
+    "resolved":  0,
+    "provider_infrastructure_failure":  23,
+    "verification_failure":  7,
+    "provider_ok":  7,
+    "provider_error":  23,
+    "total_tokens":  7181,
+    "infra_failure_rate":  0.76666666666666672,
+    "forbidden_source_accesses":  0,
+    "safety_events":  0,
+    "e2_infra_gate_threshold":  0.1,
+    "e2_infra_gate_pass":  false,
+    "claim_boundary":  "E1 autonomous efficacy is not interpretable as pure model efficacy because infrastructure failures dominate; all 30 remain denominator."
+}

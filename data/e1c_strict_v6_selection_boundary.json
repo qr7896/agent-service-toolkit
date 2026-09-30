@@ -1,0 +1,14 @@
+{
+  "schema": "e1c-strict-v6-selection-boundary-v1",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "selection_salt": "e1c-strict-v6-independent-canary",
+  "contamination_count": 244,
+  "contamination_identity_sha256": "e45992a6b229c8aefe0d8cb46f3407ab811b603e7be11ed58eed90e878bb9567",
+  "contamination_ledger_sha256": "8468c2f4baa413351dd924f5d418a09857ea59d5a5e2890d3f405ff270e5022b",
+  "task_repo_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "v5_canary_reuse_allowed": false,
+  "outcome_conditioned_replacement_allowed": false,
+  "boundary_sha256": "f1e99adf087fac86a241f1175736bc35dda6df92ed69ba4aebd1389bc1c5417a"
+}

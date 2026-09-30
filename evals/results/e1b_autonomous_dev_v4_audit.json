@@ -1,0 +1,59 @@
+{
+  "protocol": "e1b-dev-v4-audit-v1",
+  "scope": "DEV only; original TEST tasks were not executed",
+  "status": "valid_partial_dev",
+  "protocol_valid": true,
+  "freeze_ready": false,
+  "resolved_count": 2,
+  "total_model_calls": 8,
+  "total_tokens": 5789,
+  "review_changed_count": 0,
+  "improved_from_v3": [
+    "e1b__config-code-budget-25"
+  ],
+  "regressed_from_v3": [],
+  "remaining_unresolved": [
+    "e1b__cross-module-status-26",
+    "e1b__state-version-29"
+  ],
+  "transitions": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "v3_resolved": true,
+      "v4_resolved": true,
+      "resolved_transition": "1->1",
+      "review_changed_patch": false,
+      "v4_f2p_all": true,
+      "v4_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "v3_resolved": false,
+      "v4_resolved": true,
+      "resolved_transition": "0->1",
+      "review_changed_patch": false,
+      "v4_f2p_all": true,
+      "v4_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "v3_resolved": false,
+      "v4_resolved": false,
+      "resolved_transition": "0->0",
+      "review_changed_patch": false,
+      "v4_f2p_all": true,
+      "v4_p2p_all": false
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "v3_resolved": false,
+      "v4_resolved": false,
+      "resolved_transition": "0->0",
+      "review_changed_patch": false,
+      "v4_f2p_all": false,
+      "v4_p2p_all": false
+    }
+  ],
+  "claim_boundary": "This four-task DEV result is protocol-development evidence, not a population autonomous repair-rate estimate.",
+  "next_gate": "Do not freeze unless all four DEV tasks resolve under a protocol-valid run. Original TEST fixtures are contaminated for v4+ confirmation; use a replacement held-out cohort after freeze."
+}

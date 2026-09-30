@@ -1,0 +1,124 @@
+{
+  "schema": "e1c-strict-v5-postfreeze-identity-v1",
+  "ready": false,
+  "reason": "source_or_image_identity_incomplete",
+  "provider_calls": 0,
+  "new_task_tree_touched": false,
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "repo": "pydata/xarray",
+      "base_commit": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/pydata/xarray",
+        "head": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc",
+        "base_commit": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc",
+        "commit_tree_sha": "2c5856b5d192ae699f4e68d4586b2aedc61372c0",
+        "archive_sha256": "adef4b44a5943281ded06f6cbb944236d10e07cf4e53621b1243c7796171046d",
+        "archive_bytes": 2151762,
+        "git_fetch_status": "failed_then_github_archive_fallback",
+        "git_fetch_detail": {
+          "exit_code": 128,
+          "stdout": "",
+          "stderr": "fatal: unable to access 'https://github.com/pydata/xarray.git/': Failed to connect to github.com:443 after 21044 ms: Could not connect to server\n",
+          "timed_out": false
+        }
+      },
+      "image_identity": {
+        "ready": false,
+        "status": "image_manifest_unavailable",
+        "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest",
+        "digest": null,
+        "detail": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "failed to configure transport: error pinging v2 registry: Get \"https://registry-1.docker.io/v2/\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:55692->[2600:1f18:2148:bc01:8ae3:3249:7454:6f0d]:443: wsarecv: An existing connection was forcibly closed by the remote host.\n",
+          "timed_out": false
+        }
+      },
+      "provider_calls": 0,
+      "forbidden_task_files_read": [],
+      "row_sha256": "8a5f4e94b7fadc3c8123e3c639ad2b3ca3df60d7067a3534dd2203e4fc5af75e"
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "repo": "sympy/sympy",
+      "base_commit": "fb59d703e6863ed803c98177b59197b5513332e9",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/sympy/sympy",
+        "head": "fb59d703e6863ed803c98177b59197b5513332e9",
+        "base_commit": "fb59d703e6863ed803c98177b59197b5513332e9",
+        "commit_tree_sha": "e1ae244c37061fe44a05e7548185057ec8bbe09e",
+        "archive_sha256": "28a46ed7d4a012bd3dd72b43b754bee1a2ee62f12bd7841407998116fda2e56a",
+        "archive_bytes": 7105271,
+        "git_fetch_status": "failed_then_github_archive_fallback",
+        "git_fetch_detail": {
+          "exit_code": 128,
+          "stdout": "",
+          "stderr": "fatal: unable to access 'https://github.com/sympy/sympy.git/': Failed to connect to github.com:443 after 21047 ms: Could not connect to server\n",
+          "timed_out": false
+        }
+      },
+      "image_identity": {
+        "ready": false,
+        "status": "image_manifest_unavailable",
+        "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest",
+        "digest": null,
+        "detail": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "failed to configure transport: error pinging v2 registry: Get \"https://registry-1.docker.io/v2/\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:55725->[2600:1f18:2148:bc01:8ae3:3249:7454:6f0d]:443: wsarecv: An existing connection was forcibly closed by the remote host.\n",
+          "timed_out": false
+        }
+      },
+      "provider_calls": 0,
+      "forbidden_task_files_read": [],
+      "row_sha256": "4b3dc55bb0a43045df6941a898490d00a09c8ad08016a4510062dd1a0c6f5e80"
+    },
+    {
+      "instance_id": "django__django-16092",
+      "repo": "django/django",
+      "base_commit": "599f3e2cda50ab084915ffd08edb5ad6cad61415",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/django/django",
+        "head": "599f3e2cda50ab084915ffd08edb5ad6cad61415",
+        "base_commit": "599f3e2cda50ab084915ffd08edb5ad6cad61415",
+        "commit_tree_sha": "9078b89144462ffc3f52644b4fd9464853678ec9",
+        "archive_sha256": "8da8fa1940b849b602d71eefb81838c6a85228d636c0f1b23d1bcb130553558b",
+        "archive_bytes": 15110352,
+        "git_fetch_status": "failed_then_github_archive_fallback",
+        "git_fetch_detail": {
+          "exit_code": 128,
+          "stdout": "",
+          "stderr": "fatal: unable to access 'https://github.com/django/django.git/': Failed to connect to github.com:443 after 21043 ms: Could not connect to server\n",
+          "timed_out": false
+        }
+      },
+      "image_identity": {
+        "ready": false,
+        "status": "image_manifest_unavailable",
+        "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest",
+        "digest": null,
+        "detail": {
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "failed to configure transport: error pinging v2 registry: Get \"https://registry-1.docker.io/v2/\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:55769->[2600:1f18:2148:bc02:bd36:ed99:967e:712c]:443: wsarecv: An existing connection was forcibly closed by the remote host.\n",
+          "timed_out": false
+        }
+      },
+      "provider_calls": 0,
+      "forbidden_task_files_read": [],
+      "row_sha256": "20fc4f5c2219df8b37aa5eb53d0da9e53437fab81b3b4a9a56d6500318940a45"
+    }
+  ],
+  "summary_sha256": "2469e91cb8f013b75b08609b25979f1b26f22ce7d0e3836205b3fae1b42941e0"
+}

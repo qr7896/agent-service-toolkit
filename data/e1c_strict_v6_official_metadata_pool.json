@@ -1,0 +1,185 @@
+{
+  "schema": "e1c-strict-v6-official-metadata-pool-v1",
+  "source_repo": "SWE-bench/swe-bench-tasks",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "selection_salt": "e1c-strict-v6-independent-canary",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "forbidden_task_files_read": [],
+  "candidate_limit": 24,
+  "tasks": [
+    {
+      "instance_id": "django__django-15569",
+      "repo": "django/django",
+      "base_commit": "884b4c27f506b3c29d58509fc83a35c30ea10d94",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-15569:latest"
+    },
+    {
+      "instance_id": "django__django-11734",
+      "repo": "django/django",
+      "base_commit": "999891bd80b3d02dd916731a7a239e1036174885",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-11734:latest"
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8638",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "4b452338f914d4f6b54704222d70ae8a746e3db5",
+      "image": "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8638:latest"
+    },
+    {
+      "instance_id": "django__django-14404",
+      "repo": "django/django",
+      "base_commit": "de32fe83a2e4a20887972c69a0693b94eb25a88b",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-14404:latest"
+    },
+    {
+      "instance_id": "django__django-10914",
+      "repo": "django/django",
+      "base_commit": "e7fd69d051eaa67cb17f172a39b57253e9cb831a",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-10914:latest"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12585",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "bfc4a566423e036fbdc9fb02765fd893e4860c85",
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-12585:latest"
+    }
+  ],
+  "field_provenance": {
+    "django__django-15569": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-15569/task.yaml",
+      "task_yaml_blob_sha": null,
+      "task_yaml_sha256": "490e0efc95691167a07ce4e338b8ab55d2ac6c1c20dbf6bb060c7f02f180e2b2",
+      "inventory_source": "swebench_main_resource_zip_names_only",
+      "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "inventory_archive_sha256": "f37bfafc1d11fac345551126eb616ce65dc380e914ee4db6cb8c82622bd8ad66"
+    },
+    "django__django-11734": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-11734/task.yaml",
+      "task_yaml_blob_sha": null,
+      "task_yaml_sha256": "4bd3e713a8d60d27025c2cd7222b4ac64e66029bfd75b1c83859c33f63a68546",
+      "inventory_source": "swebench_main_resource_zip_names_only",
+      "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "inventory_archive_sha256": "f37bfafc1d11fac345551126eb616ce65dc380e914ee4db6cb8c82622bd8ad66"
+    },
+    "sphinx-doc__sphinx-8638": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/sphinx-doc__sphinx-8638/task.yaml",
+      "task_yaml_blob_sha": null,
+      "task_yaml_sha256": "f45c115db49aa876b23a0a3b2999e8885ce8e9331e264404a93513a98d2c14cd",
+      "inventory_source": "swebench_main_resource_zip_names_only",
+      "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "inventory_archive_sha256": "f37bfafc1d11fac345551126eb616ce65dc380e914ee4db6cb8c82622bd8ad66"
+    },
+    "django__django-14404": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-14404/task.yaml",
+      "task_yaml_blob_sha": null,
+      "task_yaml_sha256": "56a43a27b56aa6f3d49028db1c88cf7921179c5413799af8b9d073deca091ffd",
+      "inventory_source": "swebench_main_resource_zip_names_only",
+      "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "inventory_archive_sha256": "f37bfafc1d11fac345551126eb616ce65dc380e914ee4db6cb8c82622bd8ad66"
+    },
+    "django__django-10914": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/django__django-10914/task.yaml",
+      "task_yaml_blob_sha": null,
+      "task_yaml_sha256": "9818cadf4d030200697d1d358a2de8144e8295dc9e5119bbad38e463381e5e28",
+      "inventory_source": "swebench_main_resource_zip_names_only",
+      "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "inventory_archive_sha256": "f37bfafc1d11fac345551126eb616ce65dc380e914ee4db6cb8c82622bd8ad66"
+    },
+    "scikit-learn__scikit-learn-12585": {
+      "source_repo": "SWE-bench/swe-bench-tasks",
+      "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-12585/task.yaml",
+      "task_yaml_blob_sha": null,
+      "task_yaml_sha256": "10553bdb9a3c40ea7b6798809414d1f5b1154e149fff7e2ab0c81c2250f6a0f8",
+      "inventory_source": "swebench_main_resource_zip_names_only",
+      "inventory_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "inventory_archive_sha256": "f37bfafc1d11fac345551126eb616ce65dc380e914ee4db6cb8c82622bd8ad66"
+    }
+  },
+  "fetch_errors": [
+    {
+      "instance_id": "django__django-15572",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-15252",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-9296",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-11163",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "sympy__sympy-22456",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-15382",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "pydata__xarray-6461",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-25102",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25479",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-15037",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-13401",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "sympy__sympy-24066",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7440",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-17084",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-12050",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-14771",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "django__django-13417",
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7490",
+      "reason": "TimeoutError: The read operation timed out"
+    }
+  ],
+  "pool_sha256": "dc7682110cd3f5e1a765eaf69b0e7d4e9dcc1c850cd3a12ac71df19f6642a4a0"
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "e1c-strict-v9-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "identity_certificate": {
+    "ready": true,
+    "checks": {
+      "manifest_schema": true,
+      "exact_task_count": true,
+      "identity_frozen_before_statement": true,
+      "provider_calls_zero": true,
+      "task_content_inspected_false": true,
+      "mechanism_prereg_matches": true,
+      "prereg_current": true,
+      "boundary_current": true,
+      "unique_nonempty_ids": true
+    },
+    "instance_ids": [
+      "matplotlib__matplotlib-26160",
+      "pydicom__pydicom-1033",
+      "django__django-14404"
+    ]
+  },
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "image_pull_allowed_by_candidate_gate": false,
+  "official_admission_allowed_by_candidate_gate": false,
+  "live_allowed": false,
+  "reason": "seal_pre_live_insufficient_executable_reproducers",
+  "rows": [
+    {
+      "instance_id": "matplotlib__matplotlib-26160",
+      "statement_sha256": "16fb5966c5120f9bc56b9a3feb5891925a923707d72b7841192ff2712fa07354",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "head": "9fdf6adf70819c8d34e9f47eeb8470aea35d78c0",
+        "base_commit": "9fdf6adf70819c8d34e9f47eeb8470aea35d78c0"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v9-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "4177508532666f38619d30d85f36d583d0d3020ac12e0571d210bab0224f93bd"
+      },
+      "provider_calls": 0
+    },
+    {
+      "instance_id": "pydicom__pydicom-1033",
+      "statement_sha256": "df6cf932358bf598112871c46b59cc451ce56cd95d4dc2fbac28dd21f0d8819f",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "head": "701c1062bf66de2b29df68fa5540be6009943885",
+        "base_commit": "701c1062bf66de2b29df68fa5540be6009943885"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v9-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "4177508532666f38619d30d85f36d583d0d3020ac12e0571d210bab0224f93bd"
+      },
+      "provider_calls": 0
+    },
+    {
+      "instance_id": "django__django-14404",
+      "statement_sha256": "87101ebd5be89533b3b13f356058d3e6554d727b307877d77828eb4e0e3e97af",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "head": "de32fe83a2e4a20887972c69a0693b94eb25a88b",
+        "base_commit": "de32fe83a2e4a20887972c69a0693b94eb25a88b"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v9-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "4177508532666f38619d30d85f36d583d0d3020ac12e0571d210bab0224f93bd"
+      },
+      "provider_calls": 0
+    }
+  ],
+  "summary_sha256": "957f3cd8c8ecdcaafca92a856d60ddf535183ef0fd0f1e6f697df0a063643d37"
+}

@@ -1,4 +1,30 @@
-# 🧰 AI Agent Service Toolkit
+# Evidence-driven Coding Agent Research
+
+This is a research fork of [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit).
+The upstream project supplies the LangGraph, FastAPI and Streamlit service foundation.
+This fork adds budgeted code-evidence acquisition, trajectory/experience experiments,
+and auditable offline software-defect evaluation.
+
+**Start here:** [Project overview / 项目总览](docs/PROGRESS_RESEARCH_ROADMAP.md) ·
+[Current roadmap](docs/PROGRESS_RESEARCH_ROADMAP_2.md) ·
+[One-week experiment plan](docs/research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) ·
+[WebCodex handoff](docs/research/NEXT_SESSION_HANDOFF.md).
+
+As of 2026-09-30, evaluation_2 has 4/12 DEV reproductions accepted after semantic review,
+not four autonomous repairs. Its first independent canary scored 1/3, below the 2/3 gate;
+the second is frozen and blocked on authoritative image transport. No new repair or
+Fresh30 result is claimed. Earlier negative results and complete progress histories are
+preserved in the [evidence and workspace index](docs/research/WORKSPACE_REORGANIZATION_2026-09-30.md).
+
+Reviewers can inspect implementation links, experiment denominators and limitations in
+the overview. Generated tests, retrieved evidence, unit-test counts and official repair
+success are reported separately. The proposed next method is a research hypothesis,
+not a claim of established novelty or superior performance.
+
+## Upstream toolkit documentation
+
+The badges, hosted demo and setup guide below describe the upstream toolkit; they are
+not evidence of this fork's research results or CI status.
 
 [![build status](https://github.com/JoshuaC215/agent-service-toolkit/actions/workflows/test.yml/badge.svg)](https://github.com/JoshuaC215/agent-service-toolkit/actions/workflows/test.yml) [![codecov](https://codecov.io/github/JoshuaC215/agent-service-toolkit/graph/badge.svg?token=5MTJSYWD05)](https://codecov.io/github/JoshuaC215/agent-service-toolkit) [![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2FJoshuaC215%2Fagent-service-toolkit%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)](https://github.com/JoshuaC215/agent-service-toolkit/blob/main/pyproject.toml)
 [![GitHub License](https://img.shields.io/github/license/JoshuaC215/agent-service-toolkit)](https://github.com/JoshuaC215/agent-service-toolkit/blob/main/LICENSE) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_red.svg)](https://agent-service-toolkit.streamlit.app/)

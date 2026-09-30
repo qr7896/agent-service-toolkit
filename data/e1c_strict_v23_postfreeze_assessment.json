@@ -1,0 +1,162 @@
+{
+  "schema": "e1c-strict-v23-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "mechanism_prereg_sha256": "5a517906a52f8e482d81172782f96fe938c37c0f6ac7e6fc335fc573290b2dbc",
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 1,
+  "executable_candidate_task_count": 1,
+  "consensus_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "rows": [
+    {
+      "instance_id": "django__django-14291",
+      "statement_sha256": "fd66dc8d73fdf515f9ac03700e35da60d9fe6ded7f943678b8b1acab43ce050c",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/django/django",
+        "head": "5c73fbb6a93ee214678f02ba4027f18dff49337b",
+        "base_commit": "5c73fbb6a93ee214678f02ba4027f18dff49337b",
+        "archive_sha256": "5a9f2973de5bbc740b8c156094889bfa90ffe272165925b7eeecfdb217a502f4",
+        "archive_bytes": 14844993
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "consensus_path_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v23-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "consensus_path_count": 0,
+        "consensus_paths": {},
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "41945f198eb12329eca332705acb3c0031158d7c2fbb8df1901ffcf85b3cf27f"
+      }
+    },
+    {
+      "instance_id": "django__django-16517",
+      "statement_sha256": "a98f334f1da66f615ed82fa31aac08f5f2f45346d70802b6a931bcb12a53fbc6",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/django/django",
+        "head": "c626173833784c86920b448793ac45005af4c058",
+        "base_commit": "c626173833784c86920b448793ac45005af4c058",
+        "archive_sha256": "bc265b9dba7bc2d658a2237b24bf35edfe6cfde46e63d3578bd71da89eafc6b7",
+        "archive_bytes": 15422654
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "consensus_path_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v23-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "consensus_path_count": 0,
+        "consensus_paths": {},
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "41945f198eb12329eca332705acb3c0031158d7c2fbb8df1901ffcf85b3cf27f"
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-3338",
+      "statement_sha256": "fb8995fcfafe9b58220da1b88114e9d97dc487ee28e17100d4a042d502ade21a",
+      "source": {
+        "ready": true,
+        "status": "github_archive_materialized",
+        "repo_url": "https://github.com/pydata/xarray",
+        "head": "3f0049ffc51e4c709256cf174c435f741370148d",
+        "base_commit": "3f0049ffc51e4c709256cf174c435f741370148d",
+        "archive_sha256": "6cb99c7752ed7696b0ea4399a27a893055756da14bc3ccfa2247f533809f4289",
+        "archive_bytes": 3053163
+      },
+      "projection_status": "supported",
+      "candidate_count": 3,
+      "executable_candidate_count": 3,
+      "consensus_path_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v23-candidate-plan-v1",
+        "candidate_count": 3,
+        "executable_candidate_count": 3,
+        "consensus_path_count": 0,
+        "consensus_paths": {},
+        "status": "no_executable_reproducer",
+        "candidates": [
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "Dataset",
+              "candidate_path": "xarray/core/dataset.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "5af8e6782338b27a7cbfa9a8ccc80770585b220255a222dea493e3350235128f"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "groupby",
+              "candidate_path": "xarray/core/common.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "0372ed12c7935a93c1d31c8ca7212cfb3b500757a04bb79d6a793e47053f5eba"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "peek_at",
+              "candidate_path": "xarray/core/utils.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "1c213e247aefdeb5913bcc3371e8259251303a9ae95edb487df15be0e2d1a6c4"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "d7a828f88f0a64a1b55c27468d4c7060ddb96956a9ac49695055fbb943a4ad1d"
+      }
+    }
+  ],
+  "summary_sha256": "0bb2eddd03c205ab8b95bf8b8359ee71b7eeb42fb48d6df9475e043f6bd7ea84"
+}

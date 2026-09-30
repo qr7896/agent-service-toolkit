@@ -1,0 +1,37 @@
+{
+  "schema": "e1c-strict-v5-infra-gate-v1",
+  "ready": false,
+  "reason": "official_transport_not_budget_admissible",
+  "next_action": "bounded_transport_preflight_only",
+  "pull_timeout_seconds": 900,
+  "full_pull_allowed": false,
+  "local_official_images_ready": false,
+  "missing_instance_ids": [
+    "pydata__xarray-3993",
+    "django__django-16092"
+  ],
+  "latest_blob_preflight_ready": false,
+  "latest_blob_preflight_reason": "blob_transport_gate_incomplete",
+  "latest_blob_checked_count": 1,
+  "transport_trend_state": "repeated_budget_incompatible",
+  "transport_recheck_information_gain_likely": false,
+  "transport_trend_diagnostic_only": true,
+  "transport_trend_changes_admission_gate": false,
+  "cache_budget_diagnostic_only": true,
+  "cache_budget_changes_admission_gate": false,
+  "cache_budget_minimum_required_bytes_per_second": 2244749,
+  "cache_budget_minimum_required_megabytes_per_second": 2.245,
+  "authoritative_ready_count": 2,
+  "mirror_equivalent_count": 0,
+  "mirror_mismatch_count": 2,
+  "mirror_mismatch_instance_ids": [
+    "sympy__sympy-15308",
+    "django__django-16092"
+  ],
+  "mirror_route_conclusively_closed": true,
+  "mirror_pull_allowed": false,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false
+}

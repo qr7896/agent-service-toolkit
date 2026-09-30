@@ -1,0 +1,140 @@
+{
+  "schema": "e1c-strict-v24-development-replay-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "independent_evidence": false,
+  "task_count": 6,
+  "candidate_task_count": 6,
+  "executable_candidate_task_count": 6,
+  "consensus_candidate_task_count": 6,
+  "total_consensus_family_support": 16,
+  "minimum_consensus_family_support_per_task": 2,
+  "rows": [
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "django__django-15569",
+      "candidate_count": 5,
+      "executable_candidate_count": 4,
+      "candidate_origins": [
+        "projected_issue_state_relation",
+        "should_clear_claim",
+        "generic_behavior_clause",
+        "confidence_checked_clause_symbol_binding",
+        "unique_localized_symbol_corroboration"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "django/db/models/query_utils.py": [
+          "behavioral",
+          "semantic_localization",
+          "structural"
+        ]
+      },
+      "full_source_used": false
+    },
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "django__django-11734",
+      "candidate_count": 5,
+      "executable_candidate_count": 4,
+      "candidate_origins": [
+        "projected_issue_python_scenario",
+        "confidence_checked_clause_symbol_binding",
+        "confidence_checked_clause_symbol_binding",
+        "unique_localized_symbol_corroboration",
+        "unique_localized_symbol_corroboration"
+      ],
+      "consensus_path_count": 2,
+      "consensus_paths": {
+        "django/db/models/query.py": [
+          "semantic_localization",
+          "structural"
+        ],
+        "django/db/models/expressions.py": [
+          "semantic_localization",
+          "structural"
+        ]
+      },
+      "full_source_used": false
+    },
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "sphinx-doc__sphinx-8638",
+      "candidate_count": 3,
+      "executable_candidate_count": 3,
+      "candidate_origins": [
+        "structural_reference_binding",
+        "multi_evidence_structural_binding",
+        "unique_localized_symbol_corroboration"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "sphinx/project.py": [
+          "semantic_localization",
+          "structural"
+        ]
+      },
+      "full_source_used": false
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "full_source_used": true,
+      "candidate_count": 4,
+      "executable_candidate_count": 4,
+      "candidate_origins": [
+        "never_used_claim",
+        "unique_localized_symbol_corroboration",
+        "explicit_issue_callable_binding",
+        "explicit_issue_callable_binding"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "sklearn/utils/estimator_checks.py": [
+          "behavioral",
+          "semantic_localization",
+          "structural"
+        ]
+      }
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "django__django-13233",
+      "full_source_used": true,
+      "candidate_count": 3,
+      "executable_candidate_count": 3,
+      "candidate_origins": [
+        "generic_relation_clause",
+        "issue_noun_bounded_full_source_assignment",
+        "explicit_issue_ownership_clause_binding"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "django/db/models/fields/__init__.py": [
+          "semantic_localization",
+          "structural"
+        ]
+      }
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "django__django-15995",
+      "full_source_used": true,
+      "candidate_count": 3,
+      "executable_candidate_count": 3,
+      "candidate_origins": [
+        "confidence_checked_clause_symbol_binding",
+        "explicit_issue_callable_binding",
+        "explicit_callable_issue_type_corroboration"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "django/db/models/fields/related_descriptors.py": [
+          "semantic_localization",
+          "structural"
+        ]
+      }
+    }
+  ],
+  "summary_sha256": "765384070297ffd3bd7da3833dde55a54c4aeba688ac4b4f482edf2a3b46076c"
+}

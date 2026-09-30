@@ -1,0 +1,143 @@
+{
+  "schema": "e1c-strict-v7-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "identity_certificate": {
+    "ready": true,
+    "reason": "strict_v7_identity_certified",
+    "checks": {
+      "manifest_schema": true,
+      "exact_task_count": true,
+      "identity_frozen_before_statement": true,
+      "provider_calls_zero": true,
+      "task_content_inspected_false": true,
+      "mechanism_prereg_matches": true,
+      "prereg_current": true,
+      "boundary_current": true,
+      "unique_nonempty_ids": true
+    },
+    "instance_ids": [
+      "scikit-learn__scikit-learn-13313",
+      "django__django-13233",
+      "django__django-15995"
+    ],
+    "manifest_sha256": "2b576ebf9fefb3cf6e8df99947ed6966924aa6d40ccb73b6a48dde48392c931f",
+    "prereg_file_sha256": "af21589b9f16c7d895d2fbee9343c7d2a89c50bf4f992d9591aac9cc3038365e",
+    "boundary_file_sha256": "8aa2a35825182489c44e7f6570ad87775a54b5ee159ab44ee0c7baba17f9bfc9"
+  },
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "typed_candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "image_pull_allowed_by_candidate_gate": false,
+  "official_admission_allowed_by_candidate_gate": false,
+  "live_allowed": false,
+  "reason": "seal_pre_live_insufficient_executable_reproducers",
+  "rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "statement_sha256": "985eb1cac023e09f640b8e7e6a7edaa4eb0f9878cd90fc0b7eeaacd5a37887c5",
+      "statement_path": ".codex/e1c/strict-v7/postfreeze-v1/scikit-learn__scikit-learn-13313/problem_statement.md",
+      "source": {
+        "ready": true,
+        "status": "already_materialized",
+        "repo_url": "https://github.com/scikit-learn/scikit-learn.git",
+        "head": "cdfca8cba33be63ef50ba9e14d8823cc551baf92",
+        "base_commit": "cdfca8cba33be63ef50ba9e14d8823cc551baf92"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "typed_candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v7-typed-witness-plan-v1",
+        "status": "no_executable_reproducer",
+        "typed_candidates": [],
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "trusted_reproducer": false,
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "2746a19bddaf05a5632b0074dfc68c22e8126d285ed7489afc6134bc80b26056"
+      },
+      "provider_calls": 0,
+      "live_model_run": false,
+      "forbidden_task_files_read": []
+    },
+    {
+      "instance_id": "django__django-13233",
+      "statement_sha256": "6eee98ddd7e87e282723ac00470b248f907f288c884725b2521099894ba70110",
+      "statement_path": ".codex/e1c/strict-v7/postfreeze-v1/django__django-13233/problem_statement.md",
+      "source": {
+        "ready": true,
+        "status": "already_materialized",
+        "repo_url": "https://github.com/django/django.git",
+        "head": "41065cfed56d5408dd8f267b9e70089471a7f1be",
+        "base_commit": "41065cfed56d5408dd8f267b9e70089471a7f1be"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "typed_candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v7-typed-witness-plan-v1",
+        "status": "no_executable_reproducer",
+        "typed_candidates": [],
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "trusted_reproducer": false,
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "2746a19bddaf05a5632b0074dfc68c22e8126d285ed7489afc6134bc80b26056"
+      },
+      "provider_calls": 0,
+      "live_model_run": false,
+      "forbidden_task_files_read": []
+    },
+    {
+      "instance_id": "django__django-15995",
+      "statement_sha256": "8f8cbcccb4cfa62132d5d260aeb72d6c695b2c23d9065eb924529697cfb6f7d9",
+      "statement_path": ".codex/e1c/strict-v7/postfreeze-v1/django__django-15995/problem_statement.md",
+      "source": {
+        "ready": true,
+        "status": "materialized",
+        "repo_url": "https://github.com/django/django.git",
+        "head": "0701bb8e1f1771b36cdde45602ad377007e372b3",
+        "base_commit": "0701bb8e1f1771b36cdde45602ad377007e372b3",
+        "fetch": {
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "From https://github.com/django/django\n * branch            0701bb8e1f1771b36cdde45602ad377007e372b3 -> FETCH_HEAD\n",
+          "timed_out": false
+        },
+        "checkout": {
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "HEAD is now at 0701bb8 Fixed #33928 -- Avoided unnecessary queries when cascade updating.\n",
+          "timed_out": false
+        }
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "typed_candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v7-typed-witness-plan-v1",
+        "status": "no_executable_reproducer",
+        "typed_candidates": [],
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "trusted_reproducer": false,
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "2746a19bddaf05a5632b0074dfc68c22e8126d285ed7489afc6134bc80b26056"
+      },
+      "provider_calls": 0,
+      "live_model_run": false,
+      "forbidden_task_files_read": []
+    }
+  ],
+  "summary_sha256": "23c3c3bd973a3de1850f4aa07768eec13f84c3cb001b5ce3e60541e24de3c1e8"
+}

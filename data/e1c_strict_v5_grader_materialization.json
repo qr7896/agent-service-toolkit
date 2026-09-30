@@ -1,0 +1,152 @@
+{
+  "schema": "e1c-strict-v5-grader-materialization-v1",
+  "ready": true,
+  "reason": "grader_artifacts_materialized",
+  "provider_calls": 0,
+  "repair_visible": false,
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "grader_only_path": "D:/codex/working/project20260827/.codex/e1c/strict-v5/grader-only-v1/pydata__xarray-3993",
+      "repair_visible": false,
+      "files": [
+        {
+          "name": "tests.json",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 209125,
+          "sha256": "a283634aee03ee6f58c9c5d83be3b41dcf4e979bbcb145d6cac73cd31e1dbda7",
+          "blob_sha": null
+        },
+        {
+          "name": "gold.patch",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 4058,
+          "sha256": "71416a1368862b9d068eab21976cb76e9d127f4d5596a1bffe21dd34eb32f5b8",
+          "blob_sha": null
+        },
+        {
+          "name": "test.patch",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 1002,
+          "sha256": "0b2e7ba69982a93171bb6a5245e6fd80e8aab2463bcb96b56a13187fc521710a",
+          "blob_sha": null
+        },
+        {
+          "name": "eval.sh",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 1739,
+          "sha256": "6ea898d3e9ca463b34a38c7128a14b676ef082950cae6ca4d93919efe55ce413",
+          "blob_sha": null
+        },
+        {
+          "name": "Dockerfile",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 13153,
+          "sha256": "4d7c7fba5cc586382c99a8f2632400d66ee2ccb48a28460ec97ed6f6de51dbde",
+          "blob_sha": null
+        }
+      ]
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "grader_only_path": "D:/codex/working/project20260827/.codex/e1c/strict-v5/grader-only-v1/sympy__sympy-15308",
+      "repair_visible": false,
+      "files": [
+        {
+          "name": "tests.json",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 3303,
+          "sha256": "550ee98191fb8ca378b196e2d191300234aa66db893aef2e264c5d9b7aea90d0",
+          "blob_sha": null
+        },
+        {
+          "name": "gold.patch",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 837,
+          "sha256": "60e9321558d3f95f1e5aeccd5159ef124c4310979668ff99d490bf485ace9034",
+          "blob_sha": null
+        },
+        {
+          "name": "test.patch",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 1449,
+          "sha256": "d108bb2ab77c476532d5d9a806ee3700c413546e711463387ee7e6384715f6ca",
+          "blob_sha": null
+        },
+        {
+          "name": "eval.sh",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 2193,
+          "sha256": "7f8d8a15a480ae52826201030cef75546e5cd97bf7f1081b8887158ed08d480a",
+          "blob_sha": null
+        },
+        {
+          "name": "Dockerfile",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 3276,
+          "sha256": "60d5b7b0b2b1ca6c90536cff5ccd2afe1d00b7ebef9fcdfb7f7a6dbf5f4dc33e",
+          "blob_sha": null
+        }
+      ]
+    },
+    {
+      "instance_id": "django__django-16092",
+      "grader_only_path": "D:/codex/working/project20260827/.codex/e1c/strict-v5/grader-only-v1/django__django-16092",
+      "repair_visible": false,
+      "files": [
+        {
+          "name": "tests.json",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 57720,
+          "sha256": "e8e3fe94740d6df2aaa9c4af3d7fb7bac1e6d6d04e8fce43834ad7178a231c81",
+          "blob_sha": null
+        },
+        {
+          "name": "gold.patch",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 29500,
+          "sha256": "e57fc8b09590972f556afcb0e525055fcdca94b0386bb326830500248fc81d3f",
+          "blob_sha": null
+        },
+        {
+          "name": "test.patch",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 39930,
+          "sha256": "038130ca65ce3447f998a5446e62737f8a8e4e6b5cf8d5bf34d781dc8a22276e",
+          "blob_sha": null
+        },
+        {
+          "name": "eval.sh",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 41320,
+          "sha256": "051bbe539ecb47492b65af98218d6b0098f4e729851fe0556e285505b0500631",
+          "blob_sha": null
+        },
+        {
+          "name": "Dockerfile",
+          "present": true,
+          "status": "already_materialized",
+          "bytes": 4431,
+          "sha256": "91fa39bba3d29c75c37097b495d768a6d170419dd3a6c6d1c548f3ec31276dea",
+          "blob_sha": null
+        }
+      ]
+    }
+  ],
+  "summary_sha256": "b0fa4107176f9103ca4a87d8f7450f3c8b15ad16d750c3c8343f23ad5296ea36"
+}

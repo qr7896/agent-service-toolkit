@@ -1,0 +1,115 @@
+{
+  "schema": "e1c-strict-v8-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "identity_certificate": {
+    "ready": true,
+    "checks": {
+      "manifest_schema": true,
+      "exact_task_count": true,
+      "identity_frozen_before_statement": true,
+      "provider_calls_zero": true,
+      "task_content_inspected_false": true,
+      "mechanism_prereg_matches": true,
+      "prereg_current": true,
+      "boundary_current": true,
+      "unique_nonempty_ids": true
+    },
+    "instance_ids": [
+      "django__django-14071",
+      "scikit-learn__scikit-learn-13536",
+      "scikit-learn__scikit-learn-13641"
+    ]
+  },
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 0,
+  "executable_candidate_task_count": 0,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "image_pull_allowed_by_candidate_gate": false,
+  "official_admission_allowed_by_candidate_gate": false,
+  "live_allowed": false,
+  "reason": "seal_pre_live_insufficient_executable_reproducers",
+  "rows": [
+    {
+      "instance_id": "django__django-14071",
+      "statement_sha256": "eb58134f1e95d37c5144369dc54c029f05bc6a2bbff4bdaa8e57d605334e530a",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "repo_url": "https://github.com/django/django",
+        "head": "a9cf954e6174450057ea1065aa2ccbbd12f59b65",
+        "base_commit": "a9cf954e6174450057ea1065aa2ccbbd12f59b65"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e"
+      },
+      "provider_calls": 0
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13536",
+      "statement_sha256": "bcd796ce353b821b153ac06cf805b31a95bdf0cec5476af955eb13c0c7366b71",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "repo_url": "https://github.com/scikit-learn/scikit-learn",
+        "head": "c863ed3d57e3b5ceeb4e7e8001c96aad7110c605",
+        "base_commit": "c863ed3d57e3b5ceeb4e7e8001c96aad7110c605"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e"
+      },
+      "provider_calls": 0
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13641",
+      "statement_sha256": "d943b8a75784e6bf49871dc76a696e6a8f1990caf987d926093556b7b3952ee5",
+      "source": {
+        "ready": true,
+        "status": "already_materialized_archive",
+        "repo_url": "https://github.com/scikit-learn/scikit-learn",
+        "head": "badaa153e67ffa56fb1a413b3b7b5b8507024291",
+        "base_commit": "badaa153e67ffa56fb1a413b3b7b5b8507024291"
+      },
+      "projection_status": "supported",
+      "projection_error": null,
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e"
+      },
+      "provider_calls": 0
+    }
+  ],
+  "summary_sha256": "54514349049da98077256462d534f30666155473c39f908321d64c75a1dd5629"
+}

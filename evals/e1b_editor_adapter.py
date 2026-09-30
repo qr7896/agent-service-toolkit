@@ -1,10 +1,16 @@
 import json
 
-SYSTEM = 'You are an autonomous code editor in an evaluation sandbox. Return JSON only, exactly {"patch": {"relative/path.py": "complete replacement content"}}. Use only the task and evidence supplied. Do not modify tests. Do not use or request gold answers. Make the smallest repair consistent with the problem statement and visible code.'
+SYSTEM = 'You are an autonomous code editor in an evaluation sandbox. Return JSON only, exactly {"patch": {"relative/path.py": "complete replacement content"}}. Use only the task and evidence supplied. Do not modify tests. Do not use or request gold answers. Make the smallest repair consistent with the problem statement and visible code. Before answering, check every supplied evidence item, identify every visible file whose current content must change for the stated behavior, preserve behavior not contradicted by the task, and include all required files in one patch rather than stopping after the first plausible edit.'
+REVIEW_SYSTEM = 'You are the final patch reviewer in an evaluation sandbox. Return JSON only, exactly {"patch": {"relative/path.py": "complete replacement content"}}. You receive the public task, the same bounded evidence, and a candidate patch. Do not use or request tests, grader output, or gold answers. Check the candidate against the problem statement and every visible evidence item, correct missing companion-file edits, incorrect state/value mappings, async error handling, and regressions implied by the visible code, then return the smallest complete corrected patch.'
 
 
 def build_messages(payload):
     return [("system", SYSTEM), ("human", json.dumps(payload, ensure_ascii=False))]
+
+
+def build_review_messages(payload, candidate_patch):
+    review_payload = {"task": payload, "candidate_patch": candidate_patch}
+    return [("system", REVIEW_SYSTEM), ("human", json.dumps(review_payload, ensure_ascii=False))]
 
 
 def content_text(response):

@@ -1,0 +1,229 @@
+{
+  "schema": "e1c-strict-v8-development-replay-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "independent_evidence": false,
+  "may_open_c5": false,
+  "may_open_dev30": false,
+  "may_open_fresh30": false,
+  "task_count": 6,
+  "candidate_task_count": 3,
+  "executable_candidate_task_count": 2,
+  "source_witness_task_count": 2,
+  "source_base_fail_task_count": 2,
+  "rows": [
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "django__django-15569",
+      "candidate_count": 2,
+      "executable_candidate_count": 1,
+      "source_results": [
+        {
+          "witness_sha256": "1744d6c9c0e22c5fdce02027056378bd77e810cdf061ab043d3caa414d1312cd",
+          "origin": "should_clear_claim",
+          "result": {
+            "schema": "e1c-strict-v8-source-effect-result-v1",
+            "symbol": "_unregister_lookup",
+            "candidate_path": "django/db/models/query_utils.py",
+            "predicate": "has_clear_or_invalidate_effect",
+            "matched_effects": [],
+            "passed": false,
+            "reason": "clear_or_invalidate_effect_missing",
+            "result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed"
+          }
+        }
+      ],
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 2,
+        "executable_candidate_count": 1,
+        "status": "candidate_executable_witnesses",
+        "candidates": [
+          {
+            "origin": "projected_issue_state_relation",
+            "execution_ready": false,
+            "freeze": {
+              "schema": "e1c-strict-v7-witness-freeze-v1",
+              "status": "candidate",
+              "reason": "safe_typed_witness",
+              "witness": {
+                "kind": "state_transition",
+                "source": "_unregister_lookup()\n",
+                "observable": "postcondition:clear:lookup cache",
+                "candidate_path": "django/db/models/query_utils.py",
+                "provenance": "projected_issue_plus_production_localization",
+                "benchmark_assertion_used": false,
+                "task_id_used": false,
+                "schema": "e1c-strict-v7-witness-ir-v1",
+                "witness_sha256": "0e9975a1e2e13e28b3fee9eff735f4172f68e12a5bca8636d9c043266b7c8f74"
+              },
+              "freeze_sha256": "1188f3fc22f59aa2252317dc41b82e22d048acf156507d2fa7a241ae92d9ec39"
+            },
+            "row_sha256": "724ce61a170751e56f245b8bfb77d5318bf508df96bb340b80bb43549400ecfc"
+          },
+          {
+            "execution_ready": true,
+            "origin": "should_clear_claim",
+            "witness": {
+              "kind": "source_effect",
+              "symbol": "_unregister_lookup",
+              "predicate": "has_clear_or_invalidate_effect",
+              "candidate_path": "django/db/models/query_utils.py",
+              "provenance": "projected_issue_plus_production_localization",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "schema": "e1c-strict-v8-source-contract-v1",
+              "witness_sha256": "1744d6c9c0e22c5fdce02027056378bd77e810cdf061ab043d3caa414d1312cd"
+            }
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "a4ecf557c06e3d78c38886bcba08c264c9c742b2e0216d3bac2dde592cd7d429"
+      }
+    },
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "django__django-11734",
+      "candidate_count": 1,
+      "executable_candidate_count": 0,
+      "source_results": [],
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 1,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [
+          {
+            "origin": "projected_issue_python_scenario",
+            "execution_ready": false,
+            "freeze": {
+              "schema": "e1c-strict-v7-witness-freeze-v1",
+              "status": "candidate",
+              "reason": "safe_typed_witness",
+              "witness": {
+                "kind": "python_scenario",
+                "source": "# filter()\nqs = Number.objects.annotate(\n\tfoo=Exists(\n\t\tItem.objects.filter(tags__category_id=OuterRef('pk'))\n\t)\n).filter(foo=True)\nprint(qs) # works\n# exclude()\nqs = Number.objects.annotate(\n\tfoo =Exists(\n\t\tItem.objects.exclude(tags__category_id=OuterRef('pk'))\n\t)\n).filter(foo=True)\nprint(qs) # crashes\n# filter(~Q())\nqs = Number.objects.annotate(\n\tfoo =Exists(\n\t\tItem.objects.filter(~Q(tags__category_id=OuterRef('pk')))\n\t)\n).filter(foo=True)\nprint(qs) # crashes\n",
+                "observable": "scenario_exit_code == 0",
+                "candidate_path": "django/db/models/expressions.py",
+                "provenance": "projected_issue_plus_production_localization",
+                "benchmark_assertion_used": false,
+                "task_id_used": false,
+                "schema": "e1c-strict-v7-witness-ir-v1",
+                "witness_sha256": "ac32193cfc9cf8ff2dbb203175e32f4341c22fd6e37ac0f8d6976ff5483d3cbd"
+              },
+              "freeze_sha256": "0e1e9cf7ded015c4bf92b01262542dd29da4d0d67fdc1afdfc4368b5395310e9"
+            },
+            "row_sha256": "9f3e88c738aecebd2ee3556605508722c6d1ca4d56afa7569d18968266c8d3f3"
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "e12e33f87255135d6188849a0950449f852b1d4ff39b1c843eef040a86377be9"
+      }
+    },
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "sphinx-doc__sphinx-8638",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "source_results": [],
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e"
+      }
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "candidate_count": 1,
+      "executable_candidate_count": 1,
+      "source_results": [
+        {
+          "witness_sha256": "f145d8cc226237232df78fb214e16abebe000cf498da2e8f71fd3430472c4a88",
+          "origin": "never_used_claim",
+          "result": {
+            "schema": "e1c-strict-v8-source-usage-result-v1",
+            "symbol": "check_class_weight_balanced_classifiers",
+            "candidate_path": "sklearn/utils/estimator_checks.py",
+            "predicate": "has_external_call_or_registration",
+            "definition_count": 1,
+            "external_call_count": 0,
+            "external_registration_count": 0,
+            "passed": false,
+            "sample_calls": [],
+            "sample_registrations": [],
+            "result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526"
+          }
+        }
+      ],
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 1,
+        "executable_candidate_count": 1,
+        "status": "candidate_executable_witnesses",
+        "candidates": [
+          {
+            "execution_ready": true,
+            "origin": "never_used_claim",
+            "witness": {
+              "kind": "source_usage",
+              "symbol": "check_class_weight_balanced_classifiers",
+              "predicate": "has_external_call_or_registration",
+              "candidate_path": "sklearn/utils/estimator_checks.py",
+              "provenance": "projected_issue_plus_production_localization",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "schema": "e1c-strict-v8-source-contract-v1",
+              "witness_sha256": "f145d8cc226237232df78fb214e16abebe000cf498da2e8f71fd3430472c4a88"
+            }
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "e7c87547e33dc875d711e99ba1ade189d68d05a2046f4a9fc270b3dec069911f"
+      }
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "django__django-13233",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "source_results": [],
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e"
+      }
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "django__django-15995",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "source_results": [],
+      "plan": {
+        "schema": "e1c-strict-v8-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "b1474da33e2deb280e9771a874315b1bc7f88160375cac8c691f712a91c9134e"
+      }
+    }
+  ],
+  "summary_sha256": "acd6099066bd1f30074a9fe635277271e06e1f753fe828af994a4f0e13af3440"
+}

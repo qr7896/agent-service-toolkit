@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v15-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v15-independent-canary",
+  "mechanism_prereg_sha256": "3154d3f29ba58041c87e1a32d1aa3848f3639dd318a11169472f18129e1f87af",
+  "tasks": [
+    {
+      "instance_id": "django__django-13512",
+      "repo": "django/django",
+      "base_commit": "b79088306513d5ed76d31ac40ab3c15f858946ea",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-13512:latest"
+    },
+    {
+      "instance_id": "astropy__astropy-7671",
+      "repo": "astropy/astropy",
+      "base_commit": "a7141cd90019b62688d507ae056298507678c058",
+      "image": "swebench/sweb.eval.x86_64.astropy_1776_astropy-7671:latest"
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5631",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "cb828ebe70b4fa35cd5f9a7ee024272237eab351",
+      "image": "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5631:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

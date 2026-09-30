@@ -1,0 +1,286 @@
+{
+  "schema": "e1c-strict-v9-exposed-v7-projection-cache-v1",
+  "provider_calls": 0,
+  "development_only": true,
+  "rows": {
+    "scikit-learn__scikit-learn-13313": {
+      "issue": "check_class_weight_balanced_classifiers is never run?!\n\n> git grep check_class_weight_balanced_classifiers\n\nsklearn/utils/estimator_checks.py:def check_class_weight_balanced_classifiers(name, Classifier, X_train, y_train,\n\nSame for ``check_class_weight_balanced_linear_classifier``",
+      "localization": {
+        "schema": "e1c-strict-v5-localization-v1",
+        "candidate_paths": [
+          "sklearn/utils/estimator_checks.py",
+          "sklearn/utils/estimator_checks.py",
+          "sklearn/utils/estimator_checks.py",
+          "sklearn/utils/estimator_checks.py",
+          "sklearn/utils/estimator_checks.py",
+          "sklearn/utils/estimator_checks.py"
+        ],
+        "candidates": [
+          {
+            "path": "sklearn/utils/estimator_checks.py",
+            "symbol": "check_class_weight_balanced_classifiers",
+            "start_line": 1939,
+            "end_line": 1969,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "8d6c4a0719d86747f4d2d4c5a14e95017f2c559cfdf3c8ae0fa51e960436082a",
+            "read_cost": 1339,
+            "rank": 1,
+            "text": "        # XXX: Generally can use 0.89 here. On Windows, LinearSVC gets\n        #      0.88 (Issue #9111)\n        assert_greater(np.mean(y_pred == 0), 0.87)\n\n\n@ignore_warnings(category=(DeprecationWarning, FutureWarning))\ndef check_class_weight_balanced_classifiers(name, classifier_orig, X_train,\n                                            y_train, X_test, y_test, weights):\n    classifier = clone(classifier_orig)\n    if hasattr(classifier, \"n_iter\"):\n        classifier.set_params(n_iter=100)\n    if hasattr(classifier, \"max_iter\"):\n        classifier.set_params(max_iter=1000)\n\n    set_random_state(classifier)\n    classifier.fit(X_train, y_train)\n    y_pred = classifier.predict(X_test)\n\n    classifier.set_params(class_weight='balanced')\n    classifier.fit(X_train, y_train)\n    y_pred_balanced = classifier.predict(X_test)\n    assert_greater(f1_score(y_test, y_pred_balanced, average='weighted'),\n                   f1_score(y_test, y_pred, average='weighted'))\n\n\n@ignore_warnings(category=(DeprecationWarning, FutureWarning))\ndef check_class_weight_balanced_linear_classifier(name, Classifier):\n    \"\"\"Test class weights with non-contiguous class labels.\"\"\"\n    # this is run on classes, not instances, though this should be changed\n    X = np.array([[-1.0, -1.0], [-1.0, 0], [-.8, -1.0],\n                  [1.0, 1.0], [1.0, 0.0]])"
+          },
+          {
+            "path": "sklearn/utils/estimator_checks.py",
+            "symbol": "check_class_weight_balanced_linear_classifier",
+            "start_line": 1959,
+            "end_line": 2003,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "8d6c4a0719d86747f4d2d4c5a14e95017f2c559cfdf3c8ae0fa51e960436082a",
+            "read_cost": 1791,
+            "rank": 2,
+            "text": "    y_pred_balanced = classifier.predict(X_test)\n    assert_greater(f1_score(y_test, y_pred_balanced, average='weighted'),\n                   f1_score(y_test, y_pred, average='weighted'))\n\n\n@ignore_warnings(category=(DeprecationWarning, FutureWarning))\ndef check_class_weight_balanced_linear_classifier(name, Classifier):\n    \"\"\"Test class weights with non-contiguous class labels.\"\"\"\n    # this is run on classes, not instances, though this should be changed\n    X = np.array([[-1.0, -1.0], [-1.0, 0], [-.8, -1.0],\n                  [1.0, 1.0], [1.0, 0.0]])\n    y = np.array([1, 1, 1, -1, -1])\n\n    classifier = Classifier()\n\n    if hasattr(classifier, \"n_iter\"):\n        # This is a very small dataset, default n_iter are likely to prevent\n        # convergence\n        classifier.set_params(n_iter=1000)\n    if hasattr(classifier, \"max_iter\"):\n        classifier.set_params(max_iter=1000)\n    set_random_state(classifier)\n\n    # Let the model compute the class frequencies\n    classifier.set_params(class_weight='balanced')\n    coef_balanced = classifier.fit(X, y).coef_.copy()\n\n    # Count each label occurrence to reweight manually\n    n_samples = len(y)\n    n_classes = float(len(np.unique(y)))\n\n    class_weight = {1: n_samples / (np.sum(y == 1) * n_classes),\n                    -1: n_samples / (np.sum(y == -1) * n_classes)}\n    classifier.set_params(class_weight=class_weight)\n    coef_manual = classifier.fit(X, y).coef_.copy()\n\n    assert_allclose(coef_balanced, coef_manual)\n\n\n@ignore_warnings(category=(DeprecationWarning, FutureWarning))\ndef check_estimators_overwrite_params(name, estimator_orig):\n    X, y = make_blobs(random_state=0, n_samples=9)\n    # some want non-negative input\n    X -= X.min()\n    X = pairwise_estimator_convert_X(X, estimator_orig, kernel=rbf_kernel)"
+          },
+          {
+            "path": "sklearn/utils/estimator_checks.py",
+            "symbol": "_safe_tags",
+            "start_line": 60,
+            "end_line": 85,
+            "origin": "issue_explicit_path",
+            "depth": 0,
+            "source_sha256": "8d6c4a0719d86747f4d2d4c5a14e95017f2c559cfdf3c8ae0fa51e960436082a",
+            "read_cost": 834,
+            "rank": 3,
+            "text": "\n\nBOSTON = None\nCROSS_DECOMPOSITION = ['PLSCanonical', 'PLSRegression', 'CCA', 'PLSSVD']\n\n\ndef _safe_tags(estimator, key=None):\n    # if estimator doesn't have _get_tags, use _DEFAULT_TAGS\n    # if estimator has tags but not key, use _DEFAULT_TAGS[key]\n    if hasattr(estimator, \"_get_tags\"):\n        if key is not None:\n            return estimator._get_tags().get(key, _DEFAULT_TAGS[key])\n        tags = estimator._get_tags()\n        return {key: tags.get(key, _DEFAULT_TAGS[key])\n                for key in _DEFAULT_TAGS.keys()}\n    if key is not None:\n        return _DEFAULT_TAGS[key]\n    return _DEFAULT_TAGS\n\n\ndef _yield_checks(name, estimator):\n    tags = _safe_tags(estimator)\n    yield check_estimators_dtypes\n    yield check_fit_score_takes_y\n    yield check_sample_weights_pandas_series\n    yield check_sample_weights_list"
+          },
+          {
+            "path": "sklearn/utils/estimator_checks.py",
+            "symbol": "_yield_checks",
+            "start_line": 74,
+            "end_line": 121,
+            "origin": "issue_explicit_path",
+            "depth": 0,
+            "source_sha256": "8d6c4a0719d86747f4d2d4c5a14e95017f2c559cfdf3c8ae0fa51e960436082a",
+            "read_cost": 1624,
+            "rank": 4,
+            "text": "                for key in _DEFAULT_TAGS.keys()}\n    if key is not None:\n        return _DEFAULT_TAGS[key]\n    return _DEFAULT_TAGS\n\n\ndef _yield_checks(name, estimator):\n    tags = _safe_tags(estimator)\n    yield check_estimators_dtypes\n    yield check_fit_score_takes_y\n    yield check_sample_weights_pandas_series\n    yield check_sample_weights_list\n    yield check_sample_weights_invariance\n    yield check_estimators_fit_returns_self\n    yield partial(check_estimators_fit_returns_self, readonly_memmap=True)\n\n    # Check that all estimator yield informative messages when\n    # trained on empty datasets\n    if not tags[\"no_validation\"]:\n        yield check_complex_data\n        yield check_dtype_object\n        yield check_estimators_empty_data_messages\n\n    if name not in CROSS_DECOMPOSITION:\n        # cross-decomposition's \"transform\" returns X and Y\n        yield check_pipeline_consistency\n\n    if not tags[\"allow_nan\"] and not tags[\"no_validation\"]:\n        # Test that all estimators check their input for NaN's and infs\n        yield check_estimators_nan_inf\n\n    yield check_estimators_overwrite_params\n    if hasattr(estimator, 'sparsify'):\n        yield check_sparsify_coefficients\n\n    yield check_estimator_sparse_data\n\n    # Test that estimators can be pickled, and once pickled\n    # give the same answer as before.\n    yield check_estimators_pickle\n\n\ndef _yield_classifier_checks(name, classifier):\n    tags = _safe_tags(classifier)\n\n    # test classifiers can handle non-array data\n    yield check_classifier_data_not_an_array\n    # test classifiers trained on a single label always return this label"
+          },
+          {
+            "path": "sklearn/utils/estimator_checks.py",
+            "symbol": "_yield_classifier_checks",
+            "start_line": 110,
+            "end_line": 146,
+            "origin": "issue_explicit_path",
+            "depth": 0,
+            "source_sha256": "8d6c4a0719d86747f4d2d4c5a14e95017f2c559cfdf3c8ae0fa51e960436082a",
+            "read_cost": 1378,
+            "rank": 5,
+            "text": "\n    # Test that estimators can be pickled, and once pickled\n    # give the same answer as before.\n    yield check_estimators_pickle\n\n\ndef _yield_classifier_checks(name, classifier):\n    tags = _safe_tags(classifier)\n\n    # test classifiers can handle non-array data\n    yield check_classifier_data_not_an_array\n    # test classifiers trained on a single label always return this label\n    yield check_classifiers_one_label\n    yield check_classifiers_classes\n    yield check_estimators_partial_fit_n_features\n    # basic consistency testing\n    yield check_classifiers_train\n    yield partial(check_classifiers_train, readonly_memmap=True)\n    yield check_classifiers_regression_target\n    if not tags[\"no_validation\"]:\n        yield check_supervised_y_no_nan\n        yield check_supervised_y_2d\n    yield check_estimators_unfitted\n    if 'class_weight' in classifier.get_params().keys():\n        yield check_class_weight_classifiers\n\n    yield check_non_transformer_estimators_n_iter\n    # test if predict_proba is a monotonic transformation of decision_function\n    yield check_decision_proba_consistency\n\n\n@ignore_warnings(category=(DeprecationWarning, FutureWarning))\ndef check_supervised_y_no_nan(name, estimator_orig):\n    # Checks that the Estimator targets are not NaN.\n    estimator = clone(estimator_orig)\n    rng = np.random.RandomState(888)\n    X = rng.randn(10, 5)"
+          },
+          {
+            "path": "sklearn/utils/estimator_checks.py",
+            "symbol": "check_supervised_y_no_nan",
+            "start_line": 136,
+            "end_line": 169,
+            "origin": "issue_explicit_path",
+            "depth": 0,
+            "source_sha256": "8d6c4a0719d86747f4d2d4c5a14e95017f2c559cfdf3c8ae0fa51e960436082a",
+            "read_cost": 1276,
+            "rank": 6,
+            "text": "    yield check_non_transformer_estimators_n_iter\n    # test if predict_proba is a monotonic transformation of decision_function\n    yield check_decision_proba_consistency\n\n\n@ignore_warnings(category=(DeprecationWarning, FutureWarning))\ndef check_supervised_y_no_nan(name, estimator_orig):\n    # Checks that the Estimator targets are not NaN.\n    estimator = clone(estimator_orig)\n    rng = np.random.RandomState(888)\n    X = rng.randn(10, 5)\n    y = np.full(10, np.inf)\n    y = multioutput_estimator_convert_y_2d(estimator, y)\n\n    errmsg = \"Input contains NaN, infinity or a value too large for \" \\\n             \"dtype('float64').\"\n    try:\n        estimator.fit(X, y)\n    except ValueError as e:\n        if str(e) != errmsg:\n            raise ValueError(\"Estimator {0} raised error as expected, but \"\n                             \"does not match expected error message\"\n                             .format(name))\n    else:\n        raise ValueError(\"Estimator {0} should have raised error on fitting \"\n                         \"array y with NaN value.\".format(name))\n\n\ndef _yield_regressor_checks(name, regressor):\n    tags = _safe_tags(regressor)\n    # TODO: test with intercept\n    # TODO: test with multiple responses\n    # basic testing\n    yield check_regressors_train"
+          }
+        ],
+        "candidate_count": 6,
+        "total_read_cost": 8242,
+        "max_candidate_count": 6,
+        "abstain_reason": null,
+        "localization_sha256": "e5892f146ea14ce06ee175bb4928ffbb007206056df4aff8a75aefef4ec4cacf"
+      }
+    },
+    "django__django-13233": {
+      "issue": "The `model` attribute of image fields doesn't point to concrete model.\n\nDescription\n\nIn Django 3.1 and before, one could use the model attribute of image fields to find the concrete model the image field belongs to.\n\nThis isn't possible in 3.2 anymore, and I bisected the change to the fix of #31701.\n\nI found this while investigating a CI failure of django-imagefield ​https://travis-ci.org/github/matthiask/django-imagefield/jobs/710794644\n\nI'm not sure whether this is a bug or whether it is an intentional change. If it is the later, is there an alternative to find the concrete model an image field belongs to? I'm classifying this as a bug because the change made model and field introspection harder than it was before. Also, since behavior changed #31701 may possibly not be classified as a cleanup/optimization anymore...",
+      "localization": {
+        "schema": "e1c-strict-v5-localization-v1",
+        "candidate_paths": [
+          "django/contrib/gis/gdal/geometries.py",
+          "django/contrib/gis/geos/point.py",
+          "django/contrib/postgres/fields/array.py",
+          "django/contrib/postgres/fields/ranges.py",
+          "django/contrib/sessions/backends/db.py",
+          "django/db/models/base.py"
+        ],
+        "candidates": [
+          {
+            "path": "django/contrib/gis/gdal/geometries.py",
+            "symbol": "Point",
+            "start_line": 496,
+            "end_line": 543,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "ba05d7cd15faa3ad4e41c0a612a4bc2f66d630ec4d8d2eb7975876d6f3aae13c",
+            "read_cost": 1272,
+            "rank": 1,
+            "text": "        this geometry and the other.\n        \"\"\"\n        return self._geomgen(capi.geom_union, other)\n\n\n# The subclasses for OGR Geometry.\nclass Point(OGRGeometry):\n\n    def _geos_ptr(self):\n        from django.contrib.gis import geos\n        return geos.Point._create_empty() if self.empty else super()._geos_ptr()\n\n    @classmethod\n    def _create_empty(cls):\n        return capi.create_geom(OGRGeomType('point').num)\n\n    @property\n    def x(self):\n        \"Return the X coordinate for this Point.\"\n        return capi.getx(self.ptr, 0)\n\n    @property\n    def y(self):\n        \"Return the Y coordinate for this Point.\"\n        return capi.gety(self.ptr, 0)\n\n    @property\n    def z(self):\n        \"Return the Z coordinate for this Point.\"\n        if self.coord_dim == 3:\n            return capi.getz(self.ptr, 0)\n\n    @property\n    def tuple(self):\n        \"Return the tuple of this point.\"\n        if self.coord_dim == 2:\n            return (self.x, self.y)\n        elif self.coord_dim == 3:\n            return (self.x, self.y, self.z)\n    coords = tuple\n\n\nclass LineString(OGRGeometry):\n\n    def __getitem__(self, index):\n        \"Return the Point at the given index.\"\n        if 0 <= index < self.point_count:\n            x, y, z = c_double(), c_double(), c_double()"
+          },
+          {
+            "path": "django/contrib/gis/geos/point.py",
+            "symbol": "Point",
+            "start_line": 3,
+            "end_line": 160,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "5f364575ff4924ead405e18dd3800351515238383b2458f0b80c34fb1110f2c7",
+            "read_cost": 4729,
+            "rank": 2,
+            "text": "from django.contrib.gis import gdal\nfrom django.contrib.gis.geos import prototypes as capi\nfrom django.contrib.gis.geos.error import GEOSException\nfrom django.contrib.gis.geos.geometry import GEOSGeometry\n\n\nclass Point(GEOSGeometry):\n    _minlength = 2\n    _maxlength = 3\n    has_cs = True\n\n    def __init__(self, x=None, y=None, z=None, srid=None):\n        \"\"\"\n        The Point object may be initialized with either a tuple, or individual\n        parameters.\n\n        For example:\n        >>> p = Point((5, 23))  # 2D point, passed in as a tuple\n        >>> p = Point(5, 23, 8)  # 3D point, passed in with individual parameters\n        \"\"\"\n        if x is None:\n            coords = []\n        elif isinstance(x, (tuple, list)):\n            # Here a tuple or list was passed in under the `x` parameter.\n            coords = x\n        elif isinstance(x, (float, int)) and isinstance(y, (float, int)):\n            # Here X, Y, and (optionally) Z were passed in individually, as parameters.\n            if isinstance(z, (float, int)):\n                coords = [x, y, z]\n            else:\n                coords = [x, y]\n        else:\n            raise TypeError('Invalid parameters given for Point initialization.')\n\n        point = self._create_point(len(coords), coords)\n\n        # Initializing using the address returned from the GEOS\n        #  createPoint factory.\n        super().__init__(point, srid=srid)\n\n    def _to_pickle_wkb(self):\n        return None if self.empty else super()._to_pickle_wkb()\n\n    def _from_pickle_wkb(self, wkb):\n        return self._create_empty() if wkb is None else super()._from_pickle_wkb(wkb)\n\n    def _ogr_ptr(self):\n        return gdal.geometries.Point._create_empty() if self.empty else super()._ogr_ptr()\n\n    @classmethod\n    def _create_empty(cls):\n        return cls._create_point(None, None)\n\n    @classmethod\n    def _create_point(cls, ndim, coords):\n        \"\"\"\n        Create a coordinate sequence, set X, Y, [Z], and create point\n        \"\"\"\n        if not ndim:\n            return capi.create_point(None)\n\n        if ndim < 2 or ndim > 3:\n            raise TypeError('Invalid point dimension: %s' % ndim)\n\n        cs = capi.create_cs(c_uint(1), c_uint(ndim))\n        i = iter(coords)\n        capi.cs_setx(cs, 0, next(i))\n        capi.cs_sety(cs, 0, next(i))\n        if ndim == 3:\n            capi.cs_setz(cs, 0, next(i))\n\n        return capi.create_point(cs)\n\n    def _set_list(self, length, items):\n        ptr = self._create_point(length, items)\n        if ptr:\n            srid = self.srid\n            capi.destroy_geom(self.ptr)\n            self._ptr = ptr\n            if srid is not None:\n                self.srid = srid\n            self._post_init()\n        else:\n            # can this happen?\n            raise GEOSException('Geometry resulting from slice deletion was invalid.')\n\n    def _set_single(self, index, value):\n        self._cs.setOrdinate(index, 0, value)\n\n    def __iter__(self):\n        \"Iterate over coordinates of this Point.\"\n        for i in range(len(self)):\n            yield self[i]\n\n    def __len__(self):\n        \"Return the number of dimensions for this Point (either 0, 2 or 3).\"\n        if self.empty:\n            return 0\n        if self.hasz:\n            return 3\n        else:\n            return 2\n\n    def _get_single_external(self, index):\n        if index == 0:\n            return self.x\n        elif index == 1:\n            return self.y\n        elif index == 2:\n            return self.z\n\n    _get_single_internal = _get_single_external\n\n    @property\n    def x(self):\n        \"Return the X component of the Point.\"\n        return self._cs.getOrdinate(0, 0)\n\n    @x.setter\n    def x(self, value):\n        \"Set the X component of the Point.\"\n        self._cs.setOrdinate(0, 0, value)\n\n    @property\n    def y(self):\n        \"Return the Y component of the Point.\"\n        return self._cs.getOrdinate(1, 0)\n\n    @y.setter\n    def y(self, value):\n        \"Set the Y component of the Point.\"\n        self._cs.setOrdinate(1, 0, value)\n\n    @property\n    def z(self):\n        \"Return the Z component of the Point.\"\n        return self._cs.getOrdinate(2, 0) if self.hasz else None\n\n    @z.setter\n    def z(self, value):\n        \"Set the Z component of the Point.\"\n        if not self.hasz:\n            raise GEOSException('Cannot set Z on 2D Point.')\n        self._cs.setOrdinate(2, 0, value)\n\n    # ### Tuple setting and retrieval routines. ###\n    @property\n    def tuple(self):\n        \"Return a tuple of the point.\"\n        return self._cs.tuple\n\n    @tuple.setter\n    def tuple(self, tup):\n        \"Set the coordinates of the point with the given tuple.\"\n        self._cs[0] = tup\n\n    # The tuple and coords properties\n    coords = tuple"
+          },
+          {
+            "path": "django/contrib/postgres/fields/array.py",
+            "symbol": "model",
+            "start_line": 32,
+            "end_line": 50,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "cf78a00bb87802931a91a86d8d6dfe4655b73eef2b7503c117f36fe845dd8f4f",
+            "read_cost": 562,
+            "rank": 3,
+            "text": "        # implements it.\n        if hasattr(self.base_field, 'from_db_value'):\n            self.from_db_value = self._from_db_value\n        super().__init__(**kwargs)\n\n    @property\n    def model(self):\n        try:\n            return self.__dict__['model']\n        except KeyError:\n            raise AttributeError(\"'%s' object has no attribute 'model'\" % self.__class__.__name__)\n\n    @model.setter\n    def model(self, model):\n        self.__dict__['model'] = model\n        self.base_field.model = model\n\n    @classmethod\n    def _choices_is_value(cls, value):"
+          },
+          {
+            "path": "django/contrib/postgres/fields/ranges.py",
+            "symbol": "model",
+            "start_line": 47,
+            "end_line": 65,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "91f49a65525ffa05afc4d6a0821fe4e78985a2017681e7a3c394a616948c1dca",
+            "read_cost": 615,
+            "rank": 4,
+            "text": "        # Initializing base_field here ensures that its model matches the model for self.\n        if hasattr(self, 'base_field'):\n            self.base_field = self.base_field()\n        super().__init__(*args, **kwargs)\n\n    @property\n    def model(self):\n        try:\n            return self.__dict__['model']\n        except KeyError:\n            raise AttributeError(\"'%s' object has no attribute 'model'\" % self.__class__.__name__)\n\n    @model.setter\n    def model(self, model):\n        self.__dict__['model'] = model\n        self.base_field.model = model\n\n    @classmethod\n    def _choices_is_value(cls, value):"
+          },
+          {
+            "path": "django/contrib/sessions/backends/db.py",
+            "symbol": "model",
+            "start_line": 21,
+            "end_line": 36,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "5ab0acbdfc070e61775e3c52ef9a0e381398486578a2b3e1460f78da4c92cfe7",
+            "read_cost": 564,
+            "rank": 5,
+            "text": "        # Avoids a circular import and allows importing SessionStore when\n        # django.contrib.sessions is not in INSTALLED_APPS.\n        from django.contrib.sessions.models import Session\n        return Session\n\n    @cached_property\n    def model(self):\n        return self.get_model_class()\n\n    def _get_session_from_db(self):\n        try:\n            return self.model.objects.get(\n                session_key=self.session_key,\n                expire_date__gt=timezone.now()\n            )\n        except (self.model.DoesNotExist, SuspiciousOperation) as e:"
+          },
+          {
+            "path": "django/db/models/base.py",
+            "symbol": "Model",
+            "start_line": 398,
+            "end_line": 2036,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "755307a531729c9ba9dcaca97d134e0be5c27c54c2deafbd7e544a3180cce245",
+            "read_cost": 5000,
+            "rank": 6,
+            "text": "    # explicit (non-auto) PKs. This impacts validation only; it has no effect\n    # on the actual save.\n    adding = True\n    fields_cache = ModelStateFieldsCacheDescriptor()\n\n\nclass Model(metaclass=ModelBase):\n\n    def __init__(self, *args, **kwargs):\n        # Alias some things as locals to avoid repeat global lookups\n        cls = self.__class__\n        opts = self._meta\n        _setattr = setattr\n        _DEFERRED = DEFERRED\n\n        pre_init.send(sender=cls, args=args, kwargs=kwargs)\n\n        # Set up the storage for instance state\n        self._state = ModelState()\n\n        # There is a rather weird disparity here; if kwargs, it's set, then args\n        # overrides it. It should be one or the other; don't duplicate the work\n        # The reason for the kwargs check is that standard iterator passes in by\n        # args, and instantiation for iteration is 33% faster.\n        if len(args) > len(opts.concrete_fields):\n            # Daft, but matches old exception sans the err msg.\n            raise IndexError(\"Number of args exceeds number of fields\")\n\n        if not kwargs:\n            fields_iter = iter(opts.concrete_fields)\n            # The ordering of the zip calls matter - zip throws StopIteration\n            # when an iter throws it. So if the first iter throws it, the second\n            # is *not* consumed. We rely on this, so don't change the order\n            # without changing the logic.\n            for val, field in zip(args, fields_iter):\n                if val is _DEFERRED:\n                    continue\n                _setattr(self, field.attname, val)\n        else:\n            # Slower, kwargs-ready version.\n            fields_iter = iter(opts.fields)\n            for val, field in zip(args, fields_iter):\n                if val is _DEFERRED:\n                    continue\n                _setattr(self, field.attname, val)\n                kwargs.pop(field.name, None)\n\n        # Now we're left with the unprocessed fields that *must* come from\n        # keywords, or default.\n\n        for field in fields_iter:\n            is_related_object = False\n            # Virtual field\n            if field.attname not in kwargs and field.column is None:\n                continue\n            if kwargs:\n                if isinstance(field.remote_field, ForeignObjectRel):\n                    try:\n                        # Assume object instance was passed in.\n                        rel_obj = kwargs.pop(field.name)\n                        is_related_object = True\n                    except KeyError:\n                        try:\n                            # Object instance wasn't passed in -- must be an ID.\n                            val = kwargs.pop(field.attname)\n                        except KeyError:\n                            val = field.get_default()\n                else:\n                    try:\n                        val = kwargs.pop(field.attname)\n                    except KeyError:\n                        # This is done with an exception rather than the\n                        # default argument on pop because we don't want\n                        # get_default() to be evaluated, and then not used.\n                        # Refs #12057.\n                        val = field.get_default()\n            else:\n                val = field.get_default()\n\n            if is_related_object:\n                # If we are passed a related instance, set it using the\n                # field.name instead of field.attname (e.g. \"user\" instead of\n                # \"user_id\") so that the object gets properly cached (and type\n                # checked) by the RelatedObjectDescriptor.\n                if rel_obj is not _DEFERRED:\n                    _setattr(self, field.name, rel_obj)\n            else:\n                if val is not _DEFERRED:\n                    _setattr(self, field.attname, val)\n\n        if kwargs:\n            property_names = opts._property_names\n            for prop in tuple(kwargs):\n                try:\n                    # Any remaining kwargs must correspond to properties or\n                    # virtual fields.\n                    if prop in property_names or opts.get_field(prop):\n                        if kwargs[prop] is not _DEFERRED:\n                            _setattr(self, prop, kwargs[prop])\n                        del kwargs[prop]\n                except (AttributeError, FieldDoesNotExist):\n                    pass\n            for kwarg in kwargs:\n                raise TypeError(\"%s() got an unexpected keyword argument '%s'\" % (cls.__name__, kwarg))\n        super().__init__()\n        post_init.send(sender=cls, instance=self)\n\n    @classmethod\n    def from_db(cls, db, field_names, values):\n        if len(values) != len(cls._meta.concrete_fields):\n            values_iter = iter(values)\n            values = [\n                next(values_iter) if f.attname in field_names else DEFERRED\n                for f in cls._meta.concrete_fields\n            ]\n        new = cls(*values)\n        new._state"
+          }
+        ],
+        "candidate_count": 6,
+        "total_read_cost": 12742,
+        "max_candidate_count": 6,
+        "abstain_reason": null,
+        "localization_sha256": "50c964a01cf5ff7c0d0f08566146d8ff44ed8e2e1fedcc555e8c2c13ce1bb4b1"
+      }
+    },
+    "django__django-15995": {
+      "issue": "Too aggressive pk control in create_reverse_many_to_one_manager\nDescription\n\nIn the context of #19580, Django now requires an instance pk to even instanciate a related manager [7ba6ebe9149a].\nNow I have a use case where I need to introspect the model used by a related manager (MyModel().related_set.model) and Django 4.1 refuses that with ValueError: 'MyModel' instance needs to have a primary key value before this relationship can be used.\nMy opinion is that is is too aggressive of a check and would suggest to let the __init__ succeed even if the instance has no pk. Other calls to _check_fk_val in the class seems sufficient to me to safeguard against shooting in the foot.",
+      "localization": {
+        "schema": "e1c-strict-v5-localization-v1",
+        "candidate_paths": [
+          "django/db/models/fields/related_descriptors.py",
+          "django/db/models/manager.py",
+          "django/db/migrations/operations/models.py",
+          "django/db/migrations/operations/models.py",
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py"
+        ],
+        "candidates": [
+          {
+            "path": "django/db/models/fields/related_descriptors.py",
+            "symbol": "create_reverse_many_to_one_manager",
+            "start_line": 626,
+            "end_line": 902,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "8a823f8eec319aec10fe69c66246cf4506a7d76985a9efc190d337a8fa4e0e0e",
+            "read_cost": 5000,
+            "rank": 1,
+            "text": "        raise TypeError(\n            \"Direct assignment to the %s is prohibited. Use %s.set() instead.\"\n            % self._get_set_deprecation_msg_params(),\n        )\n\n\ndef create_reverse_many_to_one_manager(superclass, rel):\n    \"\"\"\n    Create a manager for the reverse side of a many-to-one relation.\n\n    This manager subclasses another manager, generally the default manager of\n    the related model, and adds behaviors specific to many-to-one relations.\n    \"\"\"\n\n    class RelatedManager(superclass):\n        def __init__(self, instance):\n            super().__init__()\n\n            self.instance = instance\n            self.model = rel.related_model\n            self.field = rel.field\n\n            self.core_filters = {self.field.name: instance}\n\n            # Even if this relation is not to pk, we require still pk value.\n            # The wish is that the instance has been already saved to DB,\n            # although having a pk value isn't a guarantee of that.\n            if self.instance.pk is None:\n                raise ValueError(\n                    f\"{instance.__class__.__name__!r} instance needs to have a primary \"\n                    f\"key value before this relationship can be used.\"\n                )\n\n        def __call__(self, *, manager):\n            manager = getattr(self.model, manager)\n            manager_class = create_reverse_many_to_one_manager(manager.__class__, rel)\n            return manager_class(self.instance)\n\n        do_not_call_in_templates = True\n\n        def _check_fk_val(self):\n            for field in self.field.foreign_related_fields:\n                if getattr(self.instance, field.attname) is None:\n                    raise ValueError(\n                        f'\"{self.instance!r}\" needs to have a value for field '\n                        f'\"{field.attname}\" before this relationship can be used.'\n                    )\n\n        def _apply_rel_filters(self, queryset):\n            \"\"\"\n            Filter the queryset for the instance this manager is bound to.\n            \"\"\"\n            db = self._db or router.db_for_read(self.model, instance=self.instance)\n            empty_strings_as_null = connections[\n                db\n            ].features.interprets_empty_strings_as_nulls\n            queryset._add_hints(instance=self.instance)\n            if self._db:\n                queryset = queryset.using(self._db)\n            queryset._defer_next_filter = True\n            queryset = queryset.filter(**self.core_filters)\n            for field in self.field.foreign_related_fields:\n                val = getattr(self.instance, field.attname)\n                if val is None or (val == \"\" and empty_strings_as_null):\n                    return queryset.none()\n            if self.field.many_to_one:\n                # Guard against field-like objects such as GenericRelation\n                # that abuse create_reverse_many_to_one_manager() with reverse\n                # one-to-many relationships instead and break known related\n                # objects assignment.\n                try:\n                    target_field = self.field.target_field\n                except FieldError:\n                    # The relationship has multiple target fields. Use a tuple\n                    # for related object id.\n                    rel_obj_id = tuple(\n                        [\n                            getattr(self.instance, target_field.attname)\n                            for target_field in self.field.path_infos[-1].target_fields\n                        ]\n                    )\n                else:\n                    rel_obj_id = getattr(self.instance, target_field.attname)\n                queryset._known_related_objects = {\n                    self.field: {rel_obj_id: self.instance}\n                }\n            return queryset\n\n        def _remove_prefetched_objects(self):\n            try:\n                self.instance._prefetched_objects_cache.pop(\n                    self.field.remote_field.get_cache_name()\n                )\n            except (AttributeError, KeyError):\n                pass  # nothing to clear from cache\n\n        def get_queryset(self):\n            try:\n                return self.instance._prefetched_objects_cache[\n                    self.field.remote_field.get_cache_name()\n                ]\n            except (AttributeError, KeyError):\n                queryset = super().get_queryset()\n                return self._apply_rel_filters(queryset)\n\n        def get_prefetch_queryset(self, instances, queryset=None):\n            if queryset is None:\n                queryset = super().get_queryset()\n\n            queryset._add_hints(instance=instances[0])\n            queryset = queryset.using(queryset._db or self._db)\n\n            rel_obj_attr = self.field.get_local_related_value\n            instance_attr = self.field.get_foreign_related_value\n            instances_dict = {instance_attr(inst): inst for inst in instances}\n            queryset = _filter_prefetch_queryset(queryset, self.field.name,"
+          },
+          {
+            "path": "django/db/models/manager.py",
+            "symbol": "Manager",
+            "start_line": 170,
+            "end_line": 185,
+            "origin": "issue_ast_definition",
+            "depth": 0,
+            "source_sha256": "6d98807a2b6f8d6daff0f0da63dfde4994e6f4bc0b9c874674ea10912913dcab",
+            "read_cost": 289,
+            "rank": 2,
+            "text": "        )\n\n    def __hash__(self):\n        return id(self)\n\n\nclass Manager(BaseManager.from_queryset(QuerySet)):\n    pass\n\n\nclass ManagerDescriptor:\n    def __init__(self, manager):\n        self.manager = manager\n\n    def __get__(self, instance, cls=None):\n        if instance is not None:"
+          },
+          {
+            "path": "django/db/migrations/operations/models.py",
+            "symbol": "CreateModel",
+            "start_line": 35,
+            "end_line": 314,
+            "origin": "ast_caller",
+            "depth": 1,
+            "source_sha256": "5a9328e885b2a919fe8905e29ec1b0d8f7cacc40fc54c1894ecbf454fdfd3c92",
+            "read_cost": 5000,
+            "rank": 3,
+            "text": "        )\n\n    def can_reduce_through(self, operation, app_label):\n        return not operation.references_model(self.name, app_label)\n\n\nclass CreateModel(ModelOperation):\n    \"\"\"Create a model's table.\"\"\"\n\n    serialization_expand_args = [\"fields\", \"options\", \"managers\"]\n\n    def __init__(self, name, fields, options=None, bases=None, managers=None):\n        self.fields = fields\n        self.options = options or {}\n        self.bases = bases or (models.Model,)\n        self.managers = managers or []\n        super().__init__(name)\n        # Sanity-check that there are no duplicated field names, bases, or\n        # manager names\n        _check_for_duplicates(\"fields\", (name for name, _ in self.fields))\n        _check_for_duplicates(\n            \"bases\",\n            (\n                base._meta.label_lower\n                if hasattr(base, \"_meta\")\n                else base.lower()\n                if isinstance(base, str)\n                else base\n                for base in self.bases\n            ),\n        )\n        _check_for_duplicates(\"managers\", (name for name, _ in self.managers))\n\n    def deconstruct(self):\n        kwargs = {\n            \"name\": self.name,\n            \"fields\": self.fields,\n        }\n        if self.options:\n            kwargs[\"options\"] = self.options\n        if self.bases and self.bases != (models.Model,):\n            kwargs[\"bases\"] = self.bases\n        if self.managers and self.managers != [(\"objects\", models.Manager())]:\n            kwargs[\"managers\"] = self.managers\n        return (self.__class__.__qualname__, [], kwargs)\n\n    def state_forwards(self, app_label, state):\n        state.add_model(\n            ModelState(\n                app_label,\n                self.name,\n                list(self.fields),\n                dict(self.options),\n                tuple(self.bases),\n                list(self.managers),\n            )\n        )\n\n    def database_forwards(self, app_label, schema_editor, from_state, to_state):\n        model = to_state.apps.get_model(app_label, self.name)\n        if self.allow_migrate_model(schema_editor.connection.alias, model):\n            schema_editor.create_model(model)\n\n    def database_backwards(self, app_label, schema_editor, from_state, to_state):\n        model = from_state.apps.get_model(app_label, self.name)\n        if self.allow_migrate_model(schema_editor.connection.alias, model):\n            schema_editor.delete_model(model)\n\n    def describe(self):\n        return \"Create %smodel %s\" % (\n            \"proxy \" if self.options.get(\"proxy\", False) else \"\",\n            self.name,\n        )\n\n    @property\n    def migration_name_fragment(self):\n        return self.name_lower\n\n    def references_model(self, name, app_label):\n        name_lower = name.lower()\n        if name_lower == self.name_lower:\n            return True\n\n        # Check we didn't inherit from the model\n        reference_model_tuple = (app_label, name_lower)\n        for base in self.bases:\n            if (\n                base is not models.Model\n                and isinstance(base, (models.base.ModelBase, str))\n                and resolve_relation(base, app_label) == reference_model_tuple\n            ):\n                return True\n\n        # Check we have no FKs/M2Ms with it\n        for _name, field in self.fields:\n            if field_references(\n                (app_label, self.name_lower), field, reference_model_tuple\n            ):\n                return True\n        return False\n\n    def reduce(self, operation, app_label):\n        if (\n            isinstance(operation, DeleteModel)\n            and self.name_lower == operation.name_lower\n            and not self.options.get(\"proxy\", False)\n        ):\n            return []\n        elif (\n            isinstance(operation, RenameModel)\n            and self.name_lower == operation.old_name_lower\n        ):\n            return [\n                CreateModel(\n                    operation.new_name,\n                    fields=self.fields,\n                    options=self.options,\n                    bases=self.bases,\n                    managers=self.managers,\n                ),\n            ]\n        elif (\n            isinstance(operation, AlterModelOptions)\n            and self.name_lower == operation.name_lower\n        ):\n            options = {**self.options, **operation.options}\n            for key in operation.ALTER_OPTION_KEYS:\n                if key not in operation.options:\n                    options.pop(key, None)\n            return [\n                CreateModel(\n                    self.name,\n                    fields=self.fields,\n                    options=options,\n                    bases=self.bases,\n                    managers=self.managers,\n                ),\n            ]\n        elif (\n            isinstance(operation, AlterModelManagers)\n            and self.name_lower == operation.name_lower\n        ):\n            return [\n                CreateModel(\n                    self.name,\n                    fields=self.fie"
+          },
+          {
+            "path": "django/db/migrations/operations/models.py",
+            "symbol": "deconstruct",
+            "start_line": 62,
+            "end_line": 87,
+            "origin": "ast_caller",
+            "depth": 1,
+            "source_sha256": "5a9328e885b2a919fe8905e29ec1b0d8f7cacc40fc54c1894ecbf454fdfd3c92",
+            "read_cost": 865,
+            "rank": 4,
+            "text": "                else base\n                for base in self.bases\n            ),\n        )\n        _check_for_duplicates(\"managers\", (name for name, _ in self.managers))\n\n    def deconstruct(self):\n        kwargs = {\n            \"name\": self.name,\n            \"fields\": self.fields,\n        }\n        if self.options:\n            kwargs[\"options\"] = self.options\n        if self.bases and self.bases != (models.Model,):\n            kwargs[\"bases\"] = self.bases\n        if self.managers and self.managers != [(\"objects\", models.Manager())]:\n            kwargs[\"managers\"] = self.managers\n        return (self.__class__.__qualname__, [], kwargs)\n\n    def state_forwards(self, app_label, state):\n        state.add_model(\n            ModelState(\n                app_label,\n                self.name,\n                list(self.fields),\n                dict(self.options),"
+          },
+          {
+            "path": "django/db/migrations/state.py",
+            "symbol": "ModelState",
+            "start_line": 705,
+            "end_line": 988,
+            "origin": "ast_caller",
+            "depth": 1,
+            "source_sha256": "e22b722ec7f7ad6d71e9ab0bba21ddc5c10059057ddddf20d6d986a258cce290",
+            "read_cost": 5000,
+            "rank": 5,
+            "text": "            del self.all_models[app_label][model_name]\n            del self.app_configs[app_label].models[model_name]\n        except KeyError:\n            pass\n\n\nclass ModelState:\n    \"\"\"\n    Represent a Django Model. Don't use the actual Model class as it's not\n    designed to have its options changed - instead, mutate this one and then\n    render it into a Model as required.\n\n    Note that while you are allowed to mutate .fields, you are not allowed\n    to mutate the Field instances inside there themselves - you must instead\n    assign new ones, as these are not detached during a clone.\n    \"\"\"\n\n    def __init__(\n        self, app_label, name, fields, options=None, bases=None, managers=None\n    ):\n        self.app_label = app_label\n        self.name = name\n        self.fields = dict(fields)\n        self.options = options or {}\n        self.options.setdefault(\"indexes\", [])\n        self.options.setdefault(\"constraints\", [])\n        self.bases = bases or (models.Model,)\n        self.managers = managers or []\n        for name, field in self.fields.items():\n            # Sanity-check that fields are NOT already bound to a model.\n            if hasattr(field, \"model\"):\n                raise ValueError(\n                    'ModelState.fields cannot be bound to a model - \"%s\" is.' % name\n                )\n            # Sanity-check that relation fields are NOT referring to a model class.\n            if field.is_relation and hasattr(field.related_model, \"_meta\"):\n                raise ValueError(\n                    'ModelState.fields cannot refer to a model class - \"%s.to\" does. '\n                    \"Use a string reference instead.\" % name\n                )\n            if field.many_to_many and hasattr(field.remote_field.through, \"_meta\"):\n                raise ValueError(\n                    'ModelState.fields cannot refer to a model class - \"%s.through\" '\n                    \"does. Use a string reference instead.\" % name\n                )\n        # Sanity-check that indexes have their name set.\n        for index in self.options[\"indexes\"]:\n            if not index.name:\n                raise ValueError(\n                    \"Indexes passed to ModelState require a name attribute. \"\n                    \"%r doesn't have one.\" % index\n                )\n\n    @cached_property\n    def name_lower(self):\n        return self.name.lower()\n\n    def get_field(self, field_name):\n        if field_name == \"_order\":\n            field_name = self.options.get(\"order_with_respect_to\", field_name)\n        return self.fields[field_name]\n\n    @classmethod\n    def from_model(cls, model, exclude_rels=False):\n        \"\"\"Given a model, return a ModelState representing it.\"\"\"\n        # Deconstruct the fields\n        fields = []\n        for field in model._meta.local_fields:\n            if getattr(field, \"remote_field\", None) and exclude_rels:\n                continue\n            if isinstance(field, models.OrderWrt):\n                continue\n            name = field.name\n            try:\n                fields.append((name, field.clone()))\n            except TypeError as e:\n                raise TypeError(\n                    \"Couldn't reconstruct field %s on %s: %s\"\n                    % (\n                        name,\n                        model._meta.label,\n                        e,\n                    )\n                )\n        if not exclude_rels:\n            for field in model._meta.local_many_to_many:\n                name = field.name\n                try:\n                    fields.append((name, field.clone()))\n                except TypeError as e:\n                    raise TypeError(\n                        \"Couldn't reconstruct m2m field %s on %s: %s\"\n                        % (\n                            name,\n                            model._meta.object_name,\n                            e,\n                        )\n                    )\n        # Extract the options\n        options = {}\n        for name in DEFAULT_NAMES:\n            # Ignore some special options\n            if name in [\"apps\", \"app_label\"]:\n                continue\n            elif name in model._meta.original_attrs:\n                if name == \"unique_together\":\n                    ut = model._meta.original_attrs[\"unique_together\"]\n                    options[name] = set(normalize_together(ut))\n                elif name == \"index_together\":\n                    it = model._meta.original_attrs[\"index_together\"]\n                    options[name] = set(normalize_together(it))\n                elif name == \"indexes\":\n                    indexes = [idx.clone() for idx in model._meta.indexes]\n                    for index in indexes:\n                        if not index.name:\n                            index.set_name_with_model(model)\n                    options[\"indexes\"] = indexes\n                elif name == \"constraints\":\n                    options[\"constraints\"] = [\n                        con.clone() for con in model._meta.constraints\n                 "
+          },
+          {
+            "path": "django/db/migrations/state.py",
+            "symbol": "from_model",
+            "start_line": 762,
+            "end_line": 912,
+            "origin": "ast_caller",
+            "depth": 1,
+            "source_sha256": "e22b722ec7f7ad6d71e9ab0bba21ddc5c10059057ddddf20d6d986a258cce290",
+            "read_cost": 5000,
+            "rank": 6,
+            "text": "    def get_field(self, field_name):\n        if field_name == \"_order\":\n            field_name = self.options.get(\"order_with_respect_to\", field_name)\n        return self.fields[field_name]\n\n    @classmethod\n    def from_model(cls, model, exclude_rels=False):\n        \"\"\"Given a model, return a ModelState representing it.\"\"\"\n        # Deconstruct the fields\n        fields = []\n        for field in model._meta.local_fields:\n            if getattr(field, \"remote_field\", None) and exclude_rels:\n                continue\n            if isinstance(field, models.OrderWrt):\n                continue\n            name = field.name\n            try:\n                fields.append((name, field.clone()))\n            except TypeError as e:\n                raise TypeError(\n                    \"Couldn't reconstruct field %s on %s: %s\"\n                    % (\n                        name,\n                        model._meta.label,\n                        e,\n                    )\n                )\n        if not exclude_rels:\n            for field in model._meta.local_many_to_many:\n                name = field.name\n                try:\n                    fields.append((name, field.clone()))\n                except TypeError as e:\n                    raise TypeError(\n                        \"Couldn't reconstruct m2m field %s on %s: %s\"\n                        % (\n                            name,\n                            model._meta.object_name,\n                            e,\n                        )\n                    )\n        # Extract the options\n        options = {}\n        for name in DEFAULT_NAMES:\n            # Ignore some special options\n            if name in [\"apps\", \"app_label\"]:\n                continue\n            elif name in model._meta.original_attrs:\n                if name == \"unique_together\":\n                    ut = model._meta.original_attrs[\"unique_together\"]\n                    options[name] = set(normalize_together(ut))\n                elif name == \"index_together\":\n                    it = model._meta.original_attrs[\"index_together\"]\n                    options[name] = set(normalize_together(it))\n                elif name == \"indexes\":\n                    indexes = [idx.clone() for idx in model._meta.indexes]\n                    for index in indexes:\n                        if not index.name:\n                            index.set_name_with_model(model)\n                    options[\"indexes\"] = indexes\n                elif name == \"constraints\":\n                    options[\"constraints\"] = [\n                        con.clone() for con in model._meta.constraints\n                    ]\n                else:\n                    options[name] = model._meta.original_attrs[name]\n        # If we're ignoring relationships, remove all field-listing model\n        # options (that option basically just means \"make a stub model\")\n        if exclude_rels:\n            for key in [\"unique_together\", \"index_together\", \"order_with_respect_to\"]:\n                if key in options:\n                    del options[key]\n        # Private fields are ignored, so remove options that refer to them.\n        elif options.get(\"order_with_respect_to\") in {\n            field.name for field in model._meta.private_fields\n        }:\n            del options[\"order_with_respect_to\"]\n\n        def flatten_bases(model):\n            bases = []\n            for base in model.__bases__:\n                if hasattr(base, \"_meta\") and base._meta.abstract:\n                    bases.extend(flatten_bases(base))\n                else:\n                    bases.append(base)\n            return bases\n\n        # We can't rely on __mro__ directly because we only want to flatten\n        # abstract models and not the whole tree. However by recursing on\n        # __bases__ we may end up with duplicates and ordering issues, we\n        # therefore discard any duplicates and reorder the bases according\n        # to their index in the MRO.\n        flattened_bases = sorted(\n            set(flatten_bases(model)), key=lambda x: model.__mro__.index(x)\n        )\n\n        # Make our record\n        bases = tuple(\n            (base._meta.label_lower if hasattr(base, \"_meta\") else base)\n            for base in flattened_bases\n        )\n        # Ensure at least one base inherits from models.Model\n        if not any(\n            (isinstance(base, str) or issubclass(base, models.Model)) for base in bases\n        ):\n            bases = (models.Model,)\n\n        managers = []\n        manager_names = set()\n        default_manager_shim = None\n        for manager in model._meta.managers:\n            if manager.name in manager_names:\n                # Skip overridden managers.\n                continue\n            elif manager.use_in_migrations:\n                # Copy managers usable in migrations.\n                new_manager = copy.copy(manager)\n                new_manager._set_creation_counter()\n            elif manager is model._base_manager or manager is model._default_manager:\n"
+          }
+        ],
+        "candidate_count": 6,
+        "total_read_cost": 21154,
+        "max_candidate_count": 6,
+        "abstain_reason": null,
+        "localization_sha256": "836e882048d2e61d9d2d3879f1c1ee77b13923d71e7ef77fda34d295b60b4b78"
+      }
+    }
+  }
+}

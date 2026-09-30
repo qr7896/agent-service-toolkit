@@ -1,0 +1,47 @@
+{
+  "binding_count": 3,
+  "bindings": [
+    {
+      "attribute": "ReferenceFrame",
+      "local_name": "ReferenceFrame",
+      "module": "sympy.physics.vector"
+    },
+    {
+      "attribute": "Vector",
+      "local_name": "Vector",
+      "module": "sympy.physics.vector"
+    },
+    {
+      "attribute": "symbols",
+      "local_name": "symbols",
+      "module": "sympy"
+    }
+  ],
+  "candidate_path": "sympy/physics/vector/vector.py",
+  "classification": "exception_type_mismatch",
+  "compiled_body_sha256": "d6b24f4c46b6a6cab586e85e8800a4235937d72c4f2e36c0756fc9b984e44ff2",
+  "exact_base_identity": true,
+  "executed": true,
+  "expected_base_commit": "c6753448b5c34f95e250105d76709fe4d349ca1f",
+  "expected_contract": {
+    "exception_type": "TypeError",
+    "message": "A Vector must be supplied"
+  },
+  "image_digest": "swebench/sweb.eval.x86_64.sympy_1776_sympy-14711@sha256:db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+  "immutable_image_identity": true,
+  "network_disabled": true,
+  "observed_base_commit": "c6753448b5c34f95e250105d76709fe4d349ca1f",
+  "observed_contract": {
+    "exception_type": "ImportError",
+    "message": "SymPy now depends on mpmath as an external library. See http://docs.sympy.org/latest/install.html#mpmath for more information."
+  },
+  "preflight_sha256": "f34379ac6026b35aade18638770499a82a9298fd5507f17745e0551fecd86154",
+  "provider_calls": 0,
+  "returncode": 1,
+  "schema": "e1c-strict-successor-expected-failure-preflight-v1",
+  "stderr_sha256": "ec722ba4729e0652ea9d78c718aeb732bc94d2887723e78c58898c4b99acb736",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timed_out": false,
+  "timeout_seconds": 60,
+  "trusted_reproducer": false
+}

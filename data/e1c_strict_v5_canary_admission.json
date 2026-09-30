@@ -1,0 +1,98 @@
+{
+  "schema": "e1c-strict-v5-canary-admission-v1",
+  "ready": false,
+  "reason": "strict_v5_admission_incomplete",
+  "provider_calls": 0,
+  "trusted_reproducer_count": 0,
+  "minimum_trusted_reproducers": 2,
+  "checks": {
+    "identity_frozen": true,
+    "projection_supported": true,
+    "source_identity": true,
+    "official_image": false,
+    "base_fail": false,
+    "gold_pass": false,
+    "leakage_free": true,
+    "infrastructure_ok": false,
+    "trusted_reproducer_minimum": false
+  },
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "identity_frozen": true,
+      "projection_status": "projected",
+      "source_commit_matches": true,
+      "image_present": false,
+      "base_fail": false,
+      "gold_pass": false,
+      "trusted_reproducer": false,
+      "leakage_free": true,
+      "infrastructure_ok": false
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "identity_frozen": true,
+      "projection_status": "projected",
+      "source_commit_matches": true,
+      "image_present": false,
+      "base_fail": false,
+      "gold_pass": false,
+      "trusted_reproducer": false,
+      "leakage_free": true,
+      "infrastructure_ok": false
+    },
+    {
+      "instance_id": "django__django-16092",
+      "identity_frozen": true,
+      "projection_status": "projected",
+      "source_commit_matches": true,
+      "image_present": false,
+      "base_fail": false,
+      "gold_pass": false,
+      "trusted_reproducer": false,
+      "leakage_free": true,
+      "infrastructure_ok": false
+    }
+  ],
+  "new_task_tree_touched": false,
+  "admission_sha256": "83ec77d8830c1fc785ea7a3f532e079b52669fef521aad85023143615e72443d",
+  "evidence_rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "projection_present": true,
+      "source_status": "github_archive_materialized",
+      "image_status": "image_manifest_unavailable",
+      "verification_status": "official_image_unavailable",
+      "probe_status": "no_reproducer",
+      "leakage_free": true,
+      "leakage_reason": null
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "projection_present": true,
+      "source_status": "github_archive_materialized",
+      "image_status": "image_manifest_unavailable",
+      "verification_status": "official_image_unavailable",
+      "probe_status": "no_reproducer",
+      "leakage_free": true,
+      "leakage_reason": null
+    },
+    {
+      "instance_id": "django__django-16092",
+      "projection_present": true,
+      "source_status": "github_archive_materialized",
+      "image_status": "image_manifest_unavailable",
+      "verification_status": "official_image_unavailable",
+      "probe_status": "no_reproducer",
+      "leakage_free": true,
+      "leakage_reason": null
+    }
+  ],
+  "live_model_run": false,
+  "frozen_instance_ids": [
+    "pydata__xarray-3993",
+    "sympy__sympy-15308",
+    "django__django-16092"
+  ],
+  "report_sha256": "5d7230f84fa346648baa319dddefbe6f7ca81214c8c3a6732b17b0c2c5f80084"
+}

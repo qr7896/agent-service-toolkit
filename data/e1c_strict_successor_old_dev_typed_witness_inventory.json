@@ -1,0 +1,29 @@
+﻿{
+    "schema":  "e1c-strict-successor-old-dev-typed-witness-inventory-v1",
+    "provider_calls":  0,
+    "source_scope":  "old DEV replay artifacts only",
+    "typed_witness_occurrence_files":  [
+                                           "data/e1c_strict_v7_dev_replay.json",
+                                           "data/e1c_strict_v8_dev_replay.json",
+                                           "data/e1c_strict_v9_dev_replay.json",
+                                           "data/e1c_strict_v10_dev_replay.json"
+                                       ],
+    "unique_typed_witness_count":  1,
+    "unique_witnesses":  [
+                             {
+                                 "instance_id":  "django__django-11734",
+                                 "kind":  "python_scenario",
+                                 "origin":  "projected_issue_python_scenario",
+                                 "execution_ready":  false,
+                                 "candidate_path":  "django/db/models/expressions.py",
+                                 "witness_sha256":  "ac32193cfc9cf8ff2dbb203175e32f4341c22fd6e37ac0f8d6976ff5483d3cbd",
+                                 "freeze_sha256":  "0e1e9cf7ded015c4bf92b01262542dd29da4d0d67fdc1afdfc4368b5395310e9",
+                                 "observable":  "scenario_exit_code == 0",
+                                 "setup_complete":  false,
+                                 "setup_gap":  "scenario references Number/Item plus Exists/OuterRef/Q; issue-local Number/Item setup is not persisted in frozen witness"
+                             }
+                         ],
+    "call_result_witness_count":  0,
+    "alternative_old_dev_preflight_target_count":  0,
+    "conclusion":  "No compliant alternate typed old-DEV reproducer target exists in the historical DEV replay artifacts. The predeclared execution-preflighted behavioral gain depends on validating the original django-11734 witness in a canonical environment; changing task or reconstructing setup would create a new/post-hoc mechanism."
+}

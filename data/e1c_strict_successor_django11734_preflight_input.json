@@ -1,0 +1,26 @@
+{
+  "expected_base_commit": "999891bd80b3d02dd916731a7a239e1036174885",
+  "freeze_sha256": "0e1e9cf7ded015c4bf92b01262542dd29da4d0d67fdc1afdfc4368b5395310e9",
+  "image_digest": "swebench/sweb.eval.x86_64.django_1776_django-11734@sha256:5ddbc111ccc7ed091855034eacff1c58347df158d6acd0c015feab17587d36a2",
+  "import_map": {},
+  "instance_id": "django__django-11734",
+  "provider_calls": 0,
+  "schema": "e1c-strict-successor-real-preflight-input-v1",
+  "setup_repair_allowed": false,
+  "source_replay": "data/e1c_strict_v10_dev_replay.json",
+  "source_replay_sha256": "a2e30c22a4e5a6eebb0d8da52f5fac19715c5974e5550dc3fdadcacafa25d363",
+  "source_root": ".codex/e1c/strict-v6/postfreeze-v1/django__django-11734/source",
+  "timeout_seconds": 60,
+  "witness": {
+    "benchmark_assertion_used": false,
+    "candidate_path": "django/db/models/expressions.py",
+    "kind": "python_scenario",
+    "observable": "scenario_exit_code == 0",
+    "provenance": "projected_issue_plus_production_localization",
+    "schema": "e1c-strict-v7-witness-ir-v1",
+    "source": "# filter()\nqs = Number.objects.annotate(\n\tfoo=Exists(\n\t\tItem.objects.filter(tags__category_id=OuterRef('pk'))\n\t)\n).filter(foo=True)\nprint(qs) # works\n# exclude()\nqs = Number.objects.annotate(\n\tfoo =Exists(\n\t\tItem.objects.exclude(tags__category_id=OuterRef('pk'))\n\t)\n).filter(foo=True)\nprint(qs) # crashes\n# filter(~Q())\nqs = Number.objects.annotate(\n\tfoo =Exists(\n\t\tItem.objects.filter(~Q(tags__category_id=OuterRef('pk')))\n\t)\n).filter(foo=True)\nprint(qs) # crashes\n",
+    "task_id_used": false,
+    "witness_sha256": "ac32193cfc9cf8ff2dbb203175e32f4341c22fd6e37ac0f8d6976ff5483d3cbd"
+  },
+  "witness_sha256": "ac32193cfc9cf8ff2dbb203175e32f4341c22fd6e37ac0f8d6976ff5483d3cbd"
+}

@@ -1,11 +1,14 @@
 import json
 
+import httpx
 import pytest
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from langchain_openai import ChatOpenAI
 
 from agents.model_budget import (
     AmbiguousProviderCall,
     ProviderBudgetExceeded,
+    _bind_with_output_limit,
     budgeted_ainvoke,
 )
 
@@ -44,6 +47,39 @@ def config(path, **overrides):
     return {"configurable": values}
 
 
+def test_deepseek_output_cap_uses_provider_field_without_losing_thinking_setting():
+    model = ChatOpenAI(model="deepseek-flash", api_key="dummy", base_url="https://api.deepseek.com")
+    thinking = model.bind(reasoning_effort="low", extra_body={"thinking": {"type": "enabled"}})
+    for source, disabled in ((model, True), (thinking, False)):
+        bound = _bind_with_output_limit(source, 6000, disabled)
+        payload = bound.bound._get_request_payload([HumanMessage(content="test")], **bound.kwargs)
+        assert payload["extra_body"]["max_tokens"] == 6000
+        assert payload["extra_body"]["thinking"]["type"] == ("disabled" if disabled else "enabled")
+        assert payload.get("max_completion_tokens") is None
+
+
+@pytest.mark.asyncio
+async def test_deepseek_output_cap_reaches_http_body_without_network():
+    sent = {}
+
+    def respond(request):
+        sent.update(json.loads(request.content))
+        return httpx.Response(200, json={
+            "id": "mock", "object": "chat.completion", "created": 0, "model": "deepseek-flash",
+            "choices": [{"index": 0, "finish_reason": "stop",
+                         "message": {"role": "assistant", "content": "ok"}}],
+            "usage": {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
+        })
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(respond)) as client:
+        model = ChatOpenAI(model="deepseek-flash", api_key="dummy",
+                           base_url="https://api.deepseek.com", http_async_client=client)
+        await _bind_with_output_limit(model, 6000, True).ainvoke([HumanMessage(content="test")])
+    assert sent["max_tokens"] == 6000
+    assert sent["thinking"] == {"type": "disabled"}
+    assert "max_completion_tokens" not in sent
+
+
 @pytest.mark.asyncio
 async def test_budgeted_call_records_usage_and_stops_at_call_ceiling(tmp_path):
     response = AIMessage(content="ok")
@@ -58,6 +94,19 @@ async def test_budgeted_call_records_usage_and_stops_at_call_ceiling(tmp_path):
     rows = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()]
     assert [row["status"] for row in rows] == ["started", "completed"]
     assert rows[-1]["total_tokens"] == 6
+
+
+@pytest.mark.asyncio
+async def test_provider_overrun_is_recorded_then_fails_closed(tmp_path):
+    response = AIMessage(content="ok")
+    response.usage_metadata = {"input_tokens": 4, "output_tokens": 200, "total_tokens": 204}
+    ledger = tmp_path / "calls.jsonl"
+    with pytest.raises(ProviderBudgetExceeded, match="over-budget usage"):
+        await budgeted_ainvoke(Model(response), [HumanMessage(content="small")],
+                               config(ledger), role="planner")
+    rows = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()]
+    assert [row["status"] for row in rows] == ["started", "completed"]
+    assert rows[-1]["over_budget"] is True and rows[-1]["total_tokens"] == 204
 
 
 @pytest.mark.asyncio

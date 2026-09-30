@@ -1,0 +1,49 @@
+{
+  "schema": "e1c-strict-v25-seal-v1",
+  "date": "2026-09-26",
+  "status": "SEALED_NEGATIVE_GATE_UNREACHABLE",
+  "provider_calls": 0,
+  "frozen_mechanism_chain_sha256": "4297b7ff5da4719aec80eb26a70fb8550539ac0aaa146d88a94f9fa0d9d11c29",
+  "prereg_sha256": "c26ed4757dc28545d657f8bae4c9f72a59975265eac9c45a73c04b2828ecf1df",
+  "identity_manifest_sha256": "e1190a072e1437a1bc925a09ed8f177dc2b9c818ef14f7fd8c31b36d57d32503",
+  "postfreeze_assessment_sha256": "1ad542f2f718615afc525b28c9dbe73911249a603fae482022873b4de3ebe1e5",
+  "required_trusted_reproducers": 2,
+  "tasks": {
+    "sympy__sympy-16637": {
+      "candidate": "executable",
+      "image_digest": "swebench/sweb.eval.x86_64.sympy_1776_sympy-16637@sha256:e9f3c11aec668ecba061657a380848ce3dd7f90c3b4cccebddcdb856c7347e4b",
+      "base_phase_pass": false,
+      "source_identity_valid": true,
+      "valid_log": false,
+      "parsed_test_count": 0,
+      "f2p_explicit_fail": 0,
+      "base_log_sha256": "8dc1191f1d3be090586d56427bbe513d9a56b2484a5adda98f37dcc472761a29",
+      "trusted_reproducer": false,
+      "reason": "official image Python runtime fails before parseable test output; Base is nonadmissible; no retry; Gold prohibited"
+    },
+    "django__django-12830": {
+      "candidate": "executable",
+      "image_acquisition": "stopped_after_gate_became_unreachable; cache preserved",
+      "trusted_reproducer": "unknown_not_needed_for_gate",
+      "reason": "even if trusted, maximum trusted count is 1"
+    },
+    "django__django-12125": {
+      "candidate": "non_executable",
+      "trusted_reproducer": false,
+      "reason": "frozen postfreeze assessment has no executable reproducer"
+    }
+  },
+  "maximum_possible_trusted_reproducers": 1,
+  "trusted_gate_reachable": false,
+  "gold_allowed_for_sympy": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "dev30_allowed": false,
+  "fresh30_allowed": false,
+  "two_round_stop_rule": {
+    "prior_independent_negative": "V23",
+    "current_independent_negative": "V25",
+    "action": "pause paid expansion; audit failures and ROI before any new independent canary"
+  },
+  "next_allowed_action": "zero-provider failure/ROI audit and successor mechanism research using old DEV/non-canary evidence only; any later canary must use a new mechanism and new non-overlapping identities"
+}

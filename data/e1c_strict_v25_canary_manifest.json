@@ -1,0 +1,46 @@
+{
+  "schema": "e1c-strict-v25-external-canary-reserve-v1",
+  "source": "frozen_swebench_git_tree_names_only",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v25-independent-canary",
+  "mechanism_prereg_sha256": "c26ed4757dc28545d657f8bae4c9f72a59975265eac9c45a73c04b2828ecf1df",
+  "tasks": [
+    {
+      "instance_id": "sympy__sympy-16637",
+      "task_yaml_path": "tasks/sympy__sympy-16637/task.yaml",
+      "task_yaml_blob_sha": "ff1166b2e735ad4e6d4efcbe1309d4e832899964",
+      "repo": "sympy/sympy",
+      "base_commit": "df58361055cbd92b03cef14dba41ac6f0a004fd7",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-16637:latest",
+      "task_yaml_sha256": "c6814cd5c4f9b76833c9b374143f191105d61197b295e4c24ec39ec6edfbc7e5",
+      "statement_sha256": "3646a4c0a2f6e59e7e885623ce95346b09a8ff37e19e7bca6029f764289c0237",
+      "statement_blob_sha": "195e86862af3a7940ba4477acf26aed4ecc37e50"
+    },
+    {
+      "instance_id": "django__django-12830",
+      "task_yaml_path": "tasks/django__django-12830/task.yaml",
+      "task_yaml_blob_sha": "27366c8a59721fbd1ec82d30515d78577936b213",
+      "repo": "django/django",
+      "base_commit": "926148ef019abcac3a9988c78734d9336d69f24e",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-12830:latest",
+      "task_yaml_sha256": "236885e6fb044969c39b4ce8f89a333fc3f9dd840e71703ca293be75ea01a029",
+      "statement_sha256": "72be3f05340cea117dcd40bf29ac38310a08577207591a1cb7265a958e7068f0",
+      "statement_blob_sha": "8c23b507e0526f0d49bdfb50d63b66d843fb50c1"
+    },
+    {
+      "instance_id": "django__django-12125",
+      "task_yaml_path": "tasks/django__django-12125/task.yaml",
+      "task_yaml_blob_sha": "77e0eb15d92685b52162d0d9fd05c0326c7b158a",
+      "repo": "django/django",
+      "base_commit": "89d41cba392b759732ba9f1db4ff29ed47da6a56",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-12125:latest",
+      "task_yaml_sha256": "43be07c13f82725f44b70591cb55f5341a4e74f9da61da6780eebad85946ddf5",
+      "statement_sha256": "d466ceb9860bfb421821c9bab47b1fa2c11295523365b174ea0b2a5a3b125a65",
+      "statement_blob_sha": "32c2da41f8fb3cb5d8b833a95cf8d5c0551b56c9"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": true,
+  "postfreeze_metadata_materialized": true
+}

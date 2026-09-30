@@ -1,0 +1,105 @@
+{
+  "schema": "e1c-strict-v25-admission-input-v1",
+  "provider_calls": 0,
+  "repair_visible": false,
+  "task_count": 3,
+  "rows": [
+    {
+      "instance_id": "sympy__sympy-16637",
+      "base_commit": "df58361055cbd92b03cef14dba41ac6f0a004fd7",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-16637:latest",
+      "grader_blobs": [
+        {
+          "name": "Dockerfile",
+          "git_blob_sha": "afa36df46bdd9a2d7a6f1ce6923f20561f30489c",
+          "size_bytes": 3276
+        },
+        {
+          "name": "eval.sh",
+          "git_blob_sha": "316c1094a51d12c4e11e55b6a02b306de2a998f6",
+          "size_bytes": 2669
+        },
+        {
+          "name": "gold.patch",
+          "git_blob_sha": "3e62c1fe1dd761fde3dbcdc5feaab2a81a2ff591",
+          "size_bytes": 2756
+        },
+        {
+          "name": "test.patch",
+          "git_blob_sha": "2ee7e236212183fe0e2111c0003a420a32f68a3e",
+          "size_bytes": 1925
+        },
+        {
+          "name": "tests.json",
+          "git_blob_sha": "0e14ab686703b8163863e9053fd29a6b842bea82",
+          "size_bytes": 105
+        }
+      ]
+    },
+    {
+      "instance_id": "django__django-12830",
+      "base_commit": "926148ef019abcac3a9988c78734d9336d69f24e",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-12830:latest",
+      "grader_blobs": [
+        {
+          "name": "Dockerfile",
+          "git_blob_sha": "a09be8c0effcb6266bf851624cabe4aade52cba0",
+          "size_bytes": 4134
+        },
+        {
+          "name": "eval.sh",
+          "git_blob_sha": "881e6b5d562f96e5443410ab3315a62c4eb672d7",
+          "size_bytes": 7096
+        },
+        {
+          "name": "gold.patch",
+          "git_blob_sha": "5d58b7666745b68c8447660f528520db4bc82511",
+          "size_bytes": 3749
+        },
+        {
+          "name": "test.patch",
+          "git_blob_sha": "c37cfb962ec0a979e272165955e0a2fc8ceb5507",
+          "size_bytes": 6137
+        },
+        {
+          "name": "tests.json",
+          "git_blob_sha": "37f70c1b2f4671b199caf42b4e8e0de5ce19ea53",
+          "size_bytes": 10350
+        }
+      ]
+    },
+    {
+      "instance_id": "django__django-12125",
+      "base_commit": "89d41cba392b759732ba9f1db4ff29ed47da6a56",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-12125:latest",
+      "grader_blobs": [
+        {
+          "name": "Dockerfile",
+          "git_blob_sha": "0f7263d034763157b4c25900af7d65434eba1d63",
+          "size_bytes": 3976
+        },
+        {
+          "name": "eval.sh",
+          "git_blob_sha": "ffbc816c4236545da448dcb7584c8ad0839ae8e6",
+          "size_bytes": 2927
+        },
+        {
+          "name": "gold.patch",
+          "git_blob_sha": "4c86a5fff17e63c464f9ab9b2b6b6ee5934fef0c",
+          "size_bytes": 546
+        },
+        {
+          "name": "test.patch",
+          "git_blob_sha": "6da326d247676ce24d18cd072e4083b5fb7eb5f9",
+          "size_bytes": 2076
+        },
+        {
+          "name": "tests.json",
+          "git_blob_sha": "7de059295483739ccd09a46f6d19ea8d151ee4e9",
+          "size_bytes": 3421
+        }
+      ]
+    }
+  ],
+  "summary_sha256": "c88f66110edf02b5d3575782f4b463412fd49383d90e92e68ccf2b2d1c044e90"
+}

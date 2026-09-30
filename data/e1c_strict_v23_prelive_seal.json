@@ -1,0 +1,18 @@
+{
+  "schema": "e1c-strict-v23-prelive-seal-v1",
+  "decision": "seal_strict_v23_independent_negative_canary_insufficient_executable_reproducers",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "mechanism_frozen": true,
+  "mechanism_prereg_sha256": "5a517906a52f8e482d81172782f96fe938c37c0f6ac7e6fc335fc573290b2dbc",
+  "postfreeze_assessment_sha256": "0bb2eddd03c205ab8b95bf8b8359ee71b7eeb42fb48d6df9475e043f6bd7ea84",
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "executable_candidate_task_count": 1,
+  "consensus_candidate_task_count": 0,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "canary_reuse_for_tuning_allowed": false,
+  "next": "zero-model successor development on old DEV only, then new nonoverlapping independent identities",
+  "seal_sha256": "df194217ed370d063f3166cfc4d180bb46e65453c434422c460a71eaa95bf155"
+}

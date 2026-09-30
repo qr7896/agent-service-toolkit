@@ -1,0 +1,57 @@
+{
+  "schema": "e1c-strict-v20-admission-input-v1",
+  "provider_calls": 0,
+  "repair_visible": false,
+  "rows": [
+    {
+      "instance_id": "sympy__sympy-21586",
+      "task_identity_ok": true,
+      "base_commit": "1808affb21ee0dd5226134ad7b3bb9f1785d2e56",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-21586:latest",
+      "f2p_count": 3,
+      "p2p_count": 135,
+      "files": {
+        "Dockerfile": "17a7f315e600c030c0d6e8fe45d3d98d56f2d9da41f7ddc18d924ff4b80950ff",
+        "eval.sh": "7cc59922108af8c91a231314359f7e09531713edbd17b135c90c8c1e25f77ffc",
+        "gold.patch": "c696930811a4533c8cfe75a8fd200d210a71fa1d3ecf1d9f4ad122a88a50c61e",
+        "task.yaml": "2d9244dc84f66d0dfb2e86b6e4b6624c5eecc06f346879fe1f59156f59af7aad",
+        "test.patch": "40b1efcb17b4383a520d735a621f46fd8bbb15ffb82885b8a5e66b8f75372398",
+        "tests.json": "4140708b2e4d490643eb64a8d6d5c8f64ec6b8f6216107fc192108d2710a5113"
+      }
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1026",
+      "task_identity_ok": true,
+      "base_commit": "27872b83b0932cc419116f79e442963cced935bb",
+      "image": "swebench/sweb.eval.x86_64.pvlib_1776_pvlib-python-1026:latest",
+      "f2p_count": 1,
+      "p2p_count": 0,
+      "files": {
+        "Dockerfile": "6c54c166002435dc8ee49edb242d940c34469b48579fcd826ef3949eca793819",
+        "eval.sh": "7ad0ac743d121f618d58a5528ec5bec02ca28ab7389c25faa7d185a87f70aa41",
+        "gold.patch": "b95a132b9fd997eb39917059f3f56151680f1bc758fcbb655f0e4def92c2c8e5",
+        "task.yaml": "e4a8526bfbdfefb4102b263ceb1e347398038077661fdbd9f7f1844d2b913ff6",
+        "test.patch": "c10f6632ff6490d480258facae1316d35045f9eb48b4fefd2cf88dd80b6cc52b",
+        "tests.json": "370e4aaded5e5210ff453953bdafccca67fc90b86c13c1ffe0c450512418fa2c"
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-2905",
+      "task_identity_ok": true,
+      "base_commit": "7c4e2ac83f7b4306296ff9b7b51aaf016e5ad614",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-2905:latest",
+      "f2p_count": 1,
+      "p2p_count": 364,
+      "files": {
+        "Dockerfile": "c1035812a900bb7c6a789a6a572f7b6669e12b8f012ffefd01d2c7715ef1dbb0",
+        "eval.sh": "65540be2ca454c19d1c156ec899c3f851ec1d5a481c346ae87614e9033d54ca1",
+        "gold.patch": "4bf05606ff37d427b5d1eff27a61b41489785d022c234933fbc8879cad5fd762",
+        "task.yaml": "de185dc3784e65b4127b217f0bc1a774310a61b4698d2667f4f5731ebbc58e9a",
+        "test.patch": "49945ef0c157e31201d3d14768dfa052381edb5915a91e5662b65a37b1683c7a",
+        "tests.json": "e1df60d9691bb3e6ccb07ce54652fc2445df07d8af22617dc974510f0faaa457"
+      }
+    }
+  ],
+  "ready": true,
+  "summary_sha256": "d1773199a19babd897338f10a9d8b87f3e2a05ce1cd29cb6da2bbdeaa0bd1a4c"
+}

@@ -1,0 +1,9 @@
+{
+  "active_images_inspect_exit": 0,
+  "active_images_present": true,
+  "docker_system_df": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          10        0         26.36GB   23.52GB (89%)\nContainers      0         0         0B        0B\nLocal Volumes   0         0         0B        0B\nBuild Cache     0         0         0B        0B\n",
+  "docker_system_df_exit": 0,
+  "network_required_for_canary_runtime": false,
+  "provider_calls": 0,
+  "schema": "e1c-strict-successor-cti2-resource-preflight-v1"
+}

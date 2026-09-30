@@ -1,0 +1,67 @@
+{
+  "protocol": "e1b-dev-v7-audit-v1",
+  "scope": "DEV only; original TEST and replacement held-out outcomes excluded",
+  "status": "valid_partial_dev",
+  "protocol_valid": true,
+  "freeze_ready": false,
+  "resolved_count": 2,
+  "total_model_calls": 8,
+  "total_tokens": 5797,
+  "ledger_completed_calls": 8,
+  "ledger_total_tokens": 5797,
+  "coverage_failure_count": 0,
+  "improved_from_v5": [],
+  "regressed_from_v5": [],
+  "remaining_unresolved": [
+    "e1b__cross-module-status-26",
+    "e1b__state-version-29"
+  ],
+  "transitions": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "v5_resolved": true,
+      "v7_resolved": true,
+      "resolved_transition": "1->1",
+      "coverage_failure": false,
+      "proposal_coverage_complete": true,
+      "final_coverage_complete": true,
+      "v7_f2p_all": true,
+      "v7_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "v5_resolved": true,
+      "v7_resolved": true,
+      "resolved_transition": "1->1",
+      "coverage_failure": false,
+      "proposal_coverage_complete": true,
+      "final_coverage_complete": true,
+      "v7_f2p_all": true,
+      "v7_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "v5_resolved": false,
+      "v7_resolved": false,
+      "resolved_transition": "0->0",
+      "coverage_failure": false,
+      "proposal_coverage_complete": true,
+      "final_coverage_complete": true,
+      "v7_f2p_all": true,
+      "v7_p2p_all": false
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "v5_resolved": false,
+      "v7_resolved": false,
+      "resolved_transition": "0->0",
+      "coverage_failure": false,
+      "proposal_coverage_complete": true,
+      "final_coverage_complete": true,
+      "v7_f2p_all": false,
+      "v7_p2p_all": false
+    }
+  ],
+  "claim_boundary": "Repeated four-task DEV evidence is protocol-development evidence only.",
+  "next_gate": "Freeze only if all four DEV resolve with valid artifacts and no regression; otherwise keep held-out outcomes closed."
+}

@@ -1,0 +1,73 @@
+{
+  "network_mode": "none",
+  "provider_calls": 0,
+  "rows": [
+    {
+      "attempt": 1,
+      "base_commit": "884b4c27f506b3c29d58509fc83a35c30ea10d94",
+      "docker_exit": 0,
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-15569:latest",
+      "instance_id": "django__django-15569",
+      "prepatch_failure": true,
+      "result": {
+        "candidate_path": "django/db/models/query_utils.py",
+        "matched_effects": [],
+        "passed": false,
+        "predicate": "has_clear_or_invalidate_effect",
+        "reason": "clear_or_invalidate_effect_missing",
+        "result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed",
+        "schema": "e1c-strict-v8-source-effect-result-v1",
+        "symbol": "_unregister_lookup"
+      },
+      "stderr": "",
+      "stdout": "{\"candidate_path\": \"django/db/models/query_utils.py\", \"matched_effects\": [], \"passed\": false, \"predicate\": \"has_clear_or_invalidate_effect\", \"reason\": \"clear_or_invalidate_effect_missing\", \"result_sha256\": \"6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed\", \"schema\": \"e1c-strict-v8-source-effect-result-v1\", \"symbol\": \"_unregister_lookup\"}\n",
+      "witness_sha256": "1744d6c9c0e22c5fdce02027056378bd77e810cdf061ab043d3caa414d1312cd"
+    },
+    {
+      "attempt": 2,
+      "base_commit": "884b4c27f506b3c29d58509fc83a35c30ea10d94",
+      "docker_exit": 0,
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-15569:latest",
+      "instance_id": "django__django-15569",
+      "prepatch_failure": true,
+      "result": {
+        "candidate_path": "django/db/models/query_utils.py",
+        "matched_effects": [],
+        "passed": false,
+        "predicate": "has_clear_or_invalidate_effect",
+        "reason": "clear_or_invalidate_effect_missing",
+        "result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed",
+        "schema": "e1c-strict-v8-source-effect-result-v1",
+        "symbol": "_unregister_lookup"
+      },
+      "stderr": "",
+      "stdout": "{\"candidate_path\": \"django/db/models/query_utils.py\", \"matched_effects\": [], \"passed\": false, \"predicate\": \"has_clear_or_invalidate_effect\", \"reason\": \"clear_or_invalidate_effect_missing\", \"result_sha256\": \"6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed\", \"schema\": \"e1c-strict-v8-source-effect-result-v1\", \"symbol\": \"_unregister_lookup\"}\n",
+      "witness_sha256": "1744d6c9c0e22c5fdce02027056378bd77e810cdf061ab043d3caa414d1312cd"
+    },
+    {
+      "attempt": 1,
+      "base_commit": "cdfca8cba33be63ef50ba9e14d8823cc551baf92",
+      "docker_exit": 1,
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13313:latest",
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "prepatch_failure": false,
+      "result": null,
+      "stderr": "Traceback (most recent call last):\n  File \"/input/run_contract.py\", line 4, in <module>\n    from evals.e1c_strict_v8_source_contract import evaluate_source_effect,evaluate_source_usage\n  File \"/repo/evals/e1c_strict_v8_source_contract.py\", line 3\n    from __future__ import annotations\n    ^\nSyntaxError: future feature annotations is not defined\n",
+      "stdout": "",
+      "witness_sha256": "f145d8cc226237232df78fb214e16abebe000cf498da2e8f71fd3430472c4a88"
+    },
+    {
+      "attempt": 2,
+      "base_commit": "cdfca8cba33be63ef50ba9e14d8823cc551baf92",
+      "docker_exit": 1,
+      "image": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13313:latest",
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "prepatch_failure": false,
+      "result": null,
+      "stderr": "Traceback (most recent call last):\n  File \"/input/run_contract.py\", line 4, in <module>\n    from evals.e1c_strict_v8_source_contract import evaluate_source_effect,evaluate_source_usage\n  File \"/repo/evals/e1c_strict_v8_source_contract.py\", line 3\n    from __future__ import annotations\n    ^\nSyntaxError: future feature annotations is not defined\n",
+      "stdout": "",
+      "witness_sha256": "f145d8cc226237232df78fb214e16abebe000cf498da2e8f71fd3430472c4a88"
+    }
+  ],
+  "schema": "e1c-strict-successor-source-contract-canonical-runtime-v1"
+}

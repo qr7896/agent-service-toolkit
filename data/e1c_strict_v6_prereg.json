@@ -1,0 +1,44 @@
+{
+  "schema": "e1c-strict-v6-reproducer-prereg-v1",
+  "provider_calls": 0,
+  "task_content_selected_after_mechanism_freeze": true,
+  "parent_v5_seal": "data/e1c_strict_v5_admission_seal.json",
+  "v5_canary_reuse_allowed": false,
+  "selection_salt": "e1c-strict-v6-independent-canary",
+  "canary_task_count": 3,
+  "minimum_trusted_reproducers": 2,
+  "live_allowed_before_admission": false,
+  "mechanism": {
+    "schema": "e1c-strict-v6-mechanism-identity-v1",
+    "files": [
+      {
+        "path": "D:/codex/working/project20260827/evals/e1c_strict_v5_boundary.py",
+        "sha256": "019a4f99dcf53c80027408d432aa0794657d9629daa32a0f667cd07f2160f7f7"
+      },
+      {
+        "path": "D:/codex/working/project20260827/evals/e1c_strict_v5_runtime.py",
+        "sha256": "89c58e40cdb1600cc9dc7aa209ab1b2f3478634980d426580aa2f57cd531422d"
+      },
+      {
+        "path": "D:/codex/working/project20260827/evals/e1c_strict_v6_probe.py",
+        "sha256": "58c71eaedd46d4ee70e3073951882d59de319d0bcbac75ed02b2e905937d09bc"
+      },
+      {
+        "path": "D:/codex/working/project20260827/evals/e1c_strict_v6_runtime.py",
+        "sha256": "75fa24d8e2c3a283491e06016aab019ee96981330f3ea6ade8921b3e826774b8"
+      }
+    ],
+    "mechanism_sha256": "a01920faae6e92a9b0efc0e5ca4cb14b2e769c9c0e0471b672ba251c8238baa2"
+  },
+  "supported_relation_classes": [
+    "return_equals",
+    "return_instead_of",
+    "equality_expression",
+    "contains",
+    "not_contains",
+    "raises",
+    "raises_instead_of"
+  ],
+  "unsupported_behavior": "fail_closed_no_reproducer",
+  "prereg_sha256": "f0636f02d031d8bd27705ded26340a85c63e5ef5534dd409c3f736d80dcc6aef"
+}

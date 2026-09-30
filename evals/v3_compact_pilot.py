@@ -43,6 +43,19 @@ EXPERIENCES = RUN_DIR / "experience.db"
 TOTAL_TOKEN_CEILING = 12_000
 TASK_TOKEN_CEILING = 4_000
 MAX_OUTPUT_TOKENS = 600
+MAX_CALLS_PER_TASK = 2
+
+
+def _configure_run(collection_id: str) -> None:
+    global RUN_ID, RUN_DIR, LEDGER, STATE, EXPERIENCES
+    if not collection_id.startswith("v3-prospective-compact-"):
+        raise ValueError("compact collection id required")
+    suffix = collection_id.removeprefix("v3-prospective-")
+    RUN_ID = collection_id
+    RUN_DIR = ROOT / ".codex" / "v3" / suffix
+    LEDGER = RUN_DIR / "provider_calls.jsonl"
+    STATE = RUN_DIR / "state.json"
+    EXPERIENCES = RUN_DIR / "experience.db"
 
 COMPACT_TASKS = (
     *PILOT_TASKS,
@@ -168,6 +181,91 @@ def _apply_edits(workspace: Path, edits: list[dict[str, str]]) -> list[str]:
     return sorted(staged)
 
 
+def _classify_failure(grade: dict[str, Any], failure: str | None) -> str:
+    if failure:
+        return "patch_failure"
+    if grade.get("passed"):
+        return "none"
+    output = f"{grade.get('stdout', '')}\n{grade.get('stderr', '')}"
+    if "ImportError: cannot import name" in output:
+        return "missing_symbol"
+    if "object is not callable" in output:
+        return "interface_contract"
+    if "AssertionError" in output:
+        return "preservation_contract"
+    if "Traceback (most recent call last)" in output:
+        return "candidate_exception"
+    return "verification_failure"
+
+
+def _escalation_policy(failure_class: str) -> str:
+    return {
+        "missing_symbol": "targeted_symbol_evidence",
+        "interface_contract": "guard_contract_feedback",
+        "preservation_contract": "failure_localized_preservation_evidence",
+        "candidate_exception": "failure_localized_exception_evidence",
+        "patch_failure": "structured_edit_feedback",
+    }.get(failure_class, "stop")
+
+
+def _escalation_card(failure_class: str, grade: dict[str, Any]) -> str:
+    cards = {
+        "missing_symbol": "Implement the missing public symbol named by the runtime-visible failure using only the task statement and supplied source excerpts.",
+        "interface_contract": "Repair only the runtime-visible interface mismatch using the task statement and supplied source excerpts.",
+        "preservation_contract": "Repair the runtime-visible preservation failure while preserving already-valid state; infer no hidden contract beyond the supplied task, source, and guard output.",
+        "candidate_exception": "Repair only the localized exception shown by the guard output.",
+        "patch_failure": "Return valid JSON exact edits against the supplied current excerpts only.",
+    }
+    detail = f"{grade.get('stdout', '')}\n{grade.get('stderr', '')}"[-1200:]
+    return f"{cards.get(failure_class, '')}\nGuard output:\n{detail}"
+
+
+async def _escalate(
+    task: PilotTask,
+    workspace: Path,
+    failure_class: str,
+    grade: dict[str, Any],
+    config: dict[str, Any],
+) -> tuple[dict[str, Any], list[str], dict[str, int], str | None]:
+    payload = _payload(task, workspace)
+    if failure_class in {"interface_contract", "preservation_contract"}:
+        payload["excerpts"] = [
+            {"path": row["path"], "text": row["text"][-4500:]} for row in payload["excerpts"]
+        ]
+    payload["escalation"] = {
+        "policy": _escalation_policy(failure_class),
+        "evidence": _escalation_card(failure_class, grade),
+    }
+    escalation_config = {
+        "configurable": {
+            **config["configurable"],
+            "provider_prompt_reserve_multiplier": 1.0,
+            "provider_max_output_tokens": 400,
+        }
+    }
+    response = await budgeted_ainvoke(
+        get_model(DeepseekModelName.DEEPSEEK_FLASH),
+        [
+            SystemMessage(content=SYSTEM),
+            HumanMessage(content=json.dumps(payload, ensure_ascii=False)),
+        ],
+        escalation_config,
+        role="compact_editor",
+    )
+    raw = content_text(response)
+    usage = usage_tokens(response)
+    changed: list[str] = []
+    failure = None
+    try:
+        edits = _parse_edits(raw, {row["path"] for row in payload["excerpts"]})
+        changed = _apply_edits(workspace, edits)
+        grade = _grade(task, workspace)
+    except (json.JSONDecodeError, TypeError, ValueError, PermissionError, OSError) as exc:
+        failure = f"patch_failure:{type(exc).__name__}:{exc}"
+        grade = {"passed": False, "exit_code": None}
+    return grade, changed, usage, failure
+
+
 def _trajectory(
     task: PilotTask,
     started_at: str,
@@ -242,7 +340,7 @@ async def _run_task(task: PilotTask) -> dict[str, Any]:
             "provider_task_id": task.instance_id,
             "provider_total_token_ceiling": TOTAL_TOKEN_CEILING,
             "provider_task_token_ceiling": TASK_TOKEN_CEILING,
-            "provider_max_calls_per_task": 1,
+            "provider_max_calls_per_task": MAX_CALLS_PER_TASK,
             "provider_max_output_tokens": MAX_OUTPUT_TOKENS,
             "provider_prompt_reserve_multiplier": 2.0,
             "provider_disable_thinking": True,
@@ -281,6 +379,26 @@ async def _run_task(task: PilotTask) -> dict[str, Any]:
         grade = {"passed": False, "exit_code": None}
 
     trajectory = _trajectory(task, started_at, grade, changed, usage, failure)
+    failure_class = _classify_failure(grade, failure)
+    trajectory["failure_class"] = failure_class
+    trajectory["escalation_policy"] = _escalation_policy(failure_class)
+    escalation_usage: dict[str, int] = {}
+    escalation_changed: list[str] = []
+    if not grade.get("passed") and trajectory["escalation_policy"] != "stop":
+        try:
+            grade, escalation_changed, escalation_usage, failure = await _escalate(
+                task, workspace, failure_class, grade, config
+            )
+            changed = sorted(set(changed + escalation_changed))
+            trajectory = _trajectory(task, started_at, grade, changed, usage, failure)
+            trajectory["attempts"] = 2
+            trajectory["llm_calls"] = 2
+            trajectory["failure_class"] = _classify_failure(grade, failure)
+            trajectory["escalation_policy"] = _escalation_policy(failure_class)
+            trajectory["escalated_from"] = failure_class
+            trajectory["escalation_provider_usage"] = escalation_usage
+        except Exception as exc:
+            trajectory["escalation_error"] = f"{type(exc).__name__}: {exc}"
     append_trajectory(trajectory, TRAJECTORIES)
     with ExperienceStore(EXPERIENCES) as store:
         experience_ids = store.record_trajectory(trajectory, root=workspace)
@@ -294,8 +412,12 @@ async def _run_task(task: PilotTask) -> dict[str, Any]:
         "trajectory_id": trajectory["id"],
         "experience_ids": experience_ids,
         "provider_usage": usage,
+        "escalation_provider_usage": escalation_usage,
+        "escalated": bool(escalation_usage),
         "provider_tokens_total": _spent(),
         "changed_files": patch["changed_files"],
+        "failure_class": failure_class,
+        "escalation_policy": trajectory["escalation_policy"],
         "wall_time_ms": round((time.perf_counter() - started) * 1000, 1),
         "workspace": str(workspace),
     }
@@ -303,8 +425,10 @@ async def _run_task(task: PilotTask) -> dict[str, Any]:
 
 async def _run(manifest_path: Path) -> dict[str, Any]:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest.get("collection_id") != RUN_ID or manifest.get("sealed_test") is not False:
-        raise ValueError(f"expected non-sealed collection {RUN_ID}")
+    collection_id = str(manifest.get("collection_id") or "")
+    if manifest.get("sealed_test") is not False:
+        raise ValueError("expected non-sealed collection")
+    _configure_run(collection_id)
     state = (
         json.loads(STATE.read_text(encoding="utf-8"))
         if STATE.exists()

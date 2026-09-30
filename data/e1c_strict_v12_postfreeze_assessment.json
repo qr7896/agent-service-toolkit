@@ -1,0 +1,97 @@
+{
+  "schema": "e1c-strict-v12-postfreeze-assessment-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 1,
+  "executable_candidate_task_count": 1,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": false,
+  "official_image_acquisition_allowed": false,
+  "rows": [
+    {
+      "instance_id": "django__django-16092",
+      "statement_sha256": "bdf4b0b6198aa5df7cc8f7b88f5b53b71f902c902274f8680249281920a0f695",
+      "source": {
+        "ready": true,
+        "base_commit": "599f3e2cda50ab084915ffd08edb5ad6cad61415"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v12-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "1586f99d9d3a90a5bfd818d5a69fdaf1285f769d92f1d03e03c53b6b3ed56d3c"
+      }
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1682",
+      "statement_sha256": "8bc88af61157e8314c2b90f32b71bed865a391c9c33610e3ed1bc3fbed58da18",
+      "source": {
+        "ready": true,
+        "base_commit": "ef8ad2fee9840a77d14b0dfd17fc489dd85c9b91"
+      },
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v12-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "1586f99d9d3a90a5bfd818d5a69fdaf1285f769d92f1d03e03c53b6b3ed56d3c"
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "statement_sha256": "a6cdc23eddbf29e8317e12bae00b482a71245291bda780d621924568351d2bd4",
+      "source": {
+        "ready": true,
+        "base_commit": "fb59d703e6863ed803c98177b59197b5513332e9"
+      },
+      "projection_status": "supported",
+      "candidate_count": 1,
+      "executable_candidate_count": 1,
+      "plan": {
+        "schema": "e1c-strict-v12-candidate-plan-v1",
+        "candidate_count": 1,
+        "executable_candidate_count": 1,
+        "status": "candidate_executable_witnesses",
+        "candidates": [
+          {
+            "execution_ready": true,
+            "origin": "generic_clause_symbol_binding",
+            "witness": {
+              "schema": "e1c-strict-v12-observable-contract-v1",
+              "kind": "semantic_postcondition",
+              "subject": "expression",
+              "verb": "preserve_expected_behavior",
+              "object": "",
+              "candidate_path": "sympy/polys/domains/expressiondomain.py",
+              "execution_ready": true,
+              "origin": "generic_clause_symbol_binding",
+              "provenance": "issue_semantic_clause_plus_unique_production_symbol",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "5c29eb9ff0d1dd219c227a8d3f240638fd703a10cb0f8a363435774e8d4f7a3b"
+            }
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "992fe5152893180963d85db90636e69ae1696149ba4d6af783bff4a72b9dfc24"
+      }
+    }
+  ],
+  "summary_sha256": "6fb33190b248d31532f7393138104421166257b272ad623ec289d0c35c4b90ec"
+}

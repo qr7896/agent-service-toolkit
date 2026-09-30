@@ -1,0 +1,114 @@
+{
+  "schema": "e1c-strict-v15-development-replay-v1",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "independent_evidence": false,
+  "task_count": 6,
+  "candidate_task_count": 6,
+  "executable_candidate_task_count": 6,
+  "rows": [
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "django__django-15569",
+      "candidate_count": 5,
+      "executable_candidate_count": 4,
+      "candidate_origins": [
+        "projected_issue_state_relation",
+        "should_clear_claim",
+        "generic_behavior_clause",
+        "confidence_checked_clause_symbol_binding",
+        "unique_localized_symbol_corroboration"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "django/db/models/query_utils.py": [
+          "behavioral",
+          "semantic_localization",
+          "structural"
+        ]
+      }
+    },
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "django__django-11734",
+      "candidate_count": 5,
+      "executable_candidate_count": 4,
+      "candidate_origins": [
+        "projected_issue_python_scenario",
+        "confidence_checked_clause_symbol_binding",
+        "confidence_checked_clause_symbol_binding",
+        "unique_localized_symbol_corroboration",
+        "unique_localized_symbol_corroboration"
+      ],
+      "consensus_path_count": 2,
+      "consensus_paths": {
+        "django/db/models/query.py": [
+          "semantic_localization",
+          "structural"
+        ],
+        "django/db/models/expressions.py": [
+          "semantic_localization",
+          "structural"
+        ]
+      }
+    },
+    {
+      "lineage": "strict_v6_exposed",
+      "instance_id": "sphinx-doc__sphinx-8638",
+      "candidate_count": 3,
+      "executable_candidate_count": 3,
+      "candidate_origins": [
+        "structural_reference_binding",
+        "multi_evidence_structural_binding",
+        "unique_localized_symbol_corroboration"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "sphinx/project.py": [
+          "semantic_localization",
+          "structural"
+        ]
+      }
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "candidate_count": 2,
+      "executable_candidate_count": 2,
+      "candidate_origins": [
+        "never_used_claim",
+        "unique_localized_symbol_corroboration"
+      ],
+      "consensus_path_count": 1,
+      "consensus_paths": {
+        "sklearn/utils/estimator_checks.py": [
+          "behavioral",
+          "structural"
+        ]
+      }
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "django__django-13233",
+      "candidate_count": 1,
+      "executable_candidate_count": 1,
+      "candidate_origins": [
+        "generic_relation_clause"
+      ],
+      "consensus_path_count": 0,
+      "consensus_paths": {}
+    },
+    {
+      "lineage": "strict_v7_exposed",
+      "instance_id": "django__django-15995",
+      "candidate_count": 1,
+      "executable_candidate_count": 1,
+      "candidate_origins": [
+        "confidence_checked_clause_symbol_binding"
+      ],
+      "consensus_path_count": 0,
+      "consensus_paths": {}
+    }
+  ],
+  "summary_sha256": "fbd5e3183e617cca9bd84a42a23808cb24d7c34a476ab72a8229c351b6550127"
+}

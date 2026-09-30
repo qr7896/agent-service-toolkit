@@ -1,0 +1,43 @@
+{
+  "bindings": [
+    {
+      "attribute": "ReferenceFrame",
+      "local_name": "ReferenceFrame",
+      "module": "sympy.physics.vector"
+    },
+    {
+      "attribute": "Vector",
+      "local_name": "Vector",
+      "module": "sympy.physics.vector"
+    },
+    {
+      "attribute": "symbols",
+      "local_name": "symbols",
+      "module": "sympy"
+    }
+  ],
+  "candidate_path": "sympy/physics/vector/vector.py",
+  "candidate_source_sha256": "7cfc74f494d9e3daaa9945962a8d0a3cebdfda024b576288e6cd46d17e277d4e",
+  "compiled_body_sha256": "d6b24f4c46b6a6cab586e85e8800a4235937d72c4f2e36c0756fc9b984e44ff2",
+  "compiled_body_source": "N = ReferenceFrame('N')\nsum([N.x, 0 * N.x])\n",
+  "dev30_analysis": "data/e1c_strict_successor_expected_failure_dev30_analysis.json",
+  "dev30_analysis_sha256": "6d7ce9ef9755711c3b973507f75a0658d94a67aeb02bc901946ff2f448846dc6",
+  "expected_base_commit": "c6753448b5c34f95e250105d76709fe4d349ca1f",
+  "expected_contract": {
+    "exception_type": "TypeError",
+    "message": "A Vector must be supplied"
+  },
+  "gate_sha256": "04a6c6f19c71e45e97b5cbd6433a81db7a624a0af8279b58bf2cce2de3e4a5db",
+  "image_digest": "swebench/sweb.eval.x86_64.sympy_1776_sympy-14711@sha256:db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+  "instance_id": "sympy__sympy-14711",
+  "mechanism_sha256": "c427ec5145cb4ab6c0534aad32c052ff11ef4f467463d06e844ba1d5978e8d89",
+  "network": "none",
+  "problem_statement_sha256": "2040f0884f278a78954414c05c2caedef7411158c41fc2046a6f3d9bac85d64f",
+  "provider_calls": 0,
+  "retry_allowed": false,
+  "schema": "e1c-strict-successor-expected-failure-preflight-input-v1",
+  "selection_rule": "first EFIL-compile-ready candidate in frozen DEV30 order; cached official digest is infrastructure-only tie-breaker",
+  "selection_stage": "post-static-gate_pre-execution",
+  "source_root": ".codex/e1c/e1c-dev-v21-n30-7d8e6569/workspaces/sympy__sympy-14711",
+  "timeout_seconds": 60
+}

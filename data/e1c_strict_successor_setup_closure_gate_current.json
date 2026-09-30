@@ -1,0 +1,25 @@
+{
+  "behavioral_closed_candidate_count": 3,
+  "behavioral_closed_repo_count": 2,
+  "gate_passed": false,
+  "gate_sha256": "b317028243c49c38a1d3c862bcaebcef129133133e8c8759351998e8185b639f",
+  "provider_calls": 0,
+  "requirements": {
+    "behavioral_candidate_count_ge_3": true,
+    "behavioral_candidate_repo_count_ge_2": true,
+    "django11734_remains_fail_closed": true,
+    "focused_tests_passed": true,
+    "forbidden_setup_access_zero": true,
+    "full_dev30_denominator": true,
+    "leakage_forbidden_hits_zero": true,
+    "provider_calls_zero": true,
+    "real_execution_preflight_gain": false,
+    "task_specific_rules_zero": true,
+    "v25_consensus_6_of_6": true,
+    "v25_minimum_family_support_ge_2": true,
+    "v25_total_family_support_ge_17": true
+  },
+  "schema": "e1c-strict-successor-setup-closure-development-gate-v1",
+  "task_count": 30,
+  "valid_promoted_preflight_count": 0
+}

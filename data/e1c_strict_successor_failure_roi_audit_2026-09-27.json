@@ -1,0 +1,49 @@
+{
+  "date": "2026-09-27",
+  "decision": "do not freeze another independent canary yet",
+  "diagnosis": [
+    "localization/candidate consensus is no longer the limiting intermediate metric: V25 DEV has consensus on 6/6 tasks but independent trusted reproducer coverage remains insufficient",
+    "current behavioral candidates often encode path/callable corroboration rather than an executable failure oracle; execution_ready metadata must not be interpreted as reproduced_failure",
+    "expected-exception compilation is too sparse as a general solution: only 2/30 old DEV tasks are compile-ready",
+    "after multiple independent negative rounds, another paid canary before a zero-provider executable-reproducer gain would have poor information value"
+  ],
+  "evidence": {
+    "cti2_admission_count": 3,
+    "cti2_required_trusted_reproducer_count": 2,
+    "cti2_trusted_reproducer_count": 0,
+    "expected_failure_dev30_compile_ready_tasks": 2,
+    "old_dev_unique_typed_witnesses": 1,
+    "v25_dev_consensus_tasks": 6,
+    "v25_dev_total_consensus_family_support": 17,
+    "v25_maximum_possible_trusted_reproducers": 1,
+    "v25_required_trusted_reproducers": 2,
+    "v25_sealed_status": "SEALED_NEGATIVE_GATE_UNREACHABLE"
+  },
+  "paid_expansion_paused": true,
+  "provider_calls": 0,
+  "schema": "e1c-strict-successor-failure-roi-audit-v1",
+  "successor_hypothesis": {
+    "allowed_contract_families": [
+      "return/value relation with literal expected value",
+      "exception type/message explicitly stated in projected issue",
+      "state transition explicitly stated in projected issue",
+      "idempotence/metamorphic relation explicitly stated in projected issue"
+    ],
+    "development_inputs": "old DEV projected natural-language issue + production localization/source only",
+    "forbidden_inputs": [
+      "task-id rules",
+      "benchmark assertions/tests",
+      "Gold patch",
+      "official Base-Fail failing assertion",
+      "independent canary task content for tuning"
+    ],
+    "name": "typed behavioral contract compiler",
+    "required_zero_model_gain": [
+      "produce executable contract, not structural-binding metadata",
+      "execute on exact-base canonical environment with network disabled",
+      "stable pre-patch failure matching the projected natural-language contract",
+      "demonstrate cross-repo old-DEV trusted reproducer gain before freezing another canary"
+    ],
+    "scope": "reproducer layer only; localization/editing/model/prompt unchanged"
+  }
+}

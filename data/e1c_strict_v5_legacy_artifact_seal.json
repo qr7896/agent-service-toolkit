@@ -1,0 +1,173 @@
+{
+  "schema": "e1c-strict-v5-legacy-artifact-seal-v1",
+  "ready": true,
+  "reason": "legacy_artifacts_sealed",
+  "sealed_file_count": 31,
+  "missing_file_count": 0,
+  "missing_paths": [],
+  "seal_sha256": "b926ba91caca0549b4ba43b1d65bfcc977ec4d87d52dd4fc1c1751088661a12a",
+  "entries": [
+    {
+      "path": ".codex/e1c/candidate_manifest.json",
+      "sha256": "16f86e20a296cc6e555038c0cbe336b6008d3b9252e8dc930a2d1c0a6cd9bca6",
+      "size_bytes": 16979
+    },
+    {
+      "path": ".codex/e1c/candidate_manifest.sha256",
+      "sha256": "63dd66a170dab6644ba39e5f2856b068f166df002bb4303fad785eedd97ef3ba",
+      "size_bytes": 66
+    },
+    {
+      "path": ".codex/e1c/final_admitted_manifest.json",
+      "sha256": "7d8e6569054195d8d68b406b1e51b9d43778b3b9699df4bc8c3672aa049a4435",
+      "size_bytes": 24779
+    },
+    {
+      "path": ".codex/e1c/final_admitted_manifest.sha256",
+      "sha256": "282c8aca445c80b3a68d699f178caa57e66ff36ef621957a2073ff3348e655fc",
+      "size_bytes": 66
+    },
+    {
+      "path": "data/e1c_candidate_manifest.json",
+      "sha256": "77100ff0fa28b0b35eae254d50e00dc72dd5fe25587ed254463d4481963a3722",
+      "size_bytes": 16671
+    },
+    {
+      "path": "data/formal_e1_n30_summary.json",
+      "sha256": "112c19061c3e58537a0d789eb3f18ffca8172a52182e3976c093fccc98cb6474",
+      "size_bytes": 1183
+    },
+    {
+      "path": "data/wave_b_cohort_manifest.json",
+      "sha256": "658e70bb4e2ed5e94b0f6e1ba7cf537fe04774a8d99bd2f0a671a4d3bb72a1a4",
+      "size_bytes": 1754
+    },
+    {
+      "path": "data/wave_b_cohort_metadata.json",
+      "sha256": "77f513c09d8c6bea9d953ef6903019951e8b2a1b8da7c6ed563940e461db0d67",
+      "size_bytes": 1748
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-canary-v1/identity.json",
+      "sha256": "e51508dc6b9530dc8e3ceacaa2e2f3645fdb040928abd3b95757d6079a2ee8c3",
+      "size_bytes": 2828
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-canary-v1/provider_calls.jsonl",
+      "sha256": "e2fd7676bac8495df3fe111129f59ce581572bba2422b83c5f30aa23b31b720a",
+      "size_bytes": 6764
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-canary-v1/result.json",
+      "sha256": "cf4556682bc2c1cd4427f0ca191a638cd4e22d96f4c3f3be00e72939155b1be8",
+      "size_bytes": 2374
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-canary-v1/resume_identity.json",
+      "sha256": "4fc618e17b527e42619614a74eac53773977d1a836c986ee6332708ad7b68b91",
+      "size_bytes": 589
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-canary-v1/state.json",
+      "sha256": "cd8692dba66d89d04bee61b2d6413aa1041cf9245a2030cdda38afc2456b8a16",
+      "size_bytes": 2307
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-prep-v1/identity.json",
+      "sha256": "5b7147ed46474a1102b8f159230435051e1b3e8f09a1964bb19548b4eee3470e",
+      "size_bytes": 6452
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-prep-v1/prepared.json",
+      "sha256": "4ea61ff74824e7042051502549cd79a5d9c7d7d957b8d414f21d5ef4b127acf7",
+      "size_bytes": 2645
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-prep-v1/selector_identity.json",
+      "sha256": "ca59f0555223e050214cc55f21f33ccce4e998a3468d459e4db7f59ccb7a86a2",
+      "size_bytes": 2374
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-v1/identity.json",
+      "sha256": "dd92d6d8871f08af4757e7097156ecc555872f4170e09fa43237eb06cd5dbdcf",
+      "size_bytes": 1782
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-v1/provider_calls.jsonl",
+      "sha256": "931920eddab745ef59a7492c1050a0d4ed6c612db147cfb09baef4486ddbe699",
+      "size_bytes": 10413
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-v1/result.json",
+      "sha256": "537c35cae1f20a982ef365af43380206f6e06a8f25cc8ce112451fd1b8bb43d2",
+      "size_bytes": 5452
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-v1/state.json",
+      "sha256": "e03cddae40bf61e0bdbf440889277dba90571560c3e24392f24beb00412ea2a7",
+      "size_bytes": 5251
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-prep-v1/identity.json",
+      "sha256": "9456e42b98b037612b7b9b5fc320661eb7c5a825f1d0ec87bf580157fe6cd1ba",
+      "size_bytes": 3145
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-prep-v1/prepared.json",
+      "sha256": "bdb9b90b0f8a07c0c44f75a1712e23fe7ec44e9bb087d475927a242a897f1ad9",
+      "size_bytes": 3208
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-prep-v1/selector_identity.json",
+      "sha256": "8ddf0ce5d66445d505e2332ff1ddb20a6ee4ed94b5d1842fa048ab9300d93a6d",
+      "size_bytes": 2445
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-v3-prep-v1/identity.json",
+      "sha256": "04e7bfa3b97f07f18fb28c2246cdfc63ab0beb3ddbd590485d9dd136842ad903",
+      "size_bytes": 2593
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-v3-prep-v1/prepared.json",
+      "sha256": "d802690dd63c1365b828edd9e677516b0ebd7475d4e9feb78adc880e0f0cbb8e",
+      "size_bytes": 1679
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-v3-prep-v1/selector_identity.json",
+      "sha256": "55f2d22da159a1f0efd00013d8a8e21a44468e085881ebf00cc7be73f6d27ad2",
+      "size_bytes": 2019
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-v3-dev-diagnostic/summary.json",
+      "sha256": "e451b9c51719c8db1a6bfa38218f8c8f0e6abfce1361db354799a029f6488454",
+      "size_bytes": 4986
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-v3-dev2-diagnostic/summary.json",
+      "sha256": "918437c0d081642b17503b2230ee1466b472555a0af843eac3e422b5d6856504",
+      "size_bytes": 2891
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-v4-dev-diagnostic-v1/result.json",
+      "sha256": "81d6b2ec321b5654fa46e85eab46cfce38caf9cc8ff701e9c0692fd4b1fefe0b",
+      "size_bytes": 1379
+    },
+    {
+      "path": "data/e1c_blind_reproducer_v4_canary_manifest.template.json",
+      "sha256": "df83ddf596c2b492d011df1f7d1541bfff55a8c0e5bb547a63e2ea18e7054ceb",
+      "size_bytes": 575
+    },
+    {
+      "path": "data/e1c_fresh30_v4_prereg_plan.json",
+      "sha256": "1049bf1a0adae9d391c8da8240bcb3d0deffb1e67ca8a801f0f1b8a2d5060a05",
+      "size_bytes": 5714
+    }
+  ],
+  "legacy_content_read_for_runtime": false,
+  "legacy_results_authoritative_for_v5": false,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false
+}

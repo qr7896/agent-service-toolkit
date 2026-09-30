@@ -1,0 +1,32 @@
+{
+  "schema_version": "e1b-experiment-package-v1",
+  "freeze_manifest_sha256": "1494d741b0d3cb446f7669a94b54c2504fff1ffc6efe1644492ac990ebd1dc32",
+  "admission_manifest_sha256": "43a949bdb733a55ea0dadaed7ec7dd8269fa1fca79768d70a32f57e12e1fbff6",
+  "task_manifest_sha256": "006b96c6a9b106a79a06885e51bf619df5e5afe1d649d38f7df4429c8cac2a12",
+  "task_count": 12,
+  "frozen_identifiers": {
+    "model_id": "deepseek-flash",
+    "editor_prompt_sha256": "8c8efd931ac6aba69b0f6ad72a934766878711045aad858035db7d82128e17bb",
+    "runtime_sha256": "7bdffb2434ed4d906c6c1e0b4cb57d70248ab2cb830b29294f103110d7fa2daa",
+    "retrieval_policy_sha256": "e7362bc85991b0882cb2b54b36b505e8866fc9c0ff18b79afb2353ccb0b10f92",
+    "tool_config_sha256": "97373e9bf63b5950d07e7d716edbd4a7393d3dae95b844eaabb317892b3b7e04",
+    "sandbox_config_sha256": "e0dd464ce91f77249a17cf3ca0658bb193c6bf04fec41deef9696e1c5dc67ecf",
+    "analysis_script_sha256": "d2d5d8c72933eebe67cd1df654025bea088ca5fb62497c211cedbb268b51451e",
+    "experiment_arm_id": "e1b-heldout-single-arm-evidence-v1"
+  },
+  "provider_call_ceiling": 12,
+  "provider_token_ceiling": 26400,
+  "one_shot_frozen": true,
+  "required_artifacts": [
+    "experiment_package.json",
+    "provider_calls.jsonl",
+    "task_outcomes.jsonl",
+    "run_summary.json",
+    "artifact_audit.json"
+  ],
+  "provider_ledger_schema": "e1b-provider-ledger-v1",
+  "starts_experiment": false,
+  "claim_boundary": "immutable experiment metadata package only; no provider execution or efficacy claim",
+  "run_id": "e1b-8bbc8ba900559ce6",
+  "package_manifest_sha256": "0f6846a989d3e0b2b17d0f9f90fcc9537ce31eb066a0e0bb8b109e14bd79f4d7"
+}

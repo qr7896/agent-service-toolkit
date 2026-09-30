@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v5-freeze-certificate-v1",
+  "ready": true,
+  "reason": "identity_freeze_certified",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "new_task_tree_touched": false,
+  "checks": {
+    "exact_task_count": true,
+    "source_revision_present": true,
+    "identity_frozen_before_statement": true,
+    "audit_provider_calls_zero": true,
+    "audit_task_content_inspected_false": true,
+    "audit_source_revision_matches": true,
+    "exact_metadata_schema": true,
+    "no_forbidden_content_fields": true,
+    "valid_required_values": true,
+    "unique_identities": true,
+    "freeze_rows_match_audit_snapshot": true
+  },
+  "audit_membership_mismatch": [],
+  "manifest_sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140",
+  "metadata_audit_sha256": "c398bef158459a1d3f4914019716baf81e53f606cb9cd65992bf35fb4630f523",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "instance_ids": [
+    "pydata__xarray-3993",
+    "sympy__sympy-15308",
+    "django__django-16092"
+  ]
+}

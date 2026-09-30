@@ -1,0 +1,40 @@
+{
+  "schema": "e1c-strict-v5-official-image-acquisition-v1",
+  "ready": false,
+  "reason": "official_manifest_preflight_incomplete",
+  "pull_attempted": false,
+  "rows": [
+    {
+      "instance_id": "pydata__xarray-3993",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3993:latest",
+      "remote": {
+        "ready": false,
+        "digest": null,
+        "error_sha256": "cc75bf72de6e84c175a0e38cff39e997b44287d44a81953e3c210ae5b3337aba",
+        "error_tail": "ERROR: failed to do request: Head \"https://registry-1.docker.io/v2/swebench/sweb.eval.x86_64.pydata_1776_xarray-3993/manifests/latest\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:55138->[2600:1f18:2148:bc02:8f88:baa4:474:e0d4]:443: wsarecv: An existing connection was forcibly closed by the remote host."
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-15308",
+      "image": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15308:latest",
+      "remote": {
+        "ready": false,
+        "digest": null,
+        "error_sha256": "131d461418cd47bfa40bc2b28690037ee83776c9adc8d170ccd848dfda60715c",
+        "error_tail": "ERROR: failed to do request: Head \"https://registry-1.docker.io/v2/swebench/sweb.eval.x86_64.sympy_1776_sympy-15308/manifests/latest\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:55140->[2600:1f18:2148:bc02:8f88:baa4:474:e0d4]:443: wsarecv: An existing connection was forcibly closed by the remote host."
+      }
+    },
+    {
+      "instance_id": "django__django-16092",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16092:latest",
+      "remote": {
+        "ready": false,
+        "digest": null,
+        "error_sha256": "39451fbec10f7348142e474a5058fb365d90ad92942026ffdad97e3501ef3094",
+        "error_tail": "ERROR: failed to do request: Head \"https://registry-1.docker.io/v2/swebench/sweb.eval.x86_64.django_1776_django-16092/manifests/latest\": read tcp [2403:d400:1000:12:4885:b182:7828:618b]:55141->[2600:1f18:2148:bc02:8f88:baa4:474:e0d4]:443: wsarecv: An existing connection was forcibly closed by the remote host."
+      }
+    }
+  ],
+  "provider_calls": 0,
+  "live_model_run": false
+}

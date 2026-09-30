@@ -1,0 +1,150 @@
+{
+  "clean_pool_path": "data/e1c_strict_v20_clean_metadata_pool.json",
+  "clean_pool_sha256": "7f1b59aff7411df40ec5d877f726bcb4161e7238e961cda859fb3b489f764ab2",
+  "excluded_identity_count": 48,
+  "exclusion_sources": [
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v10_canary_manifest.json",
+      "sha256": "c220589d8948a423795004e1746f8ec4702b164aff4a3ad76e2c805ffff8b6fb"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v11_canary_manifest.json",
+      "sha256": "1fdfdb6506daa8aed7d34c0e5652eeed32a5af685219405a366b70e71e0c2cb0"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v12_canary_manifest.json",
+      "sha256": "0b78a37aef46a9612b8b15322c1e16bca696040c6988a41bf34a6057cda8581b"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v13_canary_manifest.json",
+      "sha256": "4f6fb1dd86169a2e1163b3f407d926bedd4427590d21a1c8e1f9fc5b443b2abf"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v14_canary_manifest.json",
+      "sha256": "94fa83d5a326e2c18213d73e70bde129a504f6daacfe388c417461298399cb93"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v15_canary_manifest.json",
+      "sha256": "50e4fb415898964756fe125991cebcd6c6e29c46d5add44abeda58ee508a9f97"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v20_canary_manifest.json",
+      "sha256": "8d53256810e3500aa7d0bb1fe83b81343c192874218ed0a77485875fa14c6ec8"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v23_canary_manifest.json",
+      "sha256": "96d3d488c9197a5fbb5a4768433ccfc647d87d5153e1dbb4d3167ed8fb5574b1"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v25_canary_manifest.json",
+      "sha256": "b5d4d7785af315485a9083d7e202bbe2a782daf5702ccac592a97e89c0ef45c5"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v5_canary_manifest.json",
+      "sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v6_canary_manifest.json",
+      "sha256": "ec6f311b806fbac3225d57fcd9858e2334af41af9bae0609640350fe12438fec"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v7_canary_manifest.json",
+      "sha256": "2b576ebf9fefb3cf6e8df99947ed6966924aa6d40ccb73b6a48dde48392c931f"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v8_canary_manifest.json",
+      "sha256": "6db92b9746c1c33419fcf587a58260712e4a95f40da39b1fd41dfdf459a02442"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_v9_canary_manifest.json",
+      "sha256": "f9298c056d3116fdb27dc170704b7de6a61eb431cb42080288d8e4ac2bfd21b7"
+    },
+    {
+      "count": 3,
+      "path": "data/e1c_strict_successor_cti_canary_identity.json",
+      "sha256": "a7e09ec527606f9a66f364aaad22d48db001701c0300af3460de3cb9bdc2de21"
+    },
+    {
+      "count": 6,
+      "path": "data/e1c_strict_successor_cti2_canary_identity.json",
+      "sha256": "94be4c30cb70f20ef1da90db800f8aa3bd51929743b009a9d08ed7b7809850d4"
+    },
+    {
+      "count": 6,
+      "path": "data/e1c_strict_successor_typed_contract_old_dev_inputs.json",
+      "sha256": "2f2ad6bb4b27f3318b5cde24f5dafbfe54d32edfbe1981f2af2cc1c764553ad3"
+    }
+  ],
+  "identity_frozen_before_task_content_inspection": true,
+  "outcome_inspected": false,
+  "provider_calls": 0,
+  "schema": "e1c-strict-successor-source-contract-canary-identity-v1",
+  "selection_rule": "sha256(salt+NUL+instance_id), greedy first 6 distinct repo_key after all historical canary, CTI/CTI2, and old-DEV exclusions; first 3 primary, next 3 environmental reserves",
+  "selection_salt": "e1c-strict-source-contract-independent-canary:42bc8bbde0d06b180b264b42de4946b16a879e376e23ca548341749408c1b07a",
+  "source": "existing frozen clean metadata pool only",
+  "task_content_inspected": false,
+  "tasks": [
+    {
+      "instance_id": "django__django-12453",
+      "metadata": {},
+      "repo_key": "django",
+      "reserve_rank": null,
+      "role": "primary",
+      "selection_rank_sha256": "002ceb9eac3d9fd9ea68b19e074e31476f96ab071fb22da544bfcfc04825c9df"
+    },
+    {
+      "instance_id": "sympy__sympy-13761",
+      "metadata": {},
+      "repo_key": "sympy",
+      "reserve_rank": null,
+      "role": "primary",
+      "selection_rank_sha256": "003c83763349c6a798a34377767acc7109b69e70c72e850a627075918944e796"
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-21559",
+      "metadata": {},
+      "repo_key": "matplotlib",
+      "reserve_rank": null,
+      "role": "primary",
+      "selection_rank_sha256": "0091e4ff5f0d6c98084987cda6c482a44dea032e0032c8ff77d18d010b858872"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12834",
+      "metadata": {},
+      "repo_key": "scikit-learn",
+      "reserve_rank": 1,
+      "role": "reserve",
+      "selection_rank_sha256": "0092d1d3239a8a0b3b9da6343897a6de2d47d8b3fd3d6ac3264a01d7e081d4f3"
+    },
+    {
+      "instance_id": "pylint-dev__pylint-8819",
+      "metadata": {},
+      "repo_key": "pylint-dev",
+      "reserve_rank": 2,
+      "role": "reserve",
+      "selection_rank_sha256": "009bb02d06157e13466c6744b54c5989a7c19d40560c4d0d01b29f8b66bc944e"
+    },
+    {
+      "instance_id": "sqlfluff__sqlfluff-1577",
+      "metadata": {},
+      "repo_key": "sqlfluff",
+      "reserve_rank": 3,
+      "role": "reserve",
+      "selection_rank_sha256": "010f9b6edb1e4197fb0126acb29bc7a0b6401fd3d46ebaa19883bf55a7209628"
+    }
+  ]
+}

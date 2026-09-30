@@ -1,0 +1,29 @@
+{
+  "schema": "e1c-strict-v5-stage-a-gate-v1",
+  "stage_a_ready": true,
+  "reason": "stage_a_inventory_and_integrity_ready",
+  "checks": {
+    "workspace_snapshot_present": true,
+    "workspace_snapshot_current": true,
+    "workspace_identity_explicit": true,
+    "head_not_used_as_dirty_workspace_identity": true,
+    "legacy_seal_present": true,
+    "legacy_artifacts_unchanged": true,
+    "legacy_results_not_authoritative_for_v5": true,
+    "contamination_ledger_present": true,
+    "contamination_ledger_zero_provider": true,
+    "contamination_ledger_new_tree_untouched": true
+  },
+  "workspace_identity_sha256": "03ede235f688353cdc024f60393d055b97cf0e3ec16e149329e20cbbcc9bd495",
+  "workspace_identity_file_count": 90,
+  "legacy_artifact_seal_sha256": "b926ba91caca0549b4ba43b1d65bfcc977ec4d87d52dd4fc1c1751088661a12a",
+  "legacy_sealed_file_count": 31,
+  "contamination_identity_count": 244,
+  "provider_calls": 0,
+  "live_model_run": false,
+  "live_allowed": false,
+  "canary_allowed": false,
+  "c5_allowed": false,
+  "fresh30_allowed": false,
+  "stage_a_ready_does_not_imply_live_admission": true
+}

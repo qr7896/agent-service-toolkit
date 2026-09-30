@@ -1,0 +1,57 @@
+{
+  "schema": "e1c-strict-v5-metadata-source-registry-v1",
+  "ready": false,
+  "reason": "no_complete_metadata_only_source_found",
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "new_task_tree_touched": false,
+  "sources": [
+    {
+      "name": "official_swebench_github_resource_tree",
+      "url": "https://api.github.com/repos/SWE-bench/SWE-bench/git/trees/main?recursive=1",
+      "source_revision": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+      "task_content_read": false,
+      "available_fields": [
+        "instance_id",
+        "repo"
+      ],
+      "required_fields": [
+        "instance_id",
+        "repo",
+        "base_commit",
+        "image"
+      ],
+      "identity_count": 500,
+      "identity_sha256": "ee03b75422f5ddea6b590abdc6159a7d21e48466874fee112a234e8573953932",
+      "status": "safe_but_incomplete",
+      "reason": "resource tree exposes instance/repo identities but not base_commit and image"
+    },
+    {
+      "name": "huggingface_dataset_host",
+      "url": "https://huggingface.co/datasets/princeton-nlp/SWE-bench",
+      "task_content_read": false,
+      "status": "unavailable",
+      "reason": "gaierror: [Errno 11002] getaddrinfo failed",
+      "dns": {
+        "ready": false,
+        "error": "gaierror: [Errno 11002] getaddrinfo failed"
+      }
+    },
+    {
+      "name": "docker_registry_host",
+      "url": "https://registry-1.docker.io",
+      "task_content_read": false,
+      "status": "reachable_identity_component_only",
+      "reason": "registry reachability can support later image identity checks but does not provide base_commit metadata",
+      "dns": {
+        "ready": true,
+        "addresses": [
+          "100.60.233.171",
+          "2600:1f18:2148:bc00:39de:469:dbb7:165c",
+          "2600:1f18:2148:bc00:7c1a:1c64:7fbe:cb80",
+          "2600:1f18:2148:bc00:fc09:8b77:7dfe:f5ad"
+        ]
+      }
+    }
+  ]
+}

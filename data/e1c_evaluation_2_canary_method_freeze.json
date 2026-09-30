@@ -1,0 +1,30 @@
+{
+  "schema": "e1c2-canary-method-freeze-v1",
+  "status": "method_frozen_before_canary_selection",
+  "selection_prereg_sha256": "6c7c987985cc3a532e30f4cbbaa154600f793fcc528b952af74ef4636cb21c29",
+  "method_files": {
+    "evals/e1c_evaluation_2_canary_select.py": "d1fc7fef66babbe709570f0fde3df93ebf13ea03064610f05067ca99d430c7a0",
+    "evals/e1c_evaluation_2_unified_dev_v1.py": "496bc5cdc4ad6d216e005735cc73069256aa869d7f2d6b267120bd29fbe34c73",
+    "evals/e1c_evaluation_2_unified_dev_v2.py": "4d19ff925d8bf04513f4166037a555093a9da0e28992c036a46c5d0f44dcd371",
+    "evals/e1c_evaluation_2_probe.py": "a4201773b5ebe07723113d4ceb8a52d74293a4c55718ad9894f15b983d4d891e",
+    "evals/e1c_evaluation_2_constructor_rule.py": "41703289aaf1505edcabb86a4cca8e619376dacbcd817e28fc0108a0083fd614",
+    "evals/e1c_evaluation_2_issue_input_v4.py": "4a8fa7a03d2c41ca2b042df901b88b51b70692a7fb2ded391651f7a91b945fd2",
+    "evals/e1c_reproducer_dev_feedback.py": "15ea3f4305cf74415fb8e268984ffce372d9f9d906b6351a54a047e2da851760",
+    "evals/e1c_blind_evidence.py": "7c7fa628cbc7cfbcc3c55c5abea56fee6d8c33aeb12210df1eff527177e6ef9d",
+    "evals/e1c_strict_v5_boundary.py": "019a4f99dcf53c80027408d432aa0794657d9629daa32a0f667cd07f2160f7f7",
+    "docs/research/E1C2_CANARY_METHOD_FREEZE_2026-09-29.md": "b7ba7019dc044bb782354b61a551b1d2ebe791a73930ff8733f2b585d336e441"
+  },
+  "model": "deepseek-flash",
+  "thinking": "disabled",
+  "temperature": 0,
+  "max_requests": 3,
+  "max_requests_per_task": 1,
+  "sdk_retries": 0,
+  "max_output_tokens_per_request": 2600,
+  "per_task_provider_token_cap": 14000,
+  "batch_provider_token_cap": 42000,
+  "candidate_count": 3,
+  "minimum_trusted": 2,
+  "provider_calls": 0,
+  "canary_task_content_inspected": false
+}

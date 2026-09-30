@@ -1,0 +1,30 @@
+{
+  "schema": "e1c-strict-v10-external-canary-reserve-v1",
+  "source": "official_swebench_task_repo_task_yaml",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "identity_frozen_before_statement_materialization": true,
+  "selection_salt": "e1c-strict-v10-independent-canary",
+  "mechanism_prereg_sha256": "d85267fa0ee0e42bbb437c7fea4a7b833fccc0cbb10dc95807509b284a711718",
+  "tasks": [
+    {
+      "instance_id": "pydata__xarray-5731",
+      "repo": "pydata/xarray",
+      "base_commit": "5db40465955a30acd601d0c3d7ceaebe34d28d11",
+      "image": "swebench/sweb.eval.x86_64.pydata_1776_xarray-5731:latest"
+    },
+    {
+      "instance_id": "django__django-16411",
+      "repo": "django/django",
+      "base_commit": "75500feecddcb27b6ab65c9057e7317024cef761",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-16411:latest"
+    },
+    {
+      "instance_id": "django__django-12912",
+      "repo": "django/django",
+      "base_commit": "42c08ee46539ef44f8658ebb1cbefb408e0d03fe",
+      "image": "swebench/sweb.eval.x86_64.django_1776_django-12912:latest"
+    }
+  ],
+  "provider_calls": 0,
+  "task_content_inspected": false
+}

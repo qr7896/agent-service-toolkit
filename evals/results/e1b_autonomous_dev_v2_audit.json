@@ -1,0 +1,57 @@
+{
+  "protocol": "e1b-dev-v2-audit-v1",
+  "scope": "DEV only; sealed TEST outcomes unopened",
+  "status": "valid_failed_dev",
+  "budget_and_call_chain_valid": true,
+  "freeze_ready": false,
+  "claim_boundary": "A valid failed DEV protocol result is diagnostic evidence, not an Autonomous Repair Rate conclusion.",
+  "current_tasks": 4,
+  "current_resolved_count": 0,
+  "current_total_model_calls": 4,
+  "current_total_tokens": 2305,
+  "regressed_from_old_dev": [
+    "e1b__async-propagation-22"
+  ],
+  "repeated_failed_patch": [
+    "e1b__config-code-budget-25"
+  ],
+  "transitions": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "old_resolved": true,
+      "current_resolved": false,
+      "resolved_transition": "1->0",
+      "same_patch": false,
+      "current_f2p_all": false,
+      "current_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "old_resolved": false,
+      "current_resolved": false,
+      "resolved_transition": "0->0",
+      "same_patch": true,
+      "current_f2p_all": false,
+      "current_p2p_all": true
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "old_resolved": false,
+      "current_resolved": false,
+      "resolved_transition": "0->0",
+      "same_patch": false,
+      "current_f2p_all": true,
+      "current_p2p_all": false
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "old_resolved": false,
+      "current_resolved": false,
+      "resolved_transition": "0->0",
+      "same_patch": false,
+      "current_f2p_all": false,
+      "current_p2p_all": false
+    }
+  ],
+  "next_gate": "Improve the editor protocol on DEV, rerun a new version under a new artifact path, and freeze only after the DEV protocol is both budget-valid and edit-quality-ready."
+}

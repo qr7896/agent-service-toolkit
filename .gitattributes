@@ -1,0 +1,9 @@
+# Research identities use SHA-256 of raw bytes. Preserve original bytes across clones.
+evals/** -text
+data/** -text
+docs/research/** -text
+tests/** -text
+src/agents/model_budget.py -text
+docs/PROGRESS_RESEARCH_ROADMAP*.md -text
+README.md -text
+.gitignore -text

@@ -1,0 +1,36 @@
+{
+  "schema": "e1c-strict-successor-cti2-admission-protocol-v1",
+  "created_from": "sealed successor CTI admission blocker",
+  "provider_calls": 0,
+  "task_content_inspected_for_new_identity": false,
+  "outcome_inspected_for_new_identity": false,
+  "frozen_parser_commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "selection_source": "frozen_swebench_git_tree_names_only",
+  "selection_source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "selection_pool_sha256": "7f1b59aff7411df40ec5d877f726bcb4161e7238e961cda859fb3b489f764ab2",
+  "primary_task_count": 3,
+  "distinct_repo_key_required": true,
+  "reserve_count": 3,
+  "substitution_order": "global deterministic reserve rank; first reserve whose repo_key preserves three distinct active repo_keys",
+  "substitution_allowed_only_for": [
+    "official image unavailable after frozen network/timeout gate",
+    "exact-base/source identity cannot be materialized or verified",
+    "official evaluator cannot produce parser-observable F2P/P2P classification despite suite execution, with frozen parser unchanged",
+    "container/runtime infrastructure failure before valid Base-Fail classification"
+  ],
+  "substitution_forbidden_for": [
+    "valid official Base-Fail result",
+    "valid official Gold-Pass failure",
+    "task difficulty or issue content",
+    "model result or model failure",
+    "reproducer/probe result after admission",
+    "any outcome-based preference"
+  ],
+  "max_substitutions": 3,
+  "no_ad_hoc_test_flags": true,
+  "no_parser_changes": true,
+  "no_assertion_weakening": true,
+  "no_post_result_reordering": true,
+  "sealed_prior_identity_preserved": true,
+  "live_requires_three_admitted_tasks": true
+}

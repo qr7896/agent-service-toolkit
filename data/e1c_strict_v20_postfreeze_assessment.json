@@ -1,0 +1,274 @@
+{
+  "schema": "e1c-strict-v20-postfreeze-assessment-v2",
+  "provider_calls": 0,
+  "live_model_run": false,
+  "source_ready_count": 3,
+  "projection_supported_count": 3,
+  "candidate_task_count": 2,
+  "executable_candidate_task_count": 2,
+  "consensus_candidate_task_count": 1,
+  "minimum_executable_candidate_tasks": 2,
+  "candidate_gate_passed": true,
+  "official_image_acquisition_allowed": true,
+  "rows": [
+    {
+      "instance_id": "sympy__sympy-21586",
+      "source_ready": true,
+      "projection_status": "supported",
+      "candidate_count": 0,
+      "executable_candidate_count": 0,
+      "consensus_path_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v20-candidate-plan-v1",
+        "candidate_count": 0,
+        "executable_candidate_count": 0,
+        "consensus_path_count": 0,
+        "consensus_paths": {},
+        "status": "no_executable_reproducer",
+        "candidates": [],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "ac47fd07959715518fa37ee13b2e5ec656341c3d807f72b0ea67b585a0633744"
+      },
+      "provider_calls": 0
+    },
+    {
+      "instance_id": "pvlib__pvlib-python-1026",
+      "source_ready": true,
+      "projection_status": "supported",
+      "candidate_count": 4,
+      "executable_candidate_count": 4,
+      "consensus_path_count": 1,
+      "plan": {
+        "schema": "e1c-strict-v20-candidate-plan-v1",
+        "candidate_count": 4,
+        "executable_candidate_count": 4,
+        "consensus_path_count": 1,
+        "consensus_paths": {
+          "pvlib/iotools/crn.py": [
+            "semantic_localization",
+            "structural"
+          ]
+        },
+        "status": "candidate_executable_witnesses",
+        "candidates": [
+          {
+            "execution_ready": true,
+            "origin": "multi_evidence_structural_binding",
+            "witness": {
+              "schema": "e1c-strict-v14-observable-contract-v1",
+              "kind": "semantic_postcondition",
+              "subject": "read_crn",
+              "verb": "preserve_issue_visible_behavior",
+              "object": "",
+              "candidate_path": "pvlib/iotools/crn.py",
+              "execution_ready": true,
+              "origin": "multi_evidence_structural_binding",
+              "provenance": "issue_tokens_plus_ast_symbol_plus_path_margin",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "confidence_evidence": {
+                "score": 7,
+                "margin_required": 3,
+                "issue_overlap": [
+                  "read_crn"
+                ],
+                "localization_origin": "issue_ast_definition"
+              },
+              "witness_sha256": "e4ec0d20299d706f7b8c89efcdb5ec3c44e426f2994c6cc3aa3dc865ffed30bd"
+            },
+            "v15_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          },
+          {
+            "execution_ready": true,
+            "origin": "unique_localized_symbol_corroboration",
+            "witness": {
+              "schema": "e1c-strict-v15-corroboration-v1",
+              "kind": "structural_binding",
+              "subject": "read_crn",
+              "candidate_path": "pvlib/iotools/crn.py",
+              "execution_ready": true,
+              "origin": "unique_localized_symbol_corroboration",
+              "provenance": "production_localization_unique_symbol_same_path",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "bee7e80ad55179617f332cc12126a5d02da37986a09346597df1cd75d5c9e8bb"
+            },
+            "v15_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "read_crn",
+              "candidate_path": "pvlib/iotools/crn.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "ba372ff7a8362717a7b0afb1be963329cd0681c6724197362245401bb0f4ed3a"
+            },
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_callable_same_module_corroboration",
+            "witness": {
+              "schema": "e1c-strict-v16-callable-context-v1",
+              "kind": "structural_corroboration",
+              "subject": "read_crn",
+              "callable": "read_crn",
+              "candidate_path": "pvlib/iotools/crn.py",
+              "execution_ready": true,
+              "origin": "explicit_callable_same_module_corroboration",
+              "provenance": "projected_issue_callable_plus_existing_issue_behavior_plus_same_production_path",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "2a07f69adad8a30f8b60d6e29019937be6a41a5ea11b6fe6ab47fb814940e643"
+            },
+            "v16_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v17_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ],
+            "v18_evidence_consensus": [
+              "semantic_localization",
+              "structural"
+            ]
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "bf74dbb08f8cc66eb0680fe02d807ee4e9692b93e7ea4aa5c3f440e3fee1cb93"
+      },
+      "provider_calls": 0
+    },
+    {
+      "instance_id": "pydata__xarray-2905",
+      "source_ready": true,
+      "projection_status": "supported",
+      "candidate_count": 3,
+      "executable_candidate_count": 3,
+      "consensus_path_count": 0,
+      "plan": {
+        "schema": "e1c-strict-v20-candidate-plan-v1",
+        "candidate_count": 3,
+        "executable_candidate_count": 3,
+        "consensus_path_count": 0,
+        "consensus_paths": {},
+        "status": "no_executable_reproducer",
+        "candidates": [
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "Variable",
+              "candidate_path": "xarray/core/variable.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "42c7619d50d92517ef4cc2d10ee4fb78cdf5fe39b667ece65f52f32771427a7e"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "values",
+              "candidate_path": "xarray/core/variable.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "270aec92102f65fbc3b73144b758297107d270cac5b84fcf81c5c79e1ed0af58"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          },
+          {
+            "execution_ready": true,
+            "origin": "explicit_issue_callable_binding",
+            "witness": {
+              "schema": "e1c-strict-v16-explicit-callable-v1",
+              "kind": "structural_binding",
+              "subject": "__setitem__",
+              "candidate_path": "xarray/core/variable.py",
+              "execution_ready": true,
+              "origin": "explicit_issue_callable_binding",
+              "provenance": "projected_issue_identifier_plus_unique_production_definition",
+              "benchmark_assertion_used": false,
+              "task_id_used": false,
+              "witness_sha256": "3a97ccfcd9e617ed3ccb4bf78d5eb4bb855f5ab55a2e4cb197606c13b170c5b6"
+            },
+            "v16_evidence_consensus": [],
+            "v17_evidence_consensus": [],
+            "v18_evidence_consensus": []
+          }
+        ],
+        "provider_calls": 0,
+        "benchmark_assertion_used": false,
+        "plan_sha256": "11b353349e4e9bb30f9d970617a5b870f5728b69fa9c6ced04d596a32ae58df6"
+      },
+      "provider_calls": 0
+    }
+  ],
+  "summary_sha256": "f7c69eb58c20779cafd29af37b176e8f7821d4f6568f3932b87576e2c7dc812a"
+}

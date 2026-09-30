@@ -1,0 +1,32 @@
+﻿{
+    "schema":  "e1c-strict-successor-env-acquisition-blocked-v1",
+    "provider_calls":  0,
+    "instance_id":  "django__django-11734",
+    "official_tag":  "swebench/sweb.eval.x86_64.django_1776_django-11734:latest",
+    "amd64_manifest_digest":  "sha256:5ddbc111ccc7ed091855034eacff1c58347df158d6acd0c015feab17587d36a2",
+    "compressed_layer_bytes":  1152938217,
+    "image_committed":  false,
+    "docker_store_size":  "22.93GB",
+    "jobs":  [
+                 {
+                     "job_id":  "d01fc0e0-e38d-4a87-a991-b15cceb9470e",
+                     "status":  "timeout",
+                     "duration_seconds":  1800
+                 },
+                 {
+                     "job_id":  "24de7381-293d-49dd-9856-6089e52d6063",
+                     "status":  "timeout",
+                     "duration_seconds":  1800
+                 }
+             ],
+    "docker_api_evidence":  [
+                                "POST /v1.54/images/create at 15:32:08 had no matching completion before timeout",
+                                "POST /v1.54/images/create at 15:33:09 had no matching completion before timeout"
+                            ],
+    "registry_probe":  "reachable via 127.0.0.1:7892; HTTP 401 expected",
+    "auth_probe":  "reachable via 127.0.0.1:7892; HTTP 200",
+    "classification":  "infrastructure_transport_blocked",
+    "experimental_result":  false,
+    "retry_allowed_now":  false,
+    "reason":  "Both already-running duplicate infrastructure acquisition jobs hit their original 1800s bound without image commit. No third pull/retry is authorized in this continuation."
+}

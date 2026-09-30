@@ -1,0 +1,48 @@
+{
+  "provider_calls": 0,
+  "repos_with_stable_failure": 2,
+  "rows": [
+    {
+      "checks": [
+        {
+          "first_result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed",
+          "prepatch_failure": true,
+          "second_result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed",
+          "stable": true,
+          "witness_sha256": "1744d6c9c0e22c5fdce02027056378bd77e810cdf061ab043d3caa414d1312cd"
+        }
+      ],
+      "instance_id": "django__django-15569"
+    },
+    {
+      "checks": [],
+      "instance_id": "django__django-11734"
+    },
+    {
+      "checks": [],
+      "instance_id": "sphinx-doc__sphinx-8638"
+    },
+    {
+      "checks": [
+        {
+          "first_result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526",
+          "prepatch_failure": true,
+          "second_result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526",
+          "stable": true,
+          "witness_sha256": "f145d8cc226237232df78fb214e16abebe000cf498da2e8f71fd3430472c4a88"
+        }
+      ],
+      "instance_id": "scikit-learn__scikit-learn-13313"
+    },
+    {
+      "checks": [],
+      "instance_id": "django__django-13233"
+    },
+    {
+      "checks": [],
+      "instance_id": "django__django-15995"
+    }
+  ],
+  "schema": "e1c-strict-successor-source-contract-repeatability-v1",
+  "stable_failure_tasks": 2
+}

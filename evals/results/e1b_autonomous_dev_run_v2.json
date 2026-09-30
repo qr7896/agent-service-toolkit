@@ -1,0 +1,141 @@
+{
+  "protocol": "e1b-autonomous-dev-run-v0",
+  "scope": "DEV only; sealed TEST outcomes unopened",
+  "dry_run": false,
+  "identity": {
+    "model_id": "deepseek-flash",
+    "prompt_sha256": "a69cc3b1badb2f8b58dc84bf037aac50e5f3ae8a0f21a7af50aa66409ff6bc7e",
+    "max_iterations": 1,
+    "max_files_written": 3,
+    "allow_test_file_writes": false,
+    "split_sha256": "3a22ef4c75fe8d3ee2c5c15e85ccc6048f9462351806b70bce9fefc020bc6083",
+    "tasks_sha256": "4c6a18b123b44eeadf2eb2acccdac332627df967f40a84a454bf80b0fad43c8d",
+    "config_sha256": "b303a074b5014bfb5346e4755c0939f15355ddc9eb3e7a54edb2b8f312c34ae6"
+  },
+  "summary": {
+    "tasks": 4,
+    "attempted_tasks": 4,
+    "resolved": 0,
+    "resolved_fraction": 0.0,
+    "parse_failures": 0,
+    "model_failures": 0,
+    "budget_exhaustions": 0,
+    "total_model_calls": 4,
+    "input_tokens": 2050,
+    "output_tokens": 255,
+    "total_tokens": 2305,
+    "wall_time_ms": 17048.8
+  },
+  "rows": [
+    {
+      "instance_id": "e1b__async-propagation-22",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v1",
+      "input_tokens": 450,
+      "output_tokens": 64,
+      "total_tokens": 514,
+      "patch_sha256": "79a16f8d7a0246dca61bb47fe028e1f4486e77db2ed392466a2c94b722af5713",
+      "files_written": [
+        "src/agents/async_runner.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_22.py::test_fix": false
+      },
+      "pass_to_pass": {
+        "test_e1b_22.py::test_regression": true
+      },
+      "failure": null,
+      "wall_time_ms": 4093.5
+    },
+    {
+      "instance_id": "e1b__config-code-budget-25",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v1",
+      "input_tokens": 581,
+      "output_tokens": 39,
+      "total_tokens": 620,
+      "patch_sha256": "35a5626cef169cb788c5c5c1b4bf985f3b27af1ce63f1b415650d5cdff046a38",
+      "files_written": [
+        "src/agents/budget.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_25.py::test_fix": false
+      },
+      "pass_to_pass": {
+        "test_e1b_25.py::test_regression": true
+      },
+      "failure": null,
+      "wall_time_ms": 3507.8
+    },
+    {
+      "instance_id": "e1b__cross-module-status-26",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v1",
+      "input_tokens": 587,
+      "output_tokens": 43,
+      "total_tokens": 630,
+      "patch_sha256": "4d1ce0fbafa8ce1653b10d48d179021585f8e505057ba3c96cf9fe7cdc7c2b22",
+      "files_written": [
+        "src/service/task_adapter.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_26.py::test_fix": true
+      },
+      "pass_to_pass": {
+        "test_e1b_26.py::test_regression_ok": true,
+        "test_e1b_26.py::test_regression_pending": false
+      },
+      "failure": null,
+      "wall_time_ms": 4176.3
+    },
+    {
+      "instance_id": "e1b__state-version-29",
+      "base_resolved": false,
+      "model_calls": 1,
+      "evidence_protocol": "declared-seed-read-v1",
+      "input_tokens": 432,
+      "output_tokens": 109,
+      "total_tokens": 541,
+      "patch_sha256": "71f3510693ebd606a344cc312f5e6dd66dfc8566de455658be5cdfd1e62f1f03",
+      "files_written": [
+        "src/agents/state_migration.py"
+      ],
+      "resolved": false,
+      "fail_to_pass": {
+        "test_e1b_29.py::test_fix": false
+      },
+      "pass_to_pass": {
+        "test_e1b_29.py::test_regression_v2": true,
+        "test_e1b_29.py::test_regression_v1_false": false
+      },
+      "failure": null,
+      "wall_time_ms": 5271.2
+    }
+  ],
+  "execution": {
+    "temperature": 0,
+    "max_output_tokens": 600,
+    "task_token_ceiling": 2200,
+    "prompt_reserve_multiplier": 2.0,
+    "original_token_budget": 8800,
+    "additional_token_budget": 0,
+    "token_ceiling": 8800,
+    "max_iterations": 1,
+    "evidence_protocol": "declared-seed-read-v1",
+    "provider": "deepseek",
+    "provider_run_id": "e1b-r10-dev-v2",
+    "provider_ledger_path": ".codex\\e1b\\r10-v2\\provider_calls.jsonl",
+    "thinking_disabled": true,
+    "seed": null,
+    "sandbox_required": true,
+    "budget_status": "within_limit",
+    "budget_overrun_tokens": 0,
+    "test_outcomes_opened": 0
+  }
+}

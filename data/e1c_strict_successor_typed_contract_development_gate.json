@@ -1,0 +1,51 @@
+{
+  "cross_repo_count": 2,
+  "focused_regression": "12 passed",
+  "gate_passed": true,
+  "leakage_hits": [],
+  "network_runtime": "none",
+  "provider_calls": 0,
+  "required_count": 2,
+  "rows": [
+    {
+      "instance_id": "django__django-15569",
+      "repo_digest": "sha256:13d3ee8c6e4aa4d5c34024f32ada971a11153bfe0023339ddc4bdfb0ca48925d",
+      "runs": [
+        {
+          "outer_exit": 0,
+          "passed": false,
+          "result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed",
+          "stdout_sha256": "3029f4c3348760cfbb1590ce3733a037c21529c781b590132469ceaf6a874331"
+        },
+        {
+          "outer_exit": 0,
+          "passed": false,
+          "result_sha256": "6500186e483ca530e6205deed3aaa1f3c60a44b337ffdfeee9bba5d476f188ed",
+          "stdout_sha256": "3029f4c3348760cfbb1590ce3733a037c21529c781b590132469ceaf6a874331"
+        }
+      ],
+      "trusted_reproducer": true
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13313",
+      "repo_digest": "sha256:d2cf61b57c1e5e6e4a3cc80978ca4d606204bb5c24d0296081a0608cd69921ed",
+      "runs": [
+        {
+          "outer_exit": 0,
+          "passed": false,
+          "result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526",
+          "stdout_sha256": "28642692fb8037283d34e30075ab44a3cb32fb5970859013cdb42e102e2f3572"
+        },
+        {
+          "outer_exit": 0,
+          "passed": false,
+          "result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526",
+          "stdout_sha256": "28642692fb8037283d34e30075ab44a3cb32fb5970859013cdb42e102e2f3572"
+        }
+      ],
+      "trusted_reproducer": true
+    }
+  ],
+  "schema": "e1c-strict-successor-typed-contract-development-gate-v1",
+  "trusted_runtime_reproducer_count": 2
+}

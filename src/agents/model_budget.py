@@ -114,6 +114,24 @@ def _status_code(exc: Exception) -> int | None:
         return None
 
 
+def _bind_with_output_limit(model: Any, max_output: int, disable_thinking: bool) -> Any:
+    current = model
+    while current is not None:
+        name = str(getattr(current, "model_name", "") or "")
+        if name.startswith("deepseek"):
+            # ChatOpenAI maps max_tokens to max_completion_tokens; DeepSeek expects max_tokens.
+            extra = dict((getattr(model, "kwargs", None) or {}).get("extra_body") or {})
+            extra["max_tokens"] = max_output
+            if disable_thinking:
+                extra["thinking"] = {"type": "disabled"}
+            return model.bind(temperature=0, extra_body=extra)
+        current = getattr(current, "bound", None)
+    bound = model.bind(temperature=0, max_tokens=max_output)
+    if disable_thinking:
+        bound = bound.bind(extra_body={"thinking": {"type": "disabled"}})
+    return bound
+
+
 async def budgeted_ainvoke(
     model: Any,
     messages: list[Any],
@@ -194,9 +212,7 @@ async def budgeted_ainvoke(
     }
     _append(ledger, {**common, "status": "started", "event_time": utc_now(), "reserve": reserve})
 
-    bound = model.bind(temperature=0, max_tokens=max_output)
-    if conf.get("provider_disable_thinking", False):
-        bound = bound.bind(extra_body={"thinking": {"type": "disabled"}})
+    bound = _bind_with_output_limit(model, max_output, conf.get("provider_disable_thinking", False))
     try:
         response = await bound.ainvoke(bounded_messages)
     except Exception as exc:
@@ -221,6 +237,10 @@ async def budgeted_ainvoke(
             {**common, "status": "ambiguous", "event_time": utc_now(), "reason": "missing_usage"},
         )
         raise AmbiguousProviderCall("provider response had no token usage")
+    over_budget = bool(
+        (global_ceiling and global_spent + usage["total_tokens"] > global_ceiling)
+        or (task_ceiling and task_spent + usage["total_tokens"] > task_ceiling)
+    )
     _append(
         ledger,
         {
@@ -228,11 +248,16 @@ async def budgeted_ainvoke(
             "status": "completed",
             "event_time": utc_now(),
             **usage,
+            "over_budget": over_budget,
             "response_model": str(
                 (getattr(response, "response_metadata", None) or {}).get("model_name") or ""
             ),
         },
     )
+    if over_budget:
+        raise ProviderBudgetExceeded(
+            f"provider reported over-budget usage: total={usage['total_tokens']}"
+        )
     return response
 
 

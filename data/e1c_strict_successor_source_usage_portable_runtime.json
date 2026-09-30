@@ -1,0 +1,48 @@
+{
+  "evaluator_sha256": "947e663e328c822fb368aff5fe88301ddb773d4ed27af64000a16668a9fac48f",
+  "instance_id": "scikit-learn__scikit-learn-13313",
+  "network_mode": "none",
+  "provider_calls": 0,
+  "rows": [
+    {
+      "attempt": 1,
+      "docker_exit": 0,
+      "prepatch_failure": true,
+      "result": {
+        "candidate_path": "sklearn/utils/estimator_checks.py",
+        "definition_count": 1,
+        "external_call_count": 0,
+        "external_registration_count": 0,
+        "passed": false,
+        "predicate": "has_external_call_or_registration",
+        "result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526",
+        "sample_calls": [],
+        "sample_registrations": [],
+        "schema": "e1c-strict-v8-source-usage-result-v1",
+        "symbol": "check_class_weight_balanced_classifiers"
+      },
+      "stderr": ""
+    },
+    {
+      "attempt": 2,
+      "docker_exit": 0,
+      "prepatch_failure": true,
+      "result": {
+        "candidate_path": "sklearn/utils/estimator_checks.py",
+        "definition_count": 1,
+        "external_call_count": 0,
+        "external_registration_count": 0,
+        "passed": false,
+        "predicate": "has_external_call_or_registration",
+        "result_sha256": "8c0635252afc34b8f11817935ce3a4876186b53c9dace559a08c5e16e5223526",
+        "sample_calls": [],
+        "sample_registrations": [],
+        "schema": "e1c-strict-v8-source-usage-result-v1",
+        "symbol": "check_class_weight_balanced_classifiers"
+      },
+      "stderr": ""
+    }
+  ],
+  "schema": "e1c-strict-successor-source-usage-portable-runtime-v1",
+  "witness_sha256": "f145d8cc226237232df78fb214e16abebe000cf498da2e8f71fd3430472c4a88"
+}
