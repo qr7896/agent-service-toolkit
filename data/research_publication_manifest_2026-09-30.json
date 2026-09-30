@@ -20,11 +20,7 @@
     "canary_method_files": 14,
     "canary_hash_mismatch": [],
     "active_document_broken_paths": [],
-    "index_raw_byte_mismatches": [
-      ".gitignore",
-      "README.md",
-      "docs/PROGRESS_RESEARCH_ROADMAP_2.md"
-    ]
+    "index_raw_byte_mismatches": []
   },
   "files": [
     {
@@ -2453,8 +2449,8 @@
       "path": "docs/research/WORKSPACE_REORGANIZATION_2026-09-30.md",
       "publish": true,
       "reason": "",
-      "bytes": 5700,
-      "sha256": "1666f625a2264a86a83799c1aae19cf757dc9bd69b9879a00d6ab837a3c164e5"
+      "bytes": 5773,
+      "sha256": "b76c42244dc9184c98da31b4e79eb68179911cb29301cad7f1418b15a12e604b"
     },
     {
       "path": "docs/research/e1b_replacement_cohort_metadata.json",

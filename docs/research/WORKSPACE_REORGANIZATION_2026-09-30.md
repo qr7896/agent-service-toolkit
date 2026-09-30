@@ -48,7 +48,7 @@ V3 preflight遗留项进入一周D1：定位子进程编码来源，以新修复
 
 本地保留：`.env*`、`.codex/`、`.external/`、原始评分材料、镜像和`data/wave_b_sealed_task_spec.json`；另有含原始旧DEV题面的`data/e1c_strict_successor_typed_contract_old_dev_inputs.json`保留本地。新`.gitignore`防止这些内容误入提交；没有删除它们。既有Git历史不重写。两份历史文档有原编码异常，保留原字节，避免为了展示而损坏冻结证据。
 
-新增`.gitattributes`让研究身份相关文件禁用自动换行转换；不运行renormalize，不批量格式化冻结源码。Linux/Windows新clone仍须按freeze核验字节身份。
+新增`.gitattributes`让研究身份相关文件禁用自动换行转换；不对冻结源码运行renormalize或批量格式化。三个当前入口/配置文件定向重新入索引，以保存其原字节；Linux/Windows新clone仍须按freeze核验身份。
 
 本次公开文件的精确路径和原始字节SHA见[发布清单](../../data/research_publication_manifest_2026-09-30.json)。清单不自我哈希；本地原始证据仍按既有协议保留。整理后原907个文件无缺失，除五份入口/续档文档的预期改写或追加外，其余原文件哈希未变。
 
