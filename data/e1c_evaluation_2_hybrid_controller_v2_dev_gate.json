@@ -1,0 +1,51 @@
+{
+  "schema": "e1c2-hybrid-controller-v2-development-gate-v1",
+  "date": "2026-10-05",
+  "development_only": true,
+  "independent_validation": false,
+  "fixed_denominator": 12,
+  "source_hybrid_pilot_requests": 15,
+  "source_hybrid_pilot_tokens": 29864,
+  "source_hybrid_pilot_gold_discriminating": 3,
+  "source_pilot_original_preservation_gate_pass": false,
+  "controller_v2_cached_replay_provider_calls": 0,
+  "controller_v2_gold_discriminating": 4,
+  "trusted_reproducer_after_semantic_audit": 4,
+  "semantic_audit_includes_human": true,
+  "repository_count": 2,
+  "retained_reference_baseline_tasks": true,
+  "controller_development_gate_pass": true,
+  "historical_v4_trusted": 4,
+  "historical_v4_tokens": 25424,
+  "historical_v4_requests": 8,
+  "novelty_or_sota_proven": false,
+  "agent_repair_executed": false,
+  "trusted_task_ids": [
+    "scikit-learn__scikit-learn-13496",
+    "scikit-learn__scikit-learn-26289",
+    "marshmallow-code__marshmallow-1252",
+    "marshmallow-code__marshmallow-1359"
+  ],
+  "evidence": [
+    {
+      "path": ".codex/e1c/evaluation_2/hybrid-dev-v1/freeze.json",
+      "sha256": "e3cf8929ad7bfe8a6da7f6ce834f907b36faf127d4579d36e891883e7cfc7340"
+    },
+    {
+      "path": ".codex/e1c/evaluation_2/hybrid-dev-v1/state.json",
+      "sha256": "5949045b7e25b7de25ac900603c89dd9c7e6fd61e96ce3ebb68c9997c44b0e52"
+    },
+    {
+      "path": ".codex/e1c/evaluation_2/hybrid-dev-v1/provider_calls.jsonl",
+      "sha256": "4ff6d2ff1b9bce026d3679d1805df6b8c48d435bfd161852043b9c4ec500033d"
+    },
+    {
+      "path": ".codex/e1c/evaluation_2/hybrid-oracle-replay-dev-v1/freeze.json",
+      "sha256": "c96170847bcbf8d28de035e678cc49e9968e0a8954229f6c5b714bdef0e1d432"
+    },
+    {
+      "path": ".codex/e1c/evaluation_2/hybrid-oracle-replay-dev-v1/state.json",
+      "sha256": "5949045b7e25b7de25ac900603c89dd9c7e6fd61e96ce3ebb68c9997c44b0e52"
+    }
+  ]
+}
