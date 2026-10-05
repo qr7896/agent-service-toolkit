@@ -201,3 +201,11 @@ v2 有 **7 个两次同日志 base 失败信号**（其中 1 个确定性规则�
 只在旧 DEV 的已保存 v4 公共 issue 输入与候选源码上新增独立零调用形态审计 `evals.e1c_evaluation_2_contract_dev`：核对输入/源码摘要与逐字 issue span，并用 AST 区分真实调用后到达标记、值比较、吞异常及不受支持断言。9 条固定 DEV 记录为 3 个调用后标记、1 个值比较、1 个吞异常、2 个不受支持断言、2 个无候选；这些类别只说明代码结构，**9/9 的语义状态均为未验证**，不替换原人工语义审核或 Gold 判别，不提升 4/12 可信数，也不宣称自动修复。模块不读取官方测试或 Gold，不触碰现有冻结身份。相关专项 12 passed，新增文件 Ruff clean。
 
 规定的 V3 重点 Ruff 通过、18 项重点 pytest 通过、`evals.v3_compact_pilot preflight` 返回 `ready=true`。全仓 `uv run --frozen --offline pytest -q` 首轮为 **1085 passed / 4 skipped / 1 failed**：Windows 缺 `-X utf8`，既有 admission 测试在调用 Docker 前按原守卫拒绝。按该环境条件完整重跑 `uv run --frozen --offline python -X utf8 -m pytest -q`，单次 **1086 passed / 4 skipped / 33 warnings / 0 failed**（49.94 秒）。这是工程回归而非复现、补丁或 official resolved 成绩。下一门槛仍是官方摘要直连、用户终端镜像下载、本机 Docker 正常运行，再原协议零模型准入；不能跨过阻塞直接付费或打开 sealed TEST/C5/Fresh30。
+
+## 2026-10-05 — Docker 本机运行时恢复，官方摘要直连仍阻塞
+
+用户终端 `docker version` 显示 Linux engine 管道不存在，随后手工继续执行 `transport` 命令，官方 Docker Hub 认证在 TLS 握手处 `WinError 10054`；手工再输入 `download` 不会绕过前置传输 seal。现场没有 `image_transport.json` 或第二批 `acquire/`，无大文件下载。
+
+本机诊断定位 Docker backend 无法移除旧 AF_UNIX `dockerInference` socket（Windows 错误 1920）。完全停止 Docker 后，单文件改名同样被系统拒绝。核对两个运行时目录只含旧零字节 reparse-point socket，再将 `%LOCALAPPDATA%\Docker\run` 和 `%LOCALAPPDATA%\docker-secrets-engine` 分别改名为带日期的同目录备份；原文件保留、未删除。一次启动又留下新 socket，随后用 `docker desktop stop` 正常退出，将两个新运行时目录在同一次重启前再次备份，再用 `docker desktop start` 启动。没有改 WSL/VHDX、镜像或 tunnel 配置。此恢复方式与 [Docker 公开问题报告](https://github.com/docker/desktop-feedback/issues/460)描述的相同故障形态一致，但本机原因仍以自己的 backend 日志为证。
+
+恢复核验：`docker desktop status=running`，`docker version` 服务端 **29.4.0**，Linux/overlay2，原 DEV12 获取账本的 **12/12 不可变 image ID** 均可 `docker image inspect`。本机另有 20 张镜像记录；未做全局清理。恢复后只再次运行用户指定的零模型 `transport`，官方 `auth.docker.io` 直连仍 `WinError 10054`，因此第二批 canary 保持 **0/3 镜像、0 模型调用**。下一步需用户在无 VPN/TUN 的可达网络上完成官方小型摘要核验，成功后才由用户终端按既有直连命令下载大文件；Docker/tunnel 端到端联通仍需单独验证。

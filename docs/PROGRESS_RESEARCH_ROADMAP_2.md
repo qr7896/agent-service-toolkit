@@ -20,7 +20,7 @@
 
 ## 2. 当前阻塞
 
-2026-10-05 重试原命令后，canary v2 的 `transport` 仍在 Docker Hub `auth.docker.io` 取令牌时出现 TLS reset。没有 `image_transport.json`，镜像 0/3、provider calls=0。uv 的 `--offline` 只控制依赖获取，不阻止脚本请求镜像摘要。本机 Docker Linux engine 同时未就绪；尝试启动现有 Docker Desktop 后服务仍为 `Stopped`，当前非管理员会话无权启动 `com.docker.service`。未改 Docker 配置、数据盘或 tunnel。
+2026-10-05 再次复试原命令后，canary v2 的 `transport` 仍在 Docker Hub `auth.docker.io` 取令牌时出现 TLS reset。没有 `image_transport.json`，镜像 0/3、provider calls=0。uv 的 `--offline` 只控制依赖获取，不阻止脚本请求镜像摘要。Docker Linux engine 当天另经本机恢复：`docker desktop status=running`，服务端 29.4.0，旧 DEV12 的 12/12 镜像 ID 可核验。Docker 已不是当前下载阻塞；未改镜像、数据盘或 tunnel 配置。
 
 三题固定为 Seaborn-2846、Marshmallow-1343、pytest-8861。镜像站单独估计压缩层约 2.93 GiB，不能当权威摘要或最终磁盘增量。
 
@@ -56,7 +56,7 @@
 
 ## 5. 一周交付
 
-[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至 10 月 5 日，行为合同只完成旧 DEV 的结构性零调用审计，尚未实现完整合同生成/反馈消融；Docker 与官方摘要传输阻塞未解除。原 D1–D4 日程已延误，不能把计划当完成记录，也不能承诺 10 月 7 日必达 30/30。
+[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至 10 月 5 日，行为合同只完成旧 DEV 的结构性零调用审计，尚未实现完整合同生成/反馈消融；Docker 已恢复，官方摘要传输阻塞未解除。原 D1–D4 日程已延误，不能把计划当完成记录，也不能承诺 10 月 7 日必达 30/30。
 
 可控交付是输入隔离和自动定位检查、一个通用复现改进、同预算 DEV 消融、冻结记录、独立结果或明确阻塞报告、可接手的状态包。**30/30 保留为目标；当前证据不足以承诺一周必达。**
 
