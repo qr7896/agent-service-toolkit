@@ -263,3 +263,19 @@ Docker现场Server29.4.0/Dfree42.77GiB，未改配置、清镜像或操作VHD/tu
 本輪共15请求/31992tokens；加此前120326可见usage为152318（含旧SDK错误4281，非核账单）。无新增镜像下载/宿主配置改动/删除，Dfree42.2GiB。完整回归1118passed/4skipped/33warnings/0failed（50.55秒），重点21passed/Ruff通过/V3规定preflight ready=true。所有进程已完成，旧失败和原件保留。
 
 下一门槛先零调用证明counterfactual fixture contract：同API非触发参数可比、生产前置条件验证、oracle不改、允许待支持参数的负例、四条DEV参考不退化。尚未实现/验证，不算成果；未达不得再抽新canary/repair。本次gate失败按预注册封存，不放宽标准以继续计费。具体接手步骤见[DEV v3结果](E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)，两roadmap/交接首部已改成此状态；历史命令保留并标不重跑。
+
+## 2026-10-05 — literal counterfactual零调用证明与新生成4/12
+
+复核DEV v3 B响应发现上一归因应更正：control并未省略feature_names，而是一个标签list对照六标签array，同时改类型和值/长度。追加勘误，旧结果不回填。新通用AST compiler识别相同callee/参数结构、未遮蔽numpy导入/未重赋值literal、仅一个容器变化，生成保持target元素/顺序/长度的list对照；target/setup/assertion/oracle不改，不eval/setup取值，未知计算/mutation/dtype/新参数支持保留unproven。
+
+旧DEV九条B零调用audit：1 supported、5 unproven、3 abstain；派生相同六标签对照在原base两次触发生产长度约束，在target/Gold前拒绝错误fixture。生产guard自动来源/SHA保留，不称完整静态语义证明。完整hybrid-v1缓存新目录replay，五个target probe SHA与原oracle replay相同，四条参考Gold区分、generator仍失败；0provider，开发证据不是新生成。提交37c84c8与零调用gate保全，原canary不动。
+
+原counterfactual慢入口反复重建同一源码索引，新增独立fast adapter提交8b503e7：读取旧DEV v3冻结输入，逐次查Git/base/窗口生产SHA/image身份，task records逐字相同；保留慢入口零调用freeze，无第二份付费trial。fast freeze SHA394b8c08da35f52e49257912546162513ce1df5adc6f3d58a976cfc1fb3e3234，reserve62980、18/80000上限、单题2/20000、输出3000、Flash非thinking/零重试。
+
+先列精确`uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_counterfactual_fast_dev run`后，按用户已有授权一次完成9题/13请求26762tokens，无失败/重试；随后同入口gold独立评分5候选四真一假。四参考（warm_start/array兼容/ISO-Z/内嵌DateTime）经人工可观察行为核对4/12，机器trusted仍0。array是单标签合法shape触发参数校验不支持ndarray，Gold后完成；非原报告多标签truth-value原栈，限制明示。比DEV v3增2050tokens（8.3%）、恢复一条参考，不称省费/SOTA/因果增益；与历史v4同4/12，不称超过基线。stateSHA f7350efed623c0571ddd55df5b18d65110b7343e08f47a0e82418f1db251697d，ledgerSHA c36d61560f2c32927a899477007ca7af277e2d2f5e7ffbc84bb80dd8d4e64aed。
+
+工程最初与重负载replay并发全仓1123passed/1failed/4skipped，唯一Streamlit8秒超时；重负载结束原测试0.76秒过，无修改断言/timeout。串行全仓1124过，fast后1126过，新增独立canary适配后完整单次1127passed/4skipped/33warnings/0failed（142.85秒）。指定重点含新helper22passed、Ruff通过、V3规定preflight ready=true。不是repair rate，不拼接测试结果。
+
+新生成开发参考门槛通过，源码/独立完整协议先提交b42aa2e，再冻结counterfactual canary v4方法SHA88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea，Flash≤6/60000、每题2/20000、输出3000、零重试、分母3，无替补。此后只metadata-only排除旧DEV/三批canary/历史identity选新三题；不读新正文/Gold/模型、不下载大文件。下一步身份/官方小摘要→用户直连下载→准入/公开输入/预检→独立盲态；≥2/3才另冻repair。旧三批负结果、TEST/C5/Fresh30及Docker/tunnel均不改。累计本日可见usage179080（含旧SDK错误4281，非核账单），系列非无限预算。结果与局限见[E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md](E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)。
+
+本次选题完成：排除301历史身份，盐选PVLib-1048、SymPy-20131、scikit-15535；identitySHA06d55d996a2f6786d8718340d24c8debd5e8c2a566897cf55c3b24e114f3a337。选择时只读metadata，耗时单列不计模型，未重抽。官方task.yaml来源核验后，transport官方经授权7892共7请求/26342正文bytes，direct mirror manifest完全相同3/3；transportSHA da5c553c3765f64e83fa01a8751aa732da2fd697a0cfa0a63893f7e3b199ae71。压缩层总4345861461bytes≈4.047GiB；blob/pull/model0。Dfree42.2GiB，逐张下载空间守卫最大约29.52GiB；大文件交用户终端关闭VPN全局/TUN、Docker No proxy，新模块download --timeout-per-image21600显示进度/ETA/导入心跳。下载记录和原始小型metadata seal在本机.codex；Git只提交public receipt/hash/identity/method，不上传评分或密钥。新题issue/Gold未读，未来盲态尚未执行；当前外部等待为用户完成直连下载。

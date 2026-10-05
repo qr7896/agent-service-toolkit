@@ -30,4 +30,8 @@ AST literal分析不执行eval/setup；未知计算、重赋值、mutation、遮
 
 ## 继续/停止边界
 
+新增独立适配器最终工程回归单次1127passed/4skipped/33warnings/0failed（142.85秒），专项7passed、Ruff通过。只表示工程回归，不表示修复率。
+
+第4批方法先冻结后盐选，排除301历史身份：PVLib-1048、SymPy-20131、scikit-15535。官方/直连mirror摘要3/3一致，官方小metadata7请求26342bytes；blob/model均0，issue/Gold未读。用户需直连下载4.047GiB，确切命令见[当前接手页](NEXT_SESSION_HANDOFF.md)。这是下一独立门槛准备，不是已验证泛化；旧三批负结果不被替换。
+
 新生成须保留原四条参考、跨两仓库并分别报告成本/假阳性/弃答；未达则封存回DEV，不增加独立样本。通过也只能先完整冻结新方法/适配器后选不重叠canary，一次≥2/3，再另冻Agent repair对照；目前不能跳到repair/Fresh30/E2。literal对照是局部可执行证明，不是通用语义验证或已证明的新SOTA。

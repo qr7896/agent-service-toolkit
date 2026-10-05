@@ -1,0 +1,470 @@
+{
+  "schema": "e1c2-canary-metadata-identity-v1",
+  "role": "independent_canary_one_shot_no_replacement",
+  "method_freeze_sha256": "88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea",
+  "source_revision": "3d07b464b7b311a0cbfb5ed5b2d8a3b96f84a33d",
+  "pool_sha256": "7f1b59aff7411df40ec5d877f726bcb4161e7238e961cda859fb3b489f764ab2",
+  "salt": "e1c2-counterfactual-independent-canary-v4-2026-10-05",
+  "selection_rule": "lowest sha256(salt+NUL+'repo'+NUL+repo), then lowest sha256(salt+NUL+'task'+NUL+instance_id)",
+  "exclusion_sources": [
+    {
+      "path": ".codex/e1c/candidate_manifest.json",
+      "sha256": "16f86e20a296cc6e555038c0cbe336b6008d3b9252e8dc930a2d1c0a6cd9bca6",
+      "identity_count": 30
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-canary-v1/identity.json",
+      "sha256": "e51508dc6b9530dc8e3ceacaa2e2f3645fdb040928abd3b95757d6079a2ee8c3",
+      "identity_count": 4
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-prep-v1/identity.json",
+      "sha256": "5b7147ed46474a1102b8f159230435051e1b3e8f09a1964bb19548b4eee3470e",
+      "identity_count": 21
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-prep-v1/selector_identity.json",
+      "sha256": "ca59f0555223e050214cc55f21f33ccce4e998a3468d459e4db7f59ccb7a86a2",
+      "identity_count": 21
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-postb4-c4-v1/identity.json",
+      "sha256": "dd92d6d8871f08af4757e7097156ecc555872f4170e09fa43237eb06cd5dbdcf",
+      "identity_count": 6
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-prep-v1/identity.json",
+      "sha256": "9456e42b98b037612b7b9b5fc320661eb7c5a825f1d0ec87bf580157fe6cd1ba",
+      "identity_count": 27
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-prep-v1/selector_identity.json",
+      "sha256": "8ddf0ce5d66445d505e2332ff1ddb20a6ee4ed94b5d1842fa048ab9300d93a6d",
+      "identity_count": 27
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-v3-prep-v1/identity.json",
+      "sha256": "04e7bfa3b97f07f18fb28c2246cdfc63ab0beb3ddbd590485d9dd136842ad903",
+      "identity_count": 30
+    },
+    {
+      "path": ".codex/e1c/e1c-blind-reproducer-c4r-v3-prep-v1/selector_identity.json",
+      "sha256": "55f2d22da159a1f0efd00013d8a8e21a44468e085881ebf00cc7be73f6d27ad2",
+      "identity_count": 30
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-patch-union-batch1-20260924/identity.json",
+      "sha256": "b15f7bc26b929e0b988ce0b4ffc604c7883d0dc68a76a8277892ffd9e1e0787a",
+      "identity_count": 7
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v2-n30-7d8e6569/identity.json",
+      "sha256": "231af04babce8803eeb0da667819db48813bfb69ab96128a5b0fa58516034a90",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v21-n30-7d8e6569/identity.json",
+      "sha256": "3d1e3aace1a9b3428b405574901fa094301c28fc9810eee6452cf423bc6cdb32",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v22-noop18-812ee4bd/identity.json",
+      "sha256": "c60eda9e704a57835c968ce7355892b319d69bbf61da9a45ce926805610dedd0",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v22-recovery-django-15280-20260924/identity.json",
+      "sha256": "250194361e51484192a24e7837a4fe573c9c17a33b698f172ad1cbf105c57b6d",
+      "identity_count": 1
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v23-locator5-20260924/identity.json",
+      "sha256": "7d348d1d418beab053114b53e9c4ac71694afe5ef36cda68f0c626a1e1ae9169",
+      "identity_count": 5
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v24-thinking2-20260924/identity.json",
+      "sha256": "98a15c300b192006e5655b93ba51e5dcd43ea3d2f51c87ce12a24849b3d988ae",
+      "identity_count": 2
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v25-cap-probe-20260924/identity.json",
+      "sha256": "fb66cd03bdf2834014f890383f80e21c93a1a9d18bf02dd4568c7d0268edba4e",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v26-regression1-20260924/identity.json",
+      "sha256": "80a58024db3c21f1d944e22cbdacb6349f90acb645f995b57715cc35bd14d72b",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v27-regression1-20260924/identity.json",
+      "sha256": "37f666ea6473e3bed2b494b975a73d6e1c679f25d9d5150a65a4506613b8f2c3",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v28-nearmiss2-20260924/identity.json",
+      "sha256": "e57c9a33afbb844bd8628df218441075c46197eeaeebfc321fba408ecd0cb645",
+      "identity_count": 2
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v29-targetfail2-20260924/identity.json",
+      "sha256": "c5e32320f0678dd486ead621d4ba6a85fbe12e2c46dc27f6eadca09e5d92cf77",
+      "identity_count": 2
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v30-focused1-20260924/identity.json",
+      "sha256": "00ed4cd342f8ed444151f87164e718d10e47914eb0cc928760d351eb2fd48357",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v31-agentic23-20260924/identity.json",
+      "sha256": "ce210ffe9b410a659db1d61c0b40b155f4c33b22e4a63e4a716a6417ea69619d",
+      "identity_count": 23
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v32-agentic23-20260924/identity.json",
+      "sha256": "9926010f3b4b7da648694c83fc3391c70f749cec230ff35203e52667ac687036",
+      "identity_count": 23
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v33-localize23-20260924/identity.json",
+      "sha256": "c93e1ced5afece0072d597b0458899342b466ad8c2aeee22a089fc96e77c6aab",
+      "identity_count": 23
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v34-direct20-20260924/identity.json",
+      "sha256": "94830ee44e546b6217e565909dd3198b87f862b7857cd034e785761212e73d3c",
+      "identity_count": 23
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v35-testtrace-canary3-20260924/identity.json",
+      "sha256": "7bbeaa3877a99e40110476a2b8a0a16d8c5d56014bda2abbd128268cf5dd053c",
+      "identity_count": 3
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v36-12754-regression1-20260924/identity.json",
+      "sha256": "4e8beb95bda080efc3a54ac24941e06c5f7212e8ce867e909adc6a0676052ba3",
+      "identity_count": 1
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v37-head-canary1-20260924/identity.json",
+      "sha256": "ac494c4dc12039730fad0067bf64fd84362121859f5c5e73b24ba1c40e37369c",
+      "identity_count": 1
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v38-alterfield-window1-20260924/identity.json",
+      "sha256": "1d012f854e37a7a5976354ded2d06a0bc7fdc529fe0dea4799320431e1a89301",
+      "identity_count": 1
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v39-auto-highconf5-20260924/identity.json",
+      "sha256": "cff16632de18eef65dd2f3db632e4ea723df1d4e9d4cbd65af97544c16eb03cb",
+      "identity_count": 5
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v40-suggested-path2-20260924/identity.json",
+      "sha256": "cada009f7bf81c13469e97fb8c49a8e8a6398967249a97eebab20b60ca0c0121",
+      "identity_count": 2
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v41-assertion-source1-20260924/identity.json",
+      "sha256": "9467709537a239d880348de75f75559ab37bb2a5e7e44300973bf7482f1e1242",
+      "identity_count": 1
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v42-model-patch-union1-20260924/identity.json",
+      "sha256": "2b53c39529e053f727773473bc67c1df8542e3cc5121a5cc2ff785ad71b3e05a",
+      "identity_count": 1
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v43-auto-remaining19-20260924/identity.json",
+      "sha256": "82f154e9e8536ba396018c4ecb032b0e562d3d851d2d2115e45a76d4a6293072",
+      "identity_count": 19
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v44-thinking-auto2-20260924/identity.json",
+      "sha256": "b9032b3ecaa1a2f42855d0298cba1783c43d32f4e217c7c5781463087d51600a",
+      "identity_count": 2
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v45-suggested-source2-20260924/identity.json",
+      "sha256": "9222bda89706ef17737f531cfeae70f25f69dbce89ece072802664f22b0358c0",
+      "identity_count": 2
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v46-bounded-aci3-20260924/identity.json",
+      "sha256": "1c497358f97aeec2330e4c20f1ba99c843655a5bc8742560d7d08afd4b443d2f",
+      "identity_count": 3
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v47-public-import3-20260924/identity.json",
+      "sha256": "331d8f8eba434d37b07b9290b7f827f5335911d3ccdf3c73869a20d14d09c75f",
+      "identity_count": 3
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v48-public-nameerror-import-20260924/identity.json",
+      "sha256": "f9e99d32a0320c6539ead33f9436afe5b7ce92504fc11ec615c90c17728fb382",
+      "identity_count": 1
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v49-public-nameerror-batch-20260924/identity.json",
+      "sha256": "0d1b1cc31af9bdc9a7af995549ffcf2113796ecd021dc32cb56908fa9fe8d476",
+      "identity_count": 2
+    },
+    {
+      "path": ".codex/e1c/e1c-dev-v50-public-test-additions3-20260924/identity.json",
+      "sha256": "5005372ce7187761acafea4bdc9917d278afacf2b4e8696657884a9f68ddbc2f",
+      "identity_count": 3
+    },
+    {
+      "path": ".codex/e1c/e1c-n30-7d8e6569/identity.json",
+      "sha256": "e82fe29f99d5aecc8477c27c409b72422609cc9f460cb54768f91bdd95e5eb91",
+      "identity_count": 0
+    },
+    {
+      "path": ".codex/e1c/final_admitted_manifest.json",
+      "sha256": "7d8e6569054195d8d68b406b1e51b9d43778b3b9699df4bc8c3672aa049a4435",
+      "identity_count": 30
+    },
+    {
+      "path": ".codex/e1c/pre_metadata_correction/candidate_manifest.json",
+      "sha256": "fc402eb31a9c031ed8a4e08727e2af7e3cbf20565df22178b06257539252d418",
+      "identity_count": 30
+    },
+    {
+      "path": "data/e1c_blind_reproducer_v4_canary_manifest.template.json",
+      "sha256": "df83ddf596c2b492d011df1f7d1541bfff55a8c0e5bb547a63e2ea18e7054ceb",
+      "identity_count": 0
+    },
+    {
+      "path": "data/e1c_candidate_manifest.json",
+      "sha256": "77100ff0fa28b0b35eae254d50e00dc72dd5fe25587ed254463d4481963a3722",
+      "identity_count": 30
+    },
+    {
+      "path": "data/e1c_evaluation_2_canary_identity.json",
+      "sha256": "d078af8c0ba6da3c2a8945db4ab0461fd729bb2658c418eb8576be334d4f9551",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_evaluation_2_canary_method_freeze.json",
+      "sha256": "e78f9670cf009596ef9f31f9aba5f04685be5c133c9cc3558a2f0e3598847013",
+      "identity_count": 0
+    },
+    {
+      "path": "data/e1c_evaluation_2_canary_v2_amended_result.json",
+      "sha256": "e9abf5b2e348e30a24e50a8e412b068e070a8187398f3167efdbd737aaea907b",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_evaluation_2_canary_v2_identity.json",
+      "sha256": "a22311ffc4dd41c379e839e5618bccb35164367b35b9a3797bf5f17bb3dba997",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_evaluation_2_canary_v2_method_freeze.json",
+      "sha256": "fd58671dcdb923e70b7f018362682802849c54651655e21d051828e1d6f4d14b",
+      "identity_count": 0
+    },
+    {
+      "path": "data/e1c_evaluation_2_canary_v2_transport_amendment.json",
+      "sha256": "7afba65fcddc8d94f0b576e901f770daec77d5303f77397777ccad4246a38b85",
+      "identity_count": 0
+    },
+    {
+      "path": "data/e1c_evaluation_2_canary_v2_transport_summary.json",
+      "sha256": "6b426864f922b72216b166d08baedc3bb3001bba18e958b191e8c4f81e19cd88",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_evaluation_2_counterfactual_canary_v4_method_freeze.json",
+      "sha256": "88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea",
+      "identity_count": 0
+    },
+    {
+      "path": "data/e1c_evaluation_2_hybrid_canary_v3_identity.json",
+      "sha256": "62649edc20998fad8f101a488ccbb22e0dff6343bf81a0fc3398e5fed5d1500d",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_evaluation_2_hybrid_canary_v3_method_freeze.json",
+      "sha256": "978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44",
+      "identity_count": 0
+    },
+    {
+      "path": "data/e1c_evaluation_2_hybrid_canary_v3_result.json",
+      "sha256": "fbf30f79a063b23b120b0f3558028a0e4b0fa0289e61cd367fbcaa79458fc5df",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_evaluation_2_hybrid_canary_v3_transport_receipt.json",
+      "sha256": "9b300948ad3436af4e5b040afa4a88e8d21ae4a963407bbe68e5508a575050fc",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_reproducer_dev12_identity.json",
+      "sha256": "3a374504aebcd88b935ac3d4f020a72a5e51a01f7fa46cf203fc7487c791fe4a",
+      "identity_count": 12
+    },
+    {
+      "path": "data/e1c_strict_successor_cti2_canary_identity.json",
+      "sha256": "94be4c30cb70f20ef1da90db800f8aa3bd51929743b009a9d08ed7b7809850d4",
+      "identity_count": 6
+    },
+    {
+      "path": "data/e1c_strict_successor_cti_canary_identity.json",
+      "sha256": "a7e09ec527606f9a66f364aaad22d48db001701c0300af3460de3cb9bdc2de21",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_successor_source_contract_canary_identity.json",
+      "sha256": "939ef8b897f12d145d10ddcfdb477d8df42b1d166ff6e341879b010ca1c09499",
+      "identity_count": 6
+    },
+    {
+      "path": "data/e1c_strict_successor_source_contract_independent_canary_assessment.json",
+      "sha256": "ac3d654cc78df563802ce6a0e0e14dc85e0f74d5637665fb918df61e64501100",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_successor_source_contract_source_identity_recheck.json",
+      "sha256": "d3c0c3c75495238bc81d2f4bc6c934e427c0e7f4a907d7596532a4a539a23555",
+      "identity_count": 2
+    },
+    {
+      "path": "data/e1c_strict_v10_canary_manifest.json",
+      "sha256": "c220589d8948a423795004e1746f8ec4702b164aff4a3ad76e2c805ffff8b6fb",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v11_canary_manifest.json",
+      "sha256": "1fdfdb6506daa8aed7d34c0e5652eeed32a5af685219405a366b70e71e0c2cb0",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v12_canary_manifest.json",
+      "sha256": "0b78a37aef46a9612b8b15322c1e16bca696040c6988a41bf34a6057cda8581b",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v13_canary_manifest.json",
+      "sha256": "4f6fb1dd86169a2e1163b3f407d926bedd4427590d21a1c8e1f9fc5b443b2abf",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v14_canary_manifest.json",
+      "sha256": "94fa83d5a326e2c18213d73e70bde129a504f6daacfe388c417461298399cb93",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v15_canary_manifest.json",
+      "sha256": "50e4fb415898964756fe125991cebcd6c6e29c46d5add44abeda58ee508a9f97",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v20_canary_manifest.json",
+      "sha256": "8d53256810e3500aa7d0bb1fe83b81343c192874218ed0a77485875fa14c6ec8",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v23_canary_manifest.json",
+      "sha256": "96d3d488c9197a5fbb5a4768433ccfc647d87d5153e1dbb4d3167ed8fb5574b1",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v25_canary_manifest.json",
+      "sha256": "b5d4d7785af315485a9083d7e202bbe2a782daf5702ccac592a97e89c0ef45c5",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v5_canary_admission.json",
+      "sha256": "d1eed8af60eefd1519fa00954f3e89096c542f43631efcf8e53116cf91b10f4f",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v5_canary_manifest.json",
+      "sha256": "79e5f9b4cd995b72effef22bb0775dc9305b9ada1ec7c36eb6fce28e69109140",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v5_canary_manifest.template.json",
+      "sha256": "058e20886e8f2643825c9d99b035fae6cf789eb859767fed1b7dfcc08df4ad80",
+      "identity_count": 0
+    },
+    {
+      "path": "data/e1c_strict_v5_contamination_ledger.json",
+      "sha256": "8468c2f4baa413351dd924f5d418a09857ea59d5a5e2890d3f405ff270e5022b",
+      "identity_count": 244
+    },
+    {
+      "path": "data/e1c_strict_v5_image_identity.json",
+      "sha256": "e5aaad76174a51ddca2f2fe054476ff5985ce1dfe19045d63c288a9860e93b76",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v5_postfreeze_identity.json",
+      "sha256": "40b03b497381a90d97cdfe79242a2e014151229b72888699517547f5d4595397",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v6_canary_manifest.json",
+      "sha256": "ec6f311b806fbac3225d57fcd9858e2334af41af9bae0609640350fe12438fec",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v7_canary_manifest.json",
+      "sha256": "2b576ebf9fefb3cf6e8df99947ed6966924aa6d40ccb73b6a48dde48392c931f",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v8_canary_manifest.json",
+      "sha256": "6db92b9746c1c33419fcf587a58260712e4a95f40da39b1fd41dfdf459a02442",
+      "identity_count": 3
+    },
+    {
+      "path": "data/e1c_strict_v9_canary_manifest.json",
+      "sha256": "f9298c056d3116fdb27dc170704b7de6a61eb431cb42080288d8e4ac2bfd21b7",
+      "identity_count": 3
+    },
+    {
+      "path": "data/research_publication_manifest_2026-09-30.json",
+      "sha256": "39ff26545f1e7d05e7778d2b6ca7189f96a8280e29b6eab7f7fc4078d0af73ac",
+      "identity_count": 0
+    },
+    {
+      "path": "data/wave_b_cohort_manifest.json",
+      "sha256": "658e70bb4e2ed5e94b0f6e1ba7cf537fe04774a8d99bd2f0a671a4d3bb72a1a4",
+      "identity_count": 0
+    },
+    {
+      "path": "data/wave_b_cohort_metadata.json",
+      "sha256": "77f513c09d8c6bea9d953ef6903019951e8b2a1b8da7c6ed563940e461db0d67",
+      "identity_count": 0
+    }
+  ],
+  "excluded_identity_count": 301,
+  "task_content_inspected": false,
+  "outcome_inspected": false,
+  "provider_calls": 0,
+  "tasks": [
+    {
+      "instance_id": "pvlib__pvlib-python-1048",
+      "task_yaml_path": "tasks/pvlib__pvlib-python-1048/task.yaml",
+      "task_yaml_blob_sha": "09485ed87391da03c8c63b4f866a6997e74ab20e",
+      "task_yaml_size": 399
+    },
+    {
+      "instance_id": "sympy__sympy-20131",
+      "task_yaml_path": "tasks/sympy__sympy-20131/task.yaml",
+      "task_yaml_blob_sha": "97065c577fe3de4d6c2f26a4c1318c3f17f34843",
+      "task_yaml_size": 381
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-15535",
+      "task_yaml_path": "tasks/scikit-learn__scikit-learn-15535/task.yaml",
+      "task_yaml_blob_sha": "967e57402e31d828c68b0cdcfb514b4d1b097440",
+      "task_yaml_size": 452
+    }
+  ]
+}

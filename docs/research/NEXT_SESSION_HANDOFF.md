@@ -4,7 +4,34 @@
 
 ## 当前状态
 
-**最新：独立canary v3已完成并封存为1/3；回旧DEV的新生成v3为3/12，开发门槛仍失败。当前任务是零调用证明可信正对照/fixture contract，不再下载或重跑本页历史命令。** 本轮Flash15请求/31992tokens，未自动重试，未改旧冻结依赖。完整[独立负结果](E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)、[DEV结果/零调用下一步](E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)。原controller缓存4/12只是开发证据，不能补新生成分数；底层trusted仍false，结果包含人工语义审核。
+**最新：Counterfactual零调用机制已验证，另冻新生成恢复4/12；当前进入第4批独立canary准备。** Flash13请求/26762tokens，未重试；四参考保持、跨两仓库，但包含人工可观察行为审查，array病例不是原报告同一报错行/栈，不能称全自动语义验证。旧canary1/3、0/3、1/3和DEV v3的3/12原样封存，缓存不补新分数。[最新结果/证据](E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)、[新独立完整协议](E1C2_COUNTERFACTUAL_CANARY_V4_METHOD_2026-10-05.md)。
+
+新的入口为`evals.e1c_evaluation_2_counterfactual_canary_v4`；完整方法SHA`88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea`先冻，metadata-only排除301历史身份后选PVLib-1048/SymPy-20131/scikit-15535。identity SHA`06d55d996a2f6786d8718340d24c8debd5e8c2a566897cf55c3b24e114f3a337`；三张官方/mirror摘要一致，官方小metadata7请求/26342bytes，模型/blob0。公开[下载收据](../../data/e1c_evaluation_2_counterfactual_canary_v4_transport_receipt.json)。尚无该批泛化或修复结果，不能重选或改冻结依赖。
+
+## 当前需要用户终端：直连下载新三张
+
+压缩层PVLib1.587/SymPy1.064/scikit1.396GiB，总4.047GiB；实际安装体积更大，逐张磁盘守卫最大约29.52GiB。D现场约42.2GiB，不承诺最终空间必够，触发守卫即停、不自行prune。平均1–5MiB/s传输约14–70分钟，加校验/导入粗估40分钟–2小时；0.2MiB/s仅传输约5.8小时，单镜像硬超时6小时。逐层进度/速度/ETA、Range续传、SHA校验和导入心跳沿用原实现。
+
+官方元数据seal已缓存，这条download不走7892/官方blob。先关闭VPN全局和TUN、Docker No proxy；显式空代理不能绕过系统级透明路由。只使用**新模块**：
+
+```powershell
+Set-Location 'D:\codex\working\project20260827'
+Start-Transcript -Path '.codex\e1c\evaluation_2\counterfactual-canary-v4\download.log' -Append
+try {
+    uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_counterfactual_canary_v4 download --timeout-per-image 21600
+    if ($LASTEXITCODE -ne 0) { throw '下载中断，保留缓存/日志，不进入模型实验。' }
+} finally {
+    Stop-Transcript
+}
+```
+
+返回verified_loaded=3后核验loaded/transport与Docker ID，再按同一新模块依次`admit --timeout 900`、`public`、`preflight`；每步非0即停，infra失败保留固定分母3、不换题。完成live freeze才列精确`uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_counterfactual_canary_v4 run`：Flash≤6请求/60000tokens、单题2/20000、输出3000、重试0，沿用用户≤100000许可。结束后同模块`gold`独立评分/语义审核；一次可信≥2/3才另冻repair，不打开TEST/C5/Fresh30。下方所有v3历史命令不重跑。
+
+原counterfactual_fast_dev已经run/gold完成，不重跑；原counterfactual_dev慢入口只有零调用freeze，不再另开付费trial。快输入适配逐次重查Git/base/生产SHA/image身份，上游九条输入与慢入口逐字一致，不是手选文件。云端无本机原件/执行器则报INFRA_BLOCKED，不复制密钥/公开评分答案或开放Docker裸端口。
+
+最新工程全仓1127passed/4skipped/0failed/33warnings（142.85秒）。首次并发重负载导致原Streamlit8秒超时，已记录；失败项原样单独通过，再串行完整通过，未改超时或断言。所有旧模型试验/record/镜像/VHD/tunnel设置保留，累计本日可见usage179080（含旧SDK错误4281，非账单）。第4批至多60000，不无限扩批。
+
+以下为上一轮DEV v3的历史要求，counterfactual机制现已完成；未支持的五条pair仍保留unproven，不能把局部证明扩大为普遍语义证明：
 
 接手时先核验两份公开结果JSON和其中SHA对应本机原件；云端缺原件时报INFRA_BLOCKED，不虚构复跑。旧DEV v3已运行，禁止再次`run/gold`。下一步按DEV结果文档第1–5项：证明control/target非触发参数可比、生产前置条件校验、保持issue oracle、合成负例与四条参考不退化；仅旧DEV/合成，先零调用，不读取canary调参。证明不足不新增付费试验/新canary；新增付费须新身份和冻结Flash≤100000预算先列命令，不无限连跑。新方法尚未实现，不能算已验证创新或自动可信。
 

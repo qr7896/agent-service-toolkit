@@ -4,7 +4,7 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：基础工程和多轮检索研究已经实现；端到端修复效果仍未达目标。E1-C evaluation_2 的历史DEV v4为**4/12经语义审核的可信补丁前复现**；独立canary v1/v2/v3分别**1/3、0/3、1/3**，均未达门槛并封存。行为合同与评分前控制器的缓存开发回放4/12不能冒充独立泛化。最新旧DEV v3一次新生成**3/12**、12请求/24712tokens，节省回退调用但未保留四条参考覆盖，开发门槛仍失败。下一步先在旧DEV零调用证明正对照fixture约束，不重跑已关闭实验、不继续抽新canary。没有同版DEV30全通过、Fresh30结果或新版Agent修复结果。
+当前阶段：端到端修复质量仍未达目标。独立canary v1/v2/v3为**1/3、0/3、1/3**，负结果封存。最新counterfactual旧DEV新生成恢复**4/12经人工可观察行为审查的可信补丁前复现**，13Flash请求/26762tokens；零调用证明能提前拒绝一个类型/长度混淆的fixture。该4/12不是缓存拼分、不是自动语义验收或修复率，array病例不声称原报告相同错误位置。完整方法已封板进入第4批不重叠canary准备，尚无该批泛化结果；没有同版DEV30全通过、Fresh30或新版Agent修复结果。
 
 ## 1. 阅读入口
 
@@ -14,7 +14,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [DEV v3结果/下一项机制](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)、[独立v3负结果](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)；所有冻结协议保留 |
+| 查看最新实验与下一步 | [counterfactual新生成/零调用证据](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)、[第4批独立协议](research/E1C2_COUNTERFACTUAL_CANARY_V4_METHOD_2026-10-05.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 
@@ -64,6 +64,8 @@
 | DEV合同/控制器改进 | 新生成hybrid 3/12；修订控制器缓存4/12 | 开发证据，含语义审核；A/B、失败、成本分开报告；[结果](research/E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md) |
 | 独立hybrid canary v3 | 双准入2/3；可信1/3，未达门槛 | 3Flash请求/7280tokens，负结果封存；[报告](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md) |
 | 最新旧DEV hybrid v3 | 新生成可信3/12，门槛失败 | 12Flash请求/24712tokens，未保留四条参考；[报告与下一步](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md) |
+| counterfactual旧DEV新生成 | 13Flash请求/26762tokens，Gold及人工行为审查4/12 | 保持四条参考，零调用先拒错误fixture；不是SOTA或修复率；[报告](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md) |
+| 第4批独立canary准备 | 先冻方法，排除301身份后选PVLib-1048/SymPy-20131/scikit-15535；摘要3/3一致 | 待用户直连4.05GiB；模型0调用，TEST/C5/Fresh30仍关闭 |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 

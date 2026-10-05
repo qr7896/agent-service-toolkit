@@ -17,6 +17,9 @@
 | source-contract hybrid | 新生成15请求/29,864 tokens，Gold3/12；controller v2缓存回放4/12、零新增调用 | 仅DEV开发证据，含人工语义审核；不是独立成绩 |
 | 独立hybrid canary v3 | 镜像3/3、双准入2/3；3Flash请求/7280tokens | 可信1/3，固定分母3，负结果封存 |
 | 最新旧DEV hybrid v3 | 弃答STOP/路径锚点；9题新生成、12请求/24712tokens | 可信3/12（含人工审核），未保留四条参考，开发门槛失败 |
+| Counterfactual零调用 | 九条B审计：1 supported/5 unproven/3 abstain；同元素对照两次拒错fixture，缓存回放4/12 | 仅局部开发证明，target/oracle不改，非独立/非新生成成绩 |
+| Counterfactual新生成 | 原九题/固定12，13Flash请求26762tokens，Gold4 | 经人工可观察行为审查4/12，array不是原报告同一报错位置；四参考保留 |
+| 第4批独立canary | 方法先冻，排除301历史身份后选3题；官方/镜像摘要3/3一致 | PVLib-1048/SymPy-20131/scikit-15535，待用户直连4.05GiB；模型0调用 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
@@ -24,7 +27,9 @@
 
 ## 2. 当前瓶颈与最新入口
 
-**当前下一步是旧DEV零调用证明counterfactual fixture contract，不是下载/重跑或继续抽新canary。** 自动覆盖、响应分账、source-contract、评分前控制器及oracle一致性已做多轮开发。独立v3一次实验可信1/3，负结果封存；随后旧DEV v3弃答即STOP、路径锚点，新生成3/12，节省调用但丢失参考覆盖，开发门槛未达。旧缓存4/12不是当前新生成成绩。详见[最新DEV结果与具体下一步](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)。
+**当前下一步是第4批独立canary的基础设施准备，不是重跑旧批。** Counterfactual机制已在合成/旧DEV零调用证明：对照必须保留同一literal元素/长度，派生对照不满足生产约束则STOP，target与oracle不改，5条unproven不假装已证明。缓存4/12只做开发证据；另冻一次新生成实际4/12（人工可观察行为审查），13请求26762tokens，比DEV v3增加2050tokens，不称省费/SOTA。四参考已保持，所以可先冻完整新方法后选不重叠canary。详见[新实验/限制](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)与[第4批完整协议](research/E1C2_COUNTERFACTUAL_CANARY_V4_METHOD_2026-10-05.md)。
+
+Counterfactual-canary-v4 method SHA`88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea`；排除301历史身份后选PVLib-1048/SymPy-20131/scikit-15535，identity SHA`06d55d996a2f6786d8718340d24c8debd5e8c2a566897cf55c3b24e114f3a337`。三镜像官方/直连mirror完全一致，官方仅7请求/26342正文bytes经7892，blob/model均0，issue/Gold未读。压缩总4.047GiB，用户按[交接页新命令](research/NEXT_SESSION_HANDOFF.md)直连下载，随后双准入/公开输入/live freeze。Flash≤6/60000tokens、单题2/20000、输出3000、零重试，未来独立门槛仍未过。
 
 canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44`未变。用户完成下载；Flask/SymPy双准入、PyVista Base没有明确目标失败记录，保留分母。两题模型共3请求7280tokens；Flask候选行为偏离且Gold不区分，SymPy经审核可信，最终1/3。见[完整结果](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)。不得换题/在已看身份调参后重称独立；repair、sealed TEST/C5/Fresh30继续关闭，冻结协议和下载收据作为历史保留。
 
@@ -55,9 +60,9 @@ canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b8
 | 0 | v2 负结果与当前入口保全 | 原response/state/ledger不回填，公共摘要/结果页已写 | 不拼接旧DEV成功数 |
 | 1 | 响应分类/行为合同已开发 | v1 SDK失败保留，v2 raw JSON两臂完整；issue oracle固定 | 无完整A/B优势，不包装增益 |
 | 2 | 正对照/生产覆盖已开发 | API/类/traceback统一选择、生产AST/真实import证明，合成与旧DEV回归 | 定位覆盖不等于语义正确 |
-| 3 | DEV研究与完整回归已记录 | 新DEV v3为3/12；1118passed/4skipped/0failed | 开发门槛失败，缓存不是独立确认 |
-| 4 | 可信正对照/fixture机制待实现 | 先合成/旧DEV零调用证明，保证非触发条件可比、oracle不改 | 四条参考未保留不扩新canary |
-| 4b | 新方法独立确认（目前禁止启动） | 新DEV门槛真过才完整冻结新方法，再选不重叠canary，一次可信≥2/3 | 已封存v1/v2/v3不能复用作独立；失败封存 |
+| 3 | DEV研究与完整回归已记录 | 新counterfactual生成4/12；最新全仓1127passed/4skipped/0failed | 语义包含人工审查，工程通过不算repair |
+| 4 | Counterfactual局部机制已实现 | 1case literal类型对照、生产guard来源、两次控制验证；四参考保持 | 5条unproven保留，未宣称通用语义证明 |
+| 4b | 第4批独立确认准备 | 先完整冻结后metadata盐选新任务→用户下载→双准入→盲态一次≥2/3 | v1/v2/v3均不得复用；失败封存，不补规则重称独立 |
 | 5 | 新修复配对小实验 | 同模型/预算 baseline/treatment，独立 official grade | 无净收益不扩批 |
 | 6 | 同版旧 DEV30 | 单一冻结身份、30 行，目标 30/30 resolved | 保留失败分布，Fresh30 关闭 |
 | 7 | Fresh30 one-shot | 门槛真过后先选新身份、再读内容、一次运行 | 如实报告，不回调规则 |
@@ -67,7 +72,7 @@ canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b8
 
 ## 5. 一周交付
 
-[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至10月5日，环境恢复、三批canary封存与多轮DEV开发完成；独立及开发门槛仍失败。本轮canary+DEV新增31992tokens，累计本日已记录可见usage152318（含旧SDK错误4281；非核账单）。系列非无限预算，下一项先零调用，不再用付费重复替代方法证据；不能承诺10月7日必达30/30。
+[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至10月5日，三批canary均负结果封存；新counterfactual零调用机制及新生成4/12通过开发参考门槛，独立门槛仍未过。本次新增26762tokens，累计本日可见usage179080（含旧SDK错误4281，非核账单）。系列非无限预算，第四批最多60000，后续repair仍需单独门槛/预算，不承诺10月7日必达30/30。
 
 可控交付是输入隔离和自动定位检查、一个通用复现改进、同预算 DEV 消融、冻结记录、独立结果或明确阻塞报告、可接手的状态包。**30/30 保留为目标；当前证据不足以承诺一周必达。**
 

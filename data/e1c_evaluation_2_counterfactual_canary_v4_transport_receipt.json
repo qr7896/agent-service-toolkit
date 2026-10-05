@@ -1,0 +1,28 @@
+{
+  "schema":"e1c2-counterfactual-canary-v4-public-transport-receipt",
+  "date":"2026-10-05",
+  "status":"awaiting_user_direct_download",
+  "method_freeze_sha256":"88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea",
+  "identity_sha256":"06d55d996a2f6786d8718340d24c8debd5e8c2a566897cf55c3b24e114f3a337",
+  "metadata_sha256":"a881ace9776dc10e4501bf9799cc1e0d18f80f7c35dca180f51477d816a38193",
+  "transport_sha256":"da5c553c3765f64e83fa01a8751aa732da2fd697a0cfa0a63893f7e3b199ae71",
+  "excluded_historical_identities":301,
+  "official_requests":7,
+  "official_body_bytes":26342,
+  "official_proxy_metadata_only":true,
+  "blob_proxy":null,
+  "official_mirror_identical":3,
+  "fixed_denominator":3,
+  "compressed_layer_bytes":4345861461,
+  "blob_requests":0,
+  "provider_calls":0,
+  "task_content_inspected":false,
+  "batch_provider_token_cap":60000,
+  "max_provider_requests":6,
+  "retry_count":0,
+  "tasks":[
+    {"instance_id":"pvlib__pvlib-python-1048","compressed_layer_bytes":1704265504},
+    {"instance_id":"sympy__sympy-20131","compressed_layer_bytes":1142424225},
+    {"instance_id":"scikit-learn__scikit-learn-15535","compressed_layer_bytes":1499171732}
+  ]
+}
