@@ -193,3 +193,11 @@ v2 有 **7 个两次同日志 base 失败信号**（其中 1 个确定性规则�
 本次零模型验证：指定Ruff通过；专项18 passed；完整pytest一次1084 passed / 4 skipped / 33 warnings / 0 failed（53.96秒）。独立V3 compact preflight暴露Windows非UTF-8子进程输出的解码错误及后续stdout=None错误，保留失败。全仓Ruff另检发现2225条既有风格/导入问题，未批量改写冻结源码来造绿。不能宣称全部CI检查已通过。
 
 发布采用精确路径清单、敏感格式/原始任务字段扫描与字节身份保护；sealed spec和含原题面的旧DEV输入保留本地，不发布密钥或原始容器材料。GitHub直连超时后，仅对Git命令使用现有本地代理；Docker、WSL、数据盘和tunnel设置不变。完整保全和验证说明见[重整记录](WORKSPACE_REORGANIZATION_2026-09-30.md)，下一工作见[当前Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)与[一周计划](E1C2_ONE_WEEK_PLAN_2026-09-30.md)。
+
+## 2026-10-05 — 旧 DEV 结构审计、回归与 canary v2 基础设施复核
+
+本轮未修改第二批 canary 的 14 个冻结方法文件，逐文件 SHA-256 再核均匹配。沿用用户此前给出的精确零模型 `evals.e1c_evaluation_2_canary_v2_stage transport` 命令复试：`auth.docker.io` TLS 握手仍报 `WinError 10054`；未产生 `image_transport.json`，未下载第二批大文件，模型调用 0。Docker Linux engine 管道不存在；只尝试启动已安装的 Docker Desktop，服务仍停止；当前会话 `Start-Service com.docker.service` 因无权限失败。没有调整代理/VPN、镜像、WSL、VHDX 或 tunnel。
+
+只在旧 DEV 的已保存 v4 公共 issue 输入与候选源码上新增独立零调用形态审计 `evals.e1c_evaluation_2_contract_dev`：核对输入/源码摘要与逐字 issue span，并用 AST 区分真实调用后到达标记、值比较、吞异常及不受支持断言。9 条固定 DEV 记录为 3 个调用后标记、1 个值比较、1 个吞异常、2 个不受支持断言、2 个无候选；这些类别只说明代码结构，**9/9 的语义状态均为未验证**，不替换原人工语义审核或 Gold 判别，不提升 4/12 可信数，也不宣称自动修复。模块不读取官方测试或 Gold，不触碰现有冻结身份。相关专项 12 passed，新增文件 Ruff clean。
+
+规定的 V3 重点 Ruff 通过、18 项重点 pytest 通过、`evals.v3_compact_pilot preflight` 返回 `ready=true`。全仓 `uv run --frozen --offline pytest -q` 首轮为 **1085 passed / 4 skipped / 1 failed**：Windows 缺 `-X utf8`，既有 admission 测试在调用 Docker 前按原守卫拒绝。按该环境条件完整重跑 `uv run --frozen --offline python -X utf8 -m pytest -q`，单次 **1086 passed / 4 skipped / 33 warnings / 0 failed**（49.94 秒）。这是工程回归而非复现、补丁或 official resolved 成绩。下一门槛仍是官方摘要直连、用户终端镜像下载、本机 Docker 正常运行，再原协议零模型准入；不能跨过阻塞直接付费或打开 sealed TEST/C5/Fresh30。

@@ -1,6 +1,6 @@
 # Roadmap 2：E1-C evaluation_2 当前状态与执行顺序
 
-状态日期：2026-09-30。本页是当前执行入口；背景见 [Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，逐轮过程见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。本页不再堆叠历史“最新快照”。
+状态日期：2026-10-05。本页是当前执行入口；背景见 [Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，逐轮过程见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。本页不再堆叠历史“最新快照”。
 
 ## 1. 完成情况
 
@@ -10,8 +10,9 @@
 | DEV12 官方双准入 | Base-Fail 11/12；Gold-Pass 9/12；同时满足 9/12 | 异常题保留在固定分母 |
 | 自动定位 | 9 个准入任务的公开 issue / exact-base 生产窗口冻结 | 无人工选文件；有窗口不等于定位正确 |
 | DEV v4 复现 | 8 次 Flash 请求 / 25,424 tokens；5 个重复失败候选、4 个 Gold 区分 | 人工语义审核后可信 4/12，跨 2 仓库 |
+| 旧 DEV 零调用形态审计 | v4 的 9 条记录：3 个调用后标记、1 个值比较、1 个吞异常、2 个不支持结构、2 个无候选 | 只做结构筛查；9/9 语义状态仍未验证，不增加可信数 |
 | 独立 canary v1 | 2 请求 / 5,755 tokens；可信 1/3 | 未达 ≥2/3；负结果封存 |
-| 独立 canary v2 | 方法先冻、身份后选；14 份方法文件 SHA 已核一致 | 未读新 issue、未运行模型 |
+| 独立 canary v2 | 方法先冻、身份后选；2026-10-05 再核 14 份方法文件 SHA 一致 | 未读新 issue、未运行模型 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
@@ -19,7 +20,7 @@
 
 ## 2. 当前阻塞
 
-canary v2 的 `transport` 在 Docker Hub `auth.docker.io` 取令牌时出现 TLS reset / 连接超时。没有 `image_transport.json`，镜像 0/3、provider calls=0。uv 的 `--offline` 只控制依赖获取，不阻止脚本请求镜像摘要。
+2026-10-05 重试原命令后，canary v2 的 `transport` 仍在 Docker Hub `auth.docker.io` 取令牌时出现 TLS reset。没有 `image_transport.json`，镜像 0/3、provider calls=0。uv 的 `--offline` 只控制依赖获取，不阻止脚本请求镜像摘要。本机 Docker Linux engine 同时未就绪；尝试启动现有 Docker Desktop 后服务仍为 `Stopped`，当前非管理员会话无权启动 `com.docker.service`。未改 Docker 配置、数据盘或 tunnel。
 
 三题固定为 Seaborn-2846、Marshmallow-1343、pytest-8861。镜像站单独估计压缩层约 2.93 GiB，不能当权威摘要或最终磁盘增量。
 
@@ -55,7 +56,7 @@ canary v2 的 `transport` 在 Docker Hub `auth.docker.io` 取令牌时出现 TLS
 
 ## 5. 一周交付
 
-[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明逐日工作、预算、消融与停止条件。
+[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至 10 月 5 日，行为合同只完成旧 DEV 的结构性零调用审计，尚未实现完整合同生成/反馈消融；Docker 与官方摘要传输阻塞未解除。原 D1–D4 日程已延误，不能把计划当完成记录，也不能承诺 10 月 7 日必达 30/30。
 
 可控交付是输入隔离和自动定位检查、一个通用复现改进、同预算 DEV 消融、冻结记录、独立结果或明确阻塞报告、可接手的状态包。**30/30 保留为目标；当前证据不足以承诺一周必达。**
 
