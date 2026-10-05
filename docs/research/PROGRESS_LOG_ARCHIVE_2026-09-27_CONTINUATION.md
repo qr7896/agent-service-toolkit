@@ -219,3 +219,15 @@ v2 有 **7 个两次同日志 base 失败信号**（其中 1 个确定性规则�
 大文件未运行，用户关闭 VPN 全局/TUN 后在终端运行新模块 `download --timeout-per-image 21600`。下载只消费缓存 seal，不再请求官方 registry；复用直连镜像站的逐层进度、Range 续传、SHA/大小/diff-id/image-ID校验、磁盘守卫和导入心跳。新入口先检查 Docker engine。后续 `admit/public` 共用新产物目录；修订绑定的 live adapter/执行 freeze 尚待准入后实现，不能直接套原 `canary_v2_live`。新题面、评分文件、模型、sealed TEST/C5/Fresh30 均未打开。
 
 验证：新传输与既有隔离/镜像专项 **14 passed**，规定重点 **18 passed**，指定 Ruff 全过。V3 preflight 带 `-X utf8` 的额外调用出现既有 Windows 子进程 UTF-8 解码/`stdout=None` 错误；按仓库规定 `uv run --frozen --offline python -m evals.v3_compact_pilot preflight` 完整运行返回 `ready=true`，分别保留两条命令结论。全仓 `uv run --frozen --offline python -X utf8 -m pytest -q` 单次 **1091 passed / 4 skipped / 33 warnings / 0 failed**（52.00 秒），只算工程回归。最新状态、下载命令和 WebCodex 交接已同步更新。
+
+## 2026-10-05 — 第二批镜像/官方准入完成，Flash三题一次执行可信0/3封存
+
+用户终端返回 `verified_loaded=3` 后，本机用原transport/loaded链核对不可变image ID 3/3；执行新修订入口 `admit --timeout 900`，六项离线官方Base/Gold全部通过，固定三题均双准入。Seaborn FAIL_TO_PASS 3个base明确失败/Gold全部过，原47测试保持；Marshmallow目标1个、原24；pytest目标1个、原127。随后 `public` 按原v4自动物化三条公开issue与exact-base干净生产源码，各四个窗口。模型输入与grader路径隔离，未人工选文件或读取Gold正文。
+
+新增live/Gold桥接适配器只绑定原v4方法和新基础设施目录，原14份方法文件摘要保持。初始专项暴露导入时共享runner覆盖v1提示的副作用，改为延迟加载后同项8 passed；没改旧提示或削弱断言。指定Ruff、18重点tests、V3原命令preflight均通过；全仓单次 **1093 passed / 4 skipped / 33 warnings**（70.29秒）。导入Gold适配器后计算的preflight与独立live原freeze完全相同，避免模块导入顺序漂移。
+
+新身份 `e1c2-independent-canary-v2-metadata-proxy-v1-flash` 的live freeze SHA **5b3c8bb508019adb2fd33f32511d9d16f3bebc8cb5979e69e2cc7f4871c1004f**，预留27,760、最多3请求/42,000 tokens、单题14,000、单次输出2,600、Flash非thinking、temperature0、SDK零重试。按用户此前每个≤100,000tokens实验先列精确命令无需再确认的明确授权，源码先提交 `272f841`，再执行 `uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_proxy_live run` 一次；真实完成3请求，共 **13,783 provider tokens**。没有失败请求或重试。只保存请求模型alias和response/usage，返回具体模型版本没有完整记录，不补写版本声明。
+
+固定逐题：Seaborn-2846 7,010tokens，回显输入/源码耗尽2,600输出，未形成可解析source JSON，原解析器拒绝；Marshmallow-1343 3,678tokens，唯一执行候选base两次同错，独立Gold成功应用后仍退出1，原因是构造validator引用不存在字段，不能晋升；pytest-8861 3,095tokens，明确因相关生产窗口不足而abstain，原runner统一记candidate_rejected，审计报告另列弃答，原state不回填。独立Gold命令 `uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_proxy_gold`，attempted1、gold_discriminating0，零模型调用。
+
+固定分母可信 **0/3 < 2/3**，新增终结摘要/data结果/报告标记 `sealed_negative_below_preregistered_threshold`。ledger SHA **4fab3c9a61671094b3e0d71bea298fd2f50d3bcd2788457f3b66f00f3c047c94**，原state SHA **5c79a826d72c533619d73593269f6acef20721af3761cd22895dbc0b98e30124**，Gold结果SHA **bb4fb3eb46021c819a85d559d49f501a122152a8133a6eb7adc01fcf14f96241**；原response/ledger/state/输入/日志和历史metadata-only摘要全部保留。新版Agent repair、sealed TEST/C5/Fresh30未运行。详细结果见[E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md](E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md)。下一步回旧DEV做响应分账、固定行为合同/fixture正对照和自动窗口覆盖核验；不在本三题重跑后重称独立，取得同预算增益再冻新方法和不重叠canary。

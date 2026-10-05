@@ -12,23 +12,23 @@
 | DEV v4 复现 | 8 次 Flash 请求 / 25,424 tokens；5 个重复失败候选、4 个 Gold 区分 | 人工语义审核后可信 4/12，跨 2 仓库 |
 | 旧 DEV 零调用形态审计 | v4 的 9 条记录：3 个调用后标记、1 个值比较、1 个吞异常、2 个不支持结构、2 个无候选 | 只做结构筛查；9/9 语义状态仍未验证，不增加可信数 |
 | 独立 canary v1 | 2 请求 / 5,755 tokens；可信 1/3 | 未达 ≥2/3；负结果封存 |
-| 独立 canary v2 | 原 14 份方法文件 SHA 一致；授权的小型元数据代理修订已另冻，3/3 官方/镜像站摘要一致 | 等用户下载三张镜像；新 issue 和模型阶段未运行 |
+| 独立 canary v2（传输修订） | 3/3 镜像/双准入；3 次 Flash、13,783 tokens；1 个重复失败候选、Gold 区分 0 | 可信 0/3，未达 ≥2/3；负结果封存 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
 **现存人工环节：** Gold 区分不能自动证明 probe 忠实表达 issue。4/12 包含人工语义审核，底层 `trusted_reproducer=false` 保持原样。后续分别报告自动准入和人工审核后结果，不合称“全自动可信”。
 
-## 2. 当前阻塞
+## 2. 当前瓶颈
 
 2026-10-05 用户允许仅小型官方元数据使用本机 7892。新增并封存传输修订 `e1c2-canary-v2-metadata-proxy-v1`，保持原选择身份和 14 份方法文件。官方认证及 manifest 经代理，镜像站 manifest 直连，三张镜像摘要 **3/3 一致**；官方响应正文仅 **26,333 字节 / 6 请求**。新 seal 位于 `.codex/e1c/evaluation_2/canary-v2-metadata-proxy-v1/image_transport.json`；原 direct-only 路径仍无 seal，历史失败保留。这是同一三题 cohort 的基础设施修订，不是新抽样。
 
-现在待用户手动下载 **0/3 镜像**，provider calls=0。三题仍为 Seaborn-2846、Marshmallow-1343、pytest-8861，已核官方压缩层合计 **2.932 GiB**；实际解压/归档/导入占用更高。Docker 服务端 29.4.0 正常、旧 DEV12 的 12/12 image ID 可核验，D: 约 42.9 GiB 空闲。
+用户已下载 **3/3 镜像**，本机image ID/源码身份及六项官方Base/Gold全部通过；公开issue/生产窗口3/3物化，各四个窗口。冻结新live身份后一次调用Flash三题，实际13,783 provider tokens（硬上限42,000、无重试）。可信复现 **0/3**，该批关闭。环境已可运行，主瓶颈转为生成与定位质量。
 
 - 元数据代理限官方 token/manifest，最多 9 请求、200,000 字节/响应、2,000,000 字节累计正文；无跳转/重试，拒绝 blob URL。
 - 下载只读取缓存 seal，镜像层通过空 ProxyHandler 直连；用户关闭 VPN 全局/TUN，Docker 保持 No proxy，再用新入口下载。
-- 零模型准入使用修订入口的 `admit/public`；未来 live 另冻绑定修订的执行身份，原 v2 live 入口不适用该修订。
+- 本批 `admit/public/live/Gold` 已执行并封存，不再重复。Seaborn输出回显/不可解析；Marshmallow构造fixture错误，Gold后仍失败；pytest因相关生产窗口不足而明确弃答。
 
-完整新命令与进度见[传输修订及终端交接](research/E1C2_CANARY_V2_METADATA_PROXY_AMENDMENT_2026-10-05.md)。原[直连尝试](research/E1C2_CANARY_V2_DIRECT_DOWNLOAD_HANDOFF_2026-09-30.md)保留为历史。
+完整结果与账本摘要见[第二批负结果](research/E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md)。[传输协议](research/E1C2_CANARY_V2_METADATA_PROXY_AMENDMENT_2026-10-05.md)、[live协议](research/E1C2_CANARY_V2_PROXY_LIVE_PROTOCOL_2026-10-05.md)和原[直连尝试](research/E1C2_CANARY_V2_DIRECT_DOWNLOAD_HANDOFF_2026-09-30.md)保留，命令只作历史证据。
 
 ## 3. 严格验收定义
 
@@ -42,21 +42,21 @@
 
 | 顺序 | 工作 | 完成证据 | 失败分支 |
 |---|---|---|---|
-| 0 | 保全、当前入口与 GitHub 交接 | 历史快照、哈希清单、提交与验证 | 保留本地，不强制覆盖远端 |
-| 1 | canary v2 传输与镜像 | 摘要 3/3 已过；待用户直连下载与 image ID 核验 | 基础设施阻塞不换题 |
-| 2 | 原协议 Base/Gold、源码、公开输入 | 固定三条逐项记录 | 不后验替补或改评分 |
-| 3 | 冻结摘要与 live preflight | 精确命令、Flash、请求/预算一致 | 摘要不符停止 |
-| 4 | 一次盲态 canary v2 | ≤3 请求 / 42,000 tokens；可信 ≥2/3 | 封存，回 DEV，不在该批补规则 |
+| 0 | v2 负结果与当前入口保全 | 原response/state/ledger不回填，公共摘要/结果页已写 | 不拼接旧DEV成功数 |
+| 1 | 旧DEV新版本：响应分类与行为合同 | source/abstain/截断分账；issue引用和预期固定 | 不在本批canary重算 |
+| 2 | fixture正对照、自动生产窗口覆盖检查 | setup先过；API/traceback线索自动选择，合成与旧DEV回归 | 超预算弃答，无人工选文件 |
+| 3 | 同预算旧DEV消融与完整回归 | 固定DEV12逐行对照、可信/成本/弃答分列；单实验≤100,000 tokens | 无增益封存，不扩新样本 |
+| 4 | 新方法冻结后选不重叠canary | 排除DEV、v1/v2；先冻方法预算，后读内容，一次≥2/3 | 失败封存，不能后验补规则再称独立 |
 | 5 | 新修复配对小实验 | 同模型/预算 baseline/treatment，独立 official grade | 无净收益不扩批 |
 | 6 | 同版旧 DEV30 | 单一冻结身份、30 行，目标 30/30 resolved | 保留失败分布，Fresh30 关闭 |
 | 7 | Fresh30 one-shot | 门槛真过后先选新身份、再读内容、一次运行 | 如实报告，不回调规则 |
 | 8 | E2 / E3 | 新预注册、样本、预算、提前停止条件 | operational PASS 不代表已完成 |
 
-当前 canary v2：`deepseek-flash`、non-thinking、temperature 0；每题≤1请求 / 14,000 provider tokens；整批≤3请求 / 42,000；单请求输出≤2,600；retry=0。后续泛化的“弹性预算”不自动改写这一冻结身份。
+已封存 canary v2：`deepseek-flash`、non-thinking、temperature 0；每题≤1请求 / 14,000 provider tokens；整批≤3请求 / 42,000；单请求输出≤2,600；retry=0。实用13,783 tokens。后续“弹性预算”不改写这一冻结身份。
 
 ## 5. 一周交付
 
-[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至 10 月 5 日，行为合同只完成旧 DEV 的结构性零调用审计，尚未实现完整合同生成/反馈消融；Docker 已恢复，授权的元数据传输修订已过，待用户下载镜像。原 D1–D4 日程已延误，不能把计划当完成记录，也不能承诺 10 月 7 日必达 30/30。
+[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至 10 月 5 日，环境修复、第二批canary执行与封存已完成；完整行为合同/DEV消融尚未完成。第二批0/3证明旧v4泛化门槛未过，需回旧DEV。原 D1–D4 日程已延误，不能承诺 10 月 7 日必达 30/30。
 
 可控交付是输入隔离和自动定位检查、一个通用复现改进、同预算 DEV 消融、冻结记录、独立结果或明确阻塞报告、可接手的状态包。**30/30 保留为目标；当前证据不足以承诺一周必达。**
 
