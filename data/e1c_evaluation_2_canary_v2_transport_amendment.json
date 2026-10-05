@@ -1,0 +1,27 @@
+{
+  "schema": "e1c2-canary-v2-transport-amendment-v1",
+  "run_id": "e1c2-canary-v2-metadata-proxy-v1",
+  "role": "infrastructure_amendment_same_selected_cohort_not_a_new_sample",
+  "original_method_freeze_sha256": "fd58671dcdb923e70b7f018362682802849c54651655e21d051828e1d6f4d14b",
+  "original_identity_sha256": "a22311ffc4dd41c379e839e5618bccb35164367b35b9a3797bf5f17bb3dba997",
+  "official_metadata_sha256": "3eabcee1ac502b8de82378a8cd8cbae47c858a37429196422084b210d3fc8d5f",
+  "fixed_denominator": 3,
+  "amended_files": {
+    "evals/e1c_evaluation_2_canary_v2_metadata_proxy.py": "307bd946be287cce2c6aad9b548bc1b602f0703cfe76ca05921f98bbb56325f8",
+    "docs/research/E1C2_CANARY_V2_METADATA_PROXY_AMENDMENT_2026-10-05.md": "78a5e25cf0292cdbd7456344bf6e51cf88a0670fbda436611f37b5a007295fb6",
+    "evals/e1c_evaluation_2_mirror_acquire.py": "f70c3dc210615c1d05b83f4e01da91a9441ced9a195f52ef167ce158f08f6075",
+    "evals/e1c_evaluation_2_image_transport.py": "53307afee40a1e6b50eb6f0c94cc5e81760ec56acb408ab730b2f7648210fa54",
+    "evals/e1c_evaluation_2_batch_acquire.py": "879a12ceda12f3780501e2b9984bb8f75d33526b115edc56e864221e89553462"
+  },
+  "official_proxy_metadata_only": "http://127.0.0.1:7892",
+  "official_response_byte_cap": 200000,
+  "official_total_body_byte_cap": 2000000,
+  "official_request_cap": 9,
+  "mirror_proxy": null,
+  "redirects": 0,
+  "metadata_retries": 0,
+  "task_content_inspected": false,
+  "outcome_inspected": false,
+  "provider_calls": 0,
+  "future_live_requires_amendment_bound_execution_identity": true
+}

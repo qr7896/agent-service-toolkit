@@ -1,6 +1,6 @@
 # 研究文档入口
 
-更新：2026-09-30。当前主线为 E1-C evaluation_2。
+更新：2026-10-05。当前主线为 E1-C evaluation_2。
 
 | 文档 | 用途 |
 |---|---|
@@ -10,7 +10,8 @@
 | [接手说明](NEXT_SESSION_HANDOFF.md) | WebCodex 环境检查、下一任务、回传格式 |
 | [冻结方法](E1C2_CANARY_V2_METHOD_FREEZE_2026-09-30.md) | canary v2 原始方法与预算 |
 | [canary v1 负结果](E1C2_INDEPENDENT_CANARY_V1_RESULT_2026-09-29.md) | 固定分母 1/3，已封存 |
-| [终端下载](E1C2_CANARY_V2_DIRECT_DOWNLOAD_HANDOFF_2026-09-30.md) | 官方核验、直连下载、进度 |
+| [当前传输修订/终端下载](E1C2_CANARY_V2_METADATA_PROXY_AMENDMENT_2026-10-05.md) | 官方小型元数据代理、镜像直连、进度；原方法保留 |
+| [旧直连传输尝试](E1C2_CANARY_V2_DIRECT_DOWNLOAD_HANDOFF_2026-09-30.md) | 9月30日的阻塞记录与旧命令 |
 | [工作区保全记录](WORKSPACE_REORGANIZATION_2026-09-30.md) | 快照、发布范围、验证与本地保留项 |
 
 V0–V3 结论见 [V0](RESULTS_V0.md)、[V1](RESULTS_V1.md)、[V2](RESULTS_V2.md)、[V3](RESULTS_V3.md)。工程回归、可信复现、Agent official resolved 分开报告。

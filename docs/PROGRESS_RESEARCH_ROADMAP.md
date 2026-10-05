@@ -1,10 +1,10 @@
 # Coding Agent 研究总览：成果、证据与边界
 
-更新：2026-09-30。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
+更新：2026-10-05。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：基础工程和多轮检索研究已经实现；端到端修复效果仍未达目标。E1-C evaluation_2 的 DEV v4 为 **4/12 经语义审核的可信补丁前复现**；首批独立 canary **1/3，未达门槛**；第二批已冻结，卡在官方镜像摘要的直连传输，尚未运行。没有同版 DEV30 全通过，也没有 Fresh30 泛化结果。
+当前阶段：基础工程和多轮检索研究已经实现；端到端修复效果仍未达目标。E1-C evaluation_2 的 DEV v4 为 **4/12 经语义审核的可信补丁前复现**；首批独立 canary **1/3，未达门槛**；第二批原方法/身份保持冻结，授权的小型官方元数据代理修订已通过 **3/3 官方镜像摘要核验**，等待用户直连下载镜像，模型尚未运行。没有同版 DEV30 全通过，也没有 Fresh30 泛化结果。
 
 ## 1. 阅读入口
 
@@ -14,7 +14,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看当前冻结协议 | [canary v2 方法与预算](research/E1C2_CANARY_V2_METHOD_FREEZE_2026-09-30.md) |
+| 查看当前冻结协议 | [canary v2 方法与预算](research/E1C2_CANARY_V2_METHOD_FREEZE_2026-09-30.md) + [元数据传输修订](research/E1C2_CANARY_V2_METADATA_PROXY_AMENDMENT_2026-10-05.md) |
 
 ## 2. 从启动到现在的主线
 
@@ -60,7 +60,7 @@
 | B4 / C4 | B4 1/4 对 1/4；C4 0/6 对 0/6 | 没有 treatment 净新增修复；[历史](PROGRESS_RESEARCH_ROADMAP_HISTORY_2026-09-30.md) |
 | evaluation_2 DEV12 | 双准入 9/12；v4 经审核可信复现 4/12 | 8 请求 / 25,424 tokens；含确定性路由；不是修复率 |
 | canary v1 | 可信复现 1/3，低于 ≥2/3 | 独立负结果封存；[结果](research/E1C2_INDEPENDENT_CANARY_V1_RESULT_2026-09-29.md) |
-| canary v2 | 身份/方法冻结，模型请求 0 | 官方摘要直连受阻，不是模型失败 0/3 |
+| canary v2 | 原身份/方法冻结，模型请求 0；传输修订摘要 3/3 核对 | 官方元数据代理仅26,333字节；镜像待下载，尚无模型结果 |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 

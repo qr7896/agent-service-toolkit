@@ -1,0 +1,53 @@
+{
+  "schema": "e1c2-public-transport-summary-v1",
+  "role": "public_metadata_summary_not_an_acquisition_seal",
+  "date": "2026-10-05",
+  "run_id": "e1c2-canary-v2-metadata-proxy-v1",
+  "amendment_sha256": "7afba65fcddc8d94f0b576e901f770daec77d5303f77397777ccad4246a38b85",
+  "local_transport_sha256": "9634eacb4e893cac0131c6f167b3b341ba83cb8b6b768dec42bed6e58bdb002e",
+  "original_identity_sha256": "a22311ffc4dd41c379e839e5618bccb35164367b35b9a3797bf5f17bb3dba997",
+  "original_method_freeze_sha256": "fd58671dcdb923e70b7f018362682802849c54651655e21d051828e1d6f4d14b",
+  "original_method_file_mismatches": 0,
+  "verified_manifests": 3,
+  "fixed_denominator": 3,
+  "official_metadata_requests": 6,
+  "official_metadata_body_bytes": 26333,
+  "mirror_metadata_body_bytes": 9528,
+  "official_proxy_metadata_only": true,
+  "mirror_os_proxy_bypassed": true,
+  "compressed_layer_bytes": 3148086127,
+  "blob_requests": 0,
+  "image_pulls": 0,
+  "verified_loaded_images": 0,
+  "provider_calls": 0,
+  "task_content_inspected": false,
+  "rows": [
+    {
+      "instance_id": "mwaskom__seaborn-2846",
+      "official_image": "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-2846:latest",
+      "official_and_mirror_top_digest": "sha256:7a9c29c2fda6f7644221d40c019a2fff6ba35d5499ff40705543e00abeb84ebe",
+      "official_and_mirror_platform_digest": "sha256:7a9c29c2fda6f7644221d40c019a2fff6ba35d5499ff40705543e00abeb84ebe",
+      "compressed_layer_bytes": 1188953663,
+      "layer_count": 13,
+      "digest_identical": true
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1343",
+      "official_image": "swebench/sweb.eval.x86_64.marshmallow-code_1776_marshmallow-1343:latest",
+      "official_and_mirror_top_digest": "sha256:a61197e0b29461e34010cd83570424eb91a7f265574a81c82ff79e55c6c10f29",
+      "official_and_mirror_platform_digest": "sha256:a61197e0b29461e34010cd83570424eb91a7f265574a81c82ff79e55c6c10f29",
+      "compressed_layer_bytes": 984586489,
+      "layer_count": 15,
+      "digest_identical": true
+    },
+    {
+      "instance_id": "pytest-dev__pytest-8861",
+      "official_image": "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-8861:latest",
+      "official_and_mirror_top_digest": "sha256:421d102037bada3aa410b1d3fc20be39b86140835afbf4497a8c002f0a801776",
+      "official_and_mirror_platform_digest": "sha256:421d102037bada3aa410b1d3fc20be39b86140835afbf4497a8c002f0a801776",
+      "compressed_layer_bytes": 974545975,
+      "layer_count": 13,
+      "digest_identical": true
+    }
+  ]
+}

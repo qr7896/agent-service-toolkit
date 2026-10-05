@@ -209,3 +209,13 @@ v2 有 **7 个两次同日志 base 失败信号**（其中 1 个确定性规则�
 本机诊断定位 Docker backend 无法移除旧 AF_UNIX `dockerInference` socket（Windows 错误 1920）。完全停止 Docker 后，单文件改名同样被系统拒绝。核对两个运行时目录只含旧零字节 reparse-point socket，再将 `%LOCALAPPDATA%\Docker\run` 和 `%LOCALAPPDATA%\docker-secrets-engine` 分别改名为带日期的同目录备份；原文件保留、未删除。一次启动又留下新 socket，随后用 `docker desktop stop` 正常退出，将两个新运行时目录在同一次重启前再次备份，再用 `docker desktop start` 启动。没有改 WSL/VHDX、镜像或 tunnel 配置。此恢复方式与 [Docker 公开问题报告](https://github.com/docker/desktop-feedback/issues/460)描述的相同故障形态一致，但本机原因仍以自己的 backend 日志为证。
 
 恢复核验：`docker desktop status=running`，`docker version` 服务端 **29.4.0**，Linux/overlay2，原 DEV12 获取账本的 **12/12 不可变 image ID** 均可 `docker image inspect`。本机另有 20 张镜像记录；未做全局清理。恢复后只再次运行用户指定的零模型 `transport`，官方 `auth.docker.io` 直连仍 `WinError 10054`，因此第二批 canary 保持 **0/3 镜像、0 模型调用**。下一步需用户在无 VPN/TUN 的可达网络上完成官方小型摘要核验，成功后才由用户终端按既有直连命令下载大文件；Docker/tunnel 端到端联通仍需单独验证。
+
+## 2026-10-05 — 官方小型元数据代理修订冻结，三张镜像摘要门槛通过
+
+用户换网仍直连超时后，明确允许仅小型官方元数据使用本机 7892。新增独立基础设施入口 `evals.e1c_evaluation_2_canary_v2_metadata_proxy`，新执行身份 `e1c2-canary-v2-metadata-proxy-v1`；原 14 份方法文件、选择身份和 direct-only 失败目录全部保留。此为选题后、读取新题正文/源码/Gold/结果前的基础设施修订，继续原三题固定分母；不宣称重抽了一批独立样本。修订文件 `data/e1c_evaluation_2_canary_v2_transport_amendment.json` SHA-256 **7afba65fcddc8d94f0b576e901f770daec77d5303f77397777ccad4246a38b85**，在任何代理元数据请求前写入并封存新源码/协议及镜像导入依赖摘要。
+
+代理客户端只允许 HTTPS 官方 token/manifest 地址，最多 9 请求、每响应 200,000 字节、累计正文 2,000,000 字节，禁止跳转/自动重试和 blob URL，令牌仅存在内存。镜像站 manifest 仍空代理直连。冻结后执行 `uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_metadata_proxy transport`，**3/3 顶层/linux-amd64 摘要、层数量和压缩字节完全一致**；官方实际 **6 请求、26,333 正文字节**，镜像站正文 9,528 字节，blob/image pull/provider call 均 0。新 seal 位于 `.codex/e1c/evaluation_2/canary-v2-metadata-proxy-v1/image_transport.json`，SHA-256 **9634eacb4e893cac0131c6f167b3b341ba83cb8b6b768dec42bed6e58bdb002e**。三张已核官方压缩层总量 **3,148,086,127 字节 / 2.932 GiB**；D: 约42.9 GiB空闲，解压和归档占用仍须逐张守卫。
+
+大文件未运行，用户关闭 VPN 全局/TUN 后在终端运行新模块 `download --timeout-per-image 21600`。下载只消费缓存 seal，不再请求官方 registry；复用直连镜像站的逐层进度、Range 续传、SHA/大小/diff-id/image-ID校验、磁盘守卫和导入心跳。新入口先检查 Docker engine。后续 `admit/public` 共用新产物目录；修订绑定的 live adapter/执行 freeze 尚待准入后实现，不能直接套原 `canary_v2_live`。新题面、评分文件、模型、sealed TEST/C5/Fresh30 均未打开。
+
+验证：新传输与既有隔离/镜像专项 **14 passed**，规定重点 **18 passed**，指定 Ruff 全过。V3 preflight 带 `-X utf8` 的额外调用出现既有 Windows 子进程 UTF-8 解码/`stdout=None` 错误；按仓库规定 `uv run --frozen --offline python -m evals.v3_compact_pilot preflight` 完整运行返回 `ready=true`，分别保留两条命令结论。全仓 `uv run --frozen --offline python -X utf8 -m pytest -q` 单次 **1091 passed / 4 skipped / 33 warnings / 0 failed**（52.00 秒），只算工程回归。最新状态、下载命令和 WebCodex 交接已同步更新。
