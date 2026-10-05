@@ -231,3 +231,19 @@ v2 有 **7 个两次同日志 base 失败信号**（其中 1 个确定性规则�
 固定逐题：Seaborn-2846 7,010tokens，回显输入/源码耗尽2,600输出，未形成可解析source JSON，原解析器拒绝；Marshmallow-1343 3,678tokens，唯一执行候选base两次同错，独立Gold成功应用后仍退出1，原因是构造validator引用不存在字段，不能晋升；pytest-8861 3,095tokens，明确因相关生产窗口不足而abstain，原runner统一记candidate_rejected，审计报告另列弃答，原state不回填。独立Gold命令 `uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_proxy_gold`，attempted1、gold_discriminating0，零模型调用。
 
 固定分母可信 **0/3 < 2/3**，新增终结摘要/data结果/报告标记 `sealed_negative_below_preregistered_threshold`。ledger SHA **4fab3c9a61671094b3e0d71bea298fd2f50d3bcd2788457f3b66f00f3c047c94**，原state SHA **5c79a826d72c533619d73593269f6acef20721af3761cd22895dbc0b98e30124**，Gold结果SHA **bb4fb3eb46021c819a85d559d49f501a122152a8133a6eb7adc01fcf14f96241**；原response/ledger/state/输入/日志和历史metadata-only摘要全部保留。新版Agent repair、sealed TEST/C5/Fresh30未运行。详细结果见[E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md](E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md)。下一步回旧DEV做响应分账、固定行为合同/fixture正对照和自动窗口覆盖核验；不在本三题重跑后重称独立，取得同预算增益再冻新方法和不重叠canary。
+
+## 2026-10-05 — 旧DEV合同A/B、source-contract与评分前控制器研究
+
+按用户已有“单实验≤100,000tokens先列命令/模型/次数/预算无需重确认”权限，仅在旧DEV、Flash非thinking下运行新身份；未重试旧失败或使用canary调参。源码先提交7192071、c23f702、0a58b9c。A/B v1 A九请求19,256tokens、Gold3/12；B第8请求SDK `LengthFinishReasonError`处理失败，中断保留（七完成16,344、错误携带4,281usage），第9未调用。部分Gold零调用只评分已完成prefix1/12，不伪装公平完整对照。v2统一生产覆盖/raw JSON计量，A/B各九请求17,545/19,253tokens、各Gold1/12，未优于基线。生产文件真实import/AST构造重分期的零调用source-contract回放A/B各2/12；回放与后验策略开发不算新模型或独立成绩。
+
+新prospective hybrid-v1优先B正对照，按评分前base失败锁定，最多一次A回退，15请求29,864tokens；Gold3/12，日期基线缺失，原preservation gate失败原样留存。controller v2将原call_completes合同贯穿A回退，严格AST结构证明时取消未经合同支持的额外返回值oracle（value_relation不弱化）；全部九条旧DEV缓存重放、零调用，Gold4/12，人工语义审查四条跨2仓库，机器trusted保持false。历史v4也4/12，不称超过基线或因果增益。开发gate另立数据SHA，无原件覆盖。累计本组102,262完成tokens+错误4,281可见usage=106,543，50开始/49完成/1SDK处理失败，零自动重试；加本日旧canary13,783=120,326，非账单核验。
+
+实现最小复用：原冻结14文件不改，新source-contract/预算/controller外围适配；newmethod先冻结，再选独立canary。完整[结果与限制](E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md)。审计更正：旧canary ledger实际记录`response_model=deepseek-flash` alias，缺的是不可变版本snapshot；旧公开JSON字段过宽，在新报告追加更正，不改sealed原件/0/3分数。
+
+## 2026-10-05 — 新hybrid canary v3方法/身份/小型传输门槛封板
+
+提交de55874后`freeze-method`，methodSHA **978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44**，包含完整controller/source合同/行为oracle/预算/生成评分链文件SHA。随后metadata-only盐选Flask-5063、PyVista-4226、SymPy-17150，排除DEV/旧canary/历史身份，固定3、无替补；identitySHA **62649edc20998fad8f101a488ccbb22e0dff6343bf81a0fc3398e5fed5d1500d**。历史身份扫描耗时；一次重复启动的零模型selector在写入前终止，最终只一份身份，无重抽、无题面/评分读取。过早metadata命令因identity不存在退出，稍后正确读取官方task.yaml，失败无模型/镜像调用。
+
+新`transport`官方token/manifest按许可7892，7请求/26,299正文bytes，镜像站直连，三题官方/mirror顶层/amd64摘要3/3完全一致。transportSHA **a3c28931a11f26d6e3d09ae7e18f9652d072749a99ae363bc53e9977a76adfa9**，压缩层总4,575,379,722bytes≈4.261GiB，blob/image pull/provider均0；大文件由用户终端下载。新批整批60000、每题20000、≤6请求/每题2、输出3000、Flash非thinking，SDK零重试。下一步下载→离线官方双准入→公开输入→preflight→报告精确run→独立Gold/语义审核；≥2/3才另冻Agent repair，否则负结果封存。
+
+Docker现场Server29.4.0/Dfree42.77GiB，未改配置、清镜像或操作VHD/tunnel。全仓单次1115passed/4skipped/33warnings/0failed（50.61秒），指定重点18passed/Ruff全过/V3规定原preflight退出0；是工程回归不是修复率。两份roadmap/接手入口改为新canary下载，过程仅在此集中追加。所有旧失败、账本、原响应和冻结身份保留；新canary正文、sealed TEST/C5/Fresh30尚未打开。

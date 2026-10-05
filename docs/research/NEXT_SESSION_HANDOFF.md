@@ -4,6 +4,49 @@
 
 ## 当前状态
 
+**最新：旧DEV行为合同A/B与新控制器研究已完成，当前入口改为独立hybrid canary v3。** 新生成hybrid-v1为3/12；修订controller v2的零调用缓存4/12（含人工语义审核，底层机器trusted仍false），不宣称独立验证或胜过历史v4。完整结果、费用和失败保全见[DEV研究报告](E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md)。
+
+先冻新方法/预算再metadata-only选题，三题Flask-5063、PyVista-4226、SymPy-17150不与历史identity重叠。官方/镜像站摘要3/3一致，未读新issue/源码/答案、未付费、未下载blob。新freeze SHA`978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44`，identity SHA`62649edc20998fad8f101a488ccbb22e0dff6343bf81a0fc3398e5fed5d1500d`。不再执行freeze-method/select，不改冻结依赖。[协议](E1C2_HYBRID_CANARY_V3_METHOD_2026-10-05.md)、[公开基础设施收据](../../data/e1c_evaluation_2_hybrid_canary_v3_transport_receipt.json)。以下旧v2段落为封存背景。
+
+## 用户下一步：终端直连下载三张新镜像
+
+已核压缩层分别1.067/2.130/1.064GiB，总4.261GiB（磁盘安装体积不是该数字）。D:现场42.77GiB空闲，逐张`20+6×compressedGiB`空间守卫，当前最大门槛32.78GiB；后续镜像解压仍可能触发stop，不承诺空间必够。不清理原记录、活动VHD或tunnel。下载显示每层MiB、速度、ETA、断点续传与Docker导入心跳。平均1–5MiB/s，传输约15–73分钟，加校验/导入粗估总40分钟–2小时；0.2MiB/s则仅传输约6小时，网络未知不保证时长。单镜像硬超时6小时。
+
+关闭VPN全局及TUN（仅取消全局可能仍被TUN接管），Docker保持No proxy。官方小型manifest seal已缓存，本条download不请求官方或7892；镜像与blob显式空代理直连，不能绕过系统级透明路由。失败时保留日志，通知执行者，不自动重试。
+
+```powershell
+Set-Location 'D:\codex\working\project20260827'
+Start-Transcript -Path '.codex\e1c\evaluation_2\hybrid-canary-v3\download.log' -Append
+try {
+    uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_hybrid_canary_v3 download --timeout-per-image 21600
+    if ($LASTEXITCODE -ne 0) { throw '下载未完成：保留缓存和日志，不进入模型实验。' }
+} finally {
+    Stop-Transcript
+}
+```
+
+返回`verified_loaded=3`后，先核对loaded/transport/image ID，再执行以下**零模型**命令，任一步非0即停、不自行跳过：
+
+```powershell
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_hybrid_canary_v3 admit --timeout 900
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_hybrid_canary_v3 public
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_hybrid_canary_v3 preflight
+```
+
+所有阶段位于`.codex/e1c/evaluation_2/hybrid-canary-v3/`，保持live/public/source与grader-only分区。未双准入仍占固定分母，不替换题；预算预检须给出可执行候选数及reserve。仅在这些条件满足后，先报告以下精确付费命令：
+
+```powershell
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_hybrid_canary_v3 run
+```
+
+Flash非thinking、temperature0、最多6请求、单题20,000/整批60,000provider tokens、单请求输出3,000，SDK零重试。在用户已授权单实验≤100,000范围内，但不得无限串批或放宽此freeze。run完成才执行`uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_hybrid_canary_v3 gold`，独立零模型判别。记录provider返回alias而非不可变版本；可信≥2/3（机器与人工语义审核分开）才另冻Agent repair小实验。失败封存回DEV，不能在v3修规则后仍称独立；sealed TEST/C5/Fresh30继续关闭。
+
+**云端限制**：新代码和身份在Git；小型metadata/transport seal仍在本机`.codex`。用户用本机终端完成下载；WebCodex须经已验证本机执行器读取这些摘要/调用限定入口，缺执行器、Docker、缓存或原件时报INFRA_BLOCKED。不能把云端clone误当本机、不打开Docker远程裸端口、不上传密钥；tunnel在线能力仍需独立检查。本次没有改Docker/tunnel设置。
+
+最新工程回归：1115 passed、4 skipped、33warnings、0failed（50.61秒）；skip与原套件一致，非修复率。指定重点18passed/Ruff通过/V3规定原preflight退出0。
+
+## 已封存 v2 背景（不要按旧建议重建下一批）
+
 DEV v4 经语义审核可信复现 4/12，不是修复率；首批独立 canary 1/3，已封存负结果。第二批经元数据代理修订、用户直连下载，3/3镜像及官方双准入通过；三次Flash一次执行共13,783 tokens，可信0/3，已封存。旧DEV的成功数不能补入这批分母。新版 repair / C5 / Fresh30 / E2 main 未运行。详见[第二批结果](E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md)和[data摘要](../../data/e1c_evaluation_2_canary_v2_amended_result.json)。
 
 canary v2 方法 SHA：`fd58671dcdb923e70b7f018362682802849c54651655e21d051828e1d6f4d14b`；identity SHA：`a22311ffc4dd41c379e839e5618bccb35164367b35b9a3797bf5f17bb3dba997`。以 [freeze JSON](../../data/e1c_evaluation_2_canary_v2_method_freeze.json) 核验方法文件，不重写摘要迁就改动。
@@ -39,9 +82,9 @@ uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_
 
 实得0/3，不足2/3，本批已关闭。任何格式重放、窗口扩展或候选修订都只能作为未来开发材料，不能重报本批独立成绩。下一步回旧DEV开发通用机制；有同预算增益后再冻新方法、选择同时排除DEV及两批canary的新身份。Fresh30和旧六条TEST继续关闭。
 
-## 可立即推进的 DEV 工作
+## 已完成的 DEV 开发计划（历史要求保留）
 
-按一周计划在**新版本**实现响应分账、行为合同、fixture正对照与自动源码窗口覆盖核验；复用现有定位、预算、容器和 ledger。先用旧DEV及合成夹具做通用回归，禁止任务ID→文件/规则表。不得修改 canary v2 的14份冻结方法文件或本批live freeze；已有 DEV12 与旧 DEV30 可用于调试，sealed TEST、SERBench private/Test500内容不可用于调参。响应协议改善与真实可信覆盖增益分别报告。
+以下开发已完成并保留多轮结果，当前按页首v3执行，不重复计费：按一周计划在**新版本**实现响应分账、行为合同、fixture正对照与自动源码窗口覆盖核验；复用现有定位、预算、容器和 ledger。先用旧DEV及合成夹具做通用回归，禁止任务ID→文件/规则表。不得修改 canary v2 的14份冻结方法文件或本批live freeze；已有 DEV12 与旧 DEV30 可用于调试，sealed TEST、SERBench private/Test500内容不可用于调参。响应协议改善与真实可信覆盖增益分别报告。
 
 先实现合成边界测试，再在已有非保护 DEV 证据上验证。若缺原始输入/镜像，输出明确缺失路径和所需能力，不伪造真实实验。每个新付费 DEV 实验先输出精确命令、模型、最大请求数、token 上限与冻结身份；使用用户已有单实验≤100,000 tokens 的许可范围，不无限串联批次，遵守一周计划的累计预算与停止规则。
 

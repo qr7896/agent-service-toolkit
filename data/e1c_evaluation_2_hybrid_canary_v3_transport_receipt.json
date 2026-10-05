@@ -1,0 +1,32 @@
+{
+  "schema": "e1c2-hybrid-canary-v3-public-transport-receipt-v1",
+  "date": "2026-10-05",
+  "status": "method_identity_metadata_sealed_awaiting_user_direct_download",
+  "method_freeze_sha256": "978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44",
+  "identity_sha256": "62649edc20998fad8f101a488ccbb22e0dff6343bf81a0fc3398e5fed5d1500d",
+  "metadata_sha256": "bdd7fb5527098d216dc009058ca50dda4c2691b7597c5796a2da4a5bb982df02",
+  "transport_sha256": "a3c28931a11f26d6e3d09ae7e18f9652d072749a99ae363bc53e9977a76adfa9",
+  "fixed_denominator": 3,
+  "official_requests": 7,
+  "official_body_bytes": 26299,
+  "official_proxy_metadata_only": true,
+  "image_blob_proxy": null,
+  "task_content_inspected": false,
+  "provider_calls": 0,
+  "downloaded_new_images": 0,
+  "compressed_layer_bytes_total": 4575379722,
+  "model": "deepseek-flash",
+  "max_provider_requests": 6,
+  "batch_provider_token_cap": 60000,
+  "max_calls_per_task": 2,
+  "task_provider_token_cap": 20000,
+  "retry_count": 0,
+  "tasks": [
+    {"instance_id": "pallets__flask-5063", "compressed_layer_bytes": 1145924252},
+    {"instance_id": "pyvista__pyvista-4226", "compressed_layer_bytes": 2287358104},
+    {"instance_id": "sympy__sympy-17150", "compressed_layer_bytes": 1142097366}
+  ],
+  "protected_test_opened": false,
+  "fresh30_opened": false,
+  "agent_repair_executed": false
+}
