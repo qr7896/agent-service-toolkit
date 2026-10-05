@@ -32,6 +32,8 @@
 
 ## 保全与成本
 
+后续勘误（原陈述保留）：直接核对原B响应SHA`0fbb4f479c541eaf047af137e5a75d1a13e3d9ab851dc7f2bb278da85470bb9f`，export_text control并未省略feature_names，而是使用一个标签，target使用六个标签；这里的实质是容器表示与元素/长度同时改变，不是参数缺失。counterfactual审计仅按通用AST规则派生相同六元素list对照，原base两次触发生产长度约束，未读Gold、target与oracle不改。新方法和局限见[E1C2_COUNTERFACTUAL_DEV_PROTOCOL_2026-10-05.md](E1C2_COUNTERFACTUAL_DEV_PROTOCOL_2026-10-05.md)，旧3/12成绩不回填。
+
 freeze SHA `87926c7d86e59b9d2b4a509d4986772de36d596a4cecb87d34dde35fe0cade66`；state `d46f4512eec83e9712ffbf9573bca1c7a90faa2fa22fe257024d172b04dd0fb4`；ledger `82051e06da40963cd02a1d28262089a55558ff5317f136cdf07a8a82a52f1264`。原件`.codex/e1c/evaluation_2/hybrid-dev-v3/`含新响应/正对照/执行/评分，不覆盖旧版本。
 
 本轮canary+DEV共15请求/31992实际provider tokens；加此前本日已记录可见usage120326为152318（其中旧SDK错误4281为state.error额外usage，非核账单）。本轮没有失败调用或重试。完整工程回归1118passed/4skipped/0failed/33warnings（50.55秒），只能说明工程回归通过，不证明3/12以上修复成功。Docker、镜像和tunnel配置均未改，无清理删除。
