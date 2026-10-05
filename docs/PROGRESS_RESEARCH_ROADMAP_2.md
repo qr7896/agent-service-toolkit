@@ -15,7 +15,8 @@
 | 独立 canary v2（传输修订） | 3/3 镜像/双准入；3 次 Flash、13,783 tokens；1 个重复失败候选、Gold 区分 0 | 可信 0/3，未达 ≥2/3；负结果封存 |
 | 旧DEV合同A/B v1/v2 | v1 B因SDK处理截断中止、不重试；v2两臂各9题完成，Gold各1/12 | 无证据直接取代基线；[分账报告](research/E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md) |
 | source-contract hybrid | 新生成15请求/29,864 tokens，Gold3/12；controller v2缓存回放4/12、零新增调用 | 仅DEV开发证据，含人工语义审核；不是独立成绩 |
-| 独立hybrid canary v3 | 方法先冻、身份后选；三镜像摘要一致，压缩4.261GiB | 待用户终端直连下载；模型0调用、未读issue |
+| 独立hybrid canary v3 | 镜像3/3、双准入2/3；3Flash请求/7280tokens | 可信1/3，固定分母3，负结果封存 |
+| 最新旧DEV hybrid v3 | 弃答STOP/路径锚点；9题新生成、12请求/24712tokens | 可信3/12（含人工审核），未保留四条参考，开发门槛失败 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
@@ -23,9 +24,9 @@
 
 ## 2. 当前瓶颈与最新入口
 
-**当前下一步是新hybrid canary v3用户直连下载，不是重跑旧批。** 自动生产覆盖、raw JSON响应分账、源码import前提、构造目标重分期、评分前B→A控制器与回退oracle一致性已完成开发/回归。新生成pilot原始3/12保留；controller v2零调用缓存4/12跨2仓库，恢复基线但未证明胜过历史v4或独立泛化。原始三题v2负结果不回填。详见[本轮研究报告](research/E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md)。
+**当前下一步是旧DEV零调用证明counterfactual fixture contract，不是下载/重跑或继续抽新canary。** 自动覆盖、响应分账、source-contract、评分前控制器及oracle一致性已做多轮开发。独立v3一次实验可信1/3，负结果封存；随后旧DEV v3弃答即STOP、路径锚点，新生成3/12，节省调用但丢失参考覆盖，开发门槛未达。旧缓存4/12不是当前新生成成绩。详见[最新DEV结果与具体下一步](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)。
 
-新canary v3身份：Flask-5063、PyVista-4226、SymPy-17150，排除全部历史identity后metadata-only盐选，无人工挑题/文件。方法SHA`978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44`；官方/mirror摘要3/3一致，官方仅7请求/26,299正文bytes经7892。大文件直连，未下载；三题issue未读、模型0调用。新批Flash最多6请求/60,000tokens、每题20,000、不重试；见[冻结协议](research/E1C2_HYBRID_CANARY_V3_METHOD_2026-10-05.md)和[用户终端/接手入口](research/NEXT_SESSION_HANDOFF.md)。先下载→admit/public/preflight→付费run→独立Gold/语义审核；≥2/3才推进repair。环境或模型失败如实占固定分母3，不换题。
+canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44`未变。用户完成下载；Flask/SymPy双准入、PyVista Base没有明确目标失败记录，保留分母。两题模型共3请求7280tokens；Flask候选行为偏离且Gold不区分，SymPy经审核可信，最终1/3。见[完整结果](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)。不得换题/在已看身份调参后重称独立；repair、sealed TEST/C5/Fresh30继续关闭，冻结协议和下载收据作为历史保留。
 
 下面是旧v2基础设施与负结果背景，不作当前执行命令：
 
@@ -54,8 +55,9 @@
 | 0 | v2 负结果与当前入口保全 | 原response/state/ledger不回填，公共摘要/结果页已写 | 不拼接旧DEV成功数 |
 | 1 | 响应分类/行为合同已开发 | v1 SDK失败保留，v2 raw JSON两臂完整；issue oracle固定 | 无完整A/B优势，不包装增益 |
 | 2 | 正对照/生产覆盖已开发 | API/类/traceback统一选择、生产AST/真实import证明，合成与旧DEV回归 | 定位覆盖不等于语义正确 |
-| 3 | DEV研究与完整回归已记录 | 新hybrid3/12；v2缓存4/12，含人工审核；1115passed/4skipped/0failed | 缓存不是独立确认，pytest不是repair |
-| 4 | 新canary v3已冻，等待下载 | 下载→官方双准入→冻结输入→Flash≤6/60k→判别，一次≥2/3 | 失败封存，不能后验补规则再称独立 |
+| 3 | DEV研究与完整回归已记录 | 新DEV v3为3/12；1118passed/4skipped/0failed | 开发门槛失败，缓存不是独立确认 |
+| 4 | 可信正对照/fixture机制待实现 | 先合成/旧DEV零调用证明，保证非触发条件可比、oracle不改 | 四条参考未保留不扩新canary |
+| 4b | 新方法独立确认（目前禁止启动） | 新DEV门槛真过才完整冻结新方法，再选不重叠canary，一次可信≥2/3 | 已封存v1/v2/v3不能复用作独立；失败封存 |
 | 5 | 新修复配对小实验 | 同模型/预算 baseline/treatment，独立 official grade | 无净收益不扩批 |
 | 6 | 同版旧 DEV30 | 单一冻结身份、30 行，目标 30/30 resolved | 保留失败分布，Fresh30 关闭 |
 | 7 | Fresh30 one-shot | 门槛真过后先选新身份、再读内容、一次运行 | 如实报告，不回调规则 |
@@ -65,7 +67,7 @@
 
 ## 5. 一周交付
 
-[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至10月5日，环境修复、两批canary封存、DEV合同A/B/新控制器开发与回归已完成，新canary等待用户下载。DEV本组可见usage106,543（含SDK错误4,281；非已核账单），加本日v2canary为120,326，系列非无限预算。独立确认及Agent repair未完成，不能承诺10月7日必达30/30。
+[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至10月5日，环境恢复、三批canary封存与多轮DEV开发完成；独立及开发门槛仍失败。本轮canary+DEV新增31992tokens，累计本日已记录可见usage152318（含旧SDK错误4281；非核账单）。系列非无限预算，下一项先零调用，不再用付费重复替代方法证据；不能承诺10月7日必达30/30。
 
 可控交付是输入隔离和自动定位检查、一个通用复现改进、同预算 DEV 消融、冻结记录、独立结果或明确阻塞报告、可接手的状态包。**30/30 保留为目标；当前证据不足以承诺一周必达。**
 

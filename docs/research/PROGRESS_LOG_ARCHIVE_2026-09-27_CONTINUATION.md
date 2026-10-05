@@ -247,3 +247,19 @@ v2 有 **7 个两次同日志 base 失败信号**（其中 1 个确定性规则�
 新`transport`官方token/manifest按许可7892，7请求/26,299正文bytes，镜像站直连，三题官方/mirror顶层/amd64摘要3/3完全一致。transportSHA **a3c28931a11f26d6e3d09ae7e18f9652d072749a99ae363bc53e9977a76adfa9**，压缩层总4,575,379,722bytes≈4.261GiB，blob/image pull/provider均0；大文件由用户终端下载。新批整批60000、每题20000、≤6请求/每题2、输出3000、Flash非thinking，SDK零重试。下一步下载→离线官方双准入→公开输入→preflight→报告精确run→独立Gold/语义审核；≥2/3才另冻Agent repair，否则负结果封存。
 
 Docker现场Server29.4.0/Dfree42.77GiB，未改配置、清镜像或操作VHD/tunnel。全仓单次1115passed/4skipped/33warnings/0failed（50.61秒），指定重点18passed/Ruff全过/V3规定原preflight退出0；是工程回归不是修复率。两份roadmap/接手入口改为新canary下载，过程仅在此集中追加。所有旧失败、账本、原响应和冻结身份保留；新canary正文、sealed TEST/C5/Fresh30尚未打开。
+
+## 2026-10-05 — 独立hybrid canary v3一次完成，可信1/3封存
+
+用户续做时发现三份loaded.json均已就绪，验证全部official-bound不可变image ID，不重新下载。执行冻结入口`admit --timeout 900`六项离线评分：Flask/SymPy双通过，PyVista Base有效官方日志但25目标无明确fail/pass，Gold过仍不双准入；保留固定分母3、不换题。`public`仅两题按原规则生产窗口物化；`preflight`冻现场4请求/60000tokens，首轮reserve15031。原36文件/方法/身份SHA不变。
+
+按用户已有授权先列精确`hybrid_canary_v3 run`/Flash/4请求/60000，再执行一次：3请求7280tokens（Flask5366，SymPy1914），完成无失败/重试。Flask B弃答，A无关subdomain匹配失败；SymPy B按issue log值关系稳定base失败。独立`gold`一真一假，人工语义审核可信1/3<2/3，机器trusted保持0/false。新增公共结果e234a14封存，原ledger/state/响应与transport收据不回填；不启动repair/TEST/C5/Fresh30。完整[报告](E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)。PyVista issue未物化、未调用；不把基础设施失败说成模型失败。
+
+## 2026-10-05 — 弃答STOP/路径锚点旧DEV v3，一次新生成3/12，开发门槛未达
+
+另立旧DEV版本，不修改canary：显式B弃答停止task、不触发A；公开issue准确生产路径/行号优先窗口，无taskID表。合成专项首次暴露测试路径拒绝异常冒泡，修复只catch边界异常先拒绝后跳过，未读测试、未弱化断言。专项7passed，源码/protocol先提交e234a14。preflight9题固定12、最多18请求/80000tokens、单题20000/输出3000/零重试，reserve61231，freezeSHA87926c7d86e59b9d2b4a509d4986772de36d596a4cecb87d34dde35fe0cade66。
+
+先展示精确`hybrid_dev_v3 run`/Flash/18/80000，再一次执行9题、12请求24712tokens，无provider失败/重试；3明确弃答均不调用A。零调用独立`gold`评5候选，3区分（ctor/date/inner DateTime），dtype fixture与generator两候选Gold仍失败。经issue语义审核可信3/12，机器trusted不回填，缺四条参考中的dtype，开发gate失败。与原fresh hybrid-v1同3/12但任务不同，少3请求/5152tokens，只作描述、不称因果或新SOTA，不能拼接缓存4/12。
+
+本輪共15请求/31992tokens；加此前120326可见usage为152318（含旧SDK错误4281，非核账单）。无新增镜像下载/宿主配置改动/删除，Dfree42.2GiB。完整回归1118passed/4skipped/33warnings/0failed（50.55秒），重点21passed/Ruff通过/V3规定preflight ready=true。所有进程已完成，旧失败和原件保留。
+
+下一门槛先零调用证明counterfactual fixture contract：同API非触发参数可比、生产前置条件验证、oracle不改、允许待支持参数的负例、四条DEV参考不退化。尚未实现/验证，不算成果；未达不得再抽新canary/repair。本次gate失败按预注册封存，不放宽标准以继续计费。具体接手步骤见[DEV v3结果](E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)，两roadmap/交接首部已改成此状态；历史命令保留并标不重跑。

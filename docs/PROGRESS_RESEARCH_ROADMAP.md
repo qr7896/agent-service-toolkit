@@ -4,7 +4,7 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：基础工程和多轮检索研究已经实现；端到端修复效果仍未达目标。E1-C evaluation_2 的 DEV v4 为 **4/12 经语义审核的可信补丁前复现**；首批独立 canary **1/3**、第二批 **0/3**，均未达门槛并封存。回旧DEV完成行为合同A/B与评分前控制器：新生成pilot为3/12，修订控制器的零调用缓存回放为4/12，不能冒充独立泛化或超越历史v4。新方法已先冻结后选不重叠canary v3，官方镜像摘要3/3一致，等待用户直连下载约4.26GiB；本批模型调用0。没有同版 DEV30 全通过，也没有 Fresh30 泛化结果。
+当前阶段：基础工程和多轮检索研究已经实现；端到端修复效果仍未达目标。E1-C evaluation_2 的历史DEV v4为**4/12经语义审核的可信补丁前复现**；独立canary v1/v2/v3分别**1/3、0/3、1/3**，均未达门槛并封存。行为合同与评分前控制器的缓存开发回放4/12不能冒充独立泛化。最新旧DEV v3一次新生成**3/12**、12请求/24712tokens，节省回退调用但未保留四条参考覆盖，开发门槛仍失败。下一步先在旧DEV零调用证明正对照fixture约束，不重跑已关闭实验、不继续抽新canary。没有同版DEV30全通过、Fresh30结果或新版Agent修复结果。
 
 ## 1. 阅读入口
 
@@ -14,7 +14,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看当前冻结协议 | [hybrid canary v3完整方法](research/E1C2_HYBRID_CANARY_V3_METHOD_2026-10-05.md)；旧v2协议保留为历史 |
+| 查看最新实验与下一步 | [DEV v3结果/下一项机制](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)、[独立v3负结果](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)；所有冻结协议保留 |
 
 ## 2. 从启动到现在的主线
 
@@ -62,7 +62,8 @@
 | canary v1 | 可信复现 1/3，低于 ≥2/3 | 独立负结果封存；[结果](research/E1C2_INDEPENDENT_CANARY_V1_RESULT_2026-09-29.md) |
 | canary v2（传输修订） | 官方双准入3/3；可信复现0/3 | Flash三请求/13,783 tokens；输出回显、fixture错误和弃答；[负结果](research/E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md) |
 | DEV合同/控制器改进 | 新生成hybrid 3/12；修订控制器缓存4/12 | 开发证据，含语义审核；A/B、失败、成本分开报告；[结果](research/E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md) |
-| 新独立hybrid canary v3 | 三题metadata/镜像摘要已冻结核验；实验未运行 | 待用户直连下载；Flash≤6请求/60,000 tokens；不是已通过 |
+| 独立hybrid canary v3 | 双准入2/3；可信1/3，未达门槛 | 3Flash请求/7280tokens，负结果封存；[报告](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md) |
+| 最新旧DEV hybrid v3 | 新生成可信3/12，门槛失败 | 12Flash请求/24712tokens，未保留四条参考；[报告与下一步](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md) |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 

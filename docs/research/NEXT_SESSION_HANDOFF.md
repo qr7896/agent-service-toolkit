@@ -4,11 +4,15 @@
 
 ## 当前状态
 
-**最新：旧DEV行为合同A/B与新控制器研究已完成，当前入口改为独立hybrid canary v3。** 新生成hybrid-v1为3/12；修订controller v2的零调用缓存4/12（含人工语义审核，底层机器trusted仍false），不宣称独立验证或胜过历史v4。完整结果、费用和失败保全见[DEV研究报告](E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md)。
+**最新：独立canary v3已完成并封存为1/3；回旧DEV的新生成v3为3/12，开发门槛仍失败。当前任务是零调用证明可信正对照/fixture contract，不再下载或重跑本页历史命令。** 本轮Flash15请求/31992tokens，未自动重试，未改旧冻结依赖。完整[独立负结果](E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)、[DEV结果/零调用下一步](E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md)。原controller缓存4/12只是开发证据，不能补新生成分数；底层trusted仍false，结果包含人工语义审核。
 
-先冻新方法/预算再metadata-only选题，三题Flask-5063、PyVista-4226、SymPy-17150不与历史identity重叠。官方/镜像站摘要3/3一致，未读新issue/源码/答案、未付费、未下载blob。新freeze SHA`978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44`，identity SHA`62649edc20998fad8f101a488ccbb22e0dff6343bf81a0fc3398e5fed5d1500d`。不再执行freeze-method/select，不改冻结依赖。[协议](E1C2_HYBRID_CANARY_V3_METHOD_2026-10-05.md)、[公开基础设施收据](../../data/e1c_evaluation_2_hybrid_canary_v3_transport_receipt.json)。以下旧v2段落为封存背景。
+接手时先核验两份公开结果JSON和其中SHA对应本机原件；云端缺原件时报INFRA_BLOCKED，不虚构复跑。旧DEV v3已运行，禁止再次`run/gold`。下一步按DEV结果文档第1–5项：证明control/target非触发参数可比、生产前置条件校验、保持issue oracle、合成负例与四条参考不退化；仅旧DEV/合成，先零调用，不读取canary调参。证明不足不新增付费试验/新canary；新增付费须新身份和冻结Flash≤100000预算先列命令，不无限连跑。新方法尚未实现，不能算已验证创新或自动可信。
 
-## 用户下一步：终端直连下载三张新镜像
+本机本轮回归1118passed/4skipped/0failed/33warnings（50.55秒），工程回归非修复率。下一独立样本/Agent repair/DEV30/Fresh30/E2都未启动。未扩大权限、开放Docker远程端口、修改tunnel或清理镜像/VHD；D盘约42.2GiB。
+
+历史封板记录：先冻新方法/预算再metadata-only选题，三题Flask-5063、PyVista-4226、SymPy-17150不与历史identity重叠。官方/镜像站摘要3/3一致；当时未读issue/未付费。freeze SHA`978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44`，identity SHA`62649edc20998fad8f101a488ccbb22e0dff6343bf81a0fc3398e5fed5d1500d`。现已执行，保留[协议](E1C2_HYBRID_CANARY_V3_METHOD_2026-10-05.md)、[初始传输收据](../../data/e1c_evaluation_2_hybrid_canary_v3_transport_receipt.json)与各失败原件，不改原freeze或回填初始收据。
+
+## 已完成的用户直连下载与执行（历史命令，不重跑）
 
 已核压缩层分别1.067/2.130/1.064GiB，总4.261GiB（磁盘安装体积不是该数字）。D:现场42.77GiB空闲，逐张`20+6×compressedGiB`空间守卫，当前最大门槛32.78GiB；后续镜像解压仍可能触发stop，不承诺空间必够。不清理原记录、活动VHD或tunnel。下载显示每层MiB、速度、ETA、断点续传与Docker导入心跳。平均1–5MiB/s，传输约15–73分钟，加校验/导入粗估总40分钟–2小时；0.2MiB/s则仅传输约6小时，网络未知不保证时长。单镜像硬超时6小时。
 
@@ -43,7 +47,7 @@ Flash非thinking、temperature0、最多6请求、单题20,000/整批60,000provi
 
 **云端限制**：新代码和身份在Git；小型metadata/transport seal仍在本机`.codex`。用户用本机终端完成下载；WebCodex须经已验证本机执行器读取这些摘要/调用限定入口，缺执行器、Docker、缓存或原件时报INFRA_BLOCKED。不能把云端clone误当本机、不打开Docker远程裸端口、不上传密钥；tunnel在线能力仍需独立检查。本次没有改Docker/tunnel设置。
 
-最新工程回归：1115 passed、4 skipped、33warnings、0failed（50.61秒）；skip与原套件一致，非修复率。指定重点18passed/Ruff通过/V3规定原preflight退出0。
+封板时工程回归：1115 passed、4 skipped、33warnings、0failed（50.61秒）；最新1118见页首。skip与原套件一致，非修复率。指定重点18passed/Ruff通过/V3规定原preflight退出0。
 
 ## 已封存 v2 背景（不要按旧建议重建下一批）
 
