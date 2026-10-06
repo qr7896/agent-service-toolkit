@@ -4,7 +4,7 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：端到端修复质量仍未达目标。五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果封存。Docker正常，新v5三镜像已下载、双准入2/3；实际3Flash请求9642tokens、无重试，0/3未过独立门槛，不能重测调参后仍称独立。原DEV完整0付费回放Gold5/12（含人工行为审查、机器trusted0）仍只作开发证据。当前回旧DEV开发import来源fallback和探针执行契约：零调用原型增加4个定义窗口、识别未被调用的函数体，尚未证明复现/修复提升。没有同版DEV30全过、Fresh30或新版Agent修复结果。
+当前阶段：端到端修复质量仍未达目标。五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果封存，原DEV缓存Gold5/12仍只作开发证据。新版旧DEV接通import fallback、显式无参数入口、合同解析与每请求前engine检查，v1离线合成/回归/预算预检通过但未付费。随后新增native-fixture边界加固另立v2，需重新预检，**新付费仍0**。当前Docker已停止，普通重启旧IPC失败，等待授权恢复；不把停机算模型失败。仅移除15个封板canary本地镜像缓存，DEV12全12镜像/记录源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果。
 
 ## 1. 阅读入口
 
@@ -70,6 +70,7 @@
 | Faithful完整缓存回放 | 新provider0；9题执行、6候选、Gold5/12，四参考保留 | 人工行为审查5/12、机器trusted0，不是独立/修复；[结果](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md) |
 | 第5批独立canary | 双准入2/3；3Flash请求9642tokens，可信0/3 | import/API窗口遗漏、未调用函数、源码身份失败；[封存结果](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md) |
 | 旧DEV import/调用形态审计 | 新provider0；3题4个新增定义窗口，8份缓存候选中1份函数体未调用 | 结构诊断原型，不是新的复现分数；下一版DEV尚未付费 |
+| 新版executable-import旧DEV | v1已接线/合成/预检；v2进一步拒绝未证明fixture来源的native runner与别名引用 | v1未付费归档，v2需恢复engine重新预检；[当前协议](research/E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md) |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 

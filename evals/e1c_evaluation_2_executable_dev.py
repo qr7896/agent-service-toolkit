@@ -12,9 +12,9 @@ from evals.e1c_evaluation_2_container_health import require_engine, require_vali
 from evals.e1c_evaluation_2_dev_pilot import ROOT, _save, _sha
 from evals.e1c_evaluation_2_execution_contract import parse_response
 
-OUT = ROOT / ".codex/e1c/evaluation_2/executable-import-dev-v1"
+OUT = ROOT / ".codex/e1c/evaluation_2/executable-import-dev-v2"
 IMPORTS = ROOT / ".codex/e1c/evaluation_2/import-prefix-old-dev-audit-v2"
-PROTOCOL = ROOT / "docs/research/E1C2_EXECUTABLE_IMPORT_DEV_PROTOCOL_2026-10-06.md"
+PROTOCOL = ROOT / "docs/research/E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md"
 runtime, dev = faithful.base.study.runtime, faithful.base.study.dev
 _preflight, _messages, _execute = faithful.preflight, faithful.messages, faithful.base.study.execute_role
 MODULES = ("evals/e1c_evaluation_2_executable_dev.py", "evals/e1c_evaluation_2_execution_contract.py",
@@ -60,6 +60,7 @@ def messages(frozen, role):
         'The controller appends that one call; keep the generated behavior check inside it. '
         'Never assume testdir/pytester injection or automatic discovery. For direct_script, actually invoke your API/check; '
         'merely defining a test function is rejected. No official test files/Gold are fixtures. '
+        'Native runner/file-fixture APIs (pytest.main, runpytest, makepyfile, makeconftest) are unsupported and rejected. '
         'Abstention remains exactly {"abstain_reason":"..."} without execution.'
     )
     return value
@@ -98,7 +99,7 @@ def preflight():
     value = _preflight()
     configure()
     require_engine(tuple(row["image_id"] for row in value["tasks"]))
-    return {**value, "schema": "e1c2-executable-import-old-dev-freeze-v1",
+    return {**value, "schema": "e1c2-executable-import-old-dev-freeze-v2",
             "execution_modules": {name: _sha(ROOT / name) for name in MODULES},
             "execution_protocol_sha256": _sha(PROTOCOL), "import_audit_freeze_sha256": _sha(IMPORTS / "freeze.json"),
             "import_audit_result_sha256": _sha(IMPORTS / "result.json"),

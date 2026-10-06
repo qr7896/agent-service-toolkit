@@ -49,6 +49,19 @@ def test_new_schema_preserves_old_contract_and_abstention():
             parse_response(json.dumps({"source": "assert True", "execution": execution}), "A")
 
 
+@pytest.mark.parametrize("source", ["import pytest as p\np.main([])\nassert True",
+    "from pytest import main as launch\nlaunch([])\nassert True",
+    "from _pytest.config import main as launch\nlaunch([])\nassert True",
+    "import pytest\nlaunch = pytest.main\nlaunch([])\nassert True",
+    "import pytest\np = pytest\np.main([])\nassert True",
+    "import pytest\ncallback(pytest.main)\nassert True",
+    "testdir.makepyfile('generated or official unclear')\nassert True",
+    "testdir.runpytest()\nassert True"])
+def test_fixture_claim_cannot_enable_unverified_native_test_harness(source):
+    with pytest.raises(ExecutionContractViolation, match="fixture_provenance"):
+        parse_response(json.dumps({"source": source, "execution": DIRECT}), "A")
+
+
 def test_terminal_import_lexical_order_and_same_budget():
     def row(symbol):
         return {"path": f"pkg/{symbol}.py", "symbol": symbol, "text": "def f(): pass", "source_sha256": "synthetic"}

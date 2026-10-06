@@ -25,6 +25,8 @@
 | 运行态恢复/完整0付费回放 | engine/9个image健康；9题执行、6候选Gold5/12，无缺缓存角色 | 原四参考保留、新Lasso候选；人工行为审查5/12，机器trusted仍0 |
 | 第5批独立canary v5 | 三镜像核验、双准入2/3；实际3Flash请求9642tokens，无重试 | 0/3负结果封存，不再重测；Sphinx source identity失败不送模型 |
 | 新DEV import/执行形态原型 | 旧9题零调用审计，3题4个新增定义窗；8份旧缓存候选中1份未调用函数体 | 6项新专项通过；未接入新生成/未证明复现效果，不抽第6批 |
+| 新版DEV执行接线 | terminal→import→lexical，同预算；显式direct_script/无参数call_entrypoint、解析兼容原B oracle；每请求engine检查 | 18项专项、隔离合成成功/失败入口验证；旧DEV预检9题、≤18/80000，新付费0 |
+| 资源清理与当前engine阻塞 | 15个封板canary本地镜像移除，DEV12全12与源码/记录保留 | 清理后engine曾核验健康；后发现已停止，普通重启旧IPC失败，不推断清理造成停机 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
@@ -32,11 +34,13 @@
 
 ## 2. 当前瓶颈与最新入口
 
-**当前回旧DEV修通用定位和执行契约，v5已0/3封存。** SymPy公共代码块被整块拒绝后，四个同名symbols窗口占满，缺Mod/lambdify；pytest B未触发collection故障，A只定义test函数但直接脚本不调用；Sphinx官方镜像源码身份前置失败、退出90、不送模型。3请求9642tokens、无失败/重试，0个稳定base候选、独立Gold attempted0。固定3不换题、不补规则后重报独立。五批结果1/3、0/3、1/3、0/3、0/3；当前不能进入Agent repair/TEST/C5/Fresh30/E2。[完整结果与SHA](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md)。
+**下一步恢复engine后对v2重新预检、冻结、一次旧DEV，不再重测v5。** 新`evals.e1c_evaluation_2_executable_dev`当前指向executable-import-dev-v2；v1接线/合成/预检结果与代码f7d57d3完整保留且从未付费。v2在同一import/无参数入口机制上拒绝pytest.main/未验证file-fixture/native runner及import别名/函数引用、native模块赋值别名，B所有code字段与A source同样检查；不支持未知native harness，不把fixture来源的声明当许可。需新engine健康/源码/预算freeze，不能运行v1旧freeze。候选计划仍≤18/80000/每题20000/输出3000，现场reserve尚待重新算，新provider0。[当前v2协议](research/E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md)、[v2当前准备收据](../data/e1c_evaluation_2_executable_dev_v2_preparation.json)、[v1原型收据](../data/e1c_evaluation_2_executable_dev_preparation.json)。
 
-三镜像已由用户下载且现场immutable image核验通过，当前没有新下载需求，也不是Docker/网络阻塞。原[下载页](research/E1C2_FAITHFUL_CANARY_V5_DOWNLOAD_2026-10-06.md)仅历史，不重复任何v5命令。旧DEV回放Gold5/12与原四参考保持不变，含人工行为审查、机器trusted0，不能补进独立分数。
+当前唯一外部阻塞：后续桥接检查发现DockerDesktop/backend未运行、LinuxEngine管道不可用；普通启动再报旧dockerInference socket无法移除，已请求同一次停机联合备份两个IPC目录后启动的确认，尚不擅自移动/删除。无新的模型试验已开始，不把它记0/12。没有新下载需求；原[下载页](research/E1C2_FAITHFUL_CANARY_V5_DOWNLOAD_2026-10-06.md)仅历史，不重复任何v5命令。五批独立结果不变，旧DEV5/12不补进独立分数；TEST/C5/Fresh30/Agent repair/E2关闭。
 
-下一版开发已有两个独立原型：`import_seed_audit.py`只取公开示例开头import，不遍历断言/函数/输出值，AST绑定生产定义/reexport，旧DEV九题中3题新增4定义窗口；`invocation_status`保守识别仅导入+普通函数定义的direct-script未调用状态，旧缓存8候选命中1份。加固前后v1/v2审计结果相同，源代码与SHA分别保留，见[零调用原型摘要](../data/e1c_evaluation_2_import_prefix_dev_audit_result.json)。它们尚未接入新模型方法，结构可达性不是效果提升；不扩大付费/不抽第6批。先完成下面4d–4f的零调用验收，再另冻新DEV方法/预算。所有旧freeze/代码/账本与IPC备份保留，Docker/镜像/VHD/代理/tunnel未改。最终全仓1157passed/4skipped/33warnings/0failed（49.04秒）、规定V3 preflight ready=true，不是repair rate。
+此前零调用原型与v1/v2审计仍保留，见[摘要](../data/e1c_evaluation_2_import_prefix_dev_audit_result.json)，本版已正式接线但尚无新生成效果。完整回归持久XML1171tests/0failures/0errors/4skipped，即1167passed/4skipped（50.579秒）；必须区分工程/合成与研究得分。按用户允许仅清理15个旧封板canary镜像缓存，非强制精确tag，无container引用且与DEV12不重叠；12张DEV12、两旧DEV30镜像及alpine保留、源码/响应/账本/所有seal不删，清理后真实engine与全12曾现场复核。D空闲前约38.31/后38.19GiB，不能把44.54GB标称镜像量当实际主机释放；未收缩/移动VHD、改registry/代理/tunnel或读密钥。历史若需重执行须按旧digest重新取得镜像，不能假称缓存还在；[完整清理收据](../data/e1c_evaluation_2_closed_canary_cache_cleanup.json)。后来Docker停机原因未确认。
+
+v2新增guard与别名/ref负例后最新完整单次**1175passed/4skipped/0failed**，33warnings、65.46秒（XML1179tests/0errors/65.136秒），重点26passed/Ruff通过。未修改旧freeze、断言、timeout或skip；首次加固中间1172passed完整记录保留，不拼接结果。v2没有配置freeze/模型调用/新修复得分；不能把这次工程增量说成8个任务修复。
 
 第4批method/identity/transport原件与最早0调用receipt保持，当前由[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md)补充执行状态：PVLib环境兼容失败，SymPy缺关键窗口而弃答，scikit两个probe base通过。方法/样本不重抽，不能在本批补规则重报独立。下载/admit/public/run/gold旧命令不再运行，TEST/C5/Fresh30继续关闭。
 
@@ -73,9 +77,9 @@ canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b8
 | 4 | Counterfactual局部机制已实现 | 1case literal类型对照、生产guard来源、两次控制验证；四参考保持 | 5条unproven保留，未宣称通用语义证明 |
 | 4b | Docker恢复＋0付费DEV回放已完成 | 同输入/代码/响应SHA，新provider0、无缺缓存，Gold5/12 | 不重跑、不把原错误验证回填成有效 |
 | 4c | 第5批独立确认已完成但失败 | 固定3，3请求9642tokens，0/3完整封存 | 不回填/重测，不晋升repair |
-| 4d | 接入import fallback并做预算消融 | 原terminal优先，自动生产归属；仍≤4窗/23000字符；oracle值/名称变化不影响seed | 只合成+旧DEV，未知不猜；不从断言提API |
-| 4e | 正式probe执行契约 | manifest明确执行模式/入口/fixture；仅定义函数拒绝、合法入口真的执行、非法入口拒绝 | 不自动猜fixture参数、不把脚本exit0当测试执行过；无网络隔离不放松 |
-| 4f | 零调用验收后冻新DEV并一次付费 | 四参考保持、跨仓库、单版固定12，Flash候选预算≤18请求/80000token、重试0；实际reserve须通过 | 本预算仅计划未冻结/未执行，不拼接旧成绩；无净证据不抽第6批 |
+| 4d | import fallback接线已完成，效果待实证 | terminal→import→lexical，去重同4窗/23000，审计源/statement/source SHA绑定 | 不从断言提API；结构窗口增加不等于效果 |
+| 4e | 受限执行契约已接线/合成验收 | manifest合法无参数入口确运行；参数/注解/装饰/重复入口拒绝；direct函数-only拒绝；base/Gold同source | 不猜testdir/pytester、不支持未知native harness；非普遍可达/语义证明 |
+| 4f | 恢复engine后v2新冻DEV一次付费 | 固定12/九题，候选Flash≤18/80000/每题20000/输出3000、retry0；v1曾reserve70048但不能复制到v2 | 当前provider0，v2尚无预算freeze且engine阻塞；先新预检，再列命令；无净证据不抽第6批 |
 | 4g | 新独立确认与修复小对照 | 完整新method先冻后选历史全排除的三题；≥2/3且行为审查一致才冻repair | 负结果永久保留，TEST/Fresh30继续关闭 |
 | 5 | 新修复配对小实验 | 同模型/预算 baseline/treatment，独立 official grade | 无净收益不扩批 |
 | 6 | 同版旧 DEV30 | 单一冻结身份、30 行，目标 30/30 resolved | 保留失败分布，Fresh30 关闭 |

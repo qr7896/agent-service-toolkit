@@ -325,3 +325,17 @@ faithful-input-dev-v1-infra-replay-v1 preflight同原method/input逐项相等、
 后加固答案型名称/别名/模块根拒绝，另立import-prefix-old-dev-audit-v2，不覆盖v1。v2 modulea28a157a7592272b2aa5e3006d390e1c14b860092b4dabc89c4ee7409552bbd5、freeze1553c9abb285192c77b2d58c22218a117d3fef670e7c6dc452ec24b3257dd5e1，v1/v2 result SHA均4791dba8a4f6ec21743d999a70f879c06543f10e7e11ba0f967b3a93bc3ed4a2。6项新专项，规定预算/V3重点连初4项共22passed、Ruff最终通过；V3 preflight原命令ready=true。最终完整单次1157passed/4skipped/33warnings/0failed（49.04秒），XML在v2工程目录；中间完整同1157的51.96秒、48.65秒记录保留，不拼接结果、不改timeout/skip/断言。这些只是工程/结构审计，不是新生成提升或自动语义证明。
 
 五批独立1/3、0/3、1/3、0/3、0/3全部保留。本批新增9642，10月5日起可见usage222269+9642=231911（含旧SDK错误4281，非账单核验）。没有继续扩大付费或选第6批；当前先在旧DEV接import fallback同预算消融与明确execution manifest，证明函数确实执行/非法入口拒绝后才另冻新付费DEV计划。两份roadmap和WebCodex入口从头更新为此下一步，旧v5下载/run命令仅历史；Docker/镜像/VHD/代理/tunnel及IPC备份未动、无新增删除或大文件下载。
+
+## 2026-10-06 — DEV接线与15个封板canary镜像缓存清理；新付费0
+
+用户要求继续并允许清理以后不再用的task。核实五批全部封存，15个canary ID与DEV12不重叠、各唯一精确e1c2/tag/image ID、无任何容器引用；仅非强制docker image rm这15tag，全部返回成功。源码/响应/账本/所有manifest/seal/loaded历史收据不删，保留12个DEV12（含未准入3）、两旧DEV30以及alpine；不prune/动volume/VHD/registry/代理/tunnel/密钥。清理后全12 immutable images与engine真实核验通过。标称虚拟总44540771302bytes含共享层，非实际回收量；Dfree观察前38.31/后38.19GiB，未作VHD压缩。旧canary未来如需复核要按原digest重获镜像、upstream不能保证永久可得，不能假称loaded收据代表现场镜像仍在。用户授权及15项准确ID记录在公开cleanup JSON。
+
+新增execution_contract/executable_dev v1，terminal→import→lexical同4窗/23000预算；manifest A/B解析strip字段后保留旧oracle锁定，B不能自选入口，A仅明确无参同步函数、无注解/装饰/顶层副效，append一次调用，不猜fixture、不自动discover。每provider与候选前真实engine/image；transport不算软件故障。18项专题过/Ruff修正1import排序。零调用预检先产生v1 freeze2624309d728393b4acde03a4cd2f9a84b0aee3b9d5ffd64f0ff988b0b2ae8b92：九题固定12、Flash≤18/80000/每题20000/输出3000、primary reserve70048；provider0，没有模型state/ledger。
+
+合成离线smoke首次命令quoting SyntaxError未执行；第二次已成功运行入口并打印marker，但校验脚本错误期望passing probe内部也执行两次，原execute_candidate正常成功短路一次。旧输出保留、不改执行器；另立zero-contract-smoke-v2，pass两次独立执行[0,0]，fail一次executor重复[1,1]、均观察EXECUTION_BODY_REACHED、network none/pull never、无provider且不作SWE/repair分数。result99000946acf88b3e014c310106d92018d0c9f96fa65150240f2d10840e04707a。指定重点18passed/V3 preflight作为全仓前置成功执行；全仓持久XML1171tests/0fail/0error/4skips/50.579秒，即1167passed，源代码及协议/原型收据提交f7d57d3。未动旧冻结代码/断言/skip/timeout。长终端session在用户继续消息后查询返回Unknown process id，改核持久XML与进程，不重跑stateful实验。
+
+随后现有bridge docker_status返回docker_ready=false、报告脚本假设成功字段docker_version而KeyError；读取失败分支与CLI复核确认LinuxEngine管道不存在、Desktop/backend当时未运行。未知何时/为何停止，不能推断image rm造成。普通启动一次（不读/改目录）又在13:29本地日志报旧Docker/run/dockerInference socket不可移除，启动失败；已向用户请求正常stop＋同次停机备份两个IPC目录＋普通start一次的确认，没有擅自移动/删除或强关WSL、factory reset。bridge代码/密钥/服务未改、未发新的provider调用，engine不可用时工具不能称健康。此为当前外部阻塞。
+
+安全复核补齐fixture边界：fixture_source声明不代表可调用默认native test suite；新增guard拒绝pytest.main/_pytest.config.main、runpytest/makepyfile/makeconftest及import alias/函数引用/native模块赋值别名，B所有code字段与A同样检查，不启用native harness权限。因此v1零调用原型和f7d源码完整归档、不重用其freeze，新v2目录/协议另立，仍固定12/候选≤18/80000，但engine恢复后必须重新preflight/算reserve/冻配置。v2目前无freeze、无state/ledger/provider，未在五批canary补规则重测。
+
+v2重点26passed/Ruff通过；首次native guard全仓1172passed/4skipped/0fail（72.30秒）保留，加别名/ref负例后的最后完整1175passed/4skipped/33warnings/0fail（65.46秒；XML1179tests/0errors/65.136秒）。未拼接或弱化断言。两份roadmap与WebCodex首部更新为授权恢复engine→v2新预检→展示精确Flash run/预算后一次旧DEV；native fixture hydration仍不支持，静态可达/语义非普遍证明。新增付费本轮0，累计可见usage231911保持（含旧SDK错误4281，非账单核验），TEST/C5/Fresh30/repair/E2关闭；无新增镜像下载或重要文件删除。

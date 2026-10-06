@@ -4,9 +4,21 @@
 
 ## 当前状态
 
-**最新：第5批独立canary已执行并0/3封存，当前回旧DEV。** 三镜像现场通过、双准入2/3；3Flash请求9642tokens，无provider失败/重试，0个稳定base候选，独立Gold attempted0。SymPy丢import/关键API窗口而弃答；pytest B未触发collection问题、A函数未调用；Sphinx source identity失败、退出90不送模型。五批独立1/3、0/3、1/3、0/3、0/3，不拼接旧DEV5/12。[最新结果与下一步](E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md)。Docker正常，当前没有新下载需求；TEST/C5/Fresh30/repair/E2关闭。
+**最新：新旧DEV方法已接线，但Docker重启IPC阻塞，新provider0。** import fallback、显式无参数入口、B/A合同解析和每请求engine检查已实现；v1离线合成成功[0,0]/失败[1,1]、预算9题≤18/80000/reserve70048、完整1167passed/4skipped/0failed，代码f7d57d3留档且未付费。随后为防未验证fixture/native runner访问官方tests，另立v2拒绝这些API/别名引用，当前模块指向executable-import-dev-v2，**必须恢复engine重新preflight，不能复用v1 freeze或称v2已跑模型**。[当前协议](E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md)。五批独立1/3、0/3、1/3、0/3、0/3全部保留，旧DEV5/12只是开发证据；TEST/C5/Fresh30/repair/E2关闭。
 
-## 当前唯一下一步：旧DEV定位fallback＋执行契约
+## 当前唯一下一步：授权恢复engine，再v2新预检/冻结/一次DEV
+
+已按用户允许移除15个已封板canary镜像缓存：与DEV12 disjoint、无容器引用、精确tag/non-force，全部源码/响应/账本/manifest/所有旧freeze保留。[清理收据](../../data/e1c_evaluation_2_closed_canary_cache_cleanup.json)。DEV12全12、两旧DEV30和alpine保留，清理后全12与engine曾真实核验；Dfree约38.19GiB，未收缩/移动VHD、删文件、改registry/代理/tunnel/密钥。旧canary如需历史复核必须重新获得原digest镜像，不能假称本机镜像仍存在，不建议再跑旧研究入口。
+
+后来桥接docker_status返回docker_ready=false，CLI同样缺LinuxEngine管道，Desktop/backend进程当时未运行。普通start一次失败，日志再报Docker/run/dockerInference旧socket；没有证明停机由image rm引起，不擅自删IPC。已向用户询问：仅正常停止→同次停机备份改名`C:\Users\qq人\AppData\Local\Docker\run`与`C:\Users\qq人\AppData\Local\docker-secrets-engine`→普通启动一次。没有确认不可强杀WSL、factory reset、动VHD/registry/代理或tunnel。桥接文件/密钥未改，但engine不可用时桥接Docker工具也不可用，不能称端到端健康。
+
+获准恢复后：确认真实server与DEV12全12 image ID→当前模块preflight→核源码/输入/budget freeze，重新计算reserve→展示唯一精确run命令、Flash/最多18/实际80000/每题20000/输出3000、0重试，再用既有≤100000授权一次run→同模块gold独立评分。此时仍固定12/九双准入，不从五批canary补样本，不立即选第6批；四参考/两仓库/新机制/成本必须实证。没有新镜像下载需求。v2尚未冻live配置，v1原型freeze不可重跑或改写。
+
+现在代码入口：`evals/e1c_evaluation_2_executable_dev.py`与`execution_contract.py`，两模式direct_script和A call_entrypoint；唯一普通无参同步函数，append一次调用，非法入口拒绝。B spec剥离后仍原合同；原fallback解析器同时接新schema，避免manifest让oracle锁定意外跳过。保留已有静态安全+无网络容器。v2显式拒绝native runner/生成文件工具及其直接引用/常见别名，不作普遍Python语义证明，不猜testdir/pytester、不隐式发现官方test。合法入口合成在真实隔离容器中曾观察到函数体；这不是SWE score或Agent repair。
+
+v2工程最后26重点passed、全仓1175passed/4skipped/0failures/0errors（65.46秒），未削弱任何旧断言/timeout/skip。当前收据[data](../../data/e1c_evaluation_2_executable_dev_v2_preparation.json)明确新provider0/无budget freeze。新增付费累计本轮0，10月5日起可见usage仍231911，不继续亏预算试跑没有engine的任务。桥接`docker_status`实际因engine不可用返回false；隧道/密钥/服务文件未改，未验证Web端到端新DEV工具权限，不默认现有strict-v5 bridge允许新paid模块。云端可以接源码/单测/文档；缺本机缓存/镜像/执行器就报告INFRA_BLOCKED，不改身份、伪造评分、索取密钥或开放裸daemon端口。
+
+## 以下为上一轮DEV原型规划（历史，接线已完成；未完成的native harness仍保留）
 
 禁止再执行v5的select/download/admit/public/preflight/run/gold或任何旧canary/cache回放。原方法/身份/输入/响应/账本/Gold日志不回填；v5的新method/identity/source/state/ledger SHA见公开结果。它已看过，不在该三题补规则后仍称独立。
 
