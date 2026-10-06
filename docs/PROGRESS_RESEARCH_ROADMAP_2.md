@@ -21,18 +21,21 @@
 | Counterfactual新生成 | 原九题/固定12，13Flash请求26762tokens，Gold4 | 经人工可观察行为审查4/12，array不是原报告同一报错位置；四参考保留 |
 | 第4批独立canary | 镜像3/3、双准入2/3；3请求5596tokens | 0/3负结果封存，不换题/重算 |
 | 输入事实保真/导入归属定位 | 公开fixture AST无assert/输出答案，3题4safe块；自动找到继承fit，关系/深度/seed/SHA可追踪 | 零调用审计与新协议已冻，不手选文件 |
-| 最新Faithful DEV | 原九题16请求37593tokens，无provider失败/重试 | 模型输出保留，但Docker管道故障使验证INFRA_INVALID；成绩未知，不报0/12 |
-| 运行态健康门槛/0付费回放 | engine/image真实检查、transport失败不作软件证据；cache-only/no真实钥匙/缺角色单列 | 新代码与回归通过；Docker socket恢复待确认，回放未执行 |
+| Faithful DEV原生成 | 原九题16请求37593tokens，无provider失败/重试 | 原验证INFRA_INVALID保留，不回填、不报0/12 |
+| 运行态恢复/完整0付费回放 | engine/9个image健康；9题执行、6候选Gold5/12，无缺缓存角色 | 原四参考保留、新Lasso候选；人工行为审查5/12，机器trusted仍0 |
+| 下一独立canary v5 | 52份方法文件先冻结，排除304身份后选SymPy-22080/Sphinx-9180/pytest-7749；官方摘要3/3一致 | 等用户直连下载2.946GiB；Flash≤6/60000尚未调用，新题issue/Gold未读 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
-**现存人工环节：** Gold 区分不能自动证明 probe 忠实表达 issue。4/12 包含人工语义审核，底层 `trusted_reproducer=false` 保持原样。后续分别报告自动准入和人工审核后结果，不合称“全自动可信”。
+**现存人工环节：** Gold 区分不能自动证明 probe 忠实表达 issue。最新5/12包含人工可观察行为审查，底层`trusted_reproducer=false`保持原样。后续分别报告自动准入和人工审核后结果，不合称“全自动可信”。
 
 ## 2. 当前瓶颈与最新入口
 
-**当前硬阻塞是Docker引擎，不是额度或需要再调用模型。** 第4批盲canary 0/3已封存，暴露投影删除dtype/构造信息与末端API窗口遗漏。已回旧DEV实现公开输入事实通道与import/reexport/inheritance定位；原冻结代码不改。新Faithful九题模型16请求37593tokens完成，但引擎管道不可用被旧执行器误记重复失败，Gold未应用，验证INFRA_INVALID。原响应可0付费回放，当前停止新增付费；不报0/12能力失败。[事实/定位研究与invalid结果](research/E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md)、[恢复协议](research/E1C2_FAITHFUL_INFRA_REPLAY_2026-10-06.md)。
+**Docker已恢复；当前推进新独立v5，不重跑旧题。** 第4批0/3已封存，回DEV补公开输入事实保真与生产import/reexport/inheritance定位。Faithful源生成16请求37593tokens，原无效环境验证保留；恢复后新namespace完整0付费回放Gold5/12、四参考保留、跨两仓库，新增Lasso候选输入/终端API与public事实相符。人工可观察行为审查5/12，不是自动语义证明；源生成成本较此前26762增加约40.5%，没有已控制消融的因果/省费结论。[完整结果](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)、[公开gate](../data/e1c_evaluation_2_faithful_replay_dev_gate.json)。
 
-普通docker desktop start未恢复，日志确认旧`Docker\\run\\dockerInference` IPC socket不可移除致backend退出。已请求仅正常停止Docker、备份改名IPC run目录再启动的确认；未动socket目录/注册表/WSL/镜像/VHD/代理/tunnel。获准恢复后先查真实server及9个image ID，按新cache-only入口preflight/run/gold，同方法/输入/原response SHA不变，新provider=0；缺缓存角色不补调用、不计模型弃答。原错误state和所有日志不回填。工程最终单次1148passed/4skipped/0failed（49.54秒），只算代码回归，不证明Docker运行态健康。
+当前外部步骤是用户终端直连下载新三张，压缩层2.946GiB，最大单张空间守卫26.123GiB；D现场约38.64GiB。官方Docker小metadata经授权7892共7请求/25899正文bytes，所有大blob仍0、不走代理。镜像未在本地，新题正文/Gold未读；完整[下载命令、进度与ETA](research/E1C2_FAITHFUL_CANARY_V5_DOWNLOAD_2026-10-06.md)。完成后依次admit/public/preflight，现场核准预算，再列唯一Flash run，不能按旧入口重复缓存回放。
+
+获准同一次停机备份改名两个旧IPC目录后启动成功，备份均保留；没有删除、改注册表/WSL/镜像/VHD/代理/tunnel或读取密钥。真实engine/9个immutable image均核验、评分后engine仍健康。新回放preflight/run/gold均完成、provider0、缺缓存0，**上述命令不能再执行**。原错误state与日志不回填。工程完整单次1151passed/4skipped/33warnings/0failed（54.23秒）；首次非UTF8测试命令的环境守卫失败记录保留，未弱化断言/跳过。规定V3 preflight按原命令ready=true。
 
 第4批method/identity/transport原件与最早0调用receipt保持，当前由[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md)补充执行状态：PVLib环境兼容失败，SymPy缺关键窗口而弃答，scikit两个probe base通过。方法/样本不重抽，不能在本批补规则重报独立。下载/admit/public/run/gold旧命令不再运行，TEST/C5/Fresh30继续关闭。
 
@@ -65,10 +68,10 @@ canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b8
 | 0 | v2 负结果与当前入口保全 | 原response/state/ledger不回填，公共摘要/结果页已写 | 不拼接旧DEV成功数 |
 | 1 | 响应分类/行为合同已开发 | v1 SDK失败保留，v2 raw JSON两臂完整；issue oracle固定 | 无完整A/B优势，不包装增益 |
 | 2 | 正对照/生产覆盖已开发 | API/类/traceback统一选择、生产AST/真实import证明，合成与旧DEV回归 | 定位覆盖不等于语义正确 |
-| 3 | DEV研究与完整回归已记录 | 新counterfactual生成4/12；最新全仓1127passed/4skipped/0failed | 语义包含人工审查，工程通过不算repair |
+| 3 | DEV研究与完整回归已记录 | Faithful回放Gold5/12；全仓1151passed/4skipped/0failed | 语义包含人工审查，工程通过不算repair |
 | 4 | Counterfactual局部机制已实现 | 1case literal类型对照、生产guard来源、两次控制验证；四参考保持 | 5条unproven保留，未宣称通用语义证明 |
-| 4b | 先恢复Docker并0付费重放DEV缓存 | 新engine/image/transport健康门槛＋同输入/代码SHA，缺缓存角色单列 | 不自动provider重试/补调用，不把旧错误评分作能力结果 |
-| 4c | 新独立确认（尚不启动） | 有有效DEV改进证据后完整冻结新方法，再选与四批旧canary不重叠身份 | ≥2/3才另冻repair；失败封存，Fresh30关闭 |
+| 4b | Docker恢复＋0付费DEV回放已完成 | 同输入/代码/响应SHA，新provider0、无缺缓存，Gold5/12 | 不重跑、不把原错误验证回填成有效 |
+| 4c | 新独立v5准备中 | 方法SHA7fe8bf6c1fa9c0acbe82915ba43410b0f95db65615bb3def949dc5b1801feab3先冻；metadata-only排除旧身份，用户直连下载 | 固定3无替补；≥2/3才另冻repair，失败封存，Fresh30关闭 |
 | 5 | 新修复配对小实验 | 同模型/预算 baseline/treatment，独立 official grade | 无净收益不扩批 |
 | 6 | 同版旧 DEV30 | 单一冻结身份、30 行，目标 30/30 resolved | 保留失败分布，Fresh30 关闭 |
 | 7 | Fresh30 one-shot | 门槛真过后先选新身份、再读内容、一次运行 | 如实报告，不回调规则 |

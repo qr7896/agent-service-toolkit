@@ -4,7 +4,7 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：端到端修复质量仍未达目标。四批独立canary为**1/3、0/3、1/3、0/3**，负结果封存。旧DEV counterfactual曾恢复4/12（人工可观察行为审查，不是自动语义证明/修复率）。最新输入事实保真与导入归属定位已实现并冻结，新生成16Flash请求/37593tokens完成，但Docker引擎不可用导致验证无效，**不能报成0/12模型成绩**。原响应保留，新增0付费缓存回放/运行态健康门槛，等待Docker IPC可恢复修复确认。没有同版DEV30全过、Fresh30或新版Agent修复结果。
+当前阶段：端到端修复质量仍未达目标。四批独立canary为**1/3、0/3、1/3、0/3**，负结果封存。Docker IPC已在授权范围可恢复备份并恢复运行；原DEV16Flash请求/37593tokens的无效环境验证不回填，另立**0新增付费缓存回放：Gold区分5/12**，四参考保留，人工可观察行为审查5/12、机器trusted仍0。输入事实保真与生产API导入/继承定位有新增开发证据，非自动语义证明或修复率。新独立canary v5完整方法先冻，metadata-only排除304身份后选三题、官方摘要核验3/3，现等用户直连下载约2.946GiB，不重测旧canary。没有同版DEV30全过、Fresh30或新版Agent修复结果。
 
 ## 1. 阅读入口
 
@@ -14,7 +14,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [counterfactual新生成/零调用证据](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)、[第4批独立协议](research/E1C2_COUNTERFACTUAL_CANARY_V4_METHOD_2026-10-05.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [Faithful零付费完整回放](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)、[下一独立v5方法](research/E1C2_FAITHFUL_CANARY_V5_METHOD_2026-10-06.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 
@@ -66,7 +66,8 @@
 | 最新旧DEV hybrid v3 | 新生成可信3/12，门槛失败 | 12Flash请求/24712tokens，未保留四条参考；[报告与下一步](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md) |
 | counterfactual旧DEV新生成 | 13Flash请求/26762tokens，Gold及人工行为审查4/12 | 保持四条参考，零调用先拒错误fixture；不是SOTA或修复率；[报告](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md) |
 | 第4批独立canary | 双准入2/3，3Flash请求5596tokens，可信0/3 | 环境失败/窗口缺失/输入dtype丢失；[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md) |
-| Faithful input旧DEV | 16Flash请求37593tokens完成；验证INFRA_INVALID | 输入/导入定位已修，原模型响应可0调用回放；[结果与恢复](research/E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md) |
+| Faithful input旧DEV | 源生成16Flash请求37593tokens；原验证INFRA_INVALID保留 | 不把环境故障记0/12；[原结果](research/E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md) |
+| Faithful完整缓存回放 | 新provider0；9题执行、6候选、Gold5/12，四参考保留 | 人工行为审查5/12、机器trusted0，不是独立/修复；[结果](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md) |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 

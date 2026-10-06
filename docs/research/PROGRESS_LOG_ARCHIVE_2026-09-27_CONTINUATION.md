@@ -299,3 +299,17 @@ ordinary docker desktop start一次失败；backend日志明确旧dockerInferenc
 自10月5日可见usage179080+canary5596+Faithful37593=222269（含旧SDK错误4281，非账单核验）。没有新模型授权请求/新增付费循环，缓存可0调用恢复；Docker/镜像/本机/tunnel安全边界保留。两份roadmap与WebCodex当前首部已更新为engine恢复+零付费cache，不再按旧下载/旧run执行。
 
 收尾运行新零付费恢复preflight：ContainerInfrastructureUnavailable，真实Docker Linux Engine仍不可用；守卫在新freeze/state与任何模型调用前停止，未继续run/gold。证明当前不可运行，不产生新的复现成绩。IPC修复范围仍待用户确认。
+
+## 2026-10-06 — 授权IPC联合恢复，完整零付费回放Gold5/12
+
+用户授权正常停止/IPC run备份改名；09:07单独改名run并启动后发现另一个Secrets Engine旧engine.sock，启动失败。获准Secrets目录备份改名并启动一次，前次启动留下新dockerInference而再次失败。用户再授权最后一次联合操作；确认Docker正常停止，在同一停机内将两个已获准IPC目录分别备份改名（09:12:11），启动成功。四份备份原件保留，不删除、不读密钥、不改镜像/VHD/注册表/WSL/代理/tunnel。前两次CLI等待超时与GBK读取警告保留；最后启动退出0有stdout GBK解码警告，真实engine/9个image ID和后续成功离线容器作健康证据。没有宣称tunnel端到端重验。Dfree约38.64GiB，无blob下载。
+
+faithful-input-dev-v1-infra-replay-v1 preflight同原method/input逐项相等、绑定16response SHA，依次run/gold完成。9题/固定12，六个base稳定失败，独立Gold5真1假，机器trusted仍false；五个可观察行为人工审查范围单列，原四参考保留、新Lasso fifth候选。generator Gold仍失败，两pytest无稳定失败、一个明确弃答，历史三个准入失败仍在分母12。不写逐题特例、不重测旧canary、不把新缓存回放计为0生成成本。新provider0/tokens0/缺缓存0；源生成16/37593保持，原无效state/log/Gold不回填。
+
+新回放freeze94cc5432566ea7d6b5d443c59963c567edcda1225a7810716851e5a01abb4b08，statebb4d1e05344681004e577fc336835596c999d87c812aa79128672442ee46b0b2，cache_statusd1771e68b40963ae343782bdbb052b85c30313fb7405cbdfe33491cf4fcdafa9。六个Gold result SHA与逐题边界绑定公开DEV gate，原模型freeze/state/ledger保持。5/12不是Agent修复或独立泛化，不是已控制消融因果收益；37593比26762贵约40.5%，不宣称省费。结果/下一阶段协议与代码先提交b794f3a。
+
+复用框架新增独立Faithful canary v5适配器，保留输入facts/末端定位、counterfactual/STOP/正对照；关键新engine check在每个provider请求之前，而非仅验证前。新3项专项与既有19项共22passed，规定预算/V3重点18passed/Ruff通过。全仓第一次未用Python UTF8模式：1150passed/1fail/4skipped，失败为Windows official grader要求UTF8的运行环境守卫；正确python -X utf8 -m pytest单次1151passed/4skipped/33warnings/0failed（54.23秒），XML保存在新engineering目录，未加skip/timeout或改断言。V3 preflight附加-X utf8导致旧子进程CP936/UTF8解码异常，按AGENTS原python命令ready=true，未改冻结源码。
+
+52份完整方法文件先冻结，method7fe8bf6c1fa9c0acbe82915ba43410b0f95db65615bb3def949dc5b1801feab3，提交03ef71a，Flash≤6/60000/每题20000/输出3000/重试0。随后metadata-only按新预定盐选不重叠三题；选择仍在扫描时提前调用metadata因identity尚不存在退出，未访问网络/写metadata，后续必须等identity真正完成再推进。这是命令时序失误，不是网络阻塞/模型失败。尚未读新题issue/Gold、未新付费、未下载大文件；后续大镜像仍交用户直连终端。累计可见usage222269不增，TEST/C5/Fresh30/repair/E2关闭。
+
+选题完成：排除304历史身份，SymPy-22080/Sphinx-9180/pytest-7749，identity baa5abda0f8151dba915a13975ab014ca4b5315080a1c7b39426d17ab96d294b；官方task.yaml metadata f2bcc7b91f6260f01dbe7e8c536561e38ede072cfbbf37bd5539313c7191c93a。随后transport官方授权7892小认证/manifest、mirror空代理直连，3/3描述一致，7官方请求/25899正文bytes，transport3b1892690e3b70edbbf6a356ee349b1382a434e6562addbf2126432d1be6090d。压缩3162964124bytes≈2.946GiB，最大单张守卫26.123GiB，Dfree38.64GiB；三本地official tag都不存在。没有大blob/pull/provider或新issue/Gold读取；终端直连命令/ETA/进度页已准备，大文件继续交用户。身份和方法不再重冻，未来仅成功下载后进入准入；旧缓存回放和旧canary命令不再执行。现以用户下载为明确外部依赖，不追加付费。

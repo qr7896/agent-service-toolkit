@@ -1,0 +1,30 @@
+{
+  "schema":"e1c2-faithful-canary-v5-public-transport-receipt",
+  "date":"2026-10-06",
+  "status":"awaiting_user_direct_download",
+  "method_freeze_sha256":"7fe8bf6c1fa9c0acbe82915ba43410b0f95db65615bb3def949dc5b1801feab3",
+  "identity_sha256":"baa5abda0f8151dba915a13975ab014ca4b5315080a1c7b39426d17ab96d294b",
+  "metadata_sha256":"f2bcc7b91f6260f01dbe7e8c536561e38ede072cfbbf37bd5539313c7191c93a",
+  "transport_sha256":"3b1892690e3b70edbbf6a356ee349b1382a434e6562addbf2126432d1be6090d",
+  "excluded_historical_identities":304,
+  "official_docker_metadata_requests":7,
+  "official_docker_metadata_body_bytes":25899,
+  "official_proxy_metadata_only":true,
+  "blob_proxy":null,
+  "official_mirror_identical":3,
+  "fixed_denominator":3,
+  "compressed_layer_bytes":3162964124,
+  "maximum_download_free_space_floor_gib":26.123,
+  "blob_requests":0,
+  "provider_calls":0,
+  "task_issue_content_inspected":false,
+  "gold_test_content_inspected":false,
+  "batch_provider_token_cap":60000,
+  "max_provider_requests":6,
+  "provider_retry_count":0,
+  "tasks":[
+    {"instance_id":"sympy__sympy-22080","compressed_layer_bytes":1092634864},
+    {"instance_id":"sphinx-doc__sphinx-9180","compressed_layer_bytes":1095717828},
+    {"instance_id":"pytest-dev__pytest-7749","compressed_layer_bytes":974611432}
+  ]
+}

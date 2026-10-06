@@ -4,9 +4,21 @@
 
 ## 当前状态
 
-**最新：四批独立canary1/3、0/3、1/3、0/3全部封存；当前硬阻塞为Docker启动IPC故障。** Faithful公开输入事实/导入归属定位已实现，原DEV16Flash请求37593tokens响应已收集，但Docker管道不可用使验证INFRA_INVALID，不是0/12模型能力结果。停止新增付费，原response/state/ledger/control/评分全部保留。[有效独立v4结果](E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md)、[DEV无效验证与缓存恢复](E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md)。
+**最新：Docker已恢复，Faithful完整缓存回放完成：Gold5/12、新provider0、缺缓存0。** 原16Flash请求37593tokens生成不重试，原无效环境验证另留；四参考保留，新增Lasso可执行证据，人工可观察行为审查5/12，机器trusted仍0，不是Agent修复/独立成绩。[最新完整结果](E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)。四批独立canary1/3、0/3、1/3、0/3仍封存，不覆盖。
 
-## 当前唯一后续：恢复engine后0付费缓存回放
+## 当前下一步：独立Faithful canary v5
+
+开发gate通过，已先提交方法代码/协议b794f3a，再封存52份方法文件03ef71a；method SHA7fe8bf6c1fa9c0acbe82915ba43410b0f95db65615bb3def949dc5b1801feab3。新模块`evals.e1c_evaluation_2_faithful_canary_v5`，新目录`.codex/e1c/evaluation_2/faithful-canary-v5`。按既有metadata-only盐序排除所有历史/四批canary，选固定三题无替补；本次截至此处未读新issue/Gold、未调用provider或下载blob。完整[选题前协议](E1C2_FAITHFUL_CANARY_V5_METHOD_2026-10-06.md)。不要重复freeze-method/select；不要运行任何旧v4/v3/cached replay入口。
+
+顺序：identity完成→仅官方task.yaml metadata/授权7892小官方manifest→用户关闭VPN全局/TUN且Docker No proxy直连下载→本机admit/public/preflight→列精确run命令/Flash/最多6请求/60000tokens→一次run/gold。每请求之前真实engine/image检查，不以磁盘loaded.json代替。任何失败保留现场，不自动provider重试、不调当前canary后继续称独立；≥2/3且人工行为审查通过才另冻repair，机器/人工结果分开报。Agent repair/TEST/C5/Fresh30/E2仍未开放。
+
+identity和小型transport现已完成：排除304身份，SymPy-22080/Sphinx-9180/pytest-7749，identity SHAbaa5abda0f8151dba915a13975ab014ca4b5315080a1c7b39426d17ab96d294b；transport SHA3b1892690e3b70edbbf6a356ee349b1382a434e6562addbf2126432d1be6090d。官方摘要3/3一致，7官方Docker小metadata请求/25899正文bytes，blob/provider0。三镜像本地tag均不存在，压缩2.946GiB；大文件交用户，直接复制[本次终端命令](E1C2_FAITHFUL_CANARY_V5_DOWNLOAD_2026-10-06.md)。新题issue/Gold仍未读，不再调用select或重抽。下载后才按上述顺序零调用准入，未准入题保留分母3。
+
+工程完整单次1151passed/4skipped/33warnings/0failed（54.23秒），专项22passed、指定预算/V3重点18passed/Ruff通过，原V3 preflight ready=true。首次测试漏UTF8参数/另一次V3强制UTF8导致子进程编码异常都保留为命令环境异常，不修改冻结代码/断言。所有原记录和IPC备份留存；不动VHD/镜像/tunnel，不假称tunnel端到端已验证。自10月5日可见usage仍222269，本轮新增付费0。云端缺本机.codex/source/image/执行器即INFRA_BLOCKED，不索取密钥或开放裸daemon端口。
+
+## 已完成的缓存恢复准备（历史命令，不再执行）
+
+以下保留当时Docker不可用的接手记录；其preflight/run/gold现已完成，结果见页首。不按旧“当前/未执行”继续运行。
 
 普通Docker Desktop启动未恢复；日志明确旧`Docker\\run\\dockerInference` IPC socket不可访问，backend退出。用户确认尚待：仅正常停止Docker、备份改名`C:\Users\qq人\AppData\Local\Docker\run`目录、再普通启动。未触碰该目录/注册表/WSL/镜像/VHD/代理/tunnel。没有确认不可factory reset/global prune/强关全部WSL。Docker start/status查询可能后台挂起，勿再叠加启动或付费run。
 
