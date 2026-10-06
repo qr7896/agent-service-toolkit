@@ -1,7 +1,11 @@
 {
   "schema":"e1c2-executable-import-dev-v2-preparation",
   "date":"2026-10-06",
-  "status":"code_and_regressions_passed_engine_blocked_no_budget_freeze",
+  "status":"authorized_ipc_recovery_completed_v2_trial_completed_gold3_of12",
+  "current_engine_healthy":true,
+  "local_bridge_docker_ready":true,
+  "paid_trial_result":"data/e1c_evaluation_2_executable_dev_v2_result.json",
+  "preparation_fields_below_are_historical_before_recovery":true,
   "model":"deepseek-flash",
   "planned_max_requests":18,
   "planned_batch_token_cap":80000,

@@ -4,9 +4,21 @@
 
 ## 当前状态
 
-**最新：新旧DEV方法已接线，但Docker重启IPC阻塞，新provider0。** import fallback、显式无参数入口、B/A合同解析和每请求engine检查已实现；v1离线合成成功[0,0]/失败[1,1]、预算9题≤18/80000/reserve70048、完整1167passed/4skipped/0failed，代码f7d57d3留档且未付费。随后为防未验证fixture/native runner访问官方tests，另立v2拒绝这些API/别名引用，当前模块指向executable-import-dev-v2，**必须恢复engine重新preflight，不能复用v1 freeze或称v2已跑模型**。[当前协议](E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md)。五批独立1/3、0/3、1/3、0/3、0/3全部保留，旧DEV5/12只是开发证据；TEST/C5/Fresh30/repair/E2关闭。
+**最新：Docker/DEV12/本机bridge已恢复；两版付费DEV已完成但均未达质量门槛。** V2新生成12请求36689tokens、Gold3/12；V3缓存新增0/缺缓存0、仍3/12；V4真新生成14请求35889tokens、Gold2/12。原所有结果封存，不拼接best-of。[最新V4结果](E1C2_CONTROLLER_GENERATION_V4_RESULT_2026-10-06.md)、[V2/零费诊断](E1C2_EXECUTABLE_DEV_V2_RESULT_2026-10-06.md)。V4 A5/5返回source不再输入echo，但fixture/语义质量未提升。当前停止付费扩批/提示微调，先零调用生产前置关系与正对照机制。五批独立1/3、0/3、1/3、0/3、0/3全部保留，TEST/C5/Fresh30/repair/E2关闭。
 
-## 当前唯一下一步：授权恢复engine，再v2新预检/冻结/一次DEV
+## 当前唯一下一步：零调用fixture有效性/正对照与受限执行覆盖
+
+禁止重跑任何V2/V3-cache/V4/canary已有preflight/run/gold、改旧source/response/state/ledger/freeze，不能从issue/windows输入回显拼造代码。所有已开始的命令都只历史，下面旧engine阻塞/等待run记录不作当前指令。
+
+1. 使用合成与旧DEV，源码API signature/guard/返回结构验证fixture。现有具体负例：X一列与三项feature_names不符、FakeItem与assert True无法表达原行为、generator返回形态/重复调用关系未知。先做任务无关的可验证前置关系或已知有效正对照，未知不猜；不手填字段/维度/断言，不读取Gold/test生成。A fallback同样不能只因JSON合法就绕过控制。
+2. 对可证明表示/类型差异，保持literal/长度/API调用不变，派生正对照失败即停。尚不能证明的关系留unknown，不强行“修到过”。需要native/generated fixture harness则明确来源/执行模式，当前guard保持禁用未知pytest.main/runpytest/fixtures，不重新运行五批已看样本称独立。
+3. 明确docs/特性请求与行为bug的任务无关路由及覆盖限制；缺行为期待不能制造异常。完成零调用验收、四参考/两仓库的机制证据后再另冻完整旧DEV方法/提示/预算/源码，一次新生成比较效果与成本；无收益不抽第6批，不继续付费提示微调。最后独立方法仍须先冻、再metadata-only全历史排除，≥2/3才另冻Agent repair。
+
+本轮真实新增26请求/72578tokens，SDK/provider重试0；10月5日起可见usage304489（含旧SDK错误4281，非账单核验）。最后工程1181passed/4skipped/33warnings/0failed（68.70秒）、规定V3 preflight ready=true；不是修复率。IPC已授权正常stop/两目录备份后普通start一次成功，备份后缀20261006-135813；Docker29.4.0，DEV12全12与现有bridge Docker status现场正常，不等于Web私有连接端到端已验。无新的大下载/删除、VHD/registry/代理/tunnel/密钥不动，原15旧镜像清理收据不回填。
+
+Cloud可以接源码/单测/文档/上述零调用设计，但缺本机source/cache/image/执行器时明确INFRA_BLOCKED，当前bridge仍旧strict-v5工具，不默认允许新paid模块。不要复制旧研究命令或索取密钥，不要开放裸Docker端口。所有新结果SHA绑定公开JSON，真实评分/Gold/test和原完整日志留本机.codex。
+
+## 以下为已完成IPC恢复与V2准备（历史，不再执行）
 
 已按用户允许移除15个已封板canary镜像缓存：与DEV12 disjoint、无容器引用、精确tag/non-force，全部源码/响应/账本/manifest/所有旧freeze保留。[清理收据](../../data/e1c_evaluation_2_closed_canary_cache_cleanup.json)。DEV12全12、两旧DEV30和alpine保留，清理后全12与engine曾真实核验；Dfree约38.19GiB，未收缩/移动VHD、删文件、改registry/代理/tunnel/密钥。旧canary如需历史复核必须重新获得原digest镜像，不能假称本机镜像仍存在，不建议再跑旧研究入口。
 

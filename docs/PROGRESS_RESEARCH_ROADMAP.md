@@ -4,7 +4,7 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：端到端修复质量仍未达目标。五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果封存，原DEV缓存Gold5/12仍只作开发证据。新版旧DEV接通import fallback、显式无参数入口、合同解析与每请求前engine检查，v1离线合成/回归/预算预检通过但未付费。随后新增native-fixture边界加固另立v2，需重新预检，**新付费仍0**。当前Docker已停止，普通重启旧IPC失败，等待授权恢复；不把停机算模型失败。仅移除15个封板canary本地镜像缓存，DEV12全12镜像/记录源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果。
+当前阶段：端到端修复质量仍未达目标。五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果封存。授权IPC备份后Docker/DEV12全12/本机bridge健康。旧DEV新生成V2 Gold3/12、零付费兼容回放3/12、再新生成V4 Gold2/12均封存，未保四参考；本轮26请求72578tokens、无provider重试。输出回显已修复（V4 A5/5返回source），但fixture/行为合同质量没有提升；**不继续付费扩批，先零调用前置条件/正对照与可信fixture机制**。15个历史canary本地镜像缓存已按允许移除，记录/源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果。
 
 ## 1. 阅读入口
 
@@ -14,7 +14,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [第五批盲态结果与回DEV路线](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md)、[Faithful开发回放](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [V4真实新生成负结果/下一步](research/E1C2_CONTROLLER_GENERATION_V4_RESULT_2026-10-06.md)、[V2与零付费诊断](research/E1C2_EXECUTABLE_DEV_V2_RESULT_2026-10-06.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 
@@ -70,7 +70,10 @@
 | Faithful完整缓存回放 | 新provider0；9题执行、6候选、Gold5/12，四参考保留 | 人工行为审查5/12、机器trusted0，不是独立/修复；[结果](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md) |
 | 第5批独立canary | 双准入2/3；3Flash请求9642tokens，可信0/3 | import/API窗口遗漏、未调用函数、源码身份失败；[封存结果](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md) |
 | 旧DEV import/调用形态审计 | 新provider0；3题4个新增定义窗口，8份缓存候选中1份函数体未调用 | 结构诊断原型，不是新的复现分数；下一版DEV尚未付费 |
-| 新版executable-import旧DEV | v1已接线/合成/预检；v2进一步拒绝未证明fixture来源的native runner与别名引用 | v1未付费归档，v2需恢复engine重新预检；[当前协议](research/E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md) |
+| 新版executable-import旧DEV | v1零调用原型保留；v2能力边界加固后真实试验3/12 | 不代表净提升；[协议/历史](research/E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md) |
+| Executable新生成V2 | 12请求36689tokens；4候选Gold3/12 | 未保四参考；[真实结果](research/E1C2_EXECUTABLE_DEV_V2_RESULT_2026-10-06.md) |
+| Controller-owned缓存V3 | 新provider0/无缺缓存；仍Gold3/12 | 输入echo仍拒绝，没有新模型收益 |
+| Controller generation V4 | 14请求35889tokens；A源码格式5/5，5候选Gold2/12 | 格式改善、质量未提升；[真实负结果](research/E1C2_CONTROLLER_GENERATION_V4_RESULT_2026-10-06.md) |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 

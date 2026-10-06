@@ -339,3 +339,17 @@ faithful-input-dev-v1-infra-replay-v1 preflight同原method/input逐项相等、
 安全复核补齐fixture边界：fixture_source声明不代表可调用默认native test suite；新增guard拒绝pytest.main/_pytest.config.main、runpytest/makepyfile/makeconftest及import alias/函数引用/native模块赋值别名，B所有code字段与A同样检查，不启用native harness权限。因此v1零调用原型和f7d源码完整归档、不重用其freeze，新v2目录/协议另立，仍固定12/候选≤18/80000，但engine恢复后必须重新preflight/算reserve/冻配置。v2目前无freeze、无state/ledger/provider，未在五批canary补规则重测。
 
 v2重点26passed/Ruff通过；首次native guard全仓1172passed/4skipped/0fail（72.30秒）保留，加别名/ref负例后的最后完整1175passed/4skipped/33warnings/0fail（65.46秒；XML1179tests/0errors/65.136秒）。未拼接或弱化断言。两份roadmap与WebCodex首部更新为授权恢复engine→v2新预检→展示精确Flash run/预算后一次旧DEV；native fixture hydration仍不支持，静态可达/语义非普遍证明。新增付费本轮0，累计可见usage231911保持（含旧SDK错误4281，非账单核验），TEST/C5/Fresh30/repair/E2关闭；无新增镜像下载或重要文件删除。
+
+## 2026-10-06 — 授权IPC恢复，V2与V4两次真实DEV均未达门槛
+
+用户确认仅正常停止Docker、两个IPC目录备份改名再启动一次。确认backend/Desktop已停止、校验精确源/目标路径无junction/冲突；同次停机备份run与docker-secrets-engine，后缀20261006-135813，普通start成功。真实server29.4.0、DEV12全12 config ID可inspect、现有bridge docker_status docker_ready=true；不改VHD/registry/代理/tunnel/key，没有重下已删除15旧镜像，Web端到端未验。
+
+V2方法0cebf87已提交，现场新freeze c56411f586fbfcb59891f82fef1da7bc5aa81c8d308bb276ee694bdee5c75737，固定12/九eligible，Flash最多18/批80000/每题20000/输出3000、primary70519、temp0/nonthinking/retry0。先列精确executable_dev run/模型/预算后使用既有≤100000单实验授权一次执行。12started/12completed、36689tokens、无provider失败/重试，4base候选Gold3真1假，四参考未保不抽新canary。warm_start/Lasso/ISO-Z区分，generatorGold仍失败；array与List(DateTime) A缺execution有效field而协议拒绝。后只读这些响应JSON字段发现其实只有issue/windows输入echo，没有source，不能拼造候选。原stateeb24a0a458108748705f592d37afb19ab7f513920f9ffb4f9fdb9b63f6a0538c、ledger8e7baaa6f42d7d6b889e0403a91f37e11d4d1ae584f8e85cffce7f8d821d7c58、全部源码/响应/控制/评分一字不改。机器trusted0，未逐项封板语义审核，不称可信3/12或修复率。
+
+零费controller-owned grammar兼容回放：新两模块/12缓存raw SHA、source method/input逐项同一，cache-only不使用真实key/HTTP、新provider0，9题完整/缺缓存0。manifest只忽略唯一execution元数据，input echo和其他额外字段仍拒绝、未知fixture/native API/无参入口等边界保留。controller-manifest-cache-dev-v3最终同样Gold3/12，无提升也非新生成；freeze0a9848173943b16d924fa1d7a55dbf12ef4c79a6aea9d6d1218bf6385162a75c，state081863ba6517544ac9d4a1952f175c5ee60069ad1e8a71f617bee657a371146c。24专题passed，后代码/协议/原结果先提交f7693b7。旧A只有Human prompt、指令/大JSON上下文混合且后置facts，识别为待验证输出请求风险，不假称因果证明。
+
+另立真新生成V4：可信A指令System、公开issue/windows/facts Human、最后明确生成请求和source/七字段schema；原窗口/输入/预算及native/fixture/source边界保留，不把公开数据升为system。现场freeze40cd232e56945628f8c1f6e0946d3b1f659bb574081c252e1aaa51029c3ef2fb、最多18/80000/每题20000/输出3000、primary70238、0重试。重点6passed/Ruff、指定预算/V3重点18passed、原V3 preflight ready=true，全仓完整1181passed/4skipped/33warnings/0failed（68.70秒），未弱化断言/timeout/skip。先列精确controller_generation_dev run与Flash预算后一次执行，14started/14completed/35889tokens、无provider失败/重试。
+
+V4 A5/5均生成source无输入echo，五个base候选Gold2真3假；ISO-Z/List(DateTime)消除失败，array/generator/pytest候选Gold仍失败，warm_start弃答、Lasso无稳定失败。机器trusted0、语义审核未完整，不称全自动可信或修复。state14ad5c4f45a553c0f48a716cd6a59cbf9977dfe8e416308737724ece0393e796、ledger41f25f5d82b5f4fca1aeea682ac77b6ee57364bb981e276b5666b872a1886fd0。仅生成源码/生产依据诊断：X一列却给3个feature_names；pytest FakeConfig/FakeItem且assert True，不是原真实行为；generator未建立返回形态/重复调用关系。不能用Gold答案补输入或断言，不能合并V2/V4最好结果。
+
+本轮真实新增12+14=26请求/36689+35889=72578tokens，缓存0；10月5日起可见usage304489（含旧SDK错误4281，非账单核验）。两版质量均未保四参考，停止继续付费提示微调/扩批，不抽第6批；下一步先零调用生产precondition/guard/返回结构与正对照、A同样的fixture约束、可信generated/native执行覆盖及docs/特性请求路由。未知关系保留unknown，不手填维度/对象/断言，不让仅稳定失败算可信。五批canary负结果原样、TEST/C5/Fresh30/Agent repair/E2关闭。两份roadmap、当前交接从头更新为此步骤；无额外镜像下载/文件删除，IPC备份全部保留。
