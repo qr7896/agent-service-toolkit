@@ -8,6 +8,10 @@
 
 ## 当前唯一下一步：零调用fixture有效性/正对照与受限执行覆盖
 
+已新增[A fallback零调用审计](E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md)：原九题五A，一项control两次失败、一项constant oracle拒绝、三unknown。新增provider/Gold读取0，原V4 SHA未变。`fallback-control-zero-dev-v1`目录已经完成，不能再次运行其audit或修改已冻两模块；本次仅诊断原型，尚未接live。接手先补跨仓库合法正对照和production返回/消费关系，另立runner接A guard，再验证四参考与成本。没有新下载需要，不能直接付费或选第6批。
+
+最新工程单次1201passed/4skipped/33warnings/0failed（79.82秒），专项24/指定重点18/Ruff均过，规定V3 preflight ready=true；原件/评分口径不变。这不是1201个task修复。下方旧工程数字和命令均属历史。
+
 禁止重跑任何V2/V3-cache/V4/canary已有preflight/run/gold、改旧source/response/state/ledger/freeze，不能从issue/windows输入回显拼造代码。所有已开始的命令都只历史，下面旧engine阻塞/等待run记录不作当前指令。
 
 1. 使用合成与旧DEV，源码API signature/guard/返回结构验证fixture。现有具体负例：X一列与三项feature_names不符、FakeItem与assert True无法表达原行为、generator返回形态/重复调用关系未知。先做任务无关的可验证前置关系或已知有效正对照，未知不猜；不手填字段/维度/断言，不读取Gold/test生成。A fallback同样不能只因JSON合法就绕过控制。

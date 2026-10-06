@@ -28,11 +28,16 @@
 | 新版DEV执行接线 | terminal→import→lexical，同预算；显式direct_script/无参数call_entrypoint、解析兼容原B oracle；每请求engine检查 | 18项专项、隔离合成成功/失败入口验证；旧DEV预检9题、≤18/80000，新付费0 |
 | 资源清理与当前engine阻塞 | 15个封板canary本地镜像移除，DEV12全12与源码/记录保留 | 清理后engine曾核验健康；后发现已停止，普通重启旧IPC失败，不推断清理造成停机 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
+| A fallback 前置有效性零调用审计 | 原九题/五A：一份同元素对照两次失败、一份constant assert拒绝、三份unknown；模型/Gold读取0 | 局部拒错实证，未接live/不产生新可信数；[结果](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md) |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
 **现存人工环节：** Gold 区分不能自动证明 probe 忠实表达 issue。最新5/12包含人工可观察行为审查，底层`trusted_reproducer=false`保持原样。后续分别报告自动准入和人工审核后结果，不合称“全自动可信”。
 
 ## 2. 当前瓶颈与最新入口
+
+**最新完成：A fallback 的任务无关拒错原型与旧DEV离线审计。** 自动保持literal/长度/API其余参数，三项labels对一列X的派生list对照仍两次失败；常量assert拒绝。原五A中三份unknown，模型0/Gold读取0、V4成绩不改。下一步须补跨仓库有效正对照与返回结构/消费关系，再另立runner把A校验接在target/Gold前；本次尚未接live，不能视为完整fixture质量gate，更不能凭两项拒绝启动第6批。[验收清单与收据](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md)。
+
+当前工程验收：专项24passed、指定重点18passed、Ruff通过，原V3 preflight ready=true；完整单次1201passed/4skipped/33warnings/0failed（79.82秒）。工程数与复现/修复指标分开。
 
 **当前不再付费重复提示微调，先在旧DEV做fixture前置条件/正对照机制。** Docker授权联合IPC备份后恢复，DEV12全12和本机bridge状态健康。V2一次真新生成12请求36689tokens、Gold3/12；controller-owned缓存兼容0调用回放仍3/12；V4另冻提示/语法后14请求35889tokens、Gold2/12。全部原件/负结果封存，四参考未保、不能best-of合并或抽第6批。V4把可信A指令System/数据Human/最后明确生成，A5/5返回source不再echo，但不代表复现质量提升。第一瓶颈已转fixture有效性/grounded oracle/有限执行覆盖；[V4结果](research/E1C2_CONTROLLER_GENERATION_V4_RESULT_2026-10-06.md)、[V2/缓存诊断](research/E1C2_EXECUTABLE_DEV_V2_RESULT_2026-10-06.md)。
 

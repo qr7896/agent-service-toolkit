@@ -353,3 +353,15 @@ V2方法0cebf87已提交，现场新freeze c56411f586fbfcb59891f82fef1da7bc5aa81
 V4 A5/5均生成source无输入echo，五个base候选Gold2真3假；ISO-Z/List(DateTime)消除失败，array/generator/pytest候选Gold仍失败，warm_start弃答、Lasso无稳定失败。机器trusted0、语义审核未完整，不称全自动可信或修复。state14ad5c4f45a553c0f48a716cd6a59cbf9977dfe8e416308737724ece0393e796、ledger41f25f5d82b5f4fca1aeea682ac77b6ee57364bb981e276b5666b872a1886fd0。仅生成源码/生产依据诊断：X一列却给3个feature_names；pytest FakeConfig/FakeItem且assert True，不是原真实行为；generator未建立返回形态/重复调用关系。不能用Gold答案补输入或断言，不能合并V2/V4最好结果。
 
 本轮真实新增12+14=26请求/36689+35889=72578tokens，缓存0；10月5日起可见usage304489（含旧SDK错误4281，非账单核验）。两版质量均未保四参考，停止继续付费提示微调/扩批，不抽第6批；下一步先零调用生产precondition/guard/返回结构与正对照、A同样的fixture约束、可信generated/native执行覆盖及docs/特性请求路由。未知关系保留unknown，不手填维度/对象/断言，不让仅稳定失败算可信。五批canary负结果原样、TEST/C5/Fresh30/Agent repair/E2关闭。两份roadmap、当前交接从头更新为此步骤；无额外镜像下载/文件删除，IPC备份全部保留。
+
+## 2026-10-06 — A fallback 零调用对照拒错机制
+
+使用academic-research-suite的实验执行/证据分离与ponytail最小复用：新fallback_control从普通顶层A候选提取最后真实调用，复用既有literal counterfactual compiler，同值/顺序/长度，仅派生一个numpy→list控制；多因素/变异/逃逸/调用重绑定/函数或未知fixture保留unknown，常量Assert通用拒绝。source SHA、exact-base/输入/immutable镜像现场检查；不改任何旧source或oracle，尚未接入live runner，不宣称语义等价。
+
+首次专项2failed/18passed是新合成fixture没有初始化Git，原validator正确拒绝；修测试fixture为真实clean Git，不弱化guard。第一次审计预检错误把canonical input SHA和冻结文件SHA混比，执行前停止、未建OUT/运行容器或调用provider。修正file绑定并新增单测；Ruff首次import顺序错误也修正。以上异常如实保留，非模型重试、非被测软件失败。
+
+新一次零模型审计fallback-control-zero-dev-v1完成：固定12/原九准入/五A，compiled1、控制失败1、常量断言拒绝1、unknown3。array三项labels对一列X，自动派生同literal list后两次独立离线执行[1,1]，生产guard报feature_names must contain 1 elements, got 3；logSHA af45a7cfa213bba0f73a7dcd3c739389d9f683e710809ded16829af3b765dc99一致。pytest assertTrue在静态阶段拒绝未执行。没有修维度/数值、读取Gold/test、重算原V4 Gold2/12，也未计新可信分数。
+
+freeze9d78aafbcd3a6eae3686fe48023031cb580861708edc660a5a3e931f0e89afb2，result7a74c894f10b6592de09f5aaebc048afc0e18b4994249c9c8a3e22c223d3ba28。原V4 freeze/state/ledger三个SHA仍相同；本轮provider0/tokens0/Goldreads0，累计可见usage304489不增。九immutable镜像运行前健康、DockerServer29.4.0。没有新增下载/删除/重启，IPC备份/VHD/registry/代理/tunnel/key不动。
+
+最终专项24passed、规定重点18passed、Ruff通过、原V3 compact preflight ready=true；完整单次1201passed/4skipped/33warnings/0failed（79.82秒），持久XML1205tests。不削弱旧断言/skip/timeout，工程数不是修复率。两份Roadmap与交接最新入口已补局部证据/接线未完成/跨仓库正对照待办；独立第6批/repair/TEST/C5/Fresh30/E2仍关。公开摘要绑定本机完整记录，未上传原评分/密钥。下一步先补跨仓库合法控制及返回结构/消费关系，再另立版本接A校验；不凭两项拒绝启动新的付费提示微调。
