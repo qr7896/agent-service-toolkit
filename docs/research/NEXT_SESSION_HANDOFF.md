@@ -4,9 +4,25 @@
 
 ## 当前状态
 
-**最新：Docker已恢复，Faithful完整缓存回放完成：Gold5/12、新provider0、缺缓存0。** 原16Flash请求37593tokens生成不重试，原无效环境验证另留；四参考保留，新增Lasso可执行证据，人工可观察行为审查5/12，机器trusted仍0，不是Agent修复/独立成绩。[最新完整结果](E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)。四批独立canary1/3、0/3、1/3、0/3仍封存，不覆盖。
+**最新：第5批独立canary已执行并0/3封存，当前回旧DEV。** 三镜像现场通过、双准入2/3；3Flash请求9642tokens，无provider失败/重试，0个稳定base候选，独立Gold attempted0。SymPy丢import/关键API窗口而弃答；pytest B未触发collection问题、A函数未调用；Sphinx source identity失败、退出90不送模型。五批独立1/3、0/3、1/3、0/3、0/3，不拼接旧DEV5/12。[最新结果与下一步](E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md)。Docker正常，当前没有新下载需求；TEST/C5/Fresh30/repair/E2关闭。
 
-## 当前下一步：独立Faithful canary v5
+## 当前唯一下一步：旧DEV定位fallback＋执行契约
+
+禁止再执行v5的select/download/admit/public/preflight/run/gold或任何旧canary/cache回放。原方法/身份/输入/响应/账本/Gold日志不回填；v5的新method/identity/source/state/ledger SHA见公开结果。它已看过，不在该三题补规则后仍称独立。
+
+已有新`evals/e1c_evaluation_2_import_seed_audit.py`原型与6项专项：公开示例开头import-only→生产AST/reexport定义，遇非import即停，不从断言/函数体/输出值提名字；明确拒绝测试/答案型名字、能力根、wildcard、歧义。旧DEV九题零调用v1（代码3cb7bf9）与加固v2结果分别保留，当前只是结构覆盖审计，**不是新复现成绩**。`invocation_status`保守识别direct-script未调用函数体，旧DEV8候选中1份命中；对已封存v5的诊断只作事后解释。
+
+直接接手实现下面三个阶段，先本地合成单测/旧DEV零调用，不要立刻付费：
+
+1. 把import fallback接入另立新版DEV的证据构造：terminal API窗口优先，之后生产归属import定义，再旧词法；同4窗/23000字符预算、源SHA/depth/seed，未知或溢出不猜，不按task ID指定文件。断言值/函数名改变不得改变import来源；证明新窗口对目标API有实质作用，不能只数窗口。
+2. 明确probe manifest的执行模式、入口、fixture来源与可观察检查。函数-only明确拒绝，不把Python退出0当测试执行；不能自动猜testdir/pytester参数。先证明合法入口真的运行、非法/未知入口拒绝。若需要可信临时fixture/native harness，全部隔离/无网络/不读仓库官方test或Gold，协议另冻；未做到不能写“执行契约已完成”。
+3. 上述零调用门槛与完整回归通过后，另冻旧DEV方法/配置/预算/源码，展示精确Flash命令。候选计划最多18请求/批80000/每题20000/输出3000/重试0，**尚未冻结或运行**；实际reserve不够即停。完整固定12、九题准入，四参考保持、跨两仓库、效果/成本分别报。无实证提升不抽第6批；有提升才完整新method先冻后metadata-only排除所有历史（含v5）选一次三题，≥2/3且行为审查一致才另冻Agent repair。
+
+截至本次累计10月5日起可见usage231911（含旧SDK错误4281，非账单核验），本批新增9642。完整代码回归通过，最新实测数见Roadmap 2/集中日志；规定V3 preflight ready=true，未改已冻结预算/V1/V2/V3代码、断言、skip或timeout。小型安全摘要/代码可同步Git，原件仍在本机.codex；云端缺源/镜像/执行器即INFRA_BLOCKED，不伪造重跑、索取密钥或开裸daemon端口。Docker/VHD/代理/tunnel和IPC备份不动。
+
+## 以下为v5准备记录（历史，已完成，不再执行）
+
+下方“未读/未下载/尚未调用”只表示当时准备时状态；以页首0/3封存为准。
 
 开发gate通过，已先提交方法代码/协议b794f3a，再封存52份方法文件03ef71a；method SHA7fe8bf6c1fa9c0acbe82915ba43410b0f95db65615bb3def949dc5b1801feab3。新模块`evals.e1c_evaluation_2_faithful_canary_v5`，新目录`.codex/e1c/evaluation_2/faithful-canary-v5`。按既有metadata-only盐序排除所有历史/四批canary，选固定三题无替补；本次截至此处未读新issue/Gold、未调用provider或下载blob。完整[选题前协议](E1C2_FAITHFUL_CANARY_V5_METHOD_2026-10-06.md)。不要重复freeze-method/select；不要运行任何旧v4/v3/cached replay入口。
 

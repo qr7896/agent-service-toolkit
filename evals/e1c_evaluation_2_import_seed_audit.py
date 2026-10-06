@@ -7,10 +7,33 @@ import ast
 import json
 
 from evals.e1c_evaluation_2_dev_pilot import ROOT, _save, _sha
-from evals.e1c_evaluation_2_issue_fixture_facts import CAPABILITIES, FENCES, FORBIDDEN, assertion_name
+from evals.e1c_evaluation_2_issue_fixture_facts import (
+    ANSWER,
+    CAPABILITIES,
+    FENCES,
+    FORBIDDEN,
+    assertion_name,
+)
 from evals.e1c_evaluation_2_public_api_windows import resolve_symbol, window
 
 OUT = ROOT / ".codex/e1c/evaluation_2/import-prefix-old-dev-audit-v1"
+
+
+def invocation_status(source):
+    """Conservative direct-script check; do not claim arbitrary code is reachable."""
+    tree = ast.parse(source)
+    functions = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))]
+    if not functions or any(node.decorator_list or node.args.defaults or node.args.kw_defaults or node.returns
+                            or getattr(node, "type_params", [])
+                            or any(arg.annotation for arg in (*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs,
+                                   *((node.args.vararg,) if node.args.vararg else ()), *((node.args.kwarg,) if node.args.kwarg else ())))
+                            for node in functions):
+        return "executable_or_unknown"
+    inert = (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.AsyncFunctionDef)
+    if all(isinstance(node, inert) or isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant)
+           and isinstance(node.value.value, str) for node in tree.body):
+        return "function_bodies_not_invoked_by_direct_script"
+    return "executable_or_unknown"
 
 
 def import_prefix_seeds(statement):
@@ -30,8 +53,10 @@ def import_prefix_seeds(statement):
                 break  # No traversal of assignments, calls, assertions, classes or functions.
             names = [alias.name for alias in node.names]
             roots = {name.split(".")[0] for name in names} if isinstance(node, ast.Import) else {(node.module or "").split(".")[0]}
-            if (roots & FORBIDDEN or any(name == "*" or assertion_name(name) for name in names)
-                    or any(alias.asname and (assertion_name(alias.asname) or alias.asname in CAPABILITIES) for alias in node.names)):
+            if (roots & FORBIDDEN or any(ANSWER.search(root) for root in roots)
+                    or any(name == "*" or assertion_name(name) or ANSWER.search(name) for name in names)
+                    or any(alias.asname and (assertion_name(alias.asname) or ANSWER.search(alias.asname)
+                                             or alias.asname in CAPABILITIES) for alias in node.names)):
                 break
             if isinstance(node, ast.ImportFrom) and node.module and not node.level:
                 if assertion_name(node.module):

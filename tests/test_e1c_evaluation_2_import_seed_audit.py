@@ -1,4 +1,20 @@
-from evals.e1c_evaluation_2_import_seed_audit import import_prefix_seeds, import_windows
+from evals.e1c_evaluation_2_import_seed_audit import (
+    import_prefix_seeds,
+    import_windows,
+    invocation_status,
+)
+
+
+def test_direct_script_does_not_run_defined_test_body():
+    assert invocation_status("import pytest\ndef test_public_fixture(testdir):\n    assert False\n") == "function_bodies_not_invoked_by_direct_script"
+    assert invocation_status("def f():\n    assert False\nf()\n") == "executable_or_unknown"
+
+
+def test_definition_side_effects_are_not_called_inert():
+    for source in ("@deco\ndef f():\n    pass\n", "def f(x=call()):\n    pass\n",
+                   "def f(x: Call()):\n    pass\n", "def f(*args: Call()):\n    pass\n",
+                   "def f(**kwargs: Call()):\n    pass\n", "class F:\n    call()\n", "assert False"):
+        assert invocation_status(source) == "executable_or_unknown"
 
 
 def test_assertion_values_and_target_names_do_not_seed_routing():
@@ -12,7 +28,8 @@ def test_assertion_values_and_target_names_do_not_seed_routing():
 def test_forbidden_test_wildcard_and_nested_imports_do_not_seed():
     for source in ("import pytest\nfrom pkg import F", "from pkg import *\nfrom pkg import F",
                    "from pkg import assert_answer\nfrom pkg import F", "from pkg import F as assert_answer",
-                   "def f():\n    from pkg import F", "from os import system\nfrom pkg import F"):
+                   "def f():\n    from pkg import F", "from os import system\nfrom pkg import F",
+                   "from pkg import expected_answer", "from pkg import F as gold_value", "from gold_helper import F"):
         assert import_prefix_seeds(f"```python\n{source}\n```") == []
 
 

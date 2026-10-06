@@ -23,7 +23,8 @@
 | 输入事实保真/导入归属定位 | 公开fixture AST无assert/输出答案，3题4safe块；自动找到继承fit，关系/深度/seed/SHA可追踪 | 零调用审计与新协议已冻，不手选文件 |
 | Faithful DEV原生成 | 原九题16请求37593tokens，无provider失败/重试 | 原验证INFRA_INVALID保留，不回填、不报0/12 |
 | 运行态恢复/完整0付费回放 | engine/9个image健康；9题执行、6候选Gold5/12，无缺缓存角色 | 原四参考保留、新Lasso候选；人工行为审查5/12，机器trusted仍0 |
-| 下一独立canary v5 | 52份方法文件先冻结，排除304身份后选SymPy-22080/Sphinx-9180/pytest-7749；官方摘要3/3一致 | 等用户直连下载2.946GiB；Flash≤6/60000尚未调用，新题issue/Gold未读 |
+| 第5批独立canary v5 | 三镜像核验、双准入2/3；实际3Flash请求9642tokens，无重试 | 0/3负结果封存，不再重测；Sphinx source identity失败不送模型 |
+| 新DEV import/执行形态原型 | 旧9题零调用审计，3题4个新增定义窗；8份旧缓存候选中1份未调用函数体 | 6项新专项通过；未接入新生成/未证明复现效果，不抽第6批 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
@@ -31,11 +32,11 @@
 
 ## 2. 当前瓶颈与最新入口
 
-**Docker已恢复；当前推进新独立v5，不重跑旧题。** 第4批0/3已封存，回DEV补公开输入事实保真与生产import/reexport/inheritance定位。Faithful源生成16请求37593tokens，原无效环境验证保留；恢复后新namespace完整0付费回放Gold5/12、四参考保留、跨两仓库，新增Lasso候选输入/终端API与public事实相符。人工可观察行为审查5/12，不是自动语义证明；源生成成本较此前26762增加约40.5%，没有已控制消融的因果/省费结论。[完整结果](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)、[公开gate](../data/e1c_evaluation_2_faithful_replay_dev_gate.json)。
+**当前回旧DEV修通用定位和执行契约，v5已0/3封存。** SymPy公共代码块被整块拒绝后，四个同名symbols窗口占满，缺Mod/lambdify；pytest B未触发collection故障，A只定义test函数但直接脚本不调用；Sphinx官方镜像源码身份前置失败、退出90、不送模型。3请求9642tokens、无失败/重试，0个稳定base候选、独立Gold attempted0。固定3不换题、不补规则后重报独立。五批结果1/3、0/3、1/3、0/3、0/3；当前不能进入Agent repair/TEST/C5/Fresh30/E2。[完整结果与SHA](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md)。
 
-当前外部步骤是用户终端直连下载新三张，压缩层2.946GiB，最大单张空间守卫26.123GiB；D现场约38.64GiB。官方Docker小metadata经授权7892共7请求/25899正文bytes，所有大blob仍0、不走代理。镜像未在本地，新题正文/Gold未读；完整[下载命令、进度与ETA](research/E1C2_FAITHFUL_CANARY_V5_DOWNLOAD_2026-10-06.md)。完成后依次admit/public/preflight，现场核准预算，再列唯一Flash run，不能按旧入口重复缓存回放。
+三镜像已由用户下载且现场immutable image核验通过，当前没有新下载需求，也不是Docker/网络阻塞。原[下载页](research/E1C2_FAITHFUL_CANARY_V5_DOWNLOAD_2026-10-06.md)仅历史，不重复任何v5命令。旧DEV回放Gold5/12与原四参考保持不变，含人工行为审查、机器trusted0，不能补进独立分数。
 
-获准同一次停机备份改名两个旧IPC目录后启动成功，备份均保留；没有删除、改注册表/WSL/镜像/VHD/代理/tunnel或读取密钥。真实engine/9个immutable image均核验、评分后engine仍健康。新回放preflight/run/gold均完成、provider0、缺缓存0，**上述命令不能再执行**。原错误state与日志不回填。工程完整单次1151passed/4skipped/33warnings/0failed（54.23秒）；首次非UTF8测试命令的环境守卫失败记录保留，未弱化断言/跳过。规定V3 preflight按原命令ready=true。
+下一版开发已有两个独立原型：`import_seed_audit.py`只取公开示例开头import，不遍历断言/函数/输出值，AST绑定生产定义/reexport，旧DEV九题中3题新增4定义窗口；`invocation_status`保守识别仅导入+普通函数定义的direct-script未调用状态，旧缓存8候选命中1份。加固前后v1/v2审计结果相同，源代码与SHA分别保留，见[零调用原型摘要](../data/e1c_evaluation_2_import_prefix_dev_audit_result.json)。它们尚未接入新模型方法，结构可达性不是效果提升；不扩大付费/不抽第6批。先完成下面4d–4f的零调用验收，再另冻新DEV方法/预算。所有旧freeze/代码/账本与IPC备份保留，Docker/镜像/VHD/代理/tunnel未改。最终全仓1157passed/4skipped/33warnings/0failed（49.04秒）、规定V3 preflight ready=true，不是repair rate。
 
 第4批method/identity/transport原件与最早0调用receipt保持，当前由[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md)补充执行状态：PVLib环境兼容失败，SymPy缺关键窗口而弃答，scikit两个probe base通过。方法/样本不重抽，不能在本批补规则重报独立。下载/admit/public/run/gold旧命令不再运行，TEST/C5/Fresh30继续关闭。
 
@@ -71,7 +72,11 @@ canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b8
 | 3 | DEV研究与完整回归已记录 | Faithful回放Gold5/12；全仓1151passed/4skipped/0failed | 语义包含人工审查，工程通过不算repair |
 | 4 | Counterfactual局部机制已实现 | 1case literal类型对照、生产guard来源、两次控制验证；四参考保持 | 5条unproven保留，未宣称通用语义证明 |
 | 4b | Docker恢复＋0付费DEV回放已完成 | 同输入/代码/响应SHA，新provider0、无缺缓存，Gold5/12 | 不重跑、不把原错误验证回填成有效 |
-| 4c | 新独立v5准备中 | 方法SHA7fe8bf6c1fa9c0acbe82915ba43410b0f95db65615bb3def949dc5b1801feab3先冻；metadata-only排除旧身份，用户直连下载 | 固定3无替补；≥2/3才另冻repair，失败封存，Fresh30关闭 |
+| 4c | 第5批独立确认已完成但失败 | 固定3，3请求9642tokens，0/3完整封存 | 不回填/重测，不晋升repair |
+| 4d | 接入import fallback并做预算消融 | 原terminal优先，自动生产归属；仍≤4窗/23000字符；oracle值/名称变化不影响seed | 只合成+旧DEV，未知不猜；不从断言提API |
+| 4e | 正式probe执行契约 | manifest明确执行模式/入口/fixture；仅定义函数拒绝、合法入口真的执行、非法入口拒绝 | 不自动猜fixture参数、不把脚本exit0当测试执行过；无网络隔离不放松 |
+| 4f | 零调用验收后冻新DEV并一次付费 | 四参考保持、跨仓库、单版固定12，Flash候选预算≤18请求/80000token、重试0；实际reserve须通过 | 本预算仅计划未冻结/未执行，不拼接旧成绩；无净证据不抽第6批 |
+| 4g | 新独立确认与修复小对照 | 完整新method先冻后选历史全排除的三题；≥2/3且行为审查一致才冻repair | 负结果永久保留，TEST/Fresh30继续关闭 |
 | 5 | 新修复配对小实验 | 同模型/预算 baseline/treatment，独立 official grade | 无净收益不扩批 |
 | 6 | 同版旧 DEV30 | 单一冻结身份、30 行，目标 30/30 resolved | 保留失败分布，Fresh30 关闭 |
 | 7 | Fresh30 one-shot | 门槛真过后先选新身份、再读内容、一次运行 | 如实报告，不回调规则 |
@@ -81,7 +86,7 @@ canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b8
 
 ## 5. 一周交付
 
-[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)列明原逐日工作、预算、消融与停止条件。截至10月5日，三批canary均负结果封存；新counterfactual零调用机制及新生成4/12通过开发参考门槛，独立门槛仍未过。本次新增26762tokens，累计本日可见usage179080（含旧SDK错误4281，非核账单）。系列非无限预算，第四批最多60000，后续repair仍需单独门槛/预算，不承诺10月7日必达30/30。
+[10 月 1–7 日详细计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留原逐日安排与停止条件。截至10月6日五批独立均未达门槛，最新0/3，当前回DEV做import fallback/执行契约；源DEV5/12仍不等于独立或修复成功。本批新增9642tokens，10月5日起累计可见usage231911（含旧SDK错误4281，非核账单）。新增两个零调用原型尚需集成/效果验收；后续新DEV预算与repair都需另冻，不承诺10月7日必达30/30，不继续盲抽样本或增加模型上限掩盖机制问题。
 
 可控交付是输入隔离和自动定位检查、一个通用复现改进、同预算 DEV 消融、冻结记录、独立结果或明确阻塞报告、可接手的状态包。**30/30 保留为目标；当前证据不足以承诺一周必达。**
 

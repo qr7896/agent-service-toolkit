@@ -4,7 +4,7 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：端到端修复质量仍未达目标。四批独立canary为**1/3、0/3、1/3、0/3**，负结果封存。Docker IPC已在授权范围可恢复备份并恢复运行；原DEV16Flash请求/37593tokens的无效环境验证不回填，另立**0新增付费缓存回放：Gold区分5/12**，四参考保留，人工可观察行为审查5/12、机器trusted仍0。输入事实保真与生产API导入/继承定位有新增开发证据，非自动语义证明或修复率。新独立canary v5完整方法先冻，metadata-only排除304身份后选三题、官方摘要核验3/3，现等用户直连下载约2.946GiB，不重测旧canary。没有同版DEV30全过、Fresh30或新版Agent修复结果。
+当前阶段：端到端修复质量仍未达目标。五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果封存。Docker正常，新v5三镜像已下载、双准入2/3；实际3Flash请求9642tokens、无重试，0/3未过独立门槛，不能重测调参后仍称独立。原DEV完整0付费回放Gold5/12（含人工行为审查、机器trusted0）仍只作开发证据。当前回旧DEV开发import来源fallback和探针执行契约：零调用原型增加4个定义窗口、识别未被调用的函数体，尚未证明复现/修复提升。没有同版DEV30全过、Fresh30或新版Agent修复结果。
 
 ## 1. 阅读入口
 
@@ -14,7 +14,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [Faithful零付费完整回放](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)、[下一独立v5方法](research/E1C2_FAITHFUL_CANARY_V5_METHOD_2026-10-06.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [第五批盲态结果与回DEV路线](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md)、[Faithful开发回放](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 
@@ -68,6 +68,8 @@
 | 第4批独立canary | 双准入2/3，3Flash请求5596tokens，可信0/3 | 环境失败/窗口缺失/输入dtype丢失；[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md) |
 | Faithful input旧DEV | 源生成16Flash请求37593tokens；原验证INFRA_INVALID保留 | 不把环境故障记0/12；[原结果](research/E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md) |
 | Faithful完整缓存回放 | 新provider0；9题执行、6候选、Gold5/12，四参考保留 | 人工行为审查5/12、机器trusted0，不是独立/修复；[结果](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md) |
+| 第5批独立canary | 双准入2/3；3Flash请求9642tokens，可信0/3 | import/API窗口遗漏、未调用函数、源码身份失败；[封存结果](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md) |
+| 旧DEV import/调用形态审计 | 新provider0；3题4个新增定义窗口，8份缓存候选中1份函数体未调用 | 结构诊断原型，不是新的复现分数；下一版DEV尚未付费 |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 
