@@ -1,10 +1,10 @@
 # Coding Agent 研究总览：成果、证据与边界
 
-更新：2026-10-05。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
+更新：2026-10-06。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-当前阶段：端到端修复质量仍未达目标。独立canary v1/v2/v3为**1/3、0/3、1/3**，负结果封存。最新counterfactual旧DEV新生成恢复**4/12经人工可观察行为审查的可信补丁前复现**，13Flash请求/26762tokens；零调用证明能提前拒绝一个类型/长度混淆的fixture。该4/12不是缓存拼分、不是自动语义验收或修复率，array病例不声称原报告相同错误位置。完整方法已封板进入第4批不重叠canary准备，尚无该批泛化结果；没有同版DEV30全通过、Fresh30或新版Agent修复结果。
+当前阶段：端到端修复质量仍未达目标。四批独立canary为**1/3、0/3、1/3、0/3**，负结果封存。旧DEV counterfactual曾恢复4/12（人工可观察行为审查，不是自动语义证明/修复率）。最新输入事实保真与导入归属定位已实现并冻结，新生成16Flash请求/37593tokens完成，但Docker引擎不可用导致验证无效，**不能报成0/12模型成绩**。原响应保留，新增0付费缓存回放/运行态健康门槛，等待Docker IPC可恢复修复确认。没有同版DEV30全过、Fresh30或新版Agent修复结果。
 
 ## 1. 阅读入口
 
@@ -65,7 +65,8 @@
 | 独立hybrid canary v3 | 双准入2/3；可信1/3，未达门槛 | 3Flash请求/7280tokens，负结果封存；[报告](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md) |
 | 最新旧DEV hybrid v3 | 新生成可信3/12，门槛失败 | 12Flash请求/24712tokens，未保留四条参考；[报告与下一步](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md) |
 | counterfactual旧DEV新生成 | 13Flash请求/26762tokens，Gold及人工行为审查4/12 | 保持四条参考，零调用先拒错误fixture；不是SOTA或修复率；[报告](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md) |
-| 第4批独立canary准备 | 先冻方法，排除301身份后选PVLib-1048/SymPy-20131/scikit-15535；摘要3/3一致 | 待用户直连4.05GiB；模型0调用，TEST/C5/Fresh30仍关闭 |
+| 第4批独立canary | 双准入2/3，3Flash请求5596tokens，可信0/3 | 环境失败/窗口缺失/输入dtype丢失；[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md) |
+| Faithful input旧DEV | 16Flash请求37593tokens完成；验证INFRA_INVALID | 输入/导入定位已修，原模型响应可0调用回放；[结果与恢复](research/E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md) |
 
 DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
 

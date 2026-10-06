@@ -279,3 +279,23 @@ Docker现场Server29.4.0/Dfree42.77GiB，未改配置、清镜像或操作VHD/tu
 新生成开发参考门槛通过，源码/独立完整协议先提交b42aa2e，再冻结counterfactual canary v4方法SHA88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea，Flash≤6/60000、每题2/20000、输出3000、零重试、分母3，无替补。此后只metadata-only排除旧DEV/三批canary/历史identity选新三题；不读新正文/Gold/模型、不下载大文件。下一步身份/官方小摘要→用户直连下载→准入/公开输入/预检→独立盲态；≥2/3才另冻repair。旧三批负结果、TEST/C5/Fresh30及Docker/tunnel均不改。累计本日可见usage179080（含旧SDK错误4281，非核账单），系列非无限预算。结果与局限见[E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md](E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)。
 
 本次选题完成：排除301历史身份，盐选PVLib-1048、SymPy-20131、scikit-15535；identitySHA06d55d996a2f6786d8718340d24c8debd5e8c2a566897cf55c3b24e114f3a337。选择时只读metadata，耗时单列不计模型，未重抽。官方task.yaml来源核验后，transport官方经授权7892共7请求/26342正文bytes，direct mirror manifest完全相同3/3；transportSHA da5c553c3765f64e83fa01a8751aa732da2fd697a0cfa0a63893f7e3b199ae71。压缩层总4345861461bytes≈4.047GiB；blob/pull/model0。Dfree42.2GiB，逐张下载空间守卫最大约29.52GiB；大文件交用户终端关闭VPN全局/TUN、Docker No proxy，新模块download --timeout-per-image21600显示进度/ETA/导入心跳。下载记录和原始小型metadata seal在本机.codex；Git只提交public receipt/hash/identity/method，不上传评分或密钥。新题issue/Gold未读，未来盲态尚未执行；当前外部等待为用户完成直连下载。
+
+## 2026-10-06 — 第4批完整独立实验0/3，模型3请求5596tokens
+
+用户下载后，三份loaded/official manifest/image ID核验通过；admit六项离线官方评分，PVLib Base/Gold因NumPy2不兼容旧np.Inf导入失败，另两题双准入，固定3不换题。public只物化SymPy/scikit生产输入。live freezea8a9057a03c09905ef5397f12bc8051e08b2aa682cb9980cb91388216a6b43aa，最多4现场请求/60000、reserve13472。按已列精确命令/Flash/预算一次run，3请求5596tokens、无provider失败/重试，SymPy缺Point.vel窗口弃答，scikit两probe base通过，无锁定失败；独立gold attempted0/区分0。0/3<2/3封存，source原件/result/身份/方法不回填，repair/TEST/C5/Fresh30关闭。source stateac81f7a55ed3c884397ff4d759eb0c6100be06242345c6512dd75614fdb285b2，ledger22cbe8bbf72dff98c0ba7823ef8466fa386d808feb09cb3de6262d48fdf99bd7。
+
+仅事后DEV诊断确认旧围栏投影删掉scikit公示输入.astype(object)，不是模型真的没获得足够原始issue；不得补本批后重称独立。回旧DEV用AST facts保留dtype/shape/seed/切片/声明fixture与末端调用，断言/测试/答案变量/输出行/能力块fail-closed，不执行；import/reexport/inheritance绑定生产API，源SHA/关系/depth/origin seed追踪，合成验证不导入包。old DEV九题/固定12最终3题4safe块，6无块/拒绝；Lasso原X/y/n/d恢复，自动找到继承fit（depth2）。中间audit-v1–v4原件保留，final-v5绑定模块/SHA/官方public blob metadata，无Gold输入。源码协议先提交b676837，newinput freeze00ab5ba6ccb4a3755b014191ddcb2c6aee5d989dd13b67d4825390b68b457581，18/80000上限、reserve67335、单题20000/输出3000/SDK0。
+
+## 2026-10-06 — Faithful输出已生成但Docker未运行，验证INFRA_INVALID
+
+先列精确faithful_dev run/Flash/18/80000，已授权一次生成9题16请求37593tokens，无provider失败/重试。然而原快输入只核磁盘身份未核真实daemon，Docker LinuxEngine管道不存在，control/target退出1被旧frozen executor误判重复nonsetup故障；七项Gold未应用patch。立即停止新增付费，原验证无效，**不报0/12能力成绩**。原response/state516721755853e07629e02d0980ca405b3df5d2483f576802b29e5837e399888e、ledgerb590d99136bfa8a78201bbfec41b631fc4f501030631fd46929d824f1af91307和全部日志保留，新invalid摘要另立。
+
+ordinary docker desktop start一次失败；backend日志明确旧dockerInference IPC socket无法移除（系统无法访问/语法错误），引擎退出。没有删除socket目录、改registry/WSL/VHD/镜像/代理/tunnel；已请求仅正常停止Docker、备份改名C:\Users\qq人\AppData\Local\Docker\run目录再普通启动的确认。启动/status查询可能后台挂起，不继续叠加启动/付费。当前等待系统修复范围确认，不宣称已恢复。
+
+新增未污染原freeze的container-health guard与cache-only replay适配器：require realengine/images，transportfailure立即拒绝为软件证据；同source preflight相等/绑定全部response SHA，真实API钥匙不用、新provider0，missingrole明确controller缓存缺失、不补调用。代码已实现、专项4passed，当前engine未恢复因此replay未执行，不声称模型效果。新frozen源码不改，新恢复目录单独留存。
+
+工程记录：v4 run前首全仓1126passed/1coldTimeout/4skipped，原项0.81秒独立通过后完整1127passed/4skipped/0failed（83.42秒）；新事实/locator/faithful重点35passed/Ruff/V3 ready=true；新全仓1143passed/1coldTimeout/4skipped，原项0.94秒过后完整1144passed/4skipped/0failed（181.75秒）；加health/replay后完整1148passed/4skipped/33warnings/0failed（49.54秒）。未加timeout/skip或弱化断言，首次失败保留，不拼接、不是repair rate。
+
+自10月5日可见usage179080+canary5596+Faithful37593=222269（含旧SDK错误4281，非账单核验）。没有新模型授权请求/新增付费循环，缓存可0调用恢复；Docker/镜像/本机/tunnel安全边界保留。两份roadmap与WebCodex当前首部已更新为engine恢复+零付费cache，不再按旧下载/旧run执行。
+
+收尾运行新零付费恢复preflight：ContainerInfrastructureUnavailable，真实Docker Linux Engine仍不可用；守卫在新freeze/state与任何模型调用前停止，未继续run/gold。证明当前不可运行，不产生新的复现成绩。IPC修复范围仍待用户确认。

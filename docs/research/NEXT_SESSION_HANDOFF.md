@@ -1,10 +1,33 @@
 # WebCodex 接手：E1-C evaluation_2
 
-交接日期：2026-10-05。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[一周计划](E1C2_ONE_WEEK_PLAN_2026-09-30.md)，不要按历史文档的旧“下一步”直接运行。
+交接日期：2026-10-06。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[一周计划](E1C2_ONE_WEEK_PLAN_2026-09-30.md)，不要按历史文档的旧“下一步”直接运行。
 
 ## 当前状态
 
-**最新：Counterfactual零调用机制已验证，另冻新生成恢复4/12；当前进入第4批独立canary准备。** Flash13请求/26762tokens，未重试；四参考保持、跨两仓库，但包含人工可观察行为审查，array病例不是原报告同一报错行/栈，不能称全自动语义验证。旧canary1/3、0/3、1/3和DEV v3的3/12原样封存，缓存不补新分数。[最新结果/证据](E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)、[新独立完整协议](E1C2_COUNTERFACTUAL_CANARY_V4_METHOD_2026-10-05.md)。
+**最新：四批独立canary1/3、0/3、1/3、0/3全部封存；当前硬阻塞为Docker启动IPC故障。** Faithful公开输入事实/导入归属定位已实现，原DEV16Flash请求37593tokens响应已收集，但Docker管道不可用使验证INFRA_INVALID，不是0/12模型能力结果。停止新增付费，原response/state/ledger/control/评分全部保留。[有效独立v4结果](E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md)、[DEV无效验证与缓存恢复](E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md)。
+
+## 当前唯一后续：恢复engine后0付费缓存回放
+
+普通Docker Desktop启动未恢复；日志明确旧`Docker\\run\\dockerInference` IPC socket不可访问，backend退出。用户确认尚待：仅正常停止Docker、备份改名`C:\Users\qq人\AppData\Local\Docker\run`目录、再普通启动。未触碰该目录/注册表/WSL/镜像/VHD/代理/tunnel。没有确认不可factory reset/global prune/强关全部WSL。Docker start/status查询可能后台挂起，勿再叠加启动或付费run。
+
+确认并恢复后必须先真实`docker version`含Server及九个immutable image ID全部可inspect，再在本机执行以下**零模型**命令，任一步非0即停，不自动重试provider：
+
+```powershell
+foreach ($stage in @('preflight', 'run', 'gold')) {
+    uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_faithful_infra_replay $stage
+    if ($LASTEXITCODE -ne 0) { throw "零付费回放停止于 $stage；保留原件，不自动重试。" }
+}
+```
+
+新目录faithful-input-dev-v1-infra-replay-v1；cache-only model不使用真实钥匙、不发HTTP，原usage标upstream、新provider0。原方法/输入/preflight须与源freeze相等，绑定原全部response SHA；环境transport失败立即中断，不当软件证据。没有收集的缓存角色记controller缺失、不补模型调用、不假称模型弃答。独立[协议](E1C2_FAITHFUL_INFRA_REPLAY_2026-10-06.md)。截至交接回放未执行、无有效新分数。
+
+新faithful_dev run/gold已执行（评分无效），严禁再次运行；三张v4镜像已下载、canary模型已结束，下方旧download/admit/public/run/gold均为历史。旧code/state不回填，新结果另立。原source freeze00ab5ba6ccb4a3755b014191ddcb2c6aee5d989dd13b67d4825390b68b457581，state516721755853e07629e02d0980ca405b3df5d2483f576802b29e5837e399888e，ledgerb590d99136bfa8a78201bbfec41b631fc4f501030631fd46929d824f1af91307。云端clone缺本机.codex/cache/执行器即INFRA_BLOCKED，不索取密钥、不伪造复跑或开放裸Docker端口。
+
+有效DEV改进证据与独立≥2/3仍未达，不选新canary、不启动repair/TEST/C5/Fresh30/E2。自10月5日以来可见usage222269（含旧SDK错误4281，非账单核验），当前不续付费。最后工程单次1148passed/4skipped/33warnings/0failed（49.54秒），只表示代码回归，不保证Docker健康。所有原件及四批负结果保留，集中日志唯一入口。
+
+## 以下为旧counterfactual/v4执行交接（历史，不按其“当前”操作）
+
+历史counterfactual新生成4/12、13请求26762tokens，包含人工行为审核、非原报告同一错误栈，不是修复率；当时进入第4批准备。该批现已0/3结束，不能用旧DEV成功数补入分母。
 
 新的入口为`evals.e1c_evaluation_2_counterfactual_canary_v4`；完整方法SHA`88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea`先冻，metadata-only排除301历史身份后选PVLib-1048/SymPy-20131/scikit-15535。identity SHA`06d55d996a2f6786d8718340d24c8debd5e8c2a566897cf55c3b24e114f3a337`；三张官方/mirror摘要一致，官方小metadata7请求/26342bytes，模型/blob0。公开[下载收据](../../data/e1c_evaluation_2_counterfactual_canary_v4_transport_receipt.json)。尚无该批泛化或修复结果，不能重选或改冻结依赖。
 

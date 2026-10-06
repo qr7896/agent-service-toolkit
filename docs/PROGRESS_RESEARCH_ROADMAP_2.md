@@ -1,6 +1,6 @@
 # Roadmap 2：E1-C evaluation_2 当前状态与执行顺序
 
-状态日期：2026-10-05。本页是当前执行入口；背景见 [Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，逐轮过程见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。本页不再堆叠历史“最新快照”。
+状态日期：2026-10-06。本页是当前执行入口；背景见 [Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，逐轮过程见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。本页不再堆叠历史“最新快照”。
 
 ## 1. 完成情况
 
@@ -19,7 +19,10 @@
 | 最新旧DEV hybrid v3 | 弃答STOP/路径锚点；9题新生成、12请求/24712tokens | 可信3/12（含人工审核），未保留四条参考，开发门槛失败 |
 | Counterfactual零调用 | 九条B审计：1 supported/5 unproven/3 abstain；同元素对照两次拒错fixture，缓存回放4/12 | 仅局部开发证明，target/oracle不改，非独立/非新生成成绩 |
 | Counterfactual新生成 | 原九题/固定12，13Flash请求26762tokens，Gold4 | 经人工可观察行为审查4/12，array不是原报告同一报错位置；四参考保留 |
-| 第4批独立canary | 方法先冻，排除301历史身份后选3题；官方/镜像摘要3/3一致 | PVLib-1048/SymPy-20131/scikit-15535，待用户直连4.05GiB；模型0调用 |
+| 第4批独立canary | 镜像3/3、双准入2/3；3请求5596tokens | 0/3负结果封存，不换题/重算 |
+| 输入事实保真/导入归属定位 | 公开fixture AST无assert/输出答案，3题4safe块；自动找到继承fit，关系/深度/seed/SHA可追踪 | 零调用审计与新协议已冻，不手选文件 |
+| 最新Faithful DEV | 原九题16请求37593tokens，无provider失败/重试 | 模型输出保留，但Docker管道故障使验证INFRA_INVALID；成绩未知，不报0/12 |
+| 运行态健康门槛/0付费回放 | engine/image真实检查、transport失败不作软件证据；cache-only/no真实钥匙/缺角色单列 | 新代码与回归通过；Docker socket恢复待确认，回放未执行 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 
@@ -27,9 +30,11 @@
 
 ## 2. 当前瓶颈与最新入口
 
-**当前下一步是第4批独立canary的基础设施准备，不是重跑旧批。** Counterfactual机制已在合成/旧DEV零调用证明：对照必须保留同一literal元素/长度，派生对照不满足生产约束则STOP，target与oracle不改，5条unproven不假装已证明。缓存4/12只做开发证据；另冻一次新生成实际4/12（人工可观察行为审查），13请求26762tokens，比DEV v3增加2050tokens，不称省费/SOTA。四参考已保持，所以可先冻完整新方法后选不重叠canary。详见[新实验/限制](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md)与[第4批完整协议](research/E1C2_COUNTERFACTUAL_CANARY_V4_METHOD_2026-10-05.md)。
+**当前硬阻塞是Docker引擎，不是额度或需要再调用模型。** 第4批盲canary 0/3已封存，暴露投影删除dtype/构造信息与末端API窗口遗漏。已回旧DEV实现公开输入事实通道与import/reexport/inheritance定位；原冻结代码不改。新Faithful九题模型16请求37593tokens完成，但引擎管道不可用被旧执行器误记重复失败，Gold未应用，验证INFRA_INVALID。原响应可0付费回放，当前停止新增付费；不报0/12能力失败。[事实/定位研究与invalid结果](research/E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md)、[恢复协议](research/E1C2_FAITHFUL_INFRA_REPLAY_2026-10-06.md)。
 
-Counterfactual-canary-v4 method SHA`88df1067d0770a74ebe6d72d7eee74b78c3135defd1659b97c7b444c5fbd21ea`；排除301历史身份后选PVLib-1048/SymPy-20131/scikit-15535，identity SHA`06d55d996a2f6786d8718340d24c8debd5e8c2a566897cf55c3b24e114f3a337`。三镜像官方/直连mirror完全一致，官方仅7请求/26342正文bytes经7892，blob/model均0，issue/Gold未读。压缩总4.047GiB，用户按[交接页新命令](research/NEXT_SESSION_HANDOFF.md)直连下载，随后双准入/公开输入/live freeze。Flash≤6/60000tokens、单题2/20000、输出3000、零重试，未来独立门槛仍未过。
+普通docker desktop start未恢复，日志确认旧`Docker\\run\\dockerInference` IPC socket不可移除致backend退出。已请求仅正常停止Docker、备份改名IPC run目录再启动的确认；未动socket目录/注册表/WSL/镜像/VHD/代理/tunnel。获准恢复后先查真实server及9个image ID，按新cache-only入口preflight/run/gold，同方法/输入/原response SHA不变，新provider=0；缺缓存角色不补调用、不计模型弃答。原错误state和所有日志不回填。工程最终单次1148passed/4skipped/0failed（49.54秒），只算代码回归，不证明Docker运行态健康。
+
+第4批method/identity/transport原件与最早0调用receipt保持，当前由[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md)补充执行状态：PVLib环境兼容失败，SymPy缺关键窗口而弃答，scikit两个probe base通过。方法/样本不重抽，不能在本批补规则重报独立。下载/admit/public/run/gold旧命令不再运行，TEST/C5/Fresh30继续关闭。
 
 canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b86ba70f7cf9c7fd9add3a123c682202afb73d401ade4cb15b3c2bc7a44`未变。用户完成下载；Flask/SymPy双准入、PyVista Base没有明确目标失败记录，保留分母。两题模型共3请求7280tokens；Flask候选行为偏离且Gold不区分，SymPy经审核可信，最终1/3。见[完整结果](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md)。不得换题/在已看身份调参后重称独立；repair、sealed TEST/C5/Fresh30继续关闭，冻结协议和下载收据作为历史保留。
 
@@ -62,7 +67,8 @@ canary v3保留身份Flask-5063、PyVista-4226、SymPy-17150，方法SHA`978a0b8
 | 2 | 正对照/生产覆盖已开发 | API/类/traceback统一选择、生产AST/真实import证明，合成与旧DEV回归 | 定位覆盖不等于语义正确 |
 | 3 | DEV研究与完整回归已记录 | 新counterfactual生成4/12；最新全仓1127passed/4skipped/0failed | 语义包含人工审查，工程通过不算repair |
 | 4 | Counterfactual局部机制已实现 | 1case literal类型对照、生产guard来源、两次控制验证；四参考保持 | 5条unproven保留，未宣称通用语义证明 |
-| 4b | 第4批独立确认准备 | 先完整冻结后metadata盐选新任务→用户下载→双准入→盲态一次≥2/3 | v1/v2/v3均不得复用；失败封存，不补规则重称独立 |
+| 4b | 先恢复Docker并0付费重放DEV缓存 | 新engine/image/transport健康门槛＋同输入/代码SHA，缺缓存角色单列 | 不自动provider重试/补调用，不把旧错误评分作能力结果 |
+| 4c | 新独立确认（尚不启动） | 有有效DEV改进证据后完整冻结新方法，再选与四批旧canary不重叠身份 | ≥2/3才另冻repair；失败封存，Fresh30关闭 |
 | 5 | 新修复配对小实验 | 同模型/预算 baseline/treatment，独立 official grade | 无净收益不扩批 |
 | 6 | 同版旧 DEV30 | 单一冻结身份、30 行，目标 30/30 resolved | 保留失败分布，Fresh30 关闭 |
 | 7 | Fresh30 one-shot | 门槛真过后先选新身份、再读内容、一次运行 | 如实报告，不回调规则 |
