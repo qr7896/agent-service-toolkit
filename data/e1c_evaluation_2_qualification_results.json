@@ -1,0 +1,208 @@
+{
+  "schema": "e1c2-bounded-qualification-calibration-results-v1",
+  "date": "2026-10-07",
+  "new_provider_calls": 0,
+  "new_provider_tokens": 0,
+  "Gold_read": false,
+  "machine_trusted": 0,
+  "old_paid_scores_not_changed": true,
+  "calibration_is_static_packets_not_new_runtime_reproduction": true,
+  "v1_rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "status": "mechanism_supported_candidate",
+      "rejected": [],
+      "unknown": [],
+      "exception_correspondence": true,
+      "public_constraints": [],
+      "result_sha256": "d648cdd16e408846862a6cf1db457841f39a2fe8abecefea1fd83b1a85807f0e"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "status": "rejected",
+      "rejected": [
+        "production_binding_source_unverified"
+      ],
+      "unknown": [],
+      "exception_correspondence": false,
+      "public_constraints": [],
+      "result_sha256": "369c7862ab4e208a2db7034daa9d0fc029f39d849371217dc12fb4b1143ceff7"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "status": "rejected",
+      "rejected": [
+        "production_binding_source_unverified"
+      ],
+      "unknown": [
+        "public_fixture_constraint_unproven",
+        "target_production_dependency_unproven"
+      ],
+      "exception_correspondence": true,
+      "public_constraints": [
+        {
+          "name": "Foo",
+          "kind": "fixture_class",
+          "status": "unknown_public_reference_scope"
+        },
+        {
+          "name": "foo_schema",
+          "kind": "fixture_binding",
+          "status": "matches_public_structure"
+        },
+        {
+          "name": "a_date_with_z",
+          "kind": "fixture_binding",
+          "status": "matches_public_structure"
+        }
+      ],
+      "result_sha256": "16004999583336ac976bfbc42c8f4d54e934f162c430e8c2678df73f43f60513"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "status": "mechanism_supported_candidate",
+      "rejected": [],
+      "unknown": [],
+      "exception_correspondence": true,
+      "public_constraints": [
+        {
+          "name": "MySchema",
+          "kind": "fixture_class",
+          "status": "matches_public_structure"
+        },
+        {
+          "name": "s",
+          "kind": "fixture_binding",
+          "status": "matches_public_structure"
+        }
+      ],
+      "result_sha256": "fa2d08cb73b34e056789bab9af4539e4612cb7816b032d78e4103c0735725e3e"
+    }
+  ],
+  "v2_rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "status": "mechanism_supported_candidate",
+      "rejected": [],
+      "unknown": [],
+      "unexposed_bindings": [],
+      "result_sha256": "dc4fd2d38fd81888edc2a76b3f60944314f14b27b8b11a565947a04bac3f0ed0"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "status": "unknown",
+      "rejected": [],
+      "unknown": [
+        "unexposed_dependency_source_provenance_unknown"
+      ],
+      "unexposed_bindings": [
+        {
+          "module": "sklearn.tree",
+          "symbol": "DecisionTreeClassifier",
+          "path": "sklearn/tree/_classes.py"
+        }
+      ],
+      "result_sha256": "1433b331b97f0a15f01f3c6a924df64bf5d53b8f52078012f0e084de82293c6e"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "status": "unknown",
+      "rejected": [],
+      "unknown": [
+        "public_fixture_constraint_unproven",
+        "target_production_dependency_unproven",
+        "unexposed_dependency_source_provenance_unknown"
+      ],
+      "unexposed_bindings": [
+        {
+          "module": "marshmallow",
+          "symbol": "Schema",
+          "path": "src/marshmallow/schema.py"
+        }
+      ],
+      "result_sha256": "ff2e6aa05bb20571b00cb093bf5c2aa25522cf4a015e4a1162da13d2cf8b1cf1"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "status": "mechanism_supported_candidate",
+      "rejected": [],
+      "unknown": [],
+      "unexposed_bindings": [],
+      "result_sha256": "c2301a397550b683301f19b8a9e0735ca5448468544de7eda2e330bbd63dd6c6"
+    }
+  ],
+  "v1_in_memory_alias_counterexamples": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "kind": "in_memory_alias_shadow_same_observation",
+      "rejected": true
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "kind": "in_memory_alias_shadow_same_observation",
+      "rejected": true
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "kind": "in_memory_alias_shadow_same_observation",
+      "rejected": true
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "kind": "in_memory_alias_shadow_same_observation",
+      "rejected": true
+    }
+  ],
+  "additional_source_authority_rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "path": "sklearn/tree/_classes.py",
+      "exposed_before": false,
+      "host_bytes_sha256": "2232bbad51b2e0381ede2fef3499914061c3c13b1ad75d2740609133319c07ec",
+      "effective_LF_sha256": "2232bbad51b2e0381ede2fef3499914061c3c13b1ad75d2740609133319c07ec",
+      "canonical_base_blob_sha256": "2232bbad51b2e0381ede2fef3499914061c3c13b1ad75d2740609133319c07ec",
+      "matches_canonical_after_CRLF_projection": true,
+      "base_commit": "8521819eecbacb93deb87fce28842680ab1a5301",
+      "qualification_not_rewritten": true,
+      "runtime_source_identity": {
+        "live_sha256": "2232bbad51b2e0381ede2fef3499914061c3c13b1ad75d2740609133319c07ec",
+        "canonical_git_sha256": "2232bbad51b2e0381ede2fef3499914061c3c13b1ad75d2740609133319c07ec",
+        "live_equals_git_blob": true
+      },
+      "immutable_image": "sha256:d8912e205700e88812f62dc16f67694a5101da4865890ee8f0da4b3673fce7ec",
+      "no_model_or_qualification_results_rewritten": true
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "path": "src/marshmallow/schema.py",
+      "exposed_before": false,
+      "host_bytes_sha256": "ecbc061c2d30b64eb9318f3b1b86ed3f2355006aaeceead5ebdd89d758460775",
+      "effective_LF_sha256": "16cb98e9fbc9ef785d1797a72be1bc7cafe796568e97c59d366376964d57c971",
+      "canonical_base_blob_sha256": "16cb98e9fbc9ef785d1797a72be1bc7cafe796568e97c59d366376964d57c971",
+      "matches_canonical_after_CRLF_projection": true,
+      "base_commit": "b063a103ae5222a5953cd7453a1eb0d161dc5b52",
+      "qualification_not_rewritten": true,
+      "runtime_source_identity": {
+        "live_sha256": "16cb98e9fbc9ef785d1797a72be1bc7cafe796568e97c59d366376964d57c971",
+        "canonical_git_sha256": "16cb98e9fbc9ef785d1797a72be1bc7cafe796568e97c59d366376964d57c971",
+        "live_equals_git_blob": true
+      },
+      "immutable_image": "sha256:3b9a967a6152c6e44cf542323e2a8e13b4bbf18944091271093525f4a7343ff6",
+      "no_model_or_qualification_results_rewritten": true
+    }
+  ],
+  "additional_authority_not_integrated_into_qualification": true,
+  "source_records": {
+    "qualification-zero-v1": "ff5a4a900930c4f95a81aa66c6e7ca58e3a7a2b38f4c0368376bfa8d80014457",
+    "qualification-zero-v2": "eaedfdaf500ca034d4cac6e12987cc957d7ab1ac3025d4fef0efc220ba9f1b65",
+    "qualification-source-authority-zero-v1": "edb13e9824ecede9287c54e8925b02b40bb333e6833d27869da8766a6a05d08c",
+    "qualification-source-authority-zero-v2": "fee7cf8b5095d1a6d667e06a68a5a238d33cc9d150fd11aaa2468b92dfa3d38b"
+  },
+  "source_freeze_sha256": "5997675327f8f246b179413f0c2df5efd2b66fd2edacc2f6db430796588ea86f",
+  "qualification_module_sha256": "01bd2410d41da58180e405873eb2fef81b15b0afa25658bafc6472cfb6edf844",
+  "qualification_v2_module_sha256": "e324fad50e269cccc784dbd28cdeb8b375aec5ea99530e3468e8f45d53a06987",
+  "final_regression_xml_sha256": "821bca87605141ccf253f67fb5a5aaa2a9c7d7bd2ff8c219992bd793dfa0bfb3",
+  "canary_opened": false,
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false
+}

@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**公共报告锚版Gold4/4、异常或缺失keyword对应3/4；machine trusted0，E1-C未封板。** 实际6 Flash请求21,400tokens、retry0；公开A/B正常-目标对照真正执行，期待引用prose锚并明确推断来源。producer seal后独立Gold attempted4/区分4，不是完整DEV/独立/Agent修复。[逐项结果与严格边界](research/E1C2_REPORT_ANCHOR_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_report_anchor_results.json)。
+**受限资格v2：2项mechanism_supported_candidate、2项unknown，machine trusted0，E1-C未封板。** 本轮模型调用/tokens0/0，Gold读取0；旧Gold4/4、异常对应3/4不改，不是新生成/独立/修复成绩。[本轮校准与严格scope](research/E1C2_QUALIFICATION_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_qualification_results.json)。
 
-新例外观察器只记真实builtin异常匹配摘要/公开缺失参数，未认语义资格。v1因CRLF/LF SHA差异在probe前停止，负记录保留；v2验证原副本摘要、LF投影和容器文件/Git canonical blob，不改原源码，并保持缺dateutil环境。另项仅API行为差异，原报guard机制未证。最终1436 passed/4 skipped/33warnings（104.66秒），Ruff/预算V3/compact preflight过，工程数非修复率，当前无下载需求。
+四缓存逐项审及四个内存alias反例完成，17单测覆盖错误输入/shape、影射、对象改写、未知状态、源码/另一probe等。v1将辅助依赖未暴露误当源码变化，原误拒保留；v2正确标unknown，真SHA不一致仍拒。两个辅助依赖已只读确认host LF/Git base/runtime同摘要，但尚未并入资格、未改变模型输入或结果。最终1453 passed/4 skipped/33warnings（102.31秒），Ruff/预算V3/compact preflight过，非repair rate。无下载需求。
 
 ## 1. 已完成与尚未完成
 
@@ -24,13 +24,15 @@
 | 公开normal零费feasibility | 自动派生1程序、4次normal通过、Gold读取0 | 不是模型输出，未接live，不拼分 |
 | 公共报告锚新版本 | 新假设口径下Gold4/4，真实A/B输入表达式/source绑定 | 前版3/4不回填，不是严格前版过关 |
 | 真实异常观察与双source身份 | v1失败保留，v2观察3/4对应；CRLF/LF原副本/有效文件/Git blob核对 | 不等于语义证书或抵抗恶意程序的attestation |
+| 新受限资格校准 | v2两机制支持候选/两unknown；四静态alias反例拒绝 | 非新运行时实验，不自动认证 |
+| 辅助依赖authority | 两处host LF/base blob/runtime一致，只读核验 | 未并入资格，不回填unknown |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
-公共比较/回归报告现在可以支持明确标记的call_completes假设，错误trace/code期待仍拒。期待原始prose引用、Source-import绑定、normal两过、target重复失败和Gold区分均已有记录；不能再只加提示或原地采样。
+检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-剩余是**受限语义资格与校准**：公开输入约束是否满足、真实调用是否符合接口义务、实际异常对应哪个报告机制。新observer三个任务有真实事件对应，另一项在参数校验失败而非原报guard，须分别标API兼容行为与原故障机制。任何source帧/同消息/Gold组合不自动trusted；必须验wrong fixture、影射、生产对象被改、shape/输入约束偏离、环境/源变化等反例，校准后再冻结证书scope。
+两项unknown已定位：DecisionTreeClassifier与Schema的辅助源不在原model窗口；DateTime/Foo/Schema公共示例还省略import来源。额外生产源的host/Git/runtime字节身份已核验，下一版须显式接入authority，不假称原模型看过；省略public import的范围推断或unknown须另定协议，不能凭同名类推断原文承诺。
 
 ## 3. 严格验收定义
 
@@ -44,15 +46,15 @@
 
 | 顺序 | 下一步 | 放行证据 | 未过时 |
 |---|---|---|---|
-| 1 | 零模型语义资格scope与反例 | 输入约束/production调用/期待来源/真实异常分别有依据；unknown不晋升 | 不把3/4对应叫可信 |
-| 2 | 跨repo校准与观察器身份/环境验收 | wrong fixture/alias shadow/对象修改/shape偏离/同消息误用/源码与环境变化反例 | 不因Gold自动认证 |
-| 3 | 完整method含observer/双source身份freeze | classifier定义、支持与不支持边界、源码/输入/预算先冻 | 不改旧namespace |
-| 4 | 同版四参考/九准入DEV与有限native | Gold、受限行为资格、原报机制分账，保留固定12 | 不把screen4报全12 |
-| 5 | 新不重叠canary一次 | 全历史排除，方法先冻后选；可信≥2/3且行为一致 | 负结果封存回DEV |
-| 6 | Agent patch/独立official grade | 小型baseline/treatment同预算修复证据 | 无收益不扩批 |
-| 7 | 同版旧DEV30→另授权Fresh30 one-shot→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
+| 1 | authority接入另版辅助源校验 | 原host摘要/LF/base Git/runtime均绑定，wrong base/digest/path反例 | 不改旧model窗口或结果 |
+| 2 | public import省略的范围协议 | 有限显式推断或unknown，不凭同名认完整namespace | 不自动trusted |
+| 3 | 跨repo正负例→完整method freeze | 资格scope/classifier/observer/双source身份与输入/预算先冻 | 不继续paid调提示 |
+| 4 | 同版四参考/九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | screen不报全12 |
+| 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
+| 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
+| 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-每个新paid实验先列精确命令/Flash/次数/≤100,000tokens，不Pro/retry。report-anchor-reference-dev-v1、exception-observation-zero-v1/v2及所有已started的run/smoke/audit/Gold禁止重跑、改旧source/预算/账本。本轮不再paid扩批；语义资格未认证，不抽第6canary、TEST/Fresh30/repair/E2不打开。当前无新live/canary命令待执行。
+下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮provider0；资格v1/v2与authority各namespace以及所有已started的run/smoke/Gold/audit禁止重跑或改源/预算/账本。当前无新live/canary命令，不抽第6批，不开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 

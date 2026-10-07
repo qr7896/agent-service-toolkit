@@ -955,3 +955,18 @@ uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_
 公开data/e1c_evaluation_2_report_anchor_results.json绑定producer/Gold/真实锚-binding-grounding/zero-v1失败/zero-v2各观察与identity projection/两observer源/readonly byte audit/XML；本轮21,400，自10月5日起可见777,229非账单核验/非整项目总账。raw/probe/Gold/test/key不上传。下一步停止paid调提示，先零费合并公开输入约束/production call及alias/期待来源/真实异常，定义支持证书scope与unknown，校准wrong fixture/alias shadow/生产对象改写/shape参数偏离/只API兼容未达原机制/源码环境变化跨repo反例，再完整method含observer双身份冻结/同版四参考九准入native/全历史排除独立canary≥2/3/Agent patch official/旧DEV30/最后新任务。语义未认证，不抽第6canary、不开TEST/C5/Fresh30/private Test500/repair/E2，不保证完美/一周30题。
 
 两Roadmap/Web handoff当前入口更新为新结果、旧负记录和备份全保留，日志只集中续档。本轮未下载删除/启动重启Docker/IPC/VHD/registry/proxy/tunnel/key改变；readonly诊断及普通隔离containers不等于修系统/改源。当前无下载需求，Cloud可接source/zero tests，缺本机private evidence/source/images/runtime报INFRA_BLOCKED，不扩old bridge白名单或假称新paid云端端到端已验。只安全源码/协议/测试/脱敏摘要同步Git。
+
+
+## 2026-10-07：零付费受限资格校准、反例与未暴露依赖authority
+
+本轮完整读research/ponytail执行/监控规范，无subagent/依赖新增、provider/tokens0/0、Gold读取0，不重跑任何paid/smoke/observer。新增qualification组合assertion-free公共fixture绑定/class结构、from-import规范化、alias/生产对象修改、dynamic能力、生产依赖source SHA、精确公开锚、observer与原probe绑定、normal/target重复门槛。known bool/int严格JSON类型不混同；遗漏public import不推断成完整namespace、不错误当改值；实例/容器修改、custom行为/控制流、缺constraints/来源皆unknown。所有结果semantic/trusted false，受限候选不包装通用证书/独立/repair，已知约束库存不等于全部公共约束。
+
+13专项及预算V3重点/Ruff过，两旧完整回归分别1449passed/4skipped（114.42秒）、规定compact preflight ready=true；对报告锚四候选原seal/input/observer sourceFreeze与candidate核对，全四零费缓存审计，不Gold挑。v1两机制候选、两因辅助production source未在暴露窗口误拒，原freeze/module/result留存；四样本各做一个内存alias-shadow信息包反例均拒，不称四新runtime故障。新增v2另source/namespace，缺暴露依赖source证据分unknown而非sha变化，真正已暴露source变更仍拒，增量赋值/删除/NamedExpr等不宣称公共binding保存。四新专项/全部17资格单测/Ruff过，最终完整1453passed/4skipped/33warnings/0failed（102.31秒），无assertion/timeout/skip弱化。
+
+v2实际四缓存：SK13496、MM1359为mechanism_supported_candidate；SK26289 unknown unexposed DecisionTreeClassifier(_classes.py)，MM1252 unknown unexposed Schema(schema.py)+public Foo/Schema/DateTime没有import范围。没有rejected、machine0，不叫可信2/4。原Gold4/4、异常对应3/4、所有负记录均不变。依赖源可由同一public from-import解析器自动找到，但未暴露不等于corruption；不手选文件/造期待/改输入。
+
+进一步zero readonly authority：先核对两个原host未改副本LF投影与exact-base Git blob，随后同immutable image net-none/read-only/pull-never、Git safe.directory仅container env的普通诊断查询runtime文件与canonical blob，两处均匹配。第一条本机Python命令因引号SyntaxError在任何Docker执行/输出产物之前失败，修正调用转义后只执行一次有效诊断，不provider retry/不篡改实验记录。authority两个独立namespace留存，model inputs/window/资格结果不改，authority尚未接v2，不把unknown回填成PASS。
+
+公开data/e1c_evaluation_2_qualification_results.json绑定v1/v2、反例、authority、两资格源码、XML、原producer seal；private raw/probe/Gold/test/key不上Git。下一步另版接已核验authority并验wrong base/digest/path，定义public import省略的有限范围推断/unknown，再跨repo反例、method含资格/observer/双source身份完整freeze、同版四参考/九准入native；可信gate真过才全历史排除独立canary≥2/3、Agent patch/official、旧DEV30及最后新任务。当前不paid调提示、不抽第6批、不打开TEST/C5/Fresh30/private Test500/repair/E2、不承诺一周完美或30题全过。
+
+两Roadmap/Web handoff维护唯一当前入口，所有旧source/预算/response/state/ledger/seal/备份保留；日志只集中续档。无新下载删除/启动重启Docker/IPC/VHD/registry/proxy/tunnel/key更改，当前无下载需求；普通只读诊断containers不是机器修复或本机配置修改。Cloud可接source/zero tests，缺本机private material/source/images/runtime报INFRA_BLOCKED，旧bridge白名单不扩，不假称新paid已云端端到端验证，仅安全源码/测试/脱敏摘要同步Git。
