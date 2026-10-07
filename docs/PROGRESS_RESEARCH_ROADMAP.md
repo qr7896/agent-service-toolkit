@@ -6,6 +6,8 @@
 
 **当前主线：受限运行反馈闭环已真实试验，质量仍未达标。** 10月7日三次旧DEV三仓库screen共29次Flash请求/70977tokens、无provider重试；v1格式拒绝、v3重复检索停、v4进入真实probe/反馈但无合格候选。独立grader均attempted0，未产生新的可信复现或Agent补丁。本轮停止付费扩批，先零调用验证setup/故障前沿、预算信息压缩和受限生成fixture能力。Docker已按本轮明确授权仅备份两个IPC目录恢复，DEV12全12核验；没有新下载/删除。[本轮真实结果与下一步](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。工程1243passed/4skipped不是repair rate；TEST/Fresh30/E2继续关闭。
 
+最新零调用推进：[合同恢复与runtime定位结果](research/E1C2_CONTRACT_RECOVERY_RESULTS_2026-10-07.md)。同三题第一份旧响应，比较语法/构造前沿＋生产格式正常对照恢复2个候选/Gold区分2，**是缓存开发证据，不是新生成或独立2/3**。生成-only pytest组件实际观察到报告位置差异，并自动取得生产源码窗口，无人工选文件；组件fixture是人工写的合成用例、尚未接Agent，不计第三条成绩。新增provider/tokens0，旧所有negative不改，下一步另版统一编译/typed fixture接口，再真实同版旧DEV验证。
+
 10月6日及之前封存：五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果不改；旧DEV新生成V2 Gold3/12、零付费兼容回放3/12、再新生成V4 Gold2/12，共26请求72578tokens、未保四参考。V4 A5/5返回source修复了输出回显，但未证明复现质量提升。15个历史canary镜像缓存已按允许移除，全部记录/源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果，历史本机bridge健康不等于Web端到端已验证。
 
 最新增量：[A fallback 零调用有效性审计](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md)完成：原五份 A 中拦住一份无效维度对照、一份常量断言，三份仍 unknown；模型/Gold读取均0，未改 V4 得分。已证明局部拒错机制，尚未证明跨仓库正对照或接入新 live；下一步先完成这些验收，不立即抽新 canary。

@@ -4,6 +4,10 @@
 
 **当前唯一下一步：闭环真实negative之后的零调用根因验证，不再付费扩批。** 新v1/v3/v4旧DEV三仓库screen均完成并seal，共29请求70977tokens、无provider失败/重试；v1格式拒绝，v3重复query停，v4已消费真实执行反馈但未产合格候选。v2仅零调用未paid。grader均attempted0、无Gold执行，机器trusted0，不是Agent修复失败率。本轮先验证trace→生成AST的setup/故障前沿、不丢issue义务的预算压缩及受限生成fixture能力；详见[逐项结果/验收待办](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。所有已开始smoke/preflight/run/gold禁止重跑；完整旧DEV/四参考、独立canary/repair/TEST/Fresh30/E2门槛不开放。
 
+**上述零调用根因验证已有实际结果：** 旧三题第一probe合同恢复v1 Gold1，增加production strptime正常对照v2 Gold2/3（缓存screen，不是新生成/独立score），machine trusted0；pytest旧English CLI仍拒绝。另立生成-only skip组件＋自有report定位器，实际自动到skipping.py:239生产窗口，fixture为synthetic不计研究score；旧native guard不解除、尚未接Agent。重叠窗口无损压缩实际reserve只省6，未解budget、不接live。[最新已做/未做清单](research/E1C2_CONTRACT_RECOVERY_RESULTS_2026-10-07.md)。下一步统一新DEV编译/typed generated-fixture接口后再冻真实旧DEV方法与预算；不直接抽canary或付费重跑旧入口。
+
+本次零调用后的最终工程单次1292passed/4skipped/33warnings/0failed（61.87秒），Ruff/规定预算V3重点18/原V3 preflight均通过；旧paid SHA不变，累计可见usage375466不增。source-format正常对照不证明时区语义等价；native实际组件只支持一类生成skip用例，不能包装成第三条研究成绩或通用harness。
+
 环境与工程：授权正常stop确认后台退出，仅两个IPC目录备份（20261007-081928），普通start成功；engine/全12immutable镜像核验。各namespace真实合成smoke两仓库controls2/2通过、反馈消费、通过target不计bug，不能当任务score。最新完整1243passed/4skipped/33warnings/0failed（56.86秒）、重点50passed/Ruff、规定V3 preflight ready=true。准备时blocked→恢复→冻结/运行的全过程在集中日志；[v1](../data/e1c_evaluation_2_bounded_runtime_v1_result.json)/[v3](../data/e1c_evaluation_2_bounded_runtime_v3_result.json)/[v4](../data/e1c_evaluation_2_bounded_runtime_v4_result.json)绑定原SHA。旧“待启动/未冻结”收据均历史，不当作命令许可。
 
 ## 1. 完成情况
@@ -33,6 +37,7 @@
 | 资源清理与当前engine阻塞 | 15个封板canary本地镜像移除，DEV12全12与源码/记录保留 | 清理后engine曾核验健康；后发现已停止，普通重启旧IPC失败，不推断清理造成停机 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 受限运行反馈闭环 | 两仓库真合成smoke/格式/实际历史接线；三次screen共29请求70977tokens，v4实际执行控制反馈 | 0选定候选、grader attempted0；negative封存，停本轮paid扩批，继续零调用根因验证 |
+| 零调用合同恢复/定位 | 同三题第一probe：v1候选/Gold1，source-format v2候选/Gold2；生成-only skip组件与report→生产window实际运行 | cached screen2/3、非新生成/非独立/非repair；原pytest合同仍invalid，native Agent接口尚未完成 |
 | A fallback 前置有效性零调用审计 | 原九题/五A：一份同元素对照两次失败、一份constant assert拒绝、三份unknown；模型/Gold读取0 | 局部拒错实证，未接live/不产生新可信数；[结果](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md) |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 

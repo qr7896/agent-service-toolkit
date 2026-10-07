@@ -2,6 +2,16 @@
 
 交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新闭环真实结果与待办](E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
 
+## 最新接手增量：零费恢复2条缓存、生成式runtime定位组件已验
+
+先读[本轮新结果/接口待办](E1C2_CONTRACT_RECOVERY_RESULTS_2026-10-07.md)。`contract_recovery`统一Compare字段语法＋已有源码构造前沿，`source_format_control`从selected production strptime静态格式导出正常control，不手修target/日期/预期；同三个旧任务第一probe、无best-of，zero v1 Gold1、zero v2 Gold2/3，provider0，机器trusted仍0。这是缓存开发结果，绝不当新生成或独立canary。
+
+`generated_skip_harness`可信driver仅运行自生成/tmp一个unconditional skip/Pass，禁止外路径/插件/config/注入fixture、noconftest+禁止autoload；没有解除旧native guard、没有model safe_static_check伪证。真实base CLI正常定位生成文件:3、runxfail定位生产skipping:239，`runtime_location_evidence`按受绑定自有report自动归一化并取得源窗，不人工选择文件。fixture是开发者synthetic，不计第三题模型成功。原pytest两个quote已核验均来自投影issue，但自然语言CLI尚无machine-readable执行协议，不能回填为新native研究合同。组件还未接Agent/tunnel，能力有限不是通用pytester。
+
+下一步：另立统一DEV runner接编译器/provenance；native动作必须明示machine-readable case_source/flags和有效issue/expected quote，不自动翻译旧English CLI、不允许默认收集原tests/conftest；接口与独立评分身份必须先冻、未知/注入拒绝。零调用门槛过后另冻新Flash同版旧DEV方法/预算，先列精确命令，再验证四参考与完整旧DEV；开发有收益才不重叠canary≥2/3，再Agent repair。2/3缓存和合成不能跳这些gate。原所有付费/zero/smoke/gold已开始入口不重跑或回填。
+
+`lossless_context`重叠source往返无损，但实际10700→10694只省6、仍不够10087，保留negative不接live。新增模型/tokens0、累计可见375466不增；Docker/VHD/registry/代理/tunnel/key/IPC备份不动、无新下载/删除。以下之前negative与当时“下一步”作为历史保留，当前以本节顺序为准。
+
 ## 现在的接手任务：受限运行反馈闭环，不再继续静态提示微调
 
 生产retrieve/read→七字段正控制→两次control后target→自生成trace反馈→4轮修订、oracle锁定和真实上一action/observation接线已实际运行。v1 12请求24976tokens格式拒绝；v2仅零调用；v3 6请求13341tokens重复query停止；v4 11请求32660tokens进入probe反馈但无合格候选。三批共29请求70977tokens、无provider失败/重试，独立grader均attempted0、机器trusted0。所有smoke/preflight/run/gold已开始入口禁止重跑，绝不补旧账本或改method/response/state/freeze。只借鉴成熟Agent思想，未安装原框架/完整debugger/Agent patch。
