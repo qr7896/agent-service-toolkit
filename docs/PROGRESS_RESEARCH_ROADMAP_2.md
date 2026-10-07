@@ -4,6 +4,12 @@
 
 ## 0. 当前执行状态与唯一待办
 
+**最新：API obligation新生成Gold3/4，类型观测接线新生成2/4；四参考gate仍未通过。** 两批各8请求、28363/28428tokens，本轮合计16/56791，provider失败/retry0、machine trusted0。同四旧DEV/原12九准入分账，不best-of，不算完整DEV/修复。[最新结果/止损顺序](research/E1C2_API_OBLIGATION_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_api_obligation_results.json)。结构入口门槛恢复SK13496，source-bound zero observer证实实际list（非numpy）而不输出值；准确观测没有自动提高复现率。
+
+唯一下一步：保留API obligation版3/4作为开发比较基线，类型组件只作diagnostic；先零费统一“缺期待不可捏造/缺类型可显式source-consistent hypothesis”的单一政策与facts/hypothesis/unknown三层，以及跨repo有效normal control/target保真证据。不得把假设叫原报事实，不手修array/date/expected、不层层追加提示或增加budget；零费/完整freeze后才小DEV一次新生成。四参考/忠实性/cross-repo gate未过不扩九题/第6canary，后续native DTO/确定性证书与独立评分仍待做，TEST/C5/Fresh30/private Test500/repair/E2不打开。
+
+最终工程1372passed/4skipped/33warnings/0failed（92.73秒），Ruff/规定budget V3重点/compact preflight ready=true；可见累计669477非账单核验，旧任何freeze/state/ledger/response/audit不修改或重跑。本轮无Docker重启/IPC/镜像下载删除/改VHD/registry/proxy/tunnel/key。以下“当前最新/下一步”均本日更早封存阶段，以本段为准。
+
 **当前最新：Docker已恢复；执行前沿cache3/4，但新生成仍Gold2/4，独立质量gate未过。** 本轮按明确授权仅两个IPC备份（20261007-144329）并启动一次，原DEV12全12现场核验。zero-frontier run/seal/gold已完成，模型新增0/缺cache不补；另冻同四参考Flash新生成12请求40135tokens，MM1359恢复，两个SK弃答、机器trusted0，不best-of。[当前完整结果/下一步](research/E1C2_FRONTIER_LIVE_DEV_RESULTS_2026-10-07.md)、[新生成收据](../data/e1c_evaluation_2_frontier_live_dev_result.json)、[zero收据](../data/e1c_evaluation_2_runtime_frontier_zero_result.json)。
 
 唯一下一步转为**public API义务→实际入口/调用方式绑定、原文事实与输入类型假设分账、模型“已修复/无法复现”结论的源谓词核对**，先旧cache/跨repo合成零费，不继续paid扩批/提示微调。源码guard审计自动匹配SK26289的`_export.py:1040`且已可见，不能再误说缺源码或源码已修好，也不盲目接14重复windows。新method/预算/输入/代码freeze后才一次四参考，全部reference/忠实性/cross-repo gate后完整DEV，再新独立canary≥2/3/Agent patch/official评分/新任务；TEST/C5/Fresh30/private Test500/E2仍关闭。

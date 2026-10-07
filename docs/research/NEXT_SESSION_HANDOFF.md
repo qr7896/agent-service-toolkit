@@ -2,6 +2,16 @@
 
 交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新闭环真实结果与待办](E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
 
+## 当前唯一接手：API obligation真实3/4、类型观测真实2/4；先一致hypothesis政策零费，不再paid扩批
+
+先读[最新完整结果/第4节止损](E1C2_API_OBLIGATION_RESULTS_2026-10-07.md)、[机器收据](../../data/e1c_evaluation_2_api_obligation_results.json)。两个新namespace obligation-runtime-reference-dev-v1与observed-type-reference-dev-v1均smoke/freeze/run/seal/gold完成：各8calls28363/28428，Gold3/4与2/4、machine0，不能拼4/4或当完整DEV/独立/repair；本轮56791，累计可见669477非账单核验。所有已开始入口/方法/预算/响应/state/ledger/audit不重跑或改写。
+
+有限明确constructor参数prose→production alias/class/signature/源SHA→直接keyword目标，拒绝属性赋值/workaround/影子/死函数/动态kwargs/错qualified模块，保留旧正确目标；它是grammar-limited syntactic门槛，不是通用语义证书。真实恢复SK13496首call正确constructor，另MM两题也过（3/4）。input provenance分public AST expression vsmodel hypothesis，runtime type不自动证明。可信Controller sys.settrace/nonce/源SHA仅运行自己probe，生产guard类型不值观测，readonly/net-none/pull-never/resource limits、无model safe_static_check伪证，真正观测builtins.list；source字节不变但trace/filename/timing非等价证明，optional blocker明确skip。类型组件第二版纠正事实却SK因缺原报告dtype而弃答，MM1359不合法control弃答，2/4负结果不覆盖3/4。
+
+当前保留3/4版作开发比较基线，observer diagnostic保留、不当默认全面升级。先统一缺expected→不能捏造与缺inputtype→明确source-consistent hypothesis的单一可执行政策，facts/hypothesis/unknown分层，不把synthetic原报化、不手修某题dtype/date/value/oracle，也不再层层append提示或加budget。再跨repo正常control、目标API/失败point/源谓词保真零费，完整method/input/budget/codefreeze后一次小screen，四参考/忠实性/cross-repo gate后完整DEV/native DTO/确定性证书/独立评分，才新不重叠canary≥2/3/Agent patch/official/new任务。当前不扩九题/第6canary，不开TEST/C5/Fresh30/private Test500/E2。
+
+最新工程单次1372passed/4skipped/33warnings/0failed（92.73秒，XML1376/0errors/0failures/92.702秒），Ruff/规定budget V3重点/compact preflight ready=true，未弱化旧assertions/skip/timeout。本轮无Docker重启/IPC/镜像下载删除/改VHD/registry/proxy/tunnel/key，原12DEV镜像和全部备份保留；旧strict-v5 bridge whitelist不扩，不假称Web新paid入口已验。Cloud可接本节source/zero测试；local source/private artifact/image/runtime缺失即INFRA_BLOCKED，不索key/开裸daemon。以下旧“当前/下一步”只历史，不覆盖本节。
+
 ## 当前唯一入口：Docker已恢复，cache3/4／新生成2/4；先API义务与类型假设零费，不再paid扩批
 
 先读[最新完整结果及第5节待办](E1C2_FRONTIER_LIVE_DEV_RESULTS_2026-10-07.md)。本轮新授权仅两IPC普通stop确认→备份后缀20261007-144329→start一次成功，原DEV12全12核验，不动VHD/registry/proxy/tunnel/key/镜像，全部备份保留，该次授权已消费。原blocked receipt保持，不再按以下旧“等待授权/尚未开始zero”操作。

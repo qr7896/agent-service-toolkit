@@ -4,6 +4,8 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
+**最新：public API入口门槛版真实Gold3/4；类型观测接线版2/4，四参考开发gate未过。** 16Flash请求/56791tokens、无retry，source-bound类型事实纠正了numpy/list误判，但不等于复现收益，machine trusted0、非完整DEV/独立成绩/patch score。[最新分账结果与零费止损方案](research/E1C2_API_OBLIGATION_RESULTS_2026-10-07.md)。保留3/4方法作比较基线、不best-of、不paid扩批；下一步统一事实/假设/未知及正常control政策，不层层加提示或改输入答案。工程1372passed/4skipped/0failed不能冒充修复率，TEST/Fresh30/独立canary/repair/E2关闭；本轮Docker/VHD/IPC/proxy/tunnel/key/镜像不动，原所有记录保留。下方旧“最新/下一步”均历史。
+
 **最新：Docker按明确IPC备份授权恢复、DEV12全12核验；执行前沿零费cache Gold3/4，新生成Gold2/4，质量门槛仍未过。** 12Flash请求40135tokens/retry0，恢复MM1359但两个SK弃答，机器trusted0，不best-of、不等于Agent修复。guard AST审计自动定位`_export.py:1040`且已在模型窗口，进一步把瓶颈缩到API请求与实际目标绑定/类型假设，不继续无效检索或paid扩批。[本轮逐项结果/落地顺序](research/E1C2_FRONTIER_LIVE_DEV_RESULTS_2026-10-07.md)。工程1350passed/4skipped/0failed不是质量gate；旧数据/所有备份保留、VHD/registry/proxy/tunnel/key不改，TEST/Fresh30/canary/repair/E2关闭。以下旧“等待IPC授权/未开始zero”只是历史，不按旧命令重跑。
 
 **最新：readiness四参考真实screen完成，Gold区分2/4、machine0，尚未达开发gate。** 10Flash请求/32826tokens、无retry；52旧响应codec审计/重复无效停止/Assert求值错误反馈已接线。执行绑定setup前沿保持完整target AST/期望不改，离线证明2份同task程序，真实零调用研究却被Docker挡在freeze前；普通启动一次失败、旧run/dockerInference IPC，现等待本轮有限IPC备份授权，不强修数据盘。[最新结果/接手门槛](research/E1C2_READY_RUNTIME_DEV_RESULTS_2026-10-07.md)。工程1344passed/4skipped/0failed不是修复率，TEST/Fresh30/canary/repair/E2不开放，旧记录/备份不删除；前一段SK26289摘要误写已纠正，原得分/原件不变。

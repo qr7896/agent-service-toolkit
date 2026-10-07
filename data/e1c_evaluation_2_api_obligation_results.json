@@ -1,0 +1,141 @@
+{
+  "schema": "e1c2-api-obligation-and-type-dev-results-v1",
+  "date": "2026-10-07",
+  "new_provider_calls": 16,
+  "new_provider_tokens": 56791,
+  "provider_retries": 0,
+  "machine_trusted": 0,
+  "four_reference_gate_passed": false,
+  "independent_validation": false,
+  "batches": [
+    {
+      "run_id": "obligation-runtime-reference-dev-v1",
+      "screen_denominator": 4,
+      "fixed_denominator": 12,
+      "full_admitted_DEV_run": false,
+      "model": "deepseek-flash",
+      "provider_cap": 50000,
+      "actual_calls": 8,
+      "actual_tokens": 28363,
+      "Gold_discriminating": 3,
+      "source_records": {
+        "freeze.json": "17136deaa489e5eefd3dc709be4e8998c5cfcd60d3e3c8b8cee1701300212a95",
+        "state.json": "90bd61b1764140d663ddd8548f8a39d1c7a40f24e017c9d17f846a6a8b021744",
+        "provider_calls.jsonl": "6e72dffa61715ab59b9561d72aed6168fb6290ff23a7bebb2612f92690aaa352",
+        "generation-seal.json": "ee17275a77c313f683c4ec60bba7912c57c25e2faffbfdcc155516ade73560e0"
+      },
+      "rows": [
+        {
+          "instance_id": "scikit-learn__scikit-learn-13496",
+          "status": "executed",
+          "provider_calls": 1,
+          "provider_tokens": 3065,
+          "Gold_discriminating": true,
+          "Gold_result_sha256": "877a87bf745beee6745fb938b0a7f57e0578f0b4d88e2888a7b585a6d3290723",
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "scikit-learn__scikit-learn-26289",
+          "status": "abstained",
+          "provider_calls": 4,
+          "provider_tokens": 16650,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1252",
+          "status": "executed",
+          "provider_calls": 1,
+          "provider_tokens": 2904,
+          "Gold_discriminating": true,
+          "Gold_result_sha256": "bc73316e3bee31412d905c58b318f83366a928b04434b5b4363a0662e196615f",
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1359",
+          "status": "executed",
+          "provider_calls": 2,
+          "provider_tokens": 5744,
+          "Gold_discriminating": true,
+          "Gold_result_sha256": "3834327dba747fb2b32d64d46ab0f0ed6280006d79935195c570f4c2c483059f",
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        }
+      ]
+    },
+    {
+      "run_id": "observed-type-reference-dev-v1",
+      "screen_denominator": 4,
+      "fixed_denominator": 12,
+      "full_admitted_DEV_run": false,
+      "model": "deepseek-flash",
+      "provider_cap": 50000,
+      "actual_calls": 8,
+      "actual_tokens": 28428,
+      "Gold_discriminating": 2,
+      "source_records": {
+        "freeze.json": "6c8e3d23dd2f2b306728f35338bb94a1b4ef294bff25418c78cdd1ed41f301de",
+        "state.json": "fefbdd2186684b84017496d6c0d56e0c9cb17b1a6a01fb2e5100867551bdce49",
+        "provider_calls.jsonl": "2cb364fdd48e10fd7bc5a62fc15644a517eae13b71673472eeb57b2486b08c08",
+        "generation-seal.json": "851d9ffa5806d662b6fc195b06dfebf0801c023347823a813c673241d3147a34"
+      },
+      "rows": [
+        {
+          "instance_id": "scikit-learn__scikit-learn-13496",
+          "status": "executed",
+          "provider_calls": 1,
+          "provider_tokens": 3201,
+          "Gold_discriminating": true,
+          "Gold_result_sha256": "82911c53a35b57e1329ec9ea8d5eb512039caa6734f9d04782217bfc3c5781a2",
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "scikit-learn__scikit-learn-26289",
+          "status": "abstained",
+          "provider_calls": 3,
+          "provider_tokens": 12428,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1252",
+          "status": "executed",
+          "provider_calls": 1,
+          "provider_tokens": 3007,
+          "Gold_discriminating": true,
+          "Gold_result_sha256": "ced019fb72dbd7678528a675c52e0020399014fee6108d47ad14bd89b9538ba3",
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1359",
+          "status": "abstained",
+          "provider_calls": 3,
+          "provider_tokens": 9792,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "runtime_type_reports": 0,
+          "trusted_reproducer": false
+        }
+      ]
+    }
+  ],
+  "zero_obligation_audit_sha256": "49b06cc1bfc1bc249977adc76e4eeb7a5a4709d5aaa5deb5cc805e33246b53a8",
+  "zero_type_observation_sha256": "9ffe63f57fd033e58fd77552884e7d4df7a242a32cf1a097805a7e7b36ed0146",
+  "engineering": {
+    "tests": "1376",
+    "skipped": "4",
+    "errors": "0",
+    "failures": "0",
+    "time": "92.702"
+  },
+  "engineering_junit_sha256": "d45580b872d925bc8e1dbf36659e3481164fae5b50a990e84313d723241e3350",
+  "visible_usage_since_2026_10_05_not_billing_verified": 669477
+}
