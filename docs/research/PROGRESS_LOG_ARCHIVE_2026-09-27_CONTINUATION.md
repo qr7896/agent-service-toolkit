@@ -365,3 +365,13 @@ V4 A5/5均生成source无输入echo，五个base候选Gold2真3假；ISO-Z/List(
 freeze9d78aafbcd3a6eae3686fe48023031cb580861708edc660a5a3e931f0e89afb2，result7a74c894f10b6592de09f5aaebc048afc0e18b4994249c9c8a3e22c223d3ba28。原V4 freeze/state/ledger三个SHA仍相同；本轮provider0/tokens0/Goldreads0，累计可见usage304489不增。九immutable镜像运行前健康、DockerServer29.4.0。没有新增下载/删除/重启，IPC备份/VHD/registry/代理/tunnel/key不动。
 
 最终专项24passed、规定重点18passed、Ruff通过、原V3 compact preflight ready=true；完整单次1201passed/4skipped/33warnings/0failed（79.82秒），持久XML1205tests。不削弱旧断言/skip/timeout，工程数不是修复率。两份Roadmap与交接最新入口已补局部证据/接线未完成/跨仓库正对照待办；独立第6批/repair/TEST/C5/Fresh30/E2仍关。公开摘要绑定本机完整记录，未上传原评分/密钥。下一步先补跨仓库合法控制及返回结构/消费关系，再另立版本接A校验；不凭两项拒绝启动新的付费提示微调。
+
+## 2026-10-07 — 新受限运行反馈主干、授权IPC恢复与真实零调用门槛
+
+用户确认按新方法推进。用研究执行技能/ponytail复用边界、执行器、原B七字段合同和预算账本；新bounded_repro_loop及bounded_repro_dev支持production-only AST retrieve、已暴露path read、合同probe、弃答，最多4轮。两次正控制通过才target，自生成日志反馈修fixture/API，首次有效oracle锁定，禁用native fixture/任意shell/test/Gold反馈。没有安装完整mini/ReProAgent/SWE-Doctor，未宣称论文成绩迁移，也未实现完整debugger或Agent patch。三题按旧V4manifest首个准入task/repo预选，不看成绩：SK13496/MM1252/pytest7432；screen3/原DEV分母12，计划Flash≤12/80000/每题26000/输出2200/retry0，准备时未freeze。
+
+现场engine初始缺管道，普通启动一次仍失败，20秒健康探测timeout。诊断CLI原未设timeout挂起，仅中止自己该诊断，不杀backend。日志starting services/Inference manager报Docker/run/dockerInference旧socket，未factory reset/删IPC。专项首次1failed/16passed源于新合成Git fixture把生成artifact放进未忽略workspace，原clean guard正确拒绝；修fixture.gitignore，不弱化guard。Ruffimport/unused修正。新专项21+原规定重点18=39passed，Ruff通过，原V3 preflight ready=true；完整单次1222passed/4skipped/33warnings/0failed（64.86秒；XML1226tests/0errors/64.778秒）。工程数不是repair/repro率。
+
+随后用户本轮明确允许仅正常stop→两个IPC目录备份改名→start一次。docker desktop stop --timeout30后确认Desktop/backend均退出；源/目标/父目录无reparse/conflict，精确备份run与docker-secrets-engine，后缀ipc-backup-20261007-081928，再hidden普通启动一次。真实engine与DEV12全12 config IDs核验成功。旧备份/VHD/registry/代理/tunnel/key/镜像全不动，无大下载/删除。
+
+列明零模型smoke精确命令后一次完成：scikit-learn与marshmallow生产普通API合成输入，先retrieve，再control两次+target，通过target不算bug、反馈后明确弃答；两个repository均3步fake invoke，真实无网络/只读/pull-never执行。provider0，真实smoke gate通过；人工编写合成fixtures只说明控制器执行有效，不能报实际任务全自动正确。旧V4freeze/state/ledgerSHA不变，原所有负结果保留。准备收据先记录blocked，再追加授权恢复与smoke，不回填旧实验结果。两新method源码和协议将先提交，再freeze精确live；本节截至此处真实新增付费0，TEST/C5/Fresh30/repair/E2不变。

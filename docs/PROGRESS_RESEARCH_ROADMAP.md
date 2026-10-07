@@ -1,8 +1,10 @@
 # Coding Agent 研究总览：成果、证据与边界
 
-更新：2026-10-06。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
+更新：2026-10-07。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
+
+**当前执行主线已切换为受限运行反馈闭环。** 生产AST检索/已暴露path读取、两次正控制、自己的执行日志修订、oracle锁定和预算账本已接线；不是原版论文框架安装，也不是新复现成绩。新旧DEV三仓库筛查计划≤12请求/80000tokens，仅Flash。真实合成容器门槛尚未执行、预算尚未冻结；当前Docker普通启动失败（旧dockerInference socket），新增调用0，不能付费试跑。[协议与Web接手顺序](research/E1C2_BOUNDED_RUNTIME_DEV_V1_PROTOCOL_2026-10-07.md)、[准备收据](../data/e1c_evaluation_2_bounded_runtime_preparation.json)。以下10月6日结果与曾恢复的Docker健康状态为历史，不作当前运行许可。
 
 当前阶段：端到端修复质量仍未达目标。五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果封存。授权IPC备份后Docker/DEV12全12/本机bridge健康。旧DEV新生成V2 Gold3/12、零付费兼容回放3/12、再新生成V4 Gold2/12均封存，未保四参考；本轮26请求72578tokens、无provider重试。输出回显已修复（V4 A5/5返回source），但fixture/行为合同质量没有提升；**不继续付费扩批，先零调用前置条件/正对照与可信fixture机制**。15个历史canary本地镜像缓存已按允许移除，记录/源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果。
 

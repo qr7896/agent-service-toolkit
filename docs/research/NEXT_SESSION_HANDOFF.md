@@ -1,6 +1,16 @@
 # WebCodex 接手：E1-C evaluation_2
 
-交接日期：2026-10-06。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[一周计划](E1C2_ONE_WEEK_PLAN_2026-09-30.md)，不要按历史文档的旧“下一步”直接运行。
+交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新受限闭环协议](E1C2_BOUNDED_RUNTIME_DEV_V1_PROTOCOL_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
+
+## 现在的接手任务：受限运行反馈闭环，不再继续静态提示微调
+
+新增`bounded_repro_loop.py`与`bounded_repro_dev.py`，生产retrieve/read→七字段正控制合同→两次控制通过才target→自生成trace反馈→最多4轮修订，首次有效oracle锁定、无shell/原test读取/Gold反馈。只借鉴mini/ReProAgent/SWE-Doctor思想，未安装原框架、未实现完整debugger或Agent补丁。旧三仓库各首个任务按manifest预选，固定screen3、原DEV分母12，不能按旧成绩筛题。计划Flash≤12/80000tokens，仍未freeze或调用；完整旧DEV/四参考与独立第6批都未过gate。
+
+当前Docker未运行；普通启动一次日志报旧Docker/run/dockerInference IPC，真实20秒engine探测timeout。未擅自IPC改名/删文件/reset/VHD/registry/代理/tunnel/key，已询问仅正常stop/两个IPC目录备份/start一次。真实smoke与新run目录均不存在，没有把ledger写成失败任务。Cloud可以做合成单测/代码审查；缺本机source/image/runtime明确INFRA_BLOCKED。原tunnel严格-v5工具白名单未扩展，不默认允许新paid模块、不开放裸daemon。
+
+恢复后：现场engine与immutable images核验→协议列明的`bounded_repro_dev smoke`（零调用、一次）→`preflight`（smoke/method/input/预算SHA绑定）→展示唯一精确run/Flash/最多12/80000/输出2200/retry0后，按用户≤100000已给预算授权边界运行→完成generation seal才独立`gold`。失败不自动重试，不把合成通过/候选失败说成可信复现；不修改旧freeze或开sealed TEST/C5/Fresh30/private Test500。所有不支持native fixture/动态绑定/缺期待任务按原分母报告。稳定JSON/源码可push，原响应/Gold/日志只本机.codex。
+
+以下为10月6日封存历史，旧“健康/下一步”不得覆盖本节。
 
 ## 当前状态
 
