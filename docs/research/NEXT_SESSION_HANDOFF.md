@@ -1,31 +1,29 @@
 # WebCodex 接手：E1-C evaluation_2
 
-交接日期：2026-10-07。仓库qr7896/agent-service-toolkit。先读[AGENTS.md](../../AGENTS.md)、[当前Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新结果](E1C2_EXPECTATION_RESULTS_2026-10-07.md)。
+交接日期：2026-10-07。仓库qr7896/agent-service-toolkit。先读[AGENTS.md](../../AGENTS.md)、[当前Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新结果](E1C2_REPORT_ANCHOR_RESULTS_2026-10-07.md)。
 
-## 1. 最新状态：期待门槛版3/4，不要重跑
+## 1. 最新状态与禁止重跑
 
-expectation-reference-dev-v1：9 Flash请求30,477tokens、retry0，producer completed/seal后独立Gold attempted3/区分3，machine0；另一项期待被拒后弃答。本版未保留前版execution-plan-v2的4/4，原记录/分数不改，不best-of；成本也未改善。固定12/九准入/screen4，不是完整DEV/独立/Agent修复或30题成绩。
+report-anchor-reference-dev-v1：6 Flash请求21,400tokens、retry0，producer completed/seal后独立Gold4/4；公共A/B真实正常-目标对照已做，期待是精确prose锚的明确请求或推断完成假设。不是前版严格口径的4/4，不回填原3/4/旧4/4、不best-of。固定12/九准入/screen4分账，machine0、无Agent patch/official resolved。
 
-期待角色已在oracle lock前筛查；公开A/B语法、source/import绑定、共享表达式/literal约束与执行后grounding已接线，但复杂/未知语义不获证。原公共Human输入四项逐字不变。两轮错误期待反馈contrast=null，原文并没删，尚不能确定加反馈会恢复。
+零模型exception-observation-zero-v2在3/4取得公共异常/缺失keyword对应，另一项未见原报机制，只支持API行为差异。observer只处理精确builtin异常及字符串参数、两production文件/八记录，输出匹配SHA/位置，不输出原始消息/值，不赋予语义trust。
 
-Controller仅在独立zero诊断派生public normal A，用原缓存自有argument，未知额外参数/影射/source不绑定则拒。两份缓存派生出同一program，各两次normal通过：1旧task/1program/4次运行、模型0/Gold读取0；不是Agent程序、不补到3/4、不表示B应具备A所有能力。main paid未接该派生器。
+v1在模型probe前source SHA核验失败，失败完整留档未retry；只读确认CRLF host副本/LF container差别，容器等Git base blob。v2原暴露SHA+LF投影+容器有效文件/Git canonical blob双身份，原文件不改、实际非换行差异仍拒；适配旧Python并保留缺dateutil blocker。观察改变filename/timing，不证明全语义等价，也不是对抗任意恶意程序的attestation。
 
-最终1419 passed/4 skipped/33warnings（113.65秒）、Ruff/预算V3/compact preflight过。代码先提交9648a4f再freeze/live；[收据](../../data/e1c_evaluation_2_expectation_results.json)绑定SHA，raw/probe/Gold/test/key不上传。全部旧/新smoke/freeze/run/Gold/audit已started或封存，禁止重跑/回填，当前无下载需求。
+最终1436 passed/4 skipped/33warnings（104.66秒），Ruff/预算V3/compact preflight过；paid代码先commit e220a87。所有旧/新smoke/freeze/run/Gold/audit已started或封存，禁止重跑/修改；[收据](../../data/e1c_evaluation_2_report_anchor_results.json)绑定SHA，raw/probe/Gold/test/key不上传。无下载需求。
 
-## 2. 当前唯一下一步
+## 2. 唯一下一步：受限语义资格校准
 
-先零调用区分明确接口请求、公开回归报告、公开比较报告、unknown。trace/code不当desired behavior，literal期待不捏造。若用A工作/B失败推断B也应完成，先预注册inferred_from_public_comparative_report及源码scope/反例，不称原文明确承诺，不暗改本轮严格口径追回4/4。
+先零模型合并公共输入约束、production调用与alias、期待来源、真实异常对应；明确支持的证书scope与unknown，不把3/4对应叫可信率。反例需覆盖：同消息wrong fixture、alias shadow、生产对象改写、shape/参数偏离、仅API兼容而原报机制未证、源码/环境变动。三种类型不能互换：明确公开请求、比较/回归的推断完成假设、未知。
 
-将已识别公共prose锚与A/B关系结构化附回拒绝反馈，仍由模型生成真实对照。诊断派生normal只作feasibility，不冒充模型；报告alias/实际共享值/原报机制分别未知，source绑定不自动trusted。先跨仓库正负例与工程门槛，再另冻一次四参考，Gold/语义分账。
-
-两gate过后才完整九准入/有限native，新全历史排除canary可信≥2/3、Agent patch/独立official grade、旧DEV30，最后另授权Fresh30。当前不抽第6canary、不开始repair/E2、不再追加paid采样。
+校准跨repo后将observer/双身份/classifier完整冻入新方法，做一次同版四参考/九准入DEV（固定12分母）；受限行为和原报机制分账。可信gate真正过才全历史排除新canary预注册一次≥2/3、Agent patch/独立official、小DEV30，最后另授权Fresh30。当前不抽第6canary、不做repair/E2、不追加paid采样，不保证完美。
 
 ## 3. Cloud可先执行的无模型检查
 
 ```bash
 uv sync --frozen --group dev
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_expectation_dev.py evals/e1c_evaluation_2_public_normal_diagnostic.py tests/test_e1c_evaluation_2_expectation_dev.py tests/test_e1c_evaluation_2_public_normal_diagnostic.py
-uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_expectation_dev.py tests/test_e1c_evaluation_2_public_normal_diagnostic.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_report_anchor_dev.py evals/e1c_evaluation_2_exception_observer.py evals/e1c_evaluation_2_exception_observer_v2.py tests/test_e1c_evaluation_2_report_anchor_dev.py tests/test_e1c_evaluation_2_exception_observer.py tests/test_e1c_evaluation_2_exception_observer_v2.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_report_anchor_dev.py tests/test_e1c_evaluation_2_exception_observer.py tests/test_e1c_evaluation_2_exception_observer_v2.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 uv run --frozen python -m evals.v3_compact_pilot preflight
 uv run --frozen python -m pytest -q
 ```
@@ -34,7 +32,7 @@ uv run --frozen python -m pytest -q
 
 ## 4. 付费、安全与回传
 
-未来新实验先列精确命令、Flash、次数与≤100,000 tokens，新未开始namespace，retry0、输入隔离、producer seal后独立Gold；原v2/expectation-v1都不能“再试”。不使用Pro，不开sealed TEST/C5/Fresh30/SERBench私有Test500，当前没有新canary/repair/E2命令待执行。
+未来新实验先列精确命令、Flash、次数与≤100,000 tokens，新未开始namespace，retry0、输入隔离、producer seal后独立Gold；原v2/expectation-v1/report-anchor-v1和两个observer namespace都不能“再试”。不使用Pro，不开sealed TEST/C5/Fresh30/SERBench私有Test500，当前没有新canary/repair/E2命令待执行。
 
 本轮无下载删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key更改，备份与负结果全保留。旧IPC授权已消费，任何新修改需明确限定授权；大文件交用户终端直连、不走VPN，当前无下载需求。
 

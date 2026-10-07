@@ -4,9 +4,9 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：期待门槛版Gold3/4，未保留前版4/4；E1-C尚未封板。** 本轮9 Flash请求/30,477 tokens、无retry；三候选Gold区分、一项错误code期待两次被拒后弃答，machine trusted0，不报完整DEV/独立/Agent修复。公开A/B对照的零费派生normal已验证可运行，但仅1旧task/1程序/4次执行，不当模型成绩、不3+1拼分。[最新逐项结果与落地待办](research/E1C2_EXPECTATION_RESULTS_2026-10-07.md)、[收据](../data/e1c_evaluation_2_expectation_results.json)。下一步零费明确接口请求/回归报告/比较报告/unknown及推断期待来源，再新冻结DEV，不加预算采样追回4/4。工程1419 passed/4 skipped不是修复率；TEST/C5/Fresh30/private Test500/repair/E2关闭，无下载删除或本机配置更改。
+**当前：公开报告锚版Gold4/4，真实公共双接口对照完成；零费异常对应3/4，语义资格仍未认证。** 本轮6 Flash请求/21,400tokens、retry0，期待分别标明确接口请求/比较或回归的推断完成假设，不冒充原文保证。新observer双摘要验证未改的CRLF暴露副本与容器LF/Git base blob，v1失败保留、v2实际观察3项公共异常/缺失参数对应；不是可信率/Agent修复。machine trusted0，固定12/九准入/screen4分账。[最新结果与下一步](research/E1C2_REPORT_ANCHOR_RESULTS_2026-10-07.md)、[收据](../data/e1c_evaluation_2_report_anchor_results.json)。下一步零费校准输入约束/调用绑定/期待来源/真实异常的受限资格与反例，再新冻DEV；不继续调提示或抽canary。工程1436 passed/4 skipped不是repair rate，无下载删除/本机配置变更。
 
-前版执行链修复与4/4仍完整保留；当前质量/成本并未改善，不用新规则回填旧得分。[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)记录全部轮次，以下统计表是历史版本，不best-of、不按旧“下一步”操作。
+前版严格期待3/4、旧4/4与全部失败保留；新假设准入口径另标，不回填、不best-of。过程只记[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)；下表是历史版本。TEST/C5/Fresh30/private Test500/repair/E2仍关闭。
 
 ## 1. 阅读入口
 
