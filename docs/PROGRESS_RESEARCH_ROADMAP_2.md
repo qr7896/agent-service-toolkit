@@ -4,6 +4,12 @@
 
 ## 0. 当前执行状态与唯一待办
 
+**当前最新：readiness四参考screen已完成，Gold2/4；零费运行前沿仍被Docker挡在freeze前。** 10请求/32826tokens、provider失败/重试0，机器trusted0，四参考gate未通过，不扩九题/抽canary。全52旧响应codec审计保留原accepted、恢复4包装；Assert求值错误反馈与重复无效停止已接线。共享setup故障前沿离线AST证明2份（同一task两turn），但新容器执行0，不能当恢复一题。[最新结果与接手步骤](research/E1C2_READY_RUNTIME_DEV_RESULTS_2026-10-07.md)、[机器收据](../data/e1c_evaluation_2_ready_runtime_dev_result.json)。
+
+下一步先恢复实际Docker：普通start一次失败，最新run/dockerInference旧IPC阻塞，已询问本轮仅两IPC目录正常停机备份/普通启动一次，尚待确认；不强杀/重置/动VHD/registry/proxy/tunnel/key/镜像。恢复并核验Server/image后，尚未开始的runtime-frontier-zero-reference-v1一次run/seal/gold验证，不把缓存回放叫新反馈生成。之后才另冻live同四参考；四参考/忠实性/跨仓库gate未过不扩批，TEST/C5/Fresh30/private Test500/repair/E2仍关闭。旧所有已started入口不重跑。
+
+最终工程1344passed/4skipped/33warnings/0failed（66.47秒），Ruff/规定预算V3重点和compact preflight ready=true，无测试弱化；可见累计572551非账单核验。前次SK26289引用版“控制失败”摘要已按原feedback更正为control通过、target未复现，原件/得分/机器收据不改。以下段落是本日更早封存阶段，不覆盖本段。
+
 **完整旧DEV两轮真实新生成与独立Gold判别已完成，尚未过开发质量门槛。** 统一编译运行版26请求/74336tokens、Gold3/12；无损原文引用版26请求/89923tokens、Gold1/12。固定12/九准入，四参考分别2/4、1/4，机器trusted都0；版本分账，不能best-of拼成绩。引用错误9→0但总体变差，停止付费扩批，先零调用DTO/fixture消费与oracle就绪反馈。具体每题、哈希、接手步骤见[本轮完整结果](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)，[机器收据](../data/e1c_evaluation_2_unified_runtime_dev_result.json)。
 
 下一步按结果文档第4节：①统一action DTO与精确单层包装、重复invalid停止；②源码普通构造/返回消费关系与跨仓库有效control证据；③Assert求值错误回反馈而非terminal candidate；④无损冗余与实际reserve核算，再另冻同版四参考/完整九准入DEV一次；⑤有限generated native DTO/确定性证书和独立评分，开发有收益才新不重叠canary一次≥2/3；⑥同方法Agent patch/official grade→同版DEV→新任务。没有30/30、一周完美、独立gate或E2完成承诺。

@@ -4,6 +4,8 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
+**最新：readiness四参考真实screen完成，Gold区分2/4、machine0，尚未达开发gate。** 10Flash请求/32826tokens、无retry；52旧响应codec审计/重复无效停止/Assert求值错误反馈已接线。执行绑定setup前沿保持完整target AST/期望不改，离线证明2份同task程序，真实零调用研究却被Docker挡在freeze前；普通启动一次失败、旧run/dockerInference IPC，现等待本轮有限IPC备份授权，不强修数据盘。[最新结果/接手门槛](research/E1C2_READY_RUNTIME_DEV_RESULTS_2026-10-07.md)。工程1344passed/4skipped/0failed不是修复率，TEST/Fresh30/canary/repair/E2不开放，旧记录/备份不删除；前一段SK26289摘要误写已纠正，原得分/原件不变。
+
 **当前主线：统一编译与原文引用接口已做两轮完整旧DEV真新生成，质量仍未达标。** 两轮各原固定12/九准入：统一版26Flash请求/74336tokens、Gold区分3/12；引用版26/89923、Gold1/12，四参考2/4与1/4，机器trusted均0，不能best-of合并或当Agent修复。源码/输入/预算/响应/seal分开封存；引用错误减少但成本/质量变差，停止付费扩批先DTO/正常控制与返回消费关系/oracle就绪反馈的零调用验证。[最新逐题结果与落地待办](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)。工程1320passed/4skipped/0failed（56.44秒）不是repair rate；TEST/C5/Fresh30/repair/E2仍关闭，无本轮新下载/删除/IPC/VHD/tunnel/密钥变动。
 
 10月7日早轮封存：三次旧DEV三仓库screen共29次Flash请求/70977tokens、无provider重试；v1格式拒绝、v3重复检索停、v4进入真实probe/反馈但无合格候选，grader均attempted0。[早轮结果](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。Docker当时按明确授权仅备份两个IPC目录恢复，DEV12全12核验；原负结果不回填。

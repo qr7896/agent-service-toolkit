@@ -2,6 +2,16 @@
 
 交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新闭环真实结果与待办](E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
 
+## 当前唯一入口：readiness新screen2/4；runtime-frontier零费研究尚未开始，Docker IPC阻塞
+
+先读[当前结果/逐题/恢复顺序](E1C2_READY_RUNTIME_DEV_RESULTS_2026-10-07.md)、[哈希收据](../../data/e1c_evaluation_2_ready_runtime_dev_result.json)。ready-runtime-reference-dev-v1四参考已run/seal/gold：10请求32826，Gold2/4、机器trusted0；不是完整DEV12、独立canary或repair，四参考gate未过不扩批，所有该paid/smoke/preflight入口不能重跑或修改已冻method/budget/response/state/ledger。
+
+单一DTO/精确包装/紧凑lossless quote pairs、Assert求值错误回反馈、重复无效行动第三调用前停已接线。52旧response零调用审计原accepted保留/4包装恢复，51格式解码不当51任务成功。最新runtime_frontier_zero新增13专项，控制source/execution SHA与顶层Assign(Call)故障绑定→setup后缀移到target、完整target AST相同/normal control与期望不改；free-name检查不是alias/global独立性证明。离线全部3失败control中2份同task可编译，运行0、不能报cache新增可信数。
+
+Docker已停止、普通start一次失败，日志旧run/dockerInference IPC不可访问；没有新的IPC改名、VHD/registry/proxy/tunnel/key/镜像删除或重置，旧备份保留。已请求本轮仅Docker/run与docker-secrets-engine正常停机备份改名/普通启动一次，等待人类明确确认，不复用旧“一次”授权。若允许并恢复，确认Server/四immutable images，再按zero协议一次run，完成seal才gold。runtime-frontier-zero-reference-v1此时freeze/目录未创建；后续如已存在须以新状态为准，不能照此旧“未开始”重跑。新反馈改变后缓存动作没有重新生成，不能称因果闭环新模型成绩。
+
+最新1344passed/4skipped/33warnings/0failed（66.47秒，XML1348/0errors/0failures），Ruff/预算V3重点/compact preflight ready=true；累计可见572551非账单核验。SK26289上轮摘要“控制失败”为误写，已纠正为control过/target未复现，原件/得分不回填。无需新大下载；Cloud可读源码/单测，缺本机source/private artifacts/image/runtime即INFRA_BLOCKED，old strict-v5 bridge whitelist未扩大，不假称Web可paid端到端调用、不索取key/开daemon端口。开发gate后才新live同四参考→完整DEV→新不重叠canary≥2/3→Agent patch/official评分→同版DEV→新任务；TEST/C5/Fresh30/private Test500/E2关闭。下面所有旧“当前/下一步”仅历史。
+
 ## 当前唯一接手入口：统一DEV两轮已封存，先零调用，不再paid扩批
 
 先读[最新完整每题结果/六步落地待办](E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)与[机器收据](../../data/e1c_evaluation_2_unified_runtime_dev_result.json)。compiled-runtime-old-dev-v1与referenced-runtime-old-dev-v1均九准入/固定12、完整新生成和Gold判别seal完毕：26calls74336→Gold3/12、26calls89923→1/12；四参考2/4与1/4，机器trusted0，不best-of。新增52/164259分属两批各≤100000，不使用Pro、不自动retry；累计可见539725非账单核验。所有smoke/preflight/run/gold已开始，不再执行或修改已冻源/响应/预算/账本，旧历史完全保留。
