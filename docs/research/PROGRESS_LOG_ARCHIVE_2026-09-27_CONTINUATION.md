@@ -1218,3 +1218,15 @@ uv run --frozen python -m pytest -q
 初次范围单测1failed/9passed因fixture把同一alpha.fields.DateTime直接import当不同对象，改为alpha.DateTime负例且增加同对象正例，未弱化拒绝断言。首轮Ruff I001未过而scope审计已开始，原source全文snapshot保存于该私有namespace，SHA等原freeze；公开source仅交换argparse/ast import顺序，另记SHA和可重建差异，不修改原freeze/result、不重跑。export源码在Ruff/专项过后冻结，之后不改。重点38passed、最终1485passed/4skipped/33warnings84.67秒，XML SHA与原source/currentsource/public result SHA收据绑定；synthetic preflight ready=true。
 
 本轮未付费、未读Gold、未运行新容器故障，无下载删除/Docker重启/IPC/VHD/registry/proxy/tunnel/key改变。安全公开同步限源码/单测/协议/脱敏收据，private raw/probe/Gold/test/key不上Git；旧source/state/ledger/seal/失败备份全保留。后续runtime对象与公开行为资格仍未过，完整live方法未freeze，不抽新canary/不开TEST/C5/Fresh30/privateTest500/repair/E2，不承诺完美或30/30。当前三入口更新待办，本轮日志只集中归档。
+
+## 2026-10-07：构造器运行时关系零付费诊断，v1未知保全与v2真实观察
+
+已补充真实构造器关系证据：原四缓存中1项具有两个条件引用，离线容器观察到DateTime exact type与Foo→Schema MRO关系；其余3项not applicable。v1直接构造器未知结果保留，v2新namespace一次诊断，新增provider/tokens0/0、Gold读取0，原probe未改。旧资格仍2机制候选/1行为候选/1unknown，machine trusted0，旧Gold4/4及异常对应3/4不改。尚未完成行为资格和完整live方法冻结，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。
+
+完整读ARS执行/监控规范与ponytail，本轮无subagent/新依赖。v1/新协议/新namespace限定direct self构造器，10专项及Ruff过后审计四参考；Schema公开class无直接__init__，整体unknown，未执行容器、不重跑v1。只读AST诊断确认一般metaclass helper形态，未按task/helper名补继承规则。v2另源码/协议/namespace，以export末端同模块全部有界constructor行观察实际class identity/MRO，不解释with_metaclass。7新专项加v1共17passed，预算V3重点36、Ruff过后一次新离线诊断。
+
+复用现有只读transport，原probe/source/seal/optional dateutil blocker不变；全部三export文件runtime原字节等exact-base Git blob及host LF摘要。一次net-none/read-only/pull-never容器、90秒硬超时，无restart/download/provider/Gold。DateTime __init__与Field __init__处self exact对应声明DateTime，BaseSchema __init__处self非exact Schema但MRO包含Schema。原fault rc1不是infra失败；5记录含2early非对应调用全保留，3positive记录不是3任务。四缓存3N/A、1项两个关系出现，固定DEV12分母保留；不把关系证据当public namespace意图/行为可信、任意Pythonattestation或全语义等价。
+
+最初v1/v2 Ruff unused import只在对应freeze前修正，已冻结方法源与结果未改；原scope/export/qualification/Gold/预算/state/ledger/seal/负记录/备份均保持。最终合成compact preflight ready=true、完整1502passed/4skipped/33warnings81.24秒，XML及两observer source/v1/v2freeze/result SHA绑定data/e1c_evaluation_2_object_relationship_results.json。下一步paired API实际共享输入/类型对应与有限行为义务校准，再完整method freeze/同版DEV；不是付费调提示，不开新canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证完美或30/30。
+
+两Roadmap/Web handoff唯一当前入口更新，日志只本集中续档；源码/单测/协议/脱敏收据公开，raw/probe/Gold/test/key本机保留。无镜像删除/系统Docker修复/IPC/VHD/registry/代理/tunnel/密钥更改；Docker健康只读检查，普通隔离诊断不修改机器配置，当前无下载需求。

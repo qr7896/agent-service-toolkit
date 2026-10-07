@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** 已实现条件引用范围检查与静态重导出链审计：四缓存3显式结构支持/1条件结构支持；两个条件引用链均有静态身份支持，但原资格v3仍2机制候选/1行为候选/1unknown，machine trusted0。新增provider/tokens0/0、Gold读取0，旧Gold4/4及异常对应3/4不改。新增23单测，最终1485 passed/4 skipped/33warnings（84.67秒），Ruff、重点38项与合成preflight过；工程数不是修复率。未完成运行时对象/公开意图对应或完整live方法冻结，不开canary/TEST/C5/Fresh30/private Test500/repair/E2。 [最新结果](research/E1C2_REFERENCE_SCOPE_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_reference_scope_results.json)。
+**最新状态：** 已补充真实构造器关系证据：原四缓存中1项具有两个条件引用，离线容器观察到DateTime exact type与Foo→Schema MRO关系；其余3项not applicable。v1直接构造器未知结果保留，v2新namespace一次诊断，新增provider/tokens0/0、Gold读取0，原probe未改。旧资格仍2机制候选/1行为候选/1unknown，machine trusted0，旧Gold4/4及异常对应3/4不改。尚未完成行为资格和完整live方法冻结，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。 [结果](research/E1C2_OBJECT_RELATIONSHIP_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_object_relationship_results.json)。
 
-原v1/v2/v3、四静态alias反例与旧authority结果保持。范围审计只报告条件假设，不清除旧unknown；重导出链自动选生产文件，逐节点host LF等于exact-base Git blob。合成库正例不冒称新真实仓库实验。首次错误单测fixture与Ruff import排序记录保留；原审计源码snapshot等原freeze SHA，公开源仅import排序不同，不重跑审计。
+17项新observer单测、预算/V3重点36项与Ruff通过，合成preflight ready=true；完整回归1502 passed/4 skipped/33warnings（81.24秒）。原scope/export/source/预算/评分与失败记录保持；新对象关系是有限诊断证据，不回填旧unknown或报repair rate。当前无下载需求。
 
 ## 1. 已完成与尚未完成
 
@@ -27,13 +27,14 @@
 | 新受限资格校准 | v3两机制支持候选/一行为候选/一unknown；旧v1/v2保留 | 非新运行时实验，不自动认证 |
 | 辅助依赖authority | 两处host LF/base blob/runtime一致，已接v3审计overlay | 不改模型输入、不回填旧资格 |
 | 条件范围与静态export链 | 四缓存3显式结构/1条件结构；两引用链静态身份支持，23单测 | 不证明runtime对象/namespace意图，不改旧资格 |
+| 构造器运行时关系 | DateTime exact与Foo包含Schema MRO；5记录全保留；v1 unknown/v2独立身份 | 1缓存2关系，不是2任务；不证明公开意图/任意Python语义 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-辅助源与静态重导出链身份已补齐。MM1252省略import有条件结构解释，旧严格资格仍unknown；静态链不证明原公开意图、运行时实际使用对象或任意Python行为。SK26289仍仅行为候选，原机制未证明。接下来核对受限实际对象与公开行为义务，不重复按旧题补namespace规则、不加预算碰运气。
+辅助源、静态export链与这两个条件对象的实际构造器关系已补齐。MM1252省略import有条件解释与运行时关系，公开namespace意图仍不是显式承诺；旧严格资格unknown不变。SK26289有public API对照，但实际共享输入/类型对应与原报告机制仍需分开核对。下一步有限行为义务与反例，不以Gold或评分日志造期待，不做无限付费调提示。
 
 ## 3. 严格验收定义
 
@@ -49,7 +50,8 @@
 |---|---|---|---|
 | 已完成 | authority接入v3辅助源校验 | 原host摘要/LF/base Git/runtime均绑定，8项身份单测 | 不改旧model窗口或结果 |
 | 已完成 | 有限范围与静态export链协议/审计 | 完整引用后缀、单一静态定义/重导出、host/LF/base身份、23单测 | 条件解释不回填旧unknown |
-| 1 | runtime实际对象与链对应 | 新受限离线instrumentation，自动派生文件，正负例 | 静态链不能跳成runtime证书 |
+| 已完成（有限范围） | 条件对象构造器/MRO观察 | 新源码/namespace，network none/read-only/pull never，host/LF/base/runtime一致 | 非语义/恶意probe attestation |
+| 1 | paired API真实输入/类型对应 | 固定公共API与源码，自动观测，值不输出，正常/目标分别绑定 | 不将语法共用Name当实际值证书 |
 | 2 | 公开行为义务资格校准 | 请求/对照/回归分开，行为/机制/条件假设分账 | 缺意图或机制仍unknown |
 | 3 | 跨repo正负例→完整method freeze | 资格scope/classifier/observer/双source身份与输入/预算先冻 | 不继续paid调提示 |
 | 4 | 同版四参考/九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | screen不报全12 |

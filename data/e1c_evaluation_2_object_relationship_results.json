@@ -1,0 +1,169 @@
+{
+  "schema": "e1c2-object-relationship-results-v1",
+  "date": "2026-10-07",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "Gold_read": false,
+  "machine_trusted": 0,
+  "runtime_diagnostic_container_count": 1,
+  "new_model_generation": false,
+  "old_scores_or_qualification_changed": false,
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false,
+  "canary_opened": false,
+  "source_records": {
+    "object-observation-zero-v1": {
+      "freeze_sha256": "f3c1addabeb07d19e3436df7564c5dd2794a39d048cbb5fc173d6db16936267d",
+      "result_sha256": "9f6cc7f55b104874835f9a3cfe636034305ffea303e61a4594c44fda2a92596a"
+    },
+    "object-observation-zero-v2": {
+      "freeze_sha256": "0042a5fbea4b312b521ab368d55eaadc8b6dc704f61b3f19ae6ef45ef24e4b1a",
+      "result_sha256": "644bed4d5ef5c47c3e20d962b756115ec5883a1d1f68a53fe3c46df9be4f39f7"
+    }
+  },
+  "object-observation-zero-v1": {
+    "rows": [
+      {
+        "instance_id": "scikit-learn__scikit-learn-13496",
+        "status": "not_applicable_no_conditional_binding"
+      },
+      {
+        "instance_id": "scikit-learn__scikit-learn-26289",
+        "status": "not_applicable_no_conditional_binding"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "status": "unknown_constructor",
+        "unknown": [
+          "direct_plain_constructor_unproven"
+        ]
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1359",
+        "status": "not_applicable_no_conditional_binding"
+      }
+    ],
+    "cached_reference_denominator": 4,
+    "fixed_DEV_denominator": 12,
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "original_scores_or_qualification_changed": false,
+    "new_model_generation": false,
+    "semantic_alignment_proven": false,
+    "instrumented_same_semantics_claimed": false
+  },
+  "object-observation-zero-v2": {
+    "rows": [
+      {
+        "instance_id": "scikit-learn__scikit-learn-13496",
+        "status": "not_applicable_no_conditional_binding"
+      },
+      {
+        "instance_id": "scikit-learn__scikit-learn-26289",
+        "status": "not_applicable_no_conditional_binding"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "status": "constructor_relationships_observed",
+        "coverage": [
+          {
+            "path": "src/marshmallow/schema.py",
+            "symbol": "Schema",
+            "relationship_observed": true
+          },
+          {
+            "path": "src/marshmallow/fields.py",
+            "symbol": "DateTime",
+            "relationship_observed": true
+          }
+        ],
+        "records": [
+          {
+            "path": "src/marshmallow/schema.py",
+            "line": 185,
+            "declared_class_line": 967,
+            "symbol": "Schema",
+            "self_present": true,
+            "declared_class_present": false,
+            "instance_type_is_declared_class": false,
+            "declared_class_in_instance_mro": false
+          },
+          {
+            "path": "src/marshmallow/schema.py",
+            "line": 138,
+            "declared_class_line": 967,
+            "symbol": "Schema",
+            "self_present": true,
+            "declared_class_present": false,
+            "instance_type_is_declared_class": false,
+            "declared_class_in_instance_mro": false
+          },
+          {
+            "path": "src/marshmallow/fields.py",
+            "line": 897,
+            "declared_class_line": 859,
+            "symbol": "DateTime",
+            "self_present": true,
+            "declared_class_present": true,
+            "instance_type_is_declared_class": true,
+            "declared_class_in_instance_mro": true
+          },
+          {
+            "path": "src/marshmallow/fields.py",
+            "line": 126,
+            "declared_class_line": 859,
+            "symbol": "DateTime",
+            "self_present": true,
+            "declared_class_present": true,
+            "instance_type_is_declared_class": true,
+            "declared_class_in_instance_mro": true
+          },
+          {
+            "path": "src/marshmallow/schema.py",
+            "line": 342,
+            "declared_class_line": 967,
+            "symbol": "Schema",
+            "self_present": true,
+            "declared_class_present": true,
+            "instance_type_is_declared_class": false,
+            "declared_class_in_instance_mro": true
+          }
+        ],
+        "returncode": 1,
+        "result_sha256": "eb766630247b15225933563be6c239f4b887029b9126d851224191d76b042d1e"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1359",
+        "status": "not_applicable_no_conditional_binding"
+      }
+    ],
+    "cached_reference_denominator": 4,
+    "fixed_DEV_denominator": 12,
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "old_qualification_changed": false,
+    "new_model_generation": false,
+    "semantic_alignment_proven": false
+  },
+  "new_method_hashes": {
+    "evals/e1c_evaluation_2_object_observer.py": "e2ec776ecf8258f750077ffdcecfe5c339b6ab74ea24e82db05eecccfc249b73",
+    "evals/e1c_evaluation_2_object_observer_v2.py": "4d49205a7e3a5ccaf14f10f32a2078067e0c40a069d57ba3105d1e4c25fb3162"
+  },
+  "regression": {
+    "passed": 1502,
+    "skipped": 4,
+    "warnings": 33,
+    "seconds": 81.24,
+    "xml_sha256": "0b8fa970e5db71b31313f3ffab49edcff75d54c3a058490531b16464c75dc1cc"
+  },
+  "focused": {
+    "observer_unit_tests_passed": 17,
+    "observer_budget_v3_passed": 36,
+    "ruff_passed": true,
+    "synthetic_compact_preflight_ready": true
+  }
+}
