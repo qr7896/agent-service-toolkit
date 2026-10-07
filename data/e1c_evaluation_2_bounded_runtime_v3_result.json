@@ -1,0 +1,27 @@
+{
+  "schema": "e1c2-bounded-runtime-old-dev-v3-public-result",
+  "date": "2026-10-07",
+  "status": "completed_no_information_gain",
+  "fixed_DEV_denominator": 12,
+  "screen_denominator": 3,
+  "provider_calls": 6,
+  "provider_tokens": 13341,
+  "provider_failures": 0,
+  "provider_retries": 0,
+  "selected_candidates": 0,
+  "grader_attempted": 0,
+  "trusted_reproducer_count": 0,
+  "response_protocol_now_valid": true,
+  "production_definitions_found_for_two_tasks": true,
+  "cause": "model repeated identical retrieval; previous actual Assistant action and explicit turn request absent",
+  "artifact_root": ".codex/e1c/evaluation_2/bounded-runtime-dev-v3",
+  "artifact_sha256": {
+    "freeze.json": "571ace3fba55708f194c4823d9d43c544ce67364cc0c708703fc904bf25798f9",
+    "state.json": "1d8568b656095afe97b207526367b354096698dd0ade2e4a93bb461a4286eed9",
+    "provider_calls.jsonl": "c46ea4583918b97e0cc42ca161fbd336bb0e7a1d466ed3b7120607861285ead5",
+    "generation-seal.json": "2c7ce740dbab9df5c01479b6534dded9d6e3ed178250524525ab4a26bb1dea8a"
+  },
+  "previous_results_unchanged": true,
+  "TEST_C5_Fresh30_private_Test500_opened": false,
+  "canary_repair_E2_gates_open": false
+}
