@@ -1,0 +1,180 @@
+{
+  "schema": "e1c2-pair-input-contract-results-v1",
+  "date": "2026-10-07",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "Gold_read": false,
+  "machine_trusted": 0,
+  "diagnostic_container_count": 2,
+  "old_scores_or_qualification_changed": false,
+  "model_inputs_modified": false,
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false,
+  "canary_opened": false,
+  "source_records": {
+    "pair-input-observation-zero-v1": {
+      "freeze_sha256": "521aa57e86a925610b8c28fb60f1c355b1ca2ee2cd2e6df4e36ef0c200f050d1",
+      "result_sha256": "5c5ec331e09d5b3c57531064365650e433c8f7a8bb77fdedfb820e0d5041fc36",
+      "module": "evals/e1c_evaluation_2_pair_input_observer.py",
+      "module_sha256": "87ae015c62eed7a20a237e6ad81756ffe7d44e3fe321c5b87a0cd0c700759bfc"
+    },
+    "parameter-contract-zero-v1": {
+      "freeze_sha256": "1ed91d842317684dc32138c5f78df557ff2d57204e3dadb69a0cd3ddcfd7d4fe",
+      "result_sha256": "3ad032506110cebb1758f3198772655e9c5bf496ea1d1331b89136fa34be6324",
+      "module": "evals/e1c_evaluation_2_parameter_contract.py",
+      "module_sha256": "d8b57f8c9bcb7e76d6b82c81a07d912414b9d5a01090887cfb365461a959f0f1"
+    }
+  },
+  "pair-input-observation-zero-v1": {
+    "rows": [
+      {
+        "instance_id": "scikit-learn__scikit-learn-13496",
+        "status": "not_applicable_no_public_API_pair"
+      },
+      {
+        "instance_id": "scikit-learn__scikit-learn-26289",
+        "status": "shared_keywords_supported",
+        "rows": [
+          {
+            "parameter": "feature_names",
+            "status": "same_typed_fingerprint",
+            "normal_type": "numpy.ndarray",
+            "target_type": "numpy.ndarray"
+          },
+          {
+            "parameter": "max_depth",
+            "status": "same_typed_fingerprint",
+            "normal_type": "int",
+            "target_type": "int"
+          },
+          {
+            "parameter": "positional_0",
+            "status": "unknown",
+            "normal_type": "unclassified_or_budget_exceeded",
+            "target_type": "unclassified_or_budget_exceeded"
+          }
+        ],
+        "shared_keyword_values_match": true,
+        "all_inputs_match": false,
+        "public_fixture_value_equivalence_proven": false,
+        "trusted_reproducer": false,
+        "normal_returncode": 0,
+        "target_returncode": 1,
+        "normal_result_sha256": "ded9f6da761d7b393a02420dba394125ce3aa32fa35968054c58e2cb18d5153d",
+        "target_result_sha256": "5fd8798392320fec33f80326da43b2fabc8d46ba0186238d081af7e59fe25b3f"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "status": "not_applicable_no_public_API_pair"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1359",
+        "status": "not_applicable_no_public_API_pair"
+      }
+    ],
+    "cached_reference_denominator": 4,
+    "fixed_DEV_denominator": 12,
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "old_scores_or_qualification_changed": false,
+    "new_model_generation": false,
+    "API_body_entry_proven": false
+  },
+  "parameter-contract-zero-v1": {
+    "rows": [
+      {
+        "instance_id": "scikit-learn__scikit-learn-13496",
+        "status": "not_applicable"
+      },
+      {
+        "instance_id": "scikit-learn__scikit-learn-26289",
+        "status": "documentation_scope_gap",
+        "findings": [
+          {
+            "parameter": "max_depth",
+            "declaration": "int, default=None",
+            "source_line": 787,
+            "origin": "production_parameter_doc",
+            "role": "normal",
+            "api": "export_graphviz",
+            "path": "sklearn/tree/_export.py",
+            "source_sha256": "1008ff843c19ad7144ba96fa97c0752cd23f2c334e21e8370d65d6359cea20df",
+            "observed_type": "int",
+            "status": "documented_type_supported"
+          },
+          {
+            "parameter": "feature_names",
+            "declaration": "list of str, default=None",
+            "source_line": 791,
+            "origin": "production_parameter_doc",
+            "role": "normal",
+            "api": "export_graphviz",
+            "path": "sklearn/tree/_export.py",
+            "source_sha256": "1008ff843c19ad7144ba96fa97c0752cd23f2c334e21e8370d65d6359cea20df",
+            "observed_type": "numpy.ndarray",
+            "status": "observed_type_not_explicitly_documented"
+          },
+          {
+            "parameter": "feature_names",
+            "declaration": "list of str, default=None",
+            "source_line": 956,
+            "origin": "production_parameter_doc",
+            "role": "target",
+            "api": "export_text",
+            "path": "sklearn/tree/_export.py",
+            "source_sha256": "1008ff843c19ad7144ba96fa97c0752cd23f2c334e21e8370d65d6359cea20df",
+            "observed_type": "numpy.ndarray",
+            "status": "observed_type_not_explicitly_documented"
+          },
+          {
+            "parameter": "max_depth",
+            "declaration": "int, default=10",
+            "source_line": 971,
+            "origin": "production_parameter_doc",
+            "role": "target",
+            "api": "export_text",
+            "path": "sklearn/tree/_export.py",
+            "source_sha256": "1008ff843c19ad7144ba96fa97c0752cd23f2c334e21e8370d65d6359cea20df",
+            "observed_type": "int",
+            "status": "documented_type_supported"
+          }
+        ],
+        "source_docs_are_not_universal_truth": true,
+        "explicit_public_change_request_may_override_base_docs": true,
+        "public_report_completion_is_still_hypothesis": true,
+        "trusted_reproducer": false
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "status": "not_applicable"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1359",
+        "status": "not_applicable"
+      }
+    ],
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "cached_reference_denominator": 4,
+    "old_scores_or_qualification_changed": false,
+    "model_inputs_modified": false
+  },
+  "regression": {
+    "passed": 1519,
+    "skipped": 4,
+    "warnings": 33,
+    "seconds": 105.28,
+    "xml_sha256": "24b56fa27718e72d4214494a6551ac79ec6837d4e264823d5ea1481c2f09724f"
+  },
+  "focused": {
+    "new_unit_tests_passed": 17,
+    "pair_contract_budget_v3_passed": 36,
+    "ruff_passed": true,
+    "synthetic_compact_preflight_ready": true
+  },
+  "initial_validation_issues": "Unused imports in pair observer and import formatting in parameter-contract test were fixed before their audit freezes; no audit reruns. Earlier 1513-pass full regression preserved."
+}

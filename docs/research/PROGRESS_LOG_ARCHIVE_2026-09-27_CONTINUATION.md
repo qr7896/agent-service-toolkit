@@ -1230,3 +1230,15 @@ uv run --frozen python -m pytest -q
 最初v1/v2 Ruff unused import只在对应freeze前修正，已冻结方法源与结果未改；原scope/export/qualification/Gold/预算/state/ledger/seal/负记录/备份均保持。最终合成compact preflight ready=true、完整1502passed/4skipped/33warnings81.24秒，XML及两observer source/v1/v2freeze/result SHA绑定data/e1c_evaluation_2_object_relationship_results.json。下一步paired API实际共享输入/类型对应与有限行为义务校准，再完整method freeze/同版DEV；不是付费调提示，不开新canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证完美或30/30。
 
 两Roadmap/Web handoff唯一当前入口更新，日志只本集中续档；源码/单测/协议/脱敏收据公开，raw/probe/Gold/test/key本机保留。无镜像删除/系统Docker修复/IPC/VHD/registry/代理/tunnel/密钥更改；Docker健康只读检查，普通隔离诊断不修改机器配置，当前无下载需求。
+
+## 2026-10-07：paired caller输入诊断与Parameters规格支持缺口
+
+公共API对照的调用前诊断完成：normal rc0/target rc1，feature_names(ndarray)与max_depth(int)两路typed摘要一致，但分类器对象unknown，all_inputs_match=false。生产参数文档两API均仅明确写list of str，因此ndarray期待存在规格支持缺口，不等于输入非法或任务不是bug。新增provider/tokens0/0、Gold读取0，原probe与旧Gold4/4/资格2机制候选+1行为候选+1unknown保持，machine trusted0。
+
+完整读ARS执行/监控规范及ponytail，复用原guard transport，不新增依赖/subagent。caller-input协议预注册，新namespace验证原producer seal/全部生产侧SHA、normal/target各原脚本；源码API两role均host LF/runtime/base Git匹配。参数装饰器可阻止进函数体，故从冻结AST单一顶层调用行捕获local Name或frozen Constant，无副作用参数；不eval/repr/getattr/custom属性。builtin有界typed表示、ndarray精确类型biufcSU≤64KiB按dtype/shape/C-bytes SHA，object/subclass/custom/cycle/预算未知，官方NumPy文档仅核验bytes/kind语义。normal0/target1各一次新隔离容器快照，feature_names ndarray和max_depth int摘要匹配；positional_0分类器unknown，all_inputs_match=false，不证明API体执行/public完整fixture/语义/抵抗恶意probe。
+
+另版Parameters文档协议/新namespace，6专项过后只读审计；自动从pair binding选择API source，原host SHA/LF/base匹配，提取Parameters四声明行，不序列化Returns/Examples/断言/答案。冻结两个API均feature_names list of str，实际ndarray未明确在文档支持域；max_depth声明int与观察一致。报告documentation_scope_gap而不是非法输入或task不是bug，文档可能过时、明确公共变更请求可覆盖旧文档；normal接受不能单独推target承诺，旧报告completion假设仍分账。当前优先规格/意图分支，不扩任意对象序列化或付费碰运气。
+
+新增caller11+contract6共17单测，预算V3重点36/Ruff/合成compact preflight过；先前1513passed/4skipped107.76秒保留，最终完整1519passed/4skipped/33warnings105.28秒/XML SHA绑定公开data/e1c_evaluation_2_pair_input_contract_results.json。unused imports与测试排序仅在各audit freeze前修正，已冻结source/result/预算不改、不重跑原namespace。provider/tokens0/0、Gold读取0、machine0，原资格/Gold/exception/source/state/ledger/seal/负记录/备份保持。两新普通隔离容器不等于旧模型或评分重跑；不改model输入，不输入Gold，raw/probe/Gold/test/key不上Git。
+
+两Roadmap/Web handoff更新为有限行为资格分支/正负例、最小观测义务，再完整method freeze/同版DEV；可信gate未过不抽新canary、不打开TEST/C5/Fresh30/privateTest500/repair/E2，不保证30/30或一周完美。无下载删除/Docker重启/IPC/VHD/registry/proxy/tunnel/密钥修改，当前无下载需求。日志只集中本续档，仅安全源码/单测/协议/脱敏收据同步Git。

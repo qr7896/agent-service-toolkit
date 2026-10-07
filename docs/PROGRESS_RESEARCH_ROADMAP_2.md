@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** 已补充真实构造器关系证据：原四缓存中1项具有两个条件引用，离线容器观察到DateTime exact type与Foo→Schema MRO关系；其余3项not applicable。v1直接构造器未知结果保留，v2新namespace一次诊断，新增provider/tokens0/0、Gold读取0，原probe未改。旧资格仍2机制候选/1行为候选/1unknown，machine trusted0，旧Gold4/4及异常对应3/4不改。尚未完成行为资格和完整live方法冻结，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。 [结果](research/E1C2_OBJECT_RELATIONSHIP_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_object_relationship_results.json)。
+**最新状态：** 公共API对照的调用前诊断完成：normal rc0/target rc1，feature_names(ndarray)与max_depth(int)两路typed摘要一致，但分类器对象unknown，all_inputs_match=false。生产参数文档两API均仅明确写list of str，因此ndarray期待存在规格支持缺口，不等于输入非法或任务不是bug。新增provider/tokens0/0、Gold读取0，原probe与旧Gold4/4/资格2机制候选+1行为候选+1unknown保持，machine trusted0。 [结果](research/E1C2_PAIR_INPUT_CONTRACT_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_pair_input_contract_results.json)。
 
-17项新observer单测、预算/V3重点36项与Ruff通过，合成preflight ready=true；完整回归1502 passed/4 skipped/33warnings（81.24秒）。原scope/export/source/预算/评分与失败记录保持；新对象关系是有限诊断证据，不回填旧unknown或报repair rate。当前无下载需求。
+本轮新增17专项（caller输入11、Parameters文档6），预算/V3重点36项、Ruff与合成preflight过；完整1519 passed/4 skipped/33warnings（105.28秒）。原scope/export/object与历史资格/评分/失败保持；原模型不加doc事实回填、不重跑旧namespace，无下载需求。
 
 ## 1. 已完成与尚未完成
 
@@ -28,13 +28,15 @@
 | 辅助依赖authority | 两处host LF/base blob/runtime一致，已接v3审计overlay | 不改模型输入、不回填旧资格 |
 | 条件范围与静态export链 | 四缓存3显式结构/1条件结构；两引用链静态身份支持，23单测 | 不证明runtime对象/namespace意图，不改旧资格 |
 | 构造器运行时关系 | DateTime exact与Foo包含Schema MRO；5记录全保留；v1 unknown/v2独立身份 | 1缓存2关系，不是2任务；不证明公开意图/任意Python语义 |
+| 调用前paired输入 | 两共享keyword typed SHA一致，分类器unknown；normal0/target1 | before-call不证明进入函数体，all_inputs_match=false |
+| Parameters文档支持 | 自动提取四声明行；两个list声明不明确支持实际ndarray | 规格支持缺口，不判task非法；明确请求可改旧文档 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-辅助源、静态export链与这两个条件对象的实际构造器关系已补齐。MM1252省略import有条件解释与运行时关系，公开namespace意图仍不是显式承诺；旧严格资格unknown不变。SK26289有public API对照，但实际共享输入/类型对应与原报告机制仍需分开核对。下一步有限行为义务与反例，不以Gold或评分日志造期待，不做无限付费调提示。
+辅助源、静态export链、条件对象构造器关系和有限paired keyword快照均补齐。训练对象状态仍未知，但更优先的瓶颈是期待规格：source docs只明确list of str，实际ndarray的completion是public报告推导假设，不是已证明原承诺；明确API改动请求可覆盖旧文档，不能因此否定该task。先定义有限可观测行为资格与负例，再决定需要哪些对象状态证据，不继续无限付费调提示。
 
 ## 3. 严格验收定义
 
@@ -51,8 +53,9 @@
 | 已完成 | authority接入v3辅助源校验 | 原host摘要/LF/base Git/runtime均绑定，8项身份单测 | 不改旧model窗口或结果 |
 | 已完成 | 有限范围与静态export链协议/审计 | 完整引用后缀、单一静态定义/重导出、host/LF/base身份、23单测 | 条件解释不回填旧unknown |
 | 已完成（有限范围） | 条件对象构造器/MRO观察 | 新源码/namespace，network none/read-only/pull never，host/LF/base/runtime一致 | 非语义/恶意probe attestation |
-| 1 | paired API真实输入/类型对应 | 固定公共API与源码，自动观测，值不输出，正常/目标分别绑定 | 不将语法共用Name当实际值证书 |
-| 2 | 公开行为义务资格校准 | 请求/对照/回归分开，行为/机制/条件假设分账 | 缺意图或机制仍unknown |
+| 已完成（有限范围） | paired caller输入与Parameters文档 | 两共享keyword typed SHA一致；文档源行/SHA/base核验 | 训练对象unknown、API体未证明、期待仍需分支 |
+| 1 | 行为资格分支与反例 | 显式请求/源码文档/比较回归假设分账，不否定明确变更请求 | 未明确扩展不得冒称原承诺 |
+| 2 | 分支最小可观测义务与校准 | 必要时受限对象状态投影，保留未知与固定分母 | 不先做任意对象序列化 |
 | 3 | 跨repo正负例→完整method freeze | 资格scope/classifier/observer/双source身份与输入/预算先冻 | 不继续paid调提示 |
 | 4 | 同版四参考/九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | screen不报全12 |
 | 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |

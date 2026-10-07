@@ -1,22 +1,22 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-07。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新构造器关系](E1C2_OBJECT_RELATIONSHIP_RESULTS_2026-10-07.md)。
+日期：2026-10-07。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新paired输入与规格](E1C2_PAIR_INPUT_CONTRACT_RESULTS_2026-10-07.md)。
 
 ## 1. 当前状态与禁止重跑
 
-已补充真实构造器关系证据：原四缓存中1项具有两个条件引用，离线容器观察到DateTime exact type与Foo→Schema MRO关系；其余3项not applicable。v1直接构造器未知结果保留，v2新namespace一次诊断，新增provider/tokens0/0、Gold读取0，原probe未改。旧资格仍2机制候选/1行为候选/1unknown，machine trusted0，旧Gold4/4及异常对应3/4不改。尚未完成行为资格和完整live方法冻结，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。
+公共API对照的调用前诊断完成：normal rc0/target rc1，feature_names(ndarray)与max_depth(int)两路typed摘要一致，但分类器对象unknown，all_inputs_match=false。生产参数文档两API均仅明确写list of str，因此ndarray期待存在规格支持缺口，不等于输入非法或任务不是bug。新增provider/tokens0/0、Gold读取0，原probe与旧Gold4/4/资格2机制候选+1行为候选+1unknown保持，machine trusted0。 本轮2新离线诊断容器，非新模型/评分成绩；不开canary/TEST/Fresh30/repair/E2。
 
 资格器检查已知fixture结构、alias/对象修改、production源绑定、期待锚、原probe观察、normal/target。17单测与四内存alias反例通过，静态反例不是四个新runtime故障。v1未暴露依赖被误拒留档，v2缺证unknown、已暴露真正SHA变化仍拒；增量赋值/删除等未知。
 
 authority/scope/export仅审计，不改原模型输入。对象observer v1整体unknown且未执行容器，v2以模块全部有界构造器候选记录实际关系，不按with_metaclass猜继承。5条真实记录含2条不对应记录全部保留，DateTime exact与Schema MRO关系出现；runtime关系不证明公开意图，不清除旧严格unknown。两个namespace均完成，不重跑。
 
-[最新公开收据](../../data/e1c_evaluation_2_object_relationship_results.json)绑定本轮结果与最终XML SHA；raw/probe/Gold/test/key留本机。所有已started audit/run/smoke/Gold禁止重跑、回填或修改旧source。
+[最新公开收据](../../data/e1c_evaluation_2_pair_input_contract_results.json)绑定本轮结果与最终XML SHA；raw/probe/Gold/test/key留本机。所有已started audit/run/smoke/Gold禁止重跑、回填或修改旧source。
 
 ## 2. 当前唯一下一步
 
-最终Ruff/预算V3重点36项/合成preflight通过，完整1502 passed/4 skipped/33warnings（81.24秒），XML SHA在收据，不报repair rate。
+最终Ruff/预算V3重点36项/合成preflight通过，完整1519 passed/4 skipped/33warnings（105.28秒），XML SHA在收据，不报repair rate。
 
-先补paired API真实共享输入/类型对应，复用现有只读离线transport，绑定正常/目标各原probe与固定API/source；自动选文件，值不输出。再校准显式请求、同输入API对照、版本/依赖条件回归的有限行为义务；SK26289行为支持不叫原机制证明。scope/export/object诊断已完成，不重复原namespace。
+先冻结有限行为资格分支与正负例：显式公共变更请求可覆盖base docs、已有生产文档承诺、比较/回归报告的条件假设分账。source参数事实只取Parameters、不序列化Examples/断言，未来新输入另freeze，不回填原模型。不要先扩展任意对象序列化；只有明确契约需训练状态等证据时再另版加受限投影。scope/export/object/pair-input/parameter-contract诊断全已完成，不重跑。
 
 跨repo正负例通过后完整method含资格/observer/双source身份先冻，再同版四参考/九准入DEV/native，Gold/受限候选/语义/原机制分账。可信gate真正达成才历史全排除新canary一次≥2/3、Agent patch/official、小DEV30及最后另授权Fresh30。当前无新paid/canary命令，不抽第6批、不开始repair/E2，不保证完美。
 
@@ -24,8 +24,8 @@ authority/scope/export仅审计，不改原模型输入。对象observer v1整�
 
 ```bash
 uv sync --frozen --group dev
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_qualification.py evals/e1c_evaluation_2_qualification_v2.py evals/e1c_evaluation_2_qualification_v3.py tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py tests/test_e1c_evaluation_2_qualification_v3.py evals/e1c_evaluation_2_reference_scope.py evals/e1c_evaluation_2_export_chain.py tests/test_e1c_evaluation_2_reference_scope.py tests/test_e1c_evaluation_2_export_chain.py evals/e1c_evaluation_2_object_observer.py evals/e1c_evaluation_2_object_observer_v2.py tests/test_e1c_evaluation_2_object_observer.py tests/test_e1c_evaluation_2_object_observer_v2.py
-uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py tests/test_e1c_evaluation_2_qualification_v3.py tests/test_e1c_evaluation_2_reference_scope.py tests/test_e1c_evaluation_2_export_chain.py tests/test_e1c_evaluation_2_object_observer.py tests/test_e1c_evaluation_2_object_observer_v2.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_qualification.py evals/e1c_evaluation_2_qualification_v2.py evals/e1c_evaluation_2_qualification_v3.py tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py tests/test_e1c_evaluation_2_qualification_v3.py evals/e1c_evaluation_2_reference_scope.py evals/e1c_evaluation_2_export_chain.py tests/test_e1c_evaluation_2_reference_scope.py tests/test_e1c_evaluation_2_export_chain.py evals/e1c_evaluation_2_object_observer.py evals/e1c_evaluation_2_object_observer_v2.py tests/test_e1c_evaluation_2_object_observer.py tests/test_e1c_evaluation_2_object_observer_v2.py evals/e1c_evaluation_2_pair_input_observer.py evals/e1c_evaluation_2_parameter_contract.py tests/test_e1c_evaluation_2_pair_input_observer.py tests/test_e1c_evaluation_2_parameter_contract.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py tests/test_e1c_evaluation_2_qualification_v3.py tests/test_e1c_evaluation_2_reference_scope.py tests/test_e1c_evaluation_2_export_chain.py tests/test_e1c_evaluation_2_object_observer.py tests/test_e1c_evaluation_2_object_observer_v2.py tests/test_e1c_evaluation_2_pair_input_observer.py tests/test_e1c_evaluation_2_parameter_contract.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 uv run --frozen python -m evals.v3_compact_pilot preflight
 uv run --frozen python -m pytest -q
 ```
