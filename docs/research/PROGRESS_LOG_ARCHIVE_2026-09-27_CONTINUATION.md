@@ -1208,3 +1208,13 @@ uv run --frozen python -m pytest -q
 回传diff、实际hook证据与源SHA、工程数、paid ledger、Gold/语义/各固定分母、未过gate和下一步；不承诺完美/30题全过，不把Gold/回归称repair。日志只写[集中续档](PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，两Roadmap保持单一当前入口。旧快照/Git历史保留，不按历史“下一步”操作。
 
 </details>
+
+## 2026-10-07：有限引用范围与静态export链零调用审计
+
+已实现条件引用范围检查与静态重导出链审计：四缓存3显式结构支持/1条件结构支持；两个条件引用链均有静态身份支持，但原资格v3仍2机制候选/1行为候选/1unknown，machine trusted0。新增provider/tokens0/0、Gold读取0，旧Gold4/4及异常对应3/4不改。新增23单测，最终1485 passed/4 skipped/33warnings（84.67秒），Ruff、重点38项与合成preflight过；工程数不是修复率。未完成运行时对象/公开意图对应或完整live方法冻结，不开canary/TEST/C5/Fresh30/private Test500/repair/E2。
+
+范围协议预注册后审计四缓存，原producer seal和生产侧产物hash全部验证；完整引用路径与唯一生产定义/host SHA/LF/base Git条件绑定，不改原public facts/model输入。MM1252仅条件结构支持，明确public import不显式、export/runtime/intent不推断证书。后续export-chain协议预注册，以范围输出自动派生Schema→schema.Schema及fields.DateTime来源，两链静态身份支持，旧资格/Gold结果均不改。范围11、export12新增单测；两合成库正例不是两个真实repo实验。
+
+初次范围单测1failed/9passed因fixture把同一alpha.fields.DateTime直接import当不同对象，改为alpha.DateTime负例且增加同对象正例，未弱化拒绝断言。首轮Ruff I001未过而scope审计已开始，原source全文snapshot保存于该私有namespace，SHA等原freeze；公开source仅交换argparse/ast import顺序，另记SHA和可重建差异，不修改原freeze/result、不重跑。export源码在Ruff/专项过后冻结，之后不改。重点38passed、最终1485passed/4skipped/33warnings84.67秒，XML SHA与原source/currentsource/public result SHA收据绑定；synthetic preflight ready=true。
+
+本轮未付费、未读Gold、未运行新容器故障，无下载删除/Docker重启/IPC/VHD/registry/proxy/tunnel/key改变。安全公开同步限源码/单测/协议/脱敏收据，private raw/probe/Gold/test/key不上Git；旧source/state/ledger/seal/失败备份全保留。后续runtime对象与公开行为资格仍未过，完整live方法未freeze，不抽新canary/不开TEST/C5/Fresh30/privateTest500/repair/E2，不承诺完美或30/30。当前三入口更新待办，本轮日志只集中归档。

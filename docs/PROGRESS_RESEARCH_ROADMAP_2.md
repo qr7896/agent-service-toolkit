@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** 资格v3已接入辅助生产源码authority：四缓存2机制支持候选、1行为候选（原机制未证明）、1unknown，machine trusted仍0，E1-C未封板。本轮provider/tokens0/0、Gold读取0；旧Gold4/4、异常对应3/4不改。audit overlay不改原模型输入；public import省略范围推断仅为未接受方案。最终1462 passed/4 skipped/33 warnings（89.41秒），预算/V3重点19项、Ruff与合成preflight通过，不是修复率。初次preflight的SQLite sidecar复制竞态失败保留；只排除根目录运行态数据库快照复制，不删除数据库。不打开新canary/TEST/C5/Fresh30/private Test500/repair/E2，无下载需求。 [最新结果](research/E1C2_AUTHORITY_INTEGRATION_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_authority_integration_results.json)。
+**最新状态：** 已实现条件引用范围检查与静态重导出链审计：四缓存3显式结构支持/1条件结构支持；两个条件引用链均有静态身份支持，但原资格v3仍2机制候选/1行为候选/1unknown，machine trusted0。新增provider/tokens0/0、Gold读取0，旧Gold4/4及异常对应3/4不改。新增23单测，最终1485 passed/4 skipped/33warnings（84.67秒），Ruff、重点38项与合成preflight过；工程数不是修复率。未完成运行时对象/公开意图对应或完整live方法冻结，不开canary/TEST/C5/Fresh30/private Test500/repair/E2。 [最新结果](research/E1C2_REFERENCE_SCOPE_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_reference_scope_results.json)。
 
-原v1/v2与四个静态alias反例结果保留。v3新增8项身份单测，严格绑定receipt SHA、task/base/image、原host/LF/base Git/已记录runtime；只补充审计来源，不声称原模型看到新窗口。
+原v1/v2/v3、四静态alias反例与旧authority结果保持。范围审计只报告条件假设，不清除旧unknown；重导出链自动选生产文件，逐节点host LF等于exact-base Git blob。合成库正例不冒称新真实仓库实验。首次错误单测fixture与Ruff import排序记录保留；原审计源码snapshot等原freeze SHA，公开源仅import排序不同，不重跑审计。
 
 ## 1. 已完成与尚未完成
 
@@ -26,13 +26,14 @@
 | 真实异常观察与双source身份 | v1失败保留，v2观察3/4对应；CRLF/LF原副本/有效文件/Git blob核对 | 不等于语义证书或抵抗恶意程序的attestation |
 | 新受限资格校准 | v3两机制支持候选/一行为候选/一unknown；旧v1/v2保留 | 非新运行时实验，不自动认证 |
 | 辅助依赖authority | 两处host LF/base blob/runtime一致，已接v3审计overlay | 不改模型输入、不回填旧资格 |
+| 条件范围与静态export链 | 四缓存3显式结构/1条件结构；两引用链静态身份支持，23单测 | 不证明runtime对象/namespace意图，不改旧资格 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-两处辅助源出处缺口已补齐。SK26289仅行为候选，原机制仍未证明；MM1252仍unknown，因DateTime/Foo/Schema公共示例省略import来源。有限推断必须显式列假设、拒绝歧义、同名影射和改字面量；不能把省略import当原文承诺。proposal尚未接受或接入，machine0。
+辅助源与静态重导出链身份已补齐。MM1252省略import有条件结构解释，旧严格资格仍unknown；静态链不证明原公开意图、运行时实际使用对象或任意Python行为。SK26289仍仅行为候选，原机制未证明。接下来核对受限实际对象与公开行为义务，不重复按旧题补namespace规则、不加预算碰运气。
 
 ## 3. 严格验收定义
 
@@ -47,14 +48,16 @@
 | 顺序 | 下一步 | 放行证据 | 未过时 |
 |---|---|---|---|
 | 已完成 | authority接入v3辅助源校验 | 原host摘要/LF/base Git/runtime均绑定，8项身份单测 | 不改旧model窗口或结果 |
-| 2 | public import省略的范围协议 | 有限显式推断或unknown，不凭同名认完整namespace | 不自动trusted |
+| 已完成 | 有限范围与静态export链协议/审计 | 完整引用后缀、单一静态定义/重导出、host/LF/base身份、23单测 | 条件解释不回填旧unknown |
+| 1 | runtime实际对象与链对应 | 新受限离线instrumentation，自动派生文件，正负例 | 静态链不能跳成runtime证书 |
+| 2 | 公开行为义务资格校准 | 请求/对照/回归分开，行为/机制/条件假设分账 | 缺意图或机制仍unknown |
 | 3 | 跨repo正负例→完整method freeze | 资格scope/classifier/observer/双source身份与输入/预算先冻 | 不继续paid调提示 |
 | 4 | 同版四参考/九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | screen不报全12 |
 | 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
 | 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
 | 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮provider0；资格v1/v2/v3与authority、scope proposal各namespace以及所有已started的run/smoke/Gold/audit禁止重跑或改源/预算/账本。当前无新live/canary命令，不抽第6批，不开TEST/Fresh30/repair/E2。
+下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮provider0；资格v1/v2/v3与authority、scope proposal/reference-scope/export-chain各namespace以及所有已started的run/smoke/Gold/audit禁止重跑或改源/预算/账本。当前无新live/canary命令，不抽第6批，不开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 

@@ -1,0 +1,157 @@
+{
+  "schema": "e1c2-reference-scope-and-export-results-v1",
+  "date": "2026-10-07",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "Gold_read": false,
+  "machine_trusted": 0,
+  "new_runtime_experiment": false,
+  "old_qualification_modified": false,
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false,
+  "canary_opened": false,
+  "source_records": {
+    "reference-scope-zero-v1": {
+      "freeze_sha256": "03b19e97b6ae7fb3a26f08951758326ecb2f57d0144eb5a9157ce616b50b999c",
+      "result_sha256": "e8d80ed8217143807fcca11bbb35ad6b7e75ddf8f4a04268f9e28d2f203b2b1a"
+    },
+    "export-chain-zero-v1": {
+      "freeze_sha256": "829d310dd88951a7e0f8f5f8424ddaf7c16ec2c6005e5af4b426c3e4c4f3a85a",
+      "result_sha256": "30a0dbfec09a18d82aa045eb053ddc8d9884c86a95f55f887cc64eb952a7ee71"
+    }
+  },
+  "reference-scope-zero-v1": {
+    "rows": [
+      {
+        "instance_id": "scikit-learn__scikit-learn-13496",
+        "status": "explicit_structure_supported",
+        "scope_assumptions": [],
+        "unresolved_references": [],
+        "result_sha256": "aea5138922075dc4fca4499e6bc6cd0043857c60fd262fdf7a64eb290a19331e"
+      },
+      {
+        "instance_id": "scikit-learn__scikit-learn-26289",
+        "status": "explicit_structure_supported",
+        "scope_assumptions": [],
+        "unresolved_references": [],
+        "result_sha256": "2d8d8956f83bc58a5b09965883e0e06f148bdbf4476ec81a18c043eecb2f68cc"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "status": "conditional_structure_supported",
+        "scope_assumptions": [
+          {
+            "public_reference": "Schema",
+            "conditional_binding": "marshmallow.Schema",
+            "path": "src/marshmallow/schema.py",
+            "source_sha256": "ecbc061c2d30b64eb9318f3b1b86ed3f2355006aaeceead5ebdd89d758460775",
+            "canonical_base_sha256": "16cb98e9fbc9ef785d1797a72be1bc7cafe796568e97c59d366376964d57c971",
+            "public_import_explicit": false,
+            "export_chain_equivalence_proven": false
+          },
+          {
+            "public_reference": "DateTime",
+            "conditional_binding": "marshmallow.fields.DateTime",
+            "path": "src/marshmallow/fields.py",
+            "source_sha256": "4ef1fc8b763dd2f1f59deedea86571322895b7ae5a71fb1f3de5a32768a0e619",
+            "canonical_base_sha256": "fe379331d672ecb0ba1ce5464d1c562ae7c4367b9c6924b6725cf65c1957b8a2",
+            "public_import_explicit": false,
+            "export_chain_equivalence_proven": false
+          }
+        ],
+        "unresolved_references": [],
+        "result_sha256": "2e7b7aa8caf1c456ab98f068a8fd70c5beb9d507db80e877c26b4f81189084f9"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1359",
+        "status": "explicit_structure_supported",
+        "scope_assumptions": [],
+        "unresolved_references": [],
+        "result_sha256": "bc2e16a0dad49ffb4255724712108bc0ce3fb28d653ee18767d5e6c8d6d6c45a"
+      }
+    ],
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "original_qualification_modified": false,
+    "new_runtime_experiment": false,
+    "fixed_DEV_denominator": 12,
+    "cached_reference_denominator": 4,
+    "live_method_freeze_completed": false
+  },
+  "export-chain-zero-v1": {
+    "rows": [
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "public_reference": "Schema",
+        "input_sha256": "08942cbb3c94602e0d816b0b726e2ed6a30f5e2ce5113b3a03627ecfe6f89863",
+        "base_commit": "b063a103ae5222a5953cd7453a1eb0d161dc5b52",
+        "status": "static_chain_supported",
+        "chain": [
+          {
+            "qualified": "marshmallow.Schema",
+            "path": "src/marshmallow/__init__.py",
+            "host_sha256": "2c4604e492e2613c43d63854de34839b66d804851bac16fe106b4a9dabea61ad",
+            "canonical_sha256": "cd3b9b1a5c2537b9bb137fda089fbd16b08bed74e7bb98954389a2ae2fc10f07"
+          },
+          {
+            "qualified": "marshmallow.schema.Schema",
+            "path": "src/marshmallow/schema.py",
+            "host_sha256": "ecbc061c2d30b64eb9318f3b1b86ed3f2355006aaeceead5ebdd89d758460775",
+            "canonical_sha256": "16cb98e9fbc9ef785d1797a72be1bc7cafe796568e97c59d366376964d57c971"
+          }
+        ],
+        "runtime_object_identity_proven": false
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "public_reference": "DateTime",
+        "input_sha256": "08942cbb3c94602e0d816b0b726e2ed6a30f5e2ce5113b3a03627ecfe6f89863",
+        "base_commit": "b063a103ae5222a5953cd7453a1eb0d161dc5b52",
+        "status": "static_chain_supported",
+        "chain": [
+          {
+            "qualified": "marshmallow.fields.DateTime",
+            "path": "src/marshmallow/fields.py",
+            "host_sha256": "4ef1fc8b763dd2f1f59deedea86571322895b7ae5a71fb1f3de5a32768a0e619",
+            "canonical_sha256": "fe379331d672ecb0ba1ce5464d1c562ae7c4367b9c6924b6725cf65c1957b8a2"
+          }
+        ],
+        "runtime_object_identity_proven": false
+      }
+    ],
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "runtime_object_identity_proven": false,
+    "public_namespace_intent_proven": false,
+    "original_qualification_modified": false,
+    "new_runtime_experiment": false
+  },
+  "source_preservation": {
+    "audit_source_snapshot_sha256": "df8ca28b30fa9891cab6534c0b3e346408c677f9f082a7978cfe0598740da17d",
+    "current_source_sha256": "6191b8b11a2c0479add7322c1191695e3da5433b51f00c4b2c79523d14bc0987",
+    "difference": "import-order-only",
+    "old_audit_unchanged": true
+  },
+  "regression": {
+    "passed": 1485,
+    "skipped": 4,
+    "warnings": 33,
+    "seconds": 84.67,
+    "xml_sha256": "ff570fb88d9baeda5e60a4af05cb745176c3a83ddabf0072c29b042bc778e2a7"
+  },
+  "focused": {
+    "reference_scope_passed": 11,
+    "export_chain_passed": 12,
+    "combined_scope_authority_budget_v3_passed": 38,
+    "ruff_passed": true,
+    "synthetic_compact_preflight_ready": true
+  },
+  "initial_validation_issues": {
+    "reference_scope_test": "1 failed / 9 passed: same qualified object incorrectly treated as different in fixture; corrected to different namespace and added equal-object positive case",
+    "ruff": "I001 import-order-only; original audit source snapshot SHA verified against original freeze; no audit rerun"
+  }
+}
