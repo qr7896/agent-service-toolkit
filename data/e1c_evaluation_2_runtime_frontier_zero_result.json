@@ -1,0 +1,59 @@
+{
+  "schema": "e1c2-runtime-frontier-zero-result-v1",
+  "date": "2026-10-07",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "screen_denominator": 4,
+  "fixed_denominator": 12,
+  "full_admitted_DEV_run": false,
+  "cached_not_new_generation": true,
+  "feedback_conditioned_model_replay": false,
+  "Gold_discriminating": 3,
+  "machine_trusted": 0,
+  "source_records": {
+    "freeze.json": "cd04766a9831c51b578b60d42c70510bb999ba6d5428a3a82e163a38db0ae122",
+    "state.json": "18b67d5307e7df25414c15c1b24dcd53b038bf4a069860b00b874b7c7c18aca9",
+    "generation-seal.json": "14a67d73c7d23cbd326c7990db74258ed97b4870d1f220ec5213e54c2c314c01"
+  },
+  "rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "status": "executed",
+      "selected_turn": 2,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "79bc8db94cc7f60a1fe0a6d15a5ff9dbf5e8884f2699a1213d0db9bb9415511b",
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "status": "upstream_cache_missing_no_provider_call",
+      "selected_turn": null,
+      "Gold_discriminating": null,
+      "Gold_result_sha256": null,
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "status": "executed",
+      "selected_turn": 1,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "5b1ab3bffff37e40b74dce91200ba647bcd9efa7159ced9bf4eda0cca13f01df",
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "status": "executed",
+      "selected_turn": 3,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "7da1cd3633d794b50284fa640f358578e9b7e222d3e5b0a81dbb4a8a36f12da3",
+      "trusted_reproducer": false
+    }
+  ],
+  "Docker_recovery": {
+    "authorized_IPC_backup_only": true,
+    "backup_suffix": "20261007-144329",
+    "original_DEV_images_verified": 12,
+    "files_deleted": 0,
+    "VHD_registry_proxy_tunnel_key_modified": false
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "schema": "e1c2-frontier-live-dev-result-v1",
+  "date": "2026-10-07",
+  "run_id": "frontier-runtime-reference-dev-v1",
+  "screen_denominator": 4,
+  "fixed_denominator": 12,
+  "admitted_denominator": 9,
+  "full_admitted_DEV_run": false,
+  "model": "deepseek-flash",
+  "provider_cap": 50000,
+  "task_cap": 24000,
+  "max_calls": 16,
+  "actual_provider_calls": 12,
+  "actual_provider_tokens": 40135,
+  "provider_retries": 0,
+  "Gold_discriminating": 2,
+  "machine_trusted": 0,
+  "four_reference_gate_passed": false,
+  "independent_validation": false,
+  "isolated_single_factor_causal_comparison": false,
+  "source_records": {
+    "freeze.json": "e50cd41de432567ea065f7d1ce5c4ea531eb8c32732df0afe944ad5f23e8d223",
+    "state.json": "e09603fdeee3659551387821237b2096ccc49489cb21542b2507f1727c654865",
+    "provider_calls.jsonl": "82a97e3e556dbaba7f2055723f93b10ed49003ab51b1e825399f2211be3fb25e",
+    "generation-seal.json": "5493c5daa758257e3d497d6101c0c14dc1d39b757f5e38ceec978af8395d1110"
+  },
+  "rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "status": "abstained",
+      "provider_calls": 3,
+      "provider_tokens": 10125,
+      "selected_turn": null,
+      "Gold_discriminating": null,
+      "Gold_result_sha256": null,
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "status": "abstained",
+      "provider_calls": 4,
+      "provider_tokens": 15909,
+      "selected_turn": null,
+      "Gold_discriminating": null,
+      "Gold_result_sha256": null,
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "status": "executed",
+      "provider_calls": 3,
+      "provider_tokens": 8715,
+      "selected_turn": 3,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "da91299e862269c7143f30d3536fd0d8348120a8073ad1fd6e505599d24f9420",
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "status": "executed",
+      "provider_calls": 2,
+      "provider_tokens": 5386,
+      "selected_turn": 2,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "df33922aeb2f6624329e8353e089d3f691631a8fb3a3babea40d1e9d5c48fa3a",
+      "trusted_reproducer": false
+    }
+  ],
+  "zero_guard_audit": {
+    "result_sha256": "3c3f6625d9faf2b9db1e66c93bd1f417f04c5daee2a1a33f2cb1acbc444c9c9d",
+    "method_sha256": "53fc674b7720bfddd4a4e8d2bd3c264d2c459f84c1099cd406b9fd8b3fcfdefa",
+    "live_integrated": false,
+    "provider_calls": 0
+  },
+  "visible_usage_since_2026_10_05_not_billing_verified": 612686,
+  "Docker_recovery": {
+    "IPC_backup_suffix": "20261007-144329",
+    "original_DEV12_images_verified": 12,
+    "deletion_count": 0
+  }
+}

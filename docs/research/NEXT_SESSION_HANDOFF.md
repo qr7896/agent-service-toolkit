@@ -2,6 +2,16 @@
 
 交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新闭环真实结果与待办](E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
 
+## 当前唯一入口：Docker已恢复，cache3/4／新生成2/4；先API义务与类型假设零费，不再paid扩批
+
+先读[最新完整结果及第5节待办](E1C2_FRONTIER_LIVE_DEV_RESULTS_2026-10-07.md)。本轮新授权仅两IPC普通stop确认→备份后缀20261007-144329→start一次成功，原DEV12全12核验，不动VHD/registry/proxy/tunnel/key/镜像，全部备份保留，该次授权已消费。原blocked receipt保持，不再按以下旧“等待授权/尚未开始zero”操作。
+
+runtime-frontier-zero-reference-v1已run/seal/gold：cache3/4、provider0，SK26289上游无第四response缺cache不补；不是新feedback-conditioned生成，不重跑。frontier-runtime-reference-dev-v1另freeze/source/预算，代码提交aa0d282，真实12calls40135/Gold2/4，MM两题区分、两个SK弃答；机器trusted0/四参考gate不通过，不best-of/不扩九题、不抽新canary。新cap task24000/全批50000/output2000/≤16/reserve1.4/retry0，旧cap不改，不宣称单因素因果。
+
+新guard_evidence_audit只零诊断，public API/condition→SHA-bound AST guards→自动window：SK26289十四guard，failure条件准确命中_export.py:1040且already_visible=true，不是缺检索window。模型忽略实际bool分支、用普通list目标通过后误称“源码已修好”；SK13496用属性赋值绕过public请求的constructor入口，把已经可工作的行为当预期而弃答。下一步只零费typed API obligation/入口与参数调用方式绑定、明确public事实vs未知类型hypothesis、源谓词与观测类型的对齐；未知不硬证，禁止SK/task-ID专属规则、手修array/date/expected或看Gold生成策略。保留所有raw与negative，先跨repo合成/旧cache拒绕过目标验收，新live必须另身份完整freeze再列命令；四参考/忠实性/cross-repo后完整DEV、native DTO/确定性证书/独立评分，再不重叠canary≥2/3/repair/official/new任务。
+
+最终工程1350passed/4skipped/33warnings/0failed（89.21秒，XML1354/0errors/0failures/88.361秒），Ruff/规定budget V3重点/compact preflight ready=true，不改旧断言/skip/timeout。可见usage612686非账单核验；本轮新增paid40135、zero0，无新大下载/删除。旧bridge strict-v5 whitelist未扩，Cloud可接本节source/单测，缺local private artifacts/source/image/runtime明确INFRA_BLOCKED，不声称新模块paid端到端可用/不索key/开daemon。TEST/C5/Fresh30/private Test500/E2关闭，研究尚未完成；现所有开始过的smoke/preflight/run/gold/audit不重跑或修改其method/budget/state/response。
+
 ## 当前唯一入口：readiness新screen2/4；runtime-frontier零费研究尚未开始，Docker IPC阻塞
 
 先读[当前结果/逐题/恢复顺序](E1C2_READY_RUNTIME_DEV_RESULTS_2026-10-07.md)、[哈希收据](../../data/e1c_evaluation_2_ready_runtime_dev_result.json)。ready-runtime-reference-dev-v1四参考已run/seal/gold：10请求32826，Gold2/4、机器trusted0；不是完整DEV12、独立canary或repair，四参考gate未过不扩批，所有该paid/smoke/preflight入口不能重跑或修改已冻method/budget/response/state/ledger。
