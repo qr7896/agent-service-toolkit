@@ -1,0 +1,30 @@
+{
+  "schema": "e1c2-bounded-runtime-old-dev-v1-public-result",
+  "date": "2026-10-07",
+  "status": "completed_protocol_rejection",
+  "fixed_DEV_denominator": 12,
+  "screen_denominator": 3,
+  "provider_calls": 12,
+  "provider_tokens": 24976,
+  "provider_failures": 0,
+  "provider_retries": 0,
+  "selected_candidates": 0,
+  "grader_attempted": 0,
+  "trusted_reproducer_count": 0,
+  "software_task_failures_proven": false,
+  "actual_type_metadata": "json_object",
+  "response_shapes": {"metadata_plus_retrieve": 9, "metadata_plus_seven_contract_fields": 3},
+  "cause": "controller expected canonical one-key action and rejected fixed JSON-format metadata",
+  "v2_paid_calls": 0,
+  "v3_zero_call_format_audit": {"decoded_retrieve": 9, "decoded_probe": 3, "new_reproduction_score": false},
+  "artifact_root": ".codex/e1c/evaluation_2/bounded-runtime-dev-v1",
+  "artifact_sha256": {
+    "freeze.json": "bde797eab1bcb4fac78a52bfd751b5090bd4311a0b3e979494e964257796ffc5",
+    "state.json": "884327c8610e15c1a1c90b6c623ff22e6d4cb47a995271348a2a8ce0574d0e92",
+    "provider_calls.jsonl": "b8dd9229991d3240968a6723ac09e6e79f47a0fb7b80b8cf0823fae6a3d4b333",
+    "generation-seal.json": "2d2a83b5899e4de94002420d34e4bcf0215a95dc35c166272663dadaea0848a9"
+  },
+  "previous_V4_records_unchanged": true,
+  "TEST_C5_Fresh30_private_Test500_opened": false,
+  "canary_repair_E2_gates_open": false
+}
