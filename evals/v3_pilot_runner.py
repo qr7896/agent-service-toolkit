@@ -137,7 +137,11 @@ asyncio.run(main())
 
 
 def _ignore(_directory: str, names: list[str]) -> set[str]:
-    return {name for name in names if name in EXCLUDED_DIRS}
+    ignored = {name for name in names if name in EXCLUDED_DIRS}
+    if Path(_directory).resolve() == ROOT.resolve():
+        # Live service state is neither source nor a stable snapshot input.
+        ignored.update(name for name in names if name in {"checkpoints.db", "checkpoints.db-wal", "checkpoints.db-shm"})
+    return ignored
 
 
 def _make_writable_and_retry(function: Any, path: str, _exc: Any) -> None:

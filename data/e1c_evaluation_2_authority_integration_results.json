@@ -1,0 +1,82 @@
+{
+  "schema": "e1c2-authority-integration-results-v1",
+  "date": "2026-10-07",
+  "final_regression": {"passed": 1462, "skipped": 4, "warnings": 33, "seconds": 89.41},
+  "final_regression_xml_sha256": "d0d3421feaf0ed571bed69914a4a4929ec3612d462be40f7b518f55e87df7fd8",
+  "initial_compact_preflight_failure": "sqlite_sidecar_copy_race",
+  "snapshot_copy_root_live_database_excluded": true,
+  "final_compact_preflight_ready": true,
+  "new_provider_calls": 0,
+  "new_provider_tokens": 0,
+  "Gold_read": false,
+  "machine_trusted": 0,
+  "model_inputs_changed": false,
+  "old_scores_rewritten": false,
+  "rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "status": "mechanism_supported_candidate",
+      "unknown": [],
+      "rejected": [],
+      "authority_sources": 0,
+      "result_sha256": "c430aebdabbae3c14aa680b4bf51a7fe725c9730212fd7ff42838b200e731419"
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "status": "behavior_candidate_mechanism_unproven",
+      "unknown": [],
+      "rejected": [],
+      "authority_sources": 1,
+      "result_sha256": "d99d8b0f3ad4514c556cbb02952a897b180f10df39f062610ace3d7fa4b1e2b8"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "status": "unknown",
+      "unknown": [
+        "public_fixture_constraint_unproven"
+      ],
+      "rejected": [],
+      "authority_sources": 1,
+      "result_sha256": "2dde0bf860d079aa91e1a00fb5378425b297246677002f394f5c3d05f7b19dbc"
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "status": "mechanism_supported_candidate",
+      "unknown": [],
+      "rejected": [],
+      "authority_sources": 0,
+      "result_sha256": "f07a509d11fd7a2adcc3463e31ec25f61668aca66aa9390fdd77835563b16275"
+    }
+  ],
+  "scope_proposal": {
+    "provider_calls": 0,
+    "Gold_read": false,
+    "rows": [
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "public_class": "Foo",
+        "model_qualified_bindings": {
+          "datetime": "datetime",
+          "Schema": "marshmallow.Schema",
+          "fields": "marshmallow.fields"
+        },
+        "public_imports": {},
+        "same_structure_except_unqualified_reference_scope": true,
+        "scope_inference_not_accepted": true,
+        "trusted_reproducer": false,
+        "source_response_sha256": "a56444fdd932fc0b47b9f68ae6271758242b6bb2da0c0f34b2c832312b3bdf8a"
+      }
+    ],
+    "rule_proposal": "Only infer public reference scope when the verified production definition is uniquely resolvable in the known public library context; declare the assumption, reject ambiguity or altered literals, do not treat it as an explicit public import or semantic certificate.",
+    "not_integrated_into_qualification": true
+  },
+  "source_records": {
+    "qualification-zero-v3": "f17d91e2ca4f4801cfa79b8784489a6a99f632de8e2309bc8ccd7ba0f0125901",
+    "qualification-source-authority-zero-v2": "fee7cf8b5095d1a6d667e06a68a5a238d33cc9d150fd11aaa2468b92dfa3d38b",
+    "qualification-scope-proposal-zero-v1": "439909333bf06b60bf9d564e98ddcea14f1c0d9acd43db9dd4c59c175299f5e4"
+  },
+  "qualification_v3_module_sha256": "27446f185a16c0e820b937eef334867465f5cf93013bd7f75c4f5b4f3e9e546b",
+  "canary_opened": false,
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false
+}

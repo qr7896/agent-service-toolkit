@@ -970,3 +970,241 @@ v2实际四缓存：SK13496、MM1359为mechanism_supported_candidate；SK26289 u
 公开data/e1c_evaluation_2_qualification_results.json绑定v1/v2、反例、authority、两资格源码、XML、原producer seal；private raw/probe/Gold/test/key不上Git。下一步另版接已核验authority并验wrong base/digest/path，定义public import省略的有限范围推断/unknown，再跨repo反例、method含资格/observer/双source身份完整freeze、同版四参考/九准入native；可信gate真过才全历史排除独立canary≥2/3、Agent patch/official、旧DEV30及最后新任务。当前不paid调提示、不抽第6批、不打开TEST/C5/Fresh30/private Test500/repair/E2、不承诺一周完美或30题全过。
 
 两Roadmap/Web handoff维护唯一当前入口，所有旧source/预算/response/state/ledger/seal/备份保留；日志只集中续档。无新下载删除/启动重启Docker/IPC/VHD/registry/proxy/tunnel/key更改，当前无下载需求；普通只读诊断containers不是机器修复或本机配置修改。Cloud可接source/zero tests，缺本机private material/source/images/runtime报INFRA_BLOCKED，旧bridge白名单不扩，不假称新paid已云端端到端验证，仅安全源码/测试/脱敏摘要同步Git。
+
+## 2026-10-07：authority接入v3与根目录快照竞态修复
+
+资格v3已接入辅助生产源码authority：四缓存2机制支持候选、1行为候选（原机制未证明）、1unknown，machine trusted仍0，E1-C未封板。本轮provider/tokens0/0、Gold读取0；旧Gold4/4、异常对应3/4不改。audit overlay不改原模型输入；public import省略范围推断仅为未接受方案。最终1462 passed/4 skipped/33 warnings（89.41秒），预算/V3重点19项、Ruff与合成preflight通过，不是修复率。初次preflight的SQLite sidecar复制竞态失败保留；只排除根目录运行态数据库快照复制，不删除数据库。不打开新canary/TEST/C5/Fresh30/private Test500/repair/E2，无下载需求。
+
+新增8项身份单测，receipt SHA/task/base/image/host/LF/Git/runtime均严格核验。初次完整回归1461passed，最终1462；原失败与XML保留。公开收据data/e1c_evaluation_2_authority_integration_results.json和结果文档绑定证据。下一步范围/unknown协议及行为/机制分账、完整method冻结，再同版DEV；未达门槛不抽canary、不repair/E2。无新下载删除/Docker重启/IPC/VHD/registry/proxy/tunnel/key修改，原source/state/ledger/seal/负结果保留。下附更新前文档快照，最新待办只按当前Roadmap接手。
+
+### 更新前快照：docs/PROGRESS_RESEARCH_ROADMAP.md
+
+<details><summary>原文保全</summary>
+
+# Coding Agent 研究总览：成果、证据与边界
+
+更新：2026-10-07。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
+
+本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
+
+**当前：零模型资格校准完成一轮，2项机制支持候选、2项unknown，尚不认证语义可信。** 本轮provider/tokens0/0，旧Gold4/4与异常对应3/4不改。已拒公共约束改写/import影射/对象修改等反例，区分缺来源与真实SHA变化；两个缺口辅助依赖已只读核验host LF/Git base/runtime一致，但未回填资格。[最新校准与接手步骤](research/E1C2_QUALIFICATION_RESULTS_2026-10-07.md)、[收据](../data/e1c_evaluation_2_qualification_results.json)。下一步把authority接入新身份并处理省略public import的有限范围/unknown，再完整方法冻结；不加模型预算采样。工程1453 passed/4 skipped不是修复率，TEST/C5/Fresh30/private Test500/repair/E2未开，本机配置/旧记录不动。
+
+所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
+
+## 1. 阅读入口
+
+| 读者目的 | 入口 |
+|---|---|
+| HR / 工程师 / AI 快速了解项目 | 本页第 3、4 节 |
+| 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
+| 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
+| 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
+| 查看最新实验与下一步 | [统一运行反馈两轮结果](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_unified_runtime_dev_result.json)；旧V4/V2及所有协议/负结果保留 |
+
+## 2. 从启动到现在的主线
+
+| 阶段 | 做了什么 | 现在如何理解 |
+|---|---|---|
+| 8 月末—9 月上旬：工程基线 | 服务；本地 BGE-M3；代码搜索、读写、测试；Planning、Reviewer、HITL；轨迹与经验；配置和工作流 | 已有实现和分项验收，不能等同于研究全部完成 |
+| V0：规则证据获取 | 受控检索任务、Utility Gate 与静态策略比较 | 检索层原型收尾，不是自动修复率 |
+| V1：学习排序与停止 | Decision Episode、LogReg ranker/stopper、冻结划分、动作消融 | 已冻结，小样本检索效率改善，未证明修复增益 |
+| V2：扩展检索评估 | adaptive acquisition、SERBench Cal500 与 Test500 prediction-ready | 已冻结；Cal500 未优于词法基线，Test500 未获私有评分 |
+| V3：经验复用 | 时间顺序隔离、6 条真实轨迹、3 组 OFF/ON 对照 | pilot 关闭；未观察到修复收益 |
+| 9 月 20–23 日：Formal E1 / E1-C | 外部任务准入、预算账本、容器评分、完整实验封存 | Formal E1 0/30；原 E1-C 最终 1/30 |
+| 9 月 24–27 日：DEV30 与严格复现 | 同版开发、盲态配对试验、source-contract、失败归因 | best-of 不作系统成绩；独立门槛失败暴露复现覆盖不足 |
+| 9 月 28–30 日：evaluation_2 | DEV12 镜像、双准入、自动源码窗口、离线判别、独立 canary | 当前活动主线，详见 Roadmap 2 |
+
+原文中“全部阶段已完成”只适用于当时的基础工程验收。E1-C 质量目标、E2 main、E3 并未完成。
+
+## 3. 本分支的实质工作
+
+上游提供 Agent 服务、客户端、UI 和基础框架。以下是本分支的研究与工程扩展；不将整个上游项目算作原创。
+
+| 能力 | 实现 / 结果入口 | 可以支持的陈述 |
+|---|---|---|
+| 受控代码工具 | [code_tools.py](../src/agents/code_tools.py)、[test_tools.py](../src/agents/test_tools.py) | 路径、读取量、执行超时等边界 |
+| 规划、审查与轨迹 | [coding_planner.py](../src/agents/coding_planner.py)、[reviewer.py](../src/agents/reviewer.py)、[trajectory.py](../src/agents/trajectory.py) | 可记录决策和失败轨迹 |
+| 经验存储与复用 | [experience.py](../src/agents/experience.py)、[V3 结果](research/RESULTS_V3.md) | 已实现并做过真实小型对照；效果未获支持 |
+| 统一证据接口 | [evidence_runtime.py](../evals/evidence_runtime.py)、[evidence_controller.py](../evals/evidence_controller.py)、[codegraph_adapter.py](../evals/codegraph_adapter.py) | lexical / semantic / structural、预算与 STOP 可追踪 |
+| 学习型检索策略 | [V1](research/RESULTS_V1.md)、[V2](research/RESULTS_V2.md) | 冻结划分、检索成本指标、消融 |
+| 请求预算与账本 | [model_budget.py](../src/agents/model_budget.py) | token 预留、硬上限、失败记账与中断边界 |
+| 离线缺陷评测 | [evaluation_2](research/E1C_CODING_AGENT_EVALUATION_2.md)、[冻结清单](../data/e1c_evaluation_2_canary_v2_method_freeze.json) | 生成侧/grader 隔离、镜像/源码身份、固定分母、失败留档 |
+
+研究假设：**固定 issue 的可观测行为约束，并限制执行反馈只能修正环境或构造过程，能否减少“测试失败但与 issue 无关”的假阳性？** 现有失败记录支持这个研究动机；效果与新颖性仍须通过消融和独立验证，不能提前称为已验证的新算法。
+
+## 4. 已有结果与统计口径
+
+| 实验 | 结果 | 限制 / 证据 |
+|---|---|---|
+| V1 frozen test，4 tasks | Recall 0.7812；tokens 122.5 → 87.0；tool calls 2 → 1.25 | 小型检索实验；[报告](research/RESULTS_V1.md) |
+| V2 SERBench Cal500 | MSS@8 0.078；BM25 0.104；lexical 0.118 | 未胜出；[报告](research/RESULTS_V2.md) |
+| V3 exploratory pilot | 6 trajectories；3 组 OFF/ON 结果相同；ON 多 369 tokens | 未观察增益；[报告](research/RESULTS_V3.md) |
+| Formal E1 | 0/30 resolved；23 provider 基础设施失败 | 不能归因成纯模型能力；[汇总](../data/formal_e1_n30_summary.json) |
+| 原 E1-C | 最终 1/30；49 requests；65,801 provider tokens | 含 selective salvage；[报告](research/E2_ENTRY_GATE_STATUS_2026-09-23.md) |
+| 旧 DEV30 | 一次同版完整运行 4/30；跨版 best-of 13/30 | 不可相互替代；[历史](PROGRESS_RESEARCH_ROADMAP_2_HISTORY_2026-09-30.md) |
+| B4 / C4 | B4 1/4 对 1/4；C4 0/6 对 0/6 | 没有 treatment 净新增修复；[历史](PROGRESS_RESEARCH_ROADMAP_HISTORY_2026-09-30.md) |
+| evaluation_2 DEV12 | 双准入 9/12；v4 经审核可信复现 4/12 | 8 请求 / 25,424 tokens；含确定性路由；不是修复率 |
+| canary v1 | 可信复现 1/3，低于 ≥2/3 | 独立负结果封存；[结果](research/E1C2_INDEPENDENT_CANARY_V1_RESULT_2026-09-29.md) |
+| canary v2（传输修订） | 官方双准入3/3；可信复现0/3 | Flash三请求/13,783 tokens；输出回显、fixture错误和弃答；[负结果](research/E1C2_CANARY_V2_AMENDED_RESULT_2026-10-05.md) |
+| DEV合同/控制器改进 | 新生成hybrid 3/12；修订控制器缓存4/12 | 开发证据，含语义审核；A/B、失败、成本分开报告；[结果](research/E1C2_DEV_CONTRACT_STUDIES_2026-10-05.md) |
+| 独立hybrid canary v3 | 双准入2/3；可信1/3，未达门槛 | 3Flash请求/7280tokens，负结果封存；[报告](research/E1C2_HYBRID_CANARY_V3_RESULT_2026-10-05.md) |
+| 最新旧DEV hybrid v3 | 新生成可信3/12，门槛失败 | 12Flash请求/24712tokens，未保留四条参考；[报告与下一步](research/E1C2_HYBRID_DEV_V3_RESULT_2026-10-05.md) |
+| counterfactual旧DEV新生成 | 13Flash请求/26762tokens，Gold及人工行为审查4/12 | 保持四条参考，零调用先拒错误fixture；不是SOTA或修复率；[报告](research/E1C2_COUNTERFACTUAL_DEV_RESULT_2026-10-05.md) |
+| 第4批独立canary | 双准入2/3，3Flash请求5596tokens，可信0/3 | 环境失败/窗口缺失/输入dtype丢失；[封存结果](research/E1C2_COUNTERFACTUAL_CANARY_V4_RESULT_2026-10-06.md) |
+| Faithful input旧DEV | 源生成16Flash请求37593tokens；原验证INFRA_INVALID保留 | 不把环境故障记0/12；[原结果](research/E1C2_FAITHFUL_INPUT_DEV_RESULT_2026-10-06.md) |
+| Faithful完整缓存回放 | 新provider0；9题执行、6候选、Gold5/12，四参考保留 | 人工行为审查5/12、机器trusted0，不是独立/修复；[结果](research/E1C2_FAITHFUL_REPLAY_RESULT_2026-10-06.md) |
+| 第5批独立canary | 双准入2/3；3Flash请求9642tokens，可信0/3 | import/API窗口遗漏、未调用函数、源码身份失败；[封存结果](research/E1C2_FAITHFUL_CANARY_V5_RESULT_2026-10-06.md) |
+| 旧DEV import/调用形态审计 | 新provider0；3题4个新增定义窗口，8份缓存候选中1份函数体未调用 | 结构诊断原型，不是新的复现分数；下一版DEV尚未付费 |
+| 新版executable-import旧DEV | v1零调用原型保留；v2能力边界加固后真实试验3/12 | 不代表净提升；[协议/历史](research/E1C2_EXECUTABLE_IMPORT_DEV_V2_PROTOCOL_2026-10-06.md) |
+| Executable新生成V2 | 12请求36689tokens；4候选Gold3/12 | 未保四参考；[真实结果](research/E1C2_EXECUTABLE_DEV_V2_RESULT_2026-10-06.md) |
+| Controller-owned缓存V3 | 新provider0/无缺缓存；仍Gold3/12 | 输入echo仍拒绝，没有新模型收益 |
+| Controller generation V4 | 14请求35889tokens；A源码格式5/5，5候选Gold2/12 | 格式改善、质量未提升；[真实负结果](research/E1C2_CONTROLLER_GENERATION_V4_RESULT_2026-10-06.md) |
+
+DEV v4 底层 Gold 判别 JSON 中，4 份 `gold_discriminating=true`，而 `trusted_reproducer` 仍为 false。4/12 叠加了文档中的人工 issue 语义审核，不能说机器自动判可信，也不应回填旧 JSON。自动定位不等于完全自动语义验收。
+
+工程测试结果见[验证记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md)。pytest passed 数不代表 repair success。
+
+## 5. E1、E2、E3
+
+| 研究线 | 状态 | 下一条件 |
+|---|---|---|
+| E1 / E1-B | 正式结果封存；旧六条 TEST 未执行但保密性受损 | 旧六条不再作干净确认集 |
+| E1-C evaluation_2 | 活动中，尚无新版 Agent 修复结果 | 独立 canary ≥2/3，再冻结修复对照 |
+| E2 | operational Entry Gate 曾 PASS；main n=100 未启动 | 先满足新质量门槛；运行完整不代表质量达标 |
+| E3 | 路线规划，未启动 | E2 后另立 30 → 100 → 300+ 与提前停止协议 |
+
+## 6. 历史保全与维护
+
+完整旧正文保存在同目录，原相对链接继续有效：
+
+- [旧 Roadmap 全文](PROGRESS_RESEARCH_ROADMAP_HISTORY_2026-09-30.md)
+- [旧 Roadmap 2 全文](PROGRESS_RESEARCH_ROADMAP_2_HISTORY_2026-09-30.md)
+- [集中日志](research/PROGRESS_LOG_ARCHIVE.md)与[9 月 27 日续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)
+
+以后只更新本页项目结论、Roadmap 2 当前状态；逐轮过程写集中日志。旧 freeze/result、失败记录、源码保持原路径。本地密钥、原始任务/评分材料和大文件缓存不作为公共展示材料。本轮整理不触碰 Docker 数据盘或 tunnel 配置。
+
+</details>
+
+### 更新前快照：docs/PROGRESS_RESEARCH_ROADMAP_2.md
+
+<details><summary>原文保全</summary>
+
+# Roadmap 2：E1-C evaluation_2 当前状态与执行顺序
+
+状态日期：2026-10-07。当前唯一执行入口；背景见[Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，历史过程与旧页面原文见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。
+
+## 0. 最新结论
+
+**受限资格v2：2项mechanism_supported_candidate、2项unknown，machine trusted0，E1-C未封板。** 本轮模型调用/tokens0/0，Gold读取0；旧Gold4/4、异常对应3/4不改，不是新生成/独立/修复成绩。[本轮校准与严格scope](research/E1C2_QUALIFICATION_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_qualification_results.json)。
+
+四缓存逐项审及四个内存alias反例完成，17单测覆盖错误输入/shape、影射、对象改写、未知状态、源码/另一probe等。v1将辅助依赖未暴露误当源码变化，原误拒保留；v2正确标unknown，真SHA不一致仍拒。两个辅助依赖已只读确认host LF/Git base/runtime同摘要，但尚未并入资格、未改变模型输入或结果。最终1453 passed/4 skipped/33warnings（102.31秒），Ruff/预算V3/compact preflight过，非repair rate。无下载需求。
+
+## 1. 已完成与尚未完成
+
+| 环节 | 实际证据 | 边界 |
+|---|---|---|
+| DEV12基础设施 | 12镜像身份曾现场核验；双准入9/12 | 每次核验现场，异常留固定12分母 |
+| 自动源码窗口/入口/guard | 公开issue与exact-base生产源、来源与SHA | 非人工选文件不等于语义正确 |
+| 五批历史独立canary | 1/3、0/3、1/3、0/3、0/3封存 | 未达≥2/3；不再称独立调参 |
+| 历史API/类型/codec版本 | Gold3/4、2/4、2/4保持 | 内部配置覆盖hook，效果归因不成立 |
+| v1执行计划零费 | outer=true/inner=false；smoke/audit封存、付费0 | 原型负证据，不覆盖旧源 |
+| v2真实完整执行链 | 五份旧probe零费5/5产物、1自身类型观测；新paid4/4产物 | 不将回放叫新生成；类型组件paid未触发 |
+| v2四参考新生成 | 4请求11,909tokens；正常control与重复base失败、Gold4/4 | 固定12/九准入/screen4分账，不是完整DEV或独立成绩 |
+| 前版witness grounding零费审计 | 全4审计，1项trace期待/公开guard未在失败trace观察到 | 其余也未获语义证书；组件未接live |
+| 前版严格期待门槛 | 期待在lock前筛查、公开A/B/共享输入源绑定；Gold3/4 | 错误期待被拒，但新生成覆盖未保；unknown不trusted |
+| 公开normal零费feasibility | 自动派生1程序、4次normal通过、Gold读取0 | 不是模型输出，未接live，不拼分 |
+| 公共报告锚新版本 | 新假设口径下Gold4/4，真实A/B输入表达式/source绑定 | 前版3/4不回填，不是严格前版过关 |
+| 真实异常观察与双source身份 | v1失败保留，v2观察3/4对应；CRLF/LF原副本/有效文件/Git blob核对 | 不等于语义证书或抵抗恶意程序的attestation |
+| 新受限资格校准 | v2两机制支持候选/两unknown；四静态alias反例拒绝 | 非新运行时实验，不自动认证 |
+| 辅助依赖authority | 两处host LF/base blob/runtime一致，只读核验 | 未并入资格，不回填unknown |
+| 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
+
+## 2. 当前瓶颈
+
+检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
+
+两项unknown已定位：DecisionTreeClassifier与Schema的辅助源不在原model窗口；DateTime/Foo/Schema公共示例还省略import来源。额外生产源的host/Git/runtime字节身份已核验，下一版须显式接入authority，不假称原模型看过；省略public import的范围推断或unknown须另定协议，不能凭同名类推断原文承诺。
+
+## 3. 严格验收定义
+
+1. 生成侧只用公开issue允许投影与exact-base生产源，不输入原测试断言/题面可执行答案/Gold/官方评分日志。
+2. 定位规则无task-ID→文件表、无人工挑文件；保留来源、rank、窗口预算与SHA。
+3. 两次有效normal control和两次稳定非setup目标失败；独立Gold消除不自动授予行为忠实性证书。
+4. 新probe须对齐公开行为义务，unknown保持unknown；自动语义门槛尚未完成。
+5. Agent补丁由独立官方评分判resolved。代码回归、可信复现和30/30 resolved是三个不同目标，不best-of合并。
+
+## 4. 当前唯一执行顺序
+
+| 顺序 | 下一步 | 放行证据 | 未过时 |
+|---|---|---|---|
+| 1 | authority接入另版辅助源校验 | 原host摘要/LF/base Git/runtime均绑定，wrong base/digest/path反例 | 不改旧model窗口或结果 |
+| 2 | public import省略的范围协议 | 有限显式推断或unknown，不凭同名认完整namespace | 不自动trusted |
+| 3 | 跨repo正负例→完整method freeze | 资格scope/classifier/observer/双source身份与输入/预算先冻 | 不继续paid调提示 |
+| 4 | 同版四参考/九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | screen不报全12 |
+| 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
+| 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
+| 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
+
+下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮provider0；资格v1/v2与authority各namespace以及所有已started的run/smoke/Gold/audit禁止重跑或改源/预算/账本。当前无新live/canary命令，不抽第6批，不开TEST/Fresh30/repair/E2。
+
+## 5. 时间与停止条件
+
+[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留预注册。本轮新假设口径Gold恢复4/4且成本较前版30,477下降至21,400，但不能称隔离因果收益、严格原口径达标或一周/30题保证。可控交付是有边界的行为资格校准、完整freeze和一次同版DEV实证；未过不抽新独立任务。
+
+## 6. WebCodex与本机安全
+
+云端可接源码、无模型单测和脱敏摘要，使用uv.lock；exact-base源码/镜像/私有.codex/凭证不会随Git同步。缺材料明确INFRA_BLOCKED；[接手说明](research/NEXT_SESSION_HANDOFF.md)给出安全检查命令。旧bridge白名单未扩，不假称新paid入口云端端到端已验证，不开裸Docker daemon。
+
+本轮未下载/删除镜像或重启Docker，未改IPC/VHD/registry/proxy/tunnel/密钥。全部实验负结果和备份保留。sealed TEST/C5/Fresh30/SERBench私有Test500/Agent repair/E2仍关闭。
+
+## 7. 更新纪律
+
+本页只维护最新状态和可执行待办，逐轮日志只追加集中续档。此前本页及交接页的多份“当前/最新”快照已原文移入2026-10-07集中归档，Git历史也保留；不要按归档旧命令操作。原协议、结果、预算、response/state/ledger/seal均不回填。
+
+</details>
+
+### 更新前快照：docs/research/NEXT_SESSION_HANDOFF.md
+
+<details><summary>原文保全</summary>
+
+# WebCodex 接手：E1-C evaluation_2
+
+日期：2026-10-07。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新资格校准](E1C2_QUALIFICATION_RESULTS_2026-10-07.md)。
+
+## 1. 当前状态与禁止重跑
+
+资格v2四缓存：2机制支持候选/2unknown，machine0，本轮provider/tokens0/0、Gold读取0。旧report-anchor版Gold4/4与异常对应3/4不改，不能将缓存审计当新模型/修复成绩，不能叫可信2/4。
+
+资格器检查已知fixture结构、alias/对象修改、production源绑定、期待锚、原probe观察、normal/target。17单测与四内存alias反例通过，静态反例不是四个新runtime故障。v1未暴露依赖被误拒留档，v2缺证unknown、已暴露真正SHA变化仍拒；增量赋值/删除等未知。
+
+DecisionTreeClassifier(_classes.py)与Schema(schema.py)额外源已只读核验host LF/Git canonical/runtime同摘要，authority单独记录，未并入v2资格/未改变model输入。Foo/DateTime/Schema公共示例import范围仍不明，不能默认推断。
+
+最终1453 passed/4 skipped/33warnings（102.31秒）、Ruff/预算V3/compact preflight过；[公开收据](../../data/e1c_evaluation_2_qualification_results.json)绑定SHA，raw/probe/Gold/test/key留本机。所有已started audit/run/smoke/Gold禁止重跑、回填或修改旧source。无下载需求。
+
+## 2. 当前唯一下一步
+
+另版接入已核验authority到辅助依赖检查，验原暴露摘要/LF/base Git/runtime与错误base/digest/path反例，不假称原model已看到这些文件。为省略public import定义有限显式范围推断或unknown，不凭同名认原文namespace，未知不认证。
+
+跨repo正负例通过后完整method含资格/observer/双source身份先冻，再同版四参考/九准入DEV/native，Gold/受限候选/语义/原机制分账。可信gate真正达成才历史全排除新canary一次≥2/3、Agent patch/official、小DEV30及最后另授权Fresh30。当前无新paid/canary命令，不抽第6批、不开始repair/E2，不保证完美。
+
+## 3. Cloud可先执行的无模型检查
+
+```bash
+uv sync --frozen --group dev
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_qualification.py evals/e1c_evaluation_2_qualification_v2.py tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m evals.v3_compact_pilot preflight
+uv run --frozen python -m pytest -q
+```
+
+无需DeepSeek/tunnel密钥，合成preflight不是sealed TEST实验。依赖安装失败报环境阻塞，不降低断言/timeout/skip；源码与uv.lock可云端运行，本机exact-base/private .codex/镜像/runtime不随Git同步，缺材料报INFRA_BLOCKED。旧bridge白名单未扩、不假称新paid端到端已验、不开放裸Docker daemon、不上传key/raw/Gold。
+
+## 4. 付费、安全与回传
+
+未来新实验先列精确命令、Flash、次数与≤100,000 tokens，新未开始namespace，retry0、输入隔离、producer seal后独立Gold；原v2/expectation-v1/report-anchor-v1和两个observer namespace都不能“再试”。不使用Pro，不开sealed TEST/C5/Fresh30/SERBench私有Test500，当前没有新canary/repair/E2命令待执行。
+
+本轮无下载删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key更改，备份与负结果全保留。旧IPC授权已消费，任何新修改需明确限定授权；大文件交用户终端直连、不走VPN，当前无下载需求。
+
+回传diff、实际hook证据与源SHA、工程数、paid ledger、Gold/语义/各固定分母、未过gate和下一步；不承诺完美/30题全过，不把Gold/回归称repair。日志只写[集中续档](PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，两Roadmap保持单一当前入口。旧快照/Git历史保留，不按历史“下一步”操作。
+
+</details>

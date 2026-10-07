@@ -4,7 +4,7 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：零模型资格校准完成一轮，2项机制支持候选、2项unknown，尚不认证语义可信。** 本轮provider/tokens0/0，旧Gold4/4与异常对应3/4不改。已拒公共约束改写/import影射/对象修改等反例，区分缺来源与真实SHA变化；两个缺口辅助依赖已只读核验host LF/Git base/runtime一致，但未回填资格。[最新校准与接手步骤](research/E1C2_QUALIFICATION_RESULTS_2026-10-07.md)、[收据](../data/e1c_evaluation_2_qualification_results.json)。下一步把authority接入新身份并处理省略public import的有限范围/unknown，再完整方法冻结；不加模型预算采样。工程1453 passed/4 skipped不是修复率，TEST/C5/Fresh30/private Test500/repair/E2未开，本机配置/旧记录不动。
+**当前：** 资格v3已接入辅助生产源码authority：四缓存2机制支持候选、1行为候选（原机制未证明）、1unknown，machine trusted仍0，E1-C未封板。本轮provider/tokens0/0、Gold读取0；旧Gold4/4、异常对应3/4不改。audit overlay不改原模型输入；public import省略范围推断仅为未接受方案。最终1462 passed/4 skipped/33 warnings（89.41秒），预算/V3重点19项、Ruff与合成preflight通过，不是修复率。初次preflight的SQLite sidecar复制竞态失败保留；只排除根目录运行态数据库快照复制，不删除数据库。不打开新canary/TEST/C5/Fresh30/private Test500/repair/E2，无下载需求。 [最新结果](research/E1C2_AUTHORITY_INTEGRATION_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_authority_integration_results.json)。下一步先校准范围歧义与行为/机制边界，再冻结完整方法。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 

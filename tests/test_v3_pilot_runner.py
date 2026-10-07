@@ -11,6 +11,12 @@ from evals.v3_pilot_runner import (
 )
 
 
+def test_snapshot_excludes_only_root_live_checkpoint_database():
+    names = ["checkpoints.db", "checkpoints.db-wal", "checkpoints.db-shm", "source.py", "fixture.db"]
+    assert runner._ignore(str(runner.ROOT), names) == {"checkpoints.db", "checkpoints.db-wal", "checkpoints.db-shm"}
+    assert runner._ignore(str(runner.ROOT / "tests" / "fixtures"), names) == set()
+
+
 def test_v3_pilot_is_small_nonsealed_and_budgeted():
     assert len(TASKS) == 3
     assert len({task.instance_id for task in TASKS}) == 3

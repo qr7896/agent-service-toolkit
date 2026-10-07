@@ -1,20 +1,20 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-07。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新资格校准](E1C2_QUALIFICATION_RESULTS_2026-10-07.md)。
+日期：2026-10-07。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新身份接入](E1C2_AUTHORITY_INTEGRATION_RESULTS_2026-10-07.md)。
 
 ## 1. 当前状态与禁止重跑
 
-资格v2四缓存：2机制支持候选/2unknown，machine0，本轮provider/tokens0/0、Gold读取0。旧report-anchor版Gold4/4与异常对应3/4不改，不能将缓存审计当新模型/修复成绩，不能叫可信2/4。
+资格v3已接入辅助生产源码authority：四缓存2机制支持候选、1行为候选（原机制未证明）、1unknown，machine trusted仍0，E1-C未封板。本轮provider/tokens0/0、Gold读取0；旧Gold4/4、异常对应3/4不改。audit overlay不改原模型输入；public import省略范围推断仅为未接受方案。最终1462 passed/4 skipped/33 warnings（89.41秒），预算/V3重点19项、Ruff与合成preflight通过，不是修复率。初次preflight的SQLite sidecar复制竞态失败保留；只排除根目录运行态数据库快照复制，不删除数据库。不打开新canary/TEST/C5/Fresh30/private Test500/repair/E2，无下载需求。
 
 资格器检查已知fixture结构、alias/对象修改、production源绑定、期待锚、原probe观察、normal/target。17单测与四内存alias反例通过，静态反例不是四个新runtime故障。v1未暴露依赖被误拒留档，v2缺证unknown、已暴露真正SHA变化仍拒；增量赋值/删除等未知。
 
-DecisionTreeClassifier(_classes.py)与Schema(schema.py)额外源已只读核验host LF/Git canonical/runtime同摘要，authority单独记录，未并入v2资格/未改变model输入。Foo/DateTime/Schema公共示例import范围仍不明，不能默认推断。
+DecisionTreeClassifier(_classes.py)与Schema(schema.py)额外源authority已接v3，只作用于资格审计overlay。原host/LF/base Git/runtime与任务/image绑定；原model窗口不改，旧v1/v2不回填。Foo/DateTime/Schema public import范围仍不明；条件推断proposal未接受，不自动认证。
 
-最终1453 passed/4 skipped/33warnings（102.31秒）、Ruff/预算V3/compact preflight过；[公开收据](../../data/e1c_evaluation_2_qualification_results.json)绑定SHA，raw/probe/Gold/test/key留本机。所有已started audit/run/smoke/Gold禁止重跑、回填或修改旧source。无下载需求。
+[公开收据](../../data/e1c_evaluation_2_authority_integration_results.json)绑定本轮结果与最终XML SHA；raw/probe/Gold/test/key留本机。所有已started audit/run/smoke/Gold禁止重跑、回填或修改旧source。
 
 ## 2. 当前唯一下一步
 
-另版接入已核验authority到辅助依赖检查，验原暴露摘要/LF/base Git/runtime与错误base/digest/path反例，不假称原model已看到这些文件。为省略public import定义有限显式范围推断或unknown，不凭同名认原文namespace，未知不认证。
+先冻结public import省略的有限范围推断/unknown协议：唯一定义、显式假设、歧义/同名影射/改字面量负例；不凭同名认原文namespace。再校准SK26289行为支持与原机制未证明的区别。authority接入已完成，不重复原审计。
 
 跨repo正负例通过后完整method含资格/observer/双source身份先冻，再同版四参考/九准入DEV/native，Gold/受限候选/语义/原机制分账。可信gate真正达成才历史全排除新canary一次≥2/3、Agent patch/official、小DEV30及最后另授权Fresh30。当前无新paid/canary命令，不抽第6批、不开始repair/E2，不保证完美。
 
@@ -22,7 +22,7 @@ DecisionTreeClassifier(_classes.py)与Schema(schema.py)额外源已只读核验h
 
 ```bash
 uv sync --frozen --group dev
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_qualification.py evals/e1c_evaluation_2_qualification_v2.py tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_qualification.py evals/e1c_evaluation_2_qualification_v2.py evals/e1c_evaluation_2_qualification_v3.py tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py tests/test_e1c_evaluation_2_qualification_v3.py
 uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_qualification.py tests/test_e1c_evaluation_2_qualification_v2.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 uv run --frozen python -m evals.v3_compact_pilot preflight
 uv run --frozen python -m pytest -q
