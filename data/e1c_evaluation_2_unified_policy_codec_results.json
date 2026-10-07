@@ -1,0 +1,129 @@
+{
+  "schema": "e1c2-unified-policy-codec-dev-results-v1",
+  "date": "2026-10-07",
+  "new_provider_calls": 15,
+  "new_provider_tokens": 43966,
+  "provider_retries": 0,
+  "visible_since_2026_10_05_tokens": 713443,
+  "billing_verified": false,
+  "machine_trusted": 0,
+  "four_reference_gate_passed": false,
+  "independent_validation": false,
+  "batches": [
+    {
+      "run_id": "unified-policy-reference-dev-v1",
+      "screen_denominator": 4,
+      "fixed_denominator": 12,
+      "admitted_denominator": 9,
+      "full_admitted_DEV_run": false,
+      "model": "deepseek-flash",
+      "provider_token_cap": 50000,
+      "actual_calls": 9,
+      "actual_tokens": 25928,
+      "Gold_attempted": 0,
+      "Gold_discriminating": 0,
+      "source_records": {
+        "freeze.json": "b8c5d2281a58988c784528bc741b82a6b7991484a7882aa79cbc5e2622a47447",
+        "state.json": "deae02970da46b2cfcd3bd37eca617172297332907cf39517b67415c6d627bd9",
+        "provider_calls.jsonl": "4511e0b72b1b1eec263977086c183e06fe15184f46e46a5be216d7d37369a2f1",
+        "generation-seal.json": "e9c99120c1fdc4c2ed6cf54fdd8b76065d68c33b2d9607054cf161a187b9692a"
+      },
+      "rows": [
+        {
+          "instance_id": "scikit-learn__scikit-learn-13496",
+          "status": "repeated_unsuccessful_action_stop",
+          "turns": 3,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "scikit-learn__scikit-learn-26289",
+          "status": "repeated_unsuccessful_action_stop",
+          "turns": 2,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1252",
+          "status": "repeated_unsuccessful_action_stop",
+          "turns": 2,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1359",
+          "status": "repeated_unsuccessful_action_stop",
+          "turns": 2,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "trusted_reproducer": false
+        }
+      ]
+    },
+    {
+      "run_id": "unified-codec-reference-dev-v1",
+      "screen_denominator": 4,
+      "fixed_denominator": 12,
+      "admitted_denominator": 9,
+      "full_admitted_DEV_run": false,
+      "model": "deepseek-flash",
+      "provider_token_cap": 50000,
+      "actual_calls": 6,
+      "actual_tokens": 18038,
+      "Gold_attempted": 2,
+      "Gold_discriminating": 2,
+      "source_records": {
+        "freeze.json": "672dd2504b2f55357473b3eab69b4dd32d1b0ba2d51f095254c7f041ab1b9a0b",
+        "state.json": "0458679925b73c5742ffd4ee212661bd28138f1046d56a476bb87cc40c5b6118",
+        "provider_calls.jsonl": "4cdd56b278bc533fafde25cfcb7b9652a5f93b85863259a6721ca234ebf9ef94",
+        "generation-seal.json": "36cf07134ea566bd7ed8a051fb9c758f69b8c0c83799a42d901025e49ee7dabd"
+      },
+      "rows": [
+        {
+          "instance_id": "scikit-learn__scikit-learn-13496",
+          "status": "executed",
+          "turns": 1,
+          "Gold_discriminating": true,
+          "Gold_result_sha256": "7bde0356fd6591829098d2a1835687efafbde7e77d020d5864dcfe261b3dd809",
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "scikit-learn__scikit-learn-26289",
+          "status": "abstained",
+          "turns": 2,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1252",
+          "status": "executed",
+          "turns": 1,
+          "Gold_discriminating": true,
+          "Gold_result_sha256": "3dcd46eaa2cc20d63c95e436d3b089ea40b99ef525c63f763c3a4140808f8cde",
+          "trusted_reproducer": false
+        },
+        {
+          "instance_id": "marshmallow-code__marshmallow-1359",
+          "status": "repeated_unsuccessful_action_stop",
+          "turns": 2,
+          "Gold_discriminating": null,
+          "Gold_result_sha256": null,
+          "trusted_reproducer": false
+        }
+      ]
+    }
+  ],
+  "zero_audit_records": {
+    "unified-policy-zero-audit-v1": "a3f698ae441aab4c98030c7b904e87a6a3652f1c042bb547ba7872ba09552fb8",
+    "unified-codec-zero-audit-v1": "f40e232375cce0866472b27bea571708db4bf28ae2a052b02fc4af29d0092c50",
+    "contrast-zero-audit-v1": "06286526fc2a8a8fb7b416bf00d20d6ccf5a025e787334099cb308c26d6e3cdb",
+    "unified-codec-zero-smoke-v1": "9cfb49d6836ec60529c3d1d9b82b518d9d94addf8458891b8e4745cf88aca1b8"
+  },
+  "full_regression_xml_sha256": "7ae16d41bf96b7a7377a5df201135c948ed6c695c6212c7fa3a663b94414395d",
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false
+}

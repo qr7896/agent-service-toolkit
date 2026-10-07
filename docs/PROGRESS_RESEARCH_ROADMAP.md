@@ -4,21 +4,9 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**最新：public API入口门槛版真实Gold3/4；类型观测接线版2/4，四参考开发gate未过。** 16Flash请求/56791tokens、无retry，source-bound类型事实纠正了numpy/list误判，但不等于复现收益，machine trusted0、非完整DEV/独立成绩/patch score。[最新分账结果与零费止损方案](research/E1C2_API_OBLIGATION_RESULTS_2026-10-07.md)。保留3/4方法作比较基线、不best-of、不paid扩批；下一步统一事实/假设/未知及正常control政策，不层层加提示或改输入答案。工程1372passed/4skipped/0failed不能冒充修复率，TEST/Fresh30/独立canary/repair/E2关闭；本轮Docker/VHD/IPC/proxy/tunnel/key/镜像不动，原所有记录保留。下方旧“最新/下一步”均历史。
+**当前：严格DTO兼容修订已进入真实执行，Gold区分2/4，研究质量门槛未过。** 本轮两批Flash共15请求/43,966 tokens，接口失败版9/25,928封存；兼容版6/18,038、两题独立Gold区分，另两题弃答/无效normal control。机器可信复现0、没有Agent修复或完整DEV成绩。[逐项结果与可执行待办](research/E1C2_UNIFIED_POLICY_CODEC_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_unified_policy_codec_results.json)。工程1388 passed/4 skipped不算repair rate。下一步先零调用完成正常控制/状态与隐式协议的可执行契约，不再叠提示、扩大付费或抽新canary。TEST/C5/Fresh30/private Test500/repair/E2关闭；本轮未改Docker/IPC/VHD/代理/tunnel/密钥、未下载删除。
 
-**最新：Docker按明确IPC备份授权恢复、DEV12全12核验；执行前沿零费cache Gold3/4，新生成Gold2/4，质量门槛仍未过。** 12Flash请求40135tokens/retry0，恢复MM1359但两个SK弃答，机器trusted0，不best-of、不等于Agent修复。guard AST审计自动定位`_export.py:1040`且已在模型窗口，进一步把瓶颈缩到API请求与实际目标绑定/类型假设，不继续无效检索或paid扩批。[本轮逐项结果/落地顺序](research/E1C2_FRONTIER_LIVE_DEV_RESULTS_2026-10-07.md)。工程1350passed/4skipped/0failed不是质量gate；旧数据/所有备份保留、VHD/registry/proxy/tunnel/key不改，TEST/Fresh30/canary/repair/E2关闭。以下旧“等待IPC授权/未开始zero”只是历史，不按旧命令重跑。
-
-**最新：readiness四参考真实screen完成，Gold区分2/4、machine0，尚未达开发gate。** 10Flash请求/32826tokens、无retry；52旧响应codec审计/重复无效停止/Assert求值错误反馈已接线。执行绑定setup前沿保持完整target AST/期望不改，离线证明2份同task程序，真实零调用研究却被Docker挡在freeze前；普通启动一次失败、旧run/dockerInference IPC，现等待本轮有限IPC备份授权，不强修数据盘。[最新结果/接手门槛](research/E1C2_READY_RUNTIME_DEV_RESULTS_2026-10-07.md)。工程1344passed/4skipped/0failed不是修复率，TEST/Fresh30/canary/repair/E2不开放，旧记录/备份不删除；前一段SK26289摘要误写已纠正，原得分/原件不变。
-
-**当前主线：统一编译与原文引用接口已做两轮完整旧DEV真新生成，质量仍未达标。** 两轮各原固定12/九准入：统一版26Flash请求/74336tokens、Gold区分3/12；引用版26/89923、Gold1/12，四参考2/4与1/4，机器trusted均0，不能best-of合并或当Agent修复。源码/输入/预算/响应/seal分开封存；引用错误减少但成本/质量变差，停止付费扩批先DTO/正常控制与返回消费关系/oracle就绪反馈的零调用验证。[最新逐题结果与落地待办](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)。工程1320passed/4skipped/0failed（56.44秒）不是repair rate；TEST/C5/Fresh30/repair/E2仍关闭，无本轮新下载/删除/IPC/VHD/tunnel/密钥变动。
-
-10月7日早轮封存：三次旧DEV三仓库screen共29次Flash请求/70977tokens、无provider重试；v1格式拒绝、v3重复检索停、v4进入真实probe/反馈但无合格候选，grader均attempted0。[早轮结果](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。Docker当时按明确授权仅备份两个IPC目录恢复，DEV12全12核验；原负结果不回填。
-
-最新零调用推进：[合同恢复与runtime定位结果](research/E1C2_CONTRACT_RECOVERY_RESULTS_2026-10-07.md)。同三题第一份旧响应，比较语法/构造前沿＋生产格式正常对照恢复2个候选/Gold区分2，**是缓存开发证据，不是新生成或独立2/3**。生成-only pytest组件实际观察到报告位置差异，并自动取得生产源码窗口，无人工选文件；组件fixture是人工写的合成用例、尚未接Agent，不计第三条成绩。新增provider/tokens0，旧所有negative不改，下一步另版统一编译/typed fixture接口，再真实同版旧DEV验证。
-
-10月6日及之前封存：五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果不改；旧DEV新生成V2 Gold3/12、零付费兼容回放3/12、再新生成V4 Gold2/12，共26请求72578tokens、未保四参考。V4 A5/5返回source修复了输出回显，但未证明复现质量提升。15个历史canary镜像缓存已按允许移除，全部记录/源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果，历史本机bridge健康不等于Web端到端已验证。
-
-最新增量：[A fallback 零调用有效性审计](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md)完成：原五份 A 中拦住一份无效维度对照、一份常量断言，三份仍 unknown；模型/Gold读取均0，未改 V4 得分。已证明局部拒错机制，尚未证明跨仓库正对照或接入新 live；下一步先完成这些验收，不立即抽新 canary。
+旧开头的所有进展快照已原文保全在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)的“2026-10-07：单一政策与DTO兼容修订”条目；不再按旧“下一步”执行。以下统计表保留历史版本，各版不能best-of合并。
 
 ## 1. 阅读入口
 
