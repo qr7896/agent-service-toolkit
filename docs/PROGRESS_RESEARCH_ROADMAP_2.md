@@ -2,6 +2,16 @@
 
 状态日期：2026-10-07。本页是当前执行入口；背景见 [Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，逐轮过程见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。本页不再堆叠历史“最新快照”。
 
+## 0. 当前执行状态与唯一待办
+
+**完整旧DEV两轮真实新生成与独立Gold判别已完成，尚未过开发质量门槛。** 统一编译运行版26请求/74336tokens、Gold3/12；无损原文引用版26请求/89923tokens、Gold1/12。固定12/九准入，四参考分别2/4、1/4，机器trusted都0；版本分账，不能best-of拼成绩。引用错误9→0但总体变差，停止付费扩批，先零调用DTO/fixture消费与oracle就绪反馈。具体每题、哈希、接手步骤见[本轮完整结果](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)，[机器收据](../data/e1c_evaluation_2_unified_runtime_dev_result.json)。
+
+下一步按结果文档第4节：①统一action DTO与精确单层包装、重复invalid停止；②源码普通构造/返回消费关系与跨仓库有效control证据；③Assert求值错误回反馈而非terminal candidate；④无损冗余与实际reserve核算，再另冻同版四参考/完整九准入DEV一次；⑤有限generated native DTO/确定性证书和独立评分，开发有收益才新不重叠canary一次≥2/3；⑥同方法Agent patch/official grade→同版DEV→新任务。没有30/30、一周完美、独立gate或E2完成承诺。
+
+本轮新增52calls/164259tokens（两批各≤100000）、provider失败/重试0；自10月5日可见539725非账单核验。最新工程1320passed/4skipped/33warnings/0failed（56.44秒），Ruff/预算V3重点/规定compact preflight ready=true；工程数不是修复。零费新诊断已识别四份合法action包装与Assert内tuple TypeError，但未接live、没有缓存回填分数。无需下载/删除，Docker/VHD/IPC/registry/proxy/tunnel/key/所有旧记录不动；TEST/C5/Fresh30/private Test500/repair/E2仍关闭。
+
+以下本日早轮快照及各节旧“当前/下一步”均为封存历史，不覆盖本节；已started的smoke/preflight/run/gold/zero audit均禁止重跑。
+
 **当前唯一下一步：闭环真实negative之后的零调用根因验证，不再付费扩批。** 新v1/v3/v4旧DEV三仓库screen均完成并seal，共29请求70977tokens、无provider失败/重试；v1格式拒绝，v3重复query停，v4已消费真实执行反馈但未产合格候选。v2仅零调用未paid。grader均attempted0、无Gold执行，机器trusted0，不是Agent修复失败率。本轮先验证trace→生成AST的setup/故障前沿、不丢issue义务的预算压缩及受限生成fixture能力；详见[逐项结果/验收待办](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。所有已开始smoke/preflight/run/gold禁止重跑；完整旧DEV/四参考、独立canary/repair/TEST/Fresh30/E2门槛不开放。
 
 **上述零调用根因验证已有实际结果：** 旧三题第一probe合同恢复v1 Gold1，增加production strptime正常对照v2 Gold2/3（缓存screen，不是新生成/独立score），machine trusted0；pytest旧English CLI仍拒绝。另立生成-only skip组件＋自有report定位器，实际自动到skipping.py:239生产窗口，fixture为synthetic不计研究score；旧native guard不解除、尚未接Agent。重叠窗口无损压缩实际reserve只省6，未解budget、不接live。[最新已做/未做清单](research/E1C2_CONTRACT_RECOVERY_RESULTS_2026-10-07.md)。下一步统一新DEV编译/typed generated-fixture接口后再冻真实旧DEV方法与预算；不直接抽canary或付费重跑旧入口。
@@ -38,6 +48,7 @@
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
 | 受限运行反馈闭环 | 两仓库真合成smoke/格式/实际历史接线；三次screen共29请求70977tokens，v4实际执行控制反馈 | 0选定候选、grader attempted0；negative封存，停本轮paid扩批，继续零调用根因验证 |
 | 零调用合同恢复/定位 | 同三题第一probe：v1候选/Gold1，source-format v2候选/Gold2；生成-only skip组件与report→生产window实际运行 | cached screen2/3、非新生成/非独立/非repair；原pytest合同仍invalid，native Agent接口尚未完成 |
+| 统一编译 / 引用编号真实完整DEV | 两轮各九准入、固定12；26/74336→Gold3/12，26/89923→Gold1/12；四参考2/4→1/4 | 机器trusted0，后者质量未提高，不best-of；原件分别封存，先DTO/control/readiness零调用修复 |
 | A fallback 前置有效性零调用审计 | 原九题/五A：一份同元素对照两次失败、一份constant assert拒绝、三份unknown；模型/Gold读取0 | 局部拒错实证，未接live/不产生新可信数；[结果](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md) |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 

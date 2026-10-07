@@ -2,6 +2,16 @@
 
 交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新闭环真实结果与待办](E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
 
+## 当前唯一接手入口：统一DEV两轮已封存，先零调用，不再paid扩批
+
+先读[最新完整每题结果/六步落地待办](E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)与[机器收据](../../data/e1c_evaluation_2_unified_runtime_dev_result.json)。compiled-runtime-old-dev-v1与referenced-runtime-old-dev-v1均九准入/固定12、完整新生成和Gold判别seal完毕：26calls74336→Gold3/12、26calls89923→1/12；四参考2/4与1/4，机器trusted0，不best-of。新增52/164259分属两批各≤100000，不使用Pro、不自动retry；累计可见539725非账单核验。所有smoke/preflight/run/gold已开始，不再执行或修改已冻源/响应/预算/账本，旧历史完全保留。
+
+引用编号使原文quote错误9→0、真实11份ref证明，但格式content包装、控制/返回消费错误与额外上下文造成退化，不能“再试一次”掩盖。新contract_feedback_diagnostics仅零调用：四份精确json_object/content字典包装可strict解码，尚未执行；Assert内tuple索引TypeError被分出oracle求值错误，不混同谓词false/构造失败，诊断不是信任证书。helper尚未接live、没有新增缓存成绩，现有候选/负结果不回填。
+
+按结果第4节先一个一致DTO→源码有效control/返回消费关系跨仓库验证→oracle求值错误回反馈/重复invalid停止→保真冗余与reserve核算。完成零调用门槛/四参考/完整回归后才另立统一新runner、method/budget freeze并展示唯一Flash命令。开发有收益才有限generated-native DTO/确定性证书/独立评分、再新不重叠canary一次≥2/3且忠实性过→Agent patch/official score→同版DEV→全新任务；目前不选第6批、不打开TEST/C5/Fresh30/private Test500/repair/E2，不保证30/30。
+
+最新工程单次1320passed/4skipped/33warnings/0failed（56.44秒，XML1324/0errors/0failures），Ruff/规定预算V3重点与compact preflight ready=true，无断言/timeout/skip削弱。无新下载/删除/重启/IPC改名，Dfree约34.22GiB；Docker/VHD/registry/proxy/tunnel/key与所有备份不动。旧bridge白名单未扩展，Cloud可接本节源码/单测，缺本机private artifact/source/image/runtime明确INFRA_BLOCKED，不宣称Web端到端已验、不索要key或暴露daemon。下列旧“当前/下一步”仅历史，不覆盖本节。
+
 ## 最新接手增量：零费恢复2条缓存、生成式runtime定位组件已验
 
 先读[本轮新结果/接口待办](E1C2_CONTRACT_RECOVERY_RESULTS_2026-10-07.md)。`contract_recovery`统一Compare字段语法＋已有源码构造前沿，`source_format_control`从selected production strptime静态格式导出正常control，不手修target/日期/预期；同三个旧任务第一probe、无best-of，zero v1 Gold1、zero v2 Gold2/3，provider0，机器trusted仍0。这是缓存开发结果，绝不当新生成或独立canary。

@@ -4,7 +4,9 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前主线：受限运行反馈闭环已真实试验，质量仍未达标。** 10月7日三次旧DEV三仓库screen共29次Flash请求/70977tokens、无provider重试；v1格式拒绝、v3重复检索停、v4进入真实probe/反馈但无合格候选。独立grader均attempted0，未产生新的可信复现或Agent补丁。本轮停止付费扩批，先零调用验证setup/故障前沿、预算信息压缩和受限生成fixture能力。Docker已按本轮明确授权仅备份两个IPC目录恢复，DEV12全12核验；没有新下载/删除。[本轮真实结果与下一步](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。工程1243passed/4skipped不是repair rate；TEST/Fresh30/E2继续关闭。
+**当前主线：统一编译与原文引用接口已做两轮完整旧DEV真新生成，质量仍未达标。** 两轮各原固定12/九准入：统一版26Flash请求/74336tokens、Gold区分3/12；引用版26/89923、Gold1/12，四参考2/4与1/4，机器trusted均0，不能best-of合并或当Agent修复。源码/输入/预算/响应/seal分开封存；引用错误减少但成本/质量变差，停止付费扩批先DTO/正常控制与返回消费关系/oracle就绪反馈的零调用验证。[最新逐题结果与落地待办](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)。工程1320passed/4skipped/0failed（56.44秒）不是repair rate；TEST/C5/Fresh30/repair/E2仍关闭，无本轮新下载/删除/IPC/VHD/tunnel/密钥变动。
+
+10月7日早轮封存：三次旧DEV三仓库screen共29次Flash请求/70977tokens、无provider重试；v1格式拒绝、v3重复检索停、v4进入真实probe/反馈但无合格候选，grader均attempted0。[早轮结果](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。Docker当时按明确授权仅备份两个IPC目录恢复，DEV12全12核验；原负结果不回填。
 
 最新零调用推进：[合同恢复与runtime定位结果](research/E1C2_CONTRACT_RECOVERY_RESULTS_2026-10-07.md)。同三题第一份旧响应，比较语法/构造前沿＋生产格式正常对照恢复2个候选/Gold区分2，**是缓存开发证据，不是新生成或独立2/3**。生成-only pytest组件实际观察到报告位置差异，并自动取得生产源码窗口，无人工选文件；组件fixture是人工写的合成用例、尚未接Agent，不计第三条成绩。新增provider/tokens0，旧所有negative不改，下一步另版统一编译/typed fixture接口，再真实同版旧DEV验证。
 
@@ -20,7 +22,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [V4真实新生成负结果/下一步](research/E1C2_CONTROLLER_GENERATION_V4_RESULT_2026-10-06.md)、[V2与零付费诊断](research/E1C2_EXECUTABLE_DEV_V2_RESULT_2026-10-06.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [统一运行反馈两轮结果](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_unified_runtime_dev_result.json)；旧V4/V2及所有协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 
