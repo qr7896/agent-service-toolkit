@@ -34,7 +34,7 @@
 | task | 统一编译版：状态；调用/token；Gold | 原文引用版：状态；调用/token；Gold |
 |---|---|---|
 | scikit-learn-13496（参考） | executed；3/10839；通过 | 格式包装拒绝/turn_limit；4/12941；未评分 |
-| scikit-learn-26289（参考） | 引用不合格后budget stop；3/11001；未评分 | 控制未通过后budget stop；3/12857；未评分 |
+| scikit-learn-26289（参考） | 引用不合格后budget stop；3/11001；未评分 | 控制通过、目标未复现后budget stop；3/12857；未评分 |
 | scikit-learn-15086 | budget stop；2/8934；未评分 | budget stop；2/11846；未评分 |
 | marshmallow-1252（参考） | 两控制过、重复failure；1/2557；通过 | 两控制过、重复failure；1/2849；通过 |
 | marshmallow-1359（参考） | 四次原文quote不合格；4/9161；未评分 | 控制未通过后budget stop；3/10903；未评分 |
@@ -44,6 +44,8 @@
 | pytest-7985 | 重复retrieve停止；3/9709；未评分 | 重复retrieve停止；3/10583；未评分 |
 
 三候选Gold通过仍须严格核查issue期待/公共fixture和执行故障点的关系。比如构造参数被接受不等于完整证明warm-start重用行为；有效ISO输入正常控制表示可不同；容器复现和Gold区分都不能自行变成机器语义可信证书。
+
+后续只读核验更正：SK-26289引用版turn-2/3真实feedback为`target_not_repeatable_failure`，control运行正常；此前本表“控制未通过”系摘要误写。本表已纠正，集中日志保留错误与更正，原state/响应/反馈/账本/seal/机器收据均未修改。该probe将feature_names设为普通list，未产生报告中的ndarray失败；不能把目标通过解释成已修复生产缺陷。
 
 ## 3. 零调用诊断实证（未接live、不新增分数）
 
