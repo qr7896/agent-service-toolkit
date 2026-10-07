@@ -1,0 +1,155 @@
+{
+  "schema": "e1c2-behavior-version-results-v1",
+  "date": "2026-10-08",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "Gold_read": false,
+  "machine_trusted": 0,
+  "new_containers_started": 0,
+  "old_scores_or_qualification_changed": false,
+  "canary_opened": false,
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false,
+  "behavior_result": {
+    "rows": [
+      {
+        "instance_id": "scikit-learn__scikit-learn-13496",
+        "status": "supported_boolean_keyword_subobligation",
+        "expectation_origin": "explicit_interface_request",
+        "sub_obligation_supported": true,
+        "reasons": [],
+        "result_sha256": "979eb6efe6e4d7168bfd298ab34d0f0850f9722f4ceb7144fae960dbceba6203"
+      },
+      {
+        "instance_id": "scikit-learn__scikit-learn-26289",
+        "status": "conditional_comparative_hypothesis",
+        "expectation_origin": "comparative_report",
+        "sub_obligation_supported": false,
+        "reasons": [
+          "comparison_report_completion_is_hypothesis",
+          "receiver_or_other_input_state_unproven",
+          "observed_input_type_not_explicitly_documented"
+        ],
+        "result_sha256": "f1ccc7496f7e1814a2d2cdfd82ec82d964896a486d0ee8d17d17b730ef920a45"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1252",
+        "status": "conditional_regression_hypothesis",
+        "expectation_origin": "regression_report",
+        "sub_obligation_supported": false,
+        "reasons": [
+          "reported_old_version_behavior_not_verified_normative_oracle",
+          "public_fixture_constraint_unproven"
+        ],
+        "result_sha256": "0ecf712513ee08474d387b11d59d88f57357f54eb6b52b5a163258c4bdab068e"
+      },
+      {
+        "instance_id": "marshmallow-code__marshmallow-1359",
+        "status": "conditional_regression_hypothesis",
+        "expectation_origin": "regression_report",
+        "sub_obligation_supported": false,
+        "reasons": [
+          "reported_old_version_behavior_not_verified_normative_oracle"
+        ],
+        "result_sha256": "1dc89bf7051d101530e6b8fc3af4f7f5dd7c38a22df9f3048b2025f1ccf6897f"
+      }
+    ],
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "supported_sub_obligations": 1,
+    "cached_reference_denominator": 4,
+    "fixed_DEV_denominator": 12,
+    "full_issue_trust_gate_passed": false,
+    "live_policy_integrated": false,
+    "old_scores_or_qualification_changed": false
+  },
+  "version_status": {
+    "status": "INFRA_BLOCKED",
+    "phase": "after_materialization_before_engine_admission",
+    "error": "Docker Linux Engine unavailable; named pipe absent and no Desktop/backend processes observed",
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "diagnostic_containers_started": 0,
+    "driver_created": false,
+    "task_freeze_created": false,
+    "instance_id": "marshmallow-code__marshmallow-1359",
+    "snapshot_commit": "3e5b061dd9bb2a7642167418a9fa6078fa9214f6",
+    "public_old_version": "3.0.0rc8",
+    "source_files": [
+      {
+        "path": "src/marshmallow/__init__.py",
+        "sha256": "be2d7fac32a1f1709f02d82129dab372e87e70e9caf8a85001b7dc40eab82778"
+      },
+      {
+        "path": "src/marshmallow/base.py",
+        "sha256": "2f09421f3af2f92354419ee985791d4b251168b53f328320454cfe9bfdea661b"
+      },
+      {
+        "path": "src/marshmallow/class_registry.py",
+        "sha256": "9d74e3a3eb47d81257c52d8ea339b7899f01730cf56a5b2124c2a1256c809b2e"
+      },
+      {
+        "path": "src/marshmallow/decorators.py",
+        "sha256": "de9ea307141169c4d3ac9015086b803a38e66822347efa103d2a57d57e45382a"
+      },
+      {
+        "path": "src/marshmallow/error_store.py",
+        "sha256": "c912a3eb646873cb0765791bf9c66dffd25b24fe5cbf9c01fd312bc0544b6ed3"
+      },
+      {
+        "path": "src/marshmallow/exceptions.py",
+        "sha256": "8b7d117e34e898dc98aceaca25bfb21b7693a759b7c24a56aba69abcd45f3418"
+      },
+      {
+        "path": "src/marshmallow/fields.py",
+        "sha256": "612e7d78e55c3c8100d27fb868a341ba471d40ca1679707c36d93b31e4d1e7bd"
+      },
+      {
+        "path": "src/marshmallow/orderedset.py",
+        "sha256": "d19575763354231966f9446190d6e97e93dc1bb0538cdf1c340c3aba68792f9c"
+      },
+      {
+        "path": "src/marshmallow/schema.py",
+        "sha256": "741a36f9d365b9c3a3baa337c588bb186a878407249c43ee7de8092418b9e44f"
+      },
+      {
+        "path": "src/marshmallow/utils.py",
+        "sha256": "4a6c4044c68f7f659934da30dcc034ee42f6659c977f7bd78ad1e9e38a8c77c7"
+      },
+      {
+        "path": "src/marshmallow/validate.py",
+        "sha256": "c769924b49f1dafc8f660c78141073ffc2a7f2bdeaf690db2056a79432f65b5d"
+      }
+    ],
+    "source_file_count": 11,
+    "source_bytes": 152704,
+    "old_namespace_retry_allowed": false
+  },
+  "source_records": {
+    "behavior-gate-zero-v1": {
+      "freeze_sha256": "35a2c9bcf5dd8d9238b83268bd140181d832fdb3822364d98bcb95bf1d84bbb4",
+      "result_sha256": "967030e11b96a1ae86e8dc70540784be5116e072fba58e8130234dc3ce32830f"
+    },
+    "version-witness-zero-v1": {
+      "freeze_sha256": "7d143204c9e98170321ec261c8d9116e31df7df238b49353228dc0920bef4cc8",
+      "failure_sha256": "343e74e6478901b30b7fb020dc1886d444e5550790d0707e53038d7d009713f9"
+    }
+  },
+  "regression": {
+    "passed": 1541,
+    "skipped": 4,
+    "warnings": 33,
+    "seconds": 104.58,
+    "xml_sha256": "f05ce7451238190c0055324ad3bc5d5ad437f8acc23e2f7915e31d33f2f284a8"
+  },
+  "focused": {
+    "new_tests_passed": 22,
+    "budget_v3_combined_passed": 41,
+    "ruff_passed": true,
+    "synthetic_compact_preflight_ready": true
+  },
+  "initial_test_issue": "1 failed / 40 passed before per-command canonical archive newline fix; equal-byte assertion preserved; no global git configuration changed."
+}

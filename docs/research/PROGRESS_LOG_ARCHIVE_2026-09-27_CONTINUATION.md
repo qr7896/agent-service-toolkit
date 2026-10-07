@@ -1242,3 +1242,17 @@ uv run --frozen python -m pytest -q
 新增caller11+contract6共17单测，预算V3重点36/Ruff/合成compact preflight过；先前1513passed/4skipped107.76秒保留，最终完整1519passed/4skipped/33warnings105.28秒/XML SHA绑定公开data/e1c_evaluation_2_pair_input_contract_results.json。unused imports与测试排序仅在各audit freeze前修正，已冻结source/result/预算不改、不重跑原namespace。provider/tokens0/0、Gold读取0、machine0，原资格/Gold/exception/source/state/ledger/seal/负记录/备份保持。两新普通隔离容器不等于旧模型或评分重跑；不改model输入，不输入Gold，raw/probe/Gold/test/key不上Git。
 
 两Roadmap/Web handoff更新为有限行为资格分支/正负例、最小观测义务，再完整method freeze/同版DEV；可信gate未过不抽新canary、不打开TEST/C5/Fresh30/privateTest500/repair/E2，不保证30/30或一周完美。无下载删除/Docker重启/IPC/VHD/registry/proxy/tunnel/密钥修改，当前无下载需求。日志只集中本续档，仅安全源码/单测/协议/脱敏收据同步Git。
+
+## 2026-10-08：行为子义务校准与公开旧版本生产源准备，Docker准入前阻断
+
+有限行为分支已校准：四缓存1显式bool keyword子义务支持、1比较假设、2回归假设，机器可信仍0（不是可信1/4）。旧版本对照已准备MM1359公开3.0.0rc8的11生产文件/152,704bytes，但Docker engine管道不存在、Desktop/backend未运行，准入前INFRA_BLOCKED，driver与probe均未执行。本轮provider/tokens0/0、Gold读取0，旧资格与Gold4/4/异常对应3/4不变。
+
+本轮跨2026-10-07/08，完整读ARS执行/监控与ponytail，无subagent/依赖新增。behavior-gate另版协议/source/namespace，在16专项/Ruff后核验原producer/qualification-v3/exception-v2/pair/doc收据，对全部四缓存一次只读分类。显式BooleanCtor请求确认qualifiedAPI/公开bool域/目标literal/normal仅差请求keyword/闭合签名缺参数且无kwargs/host LF/base/原编译AST/该行TypeError同keyword；1子义务支持，default/增量/其他issue义务仍不覆盖。另1比较、2回归保持假设，全issue trusted0，无Gold读/新provider/旧评分重写。
+
+为核实regression旧版，新增本地版本source对照协议10月8日：只取publicquote单一==/<=旧版，自动包根，既有tag或80条init祖先历史，限90秒；不fetch/下载/读旧tests/Gold。只archive生产.py，路径/symlink/预算检查，每文件原始byte等canonical Git blob。首次加canonical检查1failed/40passed，Windows archive换行影响，修复仅单次core.autocrlf=false/core.eol=lf并保留相等断言；后重点41passed，缺失历史blob按metadata不可用，不当probe失败。
+
+version-witness-zero-v1 source/protocol已冻，MM1359 3.0.0rc8的11文件152704bytes在新私有目录保存。随后require_engine在driver生成/task freeze/容器启动之前抛ContainerInfrastructureUnavailable。另只读docker context=desktop-linux，version报dockerDesktopLinuxEngine named pipe不存在，Get-Process未见Desktop/backend。没有probe执行/版本批次完整result；failure.json单独INFRA_BLOCKED，并只读重新核对已存11文件等该tagcommit Git blob。没有重试旧namespace，没有Docker启动/重启/IPC/registry/VHD/代理/tunnel/key变更。先前一个测试session在用户消息切换后不可收集，Unknown process id记录，不能据此称crash；之后源canonical增强后的重点测试明确收集。
+
+最终新增22专项、Ruff/预算V3重点41/合成compact preflight ready=true，完整1541passed/4skipped/33warnings104.58秒，XML/两个冻结source/behavior freeze-result/version freeze-failure/source manifest绑定data/e1c_evaluation_2_behavior_version_results.json。工程passed不等于旧版已验证或修复率。原input/source/ledger/state/seal/Gold/失败与备份全保留，raw/probe/Gold/test/key不上Git；旧源码快照仅约149KiB，不是新镜像，0下载0新provider0Gold。
+
+两Roadmap/Web handoff当前入口更新，日志只本续档；用户先打开Docker确认Engine running后，另freeze resume-only身份只推进未执行版本probe，不再运行version v1，不复用旧IPC授权。再完整义务/方法/预算freeze、同版DEV gate；未过不开新canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证完美或30/30。仅安全源码/单测/协议/脱敏收据同步Git。

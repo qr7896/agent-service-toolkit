@@ -1,14 +1,14 @@
 # Coding Agent 研究总览：成果、证据与边界
 
-更新：2026-10-07。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
+更新：2026-10-08。本文是项目总览；当前可执行待办只维护在 [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md)。
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 公共API对照的调用前诊断完成：normal rc0/target rc1，feature_names(ndarray)与max_depth(int)两路typed摘要一致，但分类器对象unknown，all_inputs_match=false。生产参数文档两API均仅明确写list of str，因此ndarray期待存在规格支持缺口，不等于输入非法或任务不是bug。新增provider/tokens0/0、Gold读取0，原probe与旧Gold4/4/资格2机制候选+1行为候选+1unknown保持，machine trusted0。 [调用前输入与规格结果](research/E1C2_PAIR_INPUT_CONTRACT_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_pair_input_contract_results.json)。下一步优先冻结显式请求/源码文档/比较回归假设的行为资格分支；暂不扩展任意对象序列化，不加预算碰运气。尚未完整live方法冻结，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。
+**当前：** 有限行为分支已校准：四缓存1显式bool keyword子义务支持、1比较假设、2回归假设，机器可信仍0（不是可信1/4）。旧版本对照已准备MM1359公开3.0.0rc8的11生产文件/152,704bytes，但Docker engine管道不存在、Desktop/backend未运行，准入前INFRA_BLOCKED，driver与probe均未执行。本轮provider/tokens0/0、Gold读取0，旧资格与Gold4/4/异常对应3/4不变。 [行为与旧版本前置结果](research/E1C2_BEHAVIOR_VERSION_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_behavior_version_results.json)。先由用户打开Docker并确认Engine running，再另冻resume-only身份推进未执行部分；不重跑已started namespace、不改IPC/registry/VHD或下载镜像。完整DEV gate未过，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1519 passed/4 skipped/33 warnings（105.28秒）；Ruff、预算/V3重点36项与合成preflight通过。此计数不是可信复现或修复率。
+最新工程验证：1541 passed/4 skipped/33 warnings（104.58秒）；Ruff、预算/V3重点41项与合成preflight通过。此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
