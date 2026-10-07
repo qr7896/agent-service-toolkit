@@ -1,14 +1,16 @@
 # WebCodex 接手：E1-C evaluation_2
 
-交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新受限闭环协议](E1C2_BOUNDED_RUNTIME_DEV_V1_PROTOCOL_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
+交接日期：2026-10-07。仓库：`qr7896/agent-service-toolkit`。先读 [AGENTS.md](../../AGENTS.md)、[当前 Roadmap](../PROGRESS_RESEARCH_ROADMAP_2.md)、[新闭环真实结果与待办](E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)，不要按历史文档的旧“下一步”直接运行。
 
 ## 现在的接手任务：受限运行反馈闭环，不再继续静态提示微调
 
-新增`bounded_repro_loop.py`与`bounded_repro_dev.py`，生产retrieve/read→七字段正控制合同→两次控制通过才target→自生成trace反馈→最多4轮修订，首次有效oracle锁定、无shell/原test读取/Gold反馈。只借鉴mini/ReProAgent/SWE-Doctor思想，未安装原框架、未实现完整debugger或Agent补丁。旧三仓库各首个任务按manifest预选，固定screen3、原DEV分母12，不能按旧成绩筛题。计划Flash≤12/80000tokens，仍未freeze或调用；完整旧DEV/四参考与独立第6批都未过gate。
+生产retrieve/read→七字段正控制→两次control后target→自生成trace反馈→4轮修订、oracle锁定和真实上一action/observation接线已实际运行。v1 12请求24976tokens格式拒绝；v2仅零调用；v3 6请求13341tokens重复query停止；v4 11请求32660tokens进入probe反馈但无合格候选。三批共29请求70977tokens、无provider失败/重试，独立grader均attempted0、机器trusted0。所有smoke/preflight/run/gold已开始入口禁止重跑，绝不补旧账本或改method/response/state/freeze。只借鉴成熟Agent思想，未安装原框架/完整debugger/Agent patch。
 
-当前Docker未运行；普通启动一次日志报旧Docker/run/dockerInference IPC，真实20秒engine探测timeout。未擅自IPC改名/删文件/reset/VHD/registry/代理/tunnel/key，已询问仅正常stop/两个IPC目录备份/start一次。真实smoke与新run目录均不存在，没有把ledger写成失败任务。Cloud可以做合成单测/代码审查；缺本机source/image/runtime明确INFRA_BLOCKED。原tunnel严格-v5工具白名单未扩展，不默认允许新paid模块、不开放裸daemon。
+Docker初始IPC失败已在本轮明确授权后恢复：正常stop、只备份run与docker-secrets-engine，后缀20261007-081928，普通start一次成功；全12immutable images核验，全部旧备份保留。不动VHD/registry/代理/tunnel/key，没有新下载/删除。Cloud可做零调用分析/单测；缺本机source/image/runtime明确INFRA_BLOCKED；原tunnel旧strict-v5白名单未扩大，不默认能调用新paid入口，不开放裸daemon或索要key。
 
-恢复后：现场engine与immutable images核验→协议列明的`bounded_repro_dev smoke`（零调用、一次）→`preflight`（smoke/method/input/预算SHA绑定）→展示唯一精确run/Flash/最多12/80000/输出2200/retry0后，按用户≤100000已给预算授权边界运行→完成generation seal才独立`gold`。失败不自动重试，不把合成通过/候选失败说成可信复现；不修改旧freeze或开sealed TEST/C5/Fresh30/private Test500。所有不支持native fixture/动态绑定/缺期待任务按原分母报告。稳定JSON/源码可push，原响应/Gold/日志只本机.codex。
+下一步仅零调用：①自己trace→生成AST的setup/故障前沿，证明target完整程序/预期不改，不人工修维度/日期；②源码/上一probe冗余压缩保持来源和issue义务，先验证reserve节约，别降低guard或借旧budget；③合同行语法/受限生成临时fixture适配器，只运行自己生成文件，不读原tests/conftest/默认收集，原native guard不解除。跨仓库与四参考证据后另冻新版完整旧DEV，开发有收益才新的独立canary≥2/3，再另冻Agent repair，最后同版对照与全新任务。停止本轮付费扩批，不把3题screen/合成/工程tests当修复率，TEST/C5/Fresh30/private Test500/E2不打开。
+
+最新完整单次1243passed/4skipped/33warnings/0failed（56.86秒），重点50/Ruff和原V3 preflight ready=true。可见usage自10月5日起375466（含旧SDK错误4281、非账单核验），本轮70977单列。所有最新公开JSON绑定本机freeze/state/ledger/generation seal；原响应/Gold/日志不上传，初始schema接线失败与误诊修正均在集中日志。
 
 以下为10月6日封存历史，旧“健康/下一步”不得覆盖本节。
 

@@ -2,9 +2,9 @@
 
 状态日期：2026-10-07。本页是当前执行入口；背景见 [Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，逐轮过程见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。本页不再堆叠历史“最新快照”。
 
-**当前唯一主线：受限“检索—执行反馈—修订”闭环。** 新两个模块复用现有生产/执行/合同/预算边界，oracle首次有效后锁定；真实positive smoke未执行，paid freeze/run不存在。Docker普通start一次仍旧IPC失败，engine20秒超时；源码/合成测试可继续，实际实验INFRA_BLOCKED。先按[新协议](research/E1C2_BOUNDED_RUNTIME_DEV_V1_PROTOCOL_2026-10-07.md)完成两仓库真实合成smoke→新preflight freeze→展示精确Flash命令→旧DEV三题筛查→独立评分；计划12请求/80000，尚未冻结。结果不当作全DEV12或独立canary成绩，不开启TEST/Fresh30/repair/E2。[机器收据](../data/e1c_evaluation_2_bounded_runtime_preparation.json)。下方历史健康/准备/旧“下一步”须按此入口解释，不能重跑旧实验。
+**当前唯一下一步：闭环真实negative之后的零调用根因验证，不再付费扩批。** 新v1/v3/v4旧DEV三仓库screen均完成并seal，共29请求70977tokens、无provider失败/重试；v1格式拒绝，v3重复query停，v4已消费真实执行反馈但未产合格候选。v2仅零调用未paid。grader均attempted0、无Gold执行，机器trusted0，不是Agent修复失败率。本轮先验证trace→生成AST的setup/故障前沿、不丢issue义务的预算压缩及受限生成fixture能力；详见[逐项结果/验收待办](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。所有已开始smoke/preflight/run/gold禁止重跑；完整旧DEV/四参考、独立canary/repair/TEST/Fresh30/E2门槛不开放。
 
-授权恢复更新：正常stop确认后台退出，仅两个IPC目录备份，后缀20261007-081928，普通start一次成功；engine与DEV12全12 immutable镜像健康。新真实smoke两仓库正控制均2/2通过，执行反馈实际消费、通过target未选为bug，provider0。专项/重点39passed，完整1222passed/4skipped/33warnings/0failed（64.86秒），V3 preflight ready=true。现在可另冻三题筛查，不能把合成门槛说成任务复现gate。
+环境与工程：授权正常stop确认后台退出，仅两个IPC目录备份（20261007-081928），普通start成功；engine/全12immutable镜像核验。各namespace真实合成smoke两仓库controls2/2通过、反馈消费、通过target不计bug，不能当任务score。最新完整1243passed/4skipped/33warnings/0failed（56.86秒）、重点50passed/Ruff、规定V3 preflight ready=true。准备时blocked→恢复→冻结/运行的全过程在集中日志；[v1](../data/e1c_evaluation_2_bounded_runtime_v1_result.json)/[v3](../data/e1c_evaluation_2_bounded_runtime_v3_result.json)/[v4](../data/e1c_evaluation_2_bounded_runtime_v4_result.json)绑定原SHA。旧“待启动/未冻结”收据均历史，不当作命令许可。
 
 ## 1. 完成情况
 
@@ -32,7 +32,7 @@
 | 新版DEV执行接线 | terminal→import→lexical，同预算；显式direct_script/无参数call_entrypoint、解析兼容原B oracle；每请求engine检查 | 18项专项、隔离合成成功/失败入口验证；旧DEV预检9题、≤18/80000，新付费0 |
 | 资源清理与当前engine阻塞 | 15个封板canary本地镜像移除，DEV12全12与源码/记录保留 | 清理后engine曾核验健康；后发现已停止，普通重启旧IPC失败，不推断清理造成停机 |
 | 新版 Agent 补丁 + official grade | 尚无结果 | 未运行 |
-| 受限运行反馈闭环 | source retrieve/read、B控制/target执行、反馈修订、oracle lock、4轮预算接线；旧三仓库身份核验 | 真实容器smoke与模型freeze/run未开始，Docker IPC阻塞，新增provider0 |
+| 受限运行反馈闭环 | 两仓库真合成smoke/格式/实际历史接线；三次screen共29请求70977tokens，v4实际执行控制反馈 | 0选定候选、grader attempted0；negative封存，停本轮paid扩批，继续零调用根因验证 |
 | A fallback 前置有效性零调用审计 | 原九题/五A：一份同元素对照两次失败、一份constant assert拒绝、三份unknown；模型/Gold读取0 | 局部拒错实证，未接live/不产生新可信数；[结果](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md) |
 | 严格同版 DEV30 / Fresh30 / E2 main | 尚无结果 | 保持门槛关闭 |
 

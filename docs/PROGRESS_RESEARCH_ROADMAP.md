@@ -4,9 +4,9 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前执行主线已切换为受限运行反馈闭环。** 生产AST检索/已暴露path读取、两次正控制、自己的执行日志修订、oracle锁定和预算账本已接线；不是原版论文框架安装，也不是新复现成绩。新旧DEV三仓库筛查计划≤12请求/80000tokens，仅Flash。真实合成容器门槛尚未执行、预算尚未冻结；当前Docker普通启动失败（旧dockerInference socket），新增调用0，不能付费试跑。[协议与Web接手顺序](research/E1C2_BOUNDED_RUNTIME_DEV_V1_PROTOCOL_2026-10-07.md)、[准备收据](../data/e1c_evaluation_2_bounded_runtime_preparation.json)。以下10月6日结果与曾恢复的Docker健康状态为历史，不作当前运行许可。
+**当前主线：受限运行反馈闭环已真实试验，质量仍未达标。** 10月7日三次旧DEV三仓库screen共29次Flash请求/70977tokens、无provider重试；v1格式拒绝、v3重复检索停、v4进入真实probe/反馈但无合格候选。独立grader均attempted0，未产生新的可信复现或Agent补丁。本轮停止付费扩批，先零调用验证setup/故障前沿、预算信息压缩和受限生成fixture能力。Docker已按本轮明确授权仅备份两个IPC目录恢复，DEV12全12核验；没有新下载/删除。[本轮真实结果与下一步](research/E1C2_BOUNDED_RUNTIME_RESULTS_2026-10-07.md)。工程1243passed/4skipped不是repair rate；TEST/Fresh30/E2继续关闭。
 
-当前阶段：端到端修复质量仍未达目标。五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果封存。授权IPC备份后Docker/DEV12全12/本机bridge健康。旧DEV新生成V2 Gold3/12、零付费兼容回放3/12、再新生成V4 Gold2/12均封存，未保四参考；本轮26请求72578tokens、无provider重试。输出回显已修复（V4 A5/5返回source），但fixture/行为合同质量没有提升；**不继续付费扩批，先零调用前置条件/正对照与可信fixture机制**。15个历史canary本地镜像缓存已按允许移除，记录/源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果。
+10月6日及之前封存：五批独立canary为**1/3、0/3、1/3、0/3、0/3**，负结果不改；旧DEV新生成V2 Gold3/12、零付费兼容回放3/12、再新生成V4 Gold2/12，共26请求72578tokens、未保四参考。V4 A5/5返回source修复了输出回显，但未证明复现质量提升。15个历史canary镜像缓存已按允许移除，全部记录/源码保留。没有同版DEV30全过、Fresh30或新版Agent修复结果，历史本机bridge健康不等于Web端到端已验证。
 
 最新增量：[A fallback 零调用有效性审计](research/E1C2_FALLBACK_CONTROL_ZERO_DEV_RESULT_2026-10-06.md)完成：原五份 A 中拦住一份无效维度对照、一份常量断言，三份仍 unknown；模型/Gold读取均0，未改 V4 得分。已证明局部拒错机制，尚未证明跨仓库正对照或接入新 live；下一步先完成这些验收，不立即抽新 canary。
 

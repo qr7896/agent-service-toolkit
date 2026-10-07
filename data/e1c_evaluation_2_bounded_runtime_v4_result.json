@@ -1,0 +1,39 @@
+{
+  "schema": "e1c2-bounded-runtime-old-dev-v4-public-result",
+  "date": "2026-10-07",
+  "status": "completed_without_selected_witness",
+  "fixed_DEV_denominator": 12,
+  "screen_denominator": 3,
+  "provider_calls": 11,
+  "provider_tokens": 32660,
+  "provider_failures": 0,
+  "provider_retries": 0,
+  "selected_candidates": 0,
+  "grader_attempted": 0,
+  "trusted_reproducer_count": 0,
+  "runtime_feedback_used": true,
+  "rows": [
+    {"instance_id": "scikit-learn__scikit-learn-13496", "status": "budget_stop_no_retry", "calls": 3,
+     "last_rejection": "value_relation_requires_one_comparison_assertion", "spent_tokens": 9913,
+     "remaining_task_tokens": 10087, "next_call_reserve": 10700},
+    {"instance_id": "marshmallow-code__marshmallow-1252", "status": "turn_limit", "calls": 4,
+     "last_rejection": "control_failed; DateTime Z load fails before a valid positive control is established"},
+    {"instance_id": "pytest-dev__pytest-7432", "status": "turn_limit", "calls": 4,
+     "last_rejection": "invalid syntax in generated contract code"}
+  ],
+  "artifact_root": ".codex/e1c/evaluation_2/bounded-runtime-dev-v4",
+  "artifact_sha256": {
+    "freeze.json": "ab09fc427cb29b9d867aa1801dcea9763f5c9ad10fd70ce09231fed2527d480a",
+    "state.json": "a6d7b84ef22a5ff692aac24ae5bd9cfb5ca4d49badadd779937dc072ab78c7dc",
+    "provider_calls.jsonl": "8b6cc8c3b1e98f0e96066d7f867815a506bd2afd030e865d905a92d055e876de",
+    "generation-seal.json": "f4873fa7b12ee2090e6581cdfe04c3345e6604a7463e6233c9a64363b09a2522"
+  },
+  "full_regression": {"passed": 1243, "skipped": 4, "failed": 0, "warnings": 33, "seconds": 56.86},
+  "current_turn_paid_totals": {"calls": 29, "tokens": 70977},
+  "visible_usage_since_2026_10_05": 375466,
+  "billing_verified": false,
+  "previous_results_unchanged": true,
+  "additional_paid_expansion_this_turn": false,
+  "TEST_C5_Fresh30_private_Test500_opened": false,
+  "canary_repair_E2_gates_open": false
+}
