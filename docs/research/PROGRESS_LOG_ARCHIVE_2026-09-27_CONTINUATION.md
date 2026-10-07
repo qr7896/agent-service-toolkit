@@ -927,3 +927,16 @@ uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_
 公开data/e1c_evaluation_2_execution_plan_results.json绑定freeze/state/ledger/seal/Gold/实际hook产物/zero chain与诊断/工程XML；本轮11,909，自10月5日起可见725,352非账单核验，不作整个项目总账。两旧结果页追加接线更正、原正文与分数保留；两Roadmap/Web handoff单一当前入口更新为期待角色在oracle lock前接线、失败位置/接口义务双标签与跨仓库反例，再新冻结四参考/完整DEV/native/独立确认/repair路线，不继续叠提示或无机制采样。
 
 本轮无下载删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key改动，全部旧记录和备份保留；Cloud只接source/zero tests/脱敏摘要，缺本机材料明确INFRA_BLOCKED，旧bridge白名单不扩，不假称Web paid新入口端到端已验。raw/probe源码/Gold/test/key不上传，仅安全源码/协议/单测/分账摘要同步Git。研究未封板、不保证完美或30/30。
+
+
+## 2026-10-07：期待在lock前筛查、公开API对照源绑定，新生成3/4与零费normal诊断
+
+本轮继续普通软件缺陷评测，完整读research/ponytail执行与监控规范，无subagent/依赖新增。新增expectation_dev复用quote catalogue/解析、source resolver/guard、inner完整delegate链。trace/mixed trace/code/literal/不完整guard/empty期待在oracle lock前拒，unknown prose不自动可信；明确works/succeeds for/with→but not for/with单一两qualified-call语法提取公共A/B，复杂/多义不猜。若识别，模型必须normal A/target B，未影射from-import与已暴露production source SHA、共享简单argument AST与公共literal不改；public alias scope/实际共享值/语义不证。Controller不替模型改输入或期待；执行后grounding记API对照语法/公开guard实际trace，machine不晋升。14新专项+预算V3共32/Ruff、两repo真实synthetic controls、完整1416passed/4skipped（112.01秒）、规定V3 compact preflight ready=true。旧四响应零模型全审1拒/3未知保留，四公开Human输入逐字不改；zero provider/Gold读取0，不更改旧4/4。
+
+源码先commit9648a4f，freeze0f04c414602c65c89362e419c061ba16abfc9774a93a6ccc54ab83431b1df543；列精确expectation_dev run/Flash only/≤16/批50000/题24000/output2000/reserve1.4/保护未跑首reserve/retry0，按用户≤100000授权执行一次。实际9started/completed/30,477tokens，无provider失败/retry；SK13496turn2、MM1252turn1、MM1359turn3三候选；SK26289两份code-only期待被拒，turn3以缺desired behavior弃答。producer completed/seal核对后独立Gold attempted3/区分3，screen3/4、machine0，固定12/九准入/screen4分账。未保前版4/4，成本也高于11,909，不能宣称效果改善、不能best-of或追加paid采样。三成功的prose只是unclassified语义待证，不当可信。所有原4/4及历史freeze/source/预算/state/ledger/响应/负结果保留。
+
+零模型反馈审计发现同一比较报告3turn，其中两份probe拒绝反馈contrast=null；原完整公共文本始终可见，不叫原文丢失，也不确定加反馈能恢复。为检验normal可行性，新增public_normal_diagnostic：仅zero诊断，从公共A/B和缓存target from-import源绑定自动派生normal A，原自有argument表达式复制、公共A专有literal补入，unknown额外参数/影射/source不绑定不派生。派生setup/control是Controller程序，非model_generated、未接live，原target/oracle/response不改；不将诊断当Agent输出。真实同immutable base/net-none/read-only/资源限额，全部两份相关缓存派生normal各两次完成，但是同一task、同一唯一program（4次normal执行），不是2task或新修复，不3+1拼4/4；provider/Gold读取0、语义仍unknown。
+
+新helper3正负专项/Ruff过，最终单次1419passed/4skipped/33warnings/0failed（113.65秒），XML持久，无assertions/timeout/skip弱化，工程数不当repair。公开data/e1c_evaluation_2_expectation_results.json绑定新freeze/state/ledger/seal/Gold/角色binding/zero inputs-feedback-normal/代码hash/XML；本轮30,477，自10月5日起可见755,829非账单核验、非整个项目总账。raw/probe/Gold/test/key不上Git。下一步先零费明确请求/公开回归/公开比较/unknown，比较推断期待标inferred_from_public_comparative_report并先定准入与反例，不能暗改本轮口径追回4/4；将已识别关系与prose锚附回反馈、仍让模型生成A/B，派生normal仅feasibility。再跨repo验收/新冻结四参考/完整DEV/native/新独立确认≥2/3/Agent修复official/最后新任务。当前停止paid扩批，不抽第6canary，不开TEST/C5/Fresh30/private Test500/repair/E2，不保证一周/30题完美。
+
+两Roadmap/交接更新单一当前入口，不堆叠最新快照；旧所有结果/记录/备份保留。本轮未下载删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key更改，当前无下载需求；Cloud可接源码与zero tests，缺本机private material/source/images/runtime明确INFRA_BLOCKED，不扩old bridge白名单、不假称新paid模块Web端到端已验。仅安全源码/协议/单测/脱敏摘要同步Git。

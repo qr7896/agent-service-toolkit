@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**新冻结版本四参考Gold区分4/4；语义门槛未过、machine trusted0。** 实际4请求11,909 tokens，Flash only、retry0，producer seal后独立Gold attempted4/区分4。[逐项结果/接线更正](research/E1C2_EXECUTION_PLAN_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_execution_plan_results.json)。
+**期待门槛版Gold3/4，未保留前版4/4；machine trusted0、E1-C未封板。** 本轮9 Flash请求/30,477tokens、retry0；三个候选独立Gold区分，一项期待拒绝后弃答，不评分。[完整新结果](research/E1C2_EXPECTATION_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_expectation_results.json)。旧4/4不改，不best-of拼分；成本增加/覆盖下降，不能说效果提高。
 
-找到根因：内部runner重入配置覆盖外层executor，旧paid的API/类型hook并未生效；原得分、负结果不改，组件效果解释已更正。修复后实际API/uncertainty/plan产物4/4，不靠preflight声明作证。工程1402 passed/4 skipped/33 warnings（60.81秒），Ruff/预算V3/compact preflight过，不等于修复率。当前无下载需求。
+零费诊断自动派生公开A normal，在两份缓存上各两次完成；实际上1task/1唯一程序/4次normal运行，不是Agent输出或额外成功题。期待门槛/公开对照grammar已实际接线，但比较报告如何形成有来源的行为假设仍待验证。工程1419 passed/4 skipped/33warnings（113.65秒），Ruff/预算V3/compact preflight过，不是repair rate。无新下载需求。
 
 ## 1. 已完成与尚未完成
 
@@ -19,14 +19,16 @@
 | v1执行计划零费 | outer=true/inner=false；smoke/audit封存、付费0 | 原型负证据，不覆盖旧源 |
 | v2真实完整执行链 | 五份旧probe零费5/5产物、1自身类型观测；新paid4/4产物 | 不将回放叫新生成；类型组件paid未触发 |
 | v2四参考新生成 | 4请求11,909tokens；正常control与重复base失败、Gold4/4 | 固定12/九准入/screen4分账，不是完整DEV或独立成绩 |
-| witness grounding零费审计 | 全4审计，1项trace期待/公开guard未在失败trace观察到 | 其余也未获语义证书；组件未接live |
+| 前版witness grounding零费审计 | 全4审计，1项trace期待/公开guard未在失败trace观察到 | 其余也未获语义证书；组件未接live |
+| 新期待门槛版 | 期待在lock前筛查、公开A/B/共享输入源绑定；Gold3/4 | 错误期待被拒，但新生成覆盖未保；unknown不trusted |
+| 公开normal零费feasibility | 自动派生1程序、4次normal通过、Gold读取0 | 不是模型输出，未接live，不拼分 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
-正常control与数值四参考门槛本轮已通过。剩余首要问题是**公开期待有依据、候选失败支持对应行为义务**。当前数组候选Gold区分，但期待引用是trace，实际在参数校验失败，没有观察到公开guard位置；不能直接升格，也不能只因位置不同断言毫无关联。
+前版数字4/4、本版3/4，问题已缩到**期待来源与公开比较事实的解释/传递**。trace/code不能充当期待；本轮模型反复选择code quote，被拒后认为没有期待而弃答，尚未生成真正公开A/B对照。
 
-下一版先让期待角色检查进入oracle lock前、源调用链/实际失败位置形成“API义务候选／原报故障机制未证”双标签。trace/code-only引用只说明背景，不可捏造期待；自然语言未分类也不是自动通过。zero正负例后另冻一次四参考，Gold与语义分别核算。
+公共原文仍完整保留；两轮拒绝反馈没结构化带回已经可识别的比较关系，不是原文删除，也不能直接归因于反馈。零费实际运行已证明同一个自有输入下A normal可行，但A工作不证明B必须具备全部相同能力。下一版须把明确请求、回归报告、比较报告与unknown分账；比较形成的期待明确标推断研究假设，不冒充原文承诺/原报exact输入，不从Gold/原断言补答案。
 
 ## 3. 严格验收定义
 
@@ -40,20 +42,20 @@
 
 | 顺序 | 下一步 | 放行证据 | 未过时 |
 |---|---|---|---|
-| 1 | 期待角色在oracle lock前接线 | trace/code-only不能直接充当desired behavior；明确接口义务或公开自然语言来源 | unknown/弃答，不造答案 |
-| 2 | 实际失败与生产调用链分账 | API参数支持问题与公开报告故障位置区别记录；两次trace/source SHA绑定 | 不因Gold消除自动trusted |
-| 3 | 跨仓库零费正负例与工程门槛 | 有效期待/错误trace期待/有效normal/错误setup/未知语义覆盖 | 不付费盲扩批 |
-| 4 | 新方法冻结后一次同四参考 | Gold与语义分别核算，完整hook真实产物、约束不改 | 原namespace不重跑，不best-of |
-| 5 | 同版完整九准入DEV/有限native覆盖 | 保留固定12分母，行为忠实性/cross-repo gate | 不把screen4当全12 |
-| 6 | 新不重叠canary预注册一次 | 方法先冻后选，可信≥2/3且行为一致 | 永久封存回DEV |
+| 1 | 零费期待来源类型与prose锚 | 明确接口请求/公开回归/公开比较/unknown，trace/code不作期待 | 不造literal期待 |
+| 2 | 比较报告推断合同先定协议 | inferred_from_public_comparative_report明确标签、源码scope与反例、公共literal约束 | 不暗改本轮标准追回4/4 |
+| 3 | 比较事实结构化附回拒绝反馈 | 原prose引用/A-B关系有来源；让模型生成A/B同自有输入 | 派生normal仅feasibility，不当Agent输出 |
+| 4 | 跨仓库正负例/工程→新冻四参考 | Gold/语义/报告机制分账，真实完整hook产物 | 原namespace不重跑，不best-of |
+| 5 | 两gate过后同版九准入/native | 保留固定12分母，行为/cross-repo gate | 不把screen4当全12 |
+| 6 | 新不重叠canary预注册一次 | 先冻完整方法后选，可信≥2/3且行为一致 | 封存回DEV |
 | 7 | Agent patch/独立official grade | 同方法预算baseline/treatment小修复证据 | 无收益不扩批 |
-| 8 | 同版旧DEV30→另授权Fresh30 one-shot→E2 | 单一冻结身份逐题resolved | 不承诺30/30，Fresh30失败不回调 |
+| 8 | 同版旧DEV30→另授权Fresh30 one-shot→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-每个新付费实验先列精确命令/Flash/次数/≤100,000 tokens，不Pro、不自动retry。execution-plan v1/v2及之前所有已started的smoke/freeze/run/Gold/audit禁止重跑；修改方法另立namespace，不改旧源/预算/账本。本轮4/4数值门槛已过但语义未过，停止本轮paid扩批，不开第6canary。当前没有新live/canary命令待执行。
+每个新付费实验先列精确命令/Flash/次数/≤100,000tokens，retry0、不Pro。expectation-reference-dev-v1和所有历史已started的smoke/freeze/run/Gold/audit禁止重跑/改旧源/账本，新方法另立namespace。本轮停止paid扩批，不抽第6canary；当前无新live/canary命令待执行。
 
 ## 5. 时间与停止条件
 
-[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保持原预注册。本轮解决执行链并首次得到同版四参考Gold4/4，但不能据此承诺一周或30/30。可控交付是期待锚定、候选行为分账、跨仓库反例与一次冻结DEV实证；语义门槛未过就不抽新独立任务、不继续同方法采样。
+[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留原预注册，不承诺一周或30/30。本轮Gold覆盖下降、花费增加，没有新语义可信成绩；不要继续重复采样。先交付期待来源协议、结构化比较事实与跨仓库反例，再一次新冻结DEV实证，未过不抽新独立任务。
 
 ## 6. WebCodex与本机安全
 

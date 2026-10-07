@@ -1,0 +1,94 @@
+{
+  "schema": "e1c2-expectation-contrast-dev-results-v1",
+  "date": "2026-10-07",
+  "run_id": "expectation-reference-dev-v1",
+  "method_commit": "9648a4f",
+  "model": "deepseek-flash",
+  "provider_token_cap": 50000,
+  "actual_provider_calls": 9,
+  "actual_provider_tokens": 30477,
+  "provider_retries": 0,
+  "visible_since_2026_10_05_tokens": 755829,
+  "billing_verified": false,
+  "screen_denominator": 4,
+  "fixed_denominator": 12,
+  "admitted_denominator": 9,
+  "full_admitted_DEV_run": false,
+  "Gold_attempted": 3,
+  "Gold_discriminating": 3,
+  "machine_trusted": 0,
+  "four_reference_gate_passed": false,
+  "semantic_alignment_gate_passed": false,
+  "independent_canary_ready": false,
+  "rows": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "status": "executed",
+      "turns": 2,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "93dcc1f57404fff013661f072c2455cf430b4e62f967b6d37d67e05a1618024c",
+      "selected_expectation_binding_sha256": "8c7b90a1c9a748fcdadb35a2f5e93bbca381b83736ca42b54bd6dc59aaa56423",
+      "selected_expectation_role": "unclassified_requires_semantic_evidence",
+      "selected_public_contrast_status": "not_applicable",
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-26289",
+      "status": "abstained",
+      "turns": 3,
+      "Gold_discriminating": null,
+      "Gold_result_sha256": null,
+      "selected_expectation_binding_sha256": null,
+      "selected_expectation_role": null,
+      "selected_public_contrast_status": null,
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "status": "executed",
+      "turns": 1,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "e713b4680dd5050bb025cd3acd3f17cf50165cd29d337a7ca1ba166ddf468a0b",
+      "selected_expectation_binding_sha256": "8c7b90a1c9a748fcdadb35a2f5e93bbca381b83736ca42b54bd6dc59aaa56423",
+      "selected_expectation_role": "unclassified_requires_semantic_evidence",
+      "selected_public_contrast_status": "not_applicable",
+      "trusted_reproducer": false
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1359",
+      "status": "executed",
+      "turns": 3,
+      "Gold_discriminating": true,
+      "Gold_result_sha256": "ee8744598dc573a3ed986ef32c9c5936c5af0774464cc17827fda6f2205212e9",
+      "selected_expectation_binding_sha256": "8c7b90a1c9a748fcdadb35a2f5e93bbca381b83736ca42b54bd6dc59aaa56423",
+      "selected_expectation_role": "unclassified_requires_semantic_evidence",
+      "selected_public_contrast_status": "not_applicable",
+      "trusted_reproducer": false
+    }
+  ],
+  "source_records": {
+    "freeze.json": "0f04c414602c65c89362e419c061ba16abfc9774a93a6ccc54ab83431b1df543",
+    "state.json": "2bd545c3c13b2e343560f0472c6f1146fc2cf434c523a7367c66f2f076ac02bd",
+    "provider_calls.jsonl": "4b0eaa5a8f7de6dafc8050e5de939de5491e296b70438b8cbfe318d1fd2bd019",
+    "generation-seal.json": "76d2555262f54ea58226c83fa449d1a391d06dd8bb1ab7e90ee7ab155c83d24e"
+  },
+  "zero_records": {
+    "expectation-zero-audit-v1": "419c7d38ddfe00f986b84b682a127fb8e94b48bf859e5936a6c7a02f019fa631",
+    "expectation-input-zero-v1": "da595ea76cd3a9f9296fd867e6009bea8dc2fece1f23f0f95846ecc50117cb94",
+    "expectation-zero-smoke-v1": "9cfb49d6836ec60529c3d1d9b82b518d9d94addf8458891b8e4745cf88aca1b8",
+    "expectation-feedback-zero-v1": "7fc978d8239e6ac80cb27daa2dd122071a8fd3c91b7d1f550cd48ab6bf8d20d3",
+    "public-normal-zero-v1": "da95d390c7dd0a2ed8abc32716454322e3e21205640db0c7dcd01a1ce70af398"
+  },
+  "public_normal_diagnostic": {
+    "cached_rows": 2,
+    "unique_tasks": 1,
+    "unique_controls": 1,
+    "two_normal_pass_rows": 2,
+    "model_generated": false,
+    "counts_as_Agent_score": false
+  },
+  "normal_diagnostic_source_sha256": "c6b267b4b644edb8e8cf5c97032b4bc29969ab5dffb45606517408829dc750f2",
+  "final_regression_xml_sha256": "79cc6a1630c922f202568f6493daec2bf8d5a578d30892ee4789345d321fd4d5",
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false
+}

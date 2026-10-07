@@ -4,9 +4,9 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：执行器重入接线修复后，同一新版四参考Gold区分4/4，语义门槛仍未通过。** 本轮实际4 Flash请求/11,909 tokens、无retry，API/uncertainty/plan真实产物4/4；以前outer hook被inner配置覆盖，旧组件生效解释已更正，原得分/负结果保留。[完整新结果与待办](research/E1C2_EXECUTION_PLAN_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_execution_plan_results.json)。机器可信复现0，不能报完整DEV/Agent修复/30题全过。零费质量审计发现1项期待引用是trace且报错点不同；下一步先期待角色与失败位置/接口义务分账，再同版DEV，不立即抽canary。工程1402 passed/4 skipped不算repair rate。TEST/C5/Fresh30/private Test500/repair/E2关闭；无本轮下载删除/重启Docker/IPC/VHD/代理/tunnel/密钥改动。
+**当前：期待门槛版Gold3/4，未保留前版4/4；E1-C尚未封板。** 本轮9 Flash请求/30,477 tokens、无retry；三候选Gold区分、一项错误code期待两次被拒后弃答，machine trusted0，不报完整DEV/独立/Agent修复。公开A/B对照的零费派生normal已验证可运行，但仅1旧task/1程序/4次执行，不当模型成绩、不3+1拼分。[最新逐项结果与落地待办](research/E1C2_EXPECTATION_RESULTS_2026-10-07.md)、[收据](../data/e1c_evaluation_2_expectation_results.json)。下一步零费明确接口请求/回归报告/比较报告/unknown及推断期待来源，再新冻结DEV，不加预算采样追回4/4。工程1419 passed/4 skipped不是修复率；TEST/C5/Fresh30/private Test500/repair/E2关闭，无下载删除或本机配置更改。
 
-逐轮结果只维护在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)；旧页面和负结果均保留，以下统计表是历史版本，不best-of合并、不按旧“下一步”操作。
+前版执行链修复与4/4仍完整保留；当前质量/成本并未改善，不用新规则回填旧得分。[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)记录全部轮次，以下统计表是历史版本，不best-of、不按旧“下一步”操作。
 
 ## 1. 阅读入口
 
