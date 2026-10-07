@@ -1,5 +1,7 @@
 # API 义务与源绑定类型观测：真实开发结果
 
+更正（同日后续审计）：付费runner内部重入配置覆盖外层executor，原两批API义务/类型观测产物均0；此前“组件已在paid链生效”的解释不成立，不能将3/4与2/4归因于该组件。独立零调用类型组件的观察证据仍保留，原分数/账本/协议不改。详见[执行链根因、修复与新4/4结果](E1C2_EXECUTION_PLAN_RESULTS_2026-10-07.md)。
+
 ## Material Passport
 
 - Origin Skill: academic-research-suite / experiment-agent；ponytail

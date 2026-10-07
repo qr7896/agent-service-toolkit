@@ -913,3 +913,17 @@ uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_canary_v2_
 - 只在[集中续档](PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)追加过程，更新 Roadmap 2 当前状态；保留旧版本和失败记录。
 
 旧 E1-B 交接全文保留在[历史快照](NEXT_SESSION_HANDOFF_HISTORY_2026-09-30.md)。
+
+## 2026-10-07：执行器重入覆盖根因、真实链修复与同版四参考Gold4/4
+
+完整读研究执行/监控与ponytail技能，无subagent/新依赖。v1 execution-plan将control_failed和source-bound裸Name条件/自己的类型观察转为有限next-evidence计划，不改输入/期待，不升可信；六新单测/重点30/Ruff、两repo真实synthetic正常control、完整1394passed/4skipped（62.78秒）、规定compact preflight过。全部六旧响应零费审计有2normal配置plan、source-bound hypothesis0，追查实际根因而非直接付费：outer loop hook为true，compiled runner内部再次配置后为false。旧obligation/observed/codec目录有executed候选但API义务/类型观测产物0；此前组件已在paid链生效的解释不成立，原3/4、2/4、2/4成绩/文件/协议不回填。v1 zero源码/smoke/audit保留、provider0，未重跑原namespace。
+
+另立v2 namespace，compiled executor所有者也绑定捕获delegate完整链，内部重入与异常恢复有3新回归，不编辑任何已用v1/旧source。两repo真实synthetic smoke与重点27/Ruff、完整1397passed/4skipped（73.78秒）过；五份旧probe按全部原响应顺序零模型离线执行（不按Gold选、不是新反馈生成），API/uncertainty/plan5/5、适用1个runtime type观测与source-bound implicit-operation计划、2normal配置计划，Gold读取0。源码先commit0c986a5，freeze e676d9f37075c54fd8f47d9f16dae28ea21346a777a67e649a19af65b6dfe43e；列精确execution_plan_dev_v2 run、Flash only/nonthinking/温度0/16calls/批50000/题24000/output2000/reserve1.4/待跑首reserve保护/retry0后执行一次。
+
+真实新生成四题各首call候选，4started/completed/11,909provider tokens、无provider失败/retry，producer completed/seal完整核对；paid API/uncertainty/plan产物4/4。独立Gold attempted4/区分4，四参考数值gate首次同版通过，但原固定12/九准入/screen4分账，不是完整DEV/独立/repair/30题成绩。类型observer paid未触发（四目标直接失败），不能声称其造成4/4；模型新生成/接线/计划提示并改，不声称单因素因果。既有compiler派生control或移动setup前沿仍存在，plan组件不改不等于全部Controller绝不转换程序。
+
+新增witness_grounding_audit仅零执行审全部4候选，不Gold挑：1项期待引用是File traceback，实际array在参数校验失败，公开guard未在两次trace中观察到；其它3期待仅未分类待语义证据，不授可信。not_observed不是全局不可达或故障无关证书，matching site/Gold也不证语义。5新正负单测、Ruff通过，最终单次1402passed/4skipped/33warnings/0failed（60.81秒）、XML持久，无assertion/timeout/skip削弱。machine trusted0、语义gate未过，按协议停止本轮付费扩批，不开第6canary/TEST/C5/Fresh30/private Test500/Agent repair/E2。
+
+公开data/e1c_evaluation_2_execution_plan_results.json绑定freeze/state/ledger/seal/Gold/实际hook产物/zero chain与诊断/工程XML；本轮11,909，自10月5日起可见725,352非账单核验，不作整个项目总账。两旧结果页追加接线更正、原正文与分数保留；两Roadmap/Web handoff单一当前入口更新为期待角色在oracle lock前接线、失败位置/接口义务双标签与跨仓库反例，再新冻结四参考/完整DEV/native/独立确认/repair路线，不继续叠提示或无机制采样。
+
+本轮无下载删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key改动，全部旧记录和备份保留；Cloud只接source/zero tests/脱敏摘要，缺本机材料明确INFRA_BLOCKED，旧bridge白名单不扩，不假称Web paid新入口端到端已验。raw/probe源码/Gold/test/key不上传，仅安全源码/协议/单测/分账摘要同步Git。研究未封板、不保证完美或30/30。

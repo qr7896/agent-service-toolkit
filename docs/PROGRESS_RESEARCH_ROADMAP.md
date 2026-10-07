@@ -4,9 +4,9 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：严格DTO兼容修订已进入真实执行，Gold区分2/4，研究质量门槛未过。** 本轮两批Flash共15请求/43,966 tokens，接口失败版9/25,928封存；兼容版6/18,038、两题独立Gold区分，另两题弃答/无效normal control。机器可信复现0、没有Agent修复或完整DEV成绩。[逐项结果与可执行待办](research/E1C2_UNIFIED_POLICY_CODEC_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_unified_policy_codec_results.json)。工程1388 passed/4 skipped不算repair rate。下一步先零调用完成正常控制/状态与隐式协议的可执行契约，不再叠提示、扩大付费或抽新canary。TEST/C5/Fresh30/private Test500/repair/E2关闭；本轮未改Docker/IPC/VHD/代理/tunnel/密钥、未下载删除。
+**当前：执行器重入接线修复后，同一新版四参考Gold区分4/4，语义门槛仍未通过。** 本轮实际4 Flash请求/11,909 tokens、无retry，API/uncertainty/plan真实产物4/4；以前outer hook被inner配置覆盖，旧组件生效解释已更正，原得分/负结果保留。[完整新结果与待办](research/E1C2_EXECUTION_PLAN_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_execution_plan_results.json)。机器可信复现0，不能报完整DEV/Agent修复/30题全过。零费质量审计发现1项期待引用是trace且报错点不同；下一步先期待角色与失败位置/接口义务分账，再同版DEV，不立即抽canary。工程1402 passed/4 skipped不算repair rate。TEST/C5/Fresh30/private Test500/repair/E2关闭；无本轮下载删除/重启Docker/IPC/VHD/代理/tunnel/密钥改动。
 
-旧开头的所有进展快照已原文保全在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)的“2026-10-07：单一政策与DTO兼容修订”条目；不再按旧“下一步”执行。以下统计表保留历史版本，各版不能best-of合并。
+逐轮结果只维护在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)；旧页面和负结果均保留，以下统计表是历史版本，不best-of合并、不按旧“下一步”操作。
 
 ## 1. 阅读入口
 

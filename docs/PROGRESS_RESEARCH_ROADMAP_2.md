@@ -4,29 +4,29 @@
 
 ## 0. 最新结论
 
-严格DTO兼容修订完成，真实四参考screen **Gold区分2/4、机器可信复现0**，没有Agent补丁/official resolved，质量门槛未通过。本轮接口失败版9请求25,928 tokens；兼容版6请求18,038，合计15/43,966、Flash only、retry0。[逐项结果/完整验收](research/E1C2_UNIFIED_POLICY_CODEC_RESULTS_2026-10-07.md)、[可核对收据](../data/e1c_evaluation_2_unified_policy_codec_results.json)。
+**新冻结版本四参考Gold区分4/4；语义门槛未过、machine trusted0。** 实际4请求11,909 tokens，Flash only、retry0，producer seal后独立Gold attempted4/区分4。[逐项结果/接线更正](research/E1C2_EXECUTION_PLAN_RESULTS_2026-10-07.md)、[公开收据](../data/e1c_evaluation_2_execution_plan_results.json)。
 
-已完成工程回归1388 passed/4 skipped/33 warnings（93.81秒），Ruff与规定V3 preflight通过；工程数不是复现或修复率。当前不需要下载新镜像。
+找到根因：内部runner重入配置覆盖外层executor，旧paid的API/类型hook并未生效；原得分、负结果不改，组件效果解释已更正。修复后实际API/uncertainty/plan产物4/4，不靠preflight声明作证。工程1402 passed/4 skipped/33 warnings（60.81秒），Ruff/预算V3/compact preflight过，不等于修复率。当前无下载需求。
 
 ## 1. 已完成与尚未完成
 
 | 环节 | 实际证据 | 边界 |
 |---|---|---|
-| DEV12基础设施 | 12镜像身份曾现场核验；Base-Fail11/12、Gold-Pass9/12、双准入9/12 | 每次仍核验运行现场；异常留固定12分母 |
-| 非人工选文件 | 公开issue与exact-base生产源自动窗口/入口/guard来源和SHA | 覆盖与定位正确、语义忠实性是不同指标 |
-| 历史独立canary | 五批1/3、0/3、1/3、0/3、0/3封存 | 都未达≥2/3；不能再调参后称独立 |
-| API义务与类型观测 | 旧参考新生成分别Gold3/4、2/4 | 比较基线保留，不合并最好成绩 |
-| 本轮单一政策 | 替换叠加System、公开Human不改；接口负结果已封存 | 9调用均解析拒绝，没有有效候选 |
-| 本轮严格兼容 | 9旧响应零调用解码且五个code/oracle字段不改；真实screen2/4 | DTO兼容+canonical示例并改，不称单因素因果收益 |
-| control/隐式协议审计 | 六新响应零执行审计，两份同动作control标记；六单测通过 | diagnostic未接live；同动作不自动证明无效，不同动作不证明独立 |
-| 本版完整DEV/可信复现 | 未完成完整九准入；machine trusted0 | 四参考不能报DEV12全过 |
-| 自动修复/E2/Fresh30 | 未运行新Agent修复与独立新任务 | 不提前开放 |
+| DEV12基础设施 | 12镜像身份曾现场核验；双准入9/12 | 每次核验现场，异常留固定12分母 |
+| 自动源码窗口/入口/guard | 公开issue与exact-base生产源、来源与SHA | 非人工选文件不等于语义正确 |
+| 五批历史独立canary | 1/3、0/3、1/3、0/3、0/3封存 | 未达≥2/3；不再称独立调参 |
+| 历史API/类型/codec版本 | Gold3/4、2/4、2/4保持 | 内部配置覆盖hook，效果归因不成立 |
+| v1执行计划零费 | outer=true/inner=false；smoke/audit封存、付费0 | 原型负证据，不覆盖旧源 |
+| v2真实完整执行链 | 五份旧probe零费5/5产物、1自身类型观测；新paid4/4产物 | 不将回放叫新生成；类型组件paid未触发 |
+| v2四参考新生成 | 4请求11,909tokens；正常control与重复base失败、Gold4/4 | 固定12/九准入/screen4分账，不是完整DEV或独立成绩 |
+| witness grounding零费审计 | 全4审计，1项trace期待/公开guard未在失败trace观察到 | 其余也未获语义证书；组件未接live |
+| 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
-兼容版SK13496与MM1252有稳定base失败且独立Gold消除；SK26289在list输入通过后弃答，尚未执行source-consistent输入假设；MM1359正常control落在同一故障配置而失败。问题在可执行的输入假设与正常控制，不是继续下载镜像或堆源码窗口。
+正常control与数值四参考门槛本轮已通过。剩余首要问题是**公开期待有依据、候选失败支持对应行为义务**。当前数组候选Gold区分，但期待引用是trace，实际在参数校验失败，没有观察到公开guard位置；不能直接升格，也不能只因位置不同断言毫无关联。
 
-源码无显式raise不能证明条件不会抛错；裸Name guard可能调用类型协议。公开约束、已观察事实、合成假设和unknown必须分账，假设不能叫原报告exact输入；也不能用Gold或原测试来填输入。
+下一版先让期待角色检查进入oracle lock前、源调用链/实际失败位置形成“API义务候选／原报故障机制未证”双标签。trace/code-only引用只说明背景，不可捏造期待；自然语言未分类也不是自动通过。zero正负例后另冻一次四参考，Gold与语义分别核算。
 
 ## 3. 严格验收定义
 
@@ -40,20 +40,20 @@
 
 | 顺序 | 下一步 | 放行证据 | 未过时 |
 |---|---|---|---|
-| 1 | 零调用执行契约 | 公开约束/输入假设/control状态/目标API/未证项分栏，来源SHA可核对 | 不靠提示授予可信 |
-| 2 | 正常配置与隐式协议有限探索 | 同动作审状态、不同动作也验独立；模型自身提出API-valid假设并实际执行 | 不手填array/date/assertion，不原报化 |
-| 3 | 跨仓库零调用正负例、工程门槛 | 有效control/同故障假control/共享setup/类型冲突/未知入口均覆盖 | 不付费盲扩批 |
-| 4 | 新method/input/budget/source freeze后一次旧四参考 | 同版新生成、对照保留、行为忠实性/cross-repo gate | 负结果seal；原namespace不重跑 |
-| 5 | 同版完整九准入DEV | 固定12分母、预算与质量分账 | 不拼旧成功数 |
-| 6 | 新不重叠canary预注册一次 | 方法先冻结再选择，可信≥2/3且行为一致 | 永久封存，回DEV |
-| 7 | Agent patch/独立official grade | 同方法预算小型baseline/treatment修复证据 | 无收益不扩批 |
-| 8 | 同版旧DEV30→另授权Fresh30 one-shot→E2 | 单一冻结身份、每题resolved记录 | 不保证30/30，Fresh30失败不回调规则 |
+| 1 | 期待角色在oracle lock前接线 | trace/code-only不能直接充当desired behavior；明确接口义务或公开自然语言来源 | unknown/弃答，不造答案 |
+| 2 | 实际失败与生产调用链分账 | API参数支持问题与公开报告故障位置区别记录；两次trace/source SHA绑定 | 不因Gold消除自动trusted |
+| 3 | 跨仓库零费正负例与工程门槛 | 有效期待/错误trace期待/有效normal/错误setup/未知语义覆盖 | 不付费盲扩批 |
+| 4 | 新方法冻结后一次同四参考 | Gold与语义分别核算，完整hook真实产物、约束不改 | 原namespace不重跑，不best-of |
+| 5 | 同版完整九准入DEV/有限native覆盖 | 保留固定12分母，行为忠实性/cross-repo gate | 不把screen4当全12 |
+| 6 | 新不重叠canary预注册一次 | 方法先冻后选，可信≥2/3且行为一致 | 永久封存回DEV |
+| 7 | Agent patch/独立official grade | 同方法预算baseline/treatment小修复证据 | 无收益不扩批 |
+| 8 | 同版旧DEV30→另授权Fresh30 one-shot→E2 | 单一冻结身份逐题resolved | 不承诺30/30，Fresh30失败不回调 |
 
-每个新付费实验先明示精确命令/Flash/次数/≤100,000 tokens，不使用Pro、不自动retry。已完成run/smoke/freeze/Gold/audit禁止再次执行；改变方法必须新namespace，不能改旧源或账本。当前没有新live/canary命令待执行。
+每个新付费实验先列精确命令/Flash/次数/≤100,000 tokens，不Pro、不自动retry。execution-plan v1/v2及之前所有已started的smoke/freeze/run/Gold/audit禁止重跑；修改方法另立namespace，不改旧源/预算/账本。本轮4/4数值门槛已过但语义未过，停止本轮paid扩批，不开第6canary。当前没有新live/canary命令待执行。
 
 ## 5. 时间与停止条件
 
-[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留，不改当时预注册。10月7日现有证据不能承诺一周或任何日期达到30/30。本轮付费screen已封存，停止重复采样；后续先交付可执行契约与跨仓库反例，再用一次冻结DEV实证决定是否继续。不能把增加回归数当研究效果。
+[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保持原预注册。本轮解决执行链并首次得到同版四参考Gold4/4，但不能据此承诺一周或30/30。可控交付是期待锚定、候选行为分账、跨仓库反例与一次冻结DEV实证；语义门槛未过就不抽新独立任务、不继续同方法采样。
 
 ## 6. WebCodex与本机安全
 

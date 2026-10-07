@@ -1,5 +1,7 @@
 # E1-C evaluation_2：单一政策与接口兼容实验
 
+后续接线更正：旧runner内部配置覆盖外层API/类型executor，不能把preflight声明当实际gate证书；本页原2/4/接口负结果不变。另版已修复并得到四参考Gold4/4，但语义门槛仍未通过，见[新结果与真实hook证据](E1C2_EXECUTION_PLAN_RESULTS_2026-10-07.md)。
+
 ## Material Passport
 
 - Origin Skill: academic-research-suite / experiment-agent；ponytail
