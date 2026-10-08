@@ -30,6 +30,8 @@
 
 仍没有公开短名省略import时的作者namespace意图证明，SK另有default/增量等未覆盖义务。现有有限gate故意full_issue_trusted/repair=false；不能因版本对照通过或Gold消除就改True，也不能承诺30/30。
 
+用户再次要求继续后，只读核对原始公开problem statement的import行（不取断言/评分）：显式import行0，原公开issue SHA256 `1824d5fc10377672959f123d0800bd3175659b40db8c7bd111bb49e44ab97fa2`。因此不是已给的import被消息投影丢掉；该次核对没有写入私有产物或重跑实验，口径选择仍未明确。
+
 **下一步需要明确资格范围，不再需要下载或盲目付费：**
 
 1. 默认继续完整门槛：保留条件解释unknown，逐项寻找明确公共namespace/全部义务证据；现有证据不足则如实报告。

@@ -26,6 +26,7 @@
   "new_task_success_or_repair_rate_claimed": false,
   "full_issue_trusted": false,
   "public_namespace_intent_proven": false,
+  "public_import_audit": {"explicit_import_lines_found": 0, "public_issue_sha256": "1824d5fc10377672959f123d0800bd3175659b40db8c7bd111bb49e44ab97fa2", "assertion_or_scoring_material_used": false, "provider_calls": 0},
   "Agent_repairs": 0,
   "source_records": {
     "public-release-witness-zero-v1/freeze.json": "09d26f4967458fd365f24eb5734e4fe6bc42e64ec4e5dadeeb4bf4833adfe8e3",

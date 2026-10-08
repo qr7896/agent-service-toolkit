@@ -1394,3 +1394,5 @@ resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMess
 本轮公开旧版执行witness实证支持；公共namespace意图/其他issue义务仍未知。full_issue_trusted=false/Agentrepair0，资格选择未收到明确回答，不改门槛、不直接开canary/TEST/Fresh30/E2。新namespace不可重跑，不借之前其他task的版本witness、不回填旧local_source_unavailable；原有限候选/Gold分数独立保持。
 
 Ruff/重点32/compact synthetic ready，全1680passed/4skipped/33warnings103.79秒，XML SHA793b853af976cd18a0c0739a5003842542c6f531bf941b2cea38e5f3b21f0d9e；旧XML及失败测试记录保留，不报repair rate。新release method/protocol/14源manifest、八个旧generation seal与父zero结果保持；receipt绑定freeze/result/四结果/XML。两Roadmap/交接当前入口更新、下载doc状态历史留存，日志本续档；Git只source/test/protocol/脱敏收据，不上传wheel/原probe/raw/Gold/key。没有系统Docker重启/IPC/VHD/registry/代理/tunnel/密钥更改或镜像删除。当前不需要再下载/付费，下一步明确严格完整门槛或另立有限机制预注册协议；不保证30/30或完美。
+
+用户随后再次“继续”，没有明确选择资格口径，故保持原strict。只读进一步核对原始公开problem_statement.md的import行，0显式行，public SHA2561824d5fc10377672959f123d0800bd3175659b40db8c7bd111bb49e44ab97fa2；不是已给import被投影遗漏。该检查不取断言/评分、不改私有产物/重新执行、provider0。对是否继续完整证明或另预注册有限机制协议仍需明确方向，不能将“继续”静默当口径变更授权。
