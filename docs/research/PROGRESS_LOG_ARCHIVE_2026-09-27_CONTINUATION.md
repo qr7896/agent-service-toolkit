@@ -1258,3 +1258,15 @@ version-witness-zero-v1 source/protocol已冻，MM1359 3.0.0rc8的11文件152704
 两Roadmap/Web handoff当前入口更新，日志只本续档；用户先打开Docker确认Engine running后，另freeze resume-only身份只推进未执行版本probe，不再运行version v1，不复用旧IPC授权。再完整义务/方法/预算freeze、同版DEV gate；未过不开新canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证完美或30/30。仅安全源码/单测/协议/脱敏收据同步Git。
 
 交付状态补记：本轮源码/结果已本地提交3adc771；两次小型Git推送均被GitHub remote Internal Server Error拒绝（非实验retry），只读ls-remote确认main仍1fe2feb。远端同步未完成，Cloud当前main尚无本轮behavior/version新增模块；恢复后仅同步本地commits，不重跑研究namespace。工作与私有证据已本机保全，不做force push或其他历史改写。
+
+## 2026-10-08：旧版本准备项安全续接成功，Docker/GitHub恢复
+
+Docker与GitHub阻塞均恢复。resume-only身份已一次完成MM1359旧版3.0.0rc8同一原probe，实际版本/path核验通过、rc0；原当前base封存两次rc1未重跑。原11文件直接readonly复用，旧v1失败保持，新provider/tokens0/0、Gold读取0。只是一份DEV缓存的一个版本点，旧资格/Gold4/4/exception3/4不改，机器可信仍0，完整live方法尚未冻结。
+
+只读require_engine恢复ready，未启动/修复Docker系统；GitHub小型push一次成功同步先前3adc771/aaae7fd，前500负记录不改。完整读ARS/ponytail，新增resume-only源码/协议/namespace，9专项+预算V3重点28/Ruff过后执行一次精确零调用run。failure receipt绑定public hash，phase/status/真实int0/driver和taskfreeze False、实际runtime文件不存在，prepared11文件SHA/inventory全核对；原producer seal/全部产物/原probe校验，原image/base/旧3.0.0rc8/原dependency条件不变，无重选版本/重新archive/下载。
+
+新freeze/started/driver/log/result留存，oldsource/probe两个readonly mount、net-none/read-only/pull-never90s。actual__version__3.0.0rc8与__file__历史mount检查通过，原target program rc0。原current sealed execution两次rc1/probeSHA对应，只读对比、不重跑。只有一个DEV缓存/一个旧版本点实际支持，不报全更早版本、fullIssueTrusted、独立canary/repair；machine0和原资格/Gold4/4/exception3/4全保持。原v1freeze/failure/source不变，resume namespace已started不得再跑。
+
+最终完整1550passed/4skipped/33warnings106.43秒、合成compact preflight ready=true，XML/新method/source/started/resume结果/原中断/原当前execution SHA绑定data/e1c_evaluation_2_version_resume_results.json。provider/tokens0/0、Gold读0、新probe0、新普通诊断container1、0镜像下载，旧代码与raw/private记录不删除，系统IPC/VHD/registry/proxy/tunnel/key不变。仅source/专项/协议/脱敏收据公开；private source/probe/driver/log/Gold/test/key不上Git。
+
+两Roadmap/Web handoff更新唯一当前入口：停止重复收collector，下一步已有规则统一Controller接线、scope/剩余义务与adapter正负例/零调用真实接线，然后完整方法/预算freeze、同版DEV新生成；可信gate真达标才历史排除新canary≥2/3/Agentpatch official/DEV30/Fresh30/E2。MM1252无本轮旧版执行证据，不把MM1359结果移植，不打开TEST/C5/Fresh30/privateTest500/repair/E2，不承诺完美/30题全过。日志只本续档。

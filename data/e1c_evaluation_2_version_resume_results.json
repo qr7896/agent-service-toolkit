@@ -1,0 +1,63 @@
+{
+  "schema": "e1c2-version-resume-results-v1",
+  "date": "2026-10-08",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "Gold_read": false,
+  "machine_trusted": 0,
+  "new_diagnostic_containers": 1,
+  "new_probes_generated": 0,
+  "canary_opened": false,
+  "sealed_TEST_opened": false,
+  "Fresh30_opened": false,
+  "result": {
+    "status": "old_version_same_probe_completed",
+    "instance_id": "marshmallow-code__marshmallow-1359",
+    "returncode": 0,
+    "old_version_checked": true,
+    "old_version": "3.0.0rc8",
+    "log_sha256": "08dcf83cb4a9c2b68580798993947fb20efd435309d3d9f4c25572b833f7abae",
+    "freeze_sha256": "801da12cbded29e1d0bbe9de375075fdac149e1374e968676ca4018a7e510da1",
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "Gold_read": false,
+    "machine_trusted": 0,
+    "new_probes_generated": 0,
+    "cached_reference_denominator": 4,
+    "fixed_DEV_denominator": 12,
+    "original_interruption_modified": false,
+    "old_scores_or_qualification_changed": false,
+    "no_source_rematerialization": true,
+    "network_none": true,
+    "pull_never": true
+  },
+  "source_records": {
+    "resume_freeze_sha256": "801da12cbded29e1d0bbe9de375075fdac149e1374e968676ca4018a7e510da1",
+    "resume_result_sha256": "f61ad9409aa5eba3d2f4abf897ce1ef7243d2e65bb6c419ad9be17d5d9d01a11",
+    "resume_started_sha256": "406faec7ba3e4bbcb893842340b636372cc1b345515aa9ed3e1011f01cdfbaa1",
+    "original_failure_sha256": "343e74e6478901b30b7fb020dc1886d444e5550790d0707e53038d7d009713f9",
+    "original_freeze_sha256": "7d143204c9e98170321ec261c8d9116e31df7df238b49353228dc0920bef4cc8",
+    "current_sealed_execution_sha256": "41715c2ce72d316ed91c16afcc04e1b634eb2417e06dc4e4617e35a78496b2e9"
+  },
+  "module_sha256": "ee828bf41ec7087490e254bb8186aeec3e22b6d776c2d72de07d57ef0f5fb8dc",
+  "current_sealed_returncodes": [
+    1,
+    1
+  ],
+  "current_execution_not_rerun": true,
+  "scope": "one existing DEV cached probe, one public historical version point, same environment except library source version",
+  "GitHub_prior_commits_synced": true,
+  "regression": {
+    "passed": 1550,
+    "skipped": 4,
+    "warnings": 33,
+    "seconds": 106.43,
+    "xml_sha256": "1b4696b9b1c2cf3dbb3455f38ed27f65befcf042d9c09d0dfd324bd047464596"
+  },
+  "focused": {
+    "new_resume_tests_passed": 9,
+    "budget_v3_resume_passed": 28,
+    "ruff_passed": true,
+    "synthetic_compact_preflight_ready": true
+  }
+}

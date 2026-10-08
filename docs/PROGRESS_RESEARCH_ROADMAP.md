@@ -4,11 +4,11 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 有限行为分支已校准：四缓存1显式bool keyword子义务支持、1比较假设、2回归假设，机器可信仍0（不是可信1/4）。旧版本对照已准备MM1359公开3.0.0rc8的11生产文件/152,704bytes，但Docker engine管道不存在、Desktop/backend未运行，准入前INFRA_BLOCKED，driver与probe均未执行。本轮provider/tokens0/0、Gold读取0，旧资格与Gold4/4/异常对应3/4不变。 [行为与旧版本前置结果](research/E1C2_BEHAVIOR_VERSION_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_behavior_version_results.json)。先由用户打开Docker并确认Engine running，再另冻resume-only身份推进未执行部分；不重跑已started namespace、不改IPC/registry/VHD或下载镜像。完整DEV gate未过，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。
+**当前：** Docker与GitHub阻塞均恢复。resume-only身份已一次完成MM1359旧版3.0.0rc8同一原probe，实际版本/path核验通过、rc0；原当前base封存两次rc1未重跑。原11文件直接readonly复用，旧v1失败保持，新provider/tokens0/0、Gold读取0。只是一份DEV缓存的一个版本点，旧资格/Gold4/4/exception3/4不改，机器可信仍0，完整live方法尚未冻结。 [旧版本续接实证](research/E1C2_VERSION_RESUME_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_version_resume_results.json)。下一步将现有资格规则统一接入Controller、完整方法/预算freeze与零模型adapter回归，再同版DEV新生成；不重复collector、不打开canary/TEST/C5/Fresh30/privateTest500/repair/E2。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1541 passed/4 skipped/33 warnings（104.58秒）；Ruff、预算/V3重点41项与合成preflight通过。此计数不是可信复现或修复率。
+最新工程验证：1550 passed/4 skipped/33 warnings（106.43秒）；Ruff、预算/V3重点28项与合成preflight通过。此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
