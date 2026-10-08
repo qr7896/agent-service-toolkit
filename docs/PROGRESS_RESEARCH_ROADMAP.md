@@ -4,11 +4,11 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** Docker与GitHub阻塞均恢复。resume-only身份已一次完成MM1359旧版3.0.0rc8同一原probe，实际版本/path核验通过、rc0；原当前base封存两次rc1未重跑。原11文件直接readonly复用，旧v1失败保持，新provider/tokens0/0、Gold读取0。只是一份DEV缓存的一个版本点，旧资格/Gold4/4/exception3/4不改，机器可信仍0，完整live方法尚未冻结。 [旧版本续接实证](research/E1C2_VERSION_RESUME_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_version_resume_results.json)。下一步将现有资格规则统一接入Controller、完整方法/预算freeze与零模型adapter回归，再同版DEV新生成；不重复collector、不打开canary/TEST/C5/Fresh30/privateTest500/repair/E2。
+**当前：** 参数声明、结构资格与有限行为判别已接入新Controller；两类真实正常正例及一个真实合成失败分支通过，确认内层hook、反馈、实际observer/qualification/子义务判别。有限adapter/预算已冻结，真实provider run仍禁用。[接线结果与剩余门槛](research/E1C2_QUALIFIED_CONTROLLER_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_qualified_controller_results.json)。本轮provider/tokens0/0、E1-C Gold读取0。旧Gold4/4、异常对应3/4及[单点旧版本实证](research/E1C2_VERSION_RESUME_RESULTS_2026-10-08.md)不变，机器可信仍0。下一步完整义务scope/缺证动作gate，再完整producer freeze/旧DEV新生成；不开放canary/TEST/C5/Fresh30/privateTest500/repair/E2。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1550 passed/4 skipped/33 warnings（106.43秒）；Ruff、预算/V3重点28项与合成preflight通过。此计数不是可信复现或修复率。
+最新工程验证：1567 passed/4 skipped/33 warnings（102.02秒）；Ruff、预算/V3/Controller重点36项、合成compact preflight通过。此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -18,7 +18,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [统一运行反馈两轮结果](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)、[哈希收据](../data/e1c_evaluation_2_unified_runtime_dev_result.json)；旧V4/V2及所有协议/负结果保留 |
+| 查看最新实验与下一步 | [Controller实际接线](research/E1C2_QUALIFIED_CONTROLLER_RESULTS_2026-10-08.md)；[此前真实模型结果](research/E1C2_UNIFIED_RUNTIME_DEV_RESULTS_2026-10-07.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

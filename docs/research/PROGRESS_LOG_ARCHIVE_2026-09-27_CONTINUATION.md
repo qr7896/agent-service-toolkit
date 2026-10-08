@@ -1270,3 +1270,23 @@ Docker与GitHub阻塞均恢复。resume-only身份已一次完成MM1359旧版3.0
 最终完整1550passed/4skipped/33warnings106.43秒、合成compact preflight ready=true，XML/新method/source/started/resume结果/原中断/原当前execution SHA绑定data/e1c_evaluation_2_version_resume_results.json。provider/tokens0/0、Gold读0、新probe0、新普通诊断container1、0镜像下载，旧代码与raw/private记录不删除，系统IPC/VHD/registry/proxy/tunnel/key不变。仅source/专项/协议/脱敏收据公开；private source/probe/driver/log/Gold/test/key不上Git。
 
 两Roadmap/Web handoff更新唯一当前入口：停止重复收collector，下一步已有规则统一Controller接线、scope/剩余义务与adapter正负例/零调用真实接线，然后完整方法/预算freeze、同版DEV新生成；可信gate真达标才历史排除新canary≥2/3/Agentpatch official/DEV30/Fresh30/E2。MM1252无本轮旧版执行证据，不把MM1359结果移植，不打开TEST/C5/Fresh30/privateTest500/repair/E2，不承诺完美/30题全过。日志只本续档。
+
+## 2026-10-08：统一Controller有限接线、真实正常正例与adapter冻结
+
+ARS执行/冻结边界与ponytail最小改动规范指导本轮；未新增依赖/subagent/独立collector。新qualified-controller直接复用原report-anchor编译/锁定/控制/目标链，Verified input以base_commit绑定workspace，不猜taskID→文件；内层compiled.execute_probe与loop hook均接新Controller，异常退出恢复。生成只补≤8组生产Parameters声明，单文件≤1MB，host SHA与LF/base blob核验，排除Examples/答案；≤30000上下文cap不变，明确变更请求可覆盖旧文档。
+
+policy在delegate前检查已知fixture/alias/对象变更与唯一公开期待锚，仅completion+空assertion；未知仍未知。原candidate成立才调用已有exception-v2观察、qualification-v2与behavior gate，最多两生产文件、原probe与双source身份绑定，结果进入下一轮feedback；line1为文件身份边界不是失败guard定位。fullIssueTrusted始终false，不把正常API接受域推target承诺，不把bool子义务推全issue。paired/object/version尚未自动接入，不假称已完成全方法。
+
+前置mock chain1failed/9passed原因是Behavior.git_blob未mock，而Controller已mock；补同一合成source canonical mock、不改断言，后10passed再补synthetic issue隔离专项11passed，重点30passed/Ruff。synthetic issue清除原real fixture义务并更新issueSHA，两个新regression合成公开文本，复用sklearn/Marshmallow正常API，retrieve→probe→abstain。精确零调用smoke一次通过，normal每组两次rc0、target每组一次rc0、实际inner admission和post-verdict存在、feedback已消费、未选作bug；通过target无需第二次失败确认。2/2是正常管道正例，不是两task成功；真实selected-candidate观察分支未触发，仅mock覆盖，必须下一步真实反例验证。
+
+新smoke/source/protocol先冻，freeze精确零调用一次成功，固定12/九准入/screen4分账，Flash候选≤16calls/batch50000/task24000/output2000/retry0、首轮保留36101。CLI只smoke/freeze、real_provider_run_enabled=false；这是有限adapter身份，不是完整producer或付费放行，不得从底层run绕过禁用。两namespace已started，不重跑/改source。完整1561passed/4skipped/33warnings118.45秒，合成compact preflight六合成任务ready=true，XML SHA及freeze/协议/源/结果在data/e1c_evaluation_2_qualified_controller_results.json；工程计数不是repair。
+
+原producer sealSHA5997675327f8f246b179413f0c2df5efd2b66fd2edacc2f6db430796588ea86f及201产物全部匹配，新所有methodSHA无变。provider/tokens0/0、E1-C Gold0、新镜像0；旧Gold4/4、exception3/4/资格与MM1359单点旧版实证不改，machine0。无Docker重启/IPC/VHD/registry/proxy/tunnel/key修改、无删除；原raw/probe/Gold/test/key/失败/备份本机保留，不上Git。V3 mandatory synthetic grader与本轮E1-C材料分账。
+
+两Roadmap/交接仅更新当前入口，日志本续档；协议/结果报告/安全source/专项/脱敏收据同步Git。下一步新零调用反例身份引用v1 SHA验证selected异常链，再scope/剩余义务/unknown动作gate、按需证据、完整producer freeze/旧DEV同版新生成。当前无新paid命令/不抽第6批、不打开canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证30/30或一周完美，无下载需求。
+
+同轮进一步推进：追加controller-failure-smoke独立零调用验证协议/source/namespace，引用已冻Controller v1所有method SHA而不改v1。6专项/Ruff后一次精确命令执行；复用现有sklearn库synthetic fixture，新公开文本请求支持_e1c2_requested_flag bool，normal与target仅差该keyword。retrieve自动定位构造方法，不挑task文件；原issue fixture义务清空，参数名不是real task策略/调参规则。normal×2 rc0、target×2 rc1、实际observer rc1，qualification mechanism_supported_candidate无unknown，synthetic bool子义务支持，full issue trustedfalse/machine0，解除了真实selected分支只mock覆盖的管道缺口。不是benchmark新生成或三个任务成绩、不回填正常smoke，provider/tokens0/0/Gold0。新freeze/result/driver/protocol/verdict/observation SHA补同轮公开收据，三namespace完成后不重跑。重点36passed；当前下一步改为scope/剩余义务/unknown动作gate，不再扩同类smoke/collector。最终full suite另补最终XML，不复写先前1561计数。
+
+最终收尾验证：1567passed/4skipped/33warnings102.02秒，XML SHA7fcb322061bb842d6b0513333712ce042e619d90c3ae5341754e5a71159f06e6。先前1561/118.45秒XML保留，收据另加final_regression。全部新method、failure driver/protocol、原201producer文件SHA再次匹配；源/协议冻结后未改。两Roadmap/交接唯一当前入口一致，source/专项/协议/结果/脱敏收据安全同步，私有raw/probe/Gold/key/历史负记录不动。
+
+代码范围限制补记：参数声明读取v1在window缺owner时按函数名匹配已核验文件内定义，可能多同名，不是唯一targetAPI绑定。已在收据/结果/交接声明；冻结v1不改，下一producer按窗口行号与AST所属类证明唯一范围，再scope/缺证动作gate，unknown不进入repair。

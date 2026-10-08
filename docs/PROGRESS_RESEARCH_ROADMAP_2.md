@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** Docker与GitHub阻塞均恢复。resume-only身份已一次完成MM1359旧版3.0.0rc8同一原probe，实际版本/path核验通过、rc0；原当前base封存两次rc1未重跑。原11文件直接readonly复用，旧v1失败保持，新provider/tokens0/0、Gold读取0。只是一份DEV缓存的一个版本点，旧资格/Gold4/4/exception3/4不改，机器可信仍0，完整live方法尚未冻结。 [结果](research/E1C2_VERSION_RESUME_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_version_resume_results.json)。
+**最新状态：** Controller有限接线已完成正常与失败实际分支验收：两类真实正例未误报，一个合成构造参数请求触发normal0×2/target1×2及真实observer/qualification/子义务。adapter/预算冻结成功；完整研究producer仍未就绪、真实provider run禁用。[结果及下一步](research/E1C2_QUALIFIED_CONTROLLER_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_qualified_controller_results.json)。模型/token0/0、E1-C Gold读取0；原201个producer产物与全部冻结模块SHA未变，旧Gold4/4、异常3/4及单点旧版本实证保持，machine trusted仍0。
 
-本轮新增9专项验证resume边界，重点28/Ruff/合成preflight过，完整1550 passed/4 skipped/33warnings（106.43秒）。旧source/failure/原probe不改，0新镜像下载；上轮两本地commits已同步GitHub。
+本轮新增Controller11+failure-smoke6共17专项，重点36/Ruff与合成preflight通过，最终1567 passed/4 skipped/33warnings（102.02秒），先前1561记录保留。正/负例均是管道验收而非真实任务成功，真实selected-candidate分支已触发，完整语义仍未达标。0新镜像下载，无系统配置修改。
 
 ## 1. 已完成与尚未完成
 
@@ -32,13 +32,14 @@
 | Parameters文档支持 | 自动提取四声明行；两个list声明不明确支持实际ndarray | 规格支持缺口，不判task非法；明确请求可改旧文档 |
 | 行为分支与有限子义务 | 精确公共bool请求/闭合签名/相同control/原probe调用行TypeError；1子义务支持 | 不证明default/增量功能/全部issue，可信0 |
 | 公开旧版本对照 | 旧v1前置失败保留；resume复用11文件/152704bytes，实际3.0.0rc8同一probe rc0 | 当前封存两次rc1不重跑，非全部旧版/DEV/修复成功 |
+| 新统一Controller有限接线 | 参数声明/结构policy/既有执行/异常资格/行为分支；两正常正例+一真实合成故障，17专项通过，adapter冻结 | 非真实task成绩；paired/object/version未自动接入，live禁用 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-Docker及GitHub阻塞已恢复、旧版续接已完成。当前研究瓶颈是把旁路证据变成单一明确scope的Controller资格判别与完整方法身份，而不是继续收集同类证据。显式bool子义务、public文档缺口和old/current实证均须分账，不能自动认证全issue；MM1252没有本轮旧版执行证据。
+Docker及GitHub阻塞已恢复、旧版续接与Controller正负实际分支接线已完成。当前瓶颈是完整义务scope和按需缺证动作gate，不是重复扩collector/同类smoke或立即付费扩批。显式bool子义务、public文档缺口和old/current实证须分账，不能自动认证全issue；MM1252没有本轮旧版执行证据。
 
 ## 3. 严格验收定义
 
@@ -58,7 +59,9 @@ Docker及GitHub阻塞已恢复、旧版续接已完成。当前研究瓶颈是�
 | 已完成（有限范围） | paired caller输入与Parameters文档 | 两共享keyword typed SHA一致；文档源行/SHA/base核验 | 训练对象unknown、API体未证明、期待仍需分支 |
 | 已完成（有限范围） | 行为资格分支与反例 | 16专项、四缓存完整核算，1子义务支持/3假设 | 全issue trusted0，不回填旧评分 |
 | 已完成 | Engine恢复后的resume-only执行 | 原source/probe/failure SHA绑定，旧版实际导入及rc0 | 原v1/新resume均不可重跑 |
-| 1 | 统一Controller接线与scope资格 | 接入既有规则/记录，adapter正负例，无task规则、无Gold反馈 | 不继续独立扩collector |
+| 已完成（有限范围） | 统一Controller基础接线 | 11专项、实际inner hook、两类真实正常正例、adapter freeze | 未宣称完整method或可信成果 |
+| 已完成（有限范围） | 真实selected-candidate分支 | 新零调用身份引用v1 SHA，normal×2/target×2、真实observer/qualification/子义务 | 仅合成fixture，不算真实task |
+| 1 | scope/剩余义务与unknown动作gate | 按公共起源、所缺证据明确区分全issue/子义务/假设/unknown | 不重复collector/smoke，不自动trusted |
 | 2 | 完整义务范围/方法/预算freeze | 覆盖缺口显式、来源/版本/动作/预算统一身份 | 子义务或单版本成功不等于全issue |
 | 3 | 跨repo正负例→完整method freeze | 资格scope/classifier/observer/双source身份与输入/预算先冻 | 不继续paid调提示 |
 | 4 | 同版四参考/九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | screen不报全12 |
