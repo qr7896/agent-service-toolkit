@@ -1,0 +1,65 @@
+{
+  "schema": "e1c2-protocol-execution-results-v1",
+  "date": "2026-10-08",
+  "model": "deepseek-flash",
+  "new_provider_calls": 13,
+  "new_provider_tokens": 53708,
+  "fixed_DEV_denominator": 12,
+  "admitted_denominator": 9,
+  "screen_denominator": 2,
+  "qualified_candidates": 0,
+  "machine_trusted": 0,
+  "Agent_repairs": 0,
+  "Gold_used_or_run": false,
+  "stages": [
+    {"namespace": "action-protocol-flash-pilot-v1", "state": "completed_and_sealed", "calls": 2, "tokens": 5997, "batch_cap": 20000, "max_calls": 2, "sealed_files": 11, "result": "two valid successful production retrieval actions; both next calls stopped at preregistered one-call limit"},
+    {"namespace": "action-protocol-flash-probe-stage-v1", "state": "completed_and_sealed", "calls": 5, "tokens": 20914, "batch_cap": 40000, "max_calls": 6, "sealed_files": 39, "result": "one real Python probe executed but normal receiver lost after frontier; other task repeated retrieval"},
+    {"namespace": "action-protocol-frontier-flash-dev-v1", "state": "completed_and_sealed", "calls": 6, "tokens": 26797, "batch_cap": 40000, "max_calls": 6, "sealed_files": 52, "result": "both tasks abstained; one normal-pass/repeatable-target-failure observation with actual automatic Schema acquisition, no qualification"}
+  ],
+  "actual_live_acquisition": {
+    "production_symbol": "Schema",
+    "normal_control_returncodes": [0, 0],
+    "target_returncodes": [1, 1],
+    "new_dependency_source_acquired": true,
+    "next_prompt_recomposition_matches_actual_ledger_hash": true,
+    "next_prompt_contains_acquired_source": true,
+    "old_input_mutated": false,
+    "full_issue_semantics_proven": false
+  },
+  "remaining_failures": [
+    "feature request absence in old production signature incorrectly treated by model as reason not to reproduce",
+    "public fixture reference scope and dependency identity still unknown",
+    "enforced optional import condition exists in executor records but was absent from model feedback"
+  ],
+  "zero_environment_feedback": {
+    "real_control_and_target_records_checked": true,
+    "module": "dateutil",
+    "condition": "executor_forced_import_failure_in_both_phases",
+    "next_compact_feedback_preserves_condition": true,
+    "naturally_uninstalled_claimed": false,
+    "runtime_guard_value_observed": false,
+    "integrated_into_new_paid_producer": false,
+    "provider_calls": 0,
+    "new_containers": 0
+  },
+  "source_records": {
+    "action-protocol-flash-pilot-v1/freeze.json": "5c81de7e9367a509c523655e73d2259faa9227bc9e2ae0c214ca1762f7aa2ada",
+    "action-protocol-flash-pilot-v1/state.json": "a74c0852b8c0e11b1c3c8f85b67f3f59810d0ba966530288bf4e558b2b1178db",
+    "action-protocol-flash-pilot-v1/provider_calls.jsonl": "a20f2dadd67c569de3350ea3df9f7ecb4b7dfd2367b8f2553cc587864970ef2c",
+    "action-protocol-flash-pilot-v1/generation-seal.json": "a9203653023319bcd7793f54fca72611ec595f00cbd0afcd71ba91188a6d4b9d",
+    "action-protocol-flash-probe-stage-v1/freeze.json": "b44c0d59034bf3f2619e61458f7f1ceee3a776afbc8a797aae00f926284ce8c9",
+    "action-protocol-flash-probe-stage-v1/state.json": "a9d2211a963827da605950d051df6dd09f46d0e4e47cac43736b3c9e73c11db4",
+    "action-protocol-flash-probe-stage-v1/provider_calls.jsonl": "2eb2c6c200c2f63356f976bbb9bedcb864ef89c9eb85f24984ca2508187cc7f8",
+    "action-protocol-flash-probe-stage-v1/generation-seal.json": "f7ce33d78c1daf6a9114c5259161576e6db7277489d10d73b76f34ab2f3e4de8",
+    "action-protocol-frontier-flash-dev-v1/freeze.json": "7702c6e2f68433c1b033d35b4fba9a22a5d9544d3812aad04322def8c498e0a5",
+    "action-protocol-frontier-flash-dev-v1/state.json": "8dc57964d407e5d5202b7986e36d5444c44e69aa23b150c378ee41a237c0c593",
+    "action-protocol-frontier-flash-dev-v1/provider_calls.jsonl": "5d2043bd136f1d73fe02c213a1978b213a47841858785a0c7d569c75faf346d1",
+    "action-protocol-frontier-flash-dev-v1/generation-seal.json": "b712d682ebbb3141b99c6c43570f4010246e0589df9ac38182324b66cbea6a28"
+  },
+  "regressions": [
+    {"passed": 1642, "skipped": 4, "warnings": 33, "seconds": 103.05, "xml_sha256": "82fc63f43b839ab7af4b9765f9c666cc74349aa7f4c17ed2f9d8297560f3f328"},
+    {"passed": 1648, "skipped": 4, "warnings": 33, "seconds": 93.83, "xml_sha256": "ce9f2ca0a77b5131c3728cffb64608deb848bee66d78f78b7b43a95e08f8d9a8"},
+    {"passed": 1653, "skipped": 4, "warnings": 33, "seconds": 87.86, "xml_sha256": "21a5b08d5b42a17cc55d0cdfd0b0059b56074588cb0a497b0a13d0317961c85b"}
+  ],
+  "preservation": {"old_201_255_54_sealed_files_checked": true, "frozen_method_sources_unchanged": true, "API_retries": 0, "mirror_downloads": 0, "Docker_tunnel_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false}
+}

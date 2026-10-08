@@ -1338,3 +1338,21 @@ resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMess
 最终21新专项、重点40/Ruff/合成compact preflight ready，完整1636passed/4skipped/33warnings81.43秒/XML SHA8e54244136b2422b3b505df0e9e2d2f0b5b989e932a83dc17233c72233a9fcdc；前1629/107.46 XML保留。data/e1c_evaluation_2_acquisition_results.json绑定zero/80k state-ledger-seal/协议zero/真实token/预算与official links，原201/109/255与全部method保持。无下载/删除/系统Docker/IPC/VHD/registry/代理/tunnel/key改变，raw/probe/Gold/key/备份留本机，TEST/C5/Fresh30/canary/privateTest500关闭。
 
 两Roadmap/交接唯一入口更新；日志本续档。下一步无示例policy+codec整体接新producer，最终messages/实际decoder同轮JSON smoke、坏代码仍拒，完整method/80k预算freeze再新DEV；不能只扩预算或旁路collector/在旧批重试。没过质量gate不九准入扩批/新canary/repair/E2，不保证一周/30题全过。公开safe源码/单测/协议/脱敏收据，旧负结果全保留。
+
+## 2026-10-08：真实协议链小阶段、live自动补证与反馈缺口
+
+用户继续授权推进研究，既有单实验≤100k/Flash/精确命令预列委托延续。使用ARS实验执行规范保留冻结边界、ponytail最小改动复用预算/检索/执行器；inline，无subagent/新依赖。上一turn中断只完成source/test/试验freeze，未付费；本turn先核对namespace无state/ledger及无正在执行模型，再继续，不盲目重复冻结/实验。
+
+新protocol_pilot把去示例policy与closed wrapper/strict quote/Oracle/AST挂到实际nested parser，codec proof随动作传递，预算gateway实际max_calls=1；正负及预算恢复检查通过。按冻结四参考顺序每library family第一条，非人工文件定位，固定DEV12/准入9/screen2。预列精确run命令/Flash/max2call/20k/task12k/output2k/retry0，真实2calls/5997tokens都是有效成功retrieve，第二轮被call cap拦截，无probe，不报task失败或通过，11文件seal。
+
+新probe-stage仅复用父seal turn2生产窗口输入，核对issue/base/Git/输入摘要，绑定parent及new input；上阶段正常完成、非API失败重试。新source/protocol/cap先freeze，source父协议常量修正发生freeze前，6测试/Ruff过；预列max6calls/40k/task24k/retry0精确命令后真实5calls/20914tokens。SK生成真实Python，normal因unsupported构造器setup rephase移出model绑定后NameError，两次control失败；另一MM重复DateTime._deserialize被no-information-gain stop。无candidate/Gold/机器可信，39文件seal。
+
+新protocol_execution source-backed frontier守卫：只检查setup移出直接绑定与正常control读取的关系，明确缺失进容器前拒绝；normal显式重建receiver可放行，self-reference/conditional未知保守拒，不推导/编造control、不改旧compiler/期待。新增guard producer实际inner hook，策略明确setup两边执行、target-only缺陷配置/支持normal、成功查询不重复。12专项过，preflight只读前真实失败canon/input覆盖并拒绝；原stage seal/source不变，40k新identity冻结。预列精确Flash/max6call/40k/task24k/output2k/retry0后运行6calls/26797tokens，两题最终abstained，0qualified/machine/repair，52文件seal，无API重试。
+
+最新MM第二轮probe normal两0/target重复ValidationError两1，program依赖未知使Controller要求Schema，实际adapter取得host/LF/base匹配生产定义；下一个请求含取得窗口。首次只读查turn3/input没Schema，因为overlay刻意不mutate input；随后按实际capture反馈重建overlay和第三轮消息，其prompt SHA与真实provider ledger完全一致且Human含Schema。零检查第一次agents import顺序错误，evals入口先import后修正验证；未写旧产物/新容器/模型。此为真实live补证，不是cached delegate；fixture Foo公共引用scope仍unknown，绝不授可信或称repair。
+
+模型最后以环境未证明弃权；只读发现control1/control2/target执行都已记录强制阻断dateutil，executor readonly blocker明确，并非条件不存在，而是消息遗漏。新environment_feedback纯投影matching schema/input/image/base/module/offline有效运行，None/错条件不提升；自然未安装/guard runtime值/语义证明都false。5专项与实际旧记录project→compact零调用过，未接新paidproducer，不声称已经修复模型弃权。另一SK误将公开新增keyword请求在旧signature缺失判作不能测；下一方法要区分feature request与regression，公开明确参数可target失败入口、normal base支持，仍不证明default/增量/全issue。无task-ID特例，无Gold读/新评分。
+
+新合计13calls/53708tokens，各三lineage独立、不混上一16/53212或旧50k。当前合格候选0/机器可信0/Agentrepair0，未Gold；两个旧DEV来源不可当6独立任务。新17专项、Ruff/预算V3重点/合成compact preflight ready；三完整回归1642/103.05秒、1648/93.83秒、最终1653passed/4skipped/33warnings87.86秒，各XML保留，最终SHA21a5b08d5b42a17cc55d0cdfd0b0059b56074588cb0a497b0a13d0317961c85b。原201/255/54 seal及新三11/39/52产物、冻结源码核验全保持；公开receipt/result绑定。
+
+两Roadmap/接手更新当前唯一入口，旧版本与Git历史保留，日志只在本续档。下一步完整接environment_feedback与公开接口请求解释、现有fixture身份观察到主链；先实际最终消息/内层正负验证，新完整method/预算freeze，小额两个来源DEV，过关再四参考/九准入，真实质量gate才新不重叠canary一次≥2/3、Agent patch/official、DEV30/另授权Fresh30/E2。所有started namespace禁止重跑，当前无可运行新paid命令，不保证完美/一周30题全过。不删/下载镜像、不重启Docker、不改IPC/VHD/registry/代理/tunnel/key，raw/probe/Gold/密钥/备份/负结果本机保全，sealed TEST/C5/Fresh30/privateTest500继续关闭。

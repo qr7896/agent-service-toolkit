@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** 已查官方DeepSeek/SWE-agent/mini配置，并实测完整自动import定义取得/next messages。新版输入soft12k/hard24k、output2k、task soft32k/hard48k、batch80k先冻；16Flash请求/53212tokens整批完成、未budget stop，0候选/0Gold attempted/machine0，四终局1turn_limit/3abstained。[结果/来源与下一步](research/E1C2_ACQUISITION_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_acquisition_results.json)。真实失败是代码字段模板说明被照抄/外层包装不支持，不能说增预算已提升质量。新policy/codec/syntax门槛仅零调用修复，未再paid；旧结果不拼。
+**最新状态：** 协议修复已接真实内层链，并完成三小阶段：2calls/5997tokens、5/20914、6/26797，总新增13/53,708。两个旧DEV来源，非新独立样本；已产生真实Python与容器反馈，Marshmallow正常两0/目标两1，自动取得Schema后下一请求确实包含该源码（prompt SHA匹配实际账本）。但两题最后均弃权，0合格候选/机器可信0/Agent修复0，未运行Gold。[最新结果及待办](research/E1C2_PROTOCOL_EXECUTION_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_protocol_pilot_results.json)。旧80k批16/53212负结果独立保留，不拼分。
 
-新增21专项/重点40/Ruff/合成preflight通过，最终1636 passed/4 skipped/33warnings（81.43秒），此前XML全保留；不是repair rate。自动补证Controller与Human exposure实际读两生产定义，probe delegate只缓存、未知不提升；本paid probe语法无效，所以未触发live自动补证收益。0下载/删除/系统配置更改。
+新增17专项、Ruff/预算V3重点/合成preflight通过，最终1653 passed/4 skipped/33warnings（87.86秒），此前XML全保留；不是repair rate。新frontier绑定保护在实际executor前拒绝移出setup导致control缺receiver；最新live自动补证真实触发但不提升语义unknown。环境条件投影真实缓存零调用过，尚未接新paid版本。0下载/删除/系统配置更改。
 
 ## 1. 已完成与尚未完成
 
@@ -41,14 +41,17 @@
 | program缺证建议分支修复 | 新route/shadow三MM1252反馈，Schema请求恢复；4专项 | 不改旧gate/结果，未验证实际live采用 |
 | 自动production补证+context | 实际取得Classifier/Schema，host/LF/base/SHA，next messages可见；reserve11985→11100/10154→8471 | cached delegate非新probe；获取source不认证语义 |
 | 合理分层预算新DEV | input12k/24k、task32k/48k、batch80k；16calls/53212，无budget stop | 0候选；模型不能仅靠预算自动变正确 |
-| JSON协议零修复 | 去代码说明示例值、closed wrapper、AST前置；7专项及16回应shadow过 | 8坏probe仍SyntaxError，不伪造成功；尚未新模型验证 |
+| JSON协议零修复（历史阶段） | 去代码说明示例值、closed wrapper、AST前置；7专项及16回应shadow过 | 原8坏probe不补写；后续新模型实链见下行 |
+| 实际协议/执行小阶段 | 三冻结阶段13calls/53708tokens；真实Python与normal/target容器观察 | 固定两个旧DEV来源，不是完整四参考或独立样本 |
+| live自动补证与next消息 | Schema实际取得，next prompt含新源且与真实ledger SHA一致 | 公开fixture范围仍unknown，非trusted或修复 |
+| 正常对照与环境反馈修订 | source-backed binding保护已实链；matching自身记录环境投影零调用过 | 不编造receiver/自然环境，不声称投影已接新paid |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-context/cost分层已改且本批不再因reserve停止；当前直接阻塞是有效输出协议：system可复制说明值当代码、type=json_object+action=dict未识别。源码取得机制已零调用实际接线，但有效probe还未使其在live触发。下一版先完整policy/codec/input最终消息正负smoke，不能继续只扩预算或诊断collector；语义覆盖仍未过，不借旧Gold/版本点提升trusted。
+有效输出协议已经接实链，不能再把当前0全部归因格式或context。新瓶颈是：模型把公开请求新增参数在旧签名缺失误当无法复现；公开Foo/Schema的fixture来源范围仍unknown；executor强制阻断dateutil的条件未到模型。下一版接matching执行记录环境反馈、明确feature-request目标和受支持normal、接现有fixture身份观察；先零调用实际最终消息验证，再小额同来源DEV。不能通过简单改unknown、扩大预算或多旁路collector授予trusted。
 
 ## 3. 严格验收定义
 
@@ -75,19 +78,21 @@ context/cost分层已改且本批不再因reserve停止；当前直接阻塞是�
 | 已完成 | resume-only/新seal/独立Gold | 原109文件不变、账本保留旧6事件前缀、255新产物seal | 执行完成不等于质量通过 |
 | 已完成（零调用shadow） | pre-observer program依赖反馈 | Schema建议三反馈恢复、unknown/reject不提升 | 尚未接新live |
 | 已完成（有限范围） | 自动补证/合理context预算/新DEV | 2实际源码读取/next view、输入和成本分层、80k批次封存 | source取得不等于模型产物有效 |
-| 1 | 去示例值policy+closed codec整体接线 | 最终Human/System/实际parser同轮synthetic probe、坏代码/未知wrapper仍拒 | 新协议不得只在旁路check，旧source不改 |
-| 2 | 新完整JSON/method/预算freeze | 来源/输入/Oracle/控制/scope/账本一致、无模板echo | 80k硬限每批≤100k，retry0，非整体自动无限消费 |
-| 3 | 同版四参考新DEV | 真Python/actions→自动source→normal/target/observer→Gold/语义分账 | 0候选或语义不足不扩canary |
+| 已完成 | 去示例值policy+closed codec实链、小额真实输出 | 三阶段真实JSON/Python、内层hook及实际容器反馈 | 非任务通过，旧namespace禁止重跑 |
+| 已完成（有限范围） | source-frontier正常绑定保护与live补源 | receiver丢失执行前拒绝；Schema next prompt SHA与账本一致 | 不证明fixture意图/剩余行为 |
+| 1 | 环境反馈/接口请求/fixture资格同版完整接线 | matching运行条件到最终Human；显式请求的target与受支持normal；身份未知不提升 | 当前环境投影仅零调用，先正负/最终消息验收 |
+| 2 | 新完整method/预算freeze与两个旧DEV来源小验证 | 真Python→normal/target→observer/资格；精确命令/Flash/有限预算 | 不重跑旧批，不自动无限消费，未过不扩样本 |
+| 3 | 同版四参考新DEV | 自动source→normal/target/observer→独立Gold/语义分账 | 0候选或语义不足不扩canary |
 | 4 | 同版完整九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | 四参考不报全12 |
 | 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
 | 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
 | 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮独立新批16calls/53212（不与旧50k lineage重置混算）；所有started namespace含acquisition checks/paid/gold/action-protocol禁止重跑/改源。当前无新live/canary命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
+下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮三阶段13calls/53708与上一16/53212、旧50k lineage分账；所有started namespace含三协议阶段/acquisition checks/paid/gold/action-protocol禁止重跑/改源。当前没有可重跑的live命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 
-[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留预注册。历史Gold4/4/21400tokens不属于本轮；本轮续接已完成，但独立Gold只有1复用候选。近期先闭合实际补证和context预算，再同版DEV质量验收；不能保证一周/30题全过，未过不抽新独立任务。
+[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留预注册。历史Gold4/4与1复用候选不属于本轮。近期先闭合真实环境/请求解释/fixture资格反馈，再同版DEV质量验收；不能保证一周/30题全过，未过不抽新独立任务。
 
 ## 6. WebCodex与本机安全
 
