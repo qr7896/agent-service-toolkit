@@ -1356,3 +1356,17 @@ resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMess
 新合计13calls/53708tokens，各三lineage独立、不混上一16/53212或旧50k。当前合格候选0/机器可信0/Agentrepair0，未Gold；两个旧DEV来源不可当6独立任务。新17专项、Ruff/预算V3重点/合成compact preflight ready；三完整回归1642/103.05秒、1648/93.83秒、最终1653passed/4skipped/33warnings87.86秒，各XML保留，最终SHA21a5b08d5b42a17cc55d0cdfd0b0059b56074588cb0a497b0a13d0317961c85b。原201/255/54 seal及新三11/39/52产物、冻结源码核验全保持；公开receipt/result绑定。
 
 两Roadmap/接手更新当前唯一入口，旧版本与Git历史保留，日志只在本续档。下一步完整接environment_feedback与公开接口请求解释、现有fixture身份观察到主链；先实际最终消息/内层正负验证，新完整method/预算freeze，小额两个来源DEV，过关再四参考/九准入，真实质量gate才新不重叠canary一次≥2/3、Agent patch/official、DEV30/另授权Fresh30/E2。所有started namespace禁止重跑，当前无可运行新paid命令，不保证完美/一周30题全过。不删/下载镜像、不重启Docker、不改IPC/VHD/registry/代理/tunnel/key，raw/probe/Gold/密钥/备份/负结果本机保全，sealed TEST/C5/Fresh30/privateTest500继续关闭。
+
+## 2026-10-08：真实环境反馈/公开接口解释，新有限候选与模块函数检索修复
+
+用户继续授权高质量研究，Flash/单实验≤100k免二次确认且精确命令预列委托延续。完整读ARS实验执行/监控/output及ponytail，inline无subagent/依赖。新environment_dev复用所有原budget/producer/normal frontier，实际executor完成后从control1/control2/target投影matching enforced import条件到返回feedback→compact→最终Human；不赋可信。旧parent source/seal/protocol完成核验，消息zero gate SHA入freeze，真实旧环境probe反例的最终message核验，不执行旧probe。公开新增参数请求即使base不支持也允许target失败，normal源支持且独立，不编造参数值/默认行为。4新专项+环境/预算V3重点28/Ruff通过；预冻结将parent变化测试改自包含fixture以可Cloud运行、不弱化断言。
+
+精确freeze成功后预列Flash max6calls/40k/task24k/output2k/inputhard24k/reserve1.4/retry0的environment_dev run，真实4calls/16647tokens completed/seal52文件。SK第一轮新probe normal两0/target两1/observer对应/Boolean接受子义务资格成立、有限grade-only，default/增量/剩余请求未验证，trusted/repair/canary=false；MM三module查询零匹配后stop。生成seal后预列精确gold0provider命令，唯一新有限候选Gold施加后rc0/消除1/1。不是旧prefix复用、不是Agentpatch或完整成功率。
+
+只读定位MM `utils.from_iso` 等查询左侧是module，旧retrieve把它作class owner。新module_retrieval_dev保留原class/plain hook，有0结果/未超预算才裸symbol扫描，筛production file basename一致的顶层def/async def；origin=module hint、alias_binding_proven=false、最多两原32MiB扫描/3候选，无task文件表。3专项初次通过、Ruff unused import反馈留档；冻结前新增真实失败query→生产definition→实际Human检查，保存gate使用该import，捕获原preflight避免递归，不改断言或已freeze模块。实际旧query from_iso/from_iso_time零模型取源成功；复用parent已seal环境message检查并绑定SHA，无旧probe重跑。
+
+预列module版精确Flash max6/40k/task24k/retry0命令后真实5calls/23320tokens completed/seal130文件。SK第二轮另一新同任务有限候选；MM第一轮module函数匹配1，第二probe normal两0/target两1/自动Schema取得，第三probe原publicfixture值/quote/Oracle保持，又normal两0/target两1；enforced dateutil事实保持在feedback，第三请求实际prompt重组SHA完全匹配provider ledger，同时含新Schema与条件。源码补齐后unexposed未知消失，剩Foo公共短名scope unknown；qualification exception_correspondence=false，行为仍conditional regression，旧版本报告未实际normative核验。第四请求按3call cap阻止、无加预算，所有未知未升级。生成seal后预列精确module gold0provider，一新有限候选消除1/1；两版同一任务不能合成两个任务通过/best-of修复率。
+
+本轮新增9calls/39967tokens，两账本分列，started/completed全部配对；未重试HTTP、未改旧额度，先前13/53708及16/53212等保持。本轮最新有限候选1、完整可信0/Agentrepair0。新7专项、重点28/最终12/Ruff/synthetic compact preflight ready=true；全1660passed/4skipped/33warnings96.77秒，XML SHAe5cae21dd2ec9a3264d03b2e82927b8d803e5d5f531eda2b79c34bced6e04c38，旧XML全留。旧201/255/54/11/39/52与新52/130 seal及frozen method源核验不变，公开收据绑定两Gold结果SHA。
+
+两Roadmap/交接更新唯一当前入口，日志只本续档、旧协议结果/历史保留。下一步优先零模型Controller主链fixture scope/export/object分层、qualified属性/字段依赖与真实异常链、同条件公开旧版本witness；现有有限gate故意trusted/repair false，不能改常量或有限改名完整。真实义务/新协议先freeze再小额DEV，未过不开canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证完美/30题全过。无下载/删除/系统Docker重启/IPC/VHD/registry/代理/tunnel/key修改，raw/probe/Gold/密钥/备份/失败留本机；仅安全source/tests/protocol/receipt同步Git。

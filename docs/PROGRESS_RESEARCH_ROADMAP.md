@@ -4,11 +4,11 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 实际policy/decoder/消息/执行器已接通，两个旧DEV来源分三小阶段新增13次Flash调用/53,708tokens，全部封存。模型已输出真实Python；其中一probe正常对照两次通过、目标两次失败，Controller实际取得Schema生产定义，下一请求含新源码且prompt SHA与真实账本一致。**仍0合格候选/机器可信0/Agent修复0**，不是E1-C完成：fixture来源资格、请求新增参数的解释、环境条件反馈仍有缺口。[最新实链结果/待办](research/E1C2_PROTOCOL_EXECUTION_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_protocol_pilot_results.json)。已加执行前receiver绑定保护，环境事实投影仅零调用验证、未接未来paid；下一步完善这两个通用反馈/语义接口，再小额DEV。旧80k试验16calls/53,212负结果独立保留，canary/TEST/C5/Fresh30/privateTest500/repair/E2关闭。
+**当前：** 环境事实反馈与公开接口请求解释已接真实模型链；模块函数检索的class-owner误判已修复。本轮两新版新增9次Flash调用/39,967tokens，各产生同一旧DEV任务的一个有限候选，独立Gold各消除1/1；不是两个任务通过、Agent修复或完整issue可信。另一题已真实完成生产检索、normal两0/target两1、自动Schema取得及下一模型消息环境/source暴露（prompt SHA匹配真实账本），仍卡在fixture引用范围/异常链/旧版本行为资格。**机器可信0/Agent修复0，E1-C未完成**。[最新结果/零模型优先待办](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_environment_module_results.json)。下一步完善资格主链，不盲目追加同类paid；所有旧版本费用/负结果保留，canary/TEST/C5/Fresh30/privateTest500/repair/E2关闭。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1653 passed/4 skipped/33 warnings（87.86秒）；Ruff、预算/V3重点、新专项17项、合成compact preflight通过。旧1636/1642/1648等XML保留，此计数不是可信复现或修复率。
+最新工程验证：1660 passed/4 skipped/33 warnings（96.77秒）；Ruff、预算/V3重点、新专项7项、合成compact preflight通过。旧1653等XML保留，此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -18,7 +18,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [协议与真实执行链结果](research/E1C2_PROTOCOL_EXECUTION_RESULTS_2026-10-08.md)；[此前自动补证/context负结果](research/E1C2_ACQUISITION_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [环境/模块检索实链结果](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)；[此前协议链结果](research/E1C2_PROTOCOL_EXECUTION_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

@@ -1,0 +1,43 @@
+{
+  "schema": "e1c2-environment-module-results-v1",
+  "date": "2026-10-08",
+  "model": "deepseek-flash",
+  "new_provider_calls": 9,
+  "new_provider_tokens": 39967,
+  "fixed_DEV_denominator": 12,
+  "admitted_denominator": 9,
+  "screen_denominator": 2,
+  "machine_trusted": 0,
+  "Agent_repairs": 0,
+  "stages": [
+    {"namespace": "environment-feedback-flash-dev-v1", "calls": 4, "tokens": 16647, "state": "completed_and_sealed", "sealed_files": 52, "limited_candidates": 1, "Gold_attempted": 1, "Gold_discriminating": 1, "rows": ["executed_boolean_keyword_subobligation", "retrieval_no_information_gain"]},
+    {"namespace": "module-retrieval-flash-dev-v1", "calls": 5, "tokens": 23320, "state": "completed_and_sealed", "sealed_files": 130, "limited_candidates": 1, "Gold_attempted": 1, "Gold_discriminating": 1, "rows": ["executed_boolean_keyword_subobligation", "three_call_budget_stop_after_two_unqualified_probes"]}
+  ],
+  "same_task_across_versions_not_two_distinct_successes": true,
+  "actual_live_chain": {
+    "production_module_function_retrieval": true,
+    "normal_control_returncodes": [0, 0],
+    "target_returncodes": [1, 1],
+    "automatic_Schema_source_acquisition": true,
+    "enforced_import_condition_in_next_model_message": true,
+    "next_message_prompt_hash_matches_actual_provider_ledger": true,
+    "public_inputs_mutated": false,
+    "environment_upgrades_qualification": false
+  },
+  "remaining_gates": ["public fixture unqualified reference scope", "actual exception chain versus report correspondence", "reported prior version behavior", "default/incremental and other interface obligations"],
+  "source_records": {
+    "environment-feedback-flash-dev-v1/freeze.json": "c661d38edb6d80983e53912f91ed6d4bb89ec634dc30f3b6d93b2ed3e2aa5683",
+    "environment-feedback-flash-dev-v1/state.json": "c95ef94cab3cef05068200effb309fef854188f4b0c7a73b60a005fbd0ed1180",
+    "environment-feedback-flash-dev-v1/provider_calls.jsonl": "c7feac56f3cc140b9212dd56adf76d9e618e2c2d87c518547e5b75b62289c529",
+    "environment-feedback-flash-dev-v1/generation-seal.json": "f314ad92a092a75536440d08ae14580a03b75be8c9ddeaaef7fcbcbf4dedaa71",
+    "environment-feedback-flash-dev-v1/gold-discrimination/scikit-learn__scikit-learn-13496/result.json": "d4bbee793678b5a3ad3d7c5a88964c7c40090d57b3cc17470d8da992b1347c81",
+    "module-retrieval-flash-dev-v1/freeze.json": "dba90eab0b32dc9b21d7b085240ff7918087a42a332d96673a7f753f5bacfd17",
+    "module-retrieval-flash-dev-v1/state.json": "c11f2aa4f8afafec1f9ab01b146fa206641f22303c2a1502db96a69b8167814c",
+    "module-retrieval-flash-dev-v1/provider_calls.jsonl": "eeff53532b8abad96895d9b76964dacfad3ad6c01c546da895426385f8bdf77b",
+    "module-retrieval-flash-dev-v1/generation-seal.json": "a3ad642a78fbd4823ecc7d8e3beae1b01207c7254275ce4930b536904aac05c1",
+    "module-retrieval-flash-dev-v1/gold-discrimination/scikit-learn__scikit-learn-13496/result.json": "9948f6953143d33597d08be8b2bfa6b802c5e5f529e7b7cb4bef1a2dc2286d94"
+  },
+  "final_regression": {"passed": 1660, "skipped": 4, "warnings": 33, "seconds": 96.77, "xml_sha256": "e5cae21dd2ec9a3264d03b2e82927b8d803e5d5f531eda2b79c34bced6e04c38"},
+  "focused": {"new_tests": 7, "environment_budget_V3_focus": 28, "final_environment_module_focus": 12, "ruff_passed": true, "synthetic_compact_preflight_ready": true},
+  "preservation": {"prior_201_255_54_11_39_52_sealed_files_verified": true, "frozen_method_sources_unchanged": true, "API_retries": 0, "new_downloads": 0, "Docker_tunnel_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false}
+}

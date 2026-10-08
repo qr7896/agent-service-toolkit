@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** 协议修复已接真实内层链，并完成三小阶段：2calls/5997tokens、5/20914、6/26797，总新增13/53,708。两个旧DEV来源，非新独立样本；已产生真实Python与容器反馈，Marshmallow正常两0/目标两1，自动取得Schema后下一请求确实包含该源码（prompt SHA匹配实际账本）。但两题最后均弃权，0合格候选/机器可信0/Agent修复0，未运行Gold。[最新结果及待办](research/E1C2_PROTOCOL_EXECUTION_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_protocol_pilot_results.json)。旧80k批16/53212负结果独立保留，不拼分。
+**最新状态：** 两新版分别4calls/16647tokens、5/23320，新增9/39,967，均completed/seal/独立Gold完成。环境反馈/公开请求解释/模块函数检索实链接通；各产生同一SK旧DEV的一个Boolean keyword有限候选，Gold各消除1/1，不是两题通过或Agent修复。MM真实module query匹配、normal两0/target两1、Schema自动取得；下次模型确实看到环境/source（prompt SHA与实际账本一致），但仍fixture/异常链/版本期待unknown，3调用上限停止。**完整可信0/Agent修复0，E1-C未完成**。[最新结果及零模型优先待办](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_environment_module_results.json)。所有旧版费用/负结果不拼分。
 
-新增17专项、Ruff/预算V3重点/合成preflight通过，最终1653 passed/4 skipped/33warnings（87.86秒），此前XML全保留；不是repair rate。新frontier绑定保护在实际executor前拒绝移出setup导致control缺receiver；最新live自动补证真实触发但不提升语义unknown。环境条件投影真实缓存零调用过，尚未接新paid版本。0下载/删除/系统配置更改。
+新增7专项、重点28/最终12、Ruff/预算V3/合成preflight通过，最终1660 passed/4 skipped/33warnings（96.77秒），此前XML保留；不是repair rate。环境反馈现已真正live暴露，不提升unknown或声称自然卸载；模块basename仅检索提示，alias不获认证。0下载/删除/系统配置更改。
 
 ## 1. 已完成与尚未完成
 
@@ -44,14 +44,16 @@
 | JSON协议零修复（历史阶段） | 去代码说明示例值、closed wrapper、AST前置；7专项及16回应shadow过 | 原8坏probe不补写；后续新模型实链见下行 |
 | 实际协议/执行小阶段 | 三冻结阶段13calls/53708tokens；真实Python与normal/target容器观察 | 固定两个旧DEV来源，不是完整四参考或独立样本 |
 | live自动补证与next消息 | Schema实际取得，next prompt含新源且与真实ledger SHA一致 | 公开fixture范围仍unknown，非trusted或修复 |
-| 正常对照与环境反馈修订 | source-backed binding保护已实链；matching自身记录环境投影零调用过 | 不编造receiver/自然环境，不声称投影已接新paid |
+| 正常对照与环境反馈修订（历史阶段） | source-backed binding保护已实链；matching自身记录环境投影零调用过 | 当时未接paid；后续实链见下行，不编造自然环境 |
+| 环境事实/接口请求新版 | matching执行条件到Human，新的有限候选Gold1/1 | 仅参数接受，非完整行为或Agent修复 |
+| 模块函数检索新版 | 新生产query匹配与next消息过；另一新有限候选Gold1/1 | 同一旧DEV，不合并2/2；alias提示不认证 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-有效输出协议已经接实链，不能再把当前0全部归因格式或context。新瓶颈是：模型把公开请求新增参数在旧签名缺失误当无法复现；公开Foo/Schema的fixture来源范围仍unknown；executor强制阻断dateutil的条件未到模型。下一版接matching执行记录环境反馈、明确feature-request目标和受支持normal、接现有fixture身份观察；先零调用实际最终消息验证，再小额同来源DEV。不能通过简单改unknown、扩大预算或多旁路collector授予trusted。
+协议、环境事实、feature request解释、module.function检索已经实链修复。现在剩公共Foo/Schema/DateTime短名namespace意图、实际异常链与公开报告对应、报告旧版本行为未实证；SK参数接受不覆盖default/增量等请求。先在Controller主链接既有scope/export/object观察，补真实qualified属性/字段依赖和异常路径，再同条件旧版本witness，未证明保留unknown。现有有限gate故意full_issue_trusted/repair=false，必须补真实义务或明确另拟受限协议，不能改常量、增加budget/同类paid而称门槛通过。
 
 ## 3. 严格验收定义
 
@@ -80,15 +82,16 @@
 | 已完成（有限范围） | 自动补证/合理context预算/新DEV | 2实际源码读取/next view、输入和成本分层、80k批次封存 | source取得不等于模型产物有效 |
 | 已完成 | 去示例值policy+closed codec实链、小额真实输出 | 三阶段真实JSON/Python、内层hook及实际容器反馈 | 非任务通过，旧namespace禁止重跑 |
 | 已完成（有限范围） | source-frontier正常绑定保护与live补源 | receiver丢失执行前拒绝；Schema next prompt SHA与账本一致 | 不证明fixture意图/剩余行为 |
-| 1 | 环境反馈/接口请求/fixture资格同版完整接线 | matching运行条件到最终Human；显式请求的target与受支持normal；身份未知不提升 | 当前环境投影仅零调用，先正负/最终消息验收 |
-| 2 | 新完整method/预算freeze与两个旧DEV来源小验证 | 真Python→normal/target→observer/资格；精确命令/Flash/有限预算 | 不重跑旧批，不自动无限消费，未过不扩样本 |
+| 已完成（有限范围） | 环境反馈/接口请求/模块函数检索实链 | matching条件到真实next请求，有限候选及独立Gold，两个来源runtime过 | fixture/异常链/版本资格仍未知 |
+| 1 | fixture范围、qualified属性依赖、异常链与版本witness主链接线 | 身份/条件解释/意图分层、错alias/改值仍拒；真实生产路径与同条件版本对照 | 先零模型，缺版本资源报阻塞、下载交用户，不猜或改unknown |
+| 2 | 真实义务覆盖/新完整method与两个来源小验证 | 明确有限候选与完整可信边界，实际正常/target/observer/资格正负过，再精确预算freeze | 禁止修改false常量冒充trusted，不重跑旧批，不无限消费 |
 | 3 | 同版四参考新DEV | 自动source→normal/target/observer→独立Gold/语义分账 | 0候选或语义不足不扩canary |
 | 4 | 同版完整九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | 四参考不报全12 |
 | 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
 | 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
 | 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮三阶段13calls/53708与上一16/53212、旧50k lineage分账；所有started namespace含三协议阶段/acquisition checks/paid/gold/action-protocol禁止重跑/改源。当前没有可重跑的live命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
+下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮两版9/39967与此前13/53708、16/53212及旧50k lineage分账；所有started namespace含环境/模块版run/gold及更早实验禁止重跑/改源。当前优先零模型资格接线，没有可重跑live命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 

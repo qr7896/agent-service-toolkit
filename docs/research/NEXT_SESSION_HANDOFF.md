@@ -1,24 +1,26 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新真实协议链结果](E1C2_PROTOCOL_EXECUTION_RESULTS_2026-10-08.md)。
+日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新环境/模块检索实链结果](E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)。
 
 ## 1. 当前状态与禁止重跑
 
-最新三阶段均completed/seal：2calls/5997tokens、5/20914、6/26797，新增共13/53708、两个旧DEV来源，最后两题abstained。真实Python已进入容器，Marshmallow normal×2=0/target×2=1，实际取得Schema并在下一请求暴露，重组prompt SHA匹配真实ledger。仍0合格候选/machine0/Agentrepair0，本轮未Gold。此前80k批16/53212、旧resume复用候选独立保留，不拼分。禁止run任何已封存namespace，不开canary/TEST/Fresh30/repair/E2。
+最新环境版/模块检索版均completed/seal/gold：4calls/16647tokens与5/23320，新增9/39967。各一个新的同一SK有限候选、Gold各消除1/1；不是两题通过/Agent修复。MM模块函数查询现在成功，normal两0/target两1、Schema自动取得，下一真实请求有source和强制dateutil导入失败条件，prompt SHA匹配实际账本；剩fixture/异常链/旧版本期待unknown，3call cap停止。machine0/Agentrepair0。此前13/53708、16/53212及旧resume独立留存，不拼分。所有started run/gold不可重跑，canary/TEST/Fresh30/repair/E2关闭。
 
 资格器检查已知fixture结构、alias/对象修改、production源绑定、期待锚、原probe观察、normal/target。17单测与四内存alias反例通过，静态反例不是四个新runtime故障。v1未暴露依赖被误拒留档，v2缺证unknown、已暴露真正SHA变化仍拒；增量赋值/删除等未知。
 
 authority/scope/export仅审计，不改原模型输入。对象observer v1整体unknown且未执行容器，v2以模块全部有界构造器候选记录实际关系，不按with_metaclass猜继承。5条真实记录含2条不对应记录全部保留，DateTime exact与Schema MRO关系出现；runtime关系不证明公开意图，不清除旧严格unknown。两个namespace均完成，不重跑。
 
-[最新公开收据](../../data/e1c_evaluation_2_protocol_pilot_results.json)绑定结果与最终XML SHA，所有更早receipt/负记录保留。原201/255/54以及新三阶段11/39/52产物和冻结method SHA保持。raw/probe/Gold/key本机。不得重跑三个protocol-stage namespace、acquisition checks/paid/gold/action-protocol check或任何更早started namespace。
+[最新公开收据](../../data/e1c_evaluation_2_environment_module_results.json)绑定结果与最终XML SHA，所有更早receipt/负记录保留。原201/255/54/11/39/52及新52/130产物和冻结method SHA保持。raw/probe/Gold/key本机。不得重跑environment-feedback-flash-dev-v1、module-retrieval-flash-dev-v1或任何更早started namespace。
 
 ## 2. 当前唯一下一步
 
-最终Ruff/预算V3重点/新专项17项/合成compact preflight通过，完整1653 passed/4 skipped/33warnings（87.86秒），先前1636/1642/1648等XML保留，不报repair rate。
+最终Ruff/预算V3重点/新专项7项/合成compact preflight通过，完整1660 passed/4 skipped/33warnings（96.77秒），先前XML保留，不报repair rate。
 
-当前下一步：把新增environment_feedback.project_environment接真实execute返回→compact反馈→最终Human。它只接受两normal与target记录schema/input/image/base/optional module一致、offline/pull-never、非timeout有效运行；真实旧产物project/compact已零调用过，但尚无future paid接线。此事实是执行器强制导入失败，不是natural uninstall/实际guard值/语义证书。保持unknown/rejected，不把诊断当评分。
+当前下一步先零模型资格主链接线：对最新MM有效probe的公开Foo/Schema/DateTime短名，接已有scope/export/object观察，分别标已证明身份、条件解释和未证明公共namespace意图；错alias/改值/假继承反例仍拒。将qualified属性/字段构造器纳入production依赖，按真实调用/异常路径选有界观察源，不用Schema类型名替代异常链。识别报告旧版本同probe/同条件的实际witness，缺资源明确阻塞，不挪其他task的witness。详见最新结果§3，不继续同类paid补budget或旁路collector。
 
-同一新方法补明确公开feature request的解释：base签名缺请求参数可作target失败入口，normal用生产支持的独立receiver，target配置不放shared setup，不更改公共值和锁定期待。fixture Foo/Schema关系仍unknown，优先接已有scope/export/MRO观察到qualification主链，不新建旁路collector或硬改unknown。
+环境反馈已在environment_dev实际executor返回→compact Human，matching schema/input/image/base/module、offline有效运行，消息zero gate被freeze SHA绑定；不称自然卸载/guard值、不提升unknown。feature request解释已促成新有限候选，但不证明default/增量。模块版保持class/plain retrieve，仅0结果做模块basename顶层定义fallback（最多两原32MiB扫描），origin明确hint/alias未证明。实际匹配和next Human/source/条件SHA证明均过。
+
+现有有限gate故意full_issue_trusted/repair_eligible=false；先补真实行为义务或明确提议受限新协议，不得改False常量、把有限候选改名完整可信来进入canary。研究目标未完成，不能承诺30/30或完美。
 
 protocol_pilot已将policy/strict codec接真实内层；protocol_execution.validate_frontier会在进容器前检查原source-backed rephase是否移出control读取的直接receiver，明确缺失拒绝而不是生成NameError，不编造normal。复杂控制流保守未知/拒绝。三个producer已运行，不能用它们继续付费或改frozen源；未来仅新完整method/namespace、先最终messages/实际hooks正负验收再小额两来源DEV。
 
@@ -30,6 +32,8 @@ protocol_pilot已将policy/strict codec接真实内层；protocol_execution.vali
 
 ```bash
 uv sync --frozen --group dev
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_environment_dev.py evals/e1c_evaluation_2_module_retrieval_dev.py tests/test_e1c_evaluation_2_environment_dev.py tests/test_e1c_evaluation_2_module_retrieval_dev.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_environment_dev.py tests/test_e1c_evaluation_2_module_retrieval_dev.py tests/test_e1c_evaluation_2_environment_feedback.py
 uv run --frozen python -m ruff check evals/e1c_evaluation_2_protocol_pilot.py evals/e1c_evaluation_2_protocol_probe_stage.py evals/e1c_evaluation_2_protocol_execution.py evals/e1c_evaluation_2_protocol_guard_dev.py evals/e1c_evaluation_2_environment_feedback.py tests/test_e1c_evaluation_2_protocol_pilot.py tests/test_e1c_evaluation_2_protocol_probe_stage.py tests/test_e1c_evaluation_2_protocol_execution.py tests/test_e1c_evaluation_2_protocol_guard_dev.py tests/test_e1c_evaluation_2_environment_feedback.py
 uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_protocol_pilot.py tests/test_e1c_evaluation_2_protocol_probe_stage.py tests/test_e1c_evaluation_2_protocol_execution.py tests/test_e1c_evaluation_2_protocol_guard_dev.py tests/test_e1c_evaluation_2_environment_feedback.py
 uv run --frozen python -m ruff check evals/e1c_evaluation_2_acquisition_context.py evals/e1c_evaluation_2_acquisition_check.py evals/e1c_evaluation_2_acquisition_check_resume.py evals/e1c_evaluation_2_acquisition_dev.py evals/e1c_evaluation_2_action_protocol.py tests/test_e1c_evaluation_2_acquisition_context.py tests/test_e1c_evaluation_2_acquisition_check_resume.py tests/test_e1c_evaluation_2_acquisition_dev.py tests/test_e1c_evaluation_2_action_protocol.py
