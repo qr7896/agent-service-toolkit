@@ -4,11 +4,11 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 环境事实反馈与公开接口请求解释已接真实模型链；模块函数检索的class-owner误判已修复。本轮两新版新增9次Flash调用/39,967tokens，各产生同一旧DEV任务的一个有限候选，独立Gold各消除1/1；不是两个任务通过、Agent修复或完整issue可信。另一题已真实完成生产检索、normal两0/target两1、自动Schema取得及下一模型消息环境/source暴露（prompt SHA匹配真实账本），仍卡在fixture引用范围/异常链/旧版本行为资格。**机器可信0/Agent修复0，E1-C未完成**。[最新结果/零模型优先待办](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_environment_module_results.json)。下一步完善资格主链，不盲目追加同类paid；所有旧版本费用/负结果保留，canary/TEST/C5/Fresh30/privateTest500/repair/E2关闭。
+**当前：** qualified属性依赖、自动2源异常选择、scope/export/object已接Controller主链。零模型回放两个封存DEV probe，公开内层异常对应false→true，fixture条件解释和运行关系已观察；剩公开namespace意图及旧版本行为证据，**机器可信0/Agent修复0，E1-C未完成**。[最新零模型结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_source_evidence_results.json)。本轮0calls/0tokens，不计新生成/任务成绩；旧费用和Gold结果独立保留。2.19.3本地源码未找到，[约49KiB手动直连资源](research/E1C2_REPORTED_VERSION_MANUAL_DOWNLOAD_2026-10-08.md)只保存不安装。完整门槛默认不变，另立有限协议须用户明确选择；canary/TEST/C5/Fresh30/privateTest500/repair/E2关闭。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1660 passed/4 skipped/33 warnings（96.77秒）；Ruff、预算/V3重点、新专项7项、合成compact preflight通过。旧1653等XML保留，此计数不是可信复现或修复率。
+最新工程验证：1667 passed/4 skipped/33 warnings（98.26秒）；Ruff、预算/V3重点、新专项7项、合成compact preflight通过。旧XML保留，此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -18,7 +18,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [环境/模块检索实链结果](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)；[此前协议链结果](research/E1C2_PROTOCOL_EXECUTION_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [源码证据Controller零模型结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)；[此前环境/模块检索结果](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

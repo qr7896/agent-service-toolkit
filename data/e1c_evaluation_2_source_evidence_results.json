@@ -1,0 +1,23 @@
+{
+  "schema": "e1c2-source-evidence-zero-results-v1",
+  "date": "2026-10-08",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "new_model_generation": false,
+  "cached_probe_replay_not_new_task_score": true,
+  "fixed_DEV_denominator": 12,
+  "replayed_source_denominator": 2,
+  "machine_trusted": 0,
+  "Agent_repairs": 0,
+  "Gold_read": false,
+  "rows": [
+    {"task": "scikit-learn__scikit-learn-13496", "exception_correspondence": true, "public_scope_status": "explicit_structure_supported", "limited_candidate_retained": true, "full_issue_trusted": false},
+    {"task": "marshmallow-code__marshmallow-1252", "old_exception_correspondence": false, "new_exception_correspondence": true, "public_scope_status": "conditional_structure_supported", "conditional_bindings": 2, "runtime_relationship_records_true": 3, "remaining_unknown": ["public_fixture_constraint_unproven"], "limited_candidate_selected": false, "public_namespace_intent_proven": false}
+  ],
+  "mechanism": {"qualified_attribute_dependencies_in_Controller": true, "agent_requested_source_then_call_dependency_rank": true, "exception_file_cap": 2, "qualified_reference_cap": 4, "source_byte_cap_per_file": 1000000, "new_evidence_in_final_Human": true, "old_unknown_or_rejected_not_cleared": true},
+  "version_resource": {"requested_version": "2.19.3", "local_tag_or_bounded_history_source_found": false, "new_downloads": 0, "public_wheel_bytes": 49981, "public_wheel_sha256": "cb1e88b8b098ee6d0fb984e40762cb94e200c067426e43496e55b82b563feabf", "metadata_source": "https://pypi.org/pypi/marshmallow/2.19.3/json", "manual_download_script": "scripts/download_e1c2_version_witness.ps1", "script_syntax_verified_not_executed": true, "old_version_witness_run": false},
+  "source_records": {"source-evidence-controller-zero-v1/freeze.json": "96b0d98ea1af07cc10f60c810bc7233772eec606d1ebaa9e06d1486dc9aac4a0", "source-evidence-controller-zero-v1/result.json": "f420cc662c64f41a87a9c022a39e82dba3f1677905059d0007ba22ae3577b3a4"},
+  "final_regression": {"passed": 1667, "skipped": 4, "warnings": 33, "seconds": 98.26, "xml_sha256": "3940e50d84ee4cdfc245abe47a4536ee70dc088cc05b029d7bc0434dbb2e2f20"},
+  "focused": {"new_tests": 7, "source_scope_export_object_initial": 36, "source_budget_V3_final": 26, "ruff_passed": true, "synthetic_compact_preflight_ready": true},
+  "preservation": {"frozen_zero_method_hashes_verified": true, "old_namespaces_or_sources_changed": false, "Docker_tunnel_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false}
+}

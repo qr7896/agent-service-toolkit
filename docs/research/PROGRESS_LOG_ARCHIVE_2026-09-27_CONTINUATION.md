@@ -1370,3 +1370,15 @@ resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMess
 本轮新增9calls/39967tokens，两账本分列，started/completed全部配对；未重试HTTP、未改旧额度，先前13/53708及16/53212等保持。本轮最新有限候选1、完整可信0/Agentrepair0。新7专项、重点28/最终12/Ruff/synthetic compact preflight ready=true；全1660passed/4skipped/33warnings96.77秒，XML SHAe5cae21dd2ec9a3264d03b2e82927b8d803e5d5f531eda2b79c34bced6e04c38，旧XML全留。旧201/255/54/11/39/52与新52/130 seal及frozen method源核验不变，公开收据绑定两Gold结果SHA。
 
 两Roadmap/交接更新唯一当前入口，日志只本续档、旧协议结果/历史保留。下一步优先零模型Controller主链fixture scope/export/object分层、qualified属性/字段依赖与真实异常链、同条件公开旧版本witness；现有有限gate故意trusted/repair false，不能改常量或有限改名完整。真实义务/新协议先freeze再小额DEV，未过不开canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证完美/30题全过。无下载/删除/系统Docker重启/IPC/VHD/registry/代理/tunnel/key修改，raw/probe/Gold/密钥/备份/失败留本机；仅安全source/tests/protocol/receipt同步Git。
+
+## 2026-10-08：属性依赖与异常/fixture证据Controller零模型完成
+
+用户继续要求加速高质量研究。使用ARS实验执行规范与ponytail，完整读执行/监控/output，inline无subagent/依赖。新source_evidence_controller复用原strict/scope/export/constructor v2/exception transport，在policy、execution、qualification三处实际挂属性调用依赖：host SHA/LF/base匹配才入生产binding，未暴露保持unknown/补证，4references/1MB source；原rejected/fixture unknown不清除，外部helpers仍归旧validator。实际exception observer按agent-requested defs→qualified deps→plain imports选源，仍2文件cap与原public hash/keyword条件；新scope/object summary进真实compact Human，projection使用实际新selected proof，不把MRO当public namespace意图。
+
+初6专项与scope/export/object组合36过，Ruff import排序冻结前机械修。新增external-helper排除后，missing-exposure fixture空windows不满足真实runner已有production context，重点1failed/25passed；只补已暴露背景（目标仍未expose），原unknown/缺源断言保留，最终7新专项/重点26过。工具编排取回该重点失败时零模型命令已启动，这次fixture/顺序如实留档，无provider或旧身份重跑。Controller冻结源未改，零namespace不重试。
+
+预列精确source_evidence_zero命令0calls/0tokens，新目录先source/protocol/父seal freeze；对两个已seal最新生产probe回放一次，不新生成/改旧Oracle/输入/score，Gold不读。SK有限子义务保留；MMnormal两0/target两1，program新增DateTime限定依赖，自动fields/utils观察捕获公开消息同hash的内层ValueError（utils288、fields928），exception_correspondence旧false→true，host/LF/Git/runtime一致。scope有2条件binding、constructor3条true运行记录，最终Human实际有summary；strict public_fixture_constraint_unproven仍在，namespace意图false，未terminal选候选。machine0/Agentrepair0，不报新任务成绩或仪器化完全语义等价。
+
+报告2.19.3本地tag与有界80-init-history snapshot均无source；没有执行旧版witness或借其他task版本。官方PyPI JSON核对wheel49981bytes/SHA cb1e88b8b098ee6d0fb984e40762cb94e200c067426e43496e55b82b563feabf，新增手动固定URL/SHA/进度脚本，curl排代理/HTTPS/15秒连接180秒总超时/retry0，仅保存不安装/不执行包；OS VPN/TUN需用户关闭。PowerShell语法检查0errors，未执行下载。之后另冻结安全wheel读取及同probe/条件release counterfactual，发行包不冒充canonical Git；现在无witness命令。
+
+已向用户问资格范围选择：默认完整门槛，或明确另立预注册有限机制协议并分账；未答，未换口径/改False/开canary。完整1667passed/4skipped/33warnings98.26秒，XML SHA3940e50d84ee4cdfc245abe47a4536ee70dc088cc05b029d7bc0434dbb2e2f20；Ruff/重点26/compact synthetic ready、旧XML保留。八个原generation seal和新module freeze SHA核验保持，receipt绑定结果。两Roadmap/交接更新当前入口，日志本续档；无新增付费、下载/删除、Docker重启/IPC/VHD/registry/代理/tunnel/key更改，raw/probe/Gold/密钥/失败/备份本机保全。TEST/C5/Fresh30/privateTest500/repair/E2仍关闭；下一步手动小资源及资格范围明确后另零模型版本对照，不保证完美/30题全过。

@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** 两新版分别4calls/16647tokens、5/23320，新增9/39,967，均completed/seal/独立Gold完成。环境反馈/公开请求解释/模块函数检索实链接通；各产生同一SK旧DEV的一个Boolean keyword有限候选，Gold各消除1/1，不是两题通过或Agent修复。MM真实module query匹配、normal两0/target两1、Schema自动取得；下次模型确实看到环境/source（prompt SHA与实际账本一致），但仍fixture/异常链/版本期待unknown，3调用上限停止。**完整可信0/Agent修复0，E1-C未完成**。[最新结果及零模型优先待办](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_environment_module_results.json)。所有旧版费用/负结果不拼分。
+**最新状态：** qualified属性依赖/自动2源异常观察/scope-export-object已接Controller主链，新目录零模型回放两个封存生产probe。MM内层公开ValueError对应false→true，2个条件binding/3条true运行关系记录到feedback及最终Human，仍public_fixture_constraint_unproven；SK有限候选保持。**完整可信0/Agent修复0，E1-C未完成**。[最新结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_source_evidence_results.json)。本轮0calls/0tokens，无新生成/Gold；旧版费用/结果不拼分。
 
-新增7专项、重点28/最终12、Ruff/预算V3/合成preflight通过，最终1660 passed/4 skipped/33warnings（96.77秒），此前XML保留；不是repair rate。环境反馈现已真正live暴露，不提升unknown或声称自然卸载；模块basename仅检索提示，alias不获认证。0下载/删除/系统配置更改。
+新增7专项、初组合36/最终26、Ruff/预算V3/合成preflight通过，最终1667 passed/4 skipped/33warnings（98.26秒），旧XML保留；不是repair rate。2.19.3本地tag/history无源码，[手动直连命令](research/E1C2_REPORTED_VERSION_MANUAL_DOWNLOAD_2026-10-08.md)已准备（约49KiB/SHA/进度、仅保存不安装）。0下载/删除/系统配置更改；完整门槛默认保留，另立有限协议须明确选择。
 
 ## 1. 已完成与尚未完成
 
@@ -47,13 +47,14 @@
 | 正常对照与环境反馈修订（历史阶段） | source-backed binding保护已实链；matching自身记录环境投影零调用过 | 当时未接paid；后续实链见下行，不编造自然环境 |
 | 环境事实/接口请求新版 | matching执行条件到Human，新的有限候选Gold1/1 | 仅参数接受，非完整行为或Agent修复 |
 | 模块函数检索新版 | 新生产query匹配与next消息过；另一新有限候选Gold1/1 | 同一旧DEV，不合并2/2；alias提示不认证 |
+| 源码Controller零模型 | 属性依赖/2源选择/公开内层异常对应true/条件scope与运行关系到Human | 旧probe回放不是新样本；namespace意图/版本期待未证明 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-协议、环境事实、feature request解释、module.function检索已经实链修复。现在剩公共Foo/Schema/DateTime短名namespace意图、实际异常链与公开报告对应、报告旧版本行为未实证；SK参数接受不覆盖default/增量等请求。先在Controller主链接既有scope/export/object观察，补真实qualified属性/字段依赖和异常路径，再同条件旧版本witness，未证明保留unknown。现有有限gate故意full_issue_trusted/repair=false，必须补真实义务或明确另拟受限协议，不能改常量、增加budget/同类paid而称门槛通过。
+属性依赖及真实异常源选择已零模型主链验证，公开内层错误对应现在true。剩公开短名namespace意图与报告旧版行为；SK参数接受仍不覆盖default/增量。运行关系支持条件解释，不清除strict unknown。有限gate故意full_issue_trusted/repair=false：补真实义务或经明确选择另立预注册受限协议，不能改常量或多付费而称通过。缺2.19.3本地资源，下载交用户，不借其他task的witness。
 
 ## 3. 严格验收定义
 
@@ -83,7 +84,9 @@
 | 已完成 | 去示例值policy+closed codec实链、小额真实输出 | 三阶段真实JSON/Python、内层hook及实际容器反馈 | 非任务通过，旧namespace禁止重跑 |
 | 已完成（有限范围） | source-frontier正常绑定保护与live补源 | receiver丢失执行前拒绝；Schema next prompt SHA与账本一致 | 不证明fixture意图/剩余行为 |
 | 已完成（有限范围） | 环境反馈/接口请求/模块函数检索实链 | matching条件到真实next请求，有限候选及独立Gold，两个来源runtime过 | fixture/异常链/版本资格仍未知 |
-| 1 | fixture范围、qualified属性依赖、异常链与版本witness主链接线 | 身份/条件解释/意图分层、错alias/改值仍拒；真实生产路径与同条件版本对照 | 先零模型，缺版本资源报阻塞、下载交用户，不猜或改unknown |
+| 已完成（有限范围） | 属性依赖/异常路径/fixture分层Controller零模型 | 公开内层异常对应true，scope/export/object到Human，原unknown不改 | 新zero目录不重跑，不是新生成/完整可信 |
+| 1 | 旧版小资源与资格范围选择 | 用户核验49KiB发行包；默认完整门槛或明确另立有限协议 | 不安装、不挪其他task版本、不静默换口径 |
+| 1a | 新release-source counterfactual零协议 | 同probe/镜像/optional条件，实际版本/路径/源SHA与normal/target核验 | 发行包不冒充canonical Git，目前无witness命令 |
 | 2 | 真实义务覆盖/新完整method与两个来源小验证 | 明确有限候选与完整可信边界，实际正常/target/observer/资格正负过，再精确预算freeze | 禁止修改false常量冒充trusted，不重跑旧批，不无限消费 |
 | 3 | 同版四参考新DEV | 自动source→normal/target/observer→独立Gold/语义分账 | 0候选或语义不足不扩canary |
 | 4 | 同版完整九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | 四参考不报全12 |
@@ -91,7 +94,7 @@
 | 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
 | 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮两版9/39967与此前13/53708、16/53212及旧50k lineage分账；所有started namespace含环境/模块版run/gold及更早实验禁止重跑/改源。当前优先零模型资格接线，没有可重跑live命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
+下一轮paid先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮0/0与旧费用分账；source-evidence-zero及所有started run/gold不可重跑/改源。当前需小型旧版资源和资格范围选择，没有可重跑live/witness命令，不抽第6批、不开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 
