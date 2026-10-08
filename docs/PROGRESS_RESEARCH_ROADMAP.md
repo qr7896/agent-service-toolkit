@@ -4,13 +4,15 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 用户已选择“标准 baseline、标准＋证据、严格消融”三组新路线。[新预注册](research/E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)已落地：标准组只读固定 base 已有测试，严格组不输入；新增评分测试与 Gold 仍独立隔离。首轮是一个旧 DEV 的三 cell 修复接线验证，复用已封存的自动窗口与条件 witness，**不是从零端到端或正式准确率对照**。零调用输入预检通过，Flash 最多3请求/48,000tokens；付费命令尚未执行，须按仓库规则精确授权。
+**当前：** 已执行精确授权的三组试验：Flash3请求/15,764tokens，原两组JSON外壳拒绝、一组无改动，原resolved0/3。[最新完整结果](research/E1C2_THREE_ARM_RESULTS_2026-10-08.md)。另立零调用诊断后，唯一非空模型补丁在真实official评分中目标0/1、回归37/37；自身公开probe却两次完成，暴露覆盖缺口。公开派生21个时间变体：base6完成、patch11、旧公开版21，找到10个漏修条件。**21不是21个task，原成绩不回填。**
+
+[下一版方法已冻](research/E1C2_THREE_ARM_BOUNDARY_DEV_PROTOCOL_2026-10-08.md)：自动补生产global/条件重赋值上下文、四个自产反例到证据组、兼容固定外壳；三组仍区分base旧测试权限，评分断言/Gold不输入。新v2零调用preflight通过，Flash最多3calls/48k，**尚未付费，待新精确命令授权**；仍是同一旧DEV缓存接线校准，不冒充从零端到端/独立准确率。
 
 此前2.19.3公开包对照：旧版同normal/target各两次rc0，原base normal两0/target两1，版本/导入路径/生产源SHA/probe/依赖条件核验，[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**完整可信0/Agent修复0，E1-C仍未完成**。另立 DEV 条件修复协议不把旧 unknown 或 repair_eligible 改为 true；不打开 canary/TEST/Fresh30/E2。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1708 passed/4 skipped/33 warnings（108.76秒）；28新增专项、Ruff、预算/V3重点与合成compact preflight通过。[零调用准备收据](../data/e1c_evaluation_2_three_arm_preparation.json)绑定新freeze/真实prompt/XML；旧XML保留，此计数不是可信复现或修复率。
+最新工程验证：1728 passed/4 skipped/33 warnings（112.02秒）；20新增专项、Ruff、预算/V3重点与合成compact preflight通过。[最新收据](../data/e1c_evaluation_2_three_arm_results.json)绑定paid/zero/v2freeze/XML，旧准备收据与XML保留；工程数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -20,7 +22,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [三组新路线与命令](research/E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)；[此前公开发行源码版本对照](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [三组真实结果/公开覆盖缺口](research/E1C2_THREE_ARM_RESULTS_2026-10-08.md) → [v2新方法与命令](research/E1C2_THREE_ARM_BOUNDARY_DEV_PROTOCOL_2026-10-08.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

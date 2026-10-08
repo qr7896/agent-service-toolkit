@@ -4,11 +4,13 @@
 
 ## 0. 最新结论
 
-**最新状态：** 用户明确选择三组路线，已新增固定 base 测试读取通道与三 cell 修复/封存/独立评分 runner。[冻结协议与精确命令](research/E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)。标准两组允许已有测试、严格组不输入；三组都隔离新增评分测试/Gold/未来提交。一个旧 DEV 的真实输入零调用预检通过（预留11,431/12,226/9,138，均≤16k），预算Flash最多3请求/48k；**新付费尚未运行，待精确命令授权**。本轮只是共享缓存自动窗口与条件witness的修复接线，不冒充三组正式准确率或从零端到端。
+**最新状态：** 已执行获精确授权的旧DEV三cell真实试验：Flash3请求/15,764tokens，原2外壳拒绝/1无改动，resolved0/3。另立零调用诊断，仅兼容固定JSON元字段、补丁字符串不改；唯一真实候选official目标0/1、回归37/37。原公开自身probe却正常/目标各两次完成，因此瓶颈是覆盖不足，不是“没运行测试”。[完整结果](research/E1C2_THREE_ARM_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_three_arm_results.json)。
+
+不读取评分断言，公开literal的21个合成变体在base完成6、patch完成11、公开2.19.3完成21，找到10个漏修条件。它们不是新task或准确率；只比较完成，不证返回值等价。下一版已接生产global/重赋值上下文、四个自产counterexample与兼容解码，[新方法/预算](research/E1C2_THREE_ARM_BOUNDARY_DEV_PROTOCOL_2026-10-08.md)已freeze，reserve12,534/15,236/12,148均≤16k；**v2付费0，待精确新命令授权**（Flash≤3calls/48k）。三组仍区分base测试权限，不输入Gold或官方断言；缓存单任务校准非新端到端/独立泛化。
 
 原2.19.3发行对照的旧normal/target各两0、base normal两0/target两1保持，[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[原收据](../data/e1c_evaluation_2_release_witness_results.json)不变。**完整可信0/Agent修复0，E1-C未完成**；另立有界 DEV 修复可行性协议不回填旧 trusted/repair_eligible，不证明公共namespace意图/全部义务。
 
-最新工程1708 passed/4 skipped/33warnings（108.76秒），28新增专项、Ruff与合成compact preflight过，[零调用准备收据](../data/e1c_evaluation_2_three_arm_preparation.json)绑定freeze/prompt/XML。前轮1680及XML保留，均非repair rate。14生产Python的public-release counterfactual不冒充canonical Git。当前不需下载/改Docker设置；三组新范围只适用于新身份，旧strict记录原样保全。
+最新工程1728 passed/4 skipped/33warnings（112.02秒），20新增专项/Ruff/合成compact preflight过；旧1680/1708及XML保留，均非repair rate。14生产Python的public-release counterfactual不冒充canonical Git。当前不需下载/改Docker设置，旧strict记录和所有原结果保全。
 
 ## 1. 已完成与尚未完成
 
@@ -52,13 +54,17 @@
 | 源码Controller零模型 | 属性依赖/2源选择/公开内层异常对应true/条件scope与运行关系到Human | 旧probe非新样本、namespace意图未证；后续版本对照见下行 |
 | 公开2.19.3发行对照 | 同probe/image/optional条件，实际version/path/SHA过，旧normal×2/target×2都0 | 版本执行见证，不是canonical Git/完整意图/Agent修复 |
 | 三组新路线零调用准备 | base Git blob测试读取/未来提交反例/生产exact edit/全组三cell seal后评分；真实输入预算已冻 | 缓存窗口/缓存witness接线，不是新付费成绩；严格组仅模型输入无测试 |
+| 三组真实修复试验 | 3calls/15,764tokens，2外壳拒绝/1无改动，全部seal | 原resolved0/3；不重跑或回填 |
+| 后验解码与真实official容器 | 唯一保留模型patch：目标0/1、回归37/37 | zero非新生成，不将脚本rc0作resolved |
+| 原自身probe与公开边界 | patch下正常/目标各两0；同21变体base6/patch11/旧版21完成，10反例 | 一个旧DEV合成状态诊断；不证明全部值/意图 |
+| 三组公开反例DEV v2准备 | 共用3生产global含重赋值上下文，证据组4自产反例，实际输入预算freeze | paid0、尚未验证新patch；不输出评分断言 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-属性依赖、公开内层异常对应、运行关系与报告旧版本执行对照均有实证。剩公开短名省略import的namespace意图、SK default/增量等未覆盖义务；运行/版本对照不清除strict unknown。用户已明确选择三组新路线，下一步不再等待路线选择：验证条件证据是否帮助实际修复，同时用严格消融测成本。旧有限gate full_issue_trusted/repair=false不动；标准组修复成功也不能叫“不读取断言”成功。当前没有资源下载瓶颈。
+当前实质瓶颈：原自身probe仅复现单个症状，保留模型patch能让它完成，却仍漏官方目标；公开自产变体又找到10个条件反例。先验证新增公开覆盖反馈是否帮助真正修复，而不是继续只数probe完成。短名namespace/全部义务仍unknown，旧full_issue_trusted/repair=false不动；标准组若成功也不能叫“不读取现成断言”成功。时间算子只有一种家族，不是任意task完整方法；当前无下载瓶颈。
 
 ## 3. 严格组验收定义（标准组另列base测试权限）
 
@@ -91,13 +97,14 @@
 | 已完成（有限范围） | 属性依赖/异常路径/fixture分层Controller零模型 | 公开内层异常对应true，scope/export/object到Human，原unknown不改 | 新zero目录不重跑，不是新生成/完整可信 |
 | 已完成 | 公开release-source counterfactual | 同probe/镜像/optional条件、实际版本/路径/源SHA及normal×2/target×2通过 | 新namespace已运行勿重跑，发行包不冒充canonical Git |
 | 已完成（零调用） | 用户选择三组路线、边界/预算/真实输入freeze | 固定base测试独立通道，三组无Gold/新评分测试输入 | 不改变旧strict结果 |
-| 1 | 首轮旧DEV三cell修复接线 | 精确授权新命令，最多3calls/48k，all-generation seal后official | 失败保存，不自动retry/不best-of |
+| 已完成 | 首轮旧DEV三cell修复/零调用覆盖诊断 | 3calls/15,764；真实official/公开原probe/21变体分账 | 原0/3不回填，不把11/21作修复率 |
+| 1 | 新v2公开反例辅助修复小验证 | 新精确授权，≤3calls/48k，补生产依赖/四自产反例→seal→official | 未达修复质量保留负结果，不扩canary |
 | 2 | 从issue开始的两来源DEV完整链 | 同一自动定位/probe/判别/patch方法，三组生产窗口获取一致，全部成本记账 | 缓存首轮不推广成端到端/正式组效应 |
 | 3 | 同版完整九准入DEV/native | 条件机制/完整可信/official resolved分账，固定12，比较成本 | 局部机制/工程数不作修复率 |
 | 4 | 完整方法/预算冻结，新不重叠canary一次 | 全历史排除，严格可信≥2/3及独立修复门槛 | 负结果封存回DEV，不能重称独立 |
 | 5 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved及开TEST授权 | 不保证30/30，不回调Fresh30 |
 
-下一轮paid精确命令在新协议：Flash/3calls/48k，retry0不Pro，当前仅preflight完成。仓库要求该精确命令授权；不恢复旧namespace。release-witness/source-evidence-zero及所有started namespace不可重跑/改源。不抽第6批，不开TEST/Fresh30/E2；新DEV修复试验尚未启动。
+下一轮v2精确命令在新协议：Flash/3calls/48k，retry0不Pro，当前仅preflight完成，须新精确命令授权。不恢复原v1/三个zero或其他started namespace，不改其源码/协议/结果。不抽第6批，不开TEST/Fresh30/E2。
 
 ## 5. 时间与停止条件
 

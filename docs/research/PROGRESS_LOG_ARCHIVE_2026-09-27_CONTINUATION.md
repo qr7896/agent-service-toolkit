@@ -1406,3 +1406,19 @@ Ruff/重点32/compact synthetic ready，全1680passed/4skipped/33warnings103.79�
 初Ruff两处lazy import排序失败冻结前修，首22专项通过；补实际hook与seal-input绑定反例后，全28新增专项过。真实preflight一开始作为只读函数验预算，最终代码/协议完成后执行精确preflight一次新freeze：a948c6601af27f269b5d6dc0f296dc16e7d9a37077eddc9cd68226dc05b8edf0，three cell reserve11431/12226/9138；标准两组各6base-test窗口，strict0。父generation seal/零模型receipt/发行四结果与源码模块核验保持。只读Docker29.4.0响应正常，未启动修复容器/重启或改变配置。
 
 完整1708passed/4skipped/33warnings108.76秒，XML SHA b5939d7c7864bf611341b825c04e670de56414cbffef68de38526f443bac2112，Ruff/重点47/合成compact preflight通过，旧XML保留；工程数不作repair rate。新准备receipt绑定freeze/prompt/XML。当前0新增calls/0tokens，仓库AGENTS仍要求精确新live命令授权，已准备 `uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_three_arm_dev run`，尚未执行，不用generic继续代替exact授权。首轮只是缓存接线诊断，无三组准确率/独立泛化结论；之后才两来源完整自动链→九准入→整体freeze/不重叠canary。未开C5/sealed TEST/Fresh30/E2、无新下载/删除/IPC/VHD/registry/proxy/tunnel/key改变，日志仅本续档、两Roadmap/交接当前入口更新。
+
+## 2026-10-08：精确授权三组实跑，公开自身probe与official不一致；零费反例覆盖与v2准备
+
+用户明确同意上轮精确three_arm_dev run命令，遵循ARS执行/原namespace不retry与ponytail复用现有链，inline无新subagent/依赖。原1旧DEV/3cell Flash实际3calls/15,764tokens，分别5592/6108/4064，账本全部completed无超额/ambiguous。standard/strict额外type:json_object被原closed decoder拒，standard_evidence old/new同值无改动；原resolved0/3，无实际原候选评分容器，不改结果。原generation seal2ea461ed39004be74068bd18469bb69a4f865ef7065e305b2ee057d43a60cd2c保持。
+
+新增three-arm-decoding-zero-v1，先7专项/与原28组合35通过；仅兼容恰为type+edits且type=json_object，代码字符串不改，未知键仍拒。原两无改动、唯一strict模型patch保留，原评分器仅scoped重定向新zero身份，没有provider或原配置永久变动。真实候选在offline/pull-never容器official：有效log/源身份/脚本rc0、F2P0/1、P2P37/37，pytest日志1failed/37passed；不把shell rc0称成功。后验转译不是原冻结系统结果/新生成，不回填0/3。
+
+新增public-patch-probe-zero，1专项后freeze/run；同一原control与target各两次在不变模型patch下rc0、patch apply marker有效，镜像/base/dateutil blocker一致。候选只写隔离容器层，host所有mount readonly，未取评分材料/Gold。因此自身probe通过仍缺修复覆盖，未据hidden断言编写代码。
+
+新增时间类public_precision_sweep：唯一public issue/原probe共有literal由AST定位，运行前固定precision0..6×Z/+00:00/-04:30，21合成变体，原fixture/调用/guard保持。初Ruff unused import冻结前修、4专项过；第一次命令在读取release freeze无module字段预检KeyError，未创建namespace/容器。随后用户继续，分离freeze/result/receipt组合真实发行identity，新增1专项后首次启动zero namespace，不重跑started身份。三个独立phase的63子进程probe得到base6/21、模型patch11/21、公开2.19.3全部21完成，10个偏移后缀/短精度反例。仅phase driver核验版本/path/14源manifest，child同PYTHONPATH但无独立逐childattestation；完成不证值等价，不能强制复制旧版丢微秒。没有official断言/Gold输入算子；不是21新task或独立研究成功率。
+
+新增three_arm_boundary_dev v2复用同生成/预算/seal/scorer，三个common生产补证从已有完整函数AST加载名自动找同base顶层global，cap4/16lines/1MB；实际dateutil_available/missing/ISOregex。注意旧三组共享window list，复制每body而非整dict以防重复追加；补专项。条件重赋值优先有界module block，超界明确context不全、所有静态赋值非runtime证书，保留dateutil依赖条件；新增反例专项。两个evidence组仅加入public base失败/旧版完成记录的前2/末2，共4自产probe/≤900trace，baseline不加，strict不输入base测试。新兼容decoder/raw标记与system禁止noop/隐藏fallback缺陷，不改旧False/源码/结果。
+
+新专项20；组合重点66在最后补conditional反例前过，最终全1728passed/4skipped/33warnings112.02秒，XML SHA c665094c779bd7d098aac95c2c8661331c665d356a6c91a8f4e5270595a28305，Ruff/合成compact preflight过。真实context dry preflight前后原v1 freeze相等；最终v2精确preflight freeze acf7bfa4d9ea48f82f38507d655b17d803be9cd184d4c1a3d6a892f6a3b7f579，reserve12534/15236/12148均≤16k。Flash最多3calls/48k、output3k、retry0，v2paid0待新精确授权，不沿用v1授权消费。未来两来源完整自动链/计入成本后才九准入、全方法freeze/不重叠canary。
+
+新结果报告/receipt绑定paid/三zero/v2freeze/XML；两Roadmap/交接更新唯一当前入口，日志只本续档。旧preparation与所有原负结果/账本/seal/probe/wheel/Gold/key保留，不上传私有材料；无下载/删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key改动，不开TEST/C5/Fresh30/privateTest500/E2。完整可信/正式Agentrepair仍0，研究未完成，不保证30/30或完美。

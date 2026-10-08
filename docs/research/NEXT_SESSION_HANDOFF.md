@@ -1,31 +1,33 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[三组新协议](E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)。
+日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新结果](E1C2_THREE_ARM_RESULTS_2026-10-08.md)、[v2新协议](E1C2_THREE_ARM_BOUNDARY_DEV_PROTOCOL_2026-10-08.md)。
 
 ## 0. 本次更新后的唯一下一步
 
-用户明确选择标准baseline / 标准＋证据 / 严格消融。已实现 `e1c_evaluation_2_base_tests.py` 和 `e1c_evaluation_2_three_arm_dev.py`：只读固定base Git blob已有测试（不读checkout新增/未来提交）；三组生产窗口一致，严格组消息不输入test lane；actor只生产exact edit、纯diff，不写本机源码；三组全部seal后才独立official评分。
+v1已按精确授权执行：Flash3请求/15,764tokens；原2外壳拒绝/1同值无改动，原resolved0/3，没有候选实际进入原评分容器。另立zero解码后唯一保留模型patch被真实official评分：目标0/1、回归37/37。原公开probe正常/目标各两次在patch下完成，说明单条症状覆盖不足，不是任意工程数可以代替修复。v1/所有started zero目录禁止重跑，原method/输入/response/ledger/seal/result不改。
 
-真实输入preflight完成：固定一个旧DEV（按公开版本回归引用选择，不人工选文件），三个cell reserve11,431/12,226/9,138；Flash共≤3calls/48k、每cell≤16k、output≤3k、retry0。**还没调用模型或跑新patch评分**。这是缓存窗口/缓存自身probe/公开发行witness辅助的修复接线诊断，不是新E2E或正式三组准确率。旧完整可信/repair_eligible false和成绩保留；不再问路线选择、不为通过而删unknown。
+公开派生21个时间变体在base6/patch11/公开旧版21完成，10个漏修条件；未读取评分断言设计算子。不是21新task、返回值证明或通用完备覆盖。新v2已自动补3个生产global（包括regex/条件重赋值上下文），证据两组输入4自产base失败/旧公开版完成反例，严格组不输入base已有测试，Gold/新官方断言始终隔离。新decoder只兼容固定json_object元字段，raw与代码字符串保留，未知键/无改动不作成功。
+
+v2真实输入freeze完成，reserve12,534/15,236/12,148均≤16k，Flash≤3calls/48k、output≤3k、retry0；**v2付费调用0，待新精确命令授权**。仍同一个旧DEV缓存接线校准，不是两来源从零E2E或三组正式效应。不得用v1授权自动续另一身份，不能把同一期多版最佳结果拼成绩。
 
 优先零模型检查：
 
 ```bash
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_base_tests.py evals/e1c_evaluation_2_three_arm_dev.py tests/test_e1c_evaluation_2_three_arm_dev.py
-uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_three_arm_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_three_arm_decode_audit.py evals/e1c_evaluation_2_patch_probe_zero.py evals/e1c_evaluation_2_public_precision_sweep.py evals/e1c_evaluation_2_three_arm_boundary_dev.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_three_arm_decode_audit.py tests/test_e1c_evaluation_2_patch_probe_zero.py tests/test_e1c_evaluation_2_public_precision_sweep.py tests/test_e1c_evaluation_2_three_arm_boundary_dev.py tests/test_e1c_evaluation_2_three_arm_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 ```
 
 本机待精确命令授权：
 
 ```powershell
-uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_three_arm_dev run
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_three_arm_boundary_dev run
 ```
 
 仓库要求明确授权该命令；generic继续不自动消费。确认后一次生成3cell并自动seal/grade。任何started/ledger不得重复generate，provider失败停止保留；不要擅自换namespace续付费。Cloud没有私有父seal/缓存源/镜像时报INFRA_BLOCKED，不上传Gold/凭证、不开裸Docker/改tunnel白名单；新命令还没有远程端到端验证。
 
 此后同版两来源从issue运行完整自动链，计入定位/probe成本→九准入固定12→完整freeze→新不重叠canary→另授权Fresh30/E2。标准组成功不称“不读断言”；严格组未通过也如实报告。不能保证30/30或一周完美。下方保留上轮历史交接细节，仅第0节是当前执行待办。
 
-最新28专项/全1708passed、4skipped、33warnings（108.76秒），Ruff/合成compact preflight过。真实生成/官方adapter通过合成hook检查，**尚未运行真实候选评分容器**；只读Docker29.4.0健康。新freeze SHA/三个实际prompt SHA/XML SHA见[准备收据](../../data/e1c_evaluation_2_three_arm_preparation.json)。新freeze与其源码/协议不能再原地改；需修改另立新身份，不覆盖历史。
+最新20专项/全1728passed、4skipped、33warnings（112.02秒），Ruff/合成compact preflight过；真实模型/后验真实候选评分/公开覆盖诊断均有实执行记录。[最新收据](../../data/e1c_evaluation_2_three_arm_results.json)绑定paid/zero/v2freeze/XML，旧准备收据保留。v2及各已开始方法/协议不能原地改；缺私有素材报INFRA_BLOCKED。不得扩大tunnel白名单或假称新runner已云端端到端可调用，不上传raw/probe/Gold/key。
 
 ## 1. 上轮状态与禁止重跑（历史说明）
 

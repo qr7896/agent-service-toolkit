@@ -1,0 +1,24 @@
+{
+  "schema": "e1c2-three-arm-results-v1",
+  "date": "2026-10-08",
+  "paid": {"run_id": "e1c2-three-arm-cached-witness-dev-v1", "status": "completed", "model": "deepseek-flash", "calls": 3, "tokens": 15764, "fixed_tasks": 1, "fixed_cells": 3, "original_resolved_cells": 0, "original_candidate_containers": 0, "no_auto_retry": true, "rows": [{"arm": "standard", "tokens": 5592, "status": "envelope_rejected"}, {"arm": "standard_evidence", "tokens": 6108, "status": "no_change_abstained"}, {"arm": "strict_evidence", "tokens": 4064, "status": "envelope_rejected"}]},
+  "posthoc_decoding": {"calls": 0, "edit_strings_changed": false, "new_model_generation": false, "original_results_rewritten": false, "candidate_count": 1, "source_identity_verified": true, "valid_official_log": true, "shell_returncode": 0, "f2p_pass": 0, "f2p_total": 1, "p2p_maintained": 37, "p2p_total": 37, "resolved": false},
+  "unchanged_public_probe_after_patch": {"calls": 0, "control_returncodes": [0, 0], "target_returncodes": [0, 0], "patch_apply_verified": true, "same_image_base_optional_condition": true, "scoring_material_read": false},
+  "public_synthetic_boundary_sweep": {"calls": 0, "variant_count": 21, "base_completed": 6, "patch_completed": 11, "public_release_completed": 21, "patch_coverage_gaps": 10, "reported_new_tasks": 0, "return_values_equivalent_claimed": false, "per_phase_driver_package_identity_verified": true, "individual_subprocess_module_attestation": false, "official_assertion_or_Gold_used_for_operator": false},
+  "next": {"run_id": "e1c2-three-arm-public-boundary-dev-v2", "status": "ZERO_PREFLIGHT_FROZEN_AWAITING_EXACT_LIVE_AUTHORIZATION", "calls": 0, "model": "deepseek-flash", "max_calls": 3, "max_provider_tokens": 48000, "cell_tokens": 16000, "output_tokens": 3000, "retries": 0, "reserves": [12534, 15236, 12148], "automatic_extra_global_definitions": 3, "public_counterexamples": 4, "conditional_global_assignment_not_runtime_certificate": true},
+  "source_records": {
+    "e1c2-three-arm-cached-witness-dev-v1/generation-seal.json": "2ea461ed39004be74068bd18469bb69a4f865ef7065e305b2ee057d43a60cd2c",
+    "e1c2-three-arm-cached-witness-dev-v1/provider_calls.jsonl": "de81cc0fad5e47d7080f77cea0dffdd821b693da78f78e448eb386474ef3bf3a",
+    "e1c2-three-arm-cached-witness-dev-v1/result.json": "4742bed5ed962d0b877746cdf1e4577fe5f244fd1a628fb2b7bbb74ae9ad830e",
+    "three-arm-decoding-zero-v1/freeze.json": "24b56f0e479ee402f91c23e369ca8767684bb0e15da0bb0f989a00b7fd517cc1",
+    "three-arm-decoding-zero-v1/result.json": "d44d45a65ff4773da4cb27c9b2e64b16b41fe0067a2b62f757c3e38c0d975322",
+    "three-arm-public-patch-probe-zero-v1/freeze.json": "eb644dd59065ee0481c90331c471acc58c6f05e5664bb0b762b0b4db2ed6fd19",
+    "three-arm-public-patch-probe-zero-v1/result.json": "7e4a0efc2b7091c78913cc696fe232b560d4a100d6aa1f803575b08b6c931ad3",
+    "public-temporal-boundary-zero-v1/freeze.json": "a590d8dc0df611b04f4fe24c41711e5477e02c96d4847b9020206f1b505ff090",
+    "public-temporal-boundary-zero-v1/result.json": "96295de1621334b758b21d68c531b052e104f2e30ca8a06206900b3083396f8e",
+    "e1c2-three-arm-public-boundary-dev-v2/freeze.json": "acf7bfa4d9ea48f82f38507d655b17d803be9cd184d4c1a3d6a892f6a3b7f579"
+  },
+  "engineering": {"passed": 1728, "skipped": 4, "warnings": 33, "seconds": 112.02, "xml_sha256": "c665094c779bd7d098aac95c2c8661331c665d356a6c91a8f4e5270595a28305", "new_unit_tests": 20, "ruff_passed": true, "compact_synthetic_preflight_ready": true},
+  "preservation": {"original_frozen_result_and_methods_unchanged": true, "old_public_receipts_preserved": true, "canary_TEST_Fresh30_opened": false, "downloads_or_material_deletions": 0, "Docker_tunnel_proxy_key_configuration_changed": false},
+  "E1C_evaluation_2_completed": false
+}
