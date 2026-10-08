@@ -1422,3 +1422,15 @@ Ruff/重点32/compact synthetic ready，全1680passed/4skipped/33warnings103.79�
 新专项20；组合重点66在最后补conditional反例前过，最终全1728passed/4skipped/33warnings112.02秒，XML SHA c665094c779bd7d098aac95c2c8661331c665d356a6c91a8f4e5270595a28305，Ruff/合成compact preflight过。真实context dry preflight前后原v1 freeze相等；最终v2精确preflight freeze acf7bfa4d9ea48f82f38507d655b17d803be9cd184d4c1a3d6a892f6a3b7f579，reserve12534/15236/12148均≤16k。Flash最多3calls/48k、output3k、retry0，v2paid0待新精确授权，不沿用v1授权消费。未来两来源完整自动链/计入成本后才九准入、全方法freeze/不重叠canary。
 
 新结果报告/receipt绑定paid/三zero/v2freeze/XML；两Roadmap/交接更新唯一当前入口，日志只本续档。旧preparation与所有原负结果/账本/seal/probe/wheel/Gold/key保留，不上传私有材料；无下载/删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key改动，不开TEST/C5/Fresh30/privateTest500/E2。完整可信/正式Agentrepair仍0，研究未完成，不保证30/30或完美。
+
+## 2026-10-09：8日晚精确授权v2完成，跨日冻结Flash thinking单请求诊断
+
+用户精确确认three_arm_boundary_dev run，按ARS执行/不auto retry与ponytail复用链，inline无subagent/新依赖。Flash3calls/20,385：standard6312非空Z局部patch，standard_evidence8067/strict6006同值无改动，原0/3。正规JSON无外壳兼容；一真实official候选源/log有效、script rc0但F2P0/1/P2P37/37，不把rc0称修复。standard patch SHA c04994d5e98a16e99da39b9c7854d637d1efb12b3166c1d9ab182693157d8713与上一后验strict字节相同，引用旧11/21 public cache而非新重跑/21tasks。两次三组校准共6calls/36,149，不作项目总费用，原结果/seal不回填。
+
+两evidence没利用反例，不继续同样三组盲试。真实caller/budget binder一直provider_disable_thinking=True；官方DeepSeek Thinking文档说明默认enabled/high，thinking忽略temperature，无tools普通对话无需回传reasoning。它是待测配置假设，非因果证明。新增flash_thinking_dev单strict角色：相同v2prompt、enabled/high、max1call/30k含推理、生成8k，预算亦变化所以非单因素效果；实际SDK在HTTP前验证model/mode/effort/8k/JSON/no-tools，metadata只配置/reasoning tokens与存在标记，不存正文，不改系统或用Pro。
+
+离线MockTransport确认HTTP JSON与reasoning计入completion/total/ledger，fixture-key/example.invalid无provider。初7专项后real preflight因legacy固定读取standard而single输入过滤过早KeyError，未创建namespace/调用模型；保留三payload准备，仅冻结/发送strict，加兼容反例后8专项过。thinking freeze13bc036ed1e5c4c52ee5546fd8138c8d819ac648dab0dac635a9d2dc1cf3b055、reserve17,148≤30k、same v2strict SHA23e9624216d52f5de6519c066b90d6c07dd26bc379fb653baf18942c1e46b13f，paid0待新精确授权，不沿用v2已消费授权。共享prepare读取base对象但不发送standard两个payload，不称整进程未访问测试。
+
+Ruff/重点33在最后兼容反例前过，最终8专项过；全1736passed/4skipped/33warnings119.91秒，XML SHA b6c63f0b2a4750ef1683acca9713293f6b62e06dcde927ef355455a7340d413a，合成compact preflight ready。XML名称沿8日晚批次，检查实际跨日至9日，用户环境日期更新09；旧XML/源码/协议/所有负记录保留，工程数不作repair rate。
+
+新结果报告/收据绑定v2 seal/ledger/result/patch/thinking freeze/XML，两Roadmap/交接更新09最新入口，日志本续档。无下载/删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key变更，不开canary/C5/sealedTEST/Fresh30/Test500/E2，不上传raw/Gold/key。新thinking未实际provider/远程tunnel验证，不保证效果/30题全过；若仍局部/noop，下一步公开自产自验证→限次修正真实闭环，不继续堆相同模板context或评分答案补规则。

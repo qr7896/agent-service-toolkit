@@ -1,16 +1,16 @@
 # Roadmap 2：E1-C evaluation_2 当前状态与执行顺序
 
-状态日期：2026-10-08。当前唯一执行入口；背景见[Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，历史过程与旧页面原文见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。
+状态日期：2026-10-09。当前唯一执行入口；背景见[Roadmap 1](PROGRESS_RESEARCH_ROADMAP.md)，历史过程与旧页面原文见[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)。
 
 ## 0. 最新结论
 
-**最新状态：** 已执行获精确授权的旧DEV三cell真实试验：Flash3请求/15,764tokens，原2外壳拒绝/1无改动，resolved0/3。另立零调用诊断，仅兼容固定JSON元字段、补丁字符串不改；唯一真实候选official目标0/1、回归37/37。原公开自身probe却正常/目标各两次完成，因此瓶颈是覆盖不足，不是“没运行测试”。[完整结果](research/E1C2_THREE_ARM_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_three_arm_results.json)。
+**最新状态：** 公开反例DEV v2已按精确授权执行：Flash3请求/20,385tokens，standard非空局部补丁official目标0/1、回归37/37；另两证据组同值无改动，固定三cell resolved0/3。没有JSON外壳拒绝，但反例尚未驱动真正修复。[完整结果](research/E1C2_BOUNDARY_V2_RESULTS_2026-10-09.md)、[收据](../data/e1c_evaluation_2_boundary_v2_results.json)。此前原probe完成/official失败与21变体覆盖缺口保持；新patch与旧patch字节相同，引用旧11/21 cache，不称新重跑/新task。
 
-不读取评分断言，公开literal的21个合成变体在base完成6、patch完成11、公开2.19.3完成21，找到10个漏修条件。它们不是新task或准确率；只比较完成，不证返回值等价。下一版已接生产global/重赋值上下文、四个自产counterexample与兼容解码，[新方法/预算](research/E1C2_THREE_ARM_BOUNDARY_DEV_PROTOCOL_2026-10-08.md)已freeze，reserve12,534/15,236/12,148均≤16k；**v2付费0，待精确新命令授权**（Flash≤3calls/48k）。三组仍区分base测试权限，不输入Gold或官方断言；缓存单任务校准非新端到端/独立泛化。
+发现可检验配置缺口：原caller一直显式关闭thinking。下一步只发送与v2完全相同strict prompt，Flash开启thinking/high；max1call/30k含推理、生成max8k。[单请求新协议](research/E1C2_FLASH_THINKING_DEV_PROTOCOL_2026-10-08.md)已冻，reserve17,148≤30k，**paid0、待新精确授权**。actual SDK HTTP参数与reasoning ledger离线Mock验证过，不证明真实效果。预算也变化，不称单因素思考收益；共享准备读base对象，但model无既有测试/评分断言/Gold。旧unknown/所有原结果不改。
 
 原2.19.3发行对照的旧normal/target各两0、base normal两0/target两1保持，[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[原收据](../data/e1c_evaluation_2_release_witness_results.json)不变。**完整可信0/Agent修复0，E1-C未完成**；另立有界 DEV 修复可行性协议不回填旧 trusted/repair_eligible，不证明公共namespace意图/全部义务。
 
-最新工程1728 passed/4 skipped/33warnings（112.02秒），20新增专项/Ruff/合成compact preflight过；旧1680/1708及XML保留，均非repair rate。14生产Python的public-release counterfactual不冒充canonical Git。当前不需下载/改Docker设置，旧strict记录和所有原结果保全。
+最新工程1736 passed/4 skipped/33warnings（119.91秒），8新增专项/Ruff/合成compact preflight过；旧1680/1708/1728及XML保留，均非repair rate。public-release counterfactual不冒充canonical Git。当前不需下载/改Docker设置，旧strict记录和所有原结果保全。
 
 ## 1. 已完成与尚未完成
 
@@ -58,13 +58,15 @@
 | 后验解码与真实official容器 | 唯一保留模型patch：目标0/1、回归37/37 | zero非新生成，不将脚本rc0作resolved |
 | 原自身probe与公开边界 | patch下正常/目标各两0；同21变体base6/patch11/旧版21完成，10反例 | 一个旧DEV合成状态诊断；不证明全部值/意图 |
 | 三组公开反例DEV v2准备 | 共用3生产global含重赋值上下文，证据组4自产反例，实际输入预算freeze | paid0、尚未验证新patch；不输出评分断言 |
+| 三组公开反例DEV v2真实执行 | 3calls/20,385，1局部patch/2无改动，official目标0/1/回归37/37 | 原0/3封存，未证明反例收益，不重跑 |
+| Flash thinking单请求准备 | 同strict prompt，actual SDK mode/high/8k及含推理ledger离线检查，reserve17,148 | paid0，模式与预算耦合，不保证效果 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-当前实质瓶颈：原自身probe仅复现单个症状，保留模型patch能让它完成，却仍漏官方目标；公开自产变体又找到10个条件反例。先验证新增公开覆盖反馈是否帮助真正修复，而不是继续只数probe完成。短名namespace/全部义务仍unknown，旧full_issue_trusted/repair=false不动；标准组若成功也不能叫“不读取现成断言”成功。时间算子只有一种家族，不是任意task完整方法；当前无下载瓶颈。
+当前实质瓶颈：复现覆盖不足已有public反例实证，但v2模型未利用它产出实际修改，继续扩同样one-shot不合适。先用单请求thinking配置诊断，再建立公开自身反例的实际自验证→限次修正反馈；不能把官方断言当答案或仅继续堆context。短名namespace/全部义务仍unknown，旧full_issue_trusted/repair=false不动。标准组若成功不能叫“不读取现成断言”；时间算子非任意task完整方法，暂无下载瓶颈。
 
 ## 3. 严格组验收定义（标准组另列base测试权限）
 
@@ -98,13 +100,15 @@
 | 已完成 | 公开release-source counterfactual | 同probe/镜像/optional条件、实际版本/路径/源SHA及normal×2/target×2通过 | 新namespace已运行勿重跑，发行包不冒充canonical Git |
 | 已完成（零调用） | 用户选择三组路线、边界/预算/真实输入freeze | 固定base测试独立通道，三组无Gold/新评分测试输入 | 不改变旧strict结果 |
 | 已完成 | 首轮旧DEV三cell修复/零调用覆盖诊断 | 3calls/15,764；真实official/公开原probe/21变体分账 | 原0/3不回填，不把11/21作修复率 |
-| 1 | 新v2公开反例辅助修复小验证 | 新精确授权，≤3calls/48k，补生产依赖/四自产反例→seal→official | 未达修复质量保留负结果，不扩canary |
+| 已完成 | 新v2公开反例辅助修复 | 3calls/20,385，原0/3，payload/ledger/seal保留 | 未达质量，不扩canary，不best-of |
+| 1 | Flash thinking同strict输入单请求诊断 | 新精确授权，≤1call/30k含推理，生成8k，实际wire guard→seal→official | 无修改/局部/截断封存，不自动扩大预算 |
+| 1b | 公开自验证→限次修正闭环 | 自产失败trace/补源真正作为下一次反馈；全部方法/费用冻结 | 不回传官方答案，不继续同模板盲试 |
 | 2 | 从issue开始的两来源DEV完整链 | 同一自动定位/probe/判别/patch方法，三组生产窗口获取一致，全部成本记账 | 缓存首轮不推广成端到端/正式组效应 |
 | 3 | 同版完整九准入DEV/native | 条件机制/完整可信/official resolved分账，固定12，比较成本 | 局部机制/工程数不作修复率 |
 | 4 | 完整方法/预算冻结，新不重叠canary一次 | 全历史排除，严格可信≥2/3及独立修复门槛 | 负结果封存回DEV，不能重称独立 |
 | 5 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved及开TEST授权 | 不保证30/30，不回调Fresh30 |
 
-下一轮v2精确命令在新协议：Flash/3calls/48k，retry0不Pro，当前仅preflight完成，须新精确命令授权。不恢复原v1/三个zero或其他started namespace，不改其源码/协议/结果。不抽第6批，不开TEST/Fresh30/E2。
+下一轮thinking精确命令在新协议：Flash/1call/30k含推理，retry0不Pro，preflight完成但paid0，须新精确授权。原v1/v2/三个zero或其他started namespace不恢复、不改源/协议/结果。不抽第6批，不开TEST/Fresh30/E2。
 
 ## 5. 时间与停止条件
 
