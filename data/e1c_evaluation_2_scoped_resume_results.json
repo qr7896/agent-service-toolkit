@@ -1,0 +1,43 @@
+{
+  "schema": "e1c2-scoped-resume-results-v1",
+  "date": "2026-10-08",
+  "status": "completed_and_sealed",
+  "model": "deepseek-flash",
+  "new_provider_calls": 7,
+  "new_provider_tokens": 29996,
+  "prefix_provider_calls": 3,
+  "prefix_provider_tokens": 13706,
+  "cumulative_provider_calls": 10,
+  "cumulative_provider_tokens": 43702,
+  "remaining_original_token_budget": 6298,
+  "automatic_provider_retries": 0,
+  "unresolved_provider_calls": 0,
+  "fixed_DEV_denominator": 12,
+  "admitted_denominator": 9,
+  "screen_denominator": 4,
+  "machine_trusted": 0,
+  "Agent_repairs": 0,
+  "independent_Gold": {"attempted": 1, "discriminating": 1, "candidate_origin": "original_completed_prefix", "new_generated_selected_candidates": 0, "not_repair_success": true},
+  "rows": [
+    {"task": "scikit-learn__scikit-learn-13496", "status": "executed", "origin": "original_completed_prefix", "cumulative_calls": 1, "cumulative_tokens": 3908, "scope": "sub_obligation_only", "Gold_discriminating": true, "trusted": false},
+    {"task": "scikit-learn__scikit-learn-26289", "status": "budget_stop_no_retry", "origin": "continued_prefix", "new_calls": 1, "new_tokens": 5553, "cumulative_calls": 3, "cumulative_tokens": 15351, "next_request_not_called": true, "next_reserve": 11985, "task_ceiling": 24000},
+    {"task": "marshmallow-code__marshmallow-1252", "status": "budget_stop_no_retry", "origin": "previously_unstarted_task", "new_calls": 3, "new_tokens": 12498, "spent_when_stopped": 31757, "next_reserve": 10154, "protected_global_ceiling": 41520, "source_request_routing_gap": "program missing binding not forwarded to qualification gate"},
+    {"task": "marshmallow-code__marshmallow-1359", "status": "repeated_unsuccessful_action_stop", "origin": "previously_unstarted_task", "new_calls": 3, "new_tokens": 11945, "control_failed_turns": 3, "additional_repeated_call_not_made": true}
+  ],
+  "zero_checks": {"cached_turns_replayed": [1, 2], "first_unstarted_turn_checked": 3, "old_probes_or_requests_reexecuted": false, "dependency_feedback_shadow_rows": 3, "new_Schema_requests_visible": true, "unknown_or_rejected_status_not_promoted": true, "dependency_router_not_live_integrated": true},
+  "preservation": {"original_interrupted_files_verified": 109, "new_sealed_generation_files_verified": 255, "original_interrupted_namespace_changed": false, "original_ledger_identical_prefix_in_new_ledger": true, "frozen_resume_method_changed": false, "new_image_downloads": 0, "Docker_tunnel_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false},
+  "source_records": {
+    "scoped-controller-resume-zero-v1/freeze.json": "97a57e8a33c953c8fa4bc17d60c3880862feff741d35d0148736bdb37c5f36dd",
+    "scoped-controller-resume-zero-v1/result.json": "76a54bd585fbbe470b3f5ca083bc861ac2fba7986468afc8c00caace40917995",
+    "scoped-controller-resume-v1/freeze.json": "80201852e82419a117cb8cb7da2fb73b985ef92d4b75f3e18c93782d8939aed2",
+    "scoped-controller-resume-v1/state.json": "ff5395089c0ee2e55caa8284b9eaf8ba1a287523e2d73bacee1205d314665f8a",
+    "scoped-controller-resume-v1/provider_calls.jsonl": "9046903ab99b3b76fbcdc188384757b04899c4e06bd28c249c9372077d3ff10a",
+    "scoped-controller-resume-v1/generation-seal.json": "e515a4ef4b94ab1a73acc9670fa9ed5c5539cd74188ce07cf7bb308903f5d68a",
+    "scoped-controller-resume-v1/gold-discrimination/scikit-learn__scikit-learn-13496/result.json": "fdacd201567199daa6d68bf7091170b23603b23e824f6df886a89e267566c105",
+    "dependency-feedback-zero-v1/freeze.json": "b7a27cadca868431fc9561e0bb0f7bd9c9be813919d87590bab9492b75141eec",
+    "dependency-feedback-zero-v1/result.json": "dd2b2bb3b7ac71f618934aa29d2089dd7979f1b6ac4c7c6ae5b7ff3e75d129ed"
+  },
+  "initial_regression": {"passed": 1611, "skipped": 4, "warnings": 33, "seconds": 87.85, "xml_sha256": "af2383b604aba10b7294aed333acf2b263c14369b3822750e6f998e9cff911a1"},
+  "final_regression": {"passed": 1615, "skipped": 4, "warnings": 33, "seconds": 79.10, "xml_sha256": "01b43cd74e9b8331adba5c09c6bddbc304de5dca352a7000379bfbaa41812f2e"},
+  "focused": {"resume_tests": 13, "dependency_router_tests": 4, "budget_V3_focus": 36, "ruff_passed": true, "synthetic_compact_preflight_ready": true}
+}

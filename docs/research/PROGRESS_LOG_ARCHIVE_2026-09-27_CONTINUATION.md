@@ -1306,3 +1306,19 @@ policy在delegate前检查已知fixture/alias/对象变更与唯一公开期待�
 最终新增31专项，Ruff/预算V3重点50/合成compact preflight六合成ready=true；完整1598passed/4skipped/33warnings82.09秒，XML SHA72c22bd06eac2c4901383ee3137677b6d96c79b7901e08bd2274791701d83330。前1588/117.56秒XML与结果保留，source/namespace/prefix SHA及partial真实tokens绑定data/e1c_evaluation_2_scoped_dev_results.json，所有原201产物和qualified/scoped/trial三个method SHA最终匹配。工程计数非repair、cached shadow非新生成，partial paid不可报完整成绩。无下载/删除/Docker重启/IPC/VHD/registry/代理/tunnel/key修改；raw/probe/Gold/密钥/负记录/备份留本机。
 
 两Roadmap/交接只更新当前入口，日志本续档。下一步先中断后resume-only决定与新冻结prefix/投影/预算身份，再仅未调用步骤（当前题最多2轮/14202tokens、两个MM各≤4call/24000，总新增最多10请求/36294tokens，累计≤50000），不重置run_id额度、不再执行原3请求/probe。现无resume CLI，不造命令、不直接run/gold旧trial；新完整seal才独立评分。之后按真实缺证接production/paired/object/version并单版九准入DEV质量gate，真正过关才新canary≥2/3/Agentpatch official/DEV30/Fresh30/E2。全部sealed TEST/C5/Fresh30/privateTest500继续关闭，不保证一周完美/30题全过；只安全source/专项/协议/脱敏收据同步Git。
+
+## 2026-10-08：获准resume-only完成与评分，发现预算/缺证路由瓶颈
+
+用户明确允许新身份只续未调用步骤、新增≤36294tokens、不重做旧3请求。完整读ARS执行/监控/output与ponytail，inline无subagent/新依赖。新增scoped_resume源/协议、13专项/Ruff首次全过；freeze前增强“cached prefix不完整不得新probe/provider”硬错误守卫，原断言保留重点32passed。原receipt freeze/state/ledger及整个109文件inventory核验，必须3已完成call/13706tokens、1完成row/当前2已完成轮次，无ambiguous/started未结事件。旧source/namespace不改，不读取Gold。
+
+resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMessage回放两原response（0新usage），旧两个probe被cache execute硬拦并返回已存反馈/锁定Oracle/执行，payload/input/Oracle/顺序等原JSON；在第三轮完整conversation验证后synthetic abstain，0模型/容器/旧probe重跑，原prefix不变。新resume method freeze包括投影，parent全部源/protocol/正负scope gate身份绑定，精确run命令与Flash/新增最多10call/36294tokens/累计50000/rertry0会话预列后执行一次。
+
+新ledger原6事件逐字节copy前缀并沿用原run_id记预算，旧3费用不清零；累计task24000/max4calls/output2000/global50000及未开始任务首请求保护原样。首题原已完成candidate/execution/probe逐字节复用并origin=original_completed_prefix不叫新生成；其模型/原probe0重做。后当前第二题新第三请求、两个原未开始MM任务正常推进，原旧trial仍INTERRUPTED。真实新增7calls/29996tokens，加旧3/13706合计10/43702，无未结/重复请求，余额6298。四行终局completed，新generation-seal绑定255产物，原109prefix与全部method最终一致。
+
+实际状态：SK13496复用子义务候选；SK26289第三轮新probe target通过但无故障候选，第四请求task reserve15351+11985>24000，未调用，budget stop；MM1252三新请求12498tokens，第四请求global reserve31757+10154>41520，未调用，budget stop；MM1359三新请求11945tokens、normal三次失败，第四重复动作被no-progress stop阻止，无再付费。不能把stopped叫正确/错误task率、不能声称四题通过。seal完成后精确gold命令0provider一次，唯一旧prefix候选Gold施加后rc0/消除true，attempted1/discriminating1；新增生成合格候选0，machine0/Agent repair0。旧Gold4/4/异常3/4不回填或拼入本轮。
+
+只读归因：MM1252没有已暴露production binding，observer之前verdict.program存unexposed Schema，但scope.action_gate仅读qualification.program_evidence丢source建议，三反馈requests=[]；SK未执行先前Classifier建议，新probe自身List输入正常完成不证明原问题解决。新增dependency_feedback新协议/source/namespace4专项过后shadow audit，复用原gate把program映射为unknown/rejected资格视图，旧rejected/missing保持，三份Schema请求恢复；0模型/容器/Gold读、不改old Scope/score，不声称模型已采用。未接future live，下一新producer必须真正有界取得source并记录SHA；不继续旁路collector/同类smoke。
+
+最终新增resume13/router4共17专项、重点36/Ruff/合成compact preflight ready=true，完整1615passed/4skipped/33warnings79.10秒，XML SHA01b43cd74e9b8331adba5c09c6bddbc304de5dca352a7000379bfbaa41812f2e；前1611/87.85秒XML保留。data/e1c_evaluation_2_scoped_resume_results.json绑定source/prefix/seal/Gold/shadow/账本与真实tokens，旧更早201producer产物也全部匹配。工程计数非repair，1/1Gold是复用已选probe的独立消除，不是新算法成绩/全issue证明。
+
+无下载/删除/系统Docker重启/IPC/VHD/registry/代理/tunnel/key修改，私有raw/probe/Gold/密钥/负记录留本机。两Roadmap/交接更新唯一当前入口，日志本续档。下一步新producer实际路由/有界补证→压缩重复上下文和正确prior-action消息、两预算stop实际reserve零调用验收→整体source/预算freeze再同版DEV；原额度仅剩6298，不自动追加新paid批次、禁止重跑旧resume/run/gold/audit。仍未过质量gate，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证一周或30/30完美。

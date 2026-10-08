@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** Scoped Controller精确header/owner与unknown补证gate已经零调用验收并进入新Flash旧DEV四参考试验。完成3请求/13,706tokens：SK13496仅子义务候选；SK26289需要DecisionTreeClassifier生产依赖，第三请求前因诊断`Gold_used: false`字段被边界拦截；MM两题未开始。原trial保持INTERRUPTED、未重试，无新Gold/整批成绩，machine trusted0。[结果/安全续接方案](research/E1C2_SCOPED_DEV_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_scoped_dev_results.json)。原201产物、三个冻结method和中断state/ledger均保持；旧Gold4/4/异常3/4不改。
+**最新状态：** 用户允许的resume-only已经完成、seal并独立评分，原trial保持INTERRUPTED、109原文件未改。新增7Flash请求/29996tokens，加旧3/13706累计10/43702；无重复/未结请求，原额度余6298。四screen：复用SK13496有限子义务候选Gold消除通过，SK26289/MM1252预算stop，MM1359重复control失败stop；新生成合格候选0、machine trusted0。[完整结果/后续](research/E1C2_SCOPED_RESUME_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_scoped_resume_results.json)。不能将执行完成报四题通过/repair/E1封板，旧分数不拼。
 
-诊断命名冲突已用新零调用投影修复并验证实际Human消息14857字符；仅已知schema中严格False的两键可去除，真实Gold标记仍拒绝。新增31专项/重点50/Ruff/合成preflight通过，最终1598 passed/4 skipped/33warnings（82.09秒），此前XML全保留；不是repair rate。0下载/删除/系统配置更改。
+新增17专项/重点36/Ruff/合成preflight通过，最终1615 passed/4 skipped/33warnings（79.10秒），此前XML全保留；不是repair rate。program缺证漏建议已以新route/shadow三反馈恢复Schema请求，仍unknown/repair false、未接live。0下载/删除/系统配置更改。
 
 ## 1. 已完成与尚未完成
 
@@ -35,14 +35,17 @@
 | 新统一Controller有限接线 | 参数声明/结构policy/既有执行/异常资格/行为分支；两正常正例+一真实合成故障，17专项通过，adapter冻结 | 非真实task成绩；paired/object/version未自动接入，live禁用 |
 | Scoped定义与候选动作gate | 精确header/owner；unknown不terminal；四缓存3grade-only/1补证/0repair，实际正负smoke过 | 缓存不算新生成；所有有限候选不获全issue证明 |
 | 新Flash旧DEV四参考试验 | 3请求/13706tokens；1有限候选，第二题真实补证路径出现 | 第三请求前metadata边界中断，另两题未开始、无新Gold/整批率 |
-| 原失败反馈零调用投影 | 实际Human消息14857chars/原边界过、nested hook过、scope未变 | 旧trial未恢复；新完整producer尚待prefix freeze |
+| 原失败反馈零调用投影 | 实际Human消息14857chars/原边界过、nested hook过、scope未变 | 原trial不恢复；后续resume另立身份 |
+| 授权resume-only完整执行 | 原前两轮只缓存/不执行旧probe；7新calls/29996tokens，四行终局，新seal255产物 | 1候选复用、2budget stop、1重复stop；不是四题正确 |
+| 新独立Gold | 唯一复用prefix候选施加Gold后rc0，1/1消除 | 新生成候选0，不是patch成功或完整issue证书 |
+| program缺证建议分支修复 | 新route/shadow三MM1252反馈，Schema请求恢复；4专项 | 不改旧gate/结果，未验证实际live采用 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-Docker无本轮阻塞，有限scope/unknown gate已接线。直接中断原因是非终局反馈中的诊断命名碰撞，已零调用修复；下一步需resume-only新完整身份绑定prefix、投影和累计预算，不能重跑旧run。研究缺口仍是未暴露production依赖、公开fixture作用域/paired receiver、规范性期待与剩余功能义务；子义务/文档/版本点须分账，MM1252无本轮旧版执行证据。
+Docker/反馈命名冲突不是当前阻塞，续接已经完整封存。新实证瓶颈：两请求reserve不符合预算保护，MM1252的pre-observer program分支丢Schema建议，SK第三轮未落实缺证而target通过，MM1359三次normal失败。下一版实际自动补证/完整上下文预算与正确动作历史；公共fixture作用域、receiver和规范性义务仍未证，不能借旧Gold/版本点提升trusted。
 
 ## 3. 严格验收定义
 
@@ -66,19 +69,21 @@ Docker无本轮阻塞，有限scope/unknown gate已接线。直接中断原因�
 | 已完成（有限范围） | 真实selected-candidate分支 | 新零调用身份引用v1 SHA，normal×2/target×2、真实observer/qualification/子义务 | 仅合成fixture，不算真实task |
 | 已完成（有限范围） | scope动作gate/精确定义/DEV trial freeze | scope15专项/实际正负链、独立预算/源身份 | 未称完整公开意图/repair过关 |
 | 已完成（有限范围） | metadata反馈投影修复 | 10专项/实际原失败Human roundtrip，原边界不改 | 不自动retry旧paid |
-| 1 | 中断后resume-only协议/新身份 | 原3已完成请求/锁定oracle/prefixSHA/投影先冻，零调用检查未调用第三步 | 无现成resume命令，未经决定不付费续接 |
-| 2 | 仅未调用步骤→新seal→独立Gold | 最多再36294tokens/10新请求；当前题≤14202，累计≤50000 | 不重复原3请求/probe，不重置额度、不拼分 |
-| 3 | 真实缺证/剩余义务通用接线与完整质量gate | production/paired/object/version按需、未知显式，另版完整freeze | 无证据不升级全issue，不重复扩collector |
+| 已完成 | resume-only/新seal/独立Gold | 原109文件不变、账本保留旧6事件前缀、255新产物seal | 执行完成不等于质量通过 |
+| 已完成（零调用shadow） | pre-observer program依赖反馈 | Schema建议三反馈恢复、unknown/reject不提升 | 尚未接新live |
+| 1 | 新producer实际有界自动补证 | 接route→production symbol检索→SHA/window→后续Agent，正负例 | 建议显示不代表执行；无人工文件表 |
+| 2 | 预算/context/动作历史零调用收敛 | 两budget-stop实样的reserve压缩验收，必需source/rejected/unknown不丢 | 不扩大预算换绿，不把换输入pass当修复 |
+| 3 | 新完整method/预算freeze与同版DEV | 规范/输入/双source身份/质量分账，一次新生成 | 原额度仅剩6298，禁止重跑旧run/gold，不自动追加paid |
 | 4 | 同版完整九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | 四参考不报全12 |
 | 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
 | 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
 | 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮3calls/13706tokens已计账；所有started namespace（含scoped trial与projection）禁止重跑或改源/预算/账本。原trial的run/gold不应执行，当前无resume/canary命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
+下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮新增7calls/29996tokens，累计10/43702；所有started namespace（含resume/smoke/gold/router）禁止重跑或改源/预算/账本。当前无新live/canary命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 
-[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留预注册。历史report-anchor假设口径Gold4/4/21400tokens保持，不属于本轮。可控近期交付是安全续接四参考、完整seal/独立评分及真实缺证处理；本轮整批中断不能报成功率，也不保证一周/30题全过。未过质量gate不抽新独立任务。
+[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留预注册。历史Gold4/4/21400tokens不属于本轮；本轮续接已完成，但独立Gold只有1复用候选。近期先闭合实际补证和context预算，再同版DEV质量验收；不能保证一周/30题全过，未过不抽新独立任务。
 
 ## 6. WebCodex与本机安全
 

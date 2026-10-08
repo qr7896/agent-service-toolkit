@@ -4,11 +4,11 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 精确定义scope与unknown补证gate已接实际Controller，并单独冻结Flash旧DEV四参考试验。真实完成3请求/13,706tokens：第一题形成有限Boolean子义务候选，第二题补生产依赖时在第三请求前被本地`Gold_used: false`诊断字段命名冲突阻断；另两题未开始。整批INTERRUPTED，无新Gold成绩，机器可信仍0。[真实结果与零调用修复](research/E1C2_SCOPED_DEV_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_scoped_dev_results.json)。新投影仅移除两个已知严格False诊断键，实际Human消息链已零调用核验；边界不放宽，原trial未重试/state和ledger未改。下一步决定resume-only，另冻prefix/投影/预算，仅续未调用步骤；不开canary/TEST/C5/Fresh30/privateTest500/repair/E2。旧Gold4/4/异常3/4/单点旧版实证保留，不拼分。
+**当前：** 授权resume-only已完整运行、封存与独立评分；原3请求/probe未重跑。新增7Flash请求/29,996tokens，累计10/43,702（上限50,000）。四参考终局为1复用子义务候选、2预算stop、1重复control失败stop。唯一复用候选Gold消除通过，但新生成合格候选0、全issue机器可信0，E1-C质量仍未达标。[续接结果与下一步](research/E1C2_SCOPED_RESUME_RESULTS_2026-10-08.md)、[公开收据](../data/e1c_evaluation_2_scoped_resume_results.json)。缺证program分支漏检索建议已零调用修复/shadow三例，未验证live收益。下一版实际自动补证与上下文预算压缩先冻，禁止重跑旧namespace；canary/TEST/C5/Fresh30/privateTest500/repair/E2仍关闭，旧成绩保留不拼分。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1598 passed/4 skipped/33 warnings（82.09秒）；Ruff、预算/V3/新专项重点50项、合成compact preflight通过。此计数不是可信复现或修复率。
+最新工程验证：1615 passed/4 skipped/33 warnings（79.10秒）；Ruff、预算/V3/新专项重点36项、合成compact preflight通过。此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -18,7 +18,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [Scoped DEV真实中断与修复](research/E1C2_SCOPED_DEV_RESULTS_2026-10-08.md)；[此前Controller接线](research/E1C2_QUALIFIED_CONTROLLER_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [Scoped resume完整结果](research/E1C2_SCOPED_RESUME_RESULTS_2026-10-08.md)；[原真实中断记录](research/E1C2_SCOPED_DEV_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

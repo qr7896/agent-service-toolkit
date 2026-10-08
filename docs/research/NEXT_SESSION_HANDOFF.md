@@ -1,24 +1,24 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新Scoped DEV真实中断与修复](E1C2_SCOPED_DEV_RESULTS_2026-10-08.md)。
+日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新resume完整结果](E1C2_SCOPED_RESUME_RESULTS_2026-10-08.md)。
 
 ## 1. 当前状态与禁止重跑
 
-Scoped精确header/owner与unknown补证gate已实际接线，新Flash四参考试验已完成3calls/13706tokens后INTERRUPTED。SK13496为有限子义务候选；SK26289要求DecisionTreeClassifier源，第三请求前诊断Gold_used:false字段被boundary拒；MM两题未开始。原state/ledger/源不改，不执行scoped_dev_trial run/gold（无seal）。实际失败反馈投影已零调用Human roundtrip14857chars通过，边界不放宽。新Gold/整批率=null、machine0，旧Gold4/4/异常3/4不变。不开canary/TEST/Fresh30/repair/E2。
+授权resume-only已complete/seal/gold，原trial仍INTERRUPTED。新增7calls/29996tokens，累计10/43702，旧账本前缀复制保守累计，不重试旧3请求/probe。四screen终局：1复用子义务候选Gold消除过、2预算stop、1重复control失败stop；新生成合格候选0、machine0，不是四题全过/Agent repair。新router shadow三MM1252 feedback恢复Schema源建议，unknown不升级、未接live。禁止run/gold任何已封存namespace；不开canary/TEST/Fresh30/repair/E2。
 
 资格器检查已知fixture结构、alias/对象修改、production源绑定、期待锚、原probe观察、normal/target。17单测与四内存alias反例通过，静态反例不是四个新runtime故障。v1未暴露依赖被误拒留档，v2缺证unknown、已暴露真正SHA变化仍拒；增量赋值/删除等未知。
 
 authority/scope/export仅审计，不改原模型输入。对象observer v1整体unknown且未执行容器，v2以模块全部有界构造器候选记录实际关系，不按with_metaclass猜继承。5条真实记录含2条不对应记录全部保留，DateTime exact与Schema MRO关系出现；runtime关系不证明公开意图，不清除旧严格unknown。两个namespace均完成，不重跑。
 
-[最新公开收据](../../data/e1c_evaluation_2_scoped_dev_results.json)绑定本轮结果与最终XML SHA；此前[Controller收据](../../data/e1c_evaluation_2_qualified_controller_results.json)/[版本续接收据](../../data/e1c_evaluation_2_version_resume_results.json)保留。raw/probe/Gold/test/key留本机。所有started namespace禁止重跑/回填/改源，包含qualified、scoped smoke/freeze/audit/trial和projection。
+[最新公开收据](../../data/e1c_evaluation_2_scoped_resume_results.json)绑定结果与最终XML SHA；[原中断收据](../../data/e1c_evaluation_2_scoped_dev_results.json)和所有更早记录保留。原109文件、新seal255产物、原更早201产物与全部method SHA保持。raw/probe/Gold/test/key留本机；所有started namespace禁止重跑/改源，含resume、resume-zero、gold-discrimination、dependency-feedback-zero。
 
 ## 2. 当前唯一下一步
 
-最终Ruff/预算V3/新专项重点50项/合成compact preflight通过，完整1598 passed/4 skipped/33warnings（82.09秒），先前1588等XML保留。不报repair rate。
+最终Ruff/预算V3/新专项重点36项/合成compact preflight通过，完整1615 passed/4 skipped/33warnings（79.10秒），先前1611等XML保留，不报repair rate。
 
-当前唯一下一步是中断后resume-only决定与新协议/source/完整身份，不是整批重跑。冻结原3已完成请求/1完成row、第二题两份response/锁定oracle/非终局feedback、image/base/source以及原prefix SHA；把投影纳入新method。不要重复旧paid请求或原probe/container，不使用context修改旧run再续。现无现成resume CLI，不编造命令。MM1252仍缺旧版本执行证据。
+当前唯一下一步是新producer接已验dependency route并实际执行有界production-symbol检索，恢复Scope/窗口/SHA，不按taskID人工选文件。只有新source/namespace才可改接线，禁止再run当前scoped_resume或router audit。MM1252缺旧版本执行证据仍保持；三原缺证反馈修复仅shadow，不能声称live效果。
 
-只有新resume方案零调用证明仅执行未调用步骤，才列精确paid命令：最多再36294tokens，累计原50000；当前SK26289最多2轮/14202tokens，两个MM各最多4calls/24000，最多10新请求。不通过改run_id重置预算。复用已完成候选必须原byte/SHA/评分范围对应，不叫新生成；新完整seal后才独立Gold，原trial保持中断。
+同时用两预算停止真实上下文做零调用reserve验收：SK15351+11985>task24000，MM31757+10154>protected41520。先压重复诊断而不丢必需source/unknown/rejected/原期待，再真实prior-action消息，不在previous probe时错说检索完成，不把换input得到pass当bug修复。原50000额度仅余6298，不自动追加或改run_id清零；新实验先列精确命令/Flash/调用数/完整新预算，不能重跑old namespace。
 
 之后按真实缺证处理production依赖/fixture作用域/paired receiver/公开期待与剩余义务，另版完整freeze→完整九准入DEV/native分账。可信gate真达成才历史全排除新canary一次≥2/3、Agent patch/official、DEV30/另授权Fresh30。当前无resume/canary命令，不抽第6批、不开始repair/E2，不保证完美。
 
@@ -26,6 +26,8 @@ authority/scope/export仅审计，不改原模型输入。对象observer v1整�
 
 ```bash
 uv sync --frozen --group dev
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_scoped_resume.py evals/e1c_evaluation_2_dependency_feedback.py tests/test_e1c_evaluation_2_scoped_resume.py tests/test_e1c_evaluation_2_dependency_feedback.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_scoped_resume.py tests/test_e1c_evaluation_2_dependency_feedback.py
 uv run --frozen python -m ruff check evals/e1c_evaluation_2_scoped_controller.py evals/e1c_evaluation_2_scoped_dev_trial.py evals/e1c_evaluation_2_feedback_projection.py tests/test_e1c_evaluation_2_scoped_controller.py tests/test_e1c_evaluation_2_scoped_dev_trial.py tests/test_e1c_evaluation_2_feedback_projection.py
 uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_scoped_controller.py tests/test_e1c_evaluation_2_scoped_dev_trial.py tests/test_e1c_evaluation_2_feedback_projection.py
 uv run --frozen python -m ruff check evals/e1c_evaluation_2_qualified_controller.py tests/test_e1c_evaluation_2_qualified_controller.py
