@@ -4,11 +4,13 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 用户下载的2.19.3公开包已核验并完成零模型对照：同一normal与target各两次在旧版完成，原base normal两0/target两1。实际版本/导入路径/14个生产源SHA/同probe/相同依赖阻断均核验，旧版本报告的执行见证得到支持。[最新版本对照结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_release_witness_results.json)。本轮0calls/0tokens，不安装、不计新生成或修复；先前属性/异常/fixture链证据保持。**完整可信0/Agent修复0，E1-C未完成**：剩公开namespace意图与全部义务覆盖口径；未明确选择前保留严格门槛，不能直接进入canary/TEST/Fresh30/E2。
+**当前：** 用户已选择“标准 baseline、标准＋证据、严格消融”三组新路线。[新预注册](research/E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)已落地：标准组只读固定 base 已有测试，严格组不输入；新增评分测试与 Gold 仍独立隔离。首轮是一个旧 DEV 的三 cell 修复接线验证，复用已封存的自动窗口与条件 witness，**不是从零端到端或正式准确率对照**。零调用输入预检通过，Flash 最多3请求/48,000tokens；付费命令尚未执行，须按仓库规则精确授权。
+
+此前2.19.3公开包对照：旧版同normal/target各两次rc0，原base normal两0/target两1，版本/导入路径/生产源SHA/probe/依赖条件核验，[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**完整可信0/Agent修复0，E1-C仍未完成**。另立 DEV 条件修复协议不把旧 unknown 或 repair_eligible 改为 true；不打开 canary/TEST/Fresh30/E2。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1680 passed/4 skipped/33 warnings（103.79秒）；Ruff、预算/V3重点32、新专项13项、合成compact preflight通过。旧XML保留，此计数不是可信复现或修复率。
+最新工程验证：1708 passed/4 skipped/33 warnings（108.76秒）；28新增专项、Ruff、预算/V3重点与合成compact preflight通过。[零调用准备收据](../data/e1c_evaluation_2_three_arm_preparation.json)绑定新freeze/真实prompt/XML；旧XML保留，此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -18,7 +20,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [公开发行源码版本对照](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)；[此前源码Controller结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [三组新路线与命令](research/E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)；[此前公开发行源码版本对照](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

@@ -1,0 +1,23 @@
+{
+  "schema": "e1c2-three-arm-dev-preparation-v1",
+  "date": "2026-10-08",
+  "run_id": "e1c2-three-arm-cached-witness-dev-v1",
+  "stage": "ZERO_PREFLIGHT_FROZEN_AWAITING_EXACT_LIVE_AUTHORIZATION",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "new_patch_generation_completed": false,
+  "new_official_patch_scoring_completed": false,
+  "fixed_tasks": 1,
+  "fixed_cells": 3,
+  "cohort": "OLD_DEV_PUBLIC_VERSION_REGRESSION_CALIBRATION_NOT_RANDOM_OR_INDEPENDENT",
+  "arms": [
+    {"arm": "standard", "base_test_windows": 6, "conditional_cached_witness": false, "reserve_tokens": 11431, "prompt_sha256": "833ffae96f6071264f719b2655da086e005102f483becfc2e06df3b79a13ee24"},
+    {"arm": "standard_evidence", "base_test_windows": 6, "conditional_cached_witness": true, "reserve_tokens": 12226, "prompt_sha256": "1012b8b153259ea16f3fe8f4d89f22bfed60d9945eea35361fb5529d8d37c6df"},
+    {"arm": "strict_evidence", "base_test_windows": 0, "conditional_cached_witness": true, "reserve_tokens": 9138, "prompt_sha256": "9c08d0e83faa7560e37824cf1309050eb73e21756f6bebb70a093b2625a352f2"}
+  ],
+  "budget": {"model": "deepseek-flash", "thinking": "disabled", "max_calls": 3, "max_provider_tokens": 48000, "cell_provider_tokens": 16000, "max_output_tokens": 3000, "sdk_retries": 0},
+  "boundaries": {"shared_cached_automatic_production_windows": true, "fresh_end_to_end_reproduction_claimed": false, "strict_model_messages_contain_base_tests": false, "shared_preparation_reads_base_tests_for_standard_arms": true, "checkout_or_future_test_content_read": false, "new_scoring_test_or_Gold_content_in_actor": false, "all_generation_sealed_before_independent_grade": true, "old_unknown_and_repair_eligible_changed": false, "independent_accuracy_or_30_task_score_claimed": false},
+  "source_records": {"e1c2-three-arm-cached-witness-dev-v1/freeze.json": "a948c6601af27f269b5d6dc0f296dc16e7d9a37077eddc9cd68226dc05b8edf0"},
+  "engineering": {"new_unit_tests": 28, "focused_before_final_seal_payload_check": 47, "ruff_passed": true, "synthetic_compact_preflight_ready": true, "full_passed": 1708, "full_skipped": 4, "warnings": 33, "seconds": 108.76, "xml_sha256": "b5939d7c7864bf611341b825c04e670de56414cbffef68de38526f443bac2112", "synthetic_generation_and_official_adapter_hooks_tested": true, "real_official_candidate_container_not_yet_executed": true},
+  "preservation": {"parent_generation_seal_and_source_release_receipts_verified": true, "old_frozen_methods_unchanged": true, "new_downloads": 0, "deleted_images_or_records": 0, "Docker_tunnel_proxy_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false}
+}

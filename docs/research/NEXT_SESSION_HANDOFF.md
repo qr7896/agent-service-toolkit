@@ -1,8 +1,33 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新公开发行版本对照结果](E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)。
+日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[三组新协议](E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)。
 
-## 1. 当前状态与禁止重跑
+## 0. 本次更新后的唯一下一步
+
+用户明确选择标准baseline / 标准＋证据 / 严格消融。已实现 `e1c_evaluation_2_base_tests.py` 和 `e1c_evaluation_2_three_arm_dev.py`：只读固定base Git blob已有测试（不读checkout新增/未来提交）；三组生产窗口一致，严格组消息不输入test lane；actor只生产exact edit、纯diff，不写本机源码；三组全部seal后才独立official评分。
+
+真实输入preflight完成：固定一个旧DEV（按公开版本回归引用选择，不人工选文件），三个cell reserve11,431/12,226/9,138；Flash共≤3calls/48k、每cell≤16k、output≤3k、retry0。**还没调用模型或跑新patch评分**。这是缓存窗口/缓存自身probe/公开发行witness辅助的修复接线诊断，不是新E2E或正式三组准确率。旧完整可信/repair_eligible false和成绩保留；不再问路线选择、不为通过而删unknown。
+
+优先零模型检查：
+
+```bash
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_base_tests.py evals/e1c_evaluation_2_three_arm_dev.py tests/test_e1c_evaluation_2_three_arm_dev.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_three_arm_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+```
+
+本机待精确命令授权：
+
+```powershell
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_three_arm_dev run
+```
+
+仓库要求明确授权该命令；generic继续不自动消费。确认后一次生成3cell并自动seal/grade。任何started/ledger不得重复generate，provider失败停止保留；不要擅自换namespace续付费。Cloud没有私有父seal/缓存源/镜像时报INFRA_BLOCKED，不上传Gold/凭证、不开裸Docker/改tunnel白名单；新命令还没有远程端到端验证。
+
+此后同版两来源从issue运行完整自动链，计入定位/probe成本→九准入固定12→完整freeze→新不重叠canary→另授权Fresh30/E2。标准组成功不称“不读断言”；严格组未通过也如实报告。不能保证30/30或一周完美。下方保留上轮历史交接细节，仅第0节是当前执行待办。
+
+最新28专项/全1708passed、4skipped、33warnings（108.76秒），Ruff/合成compact preflight过。真实生成/官方adapter通过合成hook检查，**尚未运行真实候选评分容器**；只读Docker29.4.0健康。新freeze SHA/三个实际prompt SHA/XML SHA见[准备收据](../../data/e1c_evaluation_2_three_arm_preparation.json)。新freeze与其源码/协议不能再原地改；需修改另立新身份，不覆盖历史。
+
+## 1. 上轮状态与禁止重跑（历史说明）
 
 最新public-release-witness-zero-v1已完成0calls/0tokens：用户下载的2.19.3官方包SHA核验，14生产Python仅只读挂载；同normal/target各两次旧版rc0，对比既有base正常两0/目标两1，四次实际version/path/manifest/probe/optional条件均核验。报告旧版执行witness支持，不是canonical Git/新样本/完整意图/修复。此前Controller异常对应true、scope/object保持；machine0/Agentrepair0。所有旧费/成绩分账、started namespace不重跑，canary/TEST/Fresh30/repair/E2关闭。
 
@@ -12,7 +37,7 @@
 
 [最新公开收据](../../data/e1c_evaluation_2_release_witness_results.json)绑定四运行结果/总freeze/result/XML SHA，旧receipt保留。八个原generation seal与父zero结果、新release source/method/protocol保持。raw/probe/wheel/Gold/key本机；release/source-evidence及更早started namespace均不重跑。
 
-## 2. 当前唯一下一步
+## 2. 上轮严格协议背景（已由第0节新协议接续）
 
 最终Ruff/预算V3重点32/新专项13项/合成compact preflight通过，完整1680 passed/4 skipped/33warnings（103.79秒），旧XML保留，不报repair rate。
 
@@ -66,7 +91,7 @@ uv run --frozen python -m pytest -q
 
 ## 4. 付费、安全与回传
 
-未来新实验先列精确命令、Flash、次数与≤100,000 tokens，新未开始namespace，retry0、输入隔离、producer seal后才独立Gold；所有原版及三个protocol namespace都不能“再试”。不使用Pro，不开sealed TEST/C5/Fresh30/SERBench私有Test500，当前没有新canary/repair/E2命令待执行。
+未来新实验先列精确命令、Flash、次数与≤100,000 tokens，新未开始namespace，retry0、输入隔离、producer seal后才独立评分；所有原版及三个protocol namespace都不能“再试”。不使用Pro，不开sealed TEST/C5/Fresh30/SERBench私有Test500。当前只有第0节新DEV repair命令待精确授权，无新canary/E2命令。
 
 本轮无下载删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key更改，备份与负结果全保留。旧IPC授权已消费，任何新修改需明确限定授权；大文件交用户终端直连、不走VPN，当前无下载需求。
 

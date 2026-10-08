@@ -1396,3 +1396,13 @@ resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMess
 Ruff/重点32/compact synthetic ready，全1680passed/4skipped/33warnings103.79秒，XML SHA793b853af976cd18a0c0739a5003842542c6f531bf941b2cea38e5f3b21f0d9e；旧XML及失败测试记录保留，不报repair rate。新release method/protocol/14源manifest、八个旧generation seal与父zero结果保持；receipt绑定freeze/result/四结果/XML。两Roadmap/交接当前入口更新、下载doc状态历史留存，日志本续档；Git只source/test/protocol/脱敏收据，不上传wheel/原probe/raw/Gold/key。没有系统Docker重启/IPC/VHD/registry/代理/tunnel/密钥更改或镜像删除。当前不需要再下载/付费，下一步明确严格完整门槛或另立有限机制预注册协议；不保证30/30或完美。
 
 用户随后再次“继续”，没有明确选择资格口径，故保持原strict。只读进一步核对原始公开problem_statement.md的import行，0显式行，public SHA2561824d5fc10377672959f123d0800bd3175659b40db8c7bd111bb49e44ab97fa2；不是已给import被投影遗漏。该检查不取断言/评分、不改私有产物/重新执行、provider0。对是否继续完整证明或另预注册有限机制协议仍需明确方向，不能将“继续”静默当口径变更授权。
+
+## 2026-10-08：明确采纳三组新路线，旧DEV修复接线零调用冻结
+
+用户明确“按照这个更加适合我的路线”推进，采纳standard / standard_evidence / strict_evidence；不再等待路线选择。遵循ARS冻结与无自动重试、ponytail复用现有exact-edit parser、预算gateway和official parser；inline无subagent/新依赖。标准两组可读取固定base的既有测试，严格组模型输入无该通道；新增评分测试/Gold/未来提交仍隔离。旧strict unknown/full_issue_trusted/repair_eligible及源码/成绩全部保持，另立条件DEV修复协议而非宣称旧门槛通过。
+
+新增base_tests.py从Git ls-tree/cat-file固定base正规blob检索，不读checkout测试，路径/ref/symlink/大小预算拦截；未来commit/工作区篡改/新增评分测试反例过。新增three_arm_dev.py按已验证公开旧版本引用选择唯一旧DEV，使用同一旧自动生产窗口；额外证据是已seal自身probe/源码异常/发行witness，不是全新从issue生成。单任务三cell、一次request/组，共Flash≤3calls/48k、每组16k/output3k、retry0，未来cell全额保护。Actor exact edit须暴露且唯一，Python AST校验，純diff不写本机源码；所有生成input/response/patch/ledger封存后，才独立offline/pull-never候选official评分。合成实际generate/grade hooks检查模型/预算/输入差异/seal/F2P-P2P/退出码/源身份，无真实provider或候选评分容器运行。
+
+初Ruff两处lazy import排序失败冻结前修，首22专项通过；补实际hook与seal-input绑定反例后，全28新增专项过。真实preflight一开始作为只读函数验预算，最终代码/协议完成后执行精确preflight一次新freeze：a948c6601af27f269b5d6dc0f296dc16e7d9a37077eddc9cd68226dc05b8edf0，three cell reserve11431/12226/9138；标准两组各6base-test窗口，strict0。父generation seal/零模型receipt/发行四结果与源码模块核验保持。只读Docker29.4.0响应正常，未启动修复容器/重启或改变配置。
+
+完整1708passed/4skipped/33warnings108.76秒，XML SHA b5939d7c7864bf611341b825c04e670de56414cbffef68de38526f443bac2112，Ruff/重点47/合成compact preflight通过，旧XML保留；工程数不作repair rate。新准备receipt绑定freeze/prompt/XML。当前0新增calls/0tokens，仓库AGENTS仍要求精确新live命令授权，已准备 `uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_three_arm_dev run`，尚未执行，不用generic继续代替exact授权。首轮只是缓存接线诊断，无三组准确率/独立泛化结论；之后才两来源完整自动链→九准入→整体freeze/不重叠canary。未开C5/sealed TEST/Fresh30/E2、无新下载/删除/IPC/VHD/registry/proxy/tunnel/key改变，日志仅本续档、两Roadmap/交接当前入口更新。

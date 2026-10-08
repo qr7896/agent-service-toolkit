@@ -4,9 +4,11 @@
 
 ## 0. 最新结论
 
-**最新状态：** 2.19.3公开发行包已手动下载核验，新零模型版本对照completed：同normal/target各两次旧版rc0；既有base normal两0/target两1。四次实际version/path/manifest/probeSHA/optional条件都过，报告旧版执行witness获支持。[最新结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_release_witness_results.json)。本轮0calls/0tokens、无安装/新生成/Gold；之前源码Controller内层异常对应true、条件scope/运行关系保持。**完整可信0/Agent修复0，E1-C未完成**，公共namespace意图/其他义务仍未自动证明。
+**最新状态：** 用户明确选择三组路线，已新增固定 base 测试读取通道与三 cell 修复/封存/独立评分 runner。[冻结协议与精确命令](research/E1C2_THREE_ARM_DEV_PROTOCOL_2026-10-08.md)。标准两组允许已有测试、严格组不输入；三组都隔离新增评分测试/Gold/未来提交。一个旧 DEV 的真实输入零调用预检通过（预留11,431/12,226/9,138，均≤16k），预算Flash最多3请求/48k；**新付费尚未运行，待精确命令授权**。本轮只是共享缓存自动窗口与条件witness的修复接线，不冒充三组正式准确率或从零端到端。
 
-新增13专项、重点32/Ruff/预算V3/合成preflight通过，最终1680 passed/4 skipped/33warnings（103.79秒），旧XML保留；不是repair rate。14生产Python共153,698bytes只读挂载，不安装、无新镜像/agent下载/系统配置变化。旧Git source缺失已由明确标注的public-release counterfactual补实证，不冒充canonical Git。当前不需再下载；完整门槛默认保留，另立有限协议须明确选择。
+原2.19.3发行对照的旧normal/target各两0、base normal两0/target两1保持，[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[原收据](../data/e1c_evaluation_2_release_witness_results.json)不变。**完整可信0/Agent修复0，E1-C未完成**；另立有界 DEV 修复可行性协议不回填旧 trusted/repair_eligible，不证明公共namespace意图/全部义务。
+
+最新工程1708 passed/4 skipped/33warnings（108.76秒），28新增专项、Ruff与合成compact preflight过，[零调用准备收据](../data/e1c_evaluation_2_three_arm_preparation.json)绑定freeze/prompt/XML。前轮1680及XML保留，均非repair rate。14生产Python的public-release counterfactual不冒充canonical Git。当前不需下载/改Docker设置；三组新范围只适用于新身份，旧strict记录原样保全。
 
 ## 1. 已完成与尚未完成
 
@@ -49,15 +51,16 @@
 | 模块函数检索新版 | 新生产query匹配与next消息过；另一新有限候选Gold1/1 | 同一旧DEV，不合并2/2；alias提示不认证 |
 | 源码Controller零模型 | 属性依赖/2源选择/公开内层异常对应true/条件scope与运行关系到Human | 旧probe非新样本、namespace意图未证；后续版本对照见下行 |
 | 公开2.19.3发行对照 | 同probe/image/optional条件，实际version/path/SHA过，旧normal×2/target×2都0 | 版本执行见证，不是canonical Git/完整意图/Agent修复 |
+| 三组新路线零调用准备 | base Git blob测试读取/未来提交反例/生产exact edit/全组三cell seal后评分；真实输入预算已冻 | 缓存窗口/缓存witness接线，不是新付费成绩；严格组仅模型输入无测试 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-属性依赖、公开内层异常对应、运行关系与报告旧版本执行对照均有实证。剩公开短名省略import的namespace意图、SK default/增量等未覆盖义务；运行/版本对照支持条件机制，不自动清除strict unknown。有限gate故意full_issue_trusted/repair=false：继续完整门槛或经用户明确选择另立可审计有限机制协议，不能静默换口径/改False、多付费称通过。当前没有资源下载瓶颈，不借其他task的witness。
+属性依赖、公开内层异常对应、运行关系与报告旧版本执行对照均有实证。剩公开短名省略import的namespace意图、SK default/增量等未覆盖义务；运行/版本对照不清除strict unknown。用户已明确选择三组新路线，下一步不再等待路线选择：验证条件证据是否帮助实际修复，同时用严格消融测成本。旧有限gate full_issue_trusted/repair=false不动；标准组修复成功也不能叫“不读取断言”成功。当前没有资源下载瓶颈。
 
-## 3. 严格验收定义
+## 3. 严格组验收定义（标准组另列base测试权限）
 
 1. 生成侧只用公开issue允许投影与exact-base生产源，不输入原测试断言/题面可执行答案/Gold/官方评分日志。
 2. 定位规则无task-ID→文件表、无人工挑文件；保留来源、rank、窗口预算与SHA。
@@ -87,25 +90,24 @@
 | 已完成（有限范围） | 环境反馈/接口请求/模块函数检索实链 | matching条件到真实next请求，有限候选及独立Gold，两个来源runtime过 | fixture/异常链/版本资格仍未知 |
 | 已完成（有限范围） | 属性依赖/异常路径/fixture分层Controller零模型 | 公开内层异常对应true，scope/export/object到Human，原unknown不改 | 新zero目录不重跑，不是新生成/完整可信 |
 | 已完成 | 公开release-source counterfactual | 同probe/镜像/optional条件、实际版本/路径/源SHA及normal×2/target×2通过 | 新namespace已运行勿重跑，发行包不冒充canonical Git |
-| 1 | 资格范围明确选择 | 继续完整门槛，或另立有限机制/完整覆盖/官方修复分层预注册 | 不回填旧结果，不因witness直接进入canary |
-| 2 | 真实义务覆盖/新完整method与两个来源小验证 | 明确有限候选与完整可信边界，实际正常/target/observer/资格正负过，再精确预算freeze | 禁止修改false常量冒充trusted，不重跑旧批，不无限消费 |
-| 3 | 同版四参考新DEV | 自动source→normal/target/observer→独立Gold/语义分账 | 0候选或语义不足不扩canary |
-| 4 | 同版完整九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | 四参考不报全12 |
-| 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
-| 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
-| 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
+| 已完成（零调用） | 用户选择三组路线、边界/预算/真实输入freeze | 固定base测试独立通道，三组无Gold/新评分测试输入 | 不改变旧strict结果 |
+| 1 | 首轮旧DEV三cell修复接线 | 精确授权新命令，最多3calls/48k，all-generation seal后official | 失败保存，不自动retry/不best-of |
+| 2 | 从issue开始的两来源DEV完整链 | 同一自动定位/probe/判别/patch方法，三组生产窗口获取一致，全部成本记账 | 缓存首轮不推广成端到端/正式组效应 |
+| 3 | 同版完整九准入DEV/native | 条件机制/完整可信/official resolved分账，固定12，比较成本 | 局部机制/工程数不作修复率 |
+| 4 | 完整方法/预算冻结，新不重叠canary一次 | 全历史排除，严格可信≥2/3及独立修复门槛 | 负结果封存回DEV，不能重称独立 |
+| 5 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved及开TEST授权 | 不保证30/30，不回调Fresh30 |
 
-下一轮paid先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮0/0与旧费用分账；release-witness/source-evidence-zero和所有started namespace不可重跑/改源。当前需资格范围明确，无可重跑live/witness命令，不抽第6批，不开TEST/Fresh30/repair/E2。
+下一轮paid精确命令在新协议：Flash/3calls/48k，retry0不Pro，当前仅preflight完成。仓库要求该精确命令授权；不恢复旧namespace。release-witness/source-evidence-zero及所有started namespace不可重跑/改源。不抽第6批，不开TEST/Fresh30/E2；新DEV修复试验尚未启动。
 
 ## 5. 时间与停止条件
 
-[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留预注册。历史Gold4/4与1复用候选不属于本轮。近期先闭合真实环境/请求解释/fixture资格反馈，再同版DEV质量验收；不能保证一周/30题全过，未过不抽新独立任务。
+[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留为历史预注册；当前执行以三组新协议为准。历史Gold4/4与1复用候选不属于本轮。先做三cell修复接线，再从issue开始两来源完整链与同版DEV质量验收；不能保证一周/30题全过，未过不抽新独立任务。
 
 ## 6. WebCodex与本机安全
 
 云端可接源码、无模型单测和脱敏摘要，使用uv.lock；exact-base源码/镜像/私有.codex/凭证不会随Git同步。缺材料明确INFRA_BLOCKED；[接手说明](research/NEXT_SESSION_HANDOFF.md)给出安全检查命令。旧bridge白名单未扩，不假称新paid入口云端端到端已验证，不开裸Docker daemon。
 
-本轮未下载/删除镜像或重启Docker，未改IPC/VHD/registry/proxy/tunnel/密钥。全部实验负结果和备份保留。sealed TEST/C5/Fresh30/SERBench私有Test500/Agent repair/E2仍关闭。
+本轮未下载/删除镜像或重启Docker，未改IPC/VHD/registry/proxy/tunnel/密钥。全部实验负结果和备份保留。sealed TEST/C5/Fresh30/SERBench私有Test500/E2仍关闭；新旧DEV修复权限只适用于上述另立协议，不回填旧资格。
 
 ## 7. 更新纪律
 
