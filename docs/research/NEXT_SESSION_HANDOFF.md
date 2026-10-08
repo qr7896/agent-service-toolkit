@@ -1,6 +1,6 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-09。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新v2结果](E1C2_BOUNDARY_V2_RESULTS_2026-10-09.md)、[thinking单请求协议](E1C2_FLASH_THINKING_DEV_PROTOCOL_2026-10-08.md)。
+日期：2026-10-09。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[thinking真实截断结果](E1C2_THINKING_RESULTS_2026-10-09.md)、[新输出窗口协议](E1C2_THINKING_COMPLETION_PROTOCOL_2026-10-09.md)。
 
 ## 0. 本次更新后的唯一下一步
 
@@ -10,26 +10,28 @@ v1已按精确授权执行：Flash3请求/15,764tokens；原2外壳拒绝/1同�
 
 v2已精确授权实跑：3calls/20,385，standard patch与前版字节相同，official F2P0/1/P2P37/37；两个证据组无改动，原0/3。无JSON拒绝，却没利用反例修复。v1/v2与所有started zero禁止重跑，不改源/成绩。
 
-下一步同strict prompt的Flash thinking诊断：enabled/high，1call/max30k含推理、生成8k、retry0。actual SDK HTTP参数与reasoning ledger离线验证过；freeze reserve17,148，prompt SHA与原v2strict相同，**paid0、待新精确授权**。预算也变化，不称单因素收益；不存reasoning正文。Legacy准备仍需三payload，但只有strict发送。
+thinking8k已按精确授权执行：1call/13,708，实际enabled/high、8k全部reasoning、length截断/JSON0；没有实际候选评分，效果未测。原raw固定cells3有错误，freeze/实际1；zero独立verified-result标不一致、不改旧文件。不能称三个失败/能力无效，不保存reasoning正文。
+
+新completion窗口freeze成功：same strict prompt/mode/high，max1call/40k含推理、生成24k、HTTP300、retry0、reserve33,148。**paid0待新精确授权**；不是原8k的retry/预算更改。新runner保留legacy raw并保存与freeze/rows一致的verified-result；Cloud缺私有父产物/镜像仍报INFRA_BLOCKED。
 
 优先零模型检查：
 
 ```bash
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_flash_thinking_dev.py tests/test_e1c_evaluation_2_flash_thinking_dev.py
-uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_flash_thinking_dev.py tests/test_e1c_evaluation_2_three_arm_boundary_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_thinking_completion_dev.py tests/test_e1c_evaluation_2_thinking_completion_dev.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_thinking_completion_dev.py tests/test_e1c_evaluation_2_flash_thinking_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 ```
 
 本机待精确命令授权：
 
 ```powershell
-uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_flash_thinking_dev run
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_thinking_completion_dev run
 ```
 
-仓库要求明确授权该命令；generic继续不自动消费。确认后一次生成3cell并自动seal/grade。任何started/ledger不得重复generate，provider失败停止保留；不要擅自换namespace续付费。Cloud没有私有父seal/缓存源/镜像时报INFRA_BLOCKED，不上传Gold/凭证、不开裸Docker/改tunnel白名单；新命令还没有远程端到端验证。
+仓库要求精确授权该新命令；generic继续不消费。确认后仅一次strict cell生成/封存/独立评分，不是3cell。started/ledger不可重复；provider失败保留，不擅自换namespace续费。Cloud缺父seal/缓存源/镜像报INFRA_BLOCKED，不上传Gold/凭证、不扩tunnel白名单/裸Docker；新入口尚未远程验证。
 
 此后同版两来源从issue运行完整自动链，计入定位/probe成本→九准入固定12→完整freeze→新不重叠canary→另授权Fresh30/E2。标准组成功不称“不读断言”；严格组未通过也如实报告。不能保证30/30或一周完美。下方保留上轮历史交接细节，仅第0节是当前执行待办。
 
-最新8专项/全1736passed、4skipped、33warnings（119.91秒），Ruff/合成compact preflight过。[最新收据](../../data/e1c_evaluation_2_boundary_v2_results.json)绑定v2paid/thinking准备/XML，旧收据保留。各frozen方法/协议不能原地改；Cloud缺私有素材报INFRA_BLOCKED，不扩大tunnel白名单或假称新runner已云端端到端可调用，不上传raw/probe/Gold/key。
+最新6专项/重点33/全1742passed、4skipped、33warnings（123.55秒），Ruff/合成compact preflight过。[最新收据](../../data/e1c_evaluation_2_thinking_results.json)绑定thinking paid/计数zero/新窗口/XML，旧收据保留。frozen方法/协议不原地改、不上传raw/probe/Gold/key。若24k仍截断不自动升64k，回DEV检查effort/context与公开自验证→限次修正。
 
 ## 1. 上轮状态与禁止重跑（历史说明）
 

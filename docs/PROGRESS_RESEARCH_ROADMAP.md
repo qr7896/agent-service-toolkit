@@ -4,15 +4,15 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** 已执行精确授权的公开反例DEV v2：Flash3请求/20,385tokens，standard局部补丁F2P0/1/P2P37/37，两个证据组无改动，原resolved0/3。[最新结果](research/E1C2_BOUNDARY_V2_RESULTS_2026-10-09.md)。JSON外壳问题未再出现，但没有真正利用反例修复；其patch与前版逐字节相同，参考旧公开21变体cache11完成/10失败，不冒充新重跑。**仍一个旧DEV校准，无独立泛化/准确率；原成绩不回填。**
+**当前：** Flash thinking单请求已精确授权执行：实际enabled/high、13,708tokens，其中8,000全部推理；生成上限截断、最终JSON为空，**无候选进入评分，修复效果未测**。[最新结果](research/E1C2_THINKING_RESULTS_2026-10-09.md)。原legacy摘要错误fixed_cells3，freeze/账本/实际rows都是1；另立零调用verified-result标不一致，原raw不改。仍同一个旧DEV校准，不作独立准确率，不把截断称软件失败。
 
-[下一步已冻](research/E1C2_FLASH_THINKING_DEV_PROTOCOL_2026-10-08.md)：原runner一直关闭thinking，先用完全相同strict prompt测试Flash thinking/high；最多1request/30k含推理、生成8k，retry0，真实SDK参数/含reasoning ledger已离线核验。**新paid0，待精确命令授权**；mode与预算都变化，不能称单因素因果试验。官方能力不是实际效果保证，未开TEST/Fresh30/E2。
+[下一窗口已冻](research/E1C2_THINKING_COMPLETION_PROTOCOL_2026-10-09.md)：同prompt/mode/high，max1call/40k含推理、生成24k、HTTP300，retry0，reserve33,148；**新paid0待精确命令授权**。原8k身份不重跑/扩额，24k仍失败/截断则回DEV查context与公开自验证闭环，不自动升64k。不保证效果，未开TEST/Fresh30/E2。
 
 此前2.19.3公开包对照：旧版同normal/target各两次rc0，原base normal两0/target两1，版本/导入路径/生产源SHA/probe/依赖条件核验，[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**完整可信0/Agent修复0，E1-C仍未完成**。另立 DEV 条件修复协议不把旧 unknown 或 repair_eligible 改为 true；不打开 canary/TEST/Fresh30/E2。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1736 passed/4 skipped/33 warnings（119.91秒）；8新增专项、Ruff、预算/V3重点与合成compact preflight通过。[最新收据](../data/e1c_evaluation_2_boundary_v2_results.json)绑定v2paid/thinking准备/XML，旧收据/XML保留；工程数不是可信复现或修复率。
+最新工程验证：1742 passed/4 skipped/33 warnings（123.55秒）；6新增专项/Ruff/重点33/合成compact preflight通过。[最新收据](../data/e1c_evaluation_2_thinking_results.json)绑定thinking paid/zero计数/新窗口/XML，旧收据/XML保留；工程数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -22,7 +22,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [公开反例v2真实结果](research/E1C2_BOUNDARY_V2_RESULTS_2026-10-09.md) → [Flash thinking单请求协议](research/E1C2_FLASH_THINKING_DEV_PROTOCOL_2026-10-08.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [Flash thinking实跑/截断](research/E1C2_THINKING_RESULTS_2026-10-09.md) → [完整输出窗口/计数协议](research/E1C2_THINKING_COMPLETION_PROTOCOL_2026-10-09.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

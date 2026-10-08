@@ -1,0 +1,20 @@
+{
+  "schema": "e1c2-thinking-truncation-and-completion-preparation-v1",
+  "date": "2026-10-09",
+  "paid": {"run_id": "e1c2-flash-thinking-strict-dev-v1", "calls": 1, "model": "deepseek-flash", "thinking": "enabled", "reasoning_effort": "high", "input_tokens": 5708, "output_tokens": 8000, "reasoning_tokens_reported": 8000, "total_tokens": 13708, "finish_reason": "length", "response_status": "truncated", "raw_characters": 0, "actual_wire_profile_verified": true, "reasoning_content_present": true, "reasoning_text_saved_or_exposed": false, "official_candidate_containers": 0, "repair_effect_measured": false, "no_automatic_retry": true},
+  "cardinality_audit": {"calls": 0, "freeze_and_actual_cells": 1, "raw_legacy_fixed_cells": 3, "legacy_cardinality_consistent": false, "original_raw_result_modified": false, "independent_verified_result_written": true},
+  "recent_three_calibrations_only": {"calls": 7, "tokens": 49857, "not_entire_project_cost_or_combined_success": true},
+  "next": {"run_id": "e1c2-flash-thinking-completion-dev-v2", "status": "ZERO_PREFLIGHT_FROZEN_AWAITING_EXACT_LIVE_AUTHORIZATION", "calls": 0, "model": "deepseek-flash", "thinking": "enabled", "reasoning_effort": "high", "max_calls": 1, "max_total_provider_tokens_including_reasoning": 40000, "max_generated_tokens_including_reasoning": 24000, "HTTP_seconds": 300, "retries": 0, "reserve": 33148, "same_prompt_mode_effort": true, "prompt_sha256": "23e9624216d52f5de6519c066b90d6c07dd26bc379fb653baf18942c1e46b13f", "output_total_http_budgets_changed": true, "improvement_or_independent_generalization_claimed": false},
+  "source_records": {
+    "e1c2-flash-thinking-strict-dev-v1/generation-seal.json": "5a5512d0d8bc8abd42fa9cba19d8cd6a984880ccb0f56e8c22dcf6a6a734edfd",
+    "e1c2-flash-thinking-strict-dev-v1/provider_calls.jsonl": "f8979702976fdfa48e8553736c941e5ef0175934360f243acfc2ba55d1d21248",
+    "e1c2-flash-thinking-strict-dev-v1/result.json": "9d40977e6a30b1c62e49589ae4cc78c30883b899c43f309b5366b6dcf7175bfb",
+    "e1c2-flash-thinking-strict-dev-v1/strict_evidence/response.json": "efa32fec39e6a552074fe64b3eff7711a33a564bc7107f8933b3de4333b90105",
+    "flash-thinking-cardinality-zero-v1/freeze.json": "a233dad8a4981572a66270330e9d844e1de84eaf69f5325a73f61a7e93999748",
+    "flash-thinking-cardinality-zero-v1/verified-result.json": "eac71e623db772e0b0ca67381d289431297e7e221722c8249f716a54341aab97",
+    "e1c2-flash-thinking-completion-dev-v2/freeze.json": "fbf20d813747f8a364de31a0bde4eec771216fac9e553d8bb91f5781cfdfbb2a"
+  },
+  "engineering": {"new_unit_tests": 6, "focused_tests": 33, "ruff_passed": true, "full_regression": "PASSED", "passed": 1742, "skipped": 4, "warnings": 33, "seconds": 123.55, "xml_sha256": "d420d4b249c5bdd6917a4273d4004f47eacd769b9eb3ee1f1186673acfcbb1fc"},
+  "preservation": {"old_result_or_method_rewritten": false, "downloads_or_deletions": 0, "Docker_tunnel_proxy_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false},
+  "E1C_evaluation_2_completed": false
+}

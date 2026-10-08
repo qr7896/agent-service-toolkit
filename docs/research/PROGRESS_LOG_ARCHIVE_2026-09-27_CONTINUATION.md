@@ -1434,3 +1434,13 @@ Ruff/重点32/compact synthetic ready，全1680passed/4skipped/33warnings103.79�
 Ruff/重点33在最后兼容反例前过，最终8专项过；全1736passed/4skipped/33warnings119.91秒，XML SHA b6c63f0b2a4750ef1683acca9713293f6b62e06dcde927ef355455a7340d413a，合成compact preflight ready。XML名称沿8日晚批次，检查实际跨日至9日，用户环境日期更新09；旧XML/源码/协议/所有负记录保留，工程数不作repair rate。
 
 新结果报告/收据绑定v2 seal/ledger/result/patch/thinking freeze/XML，两Roadmap/交接更新09最新入口，日志本续档。无下载/删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key变更，不开canary/C5/sealedTEST/Fresh30/Test500/E2，不上传raw/Gold/key。新thinking未实际provider/远程tunnel验证，不保证效果/30题全过；若仍局部/noop，下一步公开自产自验证→限次修正真实闭环，不继续堆相同模板context或评分答案补规则。
+
+## 2026-10-09：Flash thinking真实生效但8k全部推理，计数zero与24k窗口准备
+
+用户精确授权flash_thinking_dev run后执行，保持ARS无auto retry/ponytail复用，inline无subagent/依赖。Flash1call，input5708/output8000/total13708，reasoning_reported8000/present true，actual wire enabled/high/no-tools/8k验证；finish_reason length、最终raw0，不完整输出拒绝，无实际候选评分容器。效果未测，不说软件失败或无能力，不从残片人工写patch，不保存/公开reasoning正文；原账本已completed无超额/未知收费，generation seal5a5512d0d8bc8abd42fa9cba19d8cd6a984880ccb0f56e8c22dcf6a6a734edfd保持。近期三次校准共7calls/49857，不算项目全部费用或拼最佳成绩。
+
+发现legacy parent.grade固定fixed_cells3，但原freeze/rows/ledger1；未改原结果或其源码。新增completion_dev纯计数validator，以freeze/唯一顺序/task核验行，wrong/missing/duplicate拒绝；audit-previous零费冻结原freeze/seal/raw/账本与自身源/协议，独立verified-result1并标raw3不一致，zero源冻结a233dad8a4981572a66270330e9d844e1de84eaf69f5325a73f61a7e93999748，原文件不回填。
+
+新未开始身份flash-thinking-completion-dev-v2只扩完整输出窗口：same strict prompt/mode/high、max1call/40k含reasoning、生成24k、HTTP300、retry0。新SDK create明确timeout300，MockHTTP校验真实mode/24k/timeout/推理计费；仅存metadata不存正文。新runner raw grade保留，同时输出freeze/rows验证过计数。若24k仍截断/局部，停止自动扩额回DEV查effort/context、自产自验证→限次修改，不自动升64k或重跑8k。预检成功freeze fbf20d813747f8a364de31a0bde4eec771216fac9e553d8bb91f5781cfdfbb2a、reserve33148≤40k，新paid0待精确新命令授权。
+
+6新专项/重点33/Ruff/合成compact preflight过；完整1742passed/4skipped/33warnings123.55秒，XML SHA d420d4b249c5bdd6917a4273d4004f47eacd769b9eb3ee1f1186673acfcbb1fc。旧XML、旧条件unknown/所有实验结果和方法保留，工程数不作repair rate。最新结果/收据、两Roadmap/交接更新本阶段，日志仅此续档；无镜像下载/删除/重启Docker或IPC/VHD/registry/proxy/tunnel/key变更，未启用canary/C5/TEST/Fresh30/Test500/E2。新窗口尚未provider/远程tunnel验证，研究未完，不保证30/30或完美。
