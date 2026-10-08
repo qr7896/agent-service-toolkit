@@ -1,31 +1,33 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新Controller接线结果](E1C2_QUALIFIED_CONTROLLER_RESULTS_2026-10-08.md)。
+日期：2026-10-08。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新Scoped DEV真实中断与修复](E1C2_SCOPED_DEV_RESULTS_2026-10-08.md)。
 
 ## 1. 当前状态与禁止重跑
 
-Controller有限接线已完成，两类真实正常正例与一个真实合成失败分支确认inner hook/反馈/observer/qualification/子义务；source/protocol/adapter/预算已冻结，CLI仅smoke/freeze。完整producer未就绪，不得调用底层run绕过禁用。本轮provider/tokens0/0、E1-C Gold0，machine trusted0、旧Gold4/4/异常3/4不变。不开canary/TEST/Fresh30/repair/E2。
+Scoped精确header/owner与unknown补证gate已实际接线，新Flash四参考试验已完成3calls/13706tokens后INTERRUPTED。SK13496为有限子义务候选；SK26289要求DecisionTreeClassifier源，第三请求前诊断Gold_used:false字段被boundary拒；MM两题未开始。原state/ledger/源不改，不执行scoped_dev_trial run/gold（无seal）。实际失败反馈投影已零调用Human roundtrip14857chars通过，边界不放宽。新Gold/整批率=null、machine0，旧Gold4/4/异常3/4不变。不开canary/TEST/Fresh30/repair/E2。
 
 资格器检查已知fixture结构、alias/对象修改、production源绑定、期待锚、原probe观察、normal/target。17单测与四内存alias反例通过，静态反例不是四个新runtime故障。v1未暴露依赖被误拒留档，v2缺证unknown、已暴露真正SHA变化仍拒；增量赋值/删除等未知。
 
 authority/scope/export仅审计，不改原模型输入。对象observer v1整体unknown且未执行容器，v2以模块全部有界构造器候选记录实际关系，不按with_metaclass猜继承。5条真实记录含2条不对应记录全部保留，DateTime exact与Schema MRO关系出现；runtime关系不证明公开意图，不清除旧严格unknown。两个namespace均完成，不重跑。
 
-[最新公开收据](../../data/e1c_evaluation_2_qualified_controller_results.json)绑定本轮结果与最终XML SHA；此前[版本续接收据](../../data/e1c_evaluation_2_version_resume_results.json)保留。raw/probe/Gold/test/key留本机。所有已started audit/run/smoke/Gold禁止重跑、回填或修改旧source，包含两个qualified-controller namespace。
+[最新公开收据](../../data/e1c_evaluation_2_scoped_dev_results.json)绑定本轮结果与最终XML SHA；此前[Controller收据](../../data/e1c_evaluation_2_qualified_controller_results.json)/[版本续接收据](../../data/e1c_evaluation_2_version_resume_results.json)保留。raw/probe/Gold/test/key留本机。所有started namespace禁止重跑/回填/改源，包含qualified、scoped smoke/freeze/audit/trial和projection。
 
 ## 2. 当前唯一下一步
 
-最终Ruff/预算V3/Controller重点36项/合成compact preflight通过，完整1567 passed/4 skipped/33warnings（102.02秒），XML SHA在收据；前1561保留。不报repair rate。
+最终Ruff/预算V3/新专项重点50项/合成compact preflight通过，完整1598 passed/4 skipped/33warnings（82.09秒），先前1588等XML保留。不报repair rate。
 
-旧版本resume和Controller正/负真实smoke及freeze都已完成，均禁止重跑（含qualified-controller-failure-smoke-v1）。不要重复扩同类示例/collector或再改v1；当前唯一下一步是scope/剩余义务/unknown动作gate，按需接既有paired/object/version证据或保持不可用，完整producer/预算先冻才旧DEV新生成。MM1252缺公开旧版执行证据，不移植MM1359结果。
+当前唯一下一步是中断后resume-only决定与新协议/source/完整身份，不是整批重跑。冻结原3已完成请求/1完成row、第二题两份response/锁定oracle/非终局feedback、image/base/source以及原prefix SHA；把投影纳入新method。不要重复旧paid请求或原probe/container，不使用context修改旧run再续。现无现成resume CLI，不编造命令。MM1252仍缺旧版本执行证据。
 
-具体先收紧参数声明scope：v1缺owner的window只按函数名匹配文件内定义，不能当唯一API绑定。新producer用原窗口行号+AST所属类证明唯一范围，再规划剩余义务和缺证动作；不改冻结v1、不让unknown进入repair。
+只有新resume方案零调用证明仅执行未调用步骤，才列精确paid命令：最多再36294tokens，累计原50000；当前SK26289最多2轮/14202tokens，两个MM各最多4calls/24000，最多10新请求。不通过改run_id重置预算。复用已完成候选必须原byte/SHA/评分范围对应，不叫新生成；新完整seal后才独立Gold，原trial保持中断。
 
-跨repo正负例通过后完整method含资格/observer/双source身份先冻，再同版四参考/九准入DEV/native，Gold/受限候选/语义/原机制分账。可信gate真正达成才历史全排除新canary一次≥2/3、Agent patch/official、小DEV30及最后另授权Fresh30。当前无新paid/canary命令，不抽第6批、不开始repair/E2，不保证完美。
+之后按真实缺证处理production依赖/fixture作用域/paired receiver/公开期待与剩余义务，另版完整freeze→完整九准入DEV/native分账。可信gate真达成才历史全排除新canary一次≥2/3、Agent patch/official、DEV30/另授权Fresh30。当前无resume/canary命令，不抽第6批、不开始repair/E2，不保证完美。
 
 ## 3. Cloud可先执行的无模型检查
 
 ```bash
 uv sync --frozen --group dev
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_scoped_controller.py evals/e1c_evaluation_2_scoped_dev_trial.py evals/e1c_evaluation_2_feedback_projection.py tests/test_e1c_evaluation_2_scoped_controller.py tests/test_e1c_evaluation_2_scoped_dev_trial.py tests/test_e1c_evaluation_2_feedback_projection.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_scoped_controller.py tests/test_e1c_evaluation_2_scoped_dev_trial.py tests/test_e1c_evaluation_2_feedback_projection.py
 uv run --frozen python -m ruff check evals/e1c_evaluation_2_qualified_controller.py tests/test_e1c_evaluation_2_qualified_controller.py
 uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_qualified_controller.py
 uv run --frozen python -m ruff check evals/e1c_evaluation_2_controller_failure_smoke.py tests/test_e1c_evaluation_2_controller_failure_smoke.py

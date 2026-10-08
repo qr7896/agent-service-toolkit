@@ -1290,3 +1290,19 @@ policy在delegate前检查已知fixture/alias/对象变更与唯一公开期待�
 最终收尾验证：1567passed/4skipped/33warnings102.02秒，XML SHA7fcb322061bb842d6b0513333712ce042e619d90c3ae5341754e5a71159f06e6。先前1561/118.45秒XML保留，收据另加final_regression。全部新method、failure driver/protocol、原201producer文件SHA再次匹配；源/协议冻结后未改。两Roadmap/交接唯一当前入口一致，source/专项/协议/结果/脱敏收据安全同步，私有raw/probe/Gold/key/历史负记录不动。
 
 代码范围限制补记：参数声明读取v1在window缺owner时按函数名匹配已核验文件内定义，可能多同名，不是唯一targetAPI绑定。已在收据/结果/交接声明；冻结v1不改，下一producer按窗口行号与AST所属类证明唯一范围，再scope/缺证动作gate，unknown不进入repair。
+
+## 2026-10-08：Scoped定义与补证gate，三次真实Flash后边界中断，零调用投影修复
+
+完整读ARS执行/监控/output与ponytail，inline无subagent/依赖新建。新scope模块复用frozen qualified v1，精确start_line+直接AST owner唯一函数定义，缺/错/Boolean行号/错owner无声明保持unknown；class/guard/nested helper不作函数参数证书，host SHA/LF/base Git仍核验，不宣称targetAPI意图获证。scope action gate接内层Controller，q/behavior拒绝或unknown不terminal select，raw/lockedOracle保持；至多两production缺证symbol请求或abstain。已支持子义务/conditional hypothesis仅independent DEV grade，repair/canary/fullissue false。
+
+15专项首次全过，Ruff1 UP012仅synthetic bytes literal机械修正在任何freeze前，不改断言。重点51/Ruff通过后新两真实正常正例smoke/freeze一次、failure smoke一次normal×2=0/target×2=1/observer1及scope grade-only过；shadow四缓存按已发布q-v3/behavior SHA核对后3grade-only/1补证/0repair，旧分类/Gold/原probe不改，不是新模型样本。四新namespace started不重跑。scope source/protocol先冻，budget继承四参考50000/task24000/max16/retry0，adapter live仍禁用。
+
+新增单独scoped_dev_trial identity与预注册协议，parent全method SHA/positive freeze-result/negative Controller-freeze-driver/protocol/实际scope gate绑定；6专项+旧scope15共21/Ruff通过，freeze精确命令0call成功。真实paid命令会话预列model deepseek-flash/最多16calls/50000tokens（既有≤100k免二次确认授权），首请求保护37737；只OLD DEV screen4，非canary、repair false。旧adapter禁用不改；新producer目的scope calibration，inner hook/preflight/budget恢复单测证实。
+
+实际run一次完成3calls/13706tokens，ledger3started+3completed：SK13496一次3908tokens，normal两0/target两1/observer/qualification/typeerror同keyword，有限Boolean子义务候选，default/增量/完整issue不证明、未Gold；SK26289两次9798tokens，原controller新gate缺DecisionTreeClassifier未暴露生产依赖，返ACQUIRE_EVIDENCE_OR_ABSTAIN使候选不terminal，下一第三provider调用之前messages拒绝。报BlindBoundaryViolation因qualification/behavior本地Gold_used:false字段名中marker；不是实际Gold泄漏、Docker/网络/API余额错误。HTTP proxy/socket选项warning只是提示，3请求均completed；无APIretry。MM两题未开始。state interrupted_no_auto_retry仅1完成row，无generation seal/new Gold/整批率，不能报1/4或0/4 repaired。旧Gold4/4/异常3/4等保持，machine0。停止paid、不重试旧run或换身份暗补。
+
+新feedback_projection零调用修复，不改frozen scope/trial/boundary源。只已知q-v2/behavior-v1严格False诊断flag可从复制的agent反馈去掉；true/null/0/字符串/未知schema/其他位置marker拒绝，实际评分字串继续原边界拒，不全字符串清洗。10专项过后预列精确零调用audit一次；先freeze旧state/ledger/唯一nonterminal feedback SHA，实际production routes与所有messages层roundtrip，最终Human JSON14857字符过原audit，nested新hook存在，unknown/scope/补证条件保持。只证明安全反馈回路，不是原trial已恢复；新provider/containers/Gold0。旧中断state/ledger原样，raw诊断keys留私有源。
+
+最终新增31专项，Ruff/预算V3重点50/合成compact preflight六合成ready=true；完整1598passed/4skipped/33warnings82.09秒，XML SHA72c22bd06eac2c4901383ee3137677b6d96c79b7901e08bd2274791701d83330。前1588/117.56秒XML与结果保留，source/namespace/prefix SHA及partial真实tokens绑定data/e1c_evaluation_2_scoped_dev_results.json，所有原201产物和qualified/scoped/trial三个method SHA最终匹配。工程计数非repair、cached shadow非新生成，partial paid不可报完整成绩。无下载/删除/Docker重启/IPC/VHD/registry/代理/tunnel/key修改；raw/probe/Gold/密钥/负记录/备份留本机。
+
+两Roadmap/交接只更新当前入口，日志本续档。下一步先中断后resume-only决定与新冻结prefix/投影/预算身份，再仅未调用步骤（当前题最多2轮/14202tokens、两个MM各≤4call/24000，总新增最多10请求/36294tokens，累计≤50000），不重置run_id额度、不再执行原3请求/probe。现无resume CLI，不造命令、不直接run/gold旧trial；新完整seal才独立评分。之后按真实缺证接production/paired/object/version并单版九准入DEV质量gate，真正过关才新canary≥2/3/Agentpatch official/DEV30/Fresh30/E2。全部sealed TEST/C5/Fresh30/privateTest500继续关闭，不保证一周完美/30题全过；只安全source/专项/协议/脱敏收据同步Git。
