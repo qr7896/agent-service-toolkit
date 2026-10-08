@@ -1,0 +1,41 @@
+{
+  "schema": "e1c2-acquisition-context-results-v1",
+  "date": "2026-10-08",
+  "provider_calls": 16,
+  "provider_tokens": 53212,
+  "model": "deepseek-flash",
+  "state": "completed_and_sealed",
+  "fixed_DEV_denominator": 12,
+  "admitted_denominator": 9,
+  "screen_denominator": 4,
+  "qualified_candidates": 0,
+  "machine_trusted": 0,
+  "Agent_repairs": 0,
+  "independent_Gold": {"attempted": 0, "discriminating": 0},
+  "budget": {"input_soft_estimated_tokens": 12000, "input_hard_estimated_tokens": 24000, "output_tokens": 2000, "task_soft_target": 32000, "task_hard_tokens": 48000, "batch_hard_tokens": 80000, "context_chars_cap": 96000, "max_calls": 16, "max_retries": 0, "actual_input_token_range": [2527, 4610], "budget_stops": 0},
+  "rows": [
+    {"task": "scikit-learn__scikit-learn-13496", "status": "turn_limit", "cause": "unsupported exact type=json_object action=dict envelope"},
+    {"task": "scikit-learn__scikit-learn-26289", "status": "abstained", "cause": "code-field description echoed instead of Python"},
+    {"task": "marshmallow-code__marshmallow-1252", "status": "abstained", "cause": "code-field description echoed instead of Python"},
+    {"task": "marshmallow-code__marshmallow-1359", "status": "abstained", "cause": "code-field description echoed instead of Python"}
+  ],
+  "zero_actual_acquisition": {"production_symbols": ["DecisionTreeClassifier", "Schema"], "next_message_exposes_source": true, "initial_inputs_mutated": false, "probe_delegate_cached_not_reexecuted": true, "new_containers": 0, "new_model_behavior_verified": false},
+  "reserve_comparison": [{"old": 11985, "new_with_acquisition": 11100, "estimated_input_tokens": 6500}, {"old": 10154, "new_with_acquisition": 8471, "estimated_input_tokens": 4622}],
+  "protocol_fix_zero_only": {"code_field_example_values_removed": true, "exact_wrapper_supported": true, "syntax_checked_before_Controller": true, "syntax_bad_probes_not_repaired": true, "recorded_responses_audited": 16, "wrappers_normalized": 4, "valid_nonprobe_actions_after_wrapper": 8, "syntax_rejected_probes": 8, "real_new_model_generation_after_fix": false},
+  "source_records": {
+    "acquisition-context-zero-v1/freeze.json": "e362a16ade00796799b495857e0b63585ac9891fc848a11c221acd628a6c6df0",
+    "acquisition-context-zero-resume-v1/provenance-freeze.json": "1ee9c02583658bafdf318c9cd667223def3e49db709077234193b1249b7ef0c1",
+    "acquisition-context-zero-resume-v1/result.json": "1f03052eb73f90d0afa06cb0cd2aec092fab1d42143c57027c76f46a2520ef5d",
+    "acquisition-context-flash-dev-v1/freeze.json": "d1640f3171f6e91cdb8899c5d8eb42c553beff3fd6eca9576a1e465b954b6861",
+    "acquisition-context-flash-dev-v1/state.json": "82cd82872d662a742fa8b135c7eeff3f0f3806665aa1f886c8e8fcf9a0445db0",
+    "acquisition-context-flash-dev-v1/provider_calls.jsonl": "8d162824256e55373e90cf283a169205c2b447ab918840cf79afff034e4f9460",
+    "acquisition-context-flash-dev-v1/generation-seal.json": "16c3d9304e42daeae052a274a03c0ff55328c282b17b7e3c02e440b6c0b39de9",
+    "action-protocol-zero-v1/freeze.json": "bb71c62504c87f51842647f44c5fc07e4ca159661fba786ff726f049d64ecc64",
+    "action-protocol-zero-v1/result.json": "3628592290372b5ee17694991bf07f681714038b1122645712d8d1c9df72fe10"
+  },
+  "preservation": {"new_sealed_generation_files": 54, "old_namespaces_or_sources_changed": false, "new_mirror_or_task_downloads": 0, "Docker_tunnel_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false},
+  "initial_regression": {"passed": 1629, "skipped": 4, "warnings": 33, "seconds": 107.46, "xml_sha256": "30ffdb8a07adcbd7dd73858f3a9541dd001150f433ad203f06821e3db4a0141f"},
+  "final_regression": {"passed": 1636, "skipped": 4, "warnings": 33, "seconds": 81.43, "xml_sha256": "8e54244136b2422b3b505df0e9e2d2f0b5b989e932a83dc17233c72233a9fcdc"},
+  "focused": {"acquisition_tests": 9, "cached_view_tests": 2, "budget_wiring_tests": 3, "protocol_tests": 7, "budget_V3_focus": 40, "ruff_passed": true, "synthetic_compact_preflight_ready": true},
+  "sources": ["https://api-docs.deepseek.com/quick_start/pricing/", "https://swe-agent.com/latest/reference/model_config/", "https://raw.githubusercontent.com/SWE-agent/mini-swe-agent/main/src/minisweagent/config/mini.yaml"]
+}

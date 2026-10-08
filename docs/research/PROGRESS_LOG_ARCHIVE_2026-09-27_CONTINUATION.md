@@ -1322,3 +1322,19 @@ resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMess
 最终新增resume13/router4共17专项、重点36/Ruff/合成compact preflight ready=true，完整1615passed/4skipped/33warnings79.10秒，XML SHA01b43cd74e9b8331adba5c09c6bddbc304de5dca352a7000379bfbaa41812f2e；前1611/87.85秒XML保留。data/e1c_evaluation_2_scoped_resume_results.json绑定source/prefix/seal/Gold/shadow/账本与真实tokens，旧更早201producer产物也全部匹配。工程计数非repair，1/1Gold是复用已选probe的独立消除，不是新算法成绩/全issue证明。
 
 无下载/删除/系统Docker重启/IPC/VHD/registry/代理/tunnel/key修改，私有raw/probe/Gold/密钥/负记录留本机。两Roadmap/交接更新唯一当前入口，日志本续档。下一步新producer实际路由/有界补证→压缩重复上下文和正确prior-action消息、两预算stop实际reserve零调用验收→整体source/预算freeze再同版DEV；原额度仅剩6298，不自动追加新paid批次、禁止重跑旧resume/run/gold/audit。仍未过质量gate，不开canary/TEST/C5/Fresh30/privateTest500/repair/E2，不保证一周或30/30完美。
+
+## 2026-10-08：自动source取得、官方context依据与80k新批，JSON模板负结果
+
+用户追加要求必要时增上下文、搜索一般配置并合理修改预算。完整读ARS执行/监控/output与ponytail，不新增subagent/依赖。查DeepSeek官方models/pricing（裸URL抓取timeout，官方索引带query页面可读）、SWE-agent model config与mini默认yaml；仅primary官方资料作为依据。Flash 1M是技术context上限不是项目建议消费，Agent分input/output/per-instance/global/calls，未给通用最优token。按自有真实reserve设计input软12k/estimated hard24k/output2k/tasksoft32k-hard48k/batchhard80k/max16/retry0/未开始任务首请求保护，不用Pro。原预算不回填，记录多因素变更不单因果。
+
+新acquisition_context从program/q未暴露import binding经static resolve_symbol取得对应production class/func，路径一致/symlink/1MB/host LF==base Git校验，max2symbols/issue+base，独立overlay给next messages/execute，初始input不mutate、补源不重算当前资格。public payload spans/facts/源/锚/声明保留，旧30k/36k字符层改新estimated token检查+96k字符安全cap，system策略合并、动作/反馈只一次、prior kind准确。首次Ruff unused import和nested conversation test1failed/7passed留档，修复真实report owner，不弱化断言；另补resume内层projection覆盖防线，9专项全过。
+
+原acquisition_context_zero_v1先freeze后在缓存turn2读compiler.json缺失停止，自动acquisition未执行，0模型/容器，原源和身份保全。新check_resume协议/源/namespace，2专项后仅原seal255文件（不含Gold）复制view，缓存compiler/contract/execution只按原109prefix SHA补齐；验证路径不逃scope/原seal身份，driver/protocol/旧fail冻结。精确零调用续接检查一次成功：真实取得DecisionTreeClassifier/Schema两源并next Human暴露，cached delegate不重执行probe。新context带新源reserve11985→11100(estimatedinput6500)、10154→8471(input4622)，仍unknown，无Gold读/新容器。边界实际接线不是模型成果。
+
+新acquisition_dev完整源/协议/预算freeze，3预算/hook专项+整体重点33/Ruff后，按既有≤100k单实验免二次确认且用户最新合理增context授权，预列精确paid run/modelFlash/max16/batch80k/task48k/retry0执行一次。真实16completed请求/53212tokens，input2527–4610，无budgetstop/unresolved/APIretry；四任务终局1turn_limit/3abstained，0candidate/machine0/Agentrepair0，54产物seal；精确独立Gold0provider命令完成attempted0/discriminating0（没有候选，不启动Gold容器）。旧1复用Gold候选/更早4/4都不拼分。本batch自动source机制未被有效probe触发，不能宣称live取得收益。
+
+响应只读归因：三题6probe复制system example英文setup说明为Python，syntax拒；另一题4回复closed {type:json_object,action:dict}未支持，其中2probe也复制说明。不是再次context耗尽；提升预算不等于效果改好。原paid/source/policy不改、不重跑。新action_protocol去probe代码示例值仅字段规则，精确known外层wrapper可拆其inner原值，其余不猜；原decoder只做schema造成1failed/6passed，实际加ast.parse前置不改断言，7过。新zeroProtocol source/proto/seal先冻，对16responses仅syntax包装诊断：4wrapper恢复、8有效nonprobe、8坏probe依旧SyntaxError，不补写代码不伪造成功，0新模型/容器/Gold。尚未集成future producer/实测新模型。
+
+最终21新专项、重点40/Ruff/合成compact preflight ready，完整1636passed/4skipped/33warnings81.43秒/XML SHA8e54244136b2422b3b505df0e9e2d2f0b5b989e932a83dc17233c72233a9fcdc；前1629/107.46 XML保留。data/e1c_evaluation_2_acquisition_results.json绑定zero/80k state-ledger-seal/协议zero/真实token/预算与official links，原201/109/255与全部method保持。无下载/删除/系统Docker/IPC/VHD/registry/代理/tunnel/key改变，raw/probe/Gold/key/备份留本机，TEST/C5/Fresh30/canary/privateTest500关闭。
+
+两Roadmap/交接唯一入口更新；日志本续档。下一步无示例policy+codec整体接新producer，最终messages/实际decoder同轮JSON smoke、坏代码仍拒，完整method/80k预算freeze再新DEV；不能只扩预算或旁路collector/在旧批重试。没过质量gate不九准入扩批/新canary/repair/E2，不保证一周/30题全过。公开safe源码/单测/协议/脱敏收据，旧负结果全保留。

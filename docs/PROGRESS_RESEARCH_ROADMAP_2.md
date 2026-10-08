@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** 用户允许的resume-only已经完成、seal并独立评分，原trial保持INTERRUPTED、109原文件未改。新增7Flash请求/29996tokens，加旧3/13706累计10/43702；无重复/未结请求，原额度余6298。四screen：复用SK13496有限子义务候选Gold消除通过，SK26289/MM1252预算stop，MM1359重复control失败stop；新生成合格候选0、machine trusted0。[完整结果/后续](research/E1C2_SCOPED_RESUME_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_scoped_resume_results.json)。不能将执行完成报四题通过/repair/E1封板，旧分数不拼。
+**最新状态：** 已查官方DeepSeek/SWE-agent/mini配置，并实测完整自动import定义取得/next messages。新版输入soft12k/hard24k、output2k、task soft32k/hard48k、batch80k先冻；16Flash请求/53212tokens整批完成、未budget stop，0候选/0Gold attempted/machine0，四终局1turn_limit/3abstained。[结果/来源与下一步](research/E1C2_ACQUISITION_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_acquisition_results.json)。真实失败是代码字段模板说明被照抄/外层包装不支持，不能说增预算已提升质量。新policy/codec/syntax门槛仅零调用修复，未再paid；旧结果不拼。
 
-新增17专项/重点36/Ruff/合成preflight通过，最终1615 passed/4 skipped/33warnings（79.10秒），此前XML全保留；不是repair rate。program缺证漏建议已以新route/shadow三反馈恢复Schema请求，仍unknown/repair false、未接live。0下载/删除/系统配置更改。
+新增21专项/重点40/Ruff/合成preflight通过，最终1636 passed/4 skipped/33warnings（81.43秒），此前XML全保留；不是repair rate。自动补证Controller与Human exposure实际读两生产定义，probe delegate只缓存、未知不提升；本paid probe语法无效，所以未触发live自动补证收益。0下载/删除/系统配置更改。
 
 ## 1. 已完成与尚未完成
 
@@ -39,13 +39,16 @@
 | 授权resume-only完整执行 | 原前两轮只缓存/不执行旧probe；7新calls/29996tokens，四行终局，新seal255产物 | 1候选复用、2budget stop、1重复stop；不是四题正确 |
 | 新独立Gold | 唯一复用prefix候选施加Gold后rc0，1/1消除 | 新生成候选0，不是patch成功或完整issue证书 |
 | program缺证建议分支修复 | 新route/shadow三MM1252反馈，Schema请求恢复；4专项 | 不改旧gate/结果，未验证实际live采用 |
+| 自动production补证+context | 实际取得Classifier/Schema，host/LF/base/SHA，next messages可见；reserve11985→11100/10154→8471 | cached delegate非新probe；获取source不认证语义 |
+| 合理分层预算新DEV | input12k/24k、task32k/48k、batch80k；16calls/53212，无budget stop | 0候选；模型不能仅靠预算自动变正确 |
+| JSON协议零修复 | 去代码说明示例值、closed wrapper、AST前置；7专项及16回应shadow过 | 8坏probe仍SyntaxError，不伪造成功；尚未新模型验证 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-Docker/反馈命名冲突不是当前阻塞，续接已经完整封存。新实证瓶颈：两请求reserve不符合预算保护，MM1252的pre-observer program分支丢Schema建议，SK第三轮未落实缺证而target通过，MM1359三次normal失败。下一版实际自动补证/完整上下文预算与正确动作历史；公共fixture作用域、receiver和规范性义务仍未证，不能借旧Gold/版本点提升trusted。
+context/cost分层已改且本批不再因reserve停止；当前直接阻塞是有效输出协议：system可复制说明值当代码、type=json_object+action=dict未识别。源码取得机制已零调用实际接线，但有效probe还未使其在live触发。下一版先完整policy/codec/input最终消息正负smoke，不能继续只扩预算或诊断collector；语义覆盖仍未过，不借旧Gold/版本点提升trusted。
 
 ## 3. 严格验收定义
 
@@ -71,15 +74,16 @@ Docker/反馈命名冲突不是当前阻塞，续接已经完整封存。新实�
 | 已完成（有限范围） | metadata反馈投影修复 | 10专项/实际原失败Human roundtrip，原边界不改 | 不自动retry旧paid |
 | 已完成 | resume-only/新seal/独立Gold | 原109文件不变、账本保留旧6事件前缀、255新产物seal | 执行完成不等于质量通过 |
 | 已完成（零调用shadow） | pre-observer program依赖反馈 | Schema建议三反馈恢复、unknown/reject不提升 | 尚未接新live |
-| 1 | 新producer实际有界自动补证 | 接route→production symbol检索→SHA/window→后续Agent，正负例 | 建议显示不代表执行；无人工文件表 |
-| 2 | 预算/context/动作历史零调用收敛 | 两budget-stop实样的reserve压缩验收，必需source/rejected/unknown不丢 | 不扩大预算换绿，不把换输入pass当修复 |
-| 3 | 新完整method/预算freeze与同版DEV | 规范/输入/双source身份/质量分账，一次新生成 | 原额度仅剩6298，禁止重跑旧run/gold，不自动追加paid |
+| 已完成（有限范围） | 自动补证/合理context预算/新DEV | 2实际源码读取/next view、输入和成本分层、80k批次封存 | source取得不等于模型产物有效 |
+| 1 | 去示例值policy+closed codec整体接线 | 最终Human/System/实际parser同轮synthetic probe、坏代码/未知wrapper仍拒 | 新协议不得只在旁路check，旧source不改 |
+| 2 | 新完整JSON/method/预算freeze | 来源/输入/Oracle/控制/scope/账本一致、无模板echo | 80k硬限每批≤100k，retry0，非整体自动无限消费 |
+| 3 | 同版四参考新DEV | 真Python/actions→自动source→normal/target/observer→Gold/语义分账 | 0候选或语义不足不扩canary |
 | 4 | 同版完整九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | 四参考不报全12 |
 | 5 | 新不重叠canary一次 | 全历史排除，可信≥2/3且行为一致 | 负结果封存回DEV |
 | 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
 | 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮新增7calls/29996tokens，累计10/43702；所有started namespace（含resume/smoke/gold/router）禁止重跑或改源/预算/账本。当前无新live/canary命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
+下一轮paid前先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮独立新批16calls/53212（不与旧50k lineage重置混算）；所有started namespace含acquisition checks/paid/gold/action-protocol禁止重跑/改源。当前无新live/canary命令，不抽第6批、不打开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 
