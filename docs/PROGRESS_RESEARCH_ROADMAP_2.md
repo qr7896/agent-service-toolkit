@@ -4,9 +4,9 @@
 
 ## 0. 最新结论
 
-**最新状态：** qualified属性依赖/自动2源异常观察/scope-export-object已接Controller主链，新目录零模型回放两个封存生产probe。MM内层公开ValueError对应false→true，2个条件binding/3条true运行关系记录到feedback及最终Human，仍public_fixture_constraint_unproven；SK有限候选保持。**完整可信0/Agent修复0，E1-C未完成**。[最新结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_source_evidence_results.json)。本轮0calls/0tokens，无新生成/Gold；旧版费用/结果不拼分。
+**最新状态：** 2.19.3公开发行包已手动下载核验，新零模型版本对照completed：同normal/target各两次旧版rc0；既有base normal两0/target两1。四次实际version/path/manifest/probeSHA/optional条件都过，报告旧版执行witness获支持。[最新结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_release_witness_results.json)。本轮0calls/0tokens、无安装/新生成/Gold；之前源码Controller内层异常对应true、条件scope/运行关系保持。**完整可信0/Agent修复0，E1-C未完成**，公共namespace意图/其他义务仍未自动证明。
 
-新增7专项、初组合36/最终26、Ruff/预算V3/合成preflight通过，最终1667 passed/4 skipped/33warnings（98.26秒），旧XML保留；不是repair rate。2.19.3本地tag/history无源码，[手动直连命令](research/E1C2_REPORTED_VERSION_MANUAL_DOWNLOAD_2026-10-08.md)已准备（约49KiB/SHA/进度、仅保存不安装）。0下载/删除/系统配置更改；完整门槛默认保留，另立有限协议须明确选择。
+新增13专项、重点32/Ruff/预算V3/合成preflight通过，最终1680 passed/4 skipped/33warnings（103.79秒），旧XML保留；不是repair rate。14生产Python共153,698bytes只读挂载，不安装、无新镜像/agent下载/系统配置变化。旧Git source缺失已由明确标注的public-release counterfactual补实证，不冒充canonical Git。当前不需再下载；完整门槛默认保留，另立有限协议须明确选择。
 
 ## 1. 已完成与尚未完成
 
@@ -47,14 +47,15 @@
 | 正常对照与环境反馈修订（历史阶段） | source-backed binding保护已实链；matching自身记录环境投影零调用过 | 当时未接paid；后续实链见下行，不编造自然环境 |
 | 环境事实/接口请求新版 | matching执行条件到Human，新的有限候选Gold1/1 | 仅参数接受，非完整行为或Agent修复 |
 | 模块函数检索新版 | 新生产query匹配与next消息过；另一新有限候选Gold1/1 | 同一旧DEV，不合并2/2；alias提示不认证 |
-| 源码Controller零模型 | 属性依赖/2源选择/公开内层异常对应true/条件scope与运行关系到Human | 旧probe回放不是新样本；namespace意图/版本期待未证明 |
+| 源码Controller零模型 | 属性依赖/2源选择/公开内层异常对应true/条件scope与运行关系到Human | 旧probe非新样本、namespace意图未证；后续版本对照见下行 |
+| 公开2.19.3发行对照 | 同probe/image/optional条件，实际version/path/SHA过，旧normal×2/target×2都0 | 版本执行见证，不是canonical Git/完整意图/Agent修复 |
 | 机器可信/Agent修复/E2 | machine0、新repair/official resolved未做 | 不报30/30，不开Fresh30 |
 
 ## 2. 当前瓶颈
 
 检查器现在能组合已知公共fixture结构、production依赖、期待锚和异常证据，并拒绝明确改值/影射/对象改写。它只支持有限结构；状态/控制流/自定义行为、遗漏公共范围不认证。
 
-属性依赖及真实异常源选择已零模型主链验证，公开内层错误对应现在true。剩公开短名namespace意图与报告旧版行为；SK参数接受仍不覆盖default/增量。运行关系支持条件解释，不清除strict unknown。有限gate故意full_issue_trusted/repair=false：补真实义务或经明确选择另立预注册受限协议，不能改常量或多付费而称通过。缺2.19.3本地资源，下载交用户，不借其他task的witness。
+属性依赖、公开内层异常对应、运行关系与报告旧版本执行对照均有实证。剩公开短名省略import的namespace意图、SK default/增量等未覆盖义务；运行/版本对照支持条件机制，不自动清除strict unknown。有限gate故意full_issue_trusted/repair=false：继续完整门槛或经用户明确选择另立可审计有限机制协议，不能静默换口径/改False、多付费称通过。当前没有资源下载瓶颈，不借其他task的witness。
 
 ## 3. 严格验收定义
 
@@ -85,8 +86,8 @@
 | 已完成（有限范围） | source-frontier正常绑定保护与live补源 | receiver丢失执行前拒绝；Schema next prompt SHA与账本一致 | 不证明fixture意图/剩余行为 |
 | 已完成（有限范围） | 环境反馈/接口请求/模块函数检索实链 | matching条件到真实next请求，有限候选及独立Gold，两个来源runtime过 | fixture/异常链/版本资格仍未知 |
 | 已完成（有限范围） | 属性依赖/异常路径/fixture分层Controller零模型 | 公开内层异常对应true，scope/export/object到Human，原unknown不改 | 新zero目录不重跑，不是新生成/完整可信 |
-| 1 | 旧版小资源与资格范围选择 | 用户核验49KiB发行包；默认完整门槛或明确另立有限协议 | 不安装、不挪其他task版本、不静默换口径 |
-| 1a | 新release-source counterfactual零协议 | 同probe/镜像/optional条件，实际版本/路径/源SHA与normal/target核验 | 发行包不冒充canonical Git，目前无witness命令 |
+| 已完成 | 公开release-source counterfactual | 同probe/镜像/optional条件、实际版本/路径/源SHA及normal×2/target×2通过 | 新namespace已运行勿重跑，发行包不冒充canonical Git |
+| 1 | 资格范围明确选择 | 继续完整门槛，或另立有限机制/完整覆盖/官方修复分层预注册 | 不回填旧结果，不因witness直接进入canary |
 | 2 | 真实义务覆盖/新完整method与两个来源小验证 | 明确有限候选与完整可信边界，实际正常/target/observer/资格正负过，再精确预算freeze | 禁止修改false常量冒充trusted，不重跑旧批，不无限消费 |
 | 3 | 同版四参考新DEV | 自动source→normal/target/observer→独立Gold/语义分账 | 0候选或语义不足不扩canary |
 | 4 | 同版完整九准入DEV/native | Gold/受限候选/语义/原机制分别计，固定12 | 四参考不报全12 |
@@ -94,7 +95,7 @@
 | 6 | Agent patch/独立official grade | 同预算小baseline/treatment修复证据 | 无收益不扩批 |
 | 7 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved | 不保证30/30，不回调Fresh30 |
 
-下一轮paid先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮0/0与旧费用分账；source-evidence-zero及所有started run/gold不可重跑/改源。当前需小型旧版资源和资格范围选择，没有可重跑live/witness命令，不抽第6批、不开TEST/Fresh30/repair/E2。
+下一轮paid先列精确命令/Flash/次数/≤100,000tokens，retry0不Pro。本轮0/0与旧费用分账；release-witness/source-evidence-zero和所有started namespace不可重跑/改源。当前需资格范围明确，无可重跑live/witness命令，不抽第6批，不开TEST/Fresh30/repair/E2。
 
 ## 5. 时间与停止条件
 

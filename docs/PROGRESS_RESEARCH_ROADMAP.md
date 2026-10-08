@@ -4,11 +4,11 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** qualified属性依赖、自动2源异常选择、scope/export/object已接Controller主链。零模型回放两个封存DEV probe，公开内层异常对应false→true，fixture条件解释和运行关系已观察；剩公开namespace意图及旧版本行为证据，**机器可信0/Agent修复0，E1-C未完成**。[最新零模型结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_source_evidence_results.json)。本轮0calls/0tokens，不计新生成/任务成绩；旧费用和Gold结果独立保留。2.19.3本地源码未找到，[约49KiB手动直连资源](research/E1C2_REPORTED_VERSION_MANUAL_DOWNLOAD_2026-10-08.md)只保存不安装。完整门槛默认不变，另立有限协议须用户明确选择；canary/TEST/C5/Fresh30/privateTest500/repair/E2关闭。
+**当前：** 用户下载的2.19.3公开包已核验并完成零模型对照：同一normal与target各两次在旧版完成，原base normal两0/target两1。实际版本/导入路径/14个生产源SHA/同probe/相同依赖阻断均核验，旧版本报告的执行见证得到支持。[最新版本对照结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[收据](../data/e1c_evaluation_2_release_witness_results.json)。本轮0calls/0tokens，不安装、不计新生成或修复；先前属性/异常/fixture链证据保持。**完整可信0/Agent修复0，E1-C未完成**：剩公开namespace意图与全部义务覆盖口径；未明确选择前保留严格门槛，不能直接进入canary/TEST/Fresh30/E2。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1667 passed/4 skipped/33 warnings（98.26秒）；Ruff、预算/V3重点、新专项7项、合成compact preflight通过。旧XML保留，此计数不是可信复现或修复率。
+最新工程验证：1680 passed/4 skipped/33 warnings（103.79秒）；Ruff、预算/V3重点32、新专项13项、合成compact preflight通过。旧XML保留，此计数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -18,7 +18,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [源码证据Controller零模型结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)；[此前环境/模块检索结果](research/E1C2_ENVIRONMENT_MODULE_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [公开发行源码版本对照](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)；[此前源码Controller结果](research/E1C2_SOURCE_EVIDENCE_RESULTS_2026-10-08.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 

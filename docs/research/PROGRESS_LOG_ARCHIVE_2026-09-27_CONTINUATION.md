@@ -1382,3 +1382,15 @@ resume-zero新namespace先source/protocol/prefix freeze，实际loop缓存AIMess
 报告2.19.3本地tag与有界80-init-history snapshot均无source；没有执行旧版witness或借其他task版本。官方PyPI JSON核对wheel49981bytes/SHA cb1e88b8b098ee6d0fb984e40762cb94e200c067426e43496e55b82b563feabf，新增手动固定URL/SHA/进度脚本，curl排代理/HTTPS/15秒连接180秒总超时/retry0，仅保存不安装/不执行包；OS VPN/TUN需用户关闭。PowerShell语法检查0errors，未执行下载。之后另冻结安全wheel读取及同probe/条件release counterfactual，发行包不冒充canonical Git；现在无witness命令。
 
 已向用户问资格范围选择：默认完整门槛，或明确另立预注册有限机制协议并分账；未答，未换口径/改False/开canary。完整1667passed/4skipped/33warnings98.26秒，XML SHA3940e50d84ee4cdfc245abe47a4536ee70dc088cc05b029d7bc0434dbb2e2f20；Ruff/重点26/compact synthetic ready、旧XML保留。八个原generation seal和新module freeze SHA核验保持，receipt绑定结果。两Roadmap/交接更新当前入口，日志本续档；无新增付费、下载/删除、Docker重启/IPC/VHD/registry/代理/tunnel/key更改，raw/probe/Gold/密钥/失败/备份本机保全。TEST/C5/Fresh30/privateTest500/repair/E2仍关闭；下一步手动小资源及资格范围明确后另零模型版本对照，不保证完美/30题全过。
+
+## 2026-10-08：用户下载已核验，2.19.3公开发行源码同probe对照通过
+
+用户回传手动下载VERIFIED49981bytes/SHA cb1e88b8b098ee6d0fb984e40762cb94e200c067426e43496e55b82b563feabf，并再次要求继续加速。遵循ARS执行/监控/output与ponytail，复用原container/probe/version AST helper，inline无subagent/依赖；未把“继续”当资格口径新选择，默认strict保持。
+
+新release_witness源码/协议先测试：host仅读取固定wheel生产Python，不import/install/setup，路径/symlink/duplicate/budget检查全部在落盘前；14files/153698bytes，module/version由公开锁定quote和单一package筛选，不用IID文件表。ZipInfo Windows规范化导致backslash反例两次重点各1failed，真实容器尚未开始；改validator读orig_filename、fixture保留raw spelling，加非规范alias反例，原断言全留。Ruff E702仅测试排版冻结前修；最终13新专项/重点32过后才freeze/run。
+
+预列精确release_witness命令0calls/0tokens；新public-release-witness-zero-v1冻结module/protocol/wheel manifest/父zero receipt及module原generation seal、baseline三结果SHA。control/target新zero生成源hash与已seal parent latest source一致，验证现base normal两0/target两1；只读挂载旧生产包，在同镜像/base/probe/optional阻断条件4次正常测量，不改原data。driver逐文件hash、实际__version__=2.19.3与/e1c2_release导入路径、原probeSHA及实际optional import失败确认后输出nonce，再运行原probe；四次normal/target均rc0且preflight有效，old_version_same_probe_completed=true。没有新安装、下载、Gold、模型、task样本或Agentpatch；发行包不是canonical旧Git/唯一修复commit证明，仪器化/版本替换不授完整语义。
+
+本轮公开旧版执行witness实证支持；公共namespace意图/其他issue义务仍未知。full_issue_trusted=false/Agentrepair0，资格选择未收到明确回答，不改门槛、不直接开canary/TEST/Fresh30/E2。新namespace不可重跑，不借之前其他task的版本witness、不回填旧local_source_unavailable；原有限候选/Gold分数独立保持。
+
+Ruff/重点32/compact synthetic ready，全1680passed/4skipped/33warnings103.79秒，XML SHA793b853af976cd18a0c0739a5003842542c6f531bf941b2cea38e5f3b21f0d9e；旧XML及失败测试记录保留，不报repair rate。新release method/protocol/14源manifest、八个旧generation seal与父zero结果保持；receipt绑定freeze/result/四结果/XML。两Roadmap/交接当前入口更新、下载doc状态历史留存，日志本续档；Git只source/test/protocol/脱敏收据，不上传wheel/原probe/raw/Gold/key。没有系统Docker重启/IPC/VHD/registry/代理/tunnel/密钥更改或镜像删除。当前不需要再下载/付费，下一步明确严格完整门槛或另立有限机制预注册协议；不保证30/30或完美。
