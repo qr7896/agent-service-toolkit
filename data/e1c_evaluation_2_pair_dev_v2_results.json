@@ -1,0 +1,22 @@
+{
+  "schema": "e1c2-pair-dev-v2-paid-result-and-zero-anchor-prototype-v1",
+  "date": "2026-10-09",
+  "preparation": {"fixed_DEV12": 12, "ready": 9, "dual_admitted_ready": 9, "missing_local_source_issue": 3, "provider_calls": 0, "input_readiness_not_repair_rate": true, "prepared_freeze_sha256": "d501f4279a62e3b56332c02924b7b99d5cfba51bdfbeae53d09285db8aff931e", "prepared_result_sha256": "d3ab3536c1937095b15c8f645b1a3f58954ff939be835abfc6adf4d09a19ea97"},
+  "paid": {"run_id": "e1c2-pair-dev-v2", "model": "deepseek-flash", "thinking": "enabled", "reasoning_effort": "high", "calls": 3, "input_tokens": 13537, "output_tokens": 29129, "total_tokens": 42666, "seconds": 127.14, "fixed_tasks": 2, "operational_pair_pass": 1, "official_resolved": 1, "all_calls_completed": true, "max_generated_tokens_each": 20000, "retry": 0, "total_budget_ceiling": 100000},
+  "tasks": [
+    {"instance_id": "scikit-learn__scikit-learn-26289", "calls": 1, "tokens": 7592, "status": "public_quote_not_verbatim", "probe_execution_started": false, "repair_started": false, "official_scoring_attempted": false, "resolved": false},
+    {"instance_id": "marshmallow-code__marshmallow-1359", "calls": 2, "tokens": 35074, "normal_returncodes": [0,0], "target_returncodes": [1,1], "operational_pair_valid": true, "own_post_patch_pass": true, "repair_metadata_removed": false, "f2p_pass": 1, "f2p_total": 1, "p2p_maintained": 76, "p2p_total": 76, "resolved": true, "repair_generated_tokens": 19556, "repair_reasoning_tokens_reported": 19494}
+  ],
+  "source_records": {
+    "freeze.json": "97085159edbd37abb6823800a66b8eff10bfb1baa5c48e6f37f1d0fafb9762ba",
+    "generation-seal.json": "1aa679ea659a721805c97e24d43a589a894eee3de769119a220d6fe0787d7462",
+    "provider_calls.jsonl": "987c29bf34db202949f962c6babb38f51e98284593d3b5a40a04febdb787bc2a",
+    "result.json": "1f03624e633cdcb6466db5f4b030c95597b97eb044a160a3cca9667de93a1ccf",
+    "marshmallow-code__marshmallow-1359/candidate.patch": "53ae229b872c487e7fb1d2f010e050099fa00e559d3661eb5b0f28c76d79d6e6"
+  },
+  "zero_anchor_prototype": {"provider_calls": 0, "tests": 5, "max_records": 12, "max_chars_each": 300, "registry_created_before_future_calls": true, "program_strings_changed": false, "actual_static_codec_hook_tested": true, "new_complete_live_method_frozen": false, "old_rejected_quote_corrected_or_rescored": false, "semantic_faithfulness_certified": false},
+  "recent_two_batches_only": {"calls": 7, "tokens": 82636, "not_project_total_or_single_batch_cost": true},
+  "engineering": {"V2_new_tests": 10, "anchor_new_tests": 5, "initial_focused_tests": 29, "initial_full_passed": 1779, "initial_skipped": 4, "initial_warnings": 33, "initial_seconds": 66.79, "initial_xml_sha256": "406834ff7a0b15609de20af028ded0c7575fb3a5ee68a5aea427115c7542c384", "final_focused_tests": 34, "final_passed": 1784, "final_skipped": 4, "final_warnings": 33, "final_seconds": 68.72, "final_xml_sha256": "097001bbcfb584d3f9ab1c609b3dcb9be854fca406f252084e799ad127cb860c", "ruff_passed": true, "synthetic_compact_preflight_ready": true},
+  "boundaries": {"old_DEV_seen_before": true, "full_issue_trusted": false, "independent_generalization_claimed": false, "original_results_changed": false, "official_or_Gold_in_actor": false, "TEST_Fresh30_opened": false, "downloads_deletions_or_system_changes": false},
+  "E1C_evaluation_2_completed": false
+}

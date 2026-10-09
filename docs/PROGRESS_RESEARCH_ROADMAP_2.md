@@ -4,13 +4,13 @@
 
 ## 0. 最新结论
 
-**最新状态：** [两来源fresh新生成链已完成](research/E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)：Flash4calls/39,970tokens，normal/target条件执行门槛2/2，原冻结official修复**1/2**。Marshmallow新模型patch F2P1/1、P2P37/37；Scikit-learn raw多一个type=json_object被拒，另立零调用审计只删元字段后F2P1/1、P2P19/19。代码字符串/probe/断言未改，原成功不重复评分；原1/2不回填。**两个旧DEV库均有官方通过模型补丁证据，不是同版冻结2/2、独立泛化或30/30。** [收据](../data/e1c_evaluation_2_fresh_pair_results.json)。
+**最新状态：** [DEV v2新两题已完成](research/E1C2_PAIR_DEV_V2_RESULTS_2026-10-09.md)：Flash3calls/42,666tokens，pair操作1/2、official修复**1/2**。MM1359新模型patch F2P1/1、P2P76/76；SK26289的引用拼接而非原文连续span，执行前拒绝、未调用repair/评分。原前版1/2及后验另1/1保留，不拼跨版最佳。**又有一个不同旧DEV实际成功，不是DEV12/30题或独立泛化完成。** [收据](../data/e1c_evaluation_2_pair_dev_v2_results.json)。
 
-本轮已完整执行[配对链协议](research/E1C2_FRESH_PAIR_PIPELINE_PROTOCOL_2026-10-09.md)，生成全部seal后才评分；旧probe/patch/测试答案不进入模型。新身份原4次调用已消费，不能恢复/改冻结源/重跑；[精确codec零调用审计](research/E1C2_FRESH_PAIR_CODEC_ZERO_2026-10-09.md)也已完成。下一步须将兼容规则正式预注册接入新方法并核算完整公开义务，不因official通过清除unknown。没有待开放canary/TEST/Fresh30。
+DEV v2已正式接codec/namespace条件检查，DEV12重检索9ready/3缺材料固定12保留；新paid身份已经完成不能重跑。下一步已实现“调用前编号片段ID→确定性原文”零模型原型及5专项，针对复制引用错误，不改本次SK quote/结果。**尚未纳入下一完整live method/预算freeze；完整公开义务仍缺证，full_issue_trusted false。** 不开canary/TEST/Fresh30。
 
 原2.19.3对照/[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)/[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**旧完整可信仍0，新两来源原系统1/2、后验另1/1，研究未完成**；不回填旧trusted/repair_eligible或author namespace/全部义务证书。
 
-最新工程1769 passed/4 skipped/33warnings（65.46秒），3新增审计专项/组合10/重点37/Ruff/合成compact preflight过；[最新结果](research/E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)/[收据](../data/e1c_evaluation_2_fresh_pair_results.json)。旧readiness、XML/strict/所有原结果保全，无下载/重启；工程数非repair rate。
+最新工程1784 passed/4 skipped/33warnings（68.72秒），10新版/5anchor专项、重点34/Ruff/合成compact preflight过；[最新结果](research/E1C2_PAIR_DEV_V2_RESULTS_2026-10-09.md)/[收据](../data/e1c_evaluation_2_pair_dev_v2_results.json)。旧readiness、XML/strict/所有原结果保全，无下载/重启；工程数非repair rate。
 
 ## 1. 已完成与尚未完成
 
@@ -66,6 +66,9 @@
 | 两来源issue-first定位/限定名补证 | 新检索各4窗口，SK补3、MM无限定名保持4，未取得保持unknown | source补证不是完整语义证书 |
 | fresh配对→修复全链已执行 | 4calls/39,970，pair执行2/2；原official1/2、MM新patch成功 | 两个已见DEV，非独立泛化/full语义证书 |
 | 精确metadata解码零调用审计 | SK代码字符串不改，自产post×4通过，F2P1/1/P2P19/19 | 后验新增候选1/1，不回填原系统1/2 |
+| DEV v2正式兼容/namespace条件检查 | 10专项含实际调用链、未知字段拒绝、真实12行准备；9份生产输入ready | 3基础设施缺材料，不作模型失败；冻结时paid0，随后已运行 |
+| DEV v2真实运行 | 3calls/42,666，MM1359 F2P1/1/P2P76/76；SK引用拒绝，原1/2 | 不重试/回填或拼版本最好成绩 |
+| 编号公开证据原型 | 12有界片段/ID/hash/offset，ID确定性映射原文，5专项含旧codec实际接线 | 尚无新live freeze，不证明片段语义/全部义务 |
 | 机器可信/E2 | 旧完整可信0，单DEV修复不等同主实验完成 | 不报30/30，不启用Fresh30/E2 |
 
 ## 2. 当前瓶颈
@@ -111,13 +114,15 @@
 | 已完成（单旧DEV） | 新24k窗口模型修复/公开验证 | 1call/19,840、official全过，21变体覆盖闭合 | 不声明因果/独立泛化，不继续调此题 |
 | 已完成（零调用） | 两来源完整执行方法与预算freeze | fresh检索/补源/canonical身份/实际messages/配对执行/修复/自验证/封存评分 | 功能接线不是效果验证；条件pair不称完整可信 |
 | 已完成 | 获精确授权的两来源DEV完整链 | pair执行2/2、原official1/2、4calls/39,970，封存后独立评分 | 原不能重跑，不回填后验解码收益 |
-| 1 | 将精确metadata codec正式接入下一method | 已有通用parser与实际posthoc评分证据，代码字符串保持/unknown字段拒绝 | 新版预算/执行链另冻结，不复制评分答案 |
+| 已完成（零调用） | 正式兼容codec/条件检查/DEV输入与两题freeze | 编译前兼容，导入namespace写入拒绝，9ready/3infra，SK26289/MM1359 | 不是新模型/9题修复/独立泛化结果 |
+| 已完成 | 授权DEV v2两题pilot | 原同版1/2、MM1359新模型patch全official过、SK引用拒绝 | 原身份不能重跑，unused第4次不自动再消费 |
+| 1 | 正式接编号证据ID下一完整方法 | 原型已过5专项，需实际请求提供prefrozen registry、模型ID→原文→旧校验/执行 | 不事后更正旧quote，不能以原型替代live证明 |
 | 2 | 公开行为义务/环境条件完整核算 | 保留dateutil条件、默认行为和训练语义未覆盖范围；分开报机制/可信/修复 | 缺证不认证，不改旧False常量 |
 | 3 | 同版完整九准入DEV/native | 条件机制/完整可信/official resolved分账，固定12，比较成本 | 局部机制/工程数不作修复率 |
 | 4 | 完整方法/预算冻结，新不重叠canary一次 | 全历史排除，严格可信≥2/3及独立修复门槛 | 负结果封存回DEV，不能重称独立 |
 | 5 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved及开TEST授权 | 不保证30/30，不回调Fresh30 |
 
-`fresh_pair_pipeline run`已授权并完成，不能再次执行；`fresh_pair_codec_zero`也已完成。当前没有待授权的新live命令，先正式接codec/核算公开义务，再另立完整method与cohort预算。整批预算不得靠多个100k子批隐瞒总额；所有started身份不恢复/改源/回填，不抽第6批、不启用TEST/Fresh30/E2。
+`pair_dev_v2 run`已精确授权并完成；prepare也完成，全部started身份不能重跑。当前无待授权新live命令，先接prefrozen evidence ID的完整执行与预算，不把未用第4次挪到新身份。扩完整cohort须披露总预算，不藏多个100k子批，不抽第6批，不启用TEST/Fresh30/E2。
 
 ## 5. 时间与停止条件
 

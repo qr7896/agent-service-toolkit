@@ -4,15 +4,15 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** [两来源issue-first新生成链](research/E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)已按精确授权执行：Flash4calls/39,970tokens，配对执行门槛2/2，原冻结official修复**1/2**。Marshmallow新patch F2P1/1、P2P37/37；Scikit-learn原schema拒绝，独立零调用精确元字段解码后F2P1/1、P2P19/19。**两个库有官方通过补丁证据，但不是同版冻结2/2、30/30或独立泛化；full_issue_trusted仍false。**
+**当前：** [DEV v2两题新生成已精确授权完成](research/E1C2_PAIR_DEV_V2_RESULTS_2026-10-09.md)：Flash3calls/42,666tokens，原同版official修复**1/2**。新MM1359补丁F2P1/1、P2P76/76；SK26289因引用不是原文连续span被拒，未执行probe/repair。前版原1/2与后验另1/1保留；不同旧DEV有新的真实修复证据，**不拼同版最佳率/30/30或独立泛化，full_issue_trusted仍false。**
 
-新生成仅用fresh公开issue/自动生产窗口与自产probe反馈，不输入旧成功patch或官方答案；定位来源为前次零调用冻结产物。paid/zero原记录字节保全，无retry。下一步正式接通用精确兼容codec、补公开行为义务缺证、再冻结同版DEV12/九准入；不启用canary/TEST/Fresh30/E2。前次[单例成功/21合成变体](research/E1C2_COMPLETION_SUCCESS_2026-10-09.md)保留，不合并成新成绩。
+DEV v2已正式接编译前兼容、真实条件与namespace写入门槛；DEV12重检索9ready/3缺材料。新pilot已消费授权，不重试或动原结果。已新增“调用前编号证据ID→连续原文”零模型适配原型（5专项），避免模型拼接引用；尚未进下一完整live freeze，不事后纠正SK。下一步完整接线与公开义务验收，再同版DEV/总预算/新独立canary，不开TEST/Fresh30/E2。
 
 此前2.19.3公开包对照与[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)/[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**旧严格完整可信仍0；新两来源原系统1/2、后验另1/1，研究仍未完成**。不因official通过回填namespace意图/全部义务或旧repair_eligible，不拼多版最佳率。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1769 passed/4 skipped/33 warnings（65.46秒）；3新增审计专项/组合10/重点37/Ruff/合成compact preflight通过。[最新结果收据](../data/e1c_evaluation_2_fresh_pair_results.json)绑定paid/zero/seal/XML。[新链原readiness](../data/e1c_evaluation_2_fresh_pair_readiness.json)、[前次成功收据](../data/e1c_evaluation_2_completion_success.json)和旧XML不改；工程数不是可信复现或修复率。
+最新工程验证：1784 passed/4 skipped/33 warnings（68.72秒）；10新版/5anchor专项、重点34/Ruff/合成compact preflight通过。[最新收据](../data/e1c_evaluation_2_pair_dev_v2_results.json)绑定paid/seal/XML；所有原readiness、收据和旧XML不改，工程数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -22,7 +22,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [两来源新生成/原成绩与零调用分账](research/E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [DEV v2真实新案例/引用锚原型与缺证](research/E1C2_PAIR_DEV_V2_RESULTS_2026-10-09.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 
