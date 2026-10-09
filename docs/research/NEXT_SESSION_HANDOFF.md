@@ -1,6 +1,6 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-09。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[首个旧DEV成功/公开验证与fresh准备](E1C2_COMPLETION_SUCCESS_2026-10-09.md)。
+日期：2026-10-09。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[最新两来源真实结果](E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)。
 
 ## 0. 本次更新后的唯一下一步
 
@@ -18,28 +18,31 @@ zero验证原normal/target各两次完成；后续两wrapper前置失败分别�
 
 已fresh issue-first重新检索两个旧library reference、各4窗口，不使用old effective windows/probe/成功patch定位。初漏SK IsolationForest本体，新通用backtick限定名resolve→base blob补3窗口，SK7/MM4；BaseBagging/BaseForest未resolve保留unknown。输入补证仅检索产物，需要下一whole method重建canonical/hash及最终messages，不能直接作为新的paid入口。
 
-**下一唯一工作（已完成零调用实现/冻结）：** [fresh配对链协议](E1C2_FRESH_PAIR_PIPELINE_PROTOCOL_2026-10-09.md)，runner `evals/e1c_evaluation_2_fresh_pair_pipeline.py`。公开issue/生产源→新probe/normal→重复离线执行→条件pair→新patch→原probe自验证→整个producer seal→official。两个输入canonical SHA、首请求SHA、镜像/base、完整方法与预算已冻结；15专项通过。真实新实验未运行，不能跳过prober称E2E或把operational_pair_valid称完整可信。
+**最新真实执行：** fresh配对链已精确授权完成，4Flash calls/39,970tokens，pair执行2/2、原official1/2；MM新patch F2P1/1/P2P37/37。SK被type=json_object元字段拒绝，另立codec_zero无模型解码，代码字符串不改、自产post×4通过、F2P1/1/P2P19/19。原系统1/2不回填，full_issue_trusted false，两来源都是旧DEV；[报告](E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)/[收据](../../data/e1c_evaluation_2_fresh_pair_results.json)。
 
-新精确付费命令须用户授权：
+以下两个命令已经完成，仅标识历史执行，**不得重跑**：
 
 ```powershell
 uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_fresh_pair_pipeline run
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_fresh_pair_codec_zero
 ```
 
-Flash enabled/high，整批≤4calls/100k（含推理），每来源≤2calls/50k；生成16k–20k按冻结余量规则，HTTP300秒，retry0；资格不足/截断/弃答按固定两题记录。started/ledger存在则拒绝重跑。没有Gold/现成测试/旧成功patch进入模型；评分材料仅整批生成封存后打开。Cloud缺本机source artifact/镜像报INFRA_BLOCKED，不扩bridge白名单或上传私有材料。不要直接执行旧已完成命令。
+实际wire Flash enabled/high、每次20k、HTTP300、retry0；预算100k未扩大，余量不能再次消费已用满的4calls授权。原/zero source与全部seal/result/ledger字节核验保留，评分在全生成seal后，未回流模型。没有Gold/现成断言/旧patch输入actor。Cloud缺本机source artifact/镜像报INFRA_BLOCKED，不扩bridge白名单或上传私有材料。
+
+**下一唯一工作：** 把既有`canonical_response`精确兼容正式接下一完整method（只删固定元字段，不改代码字符串、未知key拒绝）；补公开义务/环境条件审核，再冻结同版DEV12/九准入整体方法与cohort预算。模型仍Flash，精确新命令需另授权；多个100k子批的真实总预算必须一起披露。不能改原frozen模块或把后验新增1/1称原系统2/2，也不能因official通过跳过语义缺证/抽新canary。
 
 优先零模型检查：
 
 ```bash
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_fresh_pair_pipeline.py tests/test_e1c_evaluation_2_fresh_pair_pipeline.py
-uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_fresh_pair_pipeline.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_fresh_pair_pipeline.py evals/e1c_evaluation_2_fresh_pair_codec_zero.py tests/test_e1c_evaluation_2_fresh_pair_pipeline.py tests/test_e1c_evaluation_2_fresh_pair_codec_zero.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_fresh_pair_pipeline.py tests/test_e1c_evaluation_2_fresh_pair_codec_zero.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 ```
 
-原completion run已完成，旧zero研究命令也已started/完成或失败，**不可重跑**。Cloud先执行源码单测；缺private父源/seal/镜像报INFRA_BLOCKED，不上传Gold/凭证，不扩白名单/开裸Docker。新paid入口已实现/冻结，但未实际provider或远程接线验证；按上述精确命令授权后仅本机执行新身份一次。
+原completion/fresh_pair paid run已完成，旧zero与新codec_zero也已started/完成或失败，**不可重跑**。Cloud先执行源码单测；缺private父源/seal/镜像报INFRA_BLOCKED，不上传Gold/凭证，不扩白名单/开裸Docker。本次已验证本机实际provider/评分，不称远程tunnel新入口已验证；当前没有待授权新live命令。
 
 此后同版两来源从issue运行完整自动链，计入定位/probe成本→九准入固定12→完整freeze→新不重叠canary→另授权Fresh30/E2。标准组成功不称“不读断言”；严格组未通过也如实报告。不能保证30/30或一周完美。下方保留上轮历史交接细节，仅第0节是当前执行待办。
 
-最新9专项/重点34/全1751passed、4skipped、33warnings（66.25秒），Ruff/合成compact preflight过。[最新收据](../../data/e1c_evaluation_2_completion_success.json)绑定成功paid/公开zero/fresh定位/XML，旧收据保留，工程数非repair rate。frozen方法/协议不原地改，不上传raw/probe/Gold/key；后续保持Flash，不直接抽canary/TEST/Fresh30/E2。
+最新3审计专项/组合10/重点37/全1769passed、4skipped、33warnings（65.46秒），Ruff/合成compact preflight过。[最新收据](../../data/e1c_evaluation_2_fresh_pair_results.json)绑定paid/zero/seal/XML，旧readiness/成功收据保留，工程数非repair rate。frozen方法/协议不原地改，不上传raw/probe/Gold/key；后续保持Flash，不直接抽canary/TEST/Fresh30/E2。
 
 ## 1. 上轮状态与禁止重跑（历史说明）
 
@@ -105,7 +108,7 @@ uv run --frozen python -m pytest -q
 
 ## 4. 付费、安全与回传
 
-未来新实验先列精确命令、Flash、次数与≤100,000 tokens，新未开始namespace，retry0、输入隔离、producer seal后才独立评分；所有原版及三个protocol namespace都不能“再试”。不使用Pro，不开sealed TEST/C5/Fresh30/SERBench私有Test500。当前只有第0节新DEV repair命令待精确授权，无新canary/E2命令。
+未来新实验先列精确命令、Flash、次数与完整cohort预算，新未开始namespace，retry0、输入隔离、producer seal后才独立评分；所有已started身份不能“再试”。不使用Pro，不开sealed TEST/C5/Fresh30/SERBench私有Test500。第0节paid/zero已完成，当前无新live/canary/E2命令。
 
 本轮无下载删除/重启Docker/IPC/VHD/registry/proxy/tunnel/key更改，备份与负结果全保留。旧IPC授权已消费，任何新修改需明确限定授权；大文件交用户终端直连、不走VPN，当前无下载需求。
 

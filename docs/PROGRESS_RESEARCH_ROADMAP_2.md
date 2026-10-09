@@ -4,13 +4,13 @@
 
 ## 0. 最新结论
 
-**最新状态：** 获精确授权的24k窗口已完成：Flash1call/19,840tokens（reasoning13,897/最终JSON235），非空模型生产patch，**official F2P1/1、P2P37/37、resolved=true**。[完整结果](research/E1C2_COMPLETION_SUCCESS_2026-10-09.md)、[收据](../data/e1c_evaluation_2_completion_success.json)。原公开control/target各两次过，新patch同21变体21/21，旧10反例消失。一个看过旧DEV的修复，不是21新task/30题准确率或独立泛化；原失败/8k截断均不回填。
+**最新状态：** [两来源fresh新生成链已完成](research/E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)：Flash4calls/39,970tokens，normal/target条件执行门槛2/2，原冻结official修复**1/2**。Marshmallow新模型patch F2P1/1、P2P37/37；Scikit-learn raw多一个type=json_object被拒，另立零调用审计只删元字段后F2P1/1、P2P19/19。代码字符串/probe/断言未改，原成功不重复评分；原1/2不回填。**两个旧DEV库均有官方通过模型补丁证据，不是同版冻结2/2、独立泛化或30/30。** [收据](../data/e1c_evaluation_2_fresh_pair_results.json)。
 
-当前可执行方法已整体冻结：[两来源fresh配对链协议](research/E1C2_FRESH_PAIR_PIPELINE_PROTOCOL_2026-10-09.md)。公开issue自动定位/限定名补证→新normal/target→离线重复验证→条件门槛→新模型patch→同probe自验证→全producer seal→独立official评分。旧定位/成功patch不进入actor，补证继承的旧input ID已重新计算；逐window精确base核验。**Flash最多4请求/100,000 tokens（含推理），每来源50k；待新精确命令授权，paid0、效果未测。** 不开canary/TEST/Fresh30。此条件执行门槛不是完整语义证书；旧unknown不清除。
+本轮已完整执行[配对链协议](research/E1C2_FRESH_PAIR_PIPELINE_PROTOCOL_2026-10-09.md)，生成全部seal后才评分；旧probe/patch/测试答案不进入模型。新身份原4次调用已消费，不能恢复/改冻结源/重跑；[精确codec零调用审计](research/E1C2_FRESH_PAIR_CODEC_ZERO_2026-10-09.md)也已完成。下一步须将兼容规则正式预注册接入新方法并核算完整公开义务，不因official通过清除unknown。没有待开放canary/TEST/Fresh30。
 
-原2.19.3对照/[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)/[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**旧完整可信仍0，新路线单旧DEV official修复1，研究未完成**；不回填旧trusted/repair_eligible或author namespace/全部义务证书。
+原2.19.3对照/[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)/[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**旧完整可信仍0，新两来源原系统1/2、后验另1/1，研究未完成**；不回填旧trusted/repair_eligible或author namespace/全部义务证书。
 
-最新工程1766 passed/4 skipped/33warnings（66.26秒），15新增专项/Ruff/重点34/合成compact preflight过；[新链验收报告](research/E1C2_FRESH_PAIR_READINESS_2026-10-09.md)/[收据](../data/e1c_evaluation_2_fresh_pair_readiness.json)。Docker与两张镜像只读健康检查通过，无需下载/重启。旧XML/strict/所有原结果保全，工程数非repair rate。
+最新工程1769 passed/4 skipped/33warnings（65.46秒），3新增审计专项/组合10/重点37/Ruff/合成compact preflight过；[最新结果](research/E1C2_FRESH_PAIR_RESULTS_2026-10-09.md)/[收据](../data/e1c_evaluation_2_fresh_pair_results.json)。旧readiness、XML/strict/所有原结果保全，无下载/重启；工程数非repair rate。
 
 ## 1. 已完成与尚未完成
 
@@ -64,7 +64,8 @@
 | 计数zero核验/新24k窗口 | 原freeze/实际1 vs raw3，独立verified-result；same prompt/high、reserve33,148 | 原不回填、新paid0，若仍截断不自动扩额 |
 | 单旧DEV成功模型修复/公开验证 | 1call/19,840、F2P1/1/P2P37/37，own×4和21合成变体通过 | 旧缓存校准非fresh E2E/泛化、full可信不提升 |
 | 两来源issue-first定位/限定名补证 | 新检索各4窗口，SK补3、MM无限定名保持4，未取得保持unknown | source补证不是完整语义证书 |
-| fresh配对→修复全链零调用冻结 | canonical输入/实际Flash wire/共享预算/离线配对与自验证/完整seal/官方判据；15专项 | 新paid0，不能替代真实E2E或独立泛化结果 |
+| fresh配对→修复全链已执行 | 4calls/39,970，pair执行2/2；原official1/2、MM新patch成功 | 两个已见DEV，非独立泛化/full语义证书 |
+| 精确metadata解码零调用审计 | SK代码字符串不改，自产post×4通过，F2P1/1/P2P19/19 | 后验新增候选1/1，不回填原系统1/2 |
 | 机器可信/E2 | 旧完整可信0，单DEV修复不等同主实验完成 | 不报30/30，不启用Fresh30/E2 |
 
 ## 2. 当前瓶颈
@@ -109,13 +110,14 @@
 | 已完成 | Flash thinking 8k配置诊断/计数核验 | 1call/13,708；8k全reasoning，最终空，raw3计数差异留档 | 截断不是功能失败；旧身份不重跑 |
 | 已完成（单旧DEV） | 新24k窗口模型修复/公开验证 | 1call/19,840、official全过，21变体覆盖闭合 | 不声明因果/独立泛化，不继续调此题 |
 | 已完成（零调用） | 两来源完整执行方法与预算freeze | fresh检索/补源/canonical身份/实际messages/配对执行/修复/自验证/封存评分 | 功能接线不是效果验证；条件pair不称完整可信 |
-| 1 | 获精确授权后跑两来源DEV完整链 | 每来源最多一次probe、一次repair，最多4calls/100k；固定2分母 | 不回传official答案，不自动重试或无限扩额 |
-| 2 | 按新结果核算并改通用方法 | 分开报pair、自验证、F2P/P2P、成本及完整公开义务缺证 | 新版另冻结，不能改started身份或拼最佳率 |
+| 已完成 | 获精确授权的两来源DEV完整链 | pair执行2/2、原official1/2、4calls/39,970，封存后独立评分 | 原不能重跑，不回填后验解码收益 |
+| 1 | 将精确metadata codec正式接入下一method | 已有通用parser与实际posthoc评分证据，代码字符串保持/unknown字段拒绝 | 新版预算/执行链另冻结，不复制评分答案 |
+| 2 | 公开行为义务/环境条件完整核算 | 保留dateutil条件、默认行为和训练语义未覆盖范围；分开报机制/可信/修复 | 缺证不认证，不改旧False常量 |
 | 3 | 同版完整九准入DEV/native | 条件机制/完整可信/official resolved分账，固定12，比较成本 | 局部机制/工程数不作修复率 |
 | 4 | 完整方法/预算冻结，新不重叠canary一次 | 全历史排除，严格可信≥2/3及独立修复门槛 | 负结果封存回DEV，不能重称独立 |
 | 5 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved及开TEST授权 | 不保证30/30，不回调Fresh30 |
 
-当前唯一新付费命令待精确授权：`uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_fresh_pair_pipeline run`。Flash enabled/high、最多4calls/100k；其preflight已零调用冻结，不沿用旧授权。原v1/v2/8k/成功paid与zero等started身份不恢复/改源/回填，不抽第6批、不启用TEST/Fresh30/E2。
+`fresh_pair_pipeline run`已授权并完成，不能再次执行；`fresh_pair_codec_zero`也已完成。当前没有待授权的新live命令，先正式接codec/核算公开义务，再另立完整method与cohort预算。整批预算不得靠多个100k子批隐瞒总额；所有started身份不恢复/改源/回填，不抽第6批、不启用TEST/Fresh30/E2。
 
 ## 5. 时间与停止条件
 
