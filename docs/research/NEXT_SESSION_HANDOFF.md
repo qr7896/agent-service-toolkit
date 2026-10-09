@@ -1,6 +1,6 @@
 # WebCodex 接手：E1-C evaluation_2
 
-日期：2026-10-09。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[thinking真实截断结果](E1C2_THINKING_RESULTS_2026-10-09.md)、[新输出窗口协议](E1C2_THINKING_COMPLETION_PROTOCOL_2026-10-09.md)。
+日期：2026-10-09。先读[AGENTS.md](../../AGENTS.md)、[Roadmap 2](../PROGRESS_RESEARCH_ROADMAP_2.md)、[首个旧DEV成功/公开验证与fresh准备](E1C2_COMPLETION_SUCCESS_2026-10-09.md)。
 
 ## 0. 本次更新后的唯一下一步
 
@@ -12,26 +12,26 @@ v2已精确授权实跑：3calls/20,385，standard patch与前版字节相同，
 
 thinking8k已按精确授权执行：1call/13,708，实际enabled/high、8k全部reasoning、length截断/JSON0；没有实际候选评分，效果未测。原raw固定cells3有错误，freeze/实际1；zero独立verified-result标不一致、不改旧文件。不能称三个失败/能力无效，不保存reasoning正文。
 
-新completion窗口freeze成功：same strict prompt/mode/high，max1call/40k含推理、生成24k、HTTP300、retry0、reserve33,148。**paid0待新精确授权**；不是原8k的retry/预算更改。新runner保留legacy raw并保存与freeze/rows一致的verified-result；Cloud缺私有父产物/镜像仍报INFRA_BLOCKED。
+completion已精确授权实跑：Flash1call/19,840，reasoning13,897/最终235，完整模型patch，official F2P1/1/P2P37/37 resolved。strict模型无现成断言/Gold，shared准备读base对象，旧full可信/namespace意图不提升。verified cells1，原legacy raw3保留。只能报一个看过DEV的真实修复，不报30/30、独立泛化或完整from-issue链。
+
+zero验证原normal/target各两次完成；后续两wrapper前置失败分别由alias输入回查和dispatch目录混用导致，原目录/源不改不重跑。v3 dispatch/execution分离已完成首次21变体：base6、newpatch21、公开旧版21，10旧条件反例消失；原own×4不重播，21非新task/值等价。
+
+已fresh issue-first重新检索两个旧library reference、各4窗口，不使用old effective windows/probe/成功patch定位。初漏SK IsolationForest本体，新通用backtick限定名resolve→base blob补3窗口，SK7/MM4；BaseBagging/BaseForest未resolve保留unknown。输入补证仅检索产物，需要下一whole method重建canonical/hash及最终messages，不能直接作为新的paid入口。
+
+**下一唯一工作：** 接fresh检索/限定名/必要补源→模型probe/normal→公开自验证→修复→独立official，冻结两来源完整方法/预算/精确命令，不能跳过prober并称E2E。现无新paid命令；不再只调这一个已成功case。不自动重试、换started namespace或动系统/tunnel。
 
 优先零模型检查：
 
 ```bash
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_thinking_completion_dev.py tests/test_e1c_evaluation_2_thinking_completion_dev.py
-uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_thinking_completion_dev.py tests/test_e1c_evaluation_2_flash_thinking_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_completion_validation_zero.py evals/e1c_evaluation_2_completion_next_zero.py evals/e1c_evaluation_2_completion_sweep_zero.py evals/e1c_evaluation_2_issue_reference_zero.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_completion_validation_zero.py tests/test_e1c_evaluation_2_completion_next_zero.py tests/test_e1c_evaluation_2_completion_sweep_zero.py tests/test_e1c_evaluation_2_issue_reference_zero.py tests/test_e1c_evaluation_2_thinking_completion_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 ```
 
-本机待精确命令授权：
-
-```powershell
-uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_thinking_completion_dev run
-```
-
-仓库要求精确授权该新命令；generic继续不消费。确认后仅一次strict cell生成/封存/独立评分，不是3cell。started/ledger不可重复；provider失败保留，不擅自换namespace续费。Cloud缺父seal/缓存源/镜像报INFRA_BLOCKED，不上传Gold/凭证、不扩tunnel白名单/裸Docker；新入口尚未远程验证。
+原completion run已完成，所有上述zero研究命令也已started/完成或失败，**不可重跑**。仅执行源码单测；Cloud缺private父源/seal/镜像报INFRA_BLOCKED，不上传Gold/凭证，不扩白名单/开裸Docker。新的完整paid入口尚未实现/冻结，也未远程接线验证；实现后再按仓库列精确授权命令。
 
 此后同版两来源从issue运行完整自动链，计入定位/probe成本→九准入固定12→完整freeze→新不重叠canary→另授权Fresh30/E2。标准组成功不称“不读断言”；严格组未通过也如实报告。不能保证30/30或一周完美。下方保留上轮历史交接细节，仅第0节是当前执行待办。
 
-最新6专项/重点33/全1742passed、4skipped、33warnings（123.55秒），Ruff/合成compact preflight过。[最新收据](../../data/e1c_evaluation_2_thinking_results.json)绑定thinking paid/计数zero/新窗口/XML，旧收据保留。frozen方法/协议不原地改、不上传raw/probe/Gold/key。若24k仍截断不自动升64k，回DEV检查effort/context与公开自验证→限次修正。
+最新9专项/重点34/全1751passed、4skipped、33warnings（66.25秒），Ruff/合成compact preflight过。[最新收据](../../data/e1c_evaluation_2_completion_success.json)绑定成功paid/公开zero/fresh定位/XML，旧收据保留，工程数非repair rate。frozen方法/协议不原地改，不上传raw/probe/Gold/key；后续保持Flash，不直接抽canary/TEST/Fresh30/E2。
 
 ## 1. 上轮状态与禁止重跑（历史说明）
 

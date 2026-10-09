@@ -1,0 +1,24 @@
+{
+  "schema": "e1c2-completion-OLD-DEV-success-and-issue-first-preparation-v1",
+  "date": "2026-10-09",
+  "paid": {"run_id": "e1c2-flash-thinking-completion-dev-v2", "model": "deepseek-flash", "thinking": "enabled", "reasoning_effort": "high", "calls": 1, "tokens": 19840, "input_tokens": 5708, "output_tokens": 14132, "reasoning_tokens_reported": 13897, "visible_output_tokens": 235, "finish_reason": "stop", "actual_wire_profile_verified": true, "no_retry": true, "fixed_tasks": 1, "verified_fixed_cells": 1, "raw_legacy_fixed_cells": 3, "source_identity_verified": true, "valid_official_log": true, "f2p_pass": 1, "f2p_total": 1, "p2p_maintained": 37, "p2p_total": 37, "resolved": true, "generation_sealed_before_independent_score": true, "official_answers_in_model": false, "reasoning_text_saved_or_exposed": false},
+  "scope": {"old_development_task_seen_before": true, "cached_automatic_windows_probes_and_public_counterexamples": true, "fresh_end_to_end_or_independent_generalization_claimed": false, "full_issue_trusted": false, "thirty_task_score_claimed": false},
+  "public_zero": {"calls": 0, "original_normal_returncodes": [0, 0], "original_target_returncodes": [0, 0], "variant_count": 21, "base_completed": 6, "new_patch_completed": 21, "public_release_completed": 21, "remaining_public_condition_gaps": 0, "return_value_equivalence_claimed": false, "synthetic_cases_not_independent_tasks": true, "official_test_or_Gold_read": false, "own_probe_runs_not_repeated_by_boundary_continuations": true, "prior_two_wrapper_failures_preserved_not_rerun": true},
+  "issue_first_preparation": {"calls": 0, "library_references": 2, "initial_windows_each": 4, "supplemented_windows": [7, 4], "sklearn_qualified_IsolationForest_definition_recovered": true, "two_other_public_class_references_unresolved_kept_unknown": true, "manual_task_file_map": false, "old_effective_windows_or_model_patch_used_for_localization": false, "source_retrieval_not_semantic_certificate": true, "complete_probe_and_repair_method_ready": false, "new_paid_command_frozen": false},
+  "recent_four_calibrations_only": {"calls": 8, "tokens": 69697, "not_project_total_or_best_of_score": true},
+  "source_records": {
+    "e1c2-flash-thinking-completion-dev-v2/generation-seal.json": "bf5b1014531ae8fd3b4f56275b04aba297afacf278bde2eaf3babad529cc999e",
+    "e1c2-flash-thinking-completion-dev-v2/provider_calls.jsonl": "16620c68782f4944115a5c9bbb64407e6baa8f3236d850ed08da2b8f70794015",
+    "e1c2-flash-thinking-completion-dev-v2/verified-result.json": "fd3caf08b475b65cf545ce2b3339b5a6f730f931fa68665b2fff767564030ad9",
+    "e1c2-flash-thinking-completion-dev-v2/strict_evidence/candidate.patch": "a349381064d693fc1ddb5cfe6f689499a918b11648bd9ed613351e5e8b58cb94",
+    "completion-public-validation-zero-v1/freeze.json": "3734c3ac55906a9f75b9931f0e6bb704ae7afdca53c35bbccd4bc54286e6d2c7",
+    "completion-public-validation-zero-v1/own-probes/result.json": "7e4a0efc2b7091c78913cc696fe232b560d4a100d6aa1f803575b08b6c931ad3",
+    "completion-public-sweep-zero-v3/result.json": "32571b00f0f6309ef67b96dbdb67a8e240794dfd1a088b4dd4ef4825bec526b6",
+    "completion-public-sweep-zero-v3/execution/freeze.json": "90589b07803c2b783f182533c39d240281064fb5b89d7da5392f6ee70a57b559",
+    "issue-first-two-source-localization-zero-v1/result.json": "fbcc30d6be3b47bd1eb5d35707ff752892f04739ee8c25440a392cce58107ee1",
+    "issue-qualified-reference-zero-v1/result.json": "173f162e65fefee31b7ab125af5feeeaf434e793c49f1b86c651b92675031290"
+  },
+  "engineering": {"new_unit_tests": 9, "focused_tests": 34, "passed": 1751, "skipped": 4, "warnings": 33, "seconds": 66.25, "xml_sha256": "4b81dbc36be9fb866d7995fd8cb4d77223984e8db5e0e7f90183b21d098d139b", "ruff_passed": true, "synthetic_compact_preflight_ready": true},
+  "preservation": {"old_results_methods_or_paid_budgets_changed": false, "downloads_or_deletions": 0, "Docker_tunnel_proxy_key_configuration_changed": false, "canary_TEST_Fresh30_opened": false},
+  "E1C_evaluation_2_completed": false
+}

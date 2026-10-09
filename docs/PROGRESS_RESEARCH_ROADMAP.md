@@ -4,15 +4,15 @@
 
 本项目基于 [JoshuaC215/agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)，在 LangGraph、FastAPI、Streamlit 服务骨架上研究：**如何以受控成本获取代码证据，并让自动生成的故障复现真正支持软件修复？**
 
-**当前：** Flash thinking单请求已精确授权执行：实际enabled/high、13,708tokens，其中8,000全部推理；生成上限截断、最终JSON为空，**无候选进入评分，修复效果未测**。[最新结果](research/E1C2_THINKING_RESULTS_2026-10-09.md)。原legacy摘要错误fixed_cells3，freeze/账本/实际rows都是1；另立零调用verified-result标不一致，原raw不改。仍同一个旧DEV校准，不作独立准确率，不把截断称软件失败。
+**当前：** 新窗口已精确授权实跑，Flash1call/19,840tokens，reasoning13,897、完整JSON235tokens；模型自行修改生产源码，**独立official F2P1/1、P2P37/37，resolved=true**。[最新结果](research/E1C2_COMPLETION_SUCCESS_2026-10-09.md)。原自身control/target各两次通过；新patch的21个公开合成变体全完成，先前10个条件反例消失。**这是一个看过旧DEV的真实修复，不是30/30、完整语义证明或独立泛化；21变体不算21新task。**
 
-[下一窗口已冻](research/E1C2_THINKING_COMPLETION_PROTOCOL_2026-10-09.md)：同prompt/mode/high，max1call/40k含推理、生成24k、HTTP300，retry0，reserve33,148；**新paid0待精确命令授权**。原8k身份不重跑/扩额，24k仍失败/截断则回DEV查context与公开自验证闭环，不自动升64k。不保证效果，未开TEST/Fresh30/E2。
+下一步已零调用从原两来源public issue重新定位，各4窗口；通用限定名解析补回SK IsolationForest生产本体，SK7/MM4窗口，不用旧缓存定位/成功patch挑文件。检索补证不是全method ready，须fresh probe/normal、自验证、repair和预算/输入整体冻结。当前**无新paid命令**，不继续调同题、不启用canary/TEST/Fresh30/E2。
 
-此前2.19.3公开包对照：旧版同normal/target各两次rc0，原base normal两0/target两1，版本/导入路径/生产源SHA/probe/依赖条件核验，[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)、[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**完整可信0/Agent修复0，E1-C仍未完成**。另立 DEV 条件修复协议不把旧 unknown 或 repair_eligible 改为 true；不打开 canary/TEST/Fresh30/E2。
+此前2.19.3公开包对照与[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)/[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**旧严格完整可信仍0；新路线单旧DEV official修复1，研究仍未完成**。不因official通过回填namespace意图/全部义务或旧repair_eligible，不拼多版最佳率。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1742 passed/4 skipped/33 warnings（123.55秒）；6新增专项/Ruff/重点33/合成compact preflight通过。[最新收据](../data/e1c_evaluation_2_thinking_results.json)绑定thinking paid/zero计数/新窗口/XML，旧收据/XML保留；工程数不是可信复现或修复率。
+最新工程验证：1751 passed/4 skipped/33 warnings（66.25秒）；9新增专项/Ruff/重点34/合成compact preflight通过。[最新收据](../data/e1c_evaluation_2_completion_success.json)绑定成功paid/zero/issue-first/XML，旧收据/XML保留；工程数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
@@ -22,7 +22,7 @@
 | 接手下一步开发与实验 | [Roadmap 2](PROGRESS_RESEARCH_ROADMAP_2.md) → [WebCodex 交接](research/NEXT_SESSION_HANDOFF.md) |
 | 查看一周交付和验收 | [一周实验计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md) |
 | 查原始过程、失败与演变 | [历史索引与保全记录](research/WORKSPACE_REORGANIZATION_2026-09-30.md) |
-| 查看最新实验与下一步 | [Flash thinking实跑/截断](research/E1C2_THINKING_RESULTS_2026-10-09.md) → [完整输出窗口/计数协议](research/E1C2_THINKING_COMPLETION_PROTOCOL_2026-10-09.md)；所有旧协议/负结果保留 |
+| 查看最新实验与下一步 | [单旧DEV修复成功/公开覆盖/两来源fresh准备](research/E1C2_COMPLETION_SUCCESS_2026-10-09.md)；所有旧协议/负结果保留 |
 
 ## 2. 从启动到现在的主线
 
