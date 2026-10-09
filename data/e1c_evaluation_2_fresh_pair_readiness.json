@@ -1,0 +1,27 @@
+{
+  "schema": "e1c2-fresh-pair-OLD-DEV-readiness-v1",
+  "date": "2026-10-09",
+  "run_id": "e1c2-fresh-pair-repair-dev-v1",
+  "stage": "zero_call_frozen_pending_exact_authorization",
+  "provider_calls": 0,
+  "started": false,
+  "freeze_sha256": "2db1e3b50c0499b48382a0e14bd87440cf3f64edd74599550f22b911c20803a9",
+  "tasks": [
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "canonical_input_sha256": "62e62ea7b5fac60cd977e20885d7c74aff0c73ad98bf52809589fc8288d02d84",
+      "initial_prompt_sha256": "bab39427025795526f2b78e297b1352a0b53de5e4d8aa6c40d7191827f4bf804",
+      "initial_reserve": 29453
+    },
+    {
+      "instance_id": "marshmallow-code__marshmallow-1252",
+      "canonical_input_sha256": "7adc1ef9876b8530da05331c2b5ff2b61bce2dae0294d9de5a600053f318e1f8",
+      "initial_prompt_sha256": "88637e4181bbfabda77f64c39529648f0c60be51eaa6eb3cb4adef27143bca23",
+      "initial_reserve": 23713
+    }
+  ],
+  "budget": {"model": "deepseek-flash", "thinking": "enabled", "reasoning_effort": "high", "max_calls": 4, "max_total_tokens_including_reasoning": 100000, "per_library_calls": 2, "per_library_tokens": 50000, "min_generated_tokens": 16000, "max_generated_tokens": 20000, "HTTP_seconds": 300, "retry": 0},
+  "checks": {"freeze_matches_current_method": true, "Docker_engine_and_two_images_ready": true, "new_unit_cases": 15, "focused_cases": 34, "ruff_passed": true, "synthetic_compact_preflight_ready": true, "full_passed": 1766, "full_skipped": 4, "full_warnings": 33, "full_seconds": 66.26, "xml_sha256": "0eff7fc391dafc461300ecc94a0580d9cc193c061589aa162d1a43b779bb2607"},
+  "boundaries": {"old_DEV_not_independent": true, "old_probe_patch_or_official_feedback_in_actor": false, "existing_test_assertions_in_actor": false, "conditional_pair_not_full_semantic_certificate": true, "new_pipeline_effect_measured": false, "official_scoring_after_whole_producer_seal": true, "canary_TEST_Fresh30_opened": false, "downloads_deletions_or_system_changes": false},
+  "E1C_evaluation_2_completed": false
+}

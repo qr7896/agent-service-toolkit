@@ -18,16 +18,24 @@ zero验证原normal/target各两次完成；后续两wrapper前置失败分别�
 
 已fresh issue-first重新检索两个旧library reference、各4窗口，不使用old effective windows/probe/成功patch定位。初漏SK IsolationForest本体，新通用backtick限定名resolve→base blob补3窗口，SK7/MM4；BaseBagging/BaseForest未resolve保留unknown。输入补证仅检索产物，需要下一whole method重建canonical/hash及最终messages，不能直接作为新的paid入口。
 
-**下一唯一工作：** 接fresh检索/限定名/必要补源→模型probe/normal→公开自验证→修复→独立official，冻结两来源完整方法/预算/精确命令，不能跳过prober并称E2E。现无新paid命令；不再只调这一个已成功case。不自动重试、换started namespace或动系统/tunnel。
+**下一唯一工作（已完成零调用实现/冻结）：** [fresh配对链协议](E1C2_FRESH_PAIR_PIPELINE_PROTOCOL_2026-10-09.md)，runner `evals/e1c_evaluation_2_fresh_pair_pipeline.py`。公开issue/生产源→新probe/normal→重复离线执行→条件pair→新patch→原probe自验证→整个producer seal→official。两个输入canonical SHA、首请求SHA、镜像/base、完整方法与预算已冻结；15专项通过。真实新实验未运行，不能跳过prober称E2E或把operational_pair_valid称完整可信。
+
+新精确付费命令须用户授权：
+
+```powershell
+uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_fresh_pair_pipeline run
+```
+
+Flash enabled/high，整批≤4calls/100k（含推理），每来源≤2calls/50k；生成16k–20k按冻结余量规则，HTTP300秒，retry0；资格不足/截断/弃答按固定两题记录。started/ledger存在则拒绝重跑。没有Gold/现成测试/旧成功patch进入模型；评分材料仅整批生成封存后打开。Cloud缺本机source artifact/镜像报INFRA_BLOCKED，不扩bridge白名单或上传私有材料。不要直接执行旧已完成命令。
 
 优先零模型检查：
 
 ```bash
-uv run --frozen python -m ruff check evals/e1c_evaluation_2_completion_validation_zero.py evals/e1c_evaluation_2_completion_next_zero.py evals/e1c_evaluation_2_completion_sweep_zero.py evals/e1c_evaluation_2_issue_reference_zero.py
-uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_completion_validation_zero.py tests/test_e1c_evaluation_2_completion_next_zero.py tests/test_e1c_evaluation_2_completion_sweep_zero.py tests/test_e1c_evaluation_2_issue_reference_zero.py tests/test_e1c_evaluation_2_thinking_completion_dev.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
+uv run --frozen python -m ruff check evals/e1c_evaluation_2_fresh_pair_pipeline.py tests/test_e1c_evaluation_2_fresh_pair_pipeline.py
+uv run --frozen python -m pytest -q tests/test_e1c_evaluation_2_fresh_pair_pipeline.py tests/test_model_budget.py tests/test_v3_pilot_runner.py tests/test_v3_compact_pilot.py
 ```
 
-原completion run已完成，所有上述zero研究命令也已started/完成或失败，**不可重跑**。仅执行源码单测；Cloud缺private父源/seal/镜像报INFRA_BLOCKED，不上传Gold/凭证，不扩白名单/开裸Docker。新的完整paid入口尚未实现/冻结，也未远程接线验证；实现后再按仓库列精确授权命令。
+原completion run已完成，旧zero研究命令也已started/完成或失败，**不可重跑**。Cloud先执行源码单测；缺private父源/seal/镜像报INFRA_BLOCKED，不上传Gold/凭证，不扩白名单/开裸Docker。新paid入口已实现/冻结，但未实际provider或远程接线验证；按上述精确命令授权后仅本机执行新身份一次。
 
 此后同版两来源从issue运行完整自动链，计入定位/probe成本→九准入固定12→完整freeze→新不重叠canary→另授权Fresh30/E2。标准组成功不称“不读断言”；严格组未通过也如实报告。不能保证30/30或一周完美。下方保留上轮历史交接细节，仅第0节是当前执行待办。
 

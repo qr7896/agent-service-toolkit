@@ -6,11 +6,11 @@
 
 **最新状态：** 获精确授权的24k窗口已完成：Flash1call/19,840tokens（reasoning13,897/最终JSON235），非空模型生产patch，**official F2P1/1、P2P37/37、resolved=true**。[完整结果](research/E1C2_COMPLETION_SUCCESS_2026-10-09.md)、[收据](../data/e1c_evaluation_2_completion_success.json)。原公开control/target各两次过，新patch同21变体21/21，旧10反例消失。一个看过旧DEV的修复，不是21新task/30题准确率或独立泛化；原失败/8k截断均不回填。
 
-下一步已从原两来源issue重新执行自动检索，4窗口各一；公共限定名静态解析补回SK遗漏的IsolationForest本体，SK7/MM4窗口。没有使用旧effective windows/probe/成功patch或评分答案挑定位文件。检索补证仍非完整方法，需将fresh probe/normal、自验证、repair和成本/最终messages/canonical身份整体冻结；目前**无新paid命令、无待开放canary**。共享准备读base对象但严格模型无现成断言/Gold，旧unknown不清除。
+当前可执行方法已整体冻结：[两来源fresh配对链协议](research/E1C2_FRESH_PAIR_PIPELINE_PROTOCOL_2026-10-09.md)。公开issue自动定位/限定名补证→新normal/target→离线重复验证→条件门槛→新模型patch→同probe自验证→全producer seal→独立official评分。旧定位/成功patch不进入actor，补证继承的旧input ID已重新计算；逐window精确base核验。**Flash最多4请求/100,000 tokens（含推理），每来源50k；待新精确命令授权，paid0、效果未测。** 不开canary/TEST/Fresh30。此条件执行门槛不是完整语义证书；旧unknown不清除。
 
 原2.19.3对照/[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)/[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**旧完整可信仍0，新路线单旧DEV official修复1，研究未完成**；不回填旧trusted/repair_eligible或author namespace/全部义务证书。
 
-最新工程1751 passed/4 skipped/33warnings（66.25秒），9新增专项/Ruff/重点34/合成compact preflight过；旧XML保留，非repair rate。无需新下载/改Docker，旧strict/所有原结果保全。
+最新工程1766 passed/4 skipped/33warnings（66.26秒），15新增专项/Ruff/重点34/合成compact preflight过；[新链验收报告](research/E1C2_FRESH_PAIR_READINESS_2026-10-09.md)/[收据](../data/e1c_evaluation_2_fresh_pair_readiness.json)。Docker与两张镜像只读健康检查通过，无需下载/重启。旧XML/strict/所有原结果保全，工程数非repair rate。
 
 ## 1. 已完成与尚未完成
 
@@ -63,7 +63,8 @@
 | Flash thinking单请求实跑 | 1call/13,708，reasoning8k/JSON0，length截断，真实mode有效 | 没有官方候选评分，不解释为修复失败或收益 |
 | 计数zero核验/新24k窗口 | 原freeze/实际1 vs raw3，独立verified-result；same prompt/high、reserve33,148 | 原不回填、新paid0，若仍截断不自动扩额 |
 | 单旧DEV成功模型修复/公开验证 | 1call/19,840、F2P1/1/P2P37/37，own×4和21合成变体通过 | 旧缓存校准非fresh E2E/泛化、full可信不提升 |
-| 两来源issue-first定位/限定名补证 | 新检索各4窗口，SK补3、MM无限定名保持4，未取得保持unknown | source补证非完整method；无新paid命令 |
+| 两来源issue-first定位/限定名补证 | 新检索各4窗口，SK补3、MM无限定名保持4，未取得保持unknown | source补证不是完整语义证书 |
+| fresh配对→修复全链零调用冻结 | canonical输入/实际Flash wire/共享预算/离线配对与自验证/完整seal/官方判据；15专项 | 新paid0，不能替代真实E2E或独立泛化结果 |
 | 机器可信/E2 | 旧完整可信0，单DEV修复不等同主实验完成 | 不报30/30，不启用Fresh30/E2 |
 
 ## 2. 当前瓶颈
@@ -107,18 +108,18 @@
 | 已完成 | 新v2公开反例辅助修复 | 3calls/20,385，原0/3，payload/ledger/seal保留 | 未达质量，不扩canary，不best-of |
 | 已完成 | Flash thinking 8k配置诊断/计数核验 | 1call/13,708；8k全reasoning，最终空，raw3计数差异留档 | 截断不是功能失败；旧身份不重跑 |
 | 已完成（单旧DEV） | 新24k窗口模型修复/公开验证 | 1call/19,840、official全过，21变体覆盖闭合 | 不声明因果/独立泛化，不继续调此题 |
-| 1 | 从issue两来源完整method与预算freeze | 已取得fresh检索/限定名补证，继续生成probe/normal→公开自验证→patch/official，全部成本记账 | 不能直接沿用本次cached窗口/patch当新E2E |
-| 1b | 公开自验证→限次修正闭环 | 自产失败trace/补源真正作为下一次反馈；全部方法/费用冻结 | 不回传官方答案，不继续同模板盲试 |
-| 2 | 从issue开始的两来源DEV完整链 | 同一自动定位/probe/判别/patch方法，三组生产窗口获取一致，全部成本记账 | 缓存首轮不推广成端到端/正式组效应 |
+| 已完成（零调用） | 两来源完整执行方法与预算freeze | fresh检索/补源/canonical身份/实际messages/配对执行/修复/自验证/封存评分 | 功能接线不是效果验证；条件pair不称完整可信 |
+| 1 | 获精确授权后跑两来源DEV完整链 | 每来源最多一次probe、一次repair，最多4calls/100k；固定2分母 | 不回传official答案，不自动重试或无限扩额 |
+| 2 | 按新结果核算并改通用方法 | 分开报pair、自验证、F2P/P2P、成本及完整公开义务缺证 | 新版另冻结，不能改started身份或拼最佳率 |
 | 3 | 同版完整九准入DEV/native | 条件机制/完整可信/official resolved分账，固定12，比较成本 | 局部机制/工程数不作修复率 |
 | 4 | 完整方法/预算冻结，新不重叠canary一次 | 全历史排除，严格可信≥2/3及独立修复门槛 | 负结果封存回DEV，不能重称独立 |
 | 5 | 旧DEV30→另授权Fresh30→E2 | 单一冻结身份逐题resolved及开TEST授权 | 不保证30/30，不回调Fresh30 |
 
-本轮paid已结束，当前无新的完整paid命令；先完成两来源whole method，再列精确Flash预算/命令授权。原v1/v2/8k/成功paid与zero等started身份不恢复/改源/回填，不抽第6批、不启用TEST/Fresh30/E2。
+当前唯一新付费命令待精确授权：`uv run --frozen --offline python -u -X utf8 -m evals.e1c_evaluation_2_fresh_pair_pipeline run`。Flash enabled/high、最多4calls/100k；其preflight已零调用冻结，不沿用旧授权。原v1/v2/8k/成功paid与zero等started身份不恢复/改源/回填，不抽第6批、不启用TEST/Fresh30/E2。
 
 ## 5. 时间与停止条件
 
-[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留为历史预注册；当前执行以三组新协议为准。历史Gold4/4与1复用候选不属于本轮。先做三cell修复接线，再从issue开始两来源完整链与同版DEV质量验收；不能保证一周/30题全过，未过不抽新独立任务。
+[原一周计划](research/E1C2_ONE_WEEK_PLAN_2026-09-30.md)保留为历史预注册；当前执行以fresh配对链新协议为准。历史Gold4/4与1复用候选不属于本轮。先验收两来源新生成完整链，再同版DEV质量与完整义务验收；不能保证一周/30题全过，未过不抽新独立任务。
 
 ## 6. WebCodex与本机安全
 

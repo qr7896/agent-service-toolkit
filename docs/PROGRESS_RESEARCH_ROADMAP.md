@@ -6,13 +6,13 @@
 
 **当前：** 新窗口已精确授权实跑，Flash1call/19,840tokens，reasoning13,897、完整JSON235tokens；模型自行修改生产源码，**独立official F2P1/1、P2P37/37，resolved=true**。[最新结果](research/E1C2_COMPLETION_SUCCESS_2026-10-09.md)。原自身control/target各两次通过；新patch的21个公开合成变体全完成，先前10个条件反例消失。**这是一个看过旧DEV的真实修复，不是30/30、完整语义证明或独立泛化；21变体不算21新task。**
 
-下一步已零调用从原两来源public issue重新定位，各4窗口；通用限定名解析补回SK IsolationForest生产本体，SK7/MM4窗口，不用旧缓存定位/成功patch挑文件。检索补证不是全method ready，须fresh probe/normal、自验证、repair和预算/输入整体冻结。当前**无新paid命令**，不继续调同题、不启用canary/TEST/Fresh30/E2。
+最新工程推进：已实现并零调用冻结[两来源fresh配对复现→修复完整链](research/E1C2_FRESH_PAIR_PIPELINE_PROTOCOL_2026-10-09.md)。从公开issue重新定位及限定名补源，重建canonical输入；normal/target离线各两次验证，通过条件执行门槛才让Flash写补丁、自验证，全生成封存后独立official评分。新预算最多4calls/100k，**待新精确命令授权，尚无新模型结果**。不启用canary/TEST/Fresh30/E2，不把稳定配对称完整语义可信。
 
 此前2.19.3公开包对照与[原结果](research/E1C2_RELEASE_WITNESS_RESULTS_2026-10-08.md)/[原收据](../data/e1c_evaluation_2_release_witness_results.json)不改。**旧严格完整可信仍0；新路线单旧DEV official修复1，研究仍未完成**。不因official通过回填namespace意图/全部义务或旧repair_eligible，不拼多版最佳率。
 
 所有旧分数、输入、源码、观察与失败保留；不将“候选”叫可信2/4，不best-of或改旧namespace。日志只在[集中续档](research/PROGRESS_LOG_ARCHIVE_2026-09-27_CONTINUATION.md)，下表保留历史版本。
 
-最新工程验证：1751 passed/4 skipped/33 warnings（66.25秒）；9新增专项/Ruff/重点34/合成compact preflight通过。[最新收据](../data/e1c_evaluation_2_completion_success.json)绑定成功paid/zero/issue-first/XML，旧收据/XML保留；工程数不是可信复现或修复率。
+最新工程验证：1766 passed/4 skipped/33 warnings（66.26秒）；15新增专项/Ruff/重点34/合成compact preflight通过。[新链冻结验收](research/E1C2_FRESH_PAIR_READINESS_2026-10-09.md)/[收据](../data/e1c_evaluation_2_fresh_pair_readiness.json)绑定新方法与输入/XML。[前次真实成功收据](../data/e1c_evaluation_2_completion_success.json)和旧XML不改；工程数不是可信复现或修复率。
 
 ## 1. 阅读入口
 
