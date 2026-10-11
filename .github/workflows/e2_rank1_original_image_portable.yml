@@ -1,0 +1,56 @@
+name: E2 rank1 original Docker Hub image transport
+run-name: Original pydicom-1416 immutable image (transport only)
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  transport-one-image:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    env:
+      SOURCE_IMAGE: swebench/sweb.eval.x86_64.pydicom_1776_pydicom-1416@sha256:7970085871cd1205b891205d02e4884ba0418ea98d4339b4e69e4cb59ddef72b
+      SOURCE_MANIFEST_SHA: 7970085871cd1205b891205d02e4884ba0418ea98d4339b4e69e4cb59ddef72b
+      SOURCE_CONFIG_ID: sha256:9f71462b0240ba8ae09dc2030497c67b115c19f30dbb934305b995ab154f9df1
+      LOCAL_TRANSPORT_TAG: e2-curator-original-sha/pydicom-1416:transport
+    steps:
+      - name: Pull immutable original image and attest identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p transport
+          docker pull --platform linux/amd64 "$SOURCE_IMAGE"
+          actual="$(docker image inspect --format '{{.Id}}' "$SOURCE_IMAGE")"
+          test "$actual" = "$SOURCE_CONFIG_ID"
+          docker image inspect --format '{{json .RepoDigests}}' "$SOURCE_IMAGE" | grep -F "$SOURCE_MANIFEST_SHA"
+          docker buildx imagetools inspect --raw "$SOURCE_IMAGE" > transport/original-manifest.json
+          actual_manifest="$(sha256sum transport/original-manifest.json | cut -d' ' -f1)"
+          test "$actual_manifest" = "$SOURCE_MANIFEST_SHA"
+          docker image inspect --format '{{json .RootFS.Layers}}' "$SOURCE_IMAGE" > transport/rootfs-diffids.json
+          printf 'source=%s\nmanifest_sha256=sha256:%s\nimage_config_id=%s\nstatus=transport_only_not_official_science_admission\n'             "$SOURCE_IMAGE" "$SOURCE_MANIFEST_SHA" "$actual" > transport/identity.txt
+          docker image tag "$SOURCE_IMAGE" "$LOCAL_TRANSPORT_TAG"
+      - name: Export reproducible transfer archive and hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker save --output pydicom-1416.tar "$LOCAL_TRANSPORT_TAG"
+          gzip -1 pydicom-1416.tar
+          mv pydicom-1416.tar.gz transport/
+          cd transport
+          sha256sum pydicom-1416.tar.gz > archive.sha256
+          split -b 480m -d -a 3 pydicom-1416.tar.gz pydicom-1416.tar.gz.part-
+          sha256sum pydicom-1416.tar.gz.part-* > parts.sha256
+          sha256sum -c archive.sha256
+          sha256sum -c parts.sha256
+          rm pydicom-1416.tar.gz
+          test "$(find . -maxdepth 1 -name 'pydicom-1416.tar.gz.part-*' | wc -l)" -gt 0
+      - name: Upload bounded short-lived transport bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2-rank1-original-image-transport
+          path: transport/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 3
